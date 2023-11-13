@@ -1,4 +1,4 @@
-# Landings
+# HUESPED
 
 ## Project Setup
 
@@ -27,6 +27,6 @@ npm run lint
 
 **Sobre el proyecto**
 
-Se utiliza para mostrar las paginas para los HUespedes de theHoster.
+Se utiliza para mostrar las paginas para los Huespedes de theHoster.
 Se utilizan rutas, vue-router, VueJS y lo antes descrito para desplegar.
 para back se utiliza el proyecto llamado api para el back
