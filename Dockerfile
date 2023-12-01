@@ -1,9 +1,6 @@
-# Etapa de construcción
 FROM node:lts-alpine
 
 RUN npm install -g http-server
-
-RUN mkdir /app
 
 WORKDIR /app
 
@@ -11,11 +8,6 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+EXPOSE 80 
 
-RUN npm run build
-
-EXPOSE 80
-
-#CMD ["http-server", "dist", "-p", "80"]
 CMD npm run serve
