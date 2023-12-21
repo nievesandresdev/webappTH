@@ -1,10 +1,11 @@
 <template>
-	<div class="wrapper flex flex-column xs:hcursor-mobile relative">
+	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
         <!-- <Favicon /> -->
 		<!-- Sidebar  -->
-		<div v-if="$route.name == 'homePage'" class="hidden md:block">
-			<HomeMenu/>
+		<div v-if="!$route.name == 'homePage'" class="hidden md:block">
+			<GeneralMenu/>
 		</div>
+        
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
 			<slot
                 :settings="settings" 
@@ -24,7 +25,7 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<!-- <MenuMobile :msgs_unread="msgs_unread"  @mark_read_msgs="mark_msgs_as_read"/> -->
+			<MenuMobile :msgs_unread="msgs_unread = false"  @mark_read_msgs="mark_msgs_as_read"/>
 		</div>
         <!-- <template v-if="footer">
             <Footer />
@@ -51,9 +52,9 @@
 <script setup>
     import { onMounted, ref, onUnmounted } from 'vue';
     // import Notify from '@/Pages/Collaborator/Layouts/Notify.vue'
-    import HomeMenu from './HomeMenu.vue'
+    import GeneralMenu from './GeneralMenu.vue'
     // import Footer from './Footer.vue'
-    // import MenuMobile from './MenuMobile.vue'
+    import MenuMobile from './MenuMobile.vue'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
@@ -143,7 +144,7 @@
     //     }
     // }
 
-    // const mark_msgs_as_read = () =>{
+    const mark_msgs_as_read = () =>{
     //     show_chat.value = true
     //     if(messages.value.length){
     //         axios({
@@ -152,7 +153,7 @@
     //         }).then( res => {
     //         });
     //     }
-    // }
+    }
 
     //COMPUTED
     // const  msgs_unread = computed(() => {
