@@ -15,20 +15,20 @@
                 <div  class="ml-2 md:ml-6 md:mr-6 md:mr-6 relative">
                     <!-- <Link :href="route('hoster.home.facility.view.huesped', { hoster: slug_hoster })" > -->
                     <a href="javascript:void(0)" class="font-medium no-underline">
-                        {{translate.facilities[lang_web]}}
+                        {{translate.facilities[app_lang]}}
                     </a>
                     <div class="active absolute top-5 left-0 w-full" v-if="false" />
                 </div>
                 <div class="ml-2 md:ml-6 md:mr-6 md:mr-6 relative">
                     <a href="javascript:void(0)" class="font-medium no-underline">
-                        {{translate.places[lang_web]}}
+                        {{translate.places[app_lang]}}
                     </a>
                     <div class="active absolute top-5 left-0" v-if="false" />
                 </div>
                 <!-- v-if="hotel.show_experiences" -->
                 <div class="ml-2 md:ml-6 md:mr-6 md:mr-6 relative">
                     <a href="javascript:void(0)" class="font-medium no-underline">
-                        {{translate.experiences[lang_web]}}
+                        {{translate.experiences[app_lang]}}
                     </a>
                     <div class="active absolute top-5 left-0" v-if="false" />
                 </div>
@@ -60,7 +60,7 @@
     //COMPUTEDS
 
     // const hotel = usePage().props.value.user_hoster;
-    const lang_web = 'es';
+    const app_lang = 'es';
     const translate = {
         facilities :{
             "es": "Instalaciones",
