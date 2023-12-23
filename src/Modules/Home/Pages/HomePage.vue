@@ -7,8 +7,8 @@
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen">
             <div class="w-full h-[150px] sp:h-[240px] lg:h-full relative">
                 <img 
-                    :src="hotel.image ? storageUrl+hotel.image :'/vendor_asset/img/home/home1.png'" 
-                    class="absolute inset-0 object-cover" 
+                    :src="hotel.image ? storageUrl+hotel.image :'/images/home/home_banner_default.jpg'" 
+                    class="absolute inset-0 object-cover w-full h-full" 
                 />
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/vendor_asset/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;"></div>
                 <div
@@ -51,11 +51,11 @@
                             </div>
                             <div class="flex">
                                 <div class="text-center mr-2.5 sp:mr-4">
-                                    <h4 v-if="stay_session?.stay?.check_in" class="text-white text-xs sp:text-base font-medium">{{ $moment(stay_session?.stay?.check_in).format('DD/MM') }}</h4>
+                                    <!-- <h4 v-if="stay_session?.stay?.check_in" class="text-white text-xs sp:text-base font-medium">{{ $moment(stay_session?.stay?.check_in).format('DD/MM') }}</h4> -->
                                     <h6 v-if="stay_session?.stay?.hour_checkin" class="text-white text-[8px] sp:text-xs font-medium">{{ stay_session?.stay?.hour_checkin }}</h6>
                                 </div>
                                 <div class="text-center">
-                                    <h4 v-if="stay_session?.stay?.check_out" class="text-white text-xs sp:text-base font-medium">{{$moment(stay_session?.stay?.check_out).format('DD/MM')}}</h4>
+                                    <!-- <h4 v-if="stay_session?.stay?.check_out" class="text-white text-xs sp:text-base font-medium">{{$moment(stay_session?.stay?.check_out).format('DD/MM')}}</h4> -->
                                     <h6 v-if="stay_session?.stay?.hour_checkout" class="text-white text-[8px] sp:text-xs font-medium">{{ stay_session?.stay?.hour_checkout }}</h6>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
     
     <script setup>
         //import libraries
-        import { onMounted, ref, inject, provide, defineProps } from 'vue';//toRefs,
+        import { onMounted, ref, provide, defineProps } from 'vue';//toRefs,
         import { useHotelStore } from '@/stores/modules/hotel'
 
         // import {$slufy} from '@/util/helpers.js'
@@ -349,7 +349,7 @@
         // provide('stay_session', stay_session)
         // provide('summary_reviews', summary_reviews)
         //INJECT
-        const $moment = inject('moment')
+        // const $moment = inject('moment')
         // const screen_width= screen.width
         
     

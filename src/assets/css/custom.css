@@ -4,4 +4,24 @@ p{
     margin: 0;
     padding: 0;
 }
+@import './hoster-colors';
+@import './hoster-buttons';
 
+.container-fluid-landing {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  @media (min-width:300px){
+      .container-fluid-landing {
+          padding-left: 16px;
+          padding-right: 16px;
+      }
+  }
+  @media (min-width:768px) {
+    .container-fluid-landing {
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
