@@ -11,13 +11,13 @@
                 <!-- <img
                     v-if="$page.props.route_name == 'hoster.home' || $page.url.includes('sobre-nosotros')"
                     class="mx-auto  w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/home-hover.svg`"
+                    :src="`/icons/layout/home-hover.svg`"
                     alt="menu_home"
                 > v-else-->
                 <img
                     
                     class="mx-auto  w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/home-default.svg`"
+                    :src="`/icons/layout/home-default.svg`"
                     alt="menu_home"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -30,13 +30,13 @@
                 <!-- @click="go_route(route('hoster.home.facility.view.huesped', { hoster: slug_hoster }))"
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/instalations-hover.svg`"
+                    :src="`/icons/layout/instalations-hover.svg`"
                     alt="menu_home"
                     v-if="$page.url.includes('instalaciones')"
                 > v-else-->
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/instalations-default.svg`"
+                    :src="`/icons/layout/instalations-default.svg`"
                     alt="menu_instalations"
                     
                 >
@@ -50,13 +50,13 @@
                 <!-- @click="go_route(route('places.list', {hoster: slug_hoster}))"
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/explora-hover.svg`"
+                    :src="`/icons/layout/explora-hover.svg`"
                     alt="menu_home"
                     v-if="$page.url.includes('places') || $page.url.includes('place')"
                 >v-else -->
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="`/vendor_asset/img/hoster/icons/explora-default.svg`"
+                    :src="`/icons/layout/explora-default.svg`"
                     alt="menu_explorer"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -70,11 +70,11 @@
                 <!-- v-if="hotel.show_experiences"
                 @click="go_route(route('activities.list', {hoster:slug_hoster}))"
                 :src="($page.props.route_name == 'activities.list') || ($page.props.route_name == 'experiences.show') ?
-                        '/vendor_asset/img/hoster/icons/camera-hover.svg' : '/vendor_asset/img/hoster/icons/camera-default.svg'" -->
+                        '/icons/layout/camera-hover.svg' : '/icons/layout/camera-default.svg'" -->
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
                     alt="menu_exp"
-                    src="/vendor_asset/img/hoster/icons/camera-default.svg"
+                    src="/icons/layout/camera-default.svg"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                 {{ translate.layout.menu_mobile.experience[lang_app] }}
@@ -87,10 +87,10 @@
             >
                 <!-- <span v-if="msgs_unread && route().current() !== 'chat.mobile'" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span> -->
                 <!-- :src="(route().current() == 'chat.mobile') || ($page.url.includes('m-chat-fake')) ?
-                        '/vendor_asset/img/hoster/icons/1.TH.ChatBubble.svg' : '/vendor_asset/img/hoster/icons/estancia/Chatbubblelineoutline.svg'" -->
+                        '/icons/layout/1.TH.ChatBubble.svg' : '/icons/layout/estancia/Chatbubblelineoutline.svg'" -->
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    src="/vendor_asset/img/hoster/icons/1.TH.ChatBubble.svg"
+                    src="/icons/layout/1.TH.ChatBubble.svg"
                     alt="menu_exp_chat"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">

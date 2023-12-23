@@ -25,7 +25,7 @@
                     <a
                         @click="go_hosterhome"
                         href="javascript:void(0)"
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem] "
+                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2 "
                     >
                         Home
                     </a>
@@ -35,7 +35,7 @@
                 <!--    INSTALACIONES    -->
                 <div class="relative mr-[2.5rem]">
                     <a
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
+                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                     >
                         {{translate.facilities[app_lang]}}
                     </a>
@@ -46,7 +46,7 @@
                 <!--    INSTALACIONES    -->
                 <div class="relative mr-[2.5rem]">
                     <a
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
+                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                     >
                         {{translate.places[app_lang]}}
                     </a>
@@ -56,7 +56,7 @@
                 <!--    INSTALACIONES    -->
                 <div v-if="hotel.show_experiences" class="relative mr-[2.5rem]">
                     <a
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
+                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                         :class="{'border-b-2 border-black': $route.name == 'x'}"
                     >
                         {{translate.experiences[app_lang]}}
