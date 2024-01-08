@@ -6,6 +6,12 @@ export default {
     },
     "dropdownLanguage": {
         "title": "idioma"
+    },
+    "footer": {
+        "legal-warning": "aviso legal",
+        "privacy-policy": "política de privacidad",
+        "privacy-cookies": "política de cookies",
+        "terms-conditions": "términos y condiciones"
     }
     // más traducciones...
   };
