@@ -27,9 +27,9 @@
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
 			<MenuMobile :msgs_unread="msgs_unread = false"  @mark_read_msgs="mark_msgs_as_read"/>
 		</div>
-        <template v-if="footer">
+        <!-- <template v-if="footer">
             <Footer />
-        </template>
+        </template> -->
 
 		<!-- <Notify v-if="$page.props.flash.id" :key="$page.props.flash.id" /> -->
 		<!-- <ModalNotify /> -->
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, onUnmounted, defineProps } from 'vue';
+    import { onMounted, ref, onUnmounted } from 'vue';
     // import Notify from '@/Pages/Collaborator/Layouts/Notify.vue'
     import GeneralMenu from './GeneralMenu.vue'
     // import Footer from './Footer.vue'
@@ -61,12 +61,12 @@
     // import ScheduleModal from '@/Pages/HosterLanding/ScheduleModal.vue'
     // import Favicon from '../Components/Favicon.vue'
     // import { usePage } from '@inertiajs/inertia-vue3'
-    defineProps({
-       footer:{
-        type:Boolean,
-        default: true
-       }
-    })
+    // const props = defineProps({
+    //    footer:{
+    //     type:Boolean,
+    //     default:'true'
+    //    }
+    // })
     
     //DATA
     // const stay_session = usePage().props.value.stay_session

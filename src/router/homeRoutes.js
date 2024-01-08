@@ -1,4 +1,4 @@
-const AppLayout = () => import(/* webpackChunkName: "home" */ '@/Layout/AppLayout')
+const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 const HomePage = () => import(/* webpackChunkName: "home" */ '../Modules/Home/HomePage.vue')
 
 const homeRoutes = [

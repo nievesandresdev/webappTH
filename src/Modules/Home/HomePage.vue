@@ -26,7 +26,7 @@
 
         // import {$slufy} from '@/util/helpers.js'
         //imports components
-        import MenuHome from '@/Layout/Components/MenuHome.vue'
+        import MenuHome from '@/layout/Components/MenuHome.vue'
         // import CossSelingPlace from '../../Landing/Components/CossSelingPlace'
         // import CossSelingActivity from '../../Landing/Components/CossSelingActivity'
         // import CarouselFacilities from '../Components/CrossSellingFacilities'
