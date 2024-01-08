@@ -1,0 +1,38 @@
+
+
+*> :not(i){
+    font-family: 'Montserrat', sans-serif !important;
+  }
+
+  p,a{
+      font-family: 'Montserrat', sans-serif !important;
+  }
+
+body {
+    /* font-family: 'Work Sans', sans-serif;*/
+    /* font-family: 'Futur'; */
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 16px;
+ }
+ a:hover {
+     text-decoration: none;
+ }
+
+ a:active,
+ a:hover,
+ a:focus {
+     outline: 0 none;
+     text-decoration: none
+ }
+
+ /* h4 a:hover {
+     color: #31516B;
+ } */
+ 
+ ul {
+     list-style: outside none none;
+     margin: 0;
+     padding: 0
+ }
+
+ 

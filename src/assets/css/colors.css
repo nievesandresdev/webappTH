@@ -1,0 +1,194 @@
+:root {
+    --h-white-100: #FFFFFF;
+    /*
+        green
+    */
+    --h-green-100: #F7FFFF;
+    --h-green-200: #ECF9F5;
+    --h-green-300: #D8E8E6;
+    --h-green-400: #C5ECE1;
+    --h-green-500: #C5ECD4;
+    --h-green-600: #34A98F;
+    --h-green-700: #2A8873;
+    --h-green-800: #0B6357;
+    --h-green-900: #09423B;
+    --h-green-950: #08211E;
+    /*
+        gray
+    */
+    --h-gray-100: #FAFAFA;
+    --h-gray-200: #F2F2F2;
+    --h-gray-300 : #DADADA;
+    --h-gray-400 : #BFBFBF;
+    --h-gray-500 : #A0A0A0;
+    /*
+        yellow
+    */
+    --h-yellow: #FFD453;
+    /*
+        black
+    */
+    --h-black-100: #333333;
+    --h-black-200: #000000;
+    /*
+        alerts colors
+    */
+    --alert-negative: #FF6666;
+    --alert-alert: #FFC506;
+    --alert-info: #AAD1E6;
+}
+    /*
+        ***
+        green colors
+        ***
+    */
+    .htext-green-200 {
+        color: var(--h-green-200);
+    }
+    .hover-green-200:hover,
+    .hbg-green-200 {
+        background-color: var(--h-green-200);
+    }
+    .hover-htext-green-600:hover,
+    .htext-green-600 {
+        color: var(--h-green-600);
+    }
+    .hbg-green-600 {
+        background-color: var(--h-green-600);
+    }
+    .hborder-green-600 {
+        background-color: var(--h-green-600);
+    }
+    .hbg-green-800 {
+        background-color: var(--h-green-800);
+    }
+
+    
+
+    /*
+        ***
+        gray colors
+        ***
+    */
+    .hover-gray-100:hover,
+    .hbg-gray-100 {
+        background-color: var(--h-gray-100);
+    }
+    .hover-gray-100:hover,
+    .hbg-gray-200 {
+        background-color: var(--h-gray-200);
+    }
+    .htext-gray-500 {
+        color: var(--h-gray-500);
+    }
+    .hbg-gray-500 {
+        background-color: var(--h-gray-500);
+    }
+    .hborder-gray-400 {
+        border: 1px solid var(--h-gray-400);
+    }
+    .hborder-bottom-gray-400 {
+        border-bottom: 1px solid var(--h-gray-400);
+    }
+    .hborder-top-gray-400 {
+        border-top: 1px solid var(--h-gray-400);
+    }
+    .htext-gray-400 {
+        color: var(--h-gray-400);
+    }
+    /*
+        ***
+        alert colors
+        ***
+    */
+    .placeholder-negative::placeholder,
+    .htext-alert-negative {
+        color: var(--alert-negative) !important;
+    }
+    .hbg-alert-negative {
+        background-color: var(--alert-negative);
+    }
+    .hborder-alert-negative:hover,
+    .hborder-alert-negative {
+        border: 1px solid var(--alert-negative) !important;
+    }
+    .htext-warning {
+        color: var(--alert-alert);
+    }
+    .hbg-warning {
+        background-color: var(--alert-alert);
+    }
+    .hborder-warning {
+        border: 1px solid var(--alert-alert);
+    }
+
+    .hbg-yellow {
+        background-color: var(--h-yellow);
+    }
+    /*
+        ***
+        white colors
+        ***
+    */
+    .htext-white-100 {
+        color: var(--h-white-100);
+    }
+    .hbg-white-100 {
+        background-color: var(--h-white-100);
+    }
+    /*
+        ***
+        black colors
+        ***
+    */
+    .hbg-black-100{
+        background-color: var(--h-black-100);
+    }
+    .htext-black-100{
+        color: var(--h-black-100);
+    }
+    .hover-htext-black-200:hover,
+    .htext-black-200{
+        color: var(--h-black-200);
+    }
+    .hborder-black-100{
+        border: 1px solid var(--h-black-100);
+    }
+    .hbg-gray-400{
+        background-color: var(--h-gray-400);
+    }
+
+/*
+***
+*GHOST
+***
+*/
+.ghost-green-600:focus,
+.ghost-green-600:hover{
+    color: var(--h-green-600);
+    text-decoration: none !important;
+}
+.ghost-green-600:focus > .ghost-green-600-icon,
+.ghost-green-600:hover > .ghost-green-600-icon{
+    filter: invert(49%) sepia(98%) saturate(290%) hue-rotate(116deg) brightness(95%) contrast(86%);
+}
+/*
+***
+*TERTIARY
+***
+*/
+.tertiary-black-200:hover{
+    color: var(--h-black-200);
+}
+/*
+***
+*LINK BLACK
+***
+*/
+.black-link{
+    color: var(--h-black-100);
+    text-decoration: underline !important;
+}
+.black-link:hover{
+    color: var(--h-black-200);
+}

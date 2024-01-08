@@ -1,0 +1,21 @@
+input[type=radio]:hover {
+    background-color: var(--h-green-200);
+}
+
+.hinput-primary{
+    border: 1px solid #BFBFBF;
+    color: #333333;
+    border-radius: 6px;
+}
+.hinput-primary:focus{
+    outline: none;
+    border: 1px solid #333333;
+}
+.hinput-primary:hover{
+    border: 1px solid #34A98F;
+}
+
+.hinput-error{
+    border: 1px solid #FF6666;
+    color: #FF6666;
+}

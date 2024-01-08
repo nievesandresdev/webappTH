@@ -12,7 +12,7 @@
                 :chat_hours="chat_hours"
                 :chat_messages="messages"
             ></slot>
-			<div id="layout-collaborator-dashboard"></div>
+            <router-view></router-view>
             <!-- <div 
                 v-if="stay_session && show_chat_guest" 
                 class="bubble-chat hidden lg:block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
@@ -54,7 +54,7 @@
     // import Notify from '@/Pages/Collaborator/Layouts/Notify.vue'
     import GeneralMenu from './GeneralMenu.vue'
     // import Footer from './Footer.vue'
-    import MenuMobile from './MenuMobile.vue'
+    import MenuMobile from './Components/MenuMobile.vue'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'

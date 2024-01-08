@@ -1,6 +1,11 @@
-import { createPinia } from 'pinia';
+import { createPinia } from 'pinia'
+import { defineStore } from 'pinia'
+// import { ref } from 'vue'
+// import { i18n } from '@/i18n';
+
 
 export const pinia = createPinia();
 
-// Aquí puedes importar y utilizar las tiendas de tus módulos si es necesario
+export const useMainStore = defineStore('main', () => {
 
+})

@@ -1,24 +1,47 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+
+import './assets/css/style.css'; 
 import './assets/css/custom.css'; 
+import './assets/css/buttons.css'; 
+import './assets/css/inputs.css'; 
+import './assets/css/colors.css';
+
 import './assets/css/tailwind.css';
-import messages from './i18n/messages';
-import { createI18n } from 'vue-i18n';
+
+import { i18n }  from './i18n'
 import { pinia } from './stores';
 import * as utils from './utils/utils.js'
+// import { useHotelStore } from '@/stores/modules/hotel'
 
-// Configuración de i18n
-const i18n = createI18n({
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages,
-  });
+function initializeApp () {
 
-const app = createApp(App);
+  // const hotelStore = useHotelStore(pinia)
 
-app.use(pinia);
-app.use(i18n);
-app.use(router);
-app.config.globalProperties.$utils = utils;
-app.mount('#app');
+  try {
+
+    // await hotelStore.$loadHotel()
+    
+
+  } catch (error) {
+
+    console.error('Error al cargar los datos del hotel:', error)
+
+  } finally {
+
+
+
+    const app = createApp(App);
+
+    app.use(pinia)
+    app.use(i18n)
+    app.use(router)
+    app.config.globalProperties.$utils = utils
+    app.mount('#app')
+
+  }
+
+}
+
+initializeApp()

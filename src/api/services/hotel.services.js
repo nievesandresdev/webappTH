@@ -3,4 +3,4 @@ import {
     hotelPath,
 } from '../config/apiRoute'
 
-export const findHotelApi = () => apiHttp('GET', `${hotelPath}/find`)
+export const findByParamsApi = (params) => apiHttp('GET', `${hotelPath}/findByParams`, params)

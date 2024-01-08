@@ -5,3 +5,70 @@ p{
     padding: 0;
 }
 
+
+/* CLASES PARA EL LAYOUT */
+  .container-fluid-landing {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  @media (min-width:300px){
+      .container-fluid-landing {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+      }
+  }
+  
+  @media (min-width:768px) {
+    .container-fluid-landing {
+      width: 100%;
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+    }
+  }
+  @media (min-width:1280px) {
+    .container-fluid-landing{
+      max-width: 100%;
+      padding-left: 80px !important;
+      padding-right: 80px !important;
+    }
+  }
+  @media (min-width:1441px) {
+    .container-fluid-landing{
+        max-width: 1280px;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: auto !important;
+    }
+  }
+/* FIN CLASES PARA EL LAYOUT */
+
+
+.icon-green {
+  filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
+}
+
+.icon-blue{
+  filter: invert(73%) sepia(29%) saturate(397%) hue-rotate(157deg) brightness(91%) contrast(98%);
+}
+
+.icon-inactive{
+  filter: grayscale(100%);
+  opacity: 0.6;
+}
+
+.icon-black{
+  filter: invert(74%) sepia(69%) saturate(3672%) hue-rotate(355deg) brightness(101%) contrast(102%);
+}
+
+.icon-white{
+  filter: grayscale(100%) invert(100%) saturate(100%);
+}
+
+.icon-orange{
+  filter: invert(74%) sepia(69%) saturate(3672%) hue-rotate(355deg) brightness(101%) contrast(102%);
+}
+
+.icon-gray{
+  filter: grayscale(100%);
+}

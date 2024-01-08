@@ -2,8 +2,8 @@
     <header id="header" class="block h-[50px] sp:h-[72px]" style="z-index: 1000 !important;">
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
-                <template v-if="hotel.logo">
-                    <img :src="hotel.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
+                <template v-if="hotelData.logo">
+                    <img :src="hotelData.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
                 </template>
                 <template v-else>
                     <div class="w-full h-full flex items-center justify-start">   
@@ -13,7 +13,7 @@
                                 'non-selectable-text':!$utils.isMockup(),
                             }"
                         >
-                            {{ hotel.name }}
+                            {{ hotelData?.name }}
                         </h4>
                     </div>
                 </template>
@@ -29,7 +29,7 @@
                     >
                         Home
                     </a>
-                    <div class="active mt-2 w-full" :class="{'invisible': !$route.name == 'homePage'}" />
+                    <div class="active mt-2 w-full" :class="{'invisible': !$route.name == 'home'}" />
                 </div>
 
                 <!--    INSTALACIONES    -->
@@ -37,7 +37,7 @@
                     <a
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
                     >
-                        {{translate.facilities[app_lang]}}
+                        {{ $utils.capitalize($t('layout.header.facilities')) }}
                     </a>
                     <!-- absolute top-5 left-0 -->
                     <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
@@ -48,118 +48,44 @@
                     <a
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
                     >
-                        {{translate.places[app_lang]}}
+                    {{ $utils.capitalize($t('layout.header.explore')) }}
                     </a>
                     <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
                 </div>
 
                 <!--    INSTALACIONES    -->
-                <div v-if="hotel.show_experiences" class="relative mr-[2.5rem]">
+                <div v-if="hotelData.show_experiences" class="relative mr-[2.5rem]">
                     <a
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-[0.875rem] mb-[0.5rem]"
                         :class="{'border-b-2 border-black': $route.name == 'x'}"
                     >
-                        {{translate.experiences[app_lang]}}
+                        {{ $utils.capitalize($t('layout.header.experinces')) }}
                     </a>
                     <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
 
                 </div>
             </div>
             <div class="hidden md:flex items-center justify-end ml-auto">
-                <!-- <DropdownLanguage /> -->
+                <DropdownLanguage />
             </div>
         </div>
     </header>
-    <!-- <DropdownLanguageMobile /> -->
+    <DropdownLanguageMobile />
 </template>
 <script setup>
 import { ref, provide, onMounted } from 'vue'
-// import DropdownLanguage from '../Components/DropdownLanguage'
-// import DropdownLanguageMobile from '../Components/DropdownLanguageMobile'
+import { useHotelStore } from '@/stores/modules/hotel'
+
+import DropdownLanguage from '../Components/DropdownLanguage'
+import DropdownLanguageMobile from '../Components/DropdownLanguageMobile'
+
 const modal_lang = ref(false)
 
-const hotel = {
-                "id": 194,
-                "name": "Hotel Tayko Sevilla",
-                "type": "Hotel",
-                "address": "Prta de Jerez, 3, 41004 Sevilla, España",
-                "zone": "Sevilla",
-                "category": null,
-                "image": null,
-                "phone": "+52123123123",
-                "email": null,
-                "latitude": "37.382342",
-                "longitude": "-5.993942",
-                "checkin": "02:22",
-                "checkout": "14:31",
-                "show_profile": 1,
-                "slug": "hotel-tayko-sevillaah2",
-                "subscription_active": null,
-                "logo": null,
-                "favicon": null,
-                "name_origin": "Hotel Tayko Sevilla",
-                "subdomain": "hoteltaykosevilla4",
-                "show_experiences": 0,
-                "images": [],
-                "language_names": [
-                    {
-                        "id": 76,
-                        "name": "Hotel Tayko Sevilla",
-                        "language": "es",
-                        "zone": "Sevilla",
-                        "description": null,
-                        "type": "Hotel",
-                        "hotel_id": 194,
-                        "created_at": "2023-11-02T10:50:06.000000Z",
-                        "updated_at": "2023-11-03T13:17:30.000000Z"
-                    },
-                    {
-                        "id": 77,
-                        "name": "Hotel Tayko Sevilla",
-                        "language": "en",
-                        "zone": "Sevilla",
-                        "description": null,
-                        "type": "Hotel",
-                        "hotel_id": 194,
-                        "created_at": "2023-11-02T10:50:07.000000Z",
-                        "updated_at": "2023-11-03T13:17:30.000000Z"
-                    },
-                    {
-                        "id": 78,
-                        "name": "Hotel Tayko Sevilla",
-                        "language": "fr",
-                        "zone": "Sevilla",
-                        "description": null,
-                        "type": "Hotel",
-                        "hotel_id": 194,
-                        "created_at": "2023-11-02T10:50:07.000000Z",
-                        "updated_at": "2023-11-03T13:17:30.000000Z"
-                    }
-                ],
-                "chat_settings": {
-                    "show_guest": true,
-                    "hotel_id": 194
-                }
-            };
-    const app_lang = 'es';
-    const translate = {
-        facilities :{
-            "es": "Instalaciones",
-            "en": "Facilities",
-            "fr": "Installations"
-        },
-        places :{
-            "es": "Explora",
-            "en": "Explore ",
-            "fr": "Explorer"
-        },
-        experiences :{
-            "es": "Experiencias",
-            "en": "Experiences",
-            "fr": "Expériences"
-        }
-           
-    }
+// DATA
+
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
+
 //PROVIDE
 provide('modal_lang', modal_lang)
 //INJECT
