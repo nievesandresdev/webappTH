@@ -12,6 +12,6 @@ export default {
         "privacy-policy": "política de privacidad",
         "privacy-cookies": "política de cookies",
         "terms-conditions": "términos y condiciones"
-    }
+    },
     // más traducciones...
   };

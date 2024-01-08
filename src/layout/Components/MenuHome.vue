@@ -2,8 +2,8 @@
     <header id="header" class="block h-[50px] sp:h-[72px]" style="z-index: 1000 !important;">
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
-                <template v-if="hotelData.logo">
-                    <img :src="hotelData.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
+                <template v-if="hotelData?.logo">
+                    <img :src="hotelData?.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
                 </template>
                 <template v-else>
                     <div class="w-full h-full flex items-center justify-start">   
@@ -54,7 +54,7 @@
                 </div>
 
                 <!--    INSTALACIONES    -->
-                <div v-if="hotelData.show_experiences" class="relative mr-[2.5rem]">
+                <div v-if="hotelData?.show_experiences" class="relative mr-[2.5rem]">
                     <a
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                         :class="{'border-b-2 border-black': $route.name == 'x'}"

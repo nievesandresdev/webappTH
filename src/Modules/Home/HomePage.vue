@@ -2,11 +2,13 @@
         <MenuHome />
         
         <!-- card banner -->
-        <section class="relative h-[210px] sp:h-[345px] lg:h-screen">
-            <div class="w-full h-[150px] sp:h-[240px] lg:h-full relative">
-                <div class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('/assets/img/home/home1.png');`"></div>   
-                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
-            </div>
+        <section class="relative h-[210px] sp:h-[345px] lg:h-screen">            
+            <img 
+                class="absolute inset-0 object-cover w-full h-[150px] sp:h-[240px] lg:h-full"
+                :src="`${hotelData?.image ? storageUrl+hotelData?.image :storageUrl+'/storage/gallery/general-1.jpg'}`" 
+                :alt="hotelData.name"
+            >
+            <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
         </section>
         <!-- end card banner -->
 
@@ -20,7 +22,9 @@
             // inject,
             provide,
             // defineProps
-        } from 'vue';//toRefs,
+        } from 'vue';
+        import { useHotelStore } from '@/stores/modules/hotel'
+        //toRefs,
         // import { useMainStore } from '@/stores'
         // import { useHotelStore } from '@/stores/modules/hotel'
 
@@ -38,7 +42,9 @@
     
         // const hotelStore = useHotelStore();
         // const hotel = hotelStore.hotelData
-        // const storageUrl = process.env.STORAGE_URL
+        const storageUrl = process.env.VUE_APP_STORAGE_URL
+        const hotelStore = useHotelStore()
+        const { hotelData } = hotelStore
 
         //DATA STATIC
         

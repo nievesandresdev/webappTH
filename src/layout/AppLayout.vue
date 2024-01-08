@@ -47,6 +47,7 @@
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
 	</div>
+    <GuestLog />
 </template>
 
 <script setup>
@@ -55,6 +56,7 @@
     import GeneralMenu from './GeneralMenu.vue'
     import TheFooter from './Components/TheFooter.vue'
     import MenuMobile from './Components/MenuMobile.vue'
+    import GuestLog from './Components/GuestLog.vue'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
