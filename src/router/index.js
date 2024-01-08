@@ -18,7 +18,6 @@ router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore()
   const localeStore = useLocaleStore()
   localeStore.$load()
-  console.log('beforeEach')
   loadSubdomain()
   await hotelStore.$load()
   let hotel = hotelStore.hotelData

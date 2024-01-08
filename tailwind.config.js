@@ -50,5 +50,10 @@ module.exports = {
             opacity: ['disabled'],
         },
     },
-    plugins: [require("daisyui")],
+    // plugins: [require("daisyui")],
+    // daisyui: {
+    //     themes: [
+    //         'light',
+    //     ],
+    // },
 }

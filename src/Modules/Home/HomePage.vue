@@ -12,241 +12,125 @@
         </section>
         <!-- end card banner -->
 
+        <!-- carousel's -->
+        <div class="mb-4 sp:mb-6" :class="{'-mt-8': !hotelData.show_profile}">
+            <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
+                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                        {{ $utils.capitalize($t('home.section-facility.title')) }}
+                    </h2>
+                    <a 
+                        @click="go_facilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
+                </div>
+                <div class="mt-2.5 sp:mt-4">
+                    <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
+                </div>
+            </section>
+
+            <!-- <section v-if="cross_selling_place_visit.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
+                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                        {{translate.what_visit.title[$page.props.language.toLowerCase()]}}
+                    </h2>
+                    <a 
+                        @click="go_places(whatvisit_id, categories_places_defaults?.whatvisit?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                    >
+                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                    </a>
+                </div>
+                <div class="mt-2.5 sp:mt-4">
+                    <CossSelingPlace id="0" :data="cross_selling_place_visit" place />
+                </div>
+            </section>
+
+            <section v-if="cross_selling_place_eat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
+                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                        {{translate.where_eat.title[$page.props.language.toLowerCase()]}}
+                    </h2>
+                    <a 
+                        @click="go_places(whereeat_id, categories_places_defaults?.whereeat?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                    >
+                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                    </a>
+                </div>
+                <div class="mt-2.5 sp:mt-4">
+                    <CossSelingPlace id="1" :data="cross_selling_place_eat" place />
+                </div>
+            </section>
+            
+            <section v-if="cross_selling_place_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
+                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                        {{translate.leisure.title[$page.props.language.toLowerCase()]}}
+                    </h2>
+                    <a 
+                        @click="go_places(leisure_id, categories_places_defaults?.leisure?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                    >
+                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                    </a>
+                </div>
+                <div class="mt-2.5 sp:mt-4">
+                    <CossSelingPlace id="2" :data="cross_selling_place_leisure" place />
+                </div>
+            </section>
+
+            <section v-if="cross_selling_experiences.length > 0 && hoster.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
+                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                        {{translate.experiences.title[$page.props.language.toLowerCase()]}}
+                    </h2>
+                    <a @click="go_experiences" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)">
+                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                    </a>
+                </div>
+                <div class="mt-2.5 sp:mt-4">
+                <CossSelingActivity id="0" :data="cross_selling_experiences" />
+                </div>
+            </section> -->
+        </div>
+        <!-- end carousel's -->
+
     </template>
     
     <script setup>
-        //import libraries
+        //IMPORT
         import {
-            onMounted,
+            // onMounted,
             ref,
             // inject,
-            provide,
+            // provide,
             // defineProps
-        } from 'vue';
-        import { useHotelStore } from '@/stores/modules/hotel'
-        //toRefs,
-        // import { useMainStore } from '@/stores'
-        // import { useHotelStore } from '@/stores/modules/hotel'
-
-        // import {$slufy} from '@/util/helpers.js'
-        //imports components
+            // onMounted,
+            onBeforeMount,
+        } from 'vue';//toRefs,
+        import CarouselFacilities from './Components/CarouselFacilities.vue'
         import MenuHome from '@/layout/Components/MenuHome.vue'
-        // import CossSelingPlace from '../../Landing/Components/CossSelingPlace'
-        // import CossSelingActivity from '../../Landing/Components/CossSelingActivity'
-        // import CarouselFacilities from '../Components/CrossSellingFacilities'
-        // import SiderBarHome from '../../Landing/Layout/SiderBarHome'
-        // import FormGuest from './FormGuest'
-        // import FormStay from './FormStay'
-        // import FakeGuestWelcome from './FakeGuestWelcome'
-        // import PopUpSurvey from './PopUpSurvey'
-    
-        // const hotelStore = useHotelStore();
-        // const hotel = hotelStore.hotelData
-        const storageUrl = process.env.VUE_APP_STORAGE_URL
+
+        // STORE
+        import { useHotelStore } from '@/stores/modules/hotel'
         const hotelStore = useHotelStore()
         const { hotelData } = hotelStore
 
-        //DATA STATIC
-        
-        // const IMAGE_HOME_DEFAULT = require('@/assets/img/home/home1.png')
-        // const IMAGE_GRADIENT_WHITE = require('@/assets/img/home/gradient-white.png')
+        // DATA
+        const crossellingsData = ref(null)
 
-        /*const translate = {
-            facilities: {
-                title: {
-                    es: 'Instalaciones',
-                    en: 'Facilities',
-                    fr: 'Installations',
-                },
-            },
-            what_visit: {
-                title: {
-                    es: 'Qué visitar',
-                    en: 'What to visit',
-                    fr: 'Que visiter',
-                }
-            },
-            where_eat: {
-                title: {
-                    es: 'Dónde comer',
-                    en: 'Where to eat',
-                    fr: 'Où manger',
-                },
-            },
-            leisure: {
-                title: {
-                    es: 'Ocio',
-                    en: 'Leisure',
-                    fr: 'Loisirs',
-                },
-            },
-            see_all: {
-                es: 'Ver todo',
-                en: 'See all',
-                fr: 'Voir tout',
-            },
-            experiences: {
-                title: {
-                    es: 'Experiencias',
-                    en: 'Experiences',
-                    fr: 'Expériences',
-                }
-            },
-            welcome: {
-                es: 'Bienvenido',
-                en: 'Welcome',
-                fr: 'Accueillir',
-            },
-            room: {
-                es: 'HAB',
-                en: 'ROOM',
-                fr: 'CHAMBRE',
-            },
-            more_info:{
-                es: 'Más información',
-                en: 'More information',
-                fr: "Plus d'informations",
-            }
-        }*/
-    
-        //Props
-        // const props = defineProps({
-        //     hoster: {
-        //         type: Object,
-        //         default: () => ({}),
-        //     },
-        //     stay_session: {
-        //         type: Object,
-        //         default: () => ({}),
-        //     },
-        //     summary_reviews: {
-        //         type: Object,
-        //         default: () => ({}),
-        //     },
-        //     cross_selling_place_visit: {
-        //         type:Array,
-        //         default: () => ([]),
-        //     },
-        //     cross_selling_place_eat: {
-        //         type:Array,
-        //         default: () => ([]),
-        //     },
-        //     cross_selling_place_leisure: {
-        //         type:Array,
-        //         default: () => ([]),
-        //     },
-        //     cross_selling_experiences: {
-        //         type:Array,
-        //         default: () => ([]),
-        //     },
-        //     facilities: {
-        //         type:Array,
-        //         default: () => ([]),
-        //     },
-        //     leisure_id: {
-        //         type:String,
-        //         default: () => null,
-        //     },
-        //     whereeat_id: {
-        //         type:String,
-        //         default: () => null,
-        //     },
-        //     whatvisit_id: {
-        //         type:String,
-        //         default: () => null,
-        //     },
-        //     mockup_url: {
-        //         type:Boolean,
-        //         default: false,
-        //     },
-        //     subject: {
-        //         type:String,
-        //         default: () => null,
-        //     },
-        //     categories_places_defaults:{
-        //         type:Array,
-        //         default: () => [],
-        //     },
-        // })
-    
-        // const { hoster, stay_session, summary_reviews, cross_selling_experiences, mockup_url } = toRefs(props)
-    
-        // INSTANCE STORE
-        // const mainStore = useMainStore()
-
-        //DATA
-        const modal_lang = ref(false)
-        const mockup = ref(false)
-        // const form_search = useForm({
-        //     search: '',
-        //     lng: '',
-        //     type: '',
-        //     id: null,
-        //     date: null,
-        // })
-        // const slug_hoster = usePage().props.value.user_hoster.slug;
-        
-        //PROVIDE
-        provide('mockup', mockup)
-        // provide('form_search', form_search)
-        provide('modal_lang', modal_lang)
-        // provide('hoster', hoster)
-        // provide('hotel', hotel)
-        // provide('stay_session', stay_session)
-        // provide('summary_reviews', summary_reviews)
-        //INJECT
-        // const $moment = inject('moment')
-        // const screen_width= screen.width
-        
-    
-        //ONMOUNTED
-        onMounted(() => {
-            get_params()
-            some_modal()
-
-
+        onBeforeMount (() => {
+            loadCrossellings()
         })
-    
-        //COMPUTED
-    
-        //FUNCTIONS
-        function some_modal(){
-            // if(!mockup_url.value){    
-                //solo si no es un mockup
-                // if(!stay_session.value.guest || (stay_session.value.guest && props.subject)){
-                    // $('#form-guest').modal('show')
-                // }else if(!stay_session.value.stay){
-                    // $('#form-stay').modal('show')
-                // }
-            // }
+
+        // FUNCTION
+        async function loadCrossellings () {
+            crossellingsData.value = await hotelStore.$getCrossellings()
+            console.log(crossellingsData.value)
         }
-        // function go_experiences () {
-            // Inertia.get(route('activities.list', {hoster:slug_hoster}));
-        // }
-    
-        // function go_places (typeplace, categoriplace) {
-            // let mobile = 0;
-            // if(screen_width < 767)mobile = 1;
-            // Inertia.get(route('places.list', {hoster:slug_hoster,typeplace,categoriplace,mobile}));
-        // }
-    
-        // function go_facilities () {
-            // Inertia.get(route('hoster.home.facility.view.huesped', {hoster:slug_hoster}));
-        // }
-        function get_params () {
-            let url = window.location.href
-            let queryString = url.split('?')?.[1]
-            if(!queryString) return
-            let params = new URLSearchParams(queryString)
-            let param = params.get('mockup')
-            if (param) {
-                mockup.value = true
-            }
-        }
-    
-        // function goAbout () {
-        //     // Inertia.get(route('hoster.about.us', {hoster:slug_hoster}));
-        // }
     
     </script>
     
