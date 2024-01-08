@@ -4,6 +4,14 @@ p{
     margin: 0;
     padding: 0;
 }
+*> :not(i){
+  font-family: 'Montserrat', sans-serif;
+}
+p,a{
+    font-family: 'Montserrat', sans-serif !important;
+}
+/* @import './hoster-colors'; */
+/* @import './hoster-buttons'; */
 
 
 /* CLASES PARA EL LAYOUT */
