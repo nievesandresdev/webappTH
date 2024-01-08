@@ -20,7 +20,6 @@ export const useLocaleStore = defineStore('locale', () => {
         localStorage.setItem('locale', locale)
         i18n.global.locale = locale
         localeCurrent.value = locale
-        // window.location.reload()
     }
 
     function $changeAndReload (lg) {

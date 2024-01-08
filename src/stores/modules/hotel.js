@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 import {
     findByParamsApi,
+    getCrossellingsApi,
 } from '@/api/services'
 
 export const useHotelStore = defineStore('hotel', () => {
@@ -23,15 +24,27 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
-        console.log(response.ok)
         return response.data
     }
+
+    async function $getCrossellings () {
+
+        const response = await getCrossellingsApi()
+        const { ok, data } = response
+        if (ok) {
+            return data
+        }
+        return;        
+    }
+
+
 
     //
     return {
         hotelData,
         subdomain,
         $load,
+        $getCrossellings,
     }
 
 })
