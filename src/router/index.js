@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homeRoutes from './homeRoutes'
-
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
+import { loadSubdomain } from '@/utils/utils.js'
 
 const routes = [
   ...homeRoutes,
@@ -17,7 +17,9 @@ const router = createRouter({
 router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore()
   const localeStore = useLocaleStore()
-  localeStore.$loadByUrl()
+  localeStore.$load()
+  console.log('beforeEach')
+  loadSubdomain()
   await hotelStore.$load()
   let hotel = hotelStore.hotelData
   if (to.meta.verifyHotel && !hotel) {

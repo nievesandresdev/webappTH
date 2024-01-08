@@ -14,10 +14,9 @@ export const useLocaleStore = defineStore('locale', () => {
         localeCurrent.value = lg
     }
 
-    function $loadByUrl () {
+    function $load () {
         const urlParams = new URLSearchParams(window.location.search)
-        const locale = urlParams.get('lang')
-        if (!locale) return
+        const locale = urlParams.get('lang') || 'es'
         localStorage.setItem('locale', locale)
         i18n.global.locale = locale
         localeCurrent.value = locale
@@ -33,7 +32,7 @@ export const useLocaleStore = defineStore('locale', () => {
     return {
         localeCurrent,
         $change,
-        $loadByUrl,
+        $load,
         $changeAndReload,
     }
 

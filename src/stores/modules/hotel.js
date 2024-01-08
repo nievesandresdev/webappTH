@@ -9,14 +9,15 @@ export const useHotelStore = defineStore('hotel', () => {
     
     // STATE
     const hotelData = ref(null)
+    const subdomain = ref(localStorage.getItem('subdomain') || null)
 
     // ACTIONS
+
     async function $load () {
         if (hotelData.value) return
-        const urlParams = new URLSearchParams(window.location.search)
-        const subdomain = urlParams.get('subdomain')
+        
         let params = {
-            subdomain,
+            subdomain: subdomain.value,
         }
         const response = await findByParamsApi(params)
         const { ok } = response
@@ -29,6 +30,7 @@ export const useHotelStore = defineStore('hotel', () => {
     //
     return {
         hotelData,
+        subdomain,
         $load,
     }
 

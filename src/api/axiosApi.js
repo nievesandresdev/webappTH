@@ -1,17 +1,19 @@
 import axios from 'axios'
 import { i18n } from '@/i18n'
-// import { useMainStore } from '@/stores'
 
-// const mainStore = useMainStore()
- const locale = localStorage.getItem('locale') || 'es'
+const locale = localStorage.getItem('locale') || 'es'
+console.log(locale, 'locale')
 const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
 
 export const apiHttp = async (method, endpoint, data, options = {}) => {
     // const { token } = localStorage
+    const subdomain = localStorage.getItem('subdomain') || null
+    console.log(subdomain, 'axiosApi')
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
+      'Hotel-SUBDOMAIN': subdomain
     //   Authorization: 'Bearer ' + `${token}`,
     }
  // eslint-disable-next-line no-prototype-builtins
