@@ -1,6 +1,5 @@
 <template>
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
-        <GuestLog />
         <!-- <Favicon /> -->
 		<!-- Sidebar  -->
 		<div v-if="!$route.name == 'homePage'" class="hidden md:block">
@@ -46,6 +45,8 @@
         </transition> -->
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
+        <GuestLog />
+        <StayLog />
 	</div>
 </template>
 
@@ -56,6 +57,7 @@
     import TheFooter from './Components/TheFooter.vue'
     import MenuMobile from './Components/MenuMobile.vue'
     import GuestLog from './GuestLog.vue'
+    import StayLog from './StayLog.vue';
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
