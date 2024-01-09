@@ -4,9 +4,9 @@
       <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
   
       <!-- Full-screen container to center the panel -->
-      <div class="fixed inset-0 flex w-screen items-center justify-center z-[1200] ">
+      <div class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200] ">
         <!-- The actual dialog panel -->
-        <DialogPanel class="w-full max-w-[360px] bg-white rounded-[0.85rem]">
+        <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
                 <h1 class="text-lg font-medium text-center leading-6 pt-4">
                     {{ $utils.capitalize($t('stay.guest-log.title')) }}
@@ -59,7 +59,7 @@
   
   <script setup>
     import { onMounted, reactive, ref } from 'vue';
-    import THInputText from '@/layout/Components/THInputText.vue';
+    import THInputText from '@/components/THInputText.vue';
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
     import { Dialog } from '@headlessui/vue'
 

@@ -2,14 +2,14 @@
     <Menu as="div" class="relative inline-block text-left">
       <div>
         <MenuButton
-          class="hbtn-blur p-2 rounded-md flex items-center"
+          class="p-2 flex items-center"
         >
-            <img  v-if="localeStore.localeCurrent == 'es'" class="w-4 h-4 inline-block" src="/assets/icons/espana.png" alt="">
-            <img  v-if="localeStore.localeCurrent == 'fr'" class="w-4 h-4 inline-block" src="/assets/icons/francia.png" alt="">
-            <img  v-if="localeStore.localeCurrent == 'en'" class="w-4 h-4 inline-block" src="/assets/icons/reino-unido.png" alt="">
+            <img  v-if="localeStore.localeCurrent == 'es'" class="w-4 h-4 inline-block" src="/assets/icons/español.svg" alt="">
+            <img  v-if="localeStore.localeCurrent == 'fr'" class="w-4 h-4 inline-block" src="/assets/icons/frances.svg" alt="">
+            <img  v-if="localeStore.localeCurrent == 'en'" class="w-4 h-4 inline-block" src="/assets/icons/ingles.svg" alt="">
 
             <img
-                class="ml-1 w-3 sp:w-4 icon-white"
+                class="ml-2 w-4"
                 :class="{ 'rotate-180': toggleLang }"
                 src="/assets/icons/1.TH.I.DROPDOWN.svg"
                 alt="1.TH.DROPDOWNSHAPE"
@@ -33,11 +33,11 @@
                 :key="index"
             >
                 <a 
-                    class="cursor-pointer text-sm flex justify-between items-center p-3 hover:bg-gray-100"
+                    class="flex p-3 hover:bg-gray-100"
                     :class="localeStore.localeCurrent == item.value ? 'hidden':''"
                     @click.prevent="changeLocale(item.value)"
                 >
-                    <img class="block w-4 h-4 mx-auto" :src="item.srcIcon" :alt="item.srcIcon">
+                    <img class="block mx-auto w-4" :src="item.srcIcon" :alt="item.srcIcon">
                 </a>
             </MenuItem>
         </MenuItems>
@@ -51,25 +51,25 @@
     import { useLocaleStore } from '@/stores/modules/locale'
 
     const lgsAll = ref([
-        {label: 'Español', value: 'es', srcIcon: '/assets/icons/espana.png'},
-        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/francia.png'},
-        {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/reino-unido.png'},
+        {value: 'es', srcIcon: '/assets/icons/español.svg'},
+        {value: 'fr', srcIcon: '/assets/icons/frances.svg'},
+        {value: 'en', srcIcon: '/assets/icons/ingles.svg'},
     ])
     const toggleLang = ref(false)
-    const modal_lang = inject('modal_lang')
+    // const modal_lang = inject('modal_lang')
     const localeStore = useLocaleStore()
 
-    watch(modal_lang, (value) => {
-        if (value) {
-            document.body.classList.add('no-scroll')
-        } else {
-            document.body.classList.remove('no-scroll')
-        }
-    })
+    // watch(modal_lang, (value) => {
+    //     if (value) {
+    //         document.body.classList.add('no-scroll')
+    //     } else {
+    //         document.body.classList.remove('no-scroll')
+    //     }
+    // })
 
     //function
     function changeLocale (lg) {
-        modal_lang.value = false
+        // modal_lang.value = false
         localeStore.$changeAndReload(lg)
     }
 
