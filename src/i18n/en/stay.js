@@ -10,5 +10,7 @@ export default{
             "placeholder":"Enter your email",
             "error":"Invalid email",
         },
+        "button":"Following",
+        "back_button":"Go back",
     }
 }

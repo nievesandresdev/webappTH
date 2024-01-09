@@ -10,5 +10,7 @@ export default{
             "placeholder":"Entrer votre Email",
             "error":"Email invalide",
         },
+        "button":"Suivant",
+        "back_button":"Retourner",
     }
 }

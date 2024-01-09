@@ -121,6 +121,7 @@
 
         // DATA
         const crossellingsData = ref(null)
+        const storageUrl = process.env.VUE_APP_STORAGE_URL
 
         onBeforeMount (() => {
             loadCrossellings()

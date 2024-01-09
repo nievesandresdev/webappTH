@@ -1,5 +1,5 @@
 <template>
-    <label class="text-sm font-medium mb-2 leading-3">{{ textLabel }}</label>
+    <label class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
     <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
     <input
     :ref="id"
@@ -52,7 +52,7 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let classes = 'h-10 rounded-6 text-sm font-medium w-full';
+            let classes = 'hinput-primary h-10 rounded-[6px] text-sm font-medium w-full px-3 py-2 block';
 
             if (this.hasError || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
@@ -187,4 +187,6 @@ input::placeholder{
     color: var(--h-gray-500);
     font-weight: 500;
 }
+
+
 </style>

@@ -10,5 +10,7 @@ export default{
             "placeholder":"Introduce tu correo electrónico",
             "error":"correo electrónico no válido"
         },
+        "button":"Siguiente",
+        "back_button":"Volver a atrás",
     }
 }
