@@ -29,70 +29,70 @@
                 </div>
             </section>
 
-            <!-- <section v-if="cross_selling_place_visit.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingsData?.crosselling_places_whatvisit?.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
-                        {{translate.what_visit.title[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
                         @click="go_places(whatvisit_id, categories_places_defaults?.whatvisit?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
-                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CossSelingPlace id="0" :data="cross_selling_place_visit" place />
+                    <CarouselPlaces id="0" :items="crossellingsData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
 
-            <section v-if="cross_selling_place_eat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
-                        {{translate.where_eat.title[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
                         @click="go_places(whereeat_id, categories_places_defaults?.whereeat?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
-                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CossSelingPlace id="1" :data="cross_selling_place_eat" place />
+                    <CarouselPlaces id="1" :items="crossellingsData?.crosselling_places_whereeat" place />
                 </div>
             </section>
             
-            <section v-if="cross_selling_place_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingsData?.crosselling_places_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
-                        {{translate.leisure.title[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
                         @click="go_places(leisure_id, categories_places_defaults?.leisure?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
-                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CossSelingPlace id="2" :data="cross_selling_place_leisure" place />
+                    <CarouselPlaces id="2" :items="crossellingsData?.crosselling_places_leisure" place />
                 </div>
             </section>
-
-            <section v-if="cross_selling_experiences.length > 0 && hoster.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
+ <!-- && hotelData.show_experiences -->
+            <section v-if="crossellingsData?.crosselling_experiences?.length > 0" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
-                        {{translate.experiences.title[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.section-experience.title')) }}
                     </h2>
                     <a @click="go_experiences" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)">
-                        {{translate.see_all[$page.props.language.toLowerCase()]}}
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                <CossSelingActivity id="0" :data="cross_selling_experiences" />
+                    <CarouselExperiences id="0" :items="crossellingsData?.crosselling_experiences" />
                 </div>
-            </section> -->
+            </section>
         </div>
         <!-- end carousel's -->
 
@@ -110,6 +110,8 @@
             onBeforeMount,
         } from 'vue';//toRefs,
         import CarouselFacilities from './Components/CarouselFacilities.vue'
+        import CarouselExperiences from './Components/CarouselExperiences.vue'
+        import CarouselPlaces from './Components/CarouselPlaces.vue'
         import MenuHome from '@/layout/Components/MenuHome.vue'
 
         // STORE
@@ -127,7 +129,6 @@
         // FUNCTION
         async function loadCrossellings () {
             crossellingsData.value = await hotelStore.$getCrossellings()
-            console.log(crossellingsData.value)
         }
     
     </script>

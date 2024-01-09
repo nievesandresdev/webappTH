@@ -80,3 +80,30 @@ p,a{
 .icon-gray{
   filter: grayscale(100%);
 }
+
+.carousel__prev, .carousel__next{
+  background-color: black !important;
+}
+
+.carousel__next .carousel__icon,
+.carousel__prev .carousel__icon {
+  fill: #fff;
+}
+
+#slider .carousel__next{
+  right: 6%;
+}
+#slider .carousel__prev{
+  left: 6%;
+}
+#slider .carousel__next,
+#slider .carousel__prev{
+  height: 2rem;
+  width: 2rem;
+}
+
+#slider .carousel__next .carousel__icon,
+#slider .carousel__prev .carousel__icon{
+  height: 45px;
+  width: 45px;
+}

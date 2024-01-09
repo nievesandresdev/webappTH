@@ -15,5 +15,9 @@ export default {
     },
     "section-experience": {
           "title": "experiences"
+    },
+    "card-product": {
+      "featured": "featured",
+      "recommended": "recommended"
     }
   };
