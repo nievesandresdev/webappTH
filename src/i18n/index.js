@@ -21,6 +21,10 @@ import messageRequestEn from './en/messageRequest';
 import messageRequestEs from './es/messageRequest';
 import messageRequestFr from './fr/messageRequest';
 
+import StayEn from './en/stay';
+import StayEs from './es/stay';
+import StayFr from './fr/stay';
+
 const messages = {
   en: {
     experience: experienceEn,
@@ -28,6 +32,7 @@ const messages = {
     home: HomeEn,
     layout: layoutEn,
     messageRequest: messageRequestEn,
+    stay: StayEn,
     // más módulos...
   },
   es: {
@@ -36,6 +41,7 @@ const messages = {
     home: HomeEs,
     layout: layoutEs,
     messageRequest: messageRequestEs,
+    stay: StayEs,
     // más módulos...
   },
   fr: {
@@ -44,6 +50,7 @@ const messages = {
     home: HomeFr,
     layout: layoutFr,
     messageRequest: messageRequestFr,
+    stay: StayFr,
     // más módulos...
   },
 };

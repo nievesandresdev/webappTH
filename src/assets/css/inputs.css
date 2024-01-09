@@ -11,8 +11,14 @@ input[type=radio]:hover {
     outline: none;
     border: 1px solid #333333;
 }
+
 .hinput-primary:hover{
-    border: 1px solid #34A98F;
+    border: 1px solid var(--h-green-600);
+}
+
+.hinput-primary:hover::placeholder,
+.hinput-primary:hover{
+    color: var(--h-green-600);
 }
 
 .hinput-error{

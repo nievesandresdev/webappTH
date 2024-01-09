@@ -1,11 +1,11 @@
 <template>
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
+        <GuestLog />
         <!-- <Favicon /> -->
 		<!-- Sidebar  -->
 		<div v-if="!$route.name == 'homePage'" class="hidden md:block">
 			<GeneralMenu/>
 		</div>
-        
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
 			<slot
                 :settings="settings" 
@@ -55,6 +55,7 @@
     import GeneralMenu from './GeneralMenu.vue'
     import TheFooter from './Components/TheFooter.vue'
     import MenuMobile from './Components/MenuMobile.vue'
+    import GuestLog from './GuestLog.vue'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'

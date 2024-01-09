@@ -2,11 +2,13 @@
         <MenuHome />
         
         <!-- card banner -->
-        <section class="relative h-[210px] sp:h-[345px] lg:h-screen">
-            <div class="w-full h-[150px] sp:h-[240px] lg:h-full relative">
-                <div class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('/assets/img/home/home1.png');`"></div>   
-                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
-            </div>
+        <section class="relative h-[210px] sp:h-[345px] lg:h-screen">            
+            <img 
+                class="absolute inset-0 object-cover w-full h-[150px] sp:h-[240px] lg:h-full"
+                :src="`${hotelData?.image ? storageUrl+hotelData?.image :storageUrl+'/storage/gallery/general-1.jpg'}`" 
+                :alt="hotelData.name"
+            >
+            <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
         </section>
         <!-- end card banner -->
 
@@ -79,8 +81,8 @@
                     <CarouselPlaces id="2" :items="crossellingsData?.crosselling_places_leisure" place />
                 </div>
             </section>
- <!-- && hotelData.show_experiences -->
-            <section v-if="crossellingsData?.crosselling_experiences?.length > 0" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
+            
+            <section v-if="crossellingsData?.crosselling_experiences?.length > 0 && hotelData.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-experience.title')) }}
@@ -121,6 +123,7 @@
 
         // DATA
         const crossellingsData = ref(null)
+        const storageUrl = process.env.VUE_APP_STORAGE_URL
 
         onBeforeMount (() => {
             loadCrossellings()
