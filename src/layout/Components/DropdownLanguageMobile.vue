@@ -9,10 +9,9 @@
             <img v-if="localeStore.localeCurrent == 'es'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/espana.png" alt="">
             <img v-if="localeStore.localeCurrent == 'fr'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/francia.png" alt="">
             <img v-if="localeStore.localeCurrent == 'en'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/reino-unido.png" alt="">
-
+<!-- rotate-180 -->
             <img
                 class="ml-1 w-3 sp:w-4 icon-white"
-                :class="{ 'rotate-180': toggle_lang }"
                 src="/assets/icons/1.TH.I.DROPDOWN.svg"
                 alt="1.TH.DROPDOWNSHAPE"
             >

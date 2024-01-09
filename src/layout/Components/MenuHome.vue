@@ -59,7 +59,7 @@
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                         :class="{'border-b-2 border-black': $route.name == 'x'}"
                     >
-                        {{ $utils.capitalize($t('layout.header.experinces')) }}
+                        {{ $utils.capitalize($t('layout.header.experiences')) }}
                     </a>
                     <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
 

@@ -87,7 +87,9 @@ export const transformDuration = (value) => {
 
 export const loadSubdomain = () => {
     const urlParams = new URLSearchParams(window.location.search)
-    const subdomain = urlParams.get('subdomain')
-    localStorage.setItem('subdomain', subdomain)
+    const subdomain = urlParams.get('subdomain') || null
+    if (subdomain) {
+        localStorage.setItem('subdomain', subdomain)
+    }
     return subdomain
 }
