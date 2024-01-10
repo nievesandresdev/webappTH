@@ -60,6 +60,7 @@
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
     import { useStayStore } from '@/stores/modules/stay'
+    import { useGuestStore } from '@/stores/modules/guest'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
@@ -81,6 +82,8 @@
     const { stayData } = stayStore;
     const localStayId = localStorage.getItem('stayId');
 
+    const guestStore = useGuestStore()
+
     //DATA
     // const stay_session = usePage().props.value.stay_session
     // const slug_hoster = usePage().props.value.user_hoster.slug;
@@ -99,6 +102,7 @@
     //ONMOUNTED
     onMounted(() => {
         stayStore.loadLocalStay();
+        guestStore.loadLocalGuest();
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
     //     if(stay_session){

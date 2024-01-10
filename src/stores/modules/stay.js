@@ -25,14 +25,14 @@ export const useStayStore = defineStore('stay', () => {
             if(ok && response.data){
                 stayData.value = ok ? response.data : null
                 localStorage.setItem('stayId', stayData.value.id)
+                return response.data
             }else{
                 stayData.value = null;
                 localStorage.removeItem('stayId')
+                return null
             }
         }
-        // 
-        
-        return response.data
+        return null
     }
 
     //
