@@ -91,3 +91,9 @@ export const loadSubdomain = () => {
     localStorage.setItem('subdomain', subdomain)
     return subdomain
 }
+
+export const getUrlParam = (param) => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const dataParam = urlParams.get(param)
+    return dataParam
+}

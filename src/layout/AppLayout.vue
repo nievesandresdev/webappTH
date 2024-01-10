@@ -46,7 +46,7 @@
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
         <GuestLog />
-        <StayLog />
+        <StayLog :openModal="localStayId ? true : false" />
 	</div>
 </template>
 
@@ -58,6 +58,7 @@
     import MenuMobile from './Components/MenuMobile.vue'
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
+    import { useStayStore } from '@/stores/modules/stay'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
@@ -74,6 +75,10 @@
 
 
     
+    //store
+    const stayStore = useStayStore()
+    const localStayId = localStorage.getItem('stayId');
+
     //DATA
     // const stay_session = usePage().props.value.stay_session
     // const slug_hoster = usePage().props.value.user_hoster.slug;
@@ -91,6 +96,7 @@
 
     //ONMOUNTED
     onMounted(() => {
+        stayStore.loadLocalStay();
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
     //     if(stay_session){

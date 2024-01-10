@@ -1,5 +1,5 @@
 <template>
-    <Dialog :open="true" class="relative">
+    <Dialog :open="openModal" class="relative">
       <!-- The backdrop, rendered as a fixed sibling to the panel container -->
       <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
   
@@ -20,11 +20,11 @@
                 <!-- body -->
                 <div class="body-xs pb-6 mt-4">
                     <div class="px-4">
-                        <label class="text-sm mb-2 font-medium">
+                        <label class="text-sm mb-2 font-medium block">
                             {{ $utils.capitalize($t('stay.stayLog.checkDate.label')) }}
                         </label>
                         <THInputCalendar
-                            :textLabel="$t('stay.stayLog..placeholder')"
+                            :textLabel="$t('stay.stayLog.checkDate.placeholder')"
                             v-model="form.check_date"
                             :error="errorsKey.includes('check_date')"
                             :show_error_msg="false"
@@ -34,7 +34,7 @@
                         <!-- :texterror="texterror_calendar" -->
                     </div>
                     <div class="mt-4 px-4">
-                        <label class="text-sm mb-2 font-medium">
+                        <label class="text-sm mb-2 font-medium block">
                             {{ $utils.capitalize($t('stay.stayLog.howPeople')) }}
                         </label>
                         <THInputField
@@ -78,7 +78,7 @@
                 <!-- end body -->
                 <!-- footer -->
                 <div class="flex justify-between p-4 border-t">
-                    <a @click="back_to_guestform" href="javascript:void(0)" class="text-sm font-medium my-auto">
+                    <a @click="back_to_guestform" href="javascript:void(0)" class="text-sm font-medium my-auto underline hover:underline hover-htext-green-600">
                         {{ $utils.capitalize($t('stay.stayLog.backButton')) }}
                     </a>
                     <button 
@@ -104,8 +104,15 @@
     import THInputCalendar from '@/components/THInputFieldCalendar.vue'
     import { Dialog } from '@headlessui/vue'
 
+    const props = defineProps({
+        openModal: {
+            type:Boolean,
+            default:false
+        }
+    })
+
     onMounted(()=>{
-        //
+        console.log('staymodla',props.openModal)
     })
 
     //data
