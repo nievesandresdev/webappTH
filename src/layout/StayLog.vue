@@ -111,6 +111,8 @@
         }
     })
 
+    const emit = defineEmits(['closeModal','back']);
+
     onMounted(()=>{
         console.log('staymodla',props.openModal)
     })
@@ -144,7 +146,7 @@
     }
     
     const back_to_guestform = () => {
-        // Inertia.post(route('hoster.back_to_guestform'))
+        emit('back');
     }
 
     const submit = () => {

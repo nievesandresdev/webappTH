@@ -1,18 +1,4 @@
 export default{
-    "guest-log":{
-        "title":"Access to the webapp",
-        "name":{
-            "label":"Name and surname",
-            "placeholder": "Enter your first and last name",
-        },
-        "email":{
-            "label":"Email",
-            "placeholder":"Enter your email",
-            "error":"Invalid email",
-        },
-        "button":"Following",
-        "back_button":"Go back",
-    },
     "stayLog":{
         "title":"Acceso a la webapp",
         "checkDate":{

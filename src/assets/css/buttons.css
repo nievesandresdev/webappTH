@@ -106,18 +106,18 @@
 **********
 */
 .hbtn-cta{
-    background-color: var(--h-yellow);
+    background-color: var(--h-yellow) !important;
     border-radius: 6px;
     color: var(--h-black-100);
     font-weight: 500;
 }
 .hbtn-cta:active {
-    background-color: #EBC44C;
+    background-color: #EBC44C !important;
     font-weight: 500;
 }
 @media (hover: hover) {
     .hbtn-cta:hover {
-        background-color: #EBC44C;
+        background-color: #EBC44C !important;
         font-weight: 500;
     }
 }
@@ -125,7 +125,7 @@
 .cta-disabled,
 .hbtn-cta:disabled,
 .cta-disabled:hover{
-    background-color: var(--h-gray-300);
+    background-color: var(--h-gray-300) !important;
     color: var(--h-gray-500);
     font-weight: 500;
 }

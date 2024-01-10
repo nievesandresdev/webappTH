@@ -1,5 +1,5 @@
 <template>
-    <Dialog :open="false" class="relative">
+    <Dialog :open="openModal" class="relative">
       <!-- The backdrop, rendered as a fixed sibling to the panel container -->
       <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
   
@@ -9,18 +9,18 @@
         <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
                 <h1 class="text-lg font-medium text-center leading-6 pt-4">
-                    {{ $utils.capitalize($t('stay.guest-log.title')) }}
+                    {{ $utils.capitalize($t('guest.guestLog.title')) }}
                 </h1>
                 <div class="absolute top-3 right-4">
                     <MiniLangDropdown />
                 </div>
             </div>
-
+            
             <div class="">
                 <div class="mt-4 px-4">
                     <THInputText
-                        :textLabel="$t('stay.guest-log.name.label')"
-                        :placeholder="$t('stay.guest-log.name.placeholder')"
+                        :textLabel="$t('guest.guestLog.name.label')"
+                        :placeholder="$t('guest.guestLog.name.placeholder')"
                         v-model="form.name"
                         :customClasses="{
                             'hborder-gray-400':!form.name,
@@ -30,51 +30,82 @@
                 </div>
                 <div class="mt-4 px-4" v-if="!subject || subject == 'updated'">
                     <THInputText
-                        :textLabel="$t('stay.guest-log.email.label')"
-                        :placeholder="$t('stay.guest-log.email.placeholder')"
+                        :textLabel="$t('guest.guestLog.email.label')"
+                        :placeholder="$t('guest.guestLog.email.placeholder')"
                         :type="'email'"
                         v-model="form.email"
                         @handleError="emailError = $event"
                         :customClasses="{
                             'hborder-gray-400':!form.email
                         }"
-                        :textError="$t('stay.guest-log.email.error')"
+                        :textError="$t('guest.guestLog.email.error')"
                     />
                 </div>
             </div>
             
             <div class="mt-6 text-right p-4 border-t">
                 <button 
+                    type="submit"
                     class="hbtn-cta py-3 px-4 text-sm leading-4"
-                    :class="{'cta-disabled':!valid || form.processing}"
-                    :disabled="!valid || form.processing"
+                    :class="{'cta-disabled':!valid || processingForm}"
+                    :disabled="!valid || processingForm"
+                    @click="submitForm" 
                 >
-                    {{ $utils.capitalize($t('stay.guest-log.button')) }}
+                    {{ processingForm ? $t('guest.guestLog.processing')+'...' : $t('guest.guestLog.button') }}
                 </button>
             </div>
+            
         </DialogPanel>
       </div>
     </Dialog>
   </template>
   
   <script setup>
-    import { onMounted, reactive, ref } from 'vue';
+    import { onMounted, reactive, ref, computed } from 'vue';
     import THInputText from '@/components/THInputText.vue';
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
     import { Dialog } from '@headlessui/vue'
+    import { useGuestStore } from '@/stores/modules/guest'
+
+    const props = defineProps({
+        openModal: {
+            type:Boolean,
+            default:false
+        }
+    })
+    
+    const emit = defineEmits(['closeModal']);
 
     onMounted(()=>{
-        //
+        console.log('guestmodla',props.openModal)
     })
 
     //data
-    const form = reactive({
-    name: null,
-    email: null,
-    language: null,
-    });
     const errorsKey = ref([]);
     const emailError = ref(false);
     const subject = ref(null);
+    const processingForm = ref(false);
+    const guestStore = useGuestStore()
+    const { guestData } = guestStore;
+
+    const form = reactive({
+        name: guestData?.name ?? null,
+        email: guestData?.email ?? null,
+        language: guestData?.lang_web ?? 'es',
+    });
+
+    const submitForm = async () =>{
+        processingForm.value = true
+        const response = await guestStore.saveOrUpdate(form);
+        processingForm.value = false
+        if(response){
+            emit('closeModal')
+        }
+    }
+
+    //COMPUTED
+    const valid = computed(() => {
+        return form.name && !emailError.value && form.email
+    })
   </script>
 

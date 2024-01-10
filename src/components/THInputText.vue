@@ -16,7 +16,7 @@
     >
     <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
         <img
-            src="/vendor_asset/img/hoster/icons/1.TH.WARNING.svg"
+            src="/assets/icons/1.TH.WARNING.svg"
             alt="icon alert red"
             class="inline w-4 h-4 mr-2"
         />

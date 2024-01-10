@@ -14,13 +14,13 @@ export const useStayStore = defineStore('stay', () => {
 
     // ACTIONS
     async function loadLocalStay () {
-        
+        if(stayData.value && !stayId.value) return stayData.value
+        if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
             stayId: stayId.value,
         }
         if(stayId.value){
             const response = await findAndValidAccessApi(params)
-            console.log('useStayStore',response.data)
             const { ok } = response   
             if(ok && response.data){
                 stayData.value = ok ? response.data : null
@@ -32,12 +32,17 @@ export const useStayStore = defineStore('stay', () => {
                 return null
             }
         }
-        return null
+        return stayData.value
     }
-
+    function setStayData (data) {
+        console.log('setStayData',data)
+        stayData.value = data;
+        localStorage.setItem('stayId', stayData.value.id)
+    }
     //
     return {
         stayData,
+        setStayData,
         loadLocalStay
     }
 
