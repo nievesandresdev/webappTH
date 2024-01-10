@@ -3,6 +3,7 @@ import { i18n } from '@/i18n'
 
 const locale = localStorage.getItem('locale') || 'es'
 const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
+console.log('API_URL_BACKEND',API_URL_BACKEND)
 
 export const apiHttp = async (method, endpoint, data, options = {}) => {
     // const { token } = localStorage

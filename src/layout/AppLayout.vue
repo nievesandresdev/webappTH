@@ -4,6 +4,7 @@
 		<!-- Sidebar  -->
 		<div v-if="!$route.name == 'homePage'" class="hidden md:block">
 			<GeneralMenu/>
+            {{stayData}}
 		</div>
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
 			<slot
@@ -45,8 +46,8 @@
         </transition> -->
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
-        <GuestLog />
-        <StayLog :openModal="localStayId ? true : false" />
+        <!-- <GuestLog /> -->
+        <!-- <StayLog :openModal="localStayId ? true : false" /> -->
 	</div>
 </template>
 
@@ -77,6 +78,7 @@
     
     //store
     const stayStore = useStayStore()
+    const { stayData } = stayStore;
     const localStayId = localStorage.getItem('stayId');
 
     //DATA
