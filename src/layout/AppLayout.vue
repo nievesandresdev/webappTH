@@ -46,7 +46,7 @@
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
         <GuestLog :openModal="showGuestLog" @closeModal="closeGuestLog"/>
-        <StayLog :openModal="showStayLog" @back="updateGuest"/>
+        <StayLog :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
 </template>
 
@@ -184,6 +184,12 @@
         showGuestLog.value = false;
         loadWebStay();
     }
+
+    const closeStayLog = () => {
+        console.log('closeStayLog')
+        showStayLog.value = false
+    }
+    
 
     const updateGuest = () => {
         showStayLog.value = false;

@@ -10,6 +10,7 @@ export default{
         "backButton":"Volver a atrás",
         "addGuest":"+ Enviar a otro huésped",
         "deleteGuest":"Eliminar",
-        "guest": "Huesped"
+        "guest": "Huesped",
+        "processing":"Processing",
     }
 }

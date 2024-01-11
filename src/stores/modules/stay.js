@@ -2,7 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { 
-    findAndValidAccessApi 
+    findAndValidAccessApi,
+    createAndInviteGuestApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 
@@ -34,6 +35,19 @@ export const useStayStore = defineStore('stay', () => {
         }
         return stayData.value
     }
+
+    async function createAndInviteGuest(data) {
+        const response = await createAndInviteGuestApi(data)
+        console.log('createAndInviteGuest',response)
+        const { ok } = response   
+        if(ok){
+            stayData.value = ok ? response.data : null
+            localStorage.setItem('stayId', stayData.value.id)
+        }else{
+            stayData.value = null;
+        }
+        return stayData.value
+    }
     function setStayData (data) {
         console.log('setStayData',data)
         stayData.value = data;
@@ -43,7 +57,8 @@ export const useStayStore = defineStore('stay', () => {
     return {
         stayData,
         setStayData,
-        loadLocalStay
+        loadLocalStay,
+        createAndInviteGuest
     }
 
 })

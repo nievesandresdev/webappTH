@@ -12,7 +12,7 @@
                     {{ $utils.capitalize($t('guest.guestLog.title')) }}
                 </h1>
                 <div class="absolute top-3 right-4">
-                    <MiniLangDropdown />
+                    <MiniLangDropdown v-model="form.language" />
                 </div>
             </div>
             
