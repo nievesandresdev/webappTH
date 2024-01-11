@@ -3,7 +3,7 @@
       <button
         :disabled="disabled"
         @click="toggleDropdown"
-        class="box-input-field flex items-center hoverForm bg-white"
+        class="box-input-field flex items-center h-10 w-full rounded-[6px] py-2 px-3 hoverForm bg-white text-left"
         :class="{
           'hborder-gray-400': !error && !modelValue,
           'hborder-alert-negative': error,
@@ -21,22 +21,21 @@
         >
           {{ labelSelect }}
         </span>
-        <!-- muestra el icono para borrar la opcion en caso de que el campo no sea obligatorio -->
         <template v-if="modelValue && !mandatory">
-          <img :src="icon_delete" :class="icon_delete_class" @click="deleteOption" class="cursor-pointer">
+          <img :src="icon_delete" :class="icon_delete_class" @click.stop="deleteOption" class="cursor-pointer">
         </template>
         <template v-else>
           <img :src="icon_right" :class="icon_right_class">
         </template>
       </button>
       <div
-        class="dropdown-menu"
+        class="custom-dropdown-menu"
         :class="{'show': showOptions}"
       >
         <div
           v-for="(option, index) in options"
           :key="index"
-          class="option cursor-pointer relative h-10 p-3 text-sm"
+          class="custom-option cursor-pointer relative h-10 p-3 text-sm"
           @click.prevent="selectOption(option)"
           @mouseover="hoverOption = true"
           @mouseleave="hoverOption = false"
@@ -53,19 +52,20 @@
         </div>
       </div>
       <p v-if="error" class="mt-1 text-xs htext-alert-negative flex">
-        <img class="inline w-4 h-4 mr-2" src="/vendor_asset/img/hoster/icons/1.TH.WARNING.svg">
+        <img class="inline w-4 h-4 mr-2" src="/assets/icons/1.TH.WARNING.svg">
         {{ texterror }}
       </p>
     </div>
-</template>
+  </template>
   
-<script>
-    export default {
+  <script>
+  
+  export default {
     data() {
-        return {
+      return {
         showOptions: false,
         hoverOption: false,
-        }
+      };
     },
     emits: ['update:modelValue'],
     props: {
@@ -107,7 +107,7 @@
             },
             icon_right:{
                 type: String,
-                default: '/vendor_asset/img/hoster/icons/1.TH.I.DROPDOWN.svg',
+                default: '/assets/icons/1.TH.I.DROPDOWN.svg',
             },
             icon_right_class:{
                 type: String,
@@ -115,7 +115,7 @@
             },
             icon_delete:{
                 type: String,
-                default: '/vendor_asset/img/hoster/icons/1.TH.CLOSE.svg',
+                default: '/assets/icons/1.TH.CLOSE.svg',
             },
             icon_delete_class:{
                 type: String,
@@ -146,22 +146,39 @@
                 default: '', //opciones : top-auto
             },
         },
+    mounted() {
+        document.addEventListener('click', this.handleOutsideClick);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleOutsideClick);
+    },
     methods: {
-        toggleDropdown() {
-        if (!this.disabled) {
+        toggleDropdown(event) {
             this.showOptions = !this.showOptions;
-        }
+            event.stopPropagation();
+        },
+        handleOutsideClick(event) {
+            if (!this.$el.contains(event.target)) {
+                this.showOptions = false;
+            }
         },
         selectOption(option) {
-        if (!option.disabled) {
-            this.$emit('update:modelValue', option.value);
             this.showOptions = false;
-        }
+                console.log('selectOption',this.showOptions)
+            if (!option.disabled) {
+                this.$emit('update:modelValue', option.value);
+            }
         },
         deleteOption() {
-        this.$emit('update:modelValue', null);
+            this.$emit('update:modelValue', null);
+            this.showOptions = false;
         },
+        closeDropdown() {
+            this.showOptions = false;
+        },
+      
     },
+    
     computed: {
         label () {
             var lb = this.options.find(item => this.modelValue == item.value)
@@ -172,8 +189,8 @@
         //     return this.label || this.textLabel;
         // },
         labelSelect() {
-        const selectedOption = this.options.find(option => option.value === this.modelValue);
-        return selectedOption ? selectedOption.label : this.textLabel;
+            const selectedOption = this.options.find(option => option.value === this.modelValue);
+            return selectedOption ? selectedOption.label : this.textLabel;
         },
         style () {
             let s = {
@@ -194,50 +211,47 @@
             return s
         }
     },
-    }
-</script>
-  
-<style scoped>
+  };
+  </script>
+  <style scoped>
   .border-0:hover,
-  .border-0{
-      border:none !important;
+  .border-0 {
+      border: none !important;
   }
-  .box-input-field:hover{
-      border-color:var(--h-green-600) !important;
+  .box-input-field:hover {
+      border-color: var(--h-green-600) !important;
   }
-  .box-input-field:hover > .text-label{
-      color:var(--h-green-600) !important;
+  .box-input-field:hover > .text-label {
+      color: var(--h-green-600) !important;
   }
-  .top-dropdown{
-      top:40px !important;
+  .top-dropdown {
+      top: 40px !important;
       transform: none !important;
   }
-  .top-auto{
-      top:0;
+  .top-auto {
+      top: 0;
   }
-  .dropdown-menu {
+  .custom-dropdown-menu {
       display: none;
-  }
-  .dropdown-menu.show {
-      display: block;
-  }
-  /* .dropdown-menu{
+      position: absolute;
+      z-index: 1000;
       box-shadow: 0px 3.5px 7px rgba(0, 0, 0, 0.15);
       border-radius: 0px 0px 10px 10px;
       border: none;
       width: 100%;
-      padding:0;
-  } */
-  
-  .option{
+      padding: 0;
+      background-color: white;
+  }
+  .custom-dropdown-menu.show {
+      display: block;
+  }
+  .custom-option {
       border-radius: 0px 0px 10px 10px;
   }
-  .option:hover, .active{
-      background-color:var(--h-gray-100);
+  .custom-option:hover, .custom-option.active {
+      background-color: var(--h-gray-100);
   }
-  .disabled:hover{
-      background-color:#fff;
+  .custom-option.disabled:hover {
+      background-color: #fff;
   }
 </style>
-
-  

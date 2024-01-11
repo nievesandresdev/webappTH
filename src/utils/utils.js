@@ -93,3 +93,9 @@ export const loadSubdomain = () => {
     }
     return subdomain
 }
+
+export const getUrlParam = (param) => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const dataParam = urlParams.get(param)
+    return dataParam
+}

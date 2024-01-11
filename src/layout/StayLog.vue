@@ -1,5 +1,5 @@
 <template>
-    <Dialog :open="false" class="relative">
+    <Dialog :open="openModal" class="relative">
       <!-- The backdrop, rendered as a fixed sibling to the panel container -->
       <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
   
@@ -12,7 +12,7 @@
                     {{ $utils.capitalize($t('stay.stayLog.title')) }}
                 </h1>
                 <div class="absolute top-3 right-4">
-                    <MiniLangDropdown />
+                    <MiniLangDropdown v-model="form.language" />
                 </div>
             </div>
 
@@ -20,13 +20,13 @@
                 <!-- body -->
                 <div class="body-xs pb-6 mt-4">
                     <div class="px-4">
-                        <label class="text-sm mb-2 font-medium">
+                        <label class="text-sm mb-2 font-medium block">
                             {{ $utils.capitalize($t('stay.stayLog.checkDate.label')) }}
                         </label>
                         <THInputCalendar
-                            :textLabel="$t('stay.stayLog..placeholder')"
-                            v-model="form.check_date"
-                            :error="errorsKey.includes('check_date')"
+                            :textLabel="$t('stay.stayLog.checkDate.placeholder')"
+                            v-model="form.checkDate"
+                            :error="errorsKey.includes('checkDate')"
                             :show_error_msg="false"
                             :minDate="null"
                             mandatory
@@ -34,42 +34,42 @@
                         <!-- :texterror="texterror_calendar" -->
                     </div>
                     <div class="mt-4 px-4">
-                        <label class="text-sm mb-2 font-medium">
+                        <label class="text-sm mb-2 font-medium block">
                             {{ $utils.capitalize($t('stay.stayLog.howPeople')) }}
                         </label>
                         <THInputField
                             :textLabel="'Nº huéspedes'"
                             :options="options_n_guests"
-                            v-model="form.number_guests"
+                            v-model="form.numberguests"
                             :top_dropdown="'top-0'"
                             :extra_dropdown="'dropdown-clasess'"
                             mandatory
                         />
                     </div>
                     <div class="mt-4 px-4">
-                        <a :href="'#i'+list_guest.length" class="text-sm font-bold underline" @click="()=> list_guest.push({email:null})">
+                        <a class="text-sm font-bold underline cursor-pointer" @click.prevent="addGuestToList">
                             {{ $utils.capitalize($t('stay.stayLog.addGuest')) }}
                         </a>
                     </div>
                     <div 
-                        v-for="(guest, index) in list_guest"
+                        v-for="(guest, index) in form.listGuest"
                         class="mt-4 px-4"
                     >
                         <THInputText
                             :id="'i'+(index+1)"
-                            :textLabel="$t('stay.stayLog.guest')+' '+(index+2)"
-                            :placeholder="$t('stay.guestLog.email.placeholder')"
-                            :textError="$t('stay.guestLog.email.error')"
+                            :textLabel="$t('stay.stayLog.guest')+' '+(index+1)"
+                            :placeholder="$t('guest.guestLog.email.placeholder')"
+                            :textError="$t('guest.guestLog.email.error')"
                             :type="'email'"
-                            v-model="list_guest[index].email"
+                            v-model="form.listGuest[index].email"
                             @handleError="emailError = $event"
                             :customClasses="{
-                                'hborder-gray-400':!list_guest[index].email
+                                'hborder-gray-400':!form.listGuest[index].email
                             }"
                         />
                         <div class="text-right mt-2">
                             <button 
-                                @click="guest_delete(index)"
+                                @click="guestDelete(index)"
                                 class="text-sm font-medium underline">{{$utils.capitalize($t('stay.stayLog.deleteGuest'))}}
                             </button>
                         </div>
@@ -78,16 +78,16 @@
                 <!-- end body -->
                 <!-- footer -->
                 <div class="flex justify-between p-4 border-t">
-                    <a @click="back_to_guestform" href="javascript:void(0)" class="text-sm font-medium my-auto">
+                    <a @click="backToGuestform" href="javascript:void(0)" class="text-sm font-medium my-auto underline hover:underline hover-htext-green-600">
                         {{ $utils.capitalize($t('stay.stayLog.backButton')) }}
                     </a>
                     <button 
                         class="hbtn-cta py-3 px-4 text-sm leading-4"
-                        :class="{'cta-disabled':!valid}"
+                        :class="{'cta-disabled':!valid || processingForm}"
                         @click="submit"
-                        :disabled="!valid"
+                        :disabled="!valid || processingForm"
                     >
-                        {{ $utils.capitalize($t('stay.stayLog.button')) }}
+                        {{ processingForm ? $t('stay.stayLog.processing')+'...' : $t('stay.stayLog.button') }}
                     </button>
                 </div>
             </div>
@@ -103,21 +103,34 @@
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
     import THInputCalendar from '@/components/THInputFieldCalendar.vue'
     import { Dialog } from '@headlessui/vue'
+    import { useStayStore } from '@/stores/modules/stay'
+    import { useGuestStore } from '@/stores/modules/guest'
+    
 
-    onMounted(()=>{
-        //
+    const props = defineProps({
+        openModal: {
+            type:Boolean,
+            default:false
+        }
     })
+
+    const emit = defineEmits(['closeModal','back']);
+    //store
+    const guestStore = useGuestStore()
+
+    const stayStore = useStayStore()
 
     //data
     const form = reactive({
-        number_guests:'1',
-        check_date:null,
-        list_guest:[],
-        language:'es'
+        numberguests:'1',
+        checkDate:null,
+        listGuest:[],
+        language: 'es',
+        guestId: null,
     });
     const errorsKey = ref([]);
     const emailError = ref(false);
-    const list_guest = ref([]);
+    const processingForm = ref(false);
     const options_n_guests = [
         {value:'1',label:'1',},
         {value:'2',label:'2',},
@@ -131,31 +144,33 @@
         {value:'10',label:'10',},
     ] 
 
+
     //functions
-    const guest_delete = (i) =>{
-        list_guest.value.splice(i, 1);
-    }
-    
-    const back_to_guestform = () => {
-        // Inertia.post(route('hoster.back_to_guestform'))
+    const guestDelete = (i) =>{
+        form.listGuest.splice(i, 1);
     }
 
-    const submit = () => {
-        if(valid.value){
-            // let modal = $('#'+id);
-            form.list_guest = list_guest.value;
-            // form.post(route('hoster.check.stay',{hoster:hotel.slug}),{
-            //     preserveScroll: true,
-            //     onSuccess: (result) => {
-            //         // modal.modal('hide')
-            //     }
-            // });
-        }
+    const addGuestToList = () =>{
+        console.log('addGuestToList')
+        form.listGuest.push({email:null})
+    }
+    
+    const backToGuestform = () => {
+        emit('back');
+    }
+
+    const submit = async () => {
+        let guest = await guestStore.loadLocalGuest()
+        form.guestId = guest.id;
+        processingForm.value = true
+        await stayStore.createAndInviteGuest(form);
+        processingForm.value = false
+        emit('closeModal');
     }
 
     //COMPUTED
     const valid = computed(() => {
-        return form.check_date && !emailError.value
+        return form.checkDate && !emailError.value
     })
   </script>
 

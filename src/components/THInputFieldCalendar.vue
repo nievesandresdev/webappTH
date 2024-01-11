@@ -5,7 +5,7 @@
             @click="toggleshow"
             class="box-input-field flex items-center hoverForm"
             :class="{
-                'h-10 rounded-6 p-3':true,
+                'h-10 rounded-[6px] py-2 px-3':true,
                 'hborder-gray-400': !error && !modelValue,
                 'hborder-alert-negative': error,
                 'hborder-black-100': modelValue && !error,
@@ -52,7 +52,7 @@
                 <div class="relative mb-6">
                     <img 
                         class="w-6 h-6 absolute left-0 top-1" 
-                        src="/vendor_asset/img/hoster/icons/1.TH.BACK.svg" 
+                        src="/assets/icons/1.TH.BACK.svg" 
                         alt="volver a formulario huesped"
                         @click="showOptions = false"
                     >
@@ -69,7 +69,7 @@
 
         <template v-if="show_error_msg">
         <p v-if="error" class="mt-1 text-xs htext-alert-negative flex">
-            <img class="inline w-4 h-4 mr-2" src="/vendor_asset/img/hoster/icons/1.TH.WARNING.svg">
+            <img class="inline w-4 h-4 mr-2" src="/assets/icons/1.TH.WARNING.svg">
             {{ texterror }}
         </p>
         </template>
@@ -118,7 +118,7 @@ export default {
         },
         icon_left:{
             type: String,
-            default: '/vendor_asset/img/hoster/icons/1.TH.SCHEDULE.svg',
+            default: '/assets/icons/1.TH.SCHEDULE.svg',
         },
         icon_left_class:{
             type: String,
@@ -134,7 +134,7 @@ export default {
         },
         icon_delete:{
             type: String,
-            default: '/vendor_asset/img/hoster/icons/1.TH.CLOSE.svg',
+            default: '/assets/icons/1.TH.CLOSE.svg',
         },
         icon_delete_class:{
             type: String,

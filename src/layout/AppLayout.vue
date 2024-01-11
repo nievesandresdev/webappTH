@@ -45,8 +45,8 @@
         </transition> -->
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
-        <GuestLog />
-        <StayLog />
+        <GuestLog :openModal="showGuestLog" @closeModal="closeGuestLog"/>
+        <StayLog :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
 </template>
 
@@ -58,6 +58,8 @@
     import MenuMobile from './Components/MenuMobile.vue'
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
+    import { useStayStore } from '@/stores/modules/stay'
+    import { useGuestStore } from '@/stores/modules/guest'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
     // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
@@ -72,10 +74,9 @@
        }
     })
 
-
-    
     //DATA
-    // const stay_session = usePage().props.value.stay_session
+    const showGuestLog = ref(false)
+    const showStayLog = ref(false)
     // const slug_hoster = usePage().props.value.user_hoster.slug;
     // const current_route = usePage().props.value.route_name;
     // const show_chat_guest = usePage().props.value.user_hoster.chat_settings?.show_guest;
@@ -89,8 +90,15 @@
     const showMenuMobile = ref(true); 
     // provide('showMenuMobile', showMenuMobile);
 
+    //store
+    const stayStore = useStayStore()
+    const { stayData } = stayStore;
+
+    const guestStore = useGuestStore()
+
     //ONMOUNTED
     onMounted(() => {
+        loadWebDataModals();
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
     //     if(stay_session){
@@ -149,6 +157,45 @@
     //         });
     //     }
     // }
+
+    const loadWebDataModals = async () => {
+        try {
+            const guestLogResult = await guestStore.loadLocalGuest();
+            showGuestLog.value = guestLogResult ? false : true;
+
+            if (!showGuestLog.value) {
+                loadWebStay();
+            }
+        } catch (error) {
+            console.error("Error al cargar los datos locales:", error);
+        }
+    };
+
+    const loadWebStay = async () => {
+        try {
+            const stayLogResult = await stayStore.loadLocalStay();
+            showStayLog.value = stayLogResult ? false : true;
+        } catch (error) {
+            console.error("Error al cargar los datos locales:", error);
+        }
+    };
+
+    const closeGuestLog = () => {
+        showGuestLog.value = false;
+        loadWebStay();
+    }
+
+    const closeStayLog = () => {
+        console.log('closeStayLog')
+        showStayLog.value = false
+    }
+    
+
+    const updateGuest = () => {
+        showStayLog.value = false;
+        showGuestLog.value = true;
+    }
+
 
     const mark_msgs_as_read = () =>{
     //     show_chat.value = true
