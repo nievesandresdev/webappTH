@@ -7,7 +7,7 @@
          <div class="container-image rounded-t-lg w-full relative">
             <img
                 class="img w-full h-full lg:h-48 2xl:h-52 overflow-hidden rounded-t-lg object-cover"
-                :src="getActImage(data.images)"
+                :src="data.image?.url"
                 loading="lazy"
                 alt="img_act"
             >
@@ -98,11 +98,11 @@
         return m
     })
 
-    function getActImage (images) {
-        let store = 'activity'
-        if (images.length === 0) return '/vendor_asset/img/default/default_activities.png'
-        return images[0].url
-    }
+    // function getActImage (images) {
+    //     let store = 'activity'
+    //     if (images?.length === 0) return '/vendor_asset/img/default/default_activities.png'
+    //     return images[0].url
+    // }
 
     function goActivity (item) {
     }

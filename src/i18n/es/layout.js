@@ -13,5 +13,10 @@ export default {
         "privacy-cookies": "política de cookies",
         "terms-conditions": "términos y condiciones"
     },
+    "input-search": {
+        "search": "Buscar",
+        "placeholder": "Destinos, experiencias...",
+        "from": "desde"
+    }
     // más traducciones...
   };

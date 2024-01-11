@@ -5,27 +5,37 @@
         @click="modalMobile = false"
     />
     <div v-if="modalMobile" class="inline-block bg-white opacity-100 w-screen h-[95%] z-50 rounded-t-xl px-4 pt-6 pb-8 md:hidden fixed bottom-0 left-0 z-[4000]">
-        <!-- <SurveyModalContent /> -->
+        <FormSurveyContent />
     </div>
-    styleContent="max-width: 428px !important;"
-    <Dialog
-        :open="modal" class="relative"
-    >
-        <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
-        <div class="fixed inset-0 flex w-screen items-center justify-center z-[1200] ">
-            <DialogPanel class="w-full max-w-[360px] bg-white rounded-[0.85rem]">
-                dd
-            </DialogPanel>
-        </div>
-        <!-- <SurveyModalContent /> -->
-    </Dialog>
+    <!-- styleContent="max-width: 428px !important;" -->4
+    <TransitionRoot appear :show="modal" as="template">
+        <Dialog
+            as="div"
+            @close="close"
+            class="relative"
+        >
+            <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
+            <div class="fixed inset-0 flex w-screen items-center justify-center z-[1200] ">
+                <DialogPanel class="w-full max-w-[428px] bg-white rounded-[0.85rem] p-4">
+                    <FormSurveyContent />
+                </DialogPanel>
+            </div>
+        </Dialog>
+    </TransitionRoot>
 </template>
 
 <script setup>
     import { ref, provide, onMounted, nextTick, inject, watch, reactive } from 'vue'
 
-    import SurveyModalContent from './SurveyModalContent.vue'
-        import { Dialog } from '@headlessui/vue'
+    import FormSurveyContent from './FormSurveyContent.vue'
+    import { Dialog, TransitionRoot } from '@headlessui/vue'
+    
+    // STATE
+    import { useHotelStore } from '@/stores/modules/hotel'
+    const hotelStore = useHotelStore()
+    const { hotelData } = hotelStore
+    import { useHotelOtaStore } from '@/stores/modules/hotelOta'
+    const hotelOtaStore = useHotelOtaStore()
     
     // STATIC DATA
     const WINDOW_WIDTH = window.innerWidth
@@ -45,6 +55,7 @@
     //provide
     provide('form', form)
     provide('modal', modal)
+    provide('modalMobile', modalMobile)
 
     //inject
     const mockup = false
@@ -60,13 +71,18 @@
     //onmounted
     onMounted(async() => {
         await nextTick()
+        await hotelOtaStore.$getAll()
         openSurvey()
     })
 
+    function close () {
+        modal.value = false
+        console.log('close')
+    }
+
     //function
     function openSurvey () {
-        modal.value = true
-        return;
+        // modal.value = true
         // setTimeout(() => {
         //     if (mockup.value) return;
         //     if (stayData.value?.guest) {

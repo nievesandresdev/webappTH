@@ -99,9 +99,9 @@
         </div>
         <!-- end carousel's -->
         
-        <!-- SurveyModal -->
-        <SurveyModal />
-         <!-- END SurveyModal    -->
+        <!-- FormSurvey -->
+        <FormSurvey />
+         <!-- END FormSurvey    -->
     </template>
     
     <script setup>
@@ -119,7 +119,7 @@
         import CarouselFacilities from './Components/CarouselFacilities.vue'
         import CarouselExperiences from './Components/CarouselExperiences.vue'
         import CarouselPlaces from './Components/CarouselPlaces.vue'
-        import SurveyModal from './Components/modals/SurveyModal.vue'
+        import FormSurvey from './Components/FormSurvey.vue'
         import MenuHome from '@/layout/Components/MenuHome.vue'
 
         // STORE

@@ -129,7 +129,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     #facility-cross {
         .carousel__next .carousel__icon, .carousel__prev .carousel__icon {
             fill: #000 !important; 

@@ -9,7 +9,7 @@
             >
                 <img
                     class="mx-auto  w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['home', 'about'].includes($route.name) ? `/assets/icons/home-hover.svg` : `/assets/icons/home-default.svg`"
+                    :src="['Home', 'about'].includes($route.name) ? `/assets/icons/home-hover.svg` : `/assets/icons/home-default.svg`"
                     alt="TH.HOME"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">

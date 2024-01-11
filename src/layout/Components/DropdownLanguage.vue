@@ -1,5 +1,5 @@
 <template>
-    <Menu as="div" class="relative inline-block text-left">
+    <Menu as="div" class="relative inline-block text-left ml-3.5 sp:ml-6">
       <div>
         <MenuButton
           class="hbtn-blur p-2 rounded-md flex items-center"
@@ -56,20 +56,10 @@
         {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/reino-unido.png'},
     ])
     const toggleLang = ref(false)
-    const modal_lang = inject('modal_lang')
     const localeStore = useLocaleStore()
-
-    watch(modal_lang, (value) => {
-        if (value) {
-            document.body.classList.add('no-scroll')
-        } else {
-            document.body.classList.remove('no-scroll')
-        }
-    })
 
     //function
     function changeLocale (lg) {
-        modal_lang.value = false
         localeStore.$changeAndReload(lg)
     }
 

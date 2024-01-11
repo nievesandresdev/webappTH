@@ -2,7 +2,7 @@
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
         <!-- <Favicon /> -->
 		<!-- Sidebar  -->
-		<div v-if="!$route.name == 'homePage'" class="hidden md:block">
+		<div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
 		</div>
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
@@ -53,7 +53,7 @@
 <script setup>
     import { onMounted, ref, onUnmounted } from 'vue';
     // import Notify from '@/Pages/Collaborator/Layouts/Notify.vue'
-    import GeneralMenu from './GeneralMenu.vue'
+    import GeneralMenu from './Components/GeneralMenu.vue'
     import TheFooter from './Components/TheFooter.vue'
     import MenuMobile from './Components/MenuMobile.vue'
     import GuestLog from './GuestLog.vue'

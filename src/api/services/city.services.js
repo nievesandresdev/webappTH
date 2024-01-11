@@ -1,0 +1,6 @@
+import { apiHttp } from '../axiosApi'
+import {
+    cityPath,
+} from '../config/apiRoute'
+
+export const getAllApi = (params) => apiHttp('GET', `${cityPath}/getAll`, params)

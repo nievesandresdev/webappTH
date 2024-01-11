@@ -80,3 +80,17 @@ p,a{
 .icon-gray{
   filter: grayscale(100%);
 }
+
+/* truncar textos */
+.truncate-2 {
+  overflow: hidden; /* oculta cualquier contenido que se desborde del contenedor */
+  text-overflow: ellipsis; /* agrega tres puntos suspensivos al final del texto */
+  display: -webkit-box; /* para mostrar el contenido en varias líneas*/
+  -webkit-line-clamp: 2; /* para establecer el número máximo de líneas a 2 */
+  -webkit-box-orient: vertical; /* para establecer la dirección de la caja en vertical */
+}
+.truncate-1 {
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el texto que sobrepasa el ancho del contenedor */
+  text-overflow: ellipsis; /* Agrega los tres puntos al final del texto truncado */
+}

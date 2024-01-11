@@ -5,42 +5,42 @@
         <img
           @mouseover="hoverEmoji({face: 'WRONG', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'WRONG', state: 'DEFAULT'})"
-          :src="`/vendor_asset/img/hoster/icons/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.${state_emojis?.WRONG?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.${state_emojis?.WRONG?.state}.svg`"
           alt="1.TH.EMOJI.WRONG"
         />
       </button>
       <span
         class="text-[10px] font-semibold mt-2"
         :class="form.type && form.type == 'WRONG' ? 'text-black' : 'htext-gray-500'"
-      >Mal</span>
+      >{{ $t('home.form-survey.btn-wrong') }}</span>
     </div>
     <div class="text-center">
       <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
         <img
           @mouseover="hoverEmoji({face: 'NORMAL', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'NORMAL', state: 'DEFAULT'})"
-          :src="`/vendor_asset/img/hoster/icons/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.${state_emojis?.NORMAL?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.${state_emojis?.NORMAL?.state}.svg`"
           alt="1.TH.EMOJI.NORMAL"
         />
       </button>
       <span
         class="text-[10px] font-semibold mt-2"
         :class="form.type && form.type == 'NORMAL' ? 'text-black' : 'htext-gray-500'"
-      >Normal</span>
+      >{{ $t('home.form-survey.btn-normal') }}</span>
     </div>
     <div class="text-center">
       <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('GOOD')">
         <img
           @mouseover="hoverEmoji({face: 'GOOD', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'GOOD', state: 'DEFAULT'})"
-          :src="`/vendor_asset/img/hoster/icons/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.${state_emojis?.GOOD?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.${state_emojis?.GOOD?.state}.svg`"
           alt="1.TH.EMOJI.GOOD"
         />
       </button>
       <span
         class="text-[10px] font-semibold mt-2"
         :class="form.type && form.type == 'GOOD' ? 'text-black' : 'htext-gray-500'"
-      >Muy bien</span>
+      >{{ $t('home.form-survey.btn-good') }}</span>
     </div>
   </div>
 </template>
