@@ -162,7 +162,9 @@
         try {
             const guestLogResult = await guestStore.loadLocalGuest();
             showGuestLog.value = guestLogResult ? false : true;
-
+            if(guestLogResult && !guestLogResult.name){
+                showGuestLog.value = true;
+            }
             if (!showGuestLog.value) {
                 loadWebStay();
             }

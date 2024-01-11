@@ -28,7 +28,7 @@
                         }"
                     />
                 </div>
-                <div class="mt-4 px-4" v-if="!subject || subject == 'updated'">
+                <div class="mt-4 px-4" v-if="guestData?.name !== null">
                     <THInputText
                         :textLabel="$t('guest.guestLog.email.label')"
                         :placeholder="$t('guest.guestLog.email.placeholder')"
@@ -61,7 +61,7 @@
   </template>
   
   <script setup>
-    import { onMounted, reactive, ref, computed } from 'vue';
+    import { onMounted, reactive, ref, computed, watch } from 'vue';
     import THInputText from '@/components/THInputText.vue';
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
     import { Dialog } from '@headlessui/vue'
@@ -75,10 +75,6 @@
     })
     
     const emit = defineEmits(['closeModal']);
-
-    onMounted(()=>{
-        console.log('guestmodla',props.openModal)
-    })
 
     //data
     const errorsKey = ref([]);
@@ -94,6 +90,10 @@
         language: guestData?.lang_web ?? 'es',
     });
 
+    onMounted(()=>{
+        console.log('guestmodla',guestData)
+    })
+
     const submitForm = async () =>{
         processingForm.value = true
         const response = await guestStore.saveOrUpdate(form);
@@ -107,5 +107,14 @@
     const valid = computed(() => {
         return form.name && !emailError.value && form.email
     })
+
+    // Observa los cambios en guestData y actualiza el formulario
+watch(() => guestStore.guestData, (newGuestData) => {
+  if (newGuestData) {
+    form.name = newGuestData.name;
+    form.email = newGuestData.email;
+    form.language = newGuestData.lang_web;
+  }
+}, { immediate: true }); // El flag 'immediate' asegura que se ejecute inmediatamente después de la creación del watcher
   </script>
 
