@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homeRoutes from './homeRoutes'
+import experienceRoutes from './experienceRoutes'
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { loadSubdomain } from '@/utils/utils.js'
 
+// COMPONENTS
+const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
+
 const routes = [
   ...homeRoutes,
-  // otras rutas...
+  ...experienceRoutes,
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 
 const router = createRouter({
@@ -22,7 +27,7 @@ router.beforeEach( async (to, from, next) => {
   await hotelStore.$load()
   let hotel = hotelStore.hotelData
   if (to.meta.verifyHotel && !hotel) {
-    next({ name: 'login' })
+    next({ name: 'NotFound' })
   }
   next()
 })

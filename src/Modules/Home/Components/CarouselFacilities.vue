@@ -7,7 +7,7 @@
                         <div class="h-40 rounded-lg relative overflow-hidden">
                             <div class="overlay rounded-lg absolute h-full z-10 w-full top-0 left-0" style="background: rgba(0, 0, 0, 0.3);"></div>
                             <img 
-                                :src="getImg(item)"
+                                :src="facilityStore.$loadImage(item?.image?.url)"
                                 class="object-cover rounded-lg"
                             >
                             <h1 class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-base font-medium z-30 h-6">
@@ -29,10 +29,10 @@
             class="mr-3 card-width shrink-0 h-24 sp:h-40 rounded-lg relative"
              @click="go_facility(item.id)"
         >
-            <img 
+            <!-- <img 
                 :src="getImg(item)"
                 class="object-cover rounded-lg w-full h-full"
-            >
+            > -->
             <div class="overlay rounded-lg absolute h-full z-10 w-full top-0 left-0" style="background: rgba(0, 0, 0, 0.3);"></div>
             <h2 class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-[10px] sp:text-base font-medium z-30 h-4 sp:h-6">
                 {{item.title[0].toUpperCase() + item.title.substring(1)}}
@@ -46,7 +46,12 @@
     import { onMounted, computed, ref, toRefs, watch } from 'vue'
     import { Carousel, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
-``
+
+    // STORE
+    import { useFacilityStore } from '@/stores/modules/facility'
+    const facilityStore = useFacilityStore()
+
+
     const props =  defineProps({
         items: {
             type: Array,
@@ -124,7 +129,7 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     #facility-cross {
         .carousel__next .carousel__icon, .carousel__prev .carousel__icon {
             fill: #000 !important; 

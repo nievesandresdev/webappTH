@@ -5,10 +5,10 @@ const homeRoutes = [
   {
     path: '/',
     component: AppLayout,
-    // meta: { verifyHotel: true },
+    meta: { verifyHotel: true },
     children: [
       {
-        name: 'home',
+        name: 'Home',
         path: '',
         component: HomePage
       },

@@ -9,9 +9,6 @@
                     <div class="w-full h-full flex items-center justify-start">   
                         <h4 
                             class="text-xs sp:text-base font-medium text-white"
-                            :class="{
-                                'non-selectable-text':!$utils.isMockup(),
-                            }"
                         >
                             {{ hotelData?.name }}
                         </h4>
@@ -22,14 +19,13 @@
 
                 <!--    HOME    -->
                 <div class="relative mr-[40px]">
-                    <a
-                        @click="go_hosterhome"
-                        href="javascript:void(0)"
+                    <router-link
+                        to="/experiencias"
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2 "
                     >
                         Home
-                    </a>
-                    <div class="active mt-2 w-full" :class="{'invisible': !$route.name == 'home'}" />
+                    </router-link>
+                    <div class="active mt-2 w-full" :class="{'invisible': $route.name != 'Home'}" />
                 </div>
 
                 <!--    INSTALACIONES    -->
@@ -40,28 +36,30 @@
                         {{ $utils.capitalize($t('layout.header.facilities')) }}
                     </a>
                     <!-- absolute top-5 left-0 -->
-                    <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
+                    <div class="active mt-2 w-full"  :class="{'invisible': $route.name != 'FacilityList'}" />
                 </div>
 
-                <!--    INSTALACIONES    -->
+                <!--    PLACES    -->
                 <div class="relative mr-[2.5rem]">
                     <a
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                     >
                     {{ $utils.capitalize($t('layout.header.explore')) }}
                     </a>
-                    <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
+                    <div class="active mt-2 w-full"  :class="{'invisible': !$route.name != 'PlaceList'}" />
                 </div>
 
-                <!--    INSTALACIONES    -->
-                <div v-if="hotelData?.show_experiences" class="relative mr-[2.5rem]">
-                    <a
+                <!--    EXPERIENCES    -->
+                <!-- v-if="hotelData?.show_experiences" -->
+                
+                <div  class="relative mr-[2.5rem]">
+                    <router-link
+                        to="/experiencias"
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
-                        :class="{'border-b-2 border-black': $route.name == 'x'}"
                     >
-                        {{ $utils.capitalize($t('layout.header.experinces')) }}
-                    </a>
-                    <div class="active mt-2 w-full"  :class="{'invisible': !$route.name == 'x'}" />
+                        {{ $utils.capitalize($t('layout.header.experiences')) }}
+                    </router-link>
+                    <div class="active mt-2 w-full"  :class="{'invisible': $route.name != 'ExperienceList'}" />
 
                 </div>
             </div>

@@ -9,7 +9,7 @@
             >
                 <img
                     class="mx-auto  w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['home', 'about'].includes($route.name) ? `/assets/icons/home-hover.svg` : `/assets/icons/home-default.svg`"
+                    :src="['Home', 'about'].includes($route.name) ? `/assets/icons/home-hover.svg` : `/assets/icons/home-default.svg`"
                     alt="TH.HOME"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -46,11 +46,11 @@
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['experinceList', 'experinceShow'].includes($route.name) ? `/assets/icons/camera-hover.svg` : `/assets/icons/camera-default.svg`"
+                    :src="['experinceList', 'experienceshow'].includes($route.name) ? `/assets/icons/camera-hover.svg` : `/assets/icons/camera-default.svg`"
                     alt="TH.EXPERINCE"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
-                    {{ $utils.capitalize($t('layout.header.experinces')) }}
+                    {{ $utils.capitalize($t('layout.header.experiences')) }}
                 </span>
             </li>
             <li

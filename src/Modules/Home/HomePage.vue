@@ -9,6 +9,7 @@
                 :alt="hotelData.name"
             >
             <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
+
         </section>
         <!-- end card banner -->
 
@@ -61,7 +62,7 @@
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselPlaces id="1" :items="crossellingsData?.crosselling_places_whereeat" place />
+                    <CarouselPlaces id="1" :items="crossellingsData?.crosselling_places_whereeat" />
                 </div>
             </section>
             
@@ -78,10 +79,10 @@
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselPlaces id="2" :items="crossellingsData?.crosselling_places_leisure" place />
+                    <CarouselPlaces id="2" :items="crossellingsData?.crosselling_places_leisure" />
                 </div>
             </section>
-            
+
             <section v-if="crossellingsData?.crosselling_experiences?.length > 0 && hotelData.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
@@ -97,7 +98,10 @@
             </section>
         </div>
         <!-- end carousel's -->
-
+        
+        <!-- FormSurvey -->
+        <FormSurvey />
+         <!-- END FormSurvey    -->
     </template>
     
     <script setup>
@@ -108,22 +112,27 @@
             // inject,
             // provide,
             // defineProps
-            // onMounted,
+            onMounted,
             onBeforeMount,
         } from 'vue';//toRefs,
+        //COMPONENTS
         import CarouselFacilities from './Components/CarouselFacilities.vue'
         import CarouselExperiences from './Components/CarouselExperiences.vue'
         import CarouselPlaces from './Components/CarouselPlaces.vue'
+        import FormSurvey from './Components/FormSurvey.vue'
         import MenuHome from '@/layout/Components/MenuHome.vue'
 
         // STORE
+        import { useMainStore } from '@/stores'
+        const mainStore = useMainStore()
         import { useHotelStore } from '@/stores/modules/hotel'
         const hotelStore = useHotelStore()
         const { hotelData } = hotelStore
 
+
         // DATA
         const crossellingsData = ref(null)
-        const storageUrl = process.env.VUE_APP_STORAGE_URL
+        const storageUrl = mainStore.URL_STORAGE
 
         onBeforeMount (() => {
             loadCrossellings()
@@ -202,7 +211,5 @@
     @media (min-width:1920px){
     
     }
-    
-    
+
     </style>
-    

@@ -10,6 +10,10 @@ import './assets/css/colors.css';
 
 import './assets/css/tailwind.css';
 
+import moment from 'moment'
+import 'moment/locale/es'
+import 'moment-timezone'
+
 import { i18n }  from './i18n'
 import { pinia } from './stores';
 import * as utils from './utils/utils.js'
@@ -17,20 +21,8 @@ import * as utils from './utils/utils.js'
 
 function initializeApp () {
 
-  // const hotelStore = useHotelStore(pinia)
-
-  try {
-
-    // await hotelStore.$loadHotel()
-    
-
-  } catch (error) {
-
-    console.error('Error al cargar los datos del hotel:', error)
-
-  } finally {
-
-
+    moment.locale('es')
+    moment.tz.setDefault('Europe/Madrid')
 
     const app = createApp(App);
 
@@ -38,9 +30,8 @@ function initializeApp () {
     app.use(i18n)
     app.use(router)
     app.config.globalProperties.$utils = utils
+    app.config.globalProperties.$moment = moment
     app.mount('#app')
-
-  }
 
 }
 

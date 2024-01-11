@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import {
     findByParamsApi,
     getCrossellingsApi,
-} from '@/api/services'
+} from '@/api/services/hotel.services'
 
 export const useHotelStore = defineStore('hotel', () => {
     

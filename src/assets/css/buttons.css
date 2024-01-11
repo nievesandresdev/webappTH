@@ -146,8 +146,8 @@
     color: var(--h-black-200);
 }
 
-.plain, .plain:hover, .plain:disabled {
-    border: none;
+.plain, .plain:hover, .plain:disabled, .plain:focus {
+    border: none !important;
 }
 
 /*

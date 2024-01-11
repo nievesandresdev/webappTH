@@ -1,0 +1,23 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="1.TH.Emoji" filter="url(#filter0_d_512_54085)">
+<g id="Vector">
+<path d="M52 26C52 39.2547 41.2547 50 28 50C14.7467 50 4 39.2547 4 26C4 12.7467 14.7467 2 28 2C41.2547 2 52 12.7467 52 26Z" fill="#EBC44C"/>
+<path d="M19.3333 26C21.1743 26 22.6667 22.7168 22.6667 18.6667C22.6667 14.6166 21.1743 11.3333 19.3333 11.3333C17.4924 11.3333 16 14.6166 16 18.6667C16 22.7168 17.4924 26 19.3333 26Z" fill="#664500"/>
+<path d="M36.6667 26C38.5076 26 40 22.7168 40 18.6667C40 14.6166 38.5076 11.3333 36.6667 11.3333C34.8257 11.3333 33.3333 14.6166 33.3333 18.6667C33.3333 22.7168 34.8257 26 36.6667 26Z" fill="#664500"/>
+<path d="M28 31.3333C23.1693 31.3333 19.964 30.7707 16 30C15.0947 29.8253 13.3333 30 13.3333 32.6667C13.3333 38 19.46 44.6667 28 44.6667C36.5387 44.6667 42.6667 38 42.6667 32.6667C42.6667 30 40.9053 29.824 40 30C36.036 30.7707 32.8307 31.3333 28 31.3333Z" fill="#664500"/>
+<path d="M16 32.6667C16 32.6667 20 34 28 34C36 34 40 32.6667 40 32.6667C40 32.6667 37.3333 38 28 38C18.6667 38 16 32.6667 16 32.6667Z" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_512_54085" x="0" y="0" width="56" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_512_54085"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_512_54085" result="shape"/>
+</filter>
+</defs>
+</svg>

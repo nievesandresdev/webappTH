@@ -6,9 +6,9 @@
         <!-- cursor-pointer -->
         <div class="container-image rounded-t-lg w-full" :class="heightImg">
             <img
+                v-if="data.place_images?.[0]?.url"
                 class="img w-full h-full lg:h-48 2xl:h-52 overflow-hidden rounded-t-lg object-cover"
-                v-if="getActImage(data.place_images)"
-                :src="getActImage(data.place_images)"
+                :src="placeStore.$loadImage(data.place_images?.[0]?.image)"
                 alt="img_act"
                 loading="lazy"
             >
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div
-                    v-if="place && data.category && translate[data.category]"
+                    v-if="place && data.category && $t(`category.${$utils.slufy(data.category)}`)"
                     class="whitespace-nowrap px-1 sp:px-2 h-full rounded-full bg-blue-100 font-medium text-gray-400 leading-6  text-[6px] sp:text-[10px]"
                 >
                     {{ $utils.capitalize($t(`category.${$utils.slufy(data.category)}`)) }}
@@ -75,80 +75,10 @@
         }
     })
 
+        // STORE
+    import { usePlaceStore } from '@/stores/modules/place'
+    const placeStore = usePlaceStore()
 
-    //DATA STATIC
-    const translate = {
-        featured: {
-            es: 'Destacado',
-            en: 'Featured',
-            fr: 'Vedette',
-        },
-        recommended: {
-            es: 'Recomendado',
-            en: 'Recommended',
-            fr: 'Recommandé',
-        },
-        'Cafeterías': {
-            es: 'Cafeterías',
-            en: 'Coffee shops',
-            fr: 'Les cafés',
-        },
-        'Heladerías': {
-            es: 'Heladerías',
-            en: 'Ice cream parlors',
-            fr: 'Glaciers',
-        },
-        'Monumentos': {
-            es: 'Monumentos',
-            en: 'Monuments',
-            fr: 'Les monuments',
-        },
-        'Museos': {
-            es: 'Museos',
-            en: 'Museums',
-            fr: 'Musées',
-        },
-        'Zonas verdes':{
-            es: 'Zonas verdes',
-            en: 'Parkland',
-            fr: 'Zones vertes',
-        },
-        'Cafeterías y postres': {
-            es: 'Cafeterías y postres',
-            en: 'Cafes and desserts',
-            fr: 'Cafés et desserts',
-        },
-        'Restaurantes': {
-            es: 'Restaurantes',
-            en: 'Restaurants',
-            fr: 'Restaurants',
-        },
-        'Tapas': {
-            es: 'Tapas',
-            en: 'Tapas',
-            fr: 'Tapas',
-        },
-        'Vida nocturna': {
-            es: 'Vida nocturna',
-            en: 'Night life',
-            fr: 'Vie nocturne',
-        },
-        'Copas': {
-            es: 'Copas',
-            en: 'Cups',
-            fr: 'Tasses',
-        },
-        'Compras': {
-            es: 'Compras',
-            en: 'Shopping',
-            fr: 'Achats',
-        },
-        'Otros': {
-            es: 'Otros',
-            en: 'Others',
-            fr: 'Autres',
-        },
-    }
     const url_flag = {
         es: '/vendor_asset/img/admin/icons/espana.png',
         en: '/vendor_asset/img/admin/icons/reino-unido.png',
