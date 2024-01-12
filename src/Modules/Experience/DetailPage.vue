@@ -1,10 +1,13 @@
 <template>
     <div v-if="mockup" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <!-- Migas de pan experiencias -->
-    <div class=" hidden md:block mt-[10px] mb-8">
+    <div v-if="!experienceData">
+        no Hay datos
+    </div>
+    <template v-else="experienceData">
             
             <!-- Migas de pan experiencias -->
-            <div class=" hidden md:block mt-[10px] mb-8">
+            <div class=" hidden md:block mt-[40px] mb-[32px]">
                 <div class="container-fluid-landing">
                     
                     <!-- desktop-list-breadcrumb -->
@@ -15,13 +18,13 @@
                     >
                     </p>
                     <router-link to="/experiencias" class="text-sm font-medium text-gray-ao inline-block">
-                        Experiencias
+                        {{ $t('experience.breadcrumbs.experiences') }}
                     </router-link>
                     <p class="inline text-gray-ao lg:mx-2 inline-block">
                     >
                     </p>
                     <p class="text-sm font-medium text-gray-ao inline-block">
-                    {{ activity?.activity?.title }}
+                    {{ experienceData?.title }}
                     </p>
                     <!-- END desktop-list-breadcrumb -->
                 </div>
@@ -41,7 +44,7 @@
                                     class="mr-1"
                                     :alt="`RECOMMEND`"
                                 />
-                                Recomendado
+                                {{ $t('experience.detail-page.tag-recommend') }}
                             </template>
                             <template v-else-if="experienceData.product_featured">
                                 <img
@@ -49,7 +52,7 @@
                                     class="mr-1"
                                     :alt="`FEATURED`"
                                 />
-                                Destacado
+                                {{ $t('experience.detail-page.tag-featured') }}
                             </template>
                         </div>
                     </div>
@@ -73,8 +76,8 @@
             <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative">
                 <Carousel :items-to-show="1">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
-                        <button @click="retroceder" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4">
-                            <img class="w-2.5 sp:w-4" src="/vendor_asset/img/landing/icons/arrow-back.svg"/>
+                        <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4">
+                            <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
                         </button>
                         <img 
                             :src="img.url"
@@ -91,11 +94,11 @@
             <!-- END MOBILE Carousel Imagenes Places -->
 
             <div id="content-detail" class="container-fluid-landing mb-6 lg:mb-0">
-                <div class="row mt-4 lg:mt-6  lg:mb-[40px] no-gutters">
+                <div class="grid grid-cols-1 lg:grid-cols-3 mt-4 lg:mt-6  lg:mb-[40px] no-gutters">
 
                     <!-- Datos Experiencia-->
 
-                    <div class="w-full lg:w-[80%] px-0">
+                    <div class="lg:col-span-2 px-0">
                         <!-- seccion y contenido -->
 
                         <div class="px-0 content-section pt-0 w-full" style="gap: 8px">
@@ -107,7 +110,8 @@
                             <h2 class="lg:hidden text-[12px] sp:text-[22px] mt-[4px] sp:mt-2 font-medium">
                                 <span class="text-[10px] sp:text-sm font-normal">desde</span> {{ $utils.formatPrice(experienceData?.from_price) }}€
                             </h2>
-                            <p v-if="variantPrice" class="lg:hidden text-[8px] sp:text-xs mt-[4px] sp:mt-2 font-medium">El precio varía dependiendo del tamaño del grupo</p>
+                            <p v-if="variantPrice" class="lg:hidden text-[8px] sp:text-xs mt-[4px] sp:mt-2 font-medium">{{ $t('experience.detail-page.text-variand-price') }}</p>
+                            
                             <!-- Review -->
                             <div class="mt-[8px] sp:mt-4 flex">
                                 <div class="flex gap-0.5 sp:gap-1 mr-[4px] sp:mr-2">
@@ -130,7 +134,7 @@
                             <div class="mt-4 hidden lg:flex">
                                 <span class="text-sm flex items-center mr-6">
                                     <img
-                                        :src="`/vendor_asset/img/hoster/icons/1.TH.CLOCK.svg`"
+                                        :src="`/assets/icons/1.TH.CLOCK.svg`"
                                         alt="1.TH.CLOCK"
                                         class="mr-2 inline w-6"
                                     />
@@ -151,7 +155,7 @@
                                                     alt="1.TH.IDIOMA"
                                                     class="mr-2 inline w-6"
                                                 />
-                                                {{ availableLanguages }}
+                                                {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: availablelanguages.firstLanguage, numbers: availablelanguages?.first }) : availablelanguages?.first }}
                                             </span>
                                         </button>
                                     </template>
@@ -166,25 +170,25 @@
                                         alt="1.TH.MOBILE"
                                         class="mr-2 inline w-6"
                                     />
-                                    Ticket móvil
+                                    {{ $t('experience.detail-page.tag-ticket-mobile') }}}
                                 </span>
                             </div>
 
                             <!--mobile calendar -->
-                            <div class="container-calendar lg:hidden">
-                                <!-- <ShowReserveViator /> -->
+                            <div v-if="experienceViatorData && schedulesData" class="container-calendar lg:hidden">
+                                <DetailPageSectionReserve />
                             </div>
                             <!--END mobile calendar -->
 
                             <!-- Bookable items -->
-                            <div id="show-options">
-                                <!-- <showProductOption /> -->
+                            <div id="show-options" v-if="experienceViatorData && schedulesData">
+                                <DetailPageProductOption />
                             </div>
 
                             <!-- Hotel -->
                             <div
                                 v-if="experienceData?.recomendations"
-                                class="mt-[12px] sp:mt-6 md:mt-8 p-[12px] sp:p-6 rounded-xl border-1 border-gray-300"
+                                class="mt-[12px] sp:mt-6 md:mt-8 p-[12px] sp:p-6 rounded-xl border border-gray-300"
                             >
                                 <H3 class="text-[12px] sp:text-lg font-medium">
                                     {{ experienceData?.recomendations.hotel.name }}
@@ -194,11 +198,11 @@
                                         class="text-[8px] sp:text-sm text-white font-semibold rounded p-0.5 sp:p-1 flex  hbg-green-600 block w-max"
                                     >
                                         <img
-                                            :src="`/vendor_asset/img/hoster/icons/1.TH.RECOMMEND.svg`"
+                                            :src="`/assets/icons/1.TH.RECOMMEND.svg`"
                                             class="mr-1 w-2.5 sp:w-5"
                                             :alt="`RECOMMEND`"
                                         />
-                                        Recomendación
+                                        {{ $t('experience.detail-page.title-recomendation') }}
                                     </span>
                                 </div>
                                 <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm">
@@ -209,17 +213,17 @@
                             <!-- descripcion -->
 
                             <h1 class="mt-[12px] sp:mt-6 md:mt-8 text-[10px] sp:text-base lg:text-lg font-medium hidden lg:block">
-                                Descripción
+                                {{ $t('experience.detail-page.title-description') }}
                             </h1>
                             <h1 class="mt-[12px] sp:mt-6 lg:mt-4 text-[10px] sp:text-base lg:text-lg font-medium lg:hidden">
-                                Descripción general
+                                {{ $t('experience.detail-page.title-description-mobile') }}
                             </h1>
 
                             <ul class="mt-[8px] sp:mt-4 lg:hidden">
                                 <li class="border-b border-gray-300 py-[8px] sp:py-4">
                                     <span class="text-[8px] sp:text-sm flex items-center mr-[12px] sp:mr-6">
                                         <img
-                                            :src="`/assetsicons/1.TH.CLOCK.svg`"
+                                            :src="`/assets/icons/1.TH.CLOCK.svg`"
                                             alt="1.TH.CLOCK"
                                             class="mr-[4px] sp:mr-2 inline w-[12px] sp:w-6"
                                         />
@@ -229,11 +233,11 @@
                                 <li class="border-b border-gray-300 py-[8px] sp:py-4">
                                     <span class="text-[8px] sp:text-sm flex items-center mr-[12px] sp:mr-6">
                                         <img
-                                            :src="`/vendor_asset/img/hoster/icons/1.TH.IDIOMA.svg`"
+                                            :src="`/assets/icons/1.TH.IDIOMA.svg`"
                                             alt="1.TH.IDIOMA"
                                             class="mr-[4px] sp:mr-2 inline w-[12px] sp:w-6"
                                         />
-                                        {{ availableLanguages }}
+                                    {{ availablelanguages.length > 0 ? `${availablelanguages.firstLanguage} y ${availablelanguages.numbers} más` : availablelanguages?.first }}
                                     </span>
                                 </li>
                                 <li class="border-b border-gray-300 py-[8px] sp:py-4">
@@ -243,7 +247,7 @@
                                             alt="1.TH.MOBILE"
                                             class="mr-[4px] sp:mr-2 inline w-[12px] sp:w-6"
                                         />
-                                        Ticket móvil
+                                        {{ $t('experience.detail-page.tag-ticket-mobile') }}}
                                     </span>
                                 </li>
                             </ul>
@@ -254,7 +258,7 @@
                                     <div v-if="collapseDescriptionEnable" class="text-left pt-[4px] sp:pt-2 pl-0 lg:pr-12">
                                         <a href="javascript:void(0)" @click="collapseDescription = !collapseDescription"
                                             class="text-[8px] sp:text-sm font-medium underline">
-                                            Ver {{ collapseDescription ? 'más' : 'menos' }}
+                                            {{ collapseDescription ? $t('experience.detail-page.open-collapse-description') : $t('experience.detail-page.close-collapse-description') }}
                                         </a>
                                     </div>
                                 </div>
@@ -263,7 +267,7 @@
                             <!-- contenido y normas -->
                             <template v-if="includes?.length > 0 || notincludes?.length > 0">
                                 <h6 class="mt-[12px] sp:mt-6 md:mt-8 text-[12px] sp:text-base font-medium">
-                                    Que incluye
+                                    {{ $t('experience.detail-page.title-include') }}
                                 </h6>
                                 <div class="flex flex-col lg:flex-row mt-[8px] sp:mt-4 gap-x-[12px] sp:gap-x-6 gap-x-[8px] sp:gap-y-4">
                                     <div class="flex-col space-y-[8px] sp:space-y-4 flex-auto lg:w-[45%]">
@@ -274,6 +278,7 @@
                                         >
                                             <img
                                                 src="/assets/icons/checknocircle.svg"
+                                                alt="checknocircle"
                                                 class="w-[8px] sp:w-4 mr-[4px] sp:mr-2"
                                             >
                                             <p class="text-[8px] sp:text-sm">
@@ -288,7 +293,8 @@
                                             class="flex justify-start"
                                         >
                                             <img 
-                                                src="/vendor_asset/img/partner/icons/close.svg" 
+                                                src="/assets/icons/close.svg"
+                                                alt="close"
                                                 class="w-[10px] sp:w-5 mr-[2px] sp:mr-1"
                                             >
                                             <p class="text-[8px] sp:text-sm">
@@ -303,22 +309,22 @@
                             <!-- ubicacion -->
                             <div id="scroll-point" class="mt-[12px] sp:mt-6 md:mt-8">
                                 <h1 class="text-[12px] sp:text-base lg:text-lg font-medium">
-                                        Ubicación
+                                        {{ $t('experience.detail-page.title-location') }}
                                 </h1>
                             </div>
                             <div class="mt-[10px] sp:mt-2.5 lg:mt-4 lg:mb-0">
                                 <div class="mt-[4px] sp:mt-2">
                                     <div class="flex justify-start items-center">
-                                        <img src="/vendor_asset/img/hoster/icons/1.TH.PINPOINT.svg" class="w-[12px] sp:w-5 h-[12px] sp:h-5 mr-[4px] sp:mr-2"
+                                        <img src="/assets/icons/1.TH.PINPOINT.svg" class="w-[12px] sp:w-5 h-[12px] sp:h-5 mr-[4px] sp:mr-2"
                                             alt="1.TH.PINPOINT">
                                         <div>
                                             <p class="text-[8px] sp:text-sm font-medium">
-                                                Punto de encuentro:
+                                                {{ $t('experience.detail-page.subtitle-point-start') }}:
                                                 <span class="font-normal lg:font-medium">
                                                     {{ startMeet }}
                                                 </span>
                                             </p>
-                                            <a :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">Ver en Google Maps</a>
+                                            <a :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                     <div class="flex justify-start items-center mt-[8px] sp:mt-4">
@@ -326,15 +332,15 @@
                                             alt="1.TH.PINPOINT">
                                         <div>
                                             <p class="text-[8px] sp:text-sm font-medium">
-                                                Punto de finalización:
-                                                <span v-if="!locations?.[1]?.formatted_address" class="font-normal lg:font-medium">
+                                                {{ $t('experience.detail-page.subtitle-point-end') }}:
+                                                <span v-if="!locations.value?.[1]?.formatted_address" class="font-normal lg:font-medium">
                                                     Esta actividad finaliza en el punto de encuentro inicial.
                                                 </span>
                                                 <span v-else class="font-normal lg:font-medium">
                                                     {{ endMeet }}
                                                 </span>
                                             </p>
-                                            <a v-if="locations?.[1]" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">Ver en Google Maps</a>
+                                            <a v-if="locations.value?.[1]" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -342,7 +348,7 @@
 
                             <!-- detalles -->
                             <h1 class="mt-[10px] sp:mt-6 md:mt-8 text-[12px] sp:text-base lg:text-lg font-medium border-t lg:border-0">
-                                Información adicional
+                                {{ $t('experience.detail-page.title-other-information') }}
                             </h1>
                             <ul class="flex flex-wrap mt-[8px] sp:mt-4 gap-x-[12px] gap-y-[8px] sp:gap-x-6 sp:gap-y-4" style="list-style-type: disc !important;">
                                 <li class="flex justify-start items-center lg:w-[45%]"
@@ -350,7 +356,7 @@
                                     :key="include"
                                 >
                                     <img 
-                                        src="/vendor_asset/img/hoster/icons/1.TH.BULLET.LIST.svg"
+                                        src="/assets/icons/1.TH.BULLET.LIST.svg"
                                         alt="1.TH.BULLET.LIST"
                                         class="w-[8px] sp:w-4 h-[8px] sp:h-4 mr-[4px] sp:mr-2"
                                     >
@@ -362,13 +368,13 @@
 
                             <!-- Politicas de cancelacion -->
                             <h1 class="mt-[12px] sp:mt-6 lg:mt-8 text-[12px] sp:text-base lg:text-lg font-medium border-t lg:border-0">
-                                Política de cancelación
+                                {{ $t('experience.detail-page.title-politic-cancelation') }}
                             </h1>
                             <div
                                 class="mt-[8px] sp:mt-4"
                             >
                                 <template v-if="experienceData?.cancellation_policy == 'STANDARD'">
-                                    <p class="text-[8px] sp:text-sm">Puede cancelar hasta 24 horas antes de la experiencia para obtener un reembolso completo.</p>
+                                    <p class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.text-politic-standar-1') }}</p>
                                     <div class="flex flex-wrap mt-4 gap-x-6 gap-y-4">
                                         
                                         <p class="text-[8px] sp:text-sm lg:w-[45%] flex items-center">
@@ -377,15 +383,7 @@
                                                 alt="1.TH.BULLET.LIST"
                                                 class="w-[8px] sp:w-4 h-[8px] sp:h-4 mr-[4px] sp:mr-2"
                                             >
-                                            <template v-if="language_pag === 'En'">
-                                                For a full refund, you must cancel at least 24 hours before the experience start time.
-                                            </template>
-                                            <template v-if="language_pag === 'Fr'">
-                                                Pour un remboursement complet, vous devez annuler au moins 24 heures avant l'heure de début de l'expérience.
-                                            </template>
-                                            <template v-else-if="language_pag === 'Es'">
-                                            Para obtener un reembolso completo, debe cancelar al menos 24horas de antes de la hora de incio de la experiencia.
-                                            </template>
+                                            {{ $t('experience.detail-page.text-politic-standar-2') }}
                                         </p>
                                         <p class="text-[8px] sp:text-sm lg:w-[45%] flex items-center">
                                             <img 
@@ -393,7 +391,7 @@
                                                 alt="1.TH.BULLET.LIST"
                                                 class="w-[8px] sp:w-4 h-[8px] sp:h-4 mr-[4px] sp:mr-2"
                                             >
-                                            Cuaquier cambio realizado menos de 24 horas antes de la hora de inicio de la experiencia no será aceptado.
+                                            {{ $t('experience.detail-page.text-politic-standar-3') }}
                                         </p>
                                         <p class="text-[8px] sp:text-sm lg:w-[45%] flex items-center">
                                             <img 
@@ -401,20 +399,20 @@
                                                 alt="1.TH.BULLET.LIST"
                                                 class="w-[8px] sp:w-4 h-[8px] sp:h-4 mr-[4px] sp:mr-2"
                                             >
-                                            Si cancela al menos 24 horas antes de la hora de inicio de la experiencia, el monto de pago no será reembolsado.
+                                            {{ $t('experience.detail-page.text-politic-standar-4') }}
                                         </p>
                                         <p class="text-[8px] sp:text-sm lg:w-[45%] flex items-center">
                                             <img 
                                                 src="/assets/icons/1.TH.BULLET.LIST.svg"
                                                 class="w-[8px] sp:w-4 h-[8px] sp:h-4 mr-[4px] sp:mr-2"
                                             >
-                                            Los horarios de corte se basan en la hora local de la experiencia.
+                                            {{ $t('experience.detail-page.text-politic-standar-5') }}
                                         </p>
                                     </div>
                                 </template>
                                 <template v-else>
                                     <p class="text-[8px] sp:text-sm">
-                                        Esta experiencia no es reembolsable y no se puede cambiar por ningún motivo. Si la cancela o pide una modificación, no se le devolverá el importe abonado.
+                                        {{ $t('experience.detail-page.text-politic-notrembolsable') }}
                                     </p>
                                 </template>
                             </div>
@@ -423,15 +421,15 @@
                     </div>
 
                     <!-- Calendario -->
-                    <div id="" class="hidden lg:block col-12 col-lg-4 pl-4 pr-2 fixed-calendar relative z-10">
+                    <div v-if="experienceViatorData && schedulesData" id="" class="hidden lg:block lg:col-span-1 pl-4 pr-2 fixed-calendar relative z-10">
                         <div class="container-calendar h-36 w-full sticky rounded-2xl p-4 z-10" id="container-calendar">
-                            <!-- <ShowReserveViator /> -->
+                            <DetailPageSectionReserve />
                         </div>
                     </div>
                 </div>
             </div>
 
-    </div>
+    </template>
 </template>
 
 
@@ -440,9 +438,12 @@
     import { useRouter } from 'vue-router'
     import { Carousel, Pagination, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
+    import { transformDuration } from '@/utils/utils.js'
 
     // COMPONENTS
     import THTooltip from '@/components/THTooltip' 
+    import DetailPageSectionReserve from './DetailPageSectionReserve'
+    import DetailPageProductOption from './DetailPageProductOption'
     
     const route = useRouter()
 
@@ -455,6 +456,7 @@
         }
     })
     const { paramsRouter } = toRefs(props)
+
     
     // STORE
     import { useHotelStore } from '@/stores/modules/hotel'
@@ -462,34 +464,191 @@
     const { hotelData } = hotelStore
 
     import { useExperienceStore } from '@/stores/modules/experience'
+    import experience from '../../i18n/en/experience'   
     const experienceStore = useExperienceStore()
 
+    // DATA STATIC
+    const innerWidth = window.innerWidth
+    const cross = {
+        itemsToShow: 4,
+        snapAlign: 'center',
+    }
+    const breakpoints = {
+        // 700px and up
+        600: {
+            itemsToShow: 1,
+            snapAlign: 'center',
+        },
+        // 700px and up
+        700: {
+            itemsToShow: 2,
+            snapAlign: 'center',
+        },
+        // 700px and up
+        1024: {
+            itemsToShow: 3,
+            snapAlign: 'center',
+        },
+    }
+    const settingsCross = {
+        itemsToShow: 3,
+        snapAlign: 'center',
+    }
+    const settings = {
+        itemsToShow: 1,
+        snapAlign: 'center',
+    }
+
     // DATA
-    const variantPrice = ref(false)
-    const duration = ref(false)
-    const availableLanguages = ref(null)
-    const textDescription = ref(null)
-    const collapseDescriptionEnable = ref(null)
-    const collapseDescription = ref(null)
-    const includes = ref(null)
-    const startMeet = ref(null)
-    const endMeet = ref(null)
-    const mapLinkStart = ref(null)
-    const locations = ref(null)
-    const mapLinkEnd = ref(null)
+    const collapseDescriptionEnable = ref(false)
+    const collapseDescription = ref(false)
 
 
     const experienceData = ref(null)
     const experienceViatorData = ref(null)
     const schedulesData = ref(null)
+    const formReserve = reactive({
+        code: null,
+        date: null,
+        ages: [],
+        hour: null,
+        interval_date: null,
+    })
+    const productOptions = ref([])
 
     onMounted(() => {
         loadExperience()
         loadExperienceInViator()
         loadSchedulesInViator()
+
+        let text = experienceData?.value?.description
+        var num;
+        if (innerWidth > 1024) {
+            num = 447
+        } else {
+            num = 150
+        }
+        collapseDescription.value = text?.length > num
+        collapseDescriptionEnable.value = text?.length > num
     })
 
+    // COMPUTED
+    const includes = computed(() => {
+        return JSON.parse(experienceData?.value.include_experince)
+    })
+    const notincludes = computed(() => {
+        return JSON.parse(experienceData?.value.not_include_experince)
+    })
+    const duration = computed( ()  => {
+        let d = transformDuration(experienceData?.value.duration)
+        let text = d?.minutes <= 0 ? `${d?.hours} h aprox` : `${d?.hours} h y ${d?.minutes} min aprox`
+        return text
+    })
+    const variantPrice = computed(() => {
+        return schedulesData?.bookableItems?.[0].seasons?.[0].pricingRecords?.[0].pricingDetails?.[0]?.maxTravelers
+    })
+    const availablelanguages = computed( ()  => {
+        let languages = experienceData?.value.language_experince
+        languages = languages?.split(', ')
+        let text = ''
+        return {
+            'numbers': languages?.length - 1,
+            'firstLanguage': languages?.[0],
+            'length': languages?.length,
+        }
+    })
+    const textDescription = computed( ()  => {
+        let text = experienceData?.value.description
+        if (collapseDescription.value) {
+            let num = null
+            let points = ''
+            if (screen.width > 1024) {
+                num = 447;
+                text.length > num ? points = '...' : points = '';
+            } else {
+                num = 150;
+                text.length > num ? points = '...' : points = '';
+            }
+            if (num) {
+                text = text.substring(0,num) + points;
+            }
+        }
+        return text
+    })
+    const locations = computed(() => {
+        return experienceData.value?.location
+    })
+    const mapLinkStart = computed(() => {
+        if (locations.value?.[0].provider == 'GOOGLE') {
+            if (locations[0]?.result?.geometry) {
+                const lat = locations[0].result.geometry.location.lat
+                const lng = locations[0].result.geometry.location.lng
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+                return mapsUrl;
+            } else {
+                return '#'
+            }
+        } else {
+            if (locations[0]?.center) {
+                const lat = locations[0].center.latitude
+                const lng = locations[0].center.longitude
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+                return mapsUrl;
+            } else {
+                return '#'
+            }
+        }
+    })
+    const mapLinkEnd = computed(() => {
+        if (locations.value?.[1].provider == 'GOOGLE') {
+            if (locations[1]?.result?.geometry) {
+                const lat = locations[1].result.geometry.lat
+                const lng = locations[1].result.geometry.lng
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+                return mapsUrl;
+            } else {
+                return '#'
+            }
+        } else {
+            if (locations[1]?.center) {
+                const lat = locations[1].center.latitude
+                const lng = locations[1].center.longitude
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+                return mapsUrl;
+            } else {
+                return '#'
+            }
+        }
+    })
+    const startMeet = computed(()  => {
+        if (locations.value?.[0].provider == 'GOOGLE') {
+            return locations.value?.[0]?.result?.formatted_address
+        } else {
+            let description = `${locations.value?.[0]?.name}, ${locations.value?.[0]?.address?.street}, ${locations.value?.[0]?.address?.administrativeArea}, ${locations.value?.[0]?.address?.country}`
+            return description
+        }
+        return ''
+    })
+    const endMeet = computed(()  => {
+        if (locations.value?.[1].provider == 'GOOGLE') {
+            return locations.value?.[1]?.result?.formatted_address
+        } else {
+            let description = `${locations.value?.[1]?.name}, ${locations.value?.[1]?.address?.street}, ${locations.value?.[1]?.address?.administrativeArea}, ${locations.value?.[1]?.address?.country}`
+            return description
+        }
+        return ''
+    })
 
+    // PROVIDE
+    provide('variantPrice', variantPrice)
+    provide('formReserve', formReserve)
+    provide('schedulesData', schedulesData)
+    provide('experienceData', experienceData)
+    provide('productOptions', productOptions)
+    provide('experienceViatorData', experienceViatorData)
+
+
+    // FUNCTION
 
     async function loadExperience () {
         let { slug } = paramsRouter.value

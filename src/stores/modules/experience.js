@@ -48,7 +48,7 @@ export const useExperienceStore = defineStore('experience', () => {
 
     async function $apiFindSchedulesInVIator (params) {
         const response = await findSchedulesInVIatorApi(params)
-        console.log(response, 'response')
+        // console.log(response, 'response')
         return response
     }
 

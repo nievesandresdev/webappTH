@@ -3,7 +3,7 @@
         class="icon relative flex items-center leading-3"
     >
         <slot name="button"></slot>
-        <div class="tooltip" :class="[`width-${size}`]" :style="styles">
+        <div class="tooltipp" :class="[`width-${size}`]" :style="styles">
             <slot name="content"></slot>
         </div>
     </span>
@@ -36,7 +36,7 @@
 </script>
 
 <style scoped>
-    .tooltip{
+    .tooltipp{
         position: absolute;
         border: none;
         background-color: #fff;

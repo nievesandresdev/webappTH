@@ -31,6 +31,7 @@ function initializeApp () {
     app.use(router)
     app.config.globalProperties.$utils = utils
     app.config.globalProperties.$moment = moment
+    app.provide('$moment', app.config.globalProperties.$moment)
     app.mount('#app')
 
 }
