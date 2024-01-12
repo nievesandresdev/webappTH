@@ -10,6 +10,16 @@ p{
 p,a{
     font-family: 'Montserrat', sans-serif !important;
 }
+/* Eliminar el anillo (outline) predeterminado en todos los elementos de entrada al enfocar */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none;
+  border: none;
+  box-shadow: none !important;
+}
+
 /* @import './hoster-colors'; */
 /* @import './hoster-buttons'; */
 
@@ -94,3 +104,4 @@ p,a{
   overflow: hidden; /* Oculta el texto que sobrepasa el ancho del contenedor */
   text-overflow: ellipsis; /* Agrega los tres puntos al final del texto truncado */
 }
+

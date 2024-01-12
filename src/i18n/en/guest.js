@@ -1,5 +1,5 @@
 export default{
-    "guest-log":{
+    "guestLog":{
         "title":"Access to the webapp",
         "name":{
             "label":"Name and surname",

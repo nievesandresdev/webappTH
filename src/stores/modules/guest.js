@@ -14,7 +14,10 @@ export const useGuestStore = defineStore('guest', () => {
     // STATE
     const guestData = ref(null)
     const guestId = ref(getUrlParam('g') || null)
-
+    const stayId = ref(getUrlParam('e') || null)
+    //stay store
+    const stayStore = useStayStore()
+    const { stayData } = stayStore
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
@@ -50,12 +53,15 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findLastStay (guestId) {
+        
         const response = await findLastStayApi(guestId)
         const { ok } = response   
         if(ok){
-            const stayStore = useStayStore()
             stayStore.setStayData(response.data)
             return response.data
+        }
+        if(stayId.value){
+            const response = await stayStore.loadLocalStay();
         }
         return null
     }

@@ -29,6 +29,10 @@ import GuestEn from './en/guest';
 import GuestEs from './es/guest';
 import GuestFr from './fr/guest';
 
+import ChatEn from './en/chat';
+import ChatEs from './es/chat';
+import ChatFr from './fr/chat';
+
 const messages = {
   en: {
     experience: experienceEn,
@@ -38,6 +42,7 @@ const messages = {
     messageRequest: messageRequestEn,
     stay: StayEn,
     guest: GuestEn,
+    chat: ChatEn,
     // más módulos...
   },
   es: {
@@ -48,6 +53,7 @@ const messages = {
     messageRequest: messageRequestEs,
     stay: StayEs,
     guest: GuestEs,
+    chat: ChatEs,
     // más módulos...
   },
   fr: {
@@ -58,6 +64,7 @@ const messages = {
     messageRequest: messageRequestFr,
     stay: StayFr,
     guest: GuestFr,
+    chat: ChatFr,
     // más módulos...
   },
 };
