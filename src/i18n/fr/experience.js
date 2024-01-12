@@ -19,7 +19,12 @@ export default {
             "placeholder-price-max": "Maximum..",
             "label-duration": "Durée"
         },
+        "section-filter-history": {
+            "btn-price": "Jusqu'à {price_max}",
+            "btn-close": "Supprimer le filtre"
+        },
         "btn-more-filter": "Plus de filtres",
+        "btn-submit-filter": "Appliquer des filtres",
         "text-count-list": "Expériences mitigées",
         "text-count-list-mobile": "Se han encontrado {count} experiencias.",
         "without-results": {

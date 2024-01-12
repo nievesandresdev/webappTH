@@ -33,13 +33,13 @@
             </div>
             <div class="flex content-center">
                 <div class="search-desk lg:block" v-if="['PlaceList', 'PlaceDetail', 'ExperienceList', 'ExperienceDetail'].includes($route.name)">
-                    <InputSearch />
+                    <InputAutocompleteSearch />
                 </div>
                 <DropdownLanguage />
             </div>
         </div>
         <div  class="container-fluid-landing pb-3 search-tablet" v-if="['PlaceList', 'PlaceDetail', 'ExperienceList', 'ExperienceDetail'].includes($route.name)">
-            <InputSearch />
+            <InputAutocompleteSearch />
         </div>
     </header>
 </template>
@@ -47,7 +47,7 @@
 <script setup>
     import { ref, provide, computed } from 'vue'
     import DropdownLanguage from './DropdownLanguage'
-    import InputSearch from '@/components/InputSearch'
+    import InputAutocompleteSearch from '@/components/InputAutocompleteSearch'
 
     // STATE
     import { useLocaleStore } from '@/stores/modules/locale'

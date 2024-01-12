@@ -5,7 +5,7 @@
     <div v-if="open" ref="refDropdownContainer"  class="absolute bg-white shadow-md p-4 z-50 rounded-sm" style="width: 300px !important; top: 44px;" :style="left ? 'left: -220px !important;' : 'left: 0px !important;'" >
         <div class="relative">
             <input 
-                class="h-11 w-full border rounded-6 pl-10 text-sm" 
+                class="h-11 w-full border rounded-[6px] pl-[40px] text-sm" 
                 v-model="city"
                 @input="searchCity"
             >
@@ -91,6 +91,7 @@
         debounce.value = setTimeout(async() => {
             if(city.value){
                 const response = await cityStore.$apiGetAll({search: city.value})
+                console.log(response, 'response')
                 if (response.ok) {
                     cities.value = response.data
                 }

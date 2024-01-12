@@ -17,15 +17,21 @@ export default {
             "placeholder-price-min": "Mínimo..",
             "label-price-max": "Precio máx.",
             "placeholder-price-max": "Máximo..",
-            "label-duration": "Duración"
+            "label-duration": "Duración",
+        },
+        "section-filter-history": {
+            "btn-price": "Hasta {price_max}",
+            "btn-close": "Quitar filtro"
         },
         "btn-more-filter": "Más filtros",
+        "btn-submit-filter": "Aplicar flitros",
         "text-count-list": "Experiencias encontradas",
         "text-count-list-mobile": "Se han encontrado {count} experiencias.",
         "without-results": {
             "title": "No se han encontrado experiencias",
             "text": "No se han encontrado experiencias en esta ciudad. Te invitamos a explorar en otras ciudades, en ellas descubrirás diversas experiencias y actividades."
         },
+        
         "btn-load-more": "Cargar más"
     }
 }

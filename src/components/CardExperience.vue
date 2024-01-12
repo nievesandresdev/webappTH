@@ -2,14 +2,14 @@
     <div
         class="w-full card-exp rounded-t-lg text-left"
         :class="{'cursor-pointer':!$utils.isMockup(),'no-hover':$utils.isMockup()}"
-        @click="goActivity(data)"
+        @click="goExperience(data)"
     >
          <div class="container-image rounded-t-lg w-full relative">
             <img
                 class="img w-full h-full lg:h-48 2xl:h-52 overflow-hidden rounded-t-lg object-cover"
                 :src="data.image?.url"
                 loading="lazy"
-                alt="img_act"
+                :alt="data.image?.url"
             >
             <div
                 class="absolute bottom-2 left-2 text-[6px] sp:text-[10px] text-white font-semibold rounded p-1 flex items-center"
@@ -58,9 +58,9 @@
             {{data.title}}
         </h5>
         <div class="mt-1 sp:mt-2 flex">
-            <div class="flex items-center gap-0.5 sp:gap-1 mr-1 sp:mr-2">
+            <div v-if="data?.reviews?.combined_average_rating" class="flex items-center gap-0.5 sp:gap-1 mr-1 sp:mr-2">
                 <img
-                    v-for="(item, index) in Math.ceil(data.reviews?.combined_average_rating)" :key="index"
+                    v-for="(item, index) in Math.ceil(data?.reviews?.combined_average_rating)" :key="index"
                     :src="`/assets/icons/1.TH.REVIEW.svg`"
                     class="w-4 h-4"
                     :alt="`star_${index}`"
@@ -79,6 +79,8 @@
 
 <script setup>
     import { onMounted, computed } from 'vue'
+    import { useRouter } from 'vue-router'
+    const route = useRouter()
 
     const { data } = defineProps({
         data: {
@@ -104,7 +106,8 @@
     //     return images[0].url
     // }
 
-    function goActivity (item) {
+    function goExperience (item) {
+        route.push({name: 'ExperienceDetail', params:{ slug: item.slug }})
     }
 
 </script>

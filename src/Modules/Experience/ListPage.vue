@@ -3,10 +3,10 @@
     <div id="mobile-header-list" class="mobile-header md:hidden px-3.5 mt-4">
 
         <div class="flex items-center w-full justify-center mb-2.5 sp:mb-4">
-            <InputSearch />
+            <InputAutocompleteSearch />
             <button 
                 class=""
-                data-toggle="modal" data-target="#filtersmobile"
+                @click="openModalFilter"
             >
                 <img class="inline-block md:hidden w-3.5 sp:w-4 h-3.5 sp:h-4 absolute top-3.5 sp:top-4 right-3.5 mt-2.5 mr-4" src="/assets/icons/icon-filter.svg">
             </button>
@@ -15,7 +15,7 @@
         <!-- title,language,filters IN MOBILE-->
         <div class="mt-0 sp:mt-3.5 md:hidden flex justify-between">
             <h2 class="text-xs sp:text-lg font-medium my-auto relative w-full">
-                {{ $t('experience.list-page.section-filter.title') }}
+                {{ $t('experience.list-page.title') }}
                 <template v-if="innerWidth <= 700">
                     <THSearchCity
                         right
@@ -27,7 +27,7 @@
                     >
                         <template v-slot:button>
                             <span class="py-2 cursor-pointer p-0 inline-block" id="listCity" @click="dropdownSerchCity = !dropdownSerchCity">
-                                {{formFilterCity.city}}
+                                {{ formFilter.city || hotelData.zone }}
                                 <img
                                     :src="`/assets/icons/${!dropdownSerchCity ? '1.TH.I.DROPDOWN.svg' : '1.TH.I.DROPDOWN.OPEN.svg'}`" alt="icon_close"
                                     class="w-4 h-4 ml-1 inline-block"
@@ -136,10 +136,10 @@
                                 :checked="formFilter.duration.includes(dur.id)"
                             >
                             <label class="text-sm mb-0">
-                                {{dur.name[localeCurrent]}}
+                                {{dur.name[$i18n.locale]}}
                             </label>
                         </span>
-                        <span class="inline-block text-sm">{{countDuration?.[dur.id]?.['count']}}</span>
+                        <span class="inline-block text-sm">{{numbersByFilterDuration?.duration?.[dur.id]?.['count']}}</span>
                     </div>
                 </div>
             </div>
@@ -169,10 +169,10 @@
                             @submitSearchCity="submitSearchCity($event)"
                         >
                             <template v-slot:button>
-                                <button class="text-lg lg:text-[22px] font-medium my-auto hbtn-primary plain cursor-pointer" @click="dropdownSerchCity">
+                                <button class="text-lg lg:text-[22px] font-medium my-auto hbtn-primary plain cursor-pointer" @click="dropdownSerchCity = !dropdownSerchCity">
                                     {{ $t('experience.list-page.title') }}
                                     
-                                    <span class="py-2 p-0 " id="listCity">{{formFilter.city}}  
+                                    <span class="py-2 p-0 " id="listCity">{{ formFilter.city || hotelData.zone }}  
                                         <img
                                             :src="`/assets/icons/${!dropdownSerchCity ? '1.TH.I.DROPDOWN.svg' : '1.TH.I.DROPDOWN.OPEN.svg'}`" alt="icon_close"
                                             class="w-4 h-4 ml-1 inline-block"
@@ -184,6 +184,76 @@
                     </div>
                 </div>
                 <!-- END title section-->
+
+                                <!-- info filter active-->
+                <div v-if="filterActive" class="flex md:mt-6 items-center relative mb-4 md:mb-0 h-auto" :class="{'md:pl-5':widthSon > widthFather}">
+                    <!-- slider icons-->
+                    <template v-if="widthSon > widthFather">
+                        <img  
+                            class="absolute z-30 cursor-pointer left-0" src="/assets/icons/left_carusel.svg"
+                            @click="()=> containerFilter.scrollLeft = 0"
+                        >
+                        <img  
+                            class="absolute z-30 cursor-pointer right-0" src="/assets/icons/right_carusel.svg"
+                            @click="()=> containerFilter.scrollLeft = 200"
+                        >
+                    </template>
+                    <!--end slider icons-->
+
+                     <!-- id="container-filters" -->
+                    <div  class="flex items-center overflow-x-auto px-0 w-full">
+                        <div class="flex">
+                            <!-- price tag filter-->
+                            <div
+                                v-if="formFilter.price_min || formFilter.price_max"
+                                class="h-8 text-sm font-medium relative pl-2 md:pl-4 pr-6 md:pr-7 border border-dark rounded-lg inline-block whitespace-nowrap py-1.5 mr-2 hbtn-primary"
+                            >
+                                {{ $t('experience.list-page.section-filter-history.btn-price', {price_min: `${formFilter.price_min}€`, price_max: `${formFilter.price_max}€` }) }}
+                                <img 
+                                    class="w-4 h-4 absolute right-1.5 top-2 cursor-pointer" 
+                                    src="/assets/icons/1.TH.CLOSE.svg"
+                                    @click="()=>{formFilter.price_min= null; formFilter.price_max= null; submitFilter()}"
+                                >
+                            </div>
+                            <!--END price tag filter-->
+
+                            <!-- DURATION tag filter-->
+                            <div
+                                v-for="duration in formFilter.duration" :key="duration"
+                                class="h-8 text-sm font-medium relative pl-2 md:pl-4 pr-6 md:pr-7 border border-dark rounded-lg inline-block whitespace-nowrap py-1.5 mr-2 hbtn-primary"
+                            >   
+                                {{ durationList.find(item => item.id == duration).name[$i18n.locale] }}
+                                <img 
+                                    class="w-4 h-4 absolute right-1.5 top-2 cursor-pointer" 
+                                    src="/assets/icons/1.TH.CLOSE.svg"
+                                    @click="()=>{formFilter.duration = formFilter.duration.filter(dur=> dur !== duration); submitFilter()}"
+                                >
+                            </div>
+                            <!-- END duration tag filter-->
+                            
+                            <div
+                                v-if="formFilter.search"
+                                class="h-8 text-sm font-medium relative pl-2 md:pl-4 pr-6 md:pr-7 border border-dark rounded-lg inline-block whitespace-nowrap py-1.5 hbtn-primary"
+                            >   
+                                {{ formFilter.search }}
+                                <img 
+                                    class="w-4 h-4 absolute right-1.5 top-2 cursor-pointer" 
+                                    src="/assets/icons/1.TH.CLOSE.svg"
+                                    @click="()=>{ formFilter.search = ''; submitFilter()}"
+                                >
+                            </div>
+                            <!--END seatch filter-->
+                        </div>
+                        <button 
+                            v-if="filterActive" 
+                            class="text-sm font-medium underline px-3"
+                            @click="clearFilters"
+                        >
+                            {{ $t('experience.list-page.section-filter-history.btn-close') }}
+                        </button>
+                    </div>
+                </div>
+                <!-- END info filter active-->
                 
                 <h3 v-if="experiencesData.length > 0" class="hidden md:block text-base lg:text-sm font-medium md:mt-4 lg:mt-6 mb-4">
                     {{ paginateData?.total }}
@@ -213,7 +283,7 @@
                 </h5>
 
                 <!--load more -->
-                <div v-if="experiencesData.length < paginateData?.total" class="w-full mt-4 lg:mt-6 grid grid-cols-1 lg:grid-cols-3 lg:gap-4 justify-items-center" style="max-width:954px;">
+                <div v-if="(experiencesData.length > 0) && (experiencesData.length < paginateData?.total)" class="w-full mt-4 lg:mt-6 grid grid-cols-1 lg:grid-cols-3 lg:gap-4 justify-items-center" style="max-width:954px;">
                     <button class="w-full invisible hidden lg:block">
                         cargar mas
                     </button>
@@ -230,15 +300,35 @@
         </div>
         <!-- END desktop-list-content -->
 
+        <FormFilterMobile
+            @submit:filter="submitFilter"
+            @click:clearFilters="clearFilters"
+            @click:close="closeModalFilter"
+        />
+
+
     </div>
 </template>
 
 <script setup>
-    import { ref, reactive, onMounted } from 'vue';
+    import { ref, reactive, onMounted, inject, watch, toRefs, computed, provide } from 'vue'
+    import { useRouter } from 'vue-router'
+    const route = useRouter()
 
     // COMPONENTS
+    import FormFilterMobile from './components/FormFilterMobile'
     import THSearchCity from './components/THSearchCity'
     import CardExperience from '@/components/CardExperience'
+    import InputAutocompleteSearch from '@/components/InputAutocompleteSearch'
+
+    // PROPS
+    const props = defineProps({
+        queryRouter: {
+            type: Object,
+            default: () => ({})
+        }
+    })
+    const { queryRouter } = toRefs(props)
 
     // STORE
     import { useLocaleStore } from '@/stores/modules/locale'
@@ -251,6 +341,7 @@
 
     import { useExperienceStore } from '@/stores/modules/experience'
     const experienceStore = useExperienceStore()
+    
 
     // DATA STATIC
     const durationList = [
@@ -262,16 +353,15 @@
     const innerWidth = window.innerWidth
 
     // DATA
+    const modalFilter = ref(false)
     const dropdownSerchCity = ref(false)
     const formFilterCity = reactive({
         city: ''
     })
     const formFilter = reactive({
-        page: 1,
         price_min: null,
         price_max: null,
         duration: [],
-        load_more: null,
         search:null,
         city: null,
     })
@@ -279,37 +369,127 @@
     const experiencesData = ref([])
     const paginateData = reactive({
         total: 0,
-        current_page: 0,
-        per_page: 0,
+        current_page: 1,
+        per_page: 1,
         last_page: 0,
         from_page: 0,
         to: 0,
     })
+    const page = ref(1)
     const experiencesCount = ref(0)
+    const containerFilter = ref(null)
+    const numbersByFilterDuration = ref(null)
+
+    //PROVIDE
+    provide('formFilter', formFilter)
+    provide('durationList', durationList)
+    provide('numbersByFilterDuration', numbersByFilterDuration)
+    provide('modalFilter', modalFilter)
 
     // ONMOUNTED
     onMounted(() => {
-        loadExperinces()
+        containerFilter.value = document.getElementById('container-filters');
+
+        loadQueryInFormFilter()
+        loadExperiences()
+        loadNumbersByFilters()
     })
 
-    // FUNCTION`
-    async function loadExperinces () {
-        console.log(formFilter, 'formFilter')
-        const response = await experienceStore.$apiGetAll(formFilter)
+    // WATCH
+    watch(() => route.query, (newQuery) => {
+    }, { immediate: true })
+
+    // COMPUTED
+    const filterActive = computed(() => {
+        for (const key in queryRouter.value) {
+            if (queryRouter.value[key] != '' && queryRouter.value[key] != null || (Array.isArray(queryRouter.value[key]) && queryRouter.value[key].length > 0)) {
+                return true
+            }
+        }
+        return false
+    })
+    
+    const widthFather = computed(() => (document.getElementById('container-filters')?.offsetWidth))
+    const widthSon = computed(() => (document.getElementById('container-filters-child')?.offsetWidth))
+
+    // FUNCTION
+    async function loadNumbersByFilters () {
+        const response = await experienceStore.$apiGetNumbersByFilters(formFilter)
+        if (response.ok) {
+            numbersByFilterDuration.value = response.data
+        }
+    }
+
+    async function loadExperiences () {
+
+        const response = await experienceStore.$apiGetAll({page: page.value,...formFilter})
         if (response.ok) {
             Object.assign(paginateData, response.data.paginate)
-            experiencesData.value.push(response.data.data)
+            page.value = paginateData.current_page
+            experiencesData.value = [...experiencesData.value, ...response.data.data]
         }
     }
     function submitSearchCity (city) {
         formFilter.city = city
+        submitFilter()
     }
     function loadMore () {
-        formFilter.page = paginateData.current_page++
-        loadExperinces()
+        page.value+=1
+        // console.log(page.value, 'loadMore')
+        loadExperiences()
     }
     function submitFilter (){
+        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilter)} })
+        page.value = 1
+        experiencesData.value = []
+        closeModalFilter()
+        loadNumbersByFilters()
+        loadExperiences()
+    }
 
+    function filterNonNullAndNonEmpty(obj) {
+        const filteredObject = {}
+        Object.keys(obj).forEach(key => {
+
+            if (obj[key] !== null && obj[key] !== '') {
+                if (Array.isArray(obj[key]) && obj[key].length > 0) {
+                    filteredObject[key] = obj[key]
+                }
+                else if (!Array.isArray(obj[key])) {
+                    filteredObject[key] = obj[key]
+                }
+            }
+        })
+        return filteredObject
+    }
+
+    function loadQueryInFormFilter () {
+        for (const [key, value] of Object.entries(queryRouter.value || {})) {
+            if (formFilter.hasOwnProperty(key)) {
+                formFilter[key] = value
+            }
+        }
+        // console.log(formFilter, 'loadQueryInForm')
+    }
+
+    function clearFilters () {
+         const formFilterDefault = {
+            price_min: null,
+            price_max: null,
+            duration: [],
+            search:null,
+            city: null,
+        }
+        Object.assign(formFilter, formFilterDefault)
+        submitFilter()
+    }
+
+    function openModalFilter () {
+        modalFilter.value = true
+    }
+
+    function closeModalFilter () {
+        modalFilter.value = false
     }
 
 </script>
