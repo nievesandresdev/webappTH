@@ -55,11 +55,11 @@
             </li>
             <li
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
-                @click="mark_read_msgs"
+                @click="markReadMsgs"
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['chat'].includes($route.name) ? `/assets/icons/1.TH.ChatBubble.svg` : `/assets/icons/Chatbubblelineoutline.svg`"
+                    :src="['WindowChatMobile'].includes($route.name) ? `/assets/icons/1.TH.ChatBubble.svg` : `/assets/icons/Chatbubblelineoutline.svg`"
                     alt="TH.CHAT"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -73,7 +73,7 @@
 
 <script setup>
     import { ref, provide, onMounted, defineProps, defineEmits } from 'vue'
-
+    import { useRouter } from 'vue-router';
     defineProps({
         msgs_unread: {
             type: Boolean,
@@ -81,7 +81,9 @@
         },
     })
 
-    const emit  = defineEmits(['mark_read_msgs'])
+    const emit  = defineEmits(['markReadMsgs'])
+    const router = useRouter();
+
     //ONMOUNTED
     onMounted(() => {
         //
@@ -103,10 +105,10 @@
     provide('modal_reserve', modal_reserve)
     //COMPuted
     //FUNCTIONS
-    function mark_read_msgs(){
+    function markReadMsgs(){
         // if(!isMockup){
-            // Inertia.get(route('chat.mobile', {hoster:slug_hoster}))
-            emit('mark_read_msgs')
+            emit('markReadMsgs')
+            router.push({ name: 'WindowChatMobile' });
         // }
     }
 

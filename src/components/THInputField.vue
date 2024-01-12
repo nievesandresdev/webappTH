@@ -29,7 +29,7 @@
         </template>
       </button>
       <div
-        class="custom-dropdown-menu"
+        class="custom-dropdown-menu max-h-[104px] lg:max-h-[264px] overflow-y-scroll"
         :class="{'show': showOptions}"
       >
         <div

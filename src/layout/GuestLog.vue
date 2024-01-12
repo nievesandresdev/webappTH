@@ -1,10 +1,13 @@
 <template>
     <Dialog :open="openModal" class="relative">
-      <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-      <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
-  
-      <!-- Full-screen container to center the panel -->
-      <div class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200] ">
+    <!-- The backdrop, rendered as a fixed sibling to the panel container -->
+    <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
+
+    <!-- Full-screen container to center the panel -->
+    <div 
+        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200]" 
+        :class="openModal ? 'dialog-enter-active' : 'dialog-leave-active'"
+    >
         <!-- The actual dialog panel -->
         <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
@@ -56,65 +59,87 @@
             </div>
             
         </DialogPanel>
-      </div>
+    </div>
     </Dialog>
-  </template>
-  
-  <script setup>
-    import { onMounted, reactive, ref, computed, watch } from 'vue';
-    import THInputText from '@/components/THInputText.vue';
-    import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
-    import { Dialog } from '@headlessui/vue'
-    import { useGuestStore } from '@/stores/modules/guest'
+</template>
 
-    const props = defineProps({
-        openModal: {
-            type:Boolean,
-            default:false
-        }
-    })
-    
-    const emit = defineEmits(['closeModal']);
+<script setup>
+import { onMounted, reactive, ref, computed, watch } from 'vue';
+import THInputText from '@/components/THInputText.vue';
+import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
+import { Dialog } from '@headlessui/vue'
+import { useGuestStore } from '@/stores/modules/guest'
+import { useLocaleStore } from '@/stores/modules/locale'
 
-    //data
-    const errorsKey = ref([]);
-    const emailError = ref(false);
-    const subject = ref(null);
-    const processingForm = ref(false);
-    const guestStore = useGuestStore()
-    const { guestData } = guestStore;
-
-    const form = reactive({
-        name: guestData?.name ?? null,
-        email: guestData?.email ?? null,
-        language: guestData?.lang_web ?? 'es',
-    });
-
-    onMounted(()=>{
-        console.log('guestmodla',guestData)
-    })
-
-    const submitForm = async () =>{
-        processingForm.value = true
-        const response = await guestStore.saveOrUpdate(form);
-        processingForm.value = false
-        if(response){
-            emit('closeModal')
-        }
+const props = defineProps({
+    openModal: {
+        type:Boolean,
+        default:false
     }
+})
 
-    //COMPUTED
-    const valid = computed(() => {
-        return form.name && !emailError.value && form.email
-    })
+const emit = defineEmits(['closeModal']);
 
-    // Observa los cambios en guestData y actualiza el formulario
+//data
+const errorsKey = ref([]);
+const emailError = ref(false);
+const subject = ref(null);
+const processingForm = ref(false);
+const guestStore = useGuestStore()
+const { guestData } = guestStore;
+
+const form = reactive({
+    name: guestData?.name ?? null,
+    email: guestData?.email ?? null,
+    language: guestData?.lang_web || localStorage.getItem('locale') || 'es'
+});
+
+onMounted(()=>{
+    console.log('guestmodla',guestData)
+})
+
+const submitForm = async () =>{
+    processingForm.value = true
+    const response = await guestStore.saveOrUpdate(form);
+    processingForm.value = false
+    if(response){
+        emit('closeModal')
+    }
+}
+
+//COMPUTED
+const valid = computed(() => {
+    return form.name && !emailError.value && form.email
+})
+
+// Observa los cambios en guestData y actualiza el formulario
 watch(() => guestStore.guestData, (newGuestData) => {
-  if (newGuestData) {
-    form.name = newGuestData.name;
-    form.email = newGuestData.email;
-    form.language = newGuestData.lang_web;
-  }
+if (newGuestData) {
+form.name = newGuestData.name;
+form.email = newGuestData.email;
+form.language = newGuestData.lang_web;
+}
 }, { immediate: true }); // El flag 'immediate' asegura que se ejecute inmediatamente después de la creación del watcher
-  </script>
+</script>   
+<style scoped>
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.dialog-enter-active {
+    animation: fadeIn 0.5s ease;
+}
+
+.dialog-leave-active {
+    animation: fadeOut 0.5s ease;
+}
+</style>
+
+
 

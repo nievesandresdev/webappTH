@@ -22,7 +22,7 @@
           leave-from-class="transform scale-100 opacity-100"
           leave-to-class="transform scale-95 opacity-0"
       >
-          <MenuItems class="absolute left-0 origin-top-right rounded-lg bg-white shadow w-full">
+          <MenuItems class="absolute left-0 origin-top-right rounded-lg bg-white shadow w-full z-[300]">
               <MenuItem v-for="(item, index) in lgsAll" :key="index">
                   <button
                       class="flex p-3 hover:bg-gray-100 w-full text-left"

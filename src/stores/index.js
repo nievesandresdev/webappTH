@@ -8,7 +8,7 @@ export const pinia = createPinia();
 
 export const useMainStore = defineStore('main', () => {
     // const URL_STORAGE = ref(process.env.VUE_APP_STORAGE_URL)
-    const URL_STORAGE = 'http://localhost:8001'
+    const URL_STORAGE = 'https://test.thehoster.io/'
     return {
         URL_STORAGE,
     }

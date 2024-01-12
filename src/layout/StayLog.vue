@@ -4,7 +4,10 @@
       <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
   
       <!-- Full-screen container to center the panel -->
-      <div class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200] ">
+      <div 
+        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200]" 
+        :class="openModal ? 'dialog-enter-active' : 'dialog-leave-active'"
+    >
         <!-- The actual dialog panel -->
         <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
@@ -125,7 +128,7 @@
         numberguests:'1',
         checkDate:null,
         listGuest:[],
-        language: 'es',
+        language: localStorage.getItem('locale') || 'es',
         guestId: null,
     });
     const errorsKey = ref([]);
@@ -174,3 +177,22 @@
     })
   </script>
 
+    <style scoped>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    .dialog-enter-active {
+        animation: fadeIn 0.5s ease;
+    }
+
+    .dialog-leave-active {
+        animation: fadeOut 0.5s ease;
+    }
+    </style>

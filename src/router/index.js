@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homeRoutes from './homeRoutes'
 import experienceRoutes from './experienceRoutes'
+import chatRoutes from './chatRoutes'
+
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { loadSubdomain } from '@/utils/utils.js'
@@ -11,6 +13,7 @@ const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFo
 const routes = [
   ...homeRoutes,
   ...experienceRoutes,
+  ...chatRoutes,
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 

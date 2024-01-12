@@ -6,25 +6,21 @@
 			<GeneralMenu/>
 		</div>
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
-			<slot
-                :settings="settings" 
-                :chat_hours="chat_hours"
-                :chat_messages="messages"
-            ></slot>
+			<slot></slot>
             <router-view></router-view>
-            <!-- <div 
-                v-if="stay_session && show_chat_guest" 
-                class="bubble-chat hidden lg:block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
+            <div 
+                v-if="stayDataRef && showChat && windowWidth > 767" 
+                class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
                 :class="{'hbg-warning':msgs_unread,'hbg-gray-100':!msgs_unread}"
-                @click="mark_msgs_as_read()" 
+                @click="markMsgsAsRead()" 
             >
-                <img class="w-10 h-10" src="/vendor_asset/img/hoster/icons/estancia/Chatbubblelineoutline.svg" alt="chat">
-            </div> -->
+                <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
+            </div>
 		</div>
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile :msgs_unread="msgs_unread = false"  @mark_read_msgs="mark_msgs_as_read"/>
+			<MenuMobile :msgs_unread="msgs_unread = false"  @markReadMsgs="markMsgsAsRead"/>
 		</div>
         <template v-if="footer">
             <TheFooter />
@@ -33,16 +29,17 @@
 		<!-- <Notify v-if="$page.props.flash.id" :key="$page.props.flash.id" /> -->
 		<!-- <ModalNotify /> -->
 
-        <!-- <transition name="slide">
-            <div v-if="show_chat" class="window-chat hbg-white-100 w-[438px] hidden lg:block fixed right-0 bottom-0 z-[1000]">
+        <transition name="slide">
+            <div v-if="openChat && windowWidth > 767" class="window-chat hbg-white-100 w-[438px] hidden lg:block fixed right-0 bottom-0 z-[1000]">
                 <Chat 
-                    @closechat="show_chat = false"
-                    :settings="settings" 
-                    :chat_hours="chat_hours"
-                    :chat_messages="messages"
+                    @closechat="openChat = false"
+                    :settings="chatSettings" 
                 />
+                <!-- 
+                    :chat_hours="chat_hours"
+                    :chat_messages="messages" -->
             </div>
-        </transition> -->
+        </transition>
 
         <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
         <GuestLog :openModal="showGuestLog" @closeModal="closeGuestLog"/>
@@ -51,21 +48,25 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, onUnmounted } from 'vue';
-    // import Notify from '@/Pages/Collaborator/Layouts/Notify.vue'
+    // vue
+    import { onMounted, ref, onUnmounted, computed, watch, provide } from 'vue';
+    // components
     import GeneralMenu from './Components/GeneralMenu.vue'
     import TheFooter from './Components/TheFooter.vue'
     import MenuMobile from './Components/MenuMobile.vue'
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
+    import Chat from '@/Modules/Chat/WindowChat.vue'
+    //stores
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest'
+    import { useLocaleStore } from '@/stores/modules/locale'
+    import { useHotelStore } from '@/stores/modules/hotel';
+    import { getUrlParam } from '@/utils/utils.js'
     // import ModalNotify from '@/Components/ModalNotify'
     // import { getPusherInstance } from '@/util/pusherSingleton'
-    // import Chat from '@/Pages/HosterLanding/Chat/Window.vue'
     // import ScheduleModal from '@/Pages/HosterLanding/ScheduleModal.vue'
     // import Favicon from '../Components/Favicon.vue'
-    // import { usePage } from '@inertiajs/inertia-vue3'
     /* eslint-disable */
     const props = defineProps({
        footer:{
@@ -74,31 +75,40 @@
        }
     })
 
+    //store
+    const hotelStore = useHotelStore()
+    const stayStore = useStayStore()
+    const { stayData } = stayStore;
+    const stayDataRef = ref(null)
+
+    const guestStore = useGuestStore()
+    const localeStore = useLocaleStore()
+
     //DATA
+    const windowWidth = ref(window.innerWidth);
     const showGuestLog = ref(false)
     const showStayLog = ref(false)
-    // const slug_hoster = usePage().props.value.user_hoster.slug;
     // const current_route = usePage().props.value.route_name;
-    // const show_chat_guest = usePage().props.value.user_hoster.chat_settings?.show_guest;
-    const settings = ref({});
+    const chatSettings = ref(hotelStore?.hotelData?.chatSettings ?? {});
+    const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
     const chat_hours = ref([]);
     // const chat = ref({});
     const messages = ref([]);        
-    // const show_chat = ref(false);     
+    const openChat = ref(false);     
     // const channel_chat = ref(null);
     // const pusher = ref(null);   
     const showMenuMobile = ref(true); 
-    // provide('showMenuMobile', showMenuMobile);
-
-    //store
-    const stayStore = useStayStore()
-    const { stayData } = stayStore;
-
-    const guestStore = useGuestStore()
+    const langWebByUrl = ref(getUrlParam('lang'));
+    provide('showMenuMobile', showMenuMobile);
 
     //ONMOUNTED
     onMounted(() => {
-        loadWebDataModals();
+        if(langWebByUrl.value){
+            localeStore.$change(langWebByUrl.value)
+        }
+        setTimeout(() => {
+            loadWebDataModals();
+        }, 1000);
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
     //     if(stay_session){
@@ -107,7 +117,7 @@
     //         chat.value = data_pending?.chat ?? null;
     //         chat_hours.value = data_pending?.chat_hours ?? [];
     //         messages.value = data_pending?.messages ?? [];
-    //         settings.value = data_pending?.settings ?? [];
+    //         chatSettings.value = data_pending?.settings ?? [];
     //     }
     //     if (mockup === 'true') {
     //         // Cambia el cursor para el mockup
@@ -137,7 +147,7 @@
     //         channel_chat.value.bind('App\\Events\\UpdateChatEvent', function(data) {
     //             messages.value = [...messages.value, data.message];
     //             // si el chat esta abierto se marca como leido el mensaje
-    //             if(data.message.by == 'Hoster' && show_chat.value || data.message.by == 'Hoster' && current_route == 'chat.mobile'){
+    //             if(data.message.by == 'Hoster' && openChat.value || data.message.by == 'Hoster' && current_route == 'chat.mobile'){
     //                 mark_msgs_as_read();
     //             }
     //         });
@@ -159,6 +169,7 @@
     // }
 
     const loadWebDataModals = async () => {
+
         try {
             const guestLogResult = await guestStore.loadLocalGuest();
             showGuestLog.value = guestLogResult ? false : true;
@@ -184,23 +195,29 @@
 
     const closeGuestLog = () => {
         showGuestLog.value = false;
-        loadWebStay();
+        setTimeout(() => {
+            loadWebStay();
+        }, 1000);
     }
 
     const closeStayLog = () => {
-        console.log('closeStayLog')
-        showStayLog.value = false
+        setTimeout(() => {
+            console.log('closeStayLog')
+            showStayLog.value = false
+        }, 1000);
     }
     
 
     const updateGuest = () => {
-        showStayLog.value = false;
-        showGuestLog.value = true;
+        setTimeout(() => {
+            showStayLog.value = false;
+            showGuestLog.value = true;
+        }, 1000);
     }
 
 
-    const mark_msgs_as_read = () =>{
-    //     show_chat.value = true
+    const markMsgsAsRead = () =>{
+        openChat.value = true
     //     if(messages.value.length){
     //         axios({
     //             url: route('chat.mark_msgs_as_read',{hoster:slug_hoster,stay_id:stay_session.stay?.id}),
@@ -211,18 +228,20 @@
     }
 
     //COMPUTED
-    // const  msgs_unread = computed(() => {
-    //     const count_msgs = messages.value.length;
-    //     const arr = messages.value;
-    //     for (let i = count_msgs - 1; i >= 0; i--) {
-    //         if (arr[i].status == 'Entregado' && arr[i].by == 'Hoster') {
-    //             return true;
-    //         }
-    //     }
-    //     return false
-    // })
+    const  msgs_unread = computed(() => {
+        // const count_msgs = messages.value.length;
+        // const arr = messages.value;
+        // for (let i = count_msgs - 1; i >= 0; i--) {
+        //     if (arr[i].status == 'Entregado' && arr[i].by == 'Hoster') {
+        //         return true;
+        //     }
+        // }
+        return false
+    })
 
-    
+    watch(() => stayStore.stayData, (newStayData) => {
+        stayDataRef.value = newStayData;
+    }, { immediate: true }); 
 </script>
 
 <style scoped>

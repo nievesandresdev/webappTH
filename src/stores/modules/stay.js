@@ -48,11 +48,9 @@ export const useStayStore = defineStore('stay', () => {
         }else{
             stayData.value = null;
         }
-        console.log('createAndInviteGuest',stayData.value)
         return stayData.value
     }
     function setStayData (data) {
-        console.log('setStayData',data)
         stayData.value = data;
         localStorage.setItem('stayId', stayData.value.id)
     }

@@ -36,7 +36,6 @@ export const useGuestStore = defineStore('guest', () => {
                 guestData.value = null;
             }
         }
-        console.log('loadLocalGuest',guestData.value)
         return guestData.value
     }
 
@@ -50,7 +49,6 @@ export const useGuestStore = defineStore('guest', () => {
         }else{
             guestData.value = null;
         }
-        console.log('saveOrUpdate',guestData.value)
         return guestData.value
     }
 
@@ -60,13 +58,10 @@ export const useGuestStore = defineStore('guest', () => {
         const { ok } = response   
         if(ok){
             stayStore.setStayData(response.data)
-            console.log('findLastStay',response.data)
             return response.data
         }
-        console.log('findLastStay',null)
         if(stayId.value){
             const response = await stayStore.loadLocalStay();
-            console.log('entro',response)
         }
         return null
     }

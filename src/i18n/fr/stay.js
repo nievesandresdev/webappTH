@@ -1,16 +1,16 @@
 export default{
     "stayLog":{
-        "title":"Acceso a la webapp",
+        "title": "Accès à la webapp",
         "checkDate":{
-            "label":"Fecha Check-in/ Check-out",
-            "placeholder": "dd/mm/aaaa - dd/mm/aaaa",
+            "label": "Date d'arrivée/départ",
+            "placeholder": "jj/mm/aaaa - jj/mm/aaaa",
         },
-        "howPeople":"¿Cuántas personas se alojaron?",
-        "button":"Siguiente",
-        "backButton":"Volver a atrás",
-        "addGuest":"+ Enviar a otro huésped",
-        "deleteGuest":"Eliminar",
-        "guest": "Huesped",
-        "processing":"Processing",
+        "howPeople": "Combien de personnes sont restées ?",
+        "buuton": "Suivant",
+        "backButton": "Retourner",
+        "addGuest": "+ Envoyer à un autre invité",
+        "deleteGuest": "Supprimer",
+        "invite": "Invité",
+        "traitement": "Traitement",
     }
 }
