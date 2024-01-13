@@ -11,8 +11,8 @@
             <div 
                 v-if="stayDataRef && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
-                :class="{'hbg-warning':msgs_unread,'hbg-gray-100':!msgs_unread}"
-                @click="markMsgsAsRead()" 
+                :class="{'hbg-warning':unreadMsgs,'hbg-gray-100':!unreadMsgs}"
+                @click="openWindowChat" 
             >
                 <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
             </div>
@@ -20,7 +20,7 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile :msgs_unread="msgs_unread = false"  @markReadMsgs="markMsgsAsRead"/>
+			<MenuMobile :msgs_unread="unreadMsgs = false"  @markReadMsgs="markMsgsAsRead"/>
 		</div>
         <template v-if="footer">
             <TheFooter />
@@ -37,7 +37,7 @@
                 />
                 <!-- 
                     :chat_hours="chat_hours"
-                    :chat_messages="messages" -->
+                     -->
             </div>
         </transition>
 
@@ -49,7 +49,8 @@
 
 <script setup>
     // vue
-    import { onMounted, ref, onUnmounted, computed, watch, provide } from 'vue';
+    import { onMounted, ref, onUnmounted, watch, provide } from 'vue';
+    import { useRoute } from 'vue-router';
     // components
     import GeneralMenu from './Components/GeneralMenu.vue'
     import TheFooter from './Components/TheFooter.vue'
@@ -62,9 +63,14 @@
     import { useGuestStore } from '@/stores/modules/guest'
     import { useLocaleStore } from '@/stores/modules/locale'
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useChatStore } from '@/stores/modules/chat';
+
     import { getUrlParam } from '@/utils/utils.js'
+
+
     // import ModalNotify from '@/Components/ModalNotify'
-    // import { getPusherInstance } from '@/util/pusherSingleton'
+    import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
+
     // import ScheduleModal from '@/Pages/HosterLanding/ScheduleModal.vue'
     // import Favicon from '../Components/Favicon.vue'
     /* eslint-disable */
@@ -83,22 +89,26 @@
 
     const guestStore = useGuestStore()
     const localeStore = useLocaleStore()
+    const chatStore = useChatStore()
 
     //DATA
     const windowWidth = ref(window.innerWidth);
     const showGuestLog = ref(false)
     const showStayLog = ref(false)
-    // const current_route = usePage().props.value.route_name;
     const chatSettings = ref(hotelStore?.hotelData?.chatSettings ?? {});
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
-    const chat_hours = ref([]);
-    // const chat = ref({});
-    const messages = ref([]);        
-    const openChat = ref(false);     
-    // const channel_chat = ref(null);
-    // const pusher = ref(null);   
     const showMenuMobile = ref(true); 
     const langWebByUrl = ref(getUrlParam('lang'));
+    //chat
+    const chat_hours = ref([]);
+    const chat = ref({});
+    const messages = ref([]);        
+    const openChat = ref(false);     
+    const channel_chat = ref(null);
+    const pusher = ref(null);   
+    const isSubscribed = ref(false);
+    const unreadMsgs = ref(false);
+    const route = useRoute();
     provide('showMenuMobile', showMenuMobile);
 
     //ONMOUNTED
@@ -123,50 +133,47 @@
     //         // Cambia el cursor para el mockup
     //         document.body.style.cursor = "url('/vendor_asset/img/hoster/2-th-hotspot.cur'), auto";
     //     }
-        
-    //     connect_pusher()
     })
 
     onUnmounted(() => {
-    //     if (channel_chat.value) {
-    //         channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
-    //         pusher.value.unsubscribe(channel_chat.value);
-    //     }
+        if (channel_chat.value) {
+            console.log("Desuscribiendo  del canal pusher:", channel_chat.value);
+            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+            pusher.value.unsubscribe(channel_chat.value);
+        }
     });
-    
 
-    // const connect_pusher = () =>{
-    /*
-    //PUSHER
-    */
-    // if(stay_session){
-    //         channel_chat.value = 'private-update-chat.' + stay_session.stay?.id;
-    //         pusher.value = getPusherInstance();
-    //         //
-    //         channel_chat.value = pusher.value.subscribe(channel_chat.value);
-    //         channel_chat.value.bind('App\\Events\\UpdateChatEvent', function(data) {
-    //             messages.value = [...messages.value, data.message];
-    //             // si el chat esta abierto se marca como leido el mensaje
-    //             if(data.message.by == 'Hoster' && openChat.value || data.message.by == 'Hoster' && current_route == 'chat.mobile'){
-    //                 mark_msgs_as_read();
-    //             }
-    //         });
-    //         channel_chat.value.bind('App\\Events\\MsgReadChatEvent', function(data) {
-    //             const count_msgs = messages.value.length;
-    //             const arr = messages.value;
-    //             if(msgs_unread.value){
-    //                 for (let i = count_msgs - 1; i >= 0; i--) {
-    //                     if (arr[i].status == 'Entregado' && arr[i].by == 'Hoster') {
-    //                         arr[i].status = 'Leído';
-    //                     } else if (arr[i].status == 'Entregado') {
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //              messages.value = arr;
-    //         });
-    //     }
-    // }
+    const connect_pusher = () => {
+        if (stayDataRef.value && !isSubscribed.value) {
+            const channelName = 'private-update-chat.' + stayDataRef.value.id;
+            if (!isChannelSubscribed(channelName)) {
+                channel_chat.value = channelName;
+                pusher.value = getPusherInstance();
+                channel_chat.value = pusher.value.subscribe(channel_chat.value);
+                channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    chatStore.addMessage(data.message);
+                    // si el chat esta abierto se marca como leido el mensaje
+                    if(
+                        data.message.by == 'Hoster' && openChat.value || 
+                        data.message.by == 'Hoster' && route.name == 'WindowChatMobile'
+                    ){
+                        await chatStore.markMsgsAsRead();
+                        unreadMsgs.value = false;
+                    }
+                    await chatStore.unreadMsgs();
+                });
+            isSubscribed.value = true; // Marcar como suscrito
+            }
+        } else if (!stayDataRef.value && isSubscribed.value) {
+            // Lógica para desuscribirse del canal si stayDataRef.value es null o undefined
+            if (channel_chat.value) {
+            console.log("Desuscribiendo del canal pusher:", channel_chat.value);
+            pusher.value.unsubscribe(channel_chat.value);
+            isSubscribed.value = false; // Marcar como no suscrito
+            }
+        }
+    };
+
 
     const loadWebDataModals = async () => {
 
@@ -215,32 +222,34 @@
         }, 1000);
     }
 
-
-    const markMsgsAsRead = () =>{
-        openChat.value = true
-    //     if(messages.value.length){
-    //         axios({
-    //             url: route('chat.mark_msgs_as_read',{hoster:slug_hoster,stay_id:stay_session.stay?.id}),
-    //             method: 'POST',
-    //         }).then( res => {
-    //         });
-    //     }
+    const openWindowChat = () => {
+        openChat.value = true;
+        if(stayDataRef.value){
+            chatStore.markMsgsAsRead();
+        }
     }
 
-    //COMPUTED
-    const  msgs_unread = computed(() => {
-        // const count_msgs = messages.value.length;
-        // const arr = messages.value;
-        // for (let i = count_msgs - 1; i >= 0; i--) {
-        //     if (arr[i].status == 'Entregado' && arr[i].by == 'Hoster') {
-        //         return true;
-        //     }
-        // }
-        return false
-    })
+    const markMsgsAsRead = () => {
+        if(stayDataRef.value){
+            chatStore.markMsgsAsRead();
+        }
+    }
 
-    watch(() => stayStore.stayData, (newStayData) => {
-        stayDataRef.value = newStayData;
+    watch(() => stayStore.stayData, async (newStayData) => {
+    stayDataRef.value = newStayData;
+    // Intentar conectar pusher con los nuevos datos
+      connect_pusher();
+      if(stayDataRef.value){
+        chatStore.unreadMsgs();
+      }
+    }, { immediate: true });
+
+    watch(() => chatStore.unreadMsgsRef, (newVal, oldVal) => {
+        if (newVal) {
+            unreadMsgs.value = true;
+        } else {
+            unreadMsgs.value = false;
+        }
     }, { immediate: true }); 
 </script>
 

@@ -30,7 +30,7 @@
                     <img class="w-7 lg:w-5 mt-3.5 mx-2" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/'+lg.abbreviation+'.svg'" alt="">
                 </div>
             </div>
-            <div v-for="msg in chat_messages" :key="msg" class="min-w-[156px] lg:min-w-[125px] max-w-[246px] lg:max-w-[336px] mb-3.5 lg:mb-6" :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}">
+            <div v-for="msg in messages" :key="msg" class="min-w-[156px] lg:min-w-[125px] max-w-[246px] lg:max-w-[336px] mb-3.5 lg:mb-6" :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}">
                 <p class="break-words text-sm xs:p-1 p-2  rounded-[6px] mt-2" :class="{'hbg-gray-100':msg.by == 'Guest','hbg-white-100':msg.by !== 'Guest'}">
                     {{ msg.text }}
                 </p>
@@ -48,13 +48,13 @@
                 v-model="msg"
                 @focus="hideMenu"
                 @blur="showMenu"
-                @keyup.enter="e => { send_msg(e); showMenu(); }"
+                @keyup.enter="e => { sendMsg(e); showMenu(); }"
                 @keydown.enter="e => handleEnter(e)"
             ></textarea>
             <div class="ml-2 my-auto" >
                 <IconHover 
-                    @click="send_msg"
-                    @touchend.prevent.stop="send_msg"
+                    @click="sendMsg"
+                    @touchend.prevent.stop="sendMsg"
                     :src="'/assets/icons/2.TH.Sendicon.svg'"
                     :height_icon="'24px'"
                     :width_icon="'24px'"
@@ -73,9 +73,11 @@
     import IconHover from '@/components/IconHover.vue'
     import Moment from 'moment'
     import { useStayStore } from '@/stores/modules/stay'
+    import { useChatStore } from '@/stores/modules/chat'
     //store
-    const stayStore = useStayStore()
+    const stayStore = useStayStore();
     const { stayData } = stayStore;
+    const chatStore = useChatStore();
     //imports components
     const emit = defineEmits(['closechat'])
     const langPage = 'es';
@@ -88,27 +90,17 @@
         chat_hours: {
             type: Array,
             default: () => ([]),
-        },
-        chat_messages: {
-            type: Array,
-            default: () => ([]),
-        },
-    })
-    
-    // Observa cambios en chat_messages
-    watch(() => props.chat_messages, (newValue, oldValue) => {
-        setTimeout(scrollToBottom, 100);
-        clearTimeouts();
-    })
-    watch(() => props.chat_hours, (newValue, oldValue) => {
-        setTimeout(watch_availability, 100);
+        }
     })
 
+    //DATA
+    const messages = ref(null)
+    const msg = ref(null);
+    const isAvailable = ref(false);
+    const timeouts = ref([]);
+
     //mounted
-    onMounted(() => {
-        console.log('chatmounted',props.settings)
-        get_messages();
-        setTimeout(scrollToBottom, 100);
+    onMounted( async () => {
         watch_availability();
         nextTick(() => {
             const textarea = document.getElementById('text-auto');
@@ -120,6 +112,10 @@
         
         // Actualizar la altura cuando cambie el tamaño de la ventana
         window.addEventListener('resize', setDivHeight);
+        messages.value =  await chatStore.loadMessages();
+        setTimeout(scrollToBottom, 50);
+        clearTimeouts();
+        console.log('chatmounted',messages.value)
     });
 
     onBeforeUnmount(() => {
@@ -141,15 +137,19 @@
         }
     };
 
-    //DATA
-    const msg = ref(null);
-    const messages_list = ref(props.chat_messages);
-    const isAvailable = ref(false);
-    const automatic_msg = ref(false);
-    const msg_status = ref('Entregado');
-    const by_msg = ref('Guest');
-    const timeouts = ref([]);
-    const send_not_available_msg = ref(false);
+    watch(() => props.chat_hours, (newValue, oldValue) => {
+        setTimeout(watch_availability, 100);
+    })
+
+    // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
+    watch(messages, (newMessages) => {
+    nextTick(() => {
+        console.log('Messages updated, scrolling to bottom');
+        scrollToBottom();
+    });
+    }, { deep: true });
+
+
     //functions
 
     const showMenuMobile = inject('showMenuMobile');
@@ -163,73 +163,27 @@
     showMenuMobile.value = true;
     setDivHeight()
 };
-    const send_msg = (e)=>{
+    const sendMsg = (e)=>{
         showMenuMobile.value = true;
-        send_not_available_msg.value = false;
-        automatic_msg.value = false;
-        // e.stopPropagation();
         if (!e.shiftKey && msg.value) {
+            //servicio para enviar mensaje
             let text = msg.value;
             msg.value = null;
-            by_msg.value = 'Guest';
-            msg_status.value = 'Entregado';
-            send_axios(text);
+            let params = {
+                text,
+                guestId : localStorage.getItem('guestId'),
+                stayId : localStorage.getItem('stayId'),
+                langWeb : localStorage.getItem('locale') || 'es',
+                isAvailable : true
+            };
+            chatStore.sendMsgToHoster(params);
             // Desenfocar el campo de entrada para cerrar el teclado
             const inputElement = document.getElementById('text-auto');
             if (inputElement) {
             inputElement.blur();
             }
-
             document.getElementById('text-auto').style.height = '40px';
         }
-    }
-
-    const send_automatic_msg = (text)=>{
-        automatic_msg.value = true;
-        msg_status.value = 'Leído';
-        by_msg.value = 'Hoster';
-        send_axios(text);
-    }
-
-    const send_axios = (text) => {
-        // if(stayData){
-        //     axios({
-        //         url: route('chat.send.msg',{
-        //             hoster:slug_hoster,
-        //             stay_id:stayData?.id,
-        //             text,
-        //             automatic:automatic_msg.value,
-        //             status:msg_status.value,
-        //             by:by_msg.value,
-        //             isAvailable:isAvailable.value
-        //         }),
-        //         method: 'POST',
-        //     })
-        //     .then((res) => {
-        //         startAutomaticsMsgs();
-        //     })
-        // }
-    }
-
-
-    const startAutomaticsMsgs = () => {
-        //mensaje automatico cuando no hay agente disponible
-        // if(!isAvailable.value  && props.settings.not_available_show && !send_not_available_msg.value)
-        // {
-        //     send_not_available_msg.value = true;
-        //     send_automatic_msg(props.settings.not_available_msg[langPage])
-        // }
-    };
-
-    const get_messages = () =>{
-        // axios({
-        //     url: route('chat.get_chat_messages',{hoster:slug_hoster,stay_id:stayData.id}),
-        //     method: 'POST',
-        // })
-        // .then((res) => {
-        //     console.log('get_messages',res.data)
-        //     messages_list.value = res.data
-        // })
     }
 
     const watch_availability = () =>{
