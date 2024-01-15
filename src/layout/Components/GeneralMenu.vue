@@ -3,11 +3,12 @@
         <div class="container-fluid-landing py-2.5 w-full flex justify-between items-center">
             <div class="flex items-center">
                 <div  class="ml-2 mr-6 relative">
-                    <a
+                    <router-link
+                        to="/"
                         class="font-medium no-underline text-sm"
                     >
                         Home
-                    </a>
+                    </router-link>
                     <div class="active absolute top-5 left-0 w-full" v-if="$route.name == 'Home'" />
                 </div>
                 <div  class="ml-2 mr-6 relative">

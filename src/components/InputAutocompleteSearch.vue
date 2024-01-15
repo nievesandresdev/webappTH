@@ -54,11 +54,17 @@
 
 <script setup>
     //import libraries
-    import { ref, computed, provide, watch } from 'vue'
+    import { ref, computed, provide, watch, onMounted } from 'vue';
     import { slufy } from '@/utils/utils.js'
         import { useUtilityStore } from '@/stores/modules/utility'
     //import component
     import InputSearchModalMobile from './InputSearchModalMobile'
+
+    // PROPS
+    const props = defineProps({
+        type: String,
+        default: null
+    })
 
     // STORE
     const utilityStore = useUtilityStore()
@@ -126,7 +132,9 @@
     provide('data', data)
     provide('formSearch', formSearch)
 
-    
+    onMounted(()=>{
+        formSearch.type = props.type
+    })    
 
     // FUNCTIONS
     function toggleDropdown () {
@@ -189,20 +197,6 @@
         let city = $slufy(item.city)
         const hoster = hotel.value.slug;
         const slug = item?.slug;
-        if (formSearch.type == 'experience') {
-            let data = {hoster, slug}
-            Inertia.get(route('experiences.show', data));
-        }
-        if (formSearch.type == 'place') {
-            let data = {hoster, place_id: item.id}
-            Inertia.get(route('places.show', data));
-        }
-        if (formSearch.type == 'city') {
-            setTimeout(() => {
-                toggleDropdownCalendar()
-            }, 300);
-            //ref_btn_toggle_calendar.value.click()
-        }
     }
 </script>
 

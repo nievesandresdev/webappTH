@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid-list">
         <!-- desktop-list-breadcrumb -->
-        <div class="desktop-list-breadcrumb mtb-40 hidden md:block">
+        <div class="desktop-list-breadcrumb my-[40px] hidden md:block">
             <router-link to="/" class="text-sm font-medium text-gray-ao no-link">
                 Home    
             </router-link>
@@ -16,7 +16,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-3 xl:grid-cols-5 lg:pt-4 w-full gap-6">
             <div class="md:col-span-1 hidden md:block w-full">
-                <SiderbarDesktop @click:changeCategory="submitFilter" />
+                <MenuCategory @click:changeCategory="submitFilter" />
             </div>
             <div class="md:col-span-2 xl:col-span-4 pb-[40px]">
                 <!-- destock -->
@@ -79,7 +79,7 @@
 
     // COMPONENTS
     import THSearchCity from '@/components/THSearchCity'
-    import SiderbarDesktop from './components/SiderbarDesktop'
+    import MenuCategory from './components/MenuCategory'
     import CardProduct from '@/components/CardProduct'
 
         // PROPS

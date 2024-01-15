@@ -28,7 +28,7 @@
                     v-model="formSearch.search"
                     type="text"
                     class="border-2 rounded-lg w-full py-2 border-gray-300 pl-12"
-                    :placeholder="$t('layout.input-search.placeholder')"
+                    :placeholder="$route.name == 'PlaceList' ? 'Destinos...' : $t('layout.input-search.placeholder')"
                     @input="inputSearch()"
                 >
             </div>
@@ -102,6 +102,10 @@
 
     function selectSearch () {
 
+    }
+
+    function closeModal () {
+        showDropdownMobile.value = false
     }
 
     function inputSearch () {
