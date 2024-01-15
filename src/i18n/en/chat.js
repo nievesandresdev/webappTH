@@ -1,7 +1,9 @@
 export default {
-    "availabilty": "Disponible",
-    "notAvailabilty": "No disponible",
-    "horary": "Horario",
-    "languages":"Bienvenido al chat. Aquí tienes un listado con los idiomas hablados por nuestro personal, podrás comunicarte en cualquiera de ellos.",
-    "inputChat": "Escribe un mensaje...",
+    "availabilty": "Available",
+    "notAvailabilty": "Not available",
+    "horary": "Schedule",
+    "languages":"Welcome to the chat. Here you have a list of the languages spoken by our staff, you can communicate in any of them.",
+    "inputChat": "Write a message...",
+    "scheduleTitle": "Chat Availability",
+    "scheduleNote": "**During periods of high demand, our staff may appear unavailable. When the workload decreases, they will be available to answer your questions",
 }

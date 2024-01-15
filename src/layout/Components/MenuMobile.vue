@@ -57,6 +57,7 @@
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
                 @click="markReadMsgs"
             >
+                <span v-if="chatStore.hasUnreadMessages" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
                     :src="['WindowChatMobile'].includes($route.name) ? `/assets/icons/1.TH.ChatBubble.svg` : `/assets/icons/Chatbubblelineoutline.svg`"
@@ -74,6 +75,7 @@
 <script setup>
     import { ref, provide, onMounted, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router';
+    import { useChatStore } from '@/stores/modules/chat';
     defineProps({
         msgs_unread: {
             type: Boolean,
@@ -83,7 +85,7 @@
 
     const emit  = defineEmits(['markReadMsgs'])
     const router = useRouter();
-
+    const chatStore = useChatStore();
     //ONMOUNTED
     onMounted(() => {
         //
@@ -96,9 +98,6 @@
     const modal_lang = ref(false)
 
     // const isMockup = usePage().url.value.includes('mockup=true');
-    // const stay_session = usePage().props.value.stay_session
-    // const hotel = usePage().props.value.user_hoster;
-    // const slug_hoster = hotel.slug;
 
     //PROVIDE
     provide('modal_find_reserve', modal_find_reserve)

@@ -11,7 +11,7 @@
             <div 
                 v-if="stayDataRef && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
-                :class="{'hbg-warning':unreadMsgs,'hbg-gray-100':!unreadMsgs}"
+                :class="{'hbg-warning':chatStore.hasUnreadMessages,'hbg-gray-100':!chatStore.hasUnreadMessages}"
                 @click="openWindowChat" 
             >
                 <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
@@ -20,14 +20,13 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile :msgs_unread="unreadMsgs = false"  @markReadMsgs="markMsgsAsRead"/>
+			<MenuMobile  @markReadMsgs="markMsgsAsRead"/>
 		</div>
         <template v-if="footer">
             <TheFooter />
         </template>
 
 		<!-- <Notify v-if="$page.props.flash.id" :key="$page.props.flash.id" /> -->
-		<!-- <ModalNotify /> -->
 
         <transition name="slide">
             <div v-if="openChat && windowWidth > 767" class="window-chat hbg-white-100 w-[438px] hidden lg:block fixed right-0 bottom-0 z-[1000]">
@@ -35,13 +34,8 @@
                     @closechat="openChat = false"
                     :settings="chatSettings" 
                 />
-                <!-- 
-                    :chat_hours="chat_hours"
-                     -->
             </div>
         </transition>
-
-        <!-- <ScheduleModal :chat_hours="chat_hours" /> -->
         <GuestLog :openModal="showGuestLog" @closeModal="closeGuestLog"/>
         <StayLog :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
@@ -64,14 +58,9 @@
     import { useLocaleStore } from '@/stores/modules/locale'
     import { useHotelStore } from '@/stores/modules/hotel';
     import { useChatStore } from '@/stores/modules/chat';
-
-    import { getUrlParam } from '@/utils/utils.js'
-
-
-    // import ModalNotify from '@/Components/ModalNotify'
+    //extra
     import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
-
-    // import ScheduleModal from '@/Pages/HosterLanding/ScheduleModal.vue'
+    import { getUrlParam } from '@/utils/utils.js'
     // import Favicon from '../Components/Favicon.vue'
     /* eslint-disable */
     const props = defineProps({
@@ -107,7 +96,6 @@
     const channel_chat = ref(null);
     const pusher = ref(null);   
     const isSubscribed = ref(false);
-    const unreadMsgs = ref(false);
     const route = useRoute();
     provide('showMenuMobile', showMenuMobile);
 
@@ -121,14 +109,6 @@
         }, 1000);
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
-    //     if(stay_session){
-    //         let data_pending = usePage().props.value.guest_data_pending_init
-    //         console.log('data_pending',usePage().props.value.guest_data_pending_init)
-    //         chat.value = data_pending?.chat ?? null;
-    //         chat_hours.value = data_pending?.chat_hours ?? [];
-    //         messages.value = data_pending?.messages ?? [];
-    //         chatSettings.value = data_pending?.settings ?? [];
-    //     }
     //     if (mockup === 'true') {
     //         // Cambia el cursor para el mockup
     //         document.body.style.cursor = "url('/vendor_asset/img/hoster/2-th-hotspot.cur'), auto";
@@ -137,7 +117,6 @@
 
     onUnmounted(() => {
         if (channel_chat.value) {
-            console.log("Desuscribiendo  del canal pusher:", channel_chat.value);
             channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
             pusher.value.unsubscribe(channel_chat.value);
         }
@@ -158,7 +137,6 @@
                         data.message.by == 'Hoster' && route.name == 'WindowChatMobile'
                     ){
                         await chatStore.markMsgsAsRead();
-                        unreadMsgs.value = false;
                     }
                     await chatStore.unreadMsgs();
                 });
@@ -167,7 +145,6 @@
         } else if (!stayDataRef.value && isSubscribed.value) {
             // Lógica para desuscribirse del canal si stayDataRef.value es null o undefined
             if (channel_chat.value) {
-            console.log("Desuscribiendo del canal pusher:", channel_chat.value);
             pusher.value.unsubscribe(channel_chat.value);
             isSubscribed.value = false; // Marcar como no suscrito
             }
@@ -209,7 +186,6 @@
 
     const closeStayLog = () => {
         setTimeout(() => {
-            console.log('closeStayLog')
             showStayLog.value = false
         }, 1000);
     }
@@ -243,14 +219,7 @@
         chatStore.unreadMsgs();
       }
     }, { immediate: true });
-
-    watch(() => chatStore.unreadMsgsRef, (newVal, oldVal) => {
-        if (newVal) {
-            unreadMsgs.value = true;
-        } else {
-            unreadMsgs.value = false;
-        }
-    }, { immediate: true }); 
+    
 </script>
 
 <style scoped>
