@@ -220,12 +220,12 @@
 
     // WATCH
     watch(typeplacesTranslate, (valueCurrent)=>{
-        if (!formFilter.typeplace) {
-            formFilter.typeplace = typeplacesTranslate.value?.[0].id
-        }
-        if (!formFilter.categoriplace) {
-            formFilter.categoriplace = typeplacesTranslate.value?.[0].categori_places?.[0].id  
-        }
+        // if (!formFilter.typeplace) {
+        //     formFilter.typeplace = typeplacesTranslate.value?.[0].id
+        // }
+        // if (!formFilter.categoriplace) {
+        //     formFilter.categoriplace = typeplacesTranslate.value?.[0].categori_places?.[0].id  
+        // }
     })
 
     // FUNCTION

@@ -129,10 +129,10 @@
     const page = ref(0)
 
     // ONMOUNTED
-    onMounted(() => {
-        loadPlaces()
-        loadTypePlaces()
+    onMounted(async () => {
+        await loadTypePlaces()
         loadCategoriPlaces()
+        loadPlaces()
     })
 
     // PROVIDER
@@ -147,14 +147,20 @@
             Object.assign(paginateData, response.data.paginate)
             page.value = paginateData.current_page
             placesData.value = [...placesData.value, ...response.data.data]
-
         }
     }
 
     async function loadTypePlaces () {
         const response = await placeStore.$apiGetTypePlaces()
         if (response.ok) {
+            loadQueryInFormFilter()
             typeplaces.value = response.data
+            if (!formFilter.typeplace) {
+                formFilter.typeplace = typeplaces.value?.[0].id
+            }
+            if (!formFilter.categoriplace) {
+                formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id  
+            }
         }
     }
 
