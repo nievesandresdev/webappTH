@@ -20,7 +20,6 @@ import * as utils from './utils/utils.js'
 // import { useHotelStore } from '@/stores/modules/hotel'
 
 function initializeApp () {
-
     moment.locale('es')
     moment.tz.setDefault('Europe/Madrid')
 

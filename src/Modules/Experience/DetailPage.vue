@@ -692,6 +692,30 @@
 
 <style lang="scss" scoped>
 
+// #carousel-show-place{
+//     }
+    .carousel__next .carousel__icon, 
+    .carousel__prev .carousel__icon {
+        fill: #000 !important;
+        margin-left: 3px;
+    }
+    .carousel__next > .carousel__icon {
+        margin-left: -1px;
+        margin-top: -3px;
+    }
+    .carousel__prev > .carousel__icon {
+        margin-left: -3px;
+        margin-top: -3px;
+    }
+    .carousel__prev, .carousel__next {
+        top: 35%;
+        background: white !important;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        display: none;
+        transition: all 2s ease;
+        border-radius: 50%;
+    }
+
 .text-underline {
     text-decoration: underline;
 }

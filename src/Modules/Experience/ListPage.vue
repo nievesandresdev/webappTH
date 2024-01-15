@@ -317,7 +317,7 @@
 
     // COMPONENTS
     import FormFilterMobile from './components/FormFilterMobile'
-    import THSearchCity from './components/THSearchCity'
+    import THSearchCity from '@/components/THSearchCity'
     import CardExperience from '@/components/CardExperience'
     import InputAutocompleteSearch from '@/components/InputAutocompleteSearch'
 

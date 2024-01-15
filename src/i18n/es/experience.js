@@ -1,6 +1,6 @@
 export default {
     "breadcrumbs": {
-        "experiences": "Expereriencias",
+        "experiences": "Experiencias",
     },
     "card-experience": {
         "aprox": "aproximadamente",
@@ -34,7 +34,6 @@ export default {
             "title": "No se han encontrado experiencias",
             "text": "No se han encontrado experiencias en esta ciudad. Te invitamos a explorar en otras ciudades, en ellas descubrirás diversas experiencias y actividades."
         },
-        
         "btn-load-more": "Cargar más"
     },
     "detail-page": {
@@ -62,6 +61,5 @@ export default {
         "text-politic-standar-4": "Si cancela al menos 24 horas antes de la hora de inicio de la experiencia, el monto de pago no será reembolsado.",
         "text-politic-standar-5": "Los horarios de corte se basan en la hora local de la experiencia.",
         "text-politic-notrembolsable": "Esta experiencia no es reembolsable y no se puede cambiar por ningún motivo. Si la cancela o pide una modificación, no se le devolverá el importe abonado.",
-        
     }
 }

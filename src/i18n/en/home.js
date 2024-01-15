@@ -1,6 +1,9 @@
 export default {
     "title": 'Home',
+    "title-welcome": "Welcome",
     "btn-see-all": "what to visit",
+    "hab": "ROOM",
+    "btn-more-info": "More information",
     "section-facility": {
       "title": "facilities"
     },

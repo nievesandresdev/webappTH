@@ -2,6 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { i18n } from '@/i18n'
 
+import {
+    getAllApi,
+    getCategoriesByTypeApi,
+    getTypePlacesApi,
+} from '@/api/services/place.services'
+
 import { useMainStore } from '@/stores'
 const mainStore = useMainStore()
 
@@ -16,9 +22,27 @@ export const usePlaceStore = defineStore('place', () => {
         return url
     }
 
+    async function $apiGetAll (params) {
+        const response = await getAllApi(params)
+        return response
+    }
+    async function $apiGetCategoriesByType (params) {
+        const response = await getCategoriesByTypeApi(params)
+        // console.log(response, 'response')
+        return response
+    }
+    async function $apiGetTypePlaces (params) {
+        const response = await getTypePlacesApi(params)
+        // console.log(response, 'response')
+        return response
+    }
+
     //
     return {
         $loadImage,
+        $apiGetAll,
+        $apiGetCategoriesByType,
+        $apiGetTypePlaces,
     }
 
 })

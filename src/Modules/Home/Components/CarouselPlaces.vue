@@ -32,7 +32,7 @@
     import { Carousel, Pagination, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
     //import components
-    import CardProduct from './CardProduct'
+    import CardProduct from '@/components/CardProduct'
 
 
     const props =  defineProps({
@@ -108,7 +108,8 @@
     #carouser-wrapper-places {
         .carousel__next .carousel__icon, 
         .carousel__prev .carousel__icon {
-        fill: #000 !important;
+            fill: #000 !important;
+            margin-left: 3px;
         }
         .carousel__next > .carousel__icon {
             margin-left: -1px;
@@ -119,6 +120,7 @@
             margin-top: -3px;
         }
         .carousel__prev, .carousel__next {
+            top: 35%;
             background-color: white !important; 
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
             display: none;
@@ -127,9 +129,11 @@
         }
         .carousel__prev {
             margin-left: 0.4rem !important;
+            visibility: visible;
         }
         .carousel__next { 
             margin-right: 0.4rem !important; 
+            visibility: visible;
         }
     }
     #carouser-wrapper-places:hover {
