@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import homeRoutes from './homeRoutes'
 import experienceRoutes from './experienceRoutes'
+import placeRoutes from './placeRoutes'
 import chatRoutes from './chatRoutes'
 
 import { useHotelStore } from '@/stores/modules/hotel'
@@ -13,6 +14,7 @@ const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFo
 const routes = [
   ...homeRoutes,
   ...experienceRoutes,
+  ...placeRoutes,
   ...chatRoutes,
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]

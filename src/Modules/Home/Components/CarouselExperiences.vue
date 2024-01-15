@@ -153,7 +153,7 @@
         margin-top: -3px;
     }
     .carousel__prev, .carousel__next {
-        top: 30%;
+        top: 35%;
         background-color: white !important; 
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
         display: none;

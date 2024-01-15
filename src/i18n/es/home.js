@@ -1,6 +1,9 @@
 export default {
     "title": "Home",
+    "title-welcome": "Bienvenido",
     "btn-see-all": "ver todo",
+    "hab": "HAB",
+    "btn-more-info": "Más información",
     "section-facility": {
       "title": "instalaciones"
     },

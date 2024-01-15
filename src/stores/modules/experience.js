@@ -4,6 +4,10 @@ import { i18n } from '@/i18n'
 
 import {
     getAllApi,
+    getNumbersByFiltersApi,
+    findBySlugApi,
+    findInVIatorByShortIdApi,
+    findSchedulesInVIatorApi,
 } from '@/api/services/experiencia.services'
 
 import { useMainStore } from '@/stores'
@@ -22,13 +26,39 @@ export const useExperienceStore = defineStore('experience', () => {
 
     async function $apiGetAll (params) {
         const response = await getAllApi(params)
-        console.log(response, 'response')
+        // console.log(response, 'response')
+        return response
+    }
+    
+    async function $apiGetNumbersByFilters (params) {
+        const response = await getNumbersByFiltersApi(params)
+        // console.log(response, 'response')
+        return response
+    }
+
+    async function $apiFindBySlug (params) {
+        const response = await findBySlugApi(params)
+        return response
+    }
+
+    async function $apiFindInVIatorByShortId (params) {
+        const response = await findInVIatorByShortIdApi(params)
+        return response
+    }
+
+    async function $apiFindSchedulesInVIator (params) {
+        const response = await findSchedulesInVIatorApi(params)
+        // console.log(response, 'response')
         return response
     }
 
     //
     return {
         $apiGetAll,
+        $apiGetNumbersByFilters,
+        $apiFindBySlug,
+        $apiFindInVIatorByShortId,
+        $apiFindSchedulesInVIator,
     }
 
 })

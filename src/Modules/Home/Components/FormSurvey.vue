@@ -62,11 +62,11 @@
     const stayData = null
     // const $moment = inject('moment')
 
-    //watch stayData
-    // watch(stayData, async (value) => {
-    //     await nextTick()
-    //     openSurvey()
-    // })
+    // watch stayData
+    watch(stayData, async (value) => {
+        await nextTick()
+        openSurvey()
+    })
 
     //onmounted
     onMounted(async() => {
@@ -82,9 +82,8 @@
 
     //function
     function openSurvey () {
-        // modal.value = true
         // setTimeout(() => {
-        //     if (mockup.value) return;
+        //     // if (mockup.value) return;
         //     if (stayData.value?.guest) {
         //         let dateNow = $moment()
         //         let dateCheckIn = $moment(`${stayData.value.stay.check_in} ${stayData.value.stay.hour_checkin ?? '00:00'}:00`)

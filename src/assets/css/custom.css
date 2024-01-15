@@ -105,3 +105,10 @@ button:focus {
   text-overflow: ellipsis; /* Agrega los tres puntos al final del texto truncado */
 }
 
+.carousel__prev, .carousel__next {
+    top: 35%;
+    background: white !important;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) !important;
+    transition: all 2s ease;
+    border-radius: 50% !important;
+}

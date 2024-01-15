@@ -21,25 +21,25 @@
                     <a href="javascript:void(0)" class="font-medium no-underline text-sm">
                         {{ $utils.capitalize($t('layout.header.explore')) }}
                     </a>
-                    <div class="active absolute top-5 left-0" v-if="false" />
+                    <div class="active absolute top-5 left-0" v-if="['PlaceList', 'PlaceDetail'].includes($route.name)" />
                 </div>
                 <!-- v-if="hotel.show_experiences" -->
                 <div class="ml-2 mr-6 relative">
                     <a href="javascript:void(0)" class="font-medium no-underline text-sm">
                         {{ $utils.capitalize($t('layout.header.experiences')) }}
                     </a>
-                    <div class="active absolute top-5 left-0" v-if="$route.name == 'ExperienceList'" />
+                    <div class="active absolute top-5 left-0" v-if="['ExperienceList', 'ExperienceDetail'].includes($route.name)" />
                 </div>
             </div>
             <div class="flex content-center">
                 <div class="search-desk lg:block" v-if="['PlaceList', 'PlaceDetail', 'ExperienceList', 'ExperienceDetail'].includes($route.name)">
-                    <InputSearch />
+                    <InputAutocompleteSearch />
                 </div>
                 <DropdownLanguage />
             </div>
         </div>
         <div  class="container-fluid-landing pb-3 search-tablet" v-if="['PlaceList', 'PlaceDetail', 'ExperienceList', 'ExperienceDetail'].includes($route.name)">
-            <InputSearch />
+            <InputAutocompleteSearch />
         </div>
     </header>
 </template>
@@ -47,7 +47,7 @@
 <script setup>
     import { ref, provide, computed } from 'vue'
     import DropdownLanguage from './DropdownLanguage'
-    import InputSearch from '@/components/InputSearch'
+    import InputAutocompleteSearch from '@/components/InputAutocompleteSearch'
 
     // STATE
     import { useLocaleStore } from '@/stores/modules/locale'

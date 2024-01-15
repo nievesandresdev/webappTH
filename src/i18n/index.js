@@ -1,6 +1,10 @@
 
 import { createI18n } from 'vue-i18n';
 
+import placeEn from './en/place';
+import placeEs from './es/place';
+import placeFr from './fr/place';
+
 import experienceEn from './en/experience';
 import experienceEs from './es/experience';
 import experienceFr from './fr/experience';
@@ -35,6 +39,7 @@ import ChatFr from './fr/chat';
 
 const messages = {
   en: {
+    place: placeEn,
     experience: experienceEn,
     category: categoryEn,
     home: HomeEn,
@@ -46,6 +51,7 @@ const messages = {
     // más módulos...
   },
   es: {
+    place: placeEs,
     experience: experienceEs,
     category: categoryEs,
     home: HomeEs,
@@ -57,6 +63,7 @@ const messages = {
     // más módulos...
   },
   fr: {
+    place: placeFr,
     experience: experienceFr,
     category: categoryFr,
     home: HomeFr,

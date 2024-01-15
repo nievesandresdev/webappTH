@@ -46,7 +46,7 @@
                     >
                     {{ $utils.capitalize($t('layout.header.explore')) }}
                     </a>
-                    <div class="active mt-2 w-full"  :class="{'invisible': !$route.name != 'PlaceList'}" />
+                    <div class="active mt-2 w-full"  :class="{'invisible': !['PlaceList', 'PlaceDetail'].includes($route.name)}" />
                 </div>
 
                 <!--    EXPERIENCES    -->
