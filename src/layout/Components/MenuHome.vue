@@ -20,7 +20,7 @@
                 <!--    HOME    -->
                 <div class="relative mr-[40px]">
                     <router-link
-                        to="/experiencias"
+                        to="/"
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2 "
                     >
                         Home
@@ -41,11 +41,12 @@
 
                 <!--    PLACES    -->
                 <div class="relative mr-[2.5rem]">
-                    <a
+                    <router-link
+                        to="/places"
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                     >
-                    {{ $utils.capitalize($t('layout.header.explore')) }}
-                    </a>
+                        {{ $utils.capitalize($t('layout.header.explore')) }}
+                    </router-link>
                     <div class="active mt-2 w-full"  :class="{'invisible': !['PlaceList', 'PlaceDetail'].includes($route.name)}" />
                 </div>
 

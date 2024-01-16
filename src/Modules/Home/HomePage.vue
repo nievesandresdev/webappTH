@@ -11,8 +11,8 @@
                     :src="`${hotelData?.image ? storageUrl+hotelData?.image :storageUrl+'/storage/gallery/general-1.jpg'}`" 
                     :alt="hotelData.name"
                 > -->
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="'background-image: url('+storageUrl+hotelData?.imag+')'"></div>
-                <div v-else class="absolute inset-0 bg-cover bg-center" style="background-image: url('/assets/img/home/home1.png');"></div>  
+                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="'background-image: url('+storageUrl+hotelData?.image+')'"></div>
+                <div v-else class="absolute inset-0 bg-cover bg-center" style="background-image: url('/storage/gallery/general-1.jpg');"></div>  
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
                 <div
                     class="block lg:hidden absolute inset-x-0 -bottom-0.5 w-full"

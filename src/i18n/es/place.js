@@ -7,5 +7,7 @@ export default {
         "text-count-list": "{count} lugares encontradas",
         "btn-load-more": "Cargar más"
         // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
-    }
+    },
+    "results":'Sin resultados...',
+    "seaching":'Buscando...',
 }
