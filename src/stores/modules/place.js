@@ -27,6 +27,7 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
     async function $apiGetCategoriesByType (params) {
+        console.log(params,'params')
         const response = await getCategoriesByTypeApi(params)
         // console.log(response, 'response')
         return response

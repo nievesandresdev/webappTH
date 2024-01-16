@@ -280,7 +280,6 @@
     }
 
     // DATA \ MOBILE
-    const mobileList = ref(true)
     const endPage = ref(false)
     const scroll = ref(0)
     const scrollBottom = ref(0)
@@ -297,6 +296,7 @@
     const categoriplaces = inject('categoriplaces')
     const formFilter = inject('formFilter')
     const paginateData = inject('paginateData')
+    const mobileList = inject('mobileList')
 
     // COMPUTED
     const categoriplacesTranslate = computed(()=> {
@@ -309,7 +309,7 @@
                     iconCat: iconsCat[slug],
                     image: imagesCategory[slug],
                     name: translate.categoriplace[slug]?.[localeCurrent],
-                    count: item.countPlaces,
+                    count: item.count_places,
                     show: item.show,
                 }
         })

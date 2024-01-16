@@ -3,18 +3,30 @@ import { ref } from 'vue'
 
 import {
     storeApi,
+    findByParamsApi,
 } from '@/api/services/staySurvey.services'
 
 export const useStaySurveyStore = defineStore('staySurvey', () => {
     
     // STATE
+    const surveyData = ref(null)
 
     // ACTIONS
 
+    async function $findByParams (data) {
+        const response = await findByParamsApi(data)
+        if (response.ok) {
+            surveyData.value = response.data
+        }
+        return response
+         
+    }
     async function $store (data) {
 
         const response = await storeApi(data)
-        console.log(response, 'survey res')
+        if (response.ok) {
+            surveyData.value = response.data
+        }
         return response
          
     }
@@ -23,7 +35,9 @@ export const useStaySurveyStore = defineStore('staySurvey', () => {
 
     //
     return {
+        surveyData,
         $store,
+        $findByParams,
     }
 
 })

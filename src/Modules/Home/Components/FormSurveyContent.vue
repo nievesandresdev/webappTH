@@ -240,7 +240,6 @@
 
     async function submitSurvey () {
         loadingSubmit.value = true
-
         const response = await staySurveyStore.$store(form)
         if (response.ok) {
             if (!(form.type == 'GOOD' && tab.value == 2)) {

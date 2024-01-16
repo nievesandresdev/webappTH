@@ -46,18 +46,20 @@
                 <!-- Filtros de movil -->
                 <MenuCategory @click:changeCategory="submitFilter" />
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[8px] sp:gap-4 xl:gap-6 pt-[8px] sp:pt-4 px-3.5 md:px-0 mb-[10px] mb-20 lg:mb-0">
-                    <div v-for="item in placesData" :key="item.id">
-                        <CardProduct place heightImg="card-img" :data="item"/>
+                <template v-if="mobileList">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[8px] sp:gap-4 xl:gap-6 pt-[8px] sp:pt-4 px-3.5 md:px-0 mb-[10px] mb-20 lg:mb-0">
+                        <div v-for="item in placesData" :key="item.id">
+                            <CardProduct place heightImg="card-img" :data="item"/>
+                        </div>
                     </div>
-                </div>
 
-                <div v-if="(placesData.length > 0) && (placesData.length < paginateData?.total)" class="w-full text-center pt-[8px] sp:pt-4 px-3.5 md:px-0">
-                <button @click="loadMore()"
-                    class="mx-auto text-[8px] sp:text-xs lg:text-base text-center rounded-lg py-[4px] sp:py-2 m-0 font-bold border border-dark my-[4px] sp:my-2.5 w-full md:w-64 lg:w-72">
-                    Cargar más
-                </button>
-                </div>
+                    <div v-if="(placesData.length > 0) && (placesData.length < paginateData?.total)" class="w-full text-center pt-[8px] sp:pt-4 px-3.5 md:px-0">
+                        <button @click="loadMore()"
+                            class="mx-auto text-[8px] sp:text-xs lg:text-base text-center rounded-lg py-[4px] sp:py-2 m-0 font-bold border border-dark my-[4px] sp:my-2.5 w-full md:w-64 lg:w-72">
+                            Cargar más
+                        </button>
+                    </div>
+                </template>
             </div>
 
         </div>
@@ -99,6 +101,7 @@
     const innerWidth = window.innerWidth
 
     // DATA
+    const mobileList = ref(false)
     const dropdownSerchCity = ref(null)
     const categoriplaces = ref([])
     const typeplaces = ref([])
@@ -158,7 +161,7 @@
     }
 
     async function loadCategoriPlaces () {
-        const response = await placeStore.$apiGetCategoriesByType()
+        const response = await placeStore.$apiGetCategoriesByType({city: hotelData.zone, all: true})
         if (response.ok) {
             categoriplaces.value = response.data
         }

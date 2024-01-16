@@ -2,7 +2,7 @@
 import { utilsPath } from '@/api/config/apiRoute';
 // import { apiHttp } from '@/api/config/apiRoute'
 
-// import Pusher from 'pusher-js';
+import Pusher from 'pusher-js';
 
 let pusherInstance = null;
 
@@ -10,10 +10,10 @@ let pusherInstance = null;
 export function getPusherInstance() {
     if (!pusherInstance) {
         // console.log("Creando instancia de pusher...");
-        // pusherInstance = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
-        //     cluster: 'us2',
-        //     authEndpoint: `${process.env.VUE_APP_API_URL_BACKEND}/${utilsPath}/authPusher` 
-        // });
+        pusherInstance = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
+            cluster: 'us2',
+            authEndpoint: `${process.env.VUE_APP_API_URL_BACKEND}/${utilsPath}/authPusher` 
+        });
         // console.log("Instancia de pusher creada:", pusherInstance);
     } else {
         // console.log("Reutilizando instancia existente de pusher:", pusherInstance);

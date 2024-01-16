@@ -36,6 +36,14 @@
     const { hotelData } = hotelStore
     import { useHotelOtaStore } from '@/stores/modules/hotelOta'
     const hotelOtaStore = useHotelOtaStore()
+    import { useStaySurveyStore } from '@/stores/modules/staySurvey'
+    const staySurveyStore = useStaySurveyStore()
+    import { useStayStore } from '@/stores/modules/stay'
+    const stayStore = useStayStore()
+    const { stayData } = stayStore
+    import { useGuestStore } from '@/stores/modules/guest'
+    const guestStore = useGuestStore()
+    const { guestData } = guestStore
     
     // STATIC DATA
     const WINDOW_WIDTH = window.innerWidth
@@ -59,12 +67,14 @@
 
     //inject
     const mockup = false
-    const stayData = null
-    // const $moment = inject('moment')
+    const $moment = inject('$moment')
 
     // watch stayData
-    watch(stayData, async (value) => {
+    watch(()=>guestStore.guestData?.id, async (value) => {
+        })
+    watch(()=>stayStore.stayData?.id, async (value) => {
         await nextTick()
+        await staySurveyStore.$findByParams({guest_id: guestStore.guestData?.id, stay_id: stayStore.stayData?.id})
         openSurvey()
     })
 
@@ -72,49 +82,49 @@
     onMounted(async() => {
         await nextTick()
         await hotelOtaStore.$getAll()
-        openSurvey()
     })
 
     function close () {
         modal.value = false
-        console.log('close')
     }
 
     //function
     function openSurvey () {
-        // setTimeout(() => {
-        //     // if (mockup.value) return;
-        //     if (stayData.value?.guest) {
-        //         let dateNow = $moment()
-        //         let dateCheckIn = $moment(`${stayData.value.stay.check_in} ${stayData.value.stay.hour_checkin ?? '00:00'}:00`)
-        //         let dateCheckOut = $moment(`${stayData.value.stay.check_out} ${stayData.value.stay.hour_checkout ?? '00:00'}:00`)
-        //         // let dateCheckOut_one_before = dateCheckOut.clone().subtract(1, 'days')
-        //         let diffDays = dateCheckOut.diff(dateCheckIn, 'days')
-        //         let diffDaysNow = dateCheckOut.diff(dateNow, 'days')
-        //         if (diffDays >= 4) {
-        //             dateNow.add(1, 'days')
-        //             if (dateNow.isSameOrAfter(dateCheckOut, 'day')) {
-        //                 form.stay_id = stayData.value.stay.id
-        //                 form.guest_id = stayData.value.guest.id
-        //                 if (WINDOW_WIDTH < 640){
-        //                     modalMobile.value = true
-        //                 } else {
-        //                     modal.value = true
-        //                 }
-        //             }
-        //         } else {
-        //             // console.log(stayData.value.id, 'stayData.value')
-        //             if (dateNow.isSameOrAfter(dateCheckOut, 'day')) {
-        //                 form.stay_id = stayData.value.stay.id
-        //                 form.guest_id = stayData.value.guest.id
-        //                 if (WINDOW_WIDTH < 640){
-        //                     modalMobile.value = true
-        //                 } else {
-        //                     modal.value = true
-        //                 }
-        //             } 
-        //         }
-        //     }
-        // }, 2000)
+        setTimeout(() => {
+            if (mockup.value) return;
+            const stay = stayStore.stayData
+            const guest = guestStore.guestData
+            if (stay && !staySurveyStore.surveyData) {
+                let dateNow = $moment()
+                let dateCheckIn = $moment(`${stay?.check_in} ${stay?.hour_checkin ?? '00:00'}:00`)
+                let dateCheckOut = $moment(`${stay?.check_out} ${stay?.hour_checkout ?? '00:00'}:00`)
+                // let dateCheckOut_one_before = dateCheckOut.clone().subtract(1, 'days')
+                let diffDays = dateCheckOut.diff(dateCheckIn, 'days')
+                let diffDaysNow = dateCheckOut.diff(dateNow, 'days')
+                if (diffDays >= 4) {
+                    dateNow.add(1, 'days')
+                    if (dateNow.isSameOrAfter(dateCheckOut, 'day')) {
+                        form.stay_id = stay?.id
+                        form.guest_id = guest?.id
+                        if (WINDOW_WIDTH < 640){
+                            modalMobile.value = true
+                        } else {
+                            modal.value = true
+                        }
+                    }
+                } else {
+                    // console.log(id, 'stayData.value')
+                    if (dateNow.isSameOrAfter(dateCheckOut, 'day')) {
+                        form.stay_id = stay?.id
+                        form.guest_id = guest?.id
+                        if (WINDOW_WIDTH < 640){
+                            modalMobile.value = true
+                        } else {
+                            modal.value = true
+                        }
+                    } 
+                }
+            }
+        }, 2000)
     }
 </script>
