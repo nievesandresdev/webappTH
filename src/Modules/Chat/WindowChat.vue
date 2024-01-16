@@ -1,21 +1,19 @@
 <template>
     <!-- <div class="height-chat hbg-gray-200 flex flex-col relative"> -->
+    <ScheduleModal  ref="scheduleModal"/>
     <div ref="myDiv" class="hbg-gray-200 flex flex-col relative">
         <!-- header -->
         <div class="py-4 text-center shadow-hoster hbg-white-100 sticky top-0 left-0">
             <img @click="closeChat" class="absolute top-4 left-4 w-6 h-6 hidden lg:block cursor-pointer" src="/assets/icons/back-arrow-on-circle.svg">
             <h1 class="xs:text-xs text-base font-medium">{{settings.name}}</h1>
             <div class="text-center xs:mt-0 mt-1.5">
-                <p v-if="isAvailable" class="htext-green-600 xs:text-[10px] text-xs inline mr-2">
-                    {{$utils.capitalize($t('chat.availabilty'))}}
-                </p>
-                <p v-else class="htext-alert-negative xs:text-[10px] text-xs inline mr-2">
-                    {{$utils.capitalize($t('chat.notAvailabilty'))}}
+                <p class="xs:text-[10px] text-xs inline mr-2" :class="isAvailable?'htext-green-600':'htext-alert-negative'">
+                    {{isAvailable ? $t('chat.availabilty') : $t('chat.notAvailabilty')}}
                 </p>
                 <a 
                     href="javascript:void(0)" 
                     class="black-link text-xs lg:text-sm font-medium inline mr-2"
-                    data-toggle="modal" data-target="#horarios"
+                    @click="openHorary"
                 >{{$utils.capitalize($t('chat.horary'))}}</a>
             </div>
         </div>
@@ -71,23 +69,24 @@
     //import libraries
     import { onMounted, ref, inject, computed, nextTick, watch, onBeforeUnmount } from 'vue';
     import IconHover from '@/components/IconHover.vue'
+    import ScheduleModal from './ScheduleModal.vue';
+    
     import Moment from 'moment'
     import { useStayStore } from '@/stores/modules/stay'
     import { useChatStore } from '@/stores/modules/chat'
+    import { useHotelStore } from '@/stores/modules/hotel';
     //store
     const stayStore = useStayStore();
     const { stayData } = stayStore;
     const chatStore = useChatStore();
+    const hotelStore = useHotelStore();
+    const { hotelData } = hotelStore;
     //imports components
     const emit = defineEmits(['closechat'])
     const langPage = 'es';
     //PROPS
     const props = defineProps({
         settings: {
-            type: Array,
-            default: () => ([]),
-        },
-        chat_hours: {
             type: Array,
             default: () => ([]),
         }
@@ -98,15 +97,17 @@
     const msg = ref(null);
     const isAvailable = ref(false);
     const timeouts = ref([]);
+    const scheduleModal = ref(null);
+    
 
     //mounted
     onMounted( async () => {
-        watch_availability();
+        console.log('settings',props.settings)
+        watchAvailability();
         nextTick(() => {
             const textarea = document.getElementById('text-auto');
             autoGrow({ target: textarea });  
         })
-        setInterval(watch_availability, 180000);
         // Establecer la altura inicial
         setDivHeight();
         
@@ -115,7 +116,6 @@
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
         clearTimeouts();
-        console.log('chatmounted',messages.value)
     });
 
     onBeforeUnmount(() => {
@@ -137,22 +137,19 @@
         }
     };
 
-    watch(() => props.chat_hours, (newValue, oldValue) => {
-        setTimeout(watch_availability, 100);
-    })
-
     // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
     watch(messages, (newMessages) => {
     nextTick(() => {
-        console.log('Messages updated, scrolling to bottom');
         scrollToBottom();
     });
     }, { deep: true });
 
-
-    //functions
-
     const showMenuMobile = inject('showMenuMobile');
+    //functions
+    const openHorary = () =>{
+        scheduleModal.value.open();
+    }
+    
 
     const hideMenu = () => {
     showMenuMobile.value = false;
@@ -174,7 +171,7 @@
                 guestId : localStorage.getItem('guestId'),
                 stayId : localStorage.getItem('stayId'),
                 langWeb : localStorage.getItem('locale') || 'es',
-                isAvailable : true
+                isAvailable : isAvailable.value
             };
             chatStore.sendMsgToHoster(params);
             // Desenfocar el campo de entrada para cerrar el teclado
@@ -186,21 +183,22 @@
         }
     }
 
-    const watch_availability = () =>{
-        // console.log('watch_availability',props.chat_hours)
-        // const currentDay = Moment().format('dddd'); 
-        // const currentTime = Moment().format('HH:mm');
-        // const todaysAvailability = props.chat_hours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
-        // if (!todaysAvailability || !todaysAvailability.active) {
-        //     return false;
-        // }
+    const watchAvailability = () =>{
+        console.log('hotelData.chatHours',hotelData.chatHours)
+        const currentDay = Moment().format('dddd'); 
+        const currentTime = Moment().format('HH:mm');
+        const todaysAvailability = hotelData.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
+        if (!todaysAvailability || !todaysAvailability.active) {
+            return false;
+        }
         
-        // isAvailable.value = todaysAvailability.horary.some(timeSlot => {
-        //     const startMoment = Moment(timeSlot.start, 'HH:mm');
-        //     const endMoment = Moment(timeSlot.end, 'HH:mm');
-        //     const currentMoment = Moment(currentTime, 'HH:mm');
-        //     return currentMoment.isBetween(startMoment, endMoment, null, '[]');
-        // });
+        isAvailable.value = todaysAvailability.horary.some(timeSlot => {
+            const startMoment = Moment(timeSlot.start, 'HH:mm');
+            const endMoment = Moment(timeSlot.end, 'HH:mm');
+            const currentMoment = Moment(currentTime, 'HH:mm');
+            return currentMoment.isBetween(startMoment, endMoment, null, '[]');
+        });
+        console.log('isAvailable.value',isAvailable.value)
     }
     
     const closeChat = () => {

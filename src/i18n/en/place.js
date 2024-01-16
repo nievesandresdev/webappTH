@@ -6,5 +6,7 @@ export default {
         "title": "Explore in",
         "text-count-list": "{count} places found",
         "btn-load-more": "Load more"
-    }
+    },
+    "results":'Without results...',
+    "seaching":'Searching...',
 }

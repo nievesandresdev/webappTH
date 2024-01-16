@@ -12,23 +12,28 @@
                     <div class="active absolute top-5 left-0 w-full" v-if="$route.name == 'Home'" />
                 </div>
                 <div  class="ml-2 mr-6 relative">
-                    <!-- <Link :href="route('hoster.home.facility.view.huesped', { hoster: slug_hoster })" > -->
                     <a href="javascript:void(0)" class="font-medium no-underline text-sm">
                         {{ $utils.capitalize($t('layout.header.facilities')) }}
                     </a>
                     <div class="active absolute top-5 left-0 w-full" v-if="false" />
                 </div>
                 <div class="ml-2 mr-6 relative">
-                    <a href="javascript:void(0)" class="font-medium no-underline text-sm">
-                        {{ $utils.capitalize($t('layout.header.explore')) }}
-                    </a>
+                    <router-link
+                        to="/places"
+                        class="font-medium no-underline text-sm"
+                    >
+                    {{ $utils.capitalize($t('layout.header.explore')) }}
+                    </router-link>
                     <div class="active absolute top-5 left-0" v-if="['PlaceList', 'PlaceDetail'].includes($route.name)" />
                 </div>
                 <!-- v-if="hotel.show_experiences" -->
                 <div class="ml-2 mr-6 relative">
-                    <a href="javascript:void(0)" class="font-medium no-underline text-sm">
-                        {{ $utils.capitalize($t('layout.header.experiences')) }}
-                    </a>
+                    <router-link
+                        to="/experiencias"
+                        class="font-medium no-underline text-sm"
+                    >
+                    {{ $utils.capitalize($t('layout.header.experiences')) }}
+                    </router-link>
                     <div class="active absolute top-5 left-0" v-if="['ExperienceList', 'ExperienceDetail'].includes($route.name)" />
                 </div>
             </div>
@@ -56,7 +61,6 @@
 
     //COMPUTEDS
 
-    // const hotel = usePage().props.value.user_hoster;
     const translate = {
         facilities :{
             "es": "Instalaciones",

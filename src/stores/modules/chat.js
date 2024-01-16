@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {
     sendMsgToHosterApi,
     loadMessagesApi,
@@ -42,9 +42,10 @@ export const useChatStore = defineStore('chat', () => {
         const response = await markMsgsAsReadApi(params)
         const { ok } = response;
         if(ok){
-            return unreadMsgsRef.value = true;
+            unreadMsgsRef.value = false;
+            return response.data;
         }
-        return unreadMsgsRef.value = false;
+        return null;
     }
 
     async function unreadMsgs() {
@@ -55,20 +56,29 @@ export const useChatStore = defineStore('chat', () => {
         const response = await unreadMsgsApi(params)
         const { ok } = response;
         if(ok){
-            console.log('unreadMsgsApi',response.data)
-            return response.data
+            unreadMsgsRef.value = true;
+        }else{
+            unreadMsgsRef.value = false;
         }
-        return false
     }
 
+    //getters
+
+    const hasUnreadMessages = computed(() => {
+        console.log('hasUnreadMessages',unreadMsgsRef.value)
+        return unreadMsgsRef.value == true ? true : false;
+    });
     //
+
+
     return {
         sendMsgToHoster,
         addMessage,
         loadMessages,
         markMsgsAsRead,
         unreadMsgs,
-        unreadMsgsRef
+        unreadMsgsRef,
+        hasUnreadMessages
     }
 
 })

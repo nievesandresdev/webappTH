@@ -4,7 +4,8 @@
     >
     <!-- :class="!hotel.chat_settings?.show_guest && !hotel.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'" -->
         <ul class="flex justify-between">
-            <li
+            <router-link
+                to="/"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
             >
                 <img
@@ -15,8 +16,9 @@
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                     Home
                 </span>
-            </li>
-            <li
+            </router-link>
+            <router-link
+                to="/"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
             >
                 <img
@@ -27,36 +29,39 @@
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                     {{ $utils.capitalize($t('layout.header.facilities')) }}
                 </span>
-            </li>
-            <li
+            </router-link>
+            <router-link
+                to="/places/categorias"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['placeList', 'placeShow'].includes($route.name) ? `/assets/icons/explora-hover.svg` : `/assets/icons/explora-default.svg`"
+                    :src="['PlaceList', 'placeShow'].includes($route.name) ? `/assets/icons/explora-hover.svg` : `/assets/icons/explora-default.svg`"
                     alt="TH.PLACE"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                     {{ $utils.capitalize($t('layout.header.explore')) }}}
                 </span>
-            </li>
-            <li
+            </router-link>
+            <router-link
+                to="/experiencias"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
                 
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['experinceList', 'experienceshow'].includes($route.name) ? `/assets/icons/camera-hover.svg` : `/assets/icons/camera-default.svg`"
+                    :src="['ExperienceList', 'ExperienceDetail'].includes($route.name) ? `/assets/icons/camera-hover.svg` : `/assets/icons/camera-default.svg`"
                     alt="TH.EXPERINCE"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                     {{ $utils.capitalize($t('layout.header.experiences')) }}
                 </span>
-            </li>
+            </router-link>
             <li
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
                 @click="markReadMsgs"
             >
+                <span v-if="chatStore.hasUnreadMessages" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
                     :src="['WindowChatMobile'].includes($route.name) ? `/assets/icons/1.TH.ChatBubble.svg` : `/assets/icons/Chatbubblelineoutline.svg`"
@@ -74,6 +79,7 @@
 <script setup>
     import { ref, provide, onMounted, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router';
+    import { useChatStore } from '@/stores/modules/chat';
     defineProps({
         msgs_unread: {
             type: Boolean,
@@ -83,7 +89,7 @@
 
     const emit  = defineEmits(['markReadMsgs'])
     const router = useRouter();
-
+    const chatStore = useChatStore();
     //ONMOUNTED
     onMounted(() => {
         //
@@ -96,9 +102,6 @@
     const modal_lang = ref(false)
 
     // const isMockup = usePage().url.value.includes('mockup=true');
-    // const stay_session = usePage().props.value.stay_session
-    // const hotel = usePage().props.value.user_hoster;
-    // const slug_hoster = hotel.slug;
 
     //PROVIDE
     provide('modal_find_reserve', modal_find_reserve)
