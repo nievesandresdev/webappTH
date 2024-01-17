@@ -37,7 +37,7 @@
                 class=""
                 @click="openModalFilter"
             >
-                <img class="w-[12px] sp:w-5 absolute right-4 top-3 cursor-pointer" src="/assets/icons/icon-filter.svg">
+                <img class="w-[12px] sp:w-6 absolute right-4 top-2 cursor-pointer" src="/assets/icons/icon-filter.svg">
             </button>
         </div>
     </div>
@@ -59,24 +59,14 @@
 
     <div class="w-full grid grid-cols-1 md:hidden xl:hidden px-3.5 pb-[8px] sp:pb-4" v-if="mobileList">
         <h4 class="pt-[8px] sp:pt-4 font-medium text-[10px] sp:text-[14px]">{{ paginateData.total }}
-            <!-- <template v-if="$page.props.language === 'Fr'">
-                {{params.categoriplaceName}} rencontrés
-            </template>
-
-            <template v-if="$page.props.language === 'En'">
-                {{params.categoriplaceName}} found
-            </template>
-
-            <template v-else-if="$page.props.language === 'Es'">
-            </template> -->
-            {{ categoriplacesTranslate?.[formFilter.categoriplace]?.name }} encontrados
+            {{ categorySearch +' '+ $t('place.categorySearch') }} 
         </h4>
     </div>
 
     <template v-if="!mobileList">
         <div
             v-for="(item, index) in typeplacesTranslate" :key="index"
-            class="w-full px-4 xl:grid grid-cols-4 xl:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 md:hidden pt-4"
+            class="w-full px-4 lg:hidden pt-4"
         >
             <h1 class="title-card-category" v-if="item.id != 5">{{item.name}}</h1>
             <div
@@ -85,17 +75,17 @@
                 @click="selectCategory(`card-explora${itemCat.id}`, itemCat.id, item.id)"
             >
                 <div
-                    :id="'card-explora'+itemCat.id" class="relative card-explora-image overflow-hidden rounded-6"
+                    :id="'card-explora'+itemCat.id" class="relative card-explora-image overflow-hidden rounded-[6px]"
                     v-if="itemCat.type_places_id == item.id"
                     :class="{ 'card-explora-select': selectedCard === 'card-explora'+itemCat.id }"
                 >
-                    <div class="w-full h-full relative rounded-6 overflow-hidden">
+                    <div class="w-full h-full relative rounded-[6px] overflow-hidden">
                         <img
                             :src="itemCat.image" alt="img"
-                            class="w-full h-full object-cover rounded-6"
+                            class="w-full h-full object-cover rounded-[6px]"
                         >
-                        <div class="overlay absolute h-full z-10 w-full top-0 left-0 card-explora rounded-6" >
-                            <div class="w-14 h-14 hbg-white-100 rounded-6 ml-4 my-8">
+                        <div class="overlay absolute h-full z-10 w-full top-0 left-0 card-explora rounded-[6px]" >
+                            <div class="w-14 h-14 hbg-white-100 rounded-[6px] ml-4 my-8">
                                 <img class="w-full py-2.5 px-2"  :src="itemCat.icon" alt="" srcset="">
                             </div>
                             <span class="z-30 text-card-explora absolute font-explora" >
@@ -137,18 +127,22 @@
             </templete>
         </div>
     </div>
-
 </template>
 
 <script setup>
     import { computed, inject, onMounted, watch, ref } from 'vue';
-    import { slufy } from '@/utils/utils.js'
-
+    import { slufy, getUrlParam } from '@/utils/utils.js'
     // COMPONENTS
     import InputAutocompleteSearch from '@/components/InputAutocompleteSearch'
 
+    const props = defineProps ({
+        mobileList:{
+            type:Boolean,
+            default:false
+        }
+    })
     // EMIT
-    const emit = defineEmits(['click:changeCategory'])
+    const emit = defineEmits(['click:changeCategory','openModalFilter'])
 
     // STORE
     import { useLocaleStore } from '@/stores/modules/locale'
@@ -277,6 +271,7 @@
         'cafeterias-y-postres':'/assets/icons/explora/cafeterias.svg',
         'vida-nocturna':'/assets/icons/explora/discotecas.svg',
         compras: '/assets/icons/explora/compras.svg',
+        otros: '/assets/icons/explora/otros.svg',
     }
 
     // DATA \ MOBILE
@@ -290,17 +285,15 @@
     ];
     const selectedCard = ref(null)
 
-
     // INJECT
     const typeplaces = inject('typeplaces')
     const categoriplaces = inject('categoriplaces')
     const formFilter = inject('formFilter')
     const paginateData = inject('paginateData')
-    const mobileList = inject('mobileList')
 
     // COMPUTED
     const categoriplacesTranslate = computed(()=> {
-        return categoriplaces.value.map(item => {
+        let cats = categoriplaces.value.map(item => {
             let slug = slufy(item.name)
                 return {
                     id: item.id,
@@ -313,6 +306,7 @@
                     show: item.show,
                 }
         })
+        return cats;
     })
     const typeplacesTranslate = computed(()=> {
         return typeplaces.value.map(item => {
@@ -333,6 +327,10 @@
                 categori_places,
             }
         })
+    })
+
+    const categorySearch = computed(()=> {
+        return categoriplacesTranslate.value?.find(item => item.id == formFilter.categoriplace)?.name
     })
 
     // ONMOUNTED
@@ -404,8 +402,8 @@
         }
     }
 
-    function openModalFilter () {
-
+    function openModalFilter(){
+        emit('openModalFilter')
     }
     
 

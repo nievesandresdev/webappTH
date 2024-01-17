@@ -9,4 +9,6 @@ export default {
     },
     "results":'Sans résultats...',
     "seaching":'Recherche...',
+    "categorySearch":'rencontrés',
+    "city":"Ville",
 }

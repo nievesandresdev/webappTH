@@ -6,6 +6,7 @@ import {
     getAllApi,
     getCategoriesByTypeApi,
     getTypePlacesApi,
+    getRatingCountsPlacesApi
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
@@ -27,16 +28,20 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
     async function $apiGetCategoriesByType (params) {
-        console.log(params,'params')
         const response = await getCategoriesByTypeApi(params)
-        // console.log(response, 'response')
         return response
     }
     async function $apiGetTypePlaces (params) {
         const response = await getTypePlacesApi(params)
-        // console.log(response, 'response')
         return response
     }
+
+    async function $getRatingCountsPlaces (params) {
+        const response = await getRatingCountsPlacesApi(params)
+        return response
+    }
+
+    
 
     //
     return {
@@ -44,6 +49,7 @@ export const usePlaceStore = defineStore('place', () => {
         $apiGetAll,
         $apiGetCategoriesByType,
         $apiGetTypePlaces,
+        $getRatingCountsPlaces
     }
 
 })

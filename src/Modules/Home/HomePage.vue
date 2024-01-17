@@ -79,7 +79,7 @@
                             </div>
                             <!-- v-if="hotelData.show_profile" -->
                             <button
-                                v-if="$page.props.user_hotelData.show_profile"
+                                v-if="hotelData.show_profile"
                                 class="hbtn-blur p-2 rounded-md font-medium text-[10px] sp:text-sm text-white underline mb-[5px] sp:mb-[8px] mr-[5px] sp:mr-[8px]"
                                 :class="{'hcursor-mobile':$utils.isMockup()}"
                                 :disabled="$utils.isMockup()"

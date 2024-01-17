@@ -31,7 +31,7 @@
                 </span>
             </router-link>
             <router-link
-                to="/places/categorias"
+                to="/places"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
             >
                 <img

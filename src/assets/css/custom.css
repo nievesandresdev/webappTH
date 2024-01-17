@@ -16,7 +16,7 @@ textarea:focus,
 select:focus,
 button:focus {
   outline: none;
-  border: none;
+  border-width: 1px;
   box-shadow: none !important;
 }
 

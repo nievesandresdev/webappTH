@@ -9,4 +9,6 @@ export default {
     },
     "results":'Without results...',
     "seaching":'Searching...',
+    "categorySearch":'found',
+    "city":"City",
 }
