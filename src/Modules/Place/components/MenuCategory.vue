@@ -47,7 +47,7 @@
         v-if="mobileList"
     >
         <div
-            v-for="(item, index) in categoriplacesTranslate" :key="index"
+            v-for="(item, index) in categoriesOfType" :key="index"
             class="flex item-menu-cat rounded-full mb-0.5 sp:mb-1 top-0"
             :class="{'item-menu-cat-active': item.id == formFilter.categoriplace,'hbg-gray-100':!(item.id == formFilter.categoriplace)}"
             @click="changeCategory(item.id, formFilter.typeplace)"
@@ -306,7 +306,13 @@
                     show: item.show,
                 }
         })
+        // console.log('cats',cats)
         return cats;
+    })
+
+    const categoriesOfType = computed(()=> {
+         let categoriesOfType = categoriplacesTranslate.value.filter(cat => cat.type_places_id == formFilter.typeplace)
+        return categoriesOfType;
     })
     const typeplacesTranslate = computed(()=> {
         return typeplaces.value.map(item => {
@@ -380,9 +386,18 @@
     })
 
     // FUNCTION
+    const getFirstCategoryOfType = ()=> {
+        if(formFilter.typeplace){
+            formFilter.typeplace
+            let first = categoriplacesTranslate.value.find(cat => cat.type_places_id == formFilter.typeplace)
+            formFilter.categoriplace = first?.id
+        }
+    }
+
     function changeCategory (idCategory = null, idTypePlace = null) {
         formFilter.categoriplace = idCategory
         formFilter.typeplace = idTypePlace
+        if(!formFilter.categoriplace) getFirstCategoryOfType()
         emit('click:changeCategory')
     }
 
@@ -405,6 +420,7 @@
     function openModalFilter(){
         emit('openModalFilter')
     }
+
     
 
 </script>
