@@ -137,3 +137,6 @@ button:focus {
 #carousel-reviews-place .carousel__next{
   right:-20px !important;
 }
+.no-scrollbar::-webkit-scrollbar{
+  display: none !important;
+}

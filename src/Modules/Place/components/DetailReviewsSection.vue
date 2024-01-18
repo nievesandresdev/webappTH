@@ -36,7 +36,7 @@
             {{ $t('place.detail.ratingTitle') }}
         </h1>
         <div class="mt-[8px] sp:mt-4">
-            <div class="rating-box w-full lg:w-[411px]">
+            <div class="rating-box w-full sp:w-4/5 lg:w-[411px]">
                 <div 
                     class="flex justify-between items-center pb-[8px] sp:pb-4"
                     v-for="(review, index) in [5,4,3,2,1]"
@@ -54,7 +54,7 @@
                         {{ review }}
                         {{ review == 1 ? $t('place.detail.starWord') : $t('place.detail.starsWord')}}
                     </p>
-                    <div class="mx-4 w-[210px]">
+                    <div class="mx-4 w-32 lg:w-[210px]">
                         <div class="h-[8px] hbg-gray-200 w-full rounded-full">
                             <div 
                                 v-if="dataReviewsPercentaje && dataReviewsPercentaje[review] > 0"
@@ -81,7 +81,7 @@
         <div id="carousel-reviews-place" class="hidden lg:block lg:sticky top-[8px] sp:top-4 mb-10">
             <div v-if="dataReviews?.length > 0" class="relative mt-[8px] sp:mt-4">
                 <Carousel :items-to-show="2">
-                    <Slide v-for="review in dataReviews" :key="review.id" class="slide-margin">
+                    <Slide v-for="review in dataReviews" :key="review" class="slide-margin">
                         <div class="card_review_user flex flex-col rounded-[10px] w-[140px] sp:w-[100%] h-[140px] sp:h-[296px]">
                             <div @click="ShowSelectedReviewModal(review)" class="card-body-review cursor-pointer p-4">
                                 <div class="flex justify-between items-center">
@@ -126,7 +126,7 @@
                 </Carousel>
             </div>
 
-            <div class="flex justify-between pt-6">
+            <div class="flex justify-between pt-6" v-if="dataReviews?.length > 0">
                 <button @click="ShowAllReviewsModal()" class="hbtn-primary text-base font-medium py-5 px-9 leading-3">
                     {{  $t('place.detail.seeAllComments') }}
                 </button>
@@ -179,13 +179,17 @@
                 </div>
             </div>
         </div>
-        <div class="mt-[8px] sp:mt-6 lg:hidden mb-10">
+        <div class="mt-[8px] sp:mt-6 lg:hidden mb-10" v-if="dataReviews?.length > 0">
             <button @click="ShowAllReviewsModal()" class="font-medium hbtn-primary text-[10px] sp:text-base py-[6px] sp:py-2.5 w-full md:w-64 md:mr-4">
                 {{ $t('place.detail.seeAllComments') }}
             </button>
         </div>
         <!-- END mobile Reviews de users -->
-        <ModalReviews :reviews="dataReviews" ref="modalReviews"/>
+        <ModalReviews 
+            :reviews="reviewsModal" 
+            ref="modalReviews"
+            :ammountTotal="dataReviewsAmmountTotal"
+        />
 
     </div>
 </template>
@@ -215,7 +219,9 @@
     const dataReviews = ref([]);
     const dataReviewsAmmout = ref(null);
     const dataReviewsPercentaje = ref(null);
+    const dataReviewsAmmountTotal = ref(0);
     const modalReviews = ref(null);
+    const reviewsModal = ref(null);
     
 
     //function
@@ -224,34 +230,36 @@
         return parseFloat(value.replace(",", "."))
     }
     
-    const filterReviews = (value) => {
+    const filterReviews = async (value) => {
         starSelected.value = value;
-        // axios({
-        //     url: route('places.filters_reviews.show', { search: value, id: this.place.id }),
-        //     method: 'GET',
-        // })
-        // .then(res => {
-        //     this.reviews = res.data;
-        //     // console.log('filterReviews',res.data)
-        // })
+        let params = {id:props.placeData?.id, search:value}
+        if(value){
+            let response = await placeStore.$getReviewsByRating(params);
+            if(response.ok){
+                console.log('filterReviews',response.data)
+                dataReviews.value = response.data;
+            } 
+        }
     }
 
     const getDataReviews = async () => {
         let response = await placeStore.$getDataReviews(props.placeData?.id);
         if(response.ok){
             dataReviews.value = response.data.reviews;
+            reviewsModal.value = response.data.reviews;
             dataReviewsAmmout.value = response.data.ammount;
             dataReviewsPercentaje.value = response.data.percentaje;
+            dataReviewsAmmountTotal.value = response.data.ammountTotal;
         } 
-        
-        console.log('getDataReviews',dataReviews.value)
     }
 
-    const ShowSelectedReviewModal = (value) => {
+    const ShowSelectedReviewModal = (review) => {
+        reviewsModal.value = [review];
         modalReviews.value.open();
     }
 
     const ShowAllReviewsModal = (value) => {
+        reviewsModal.value = dataReviews.value;
         modalReviews.value.open();
     }
 

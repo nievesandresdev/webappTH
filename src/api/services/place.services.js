@@ -9,3 +9,4 @@ export const getTypePlacesApi = (params) => apiHttp('GET', `${placePath}/getType
 export const getRatingCountsPlacesApi = (params) => apiHttp('GET', `${placePath}/getRatingCountsPlaces`, params)
 export const findByIdApi = (params) => apiHttp('GET', `${placePath}/findById`, params)
 export const getDataReviewsApi = (params) => apiHttp('GET', `${placePath}/getDataReviews`, params)
+export const getReviewsByRatingApi = (params) => apiHttp('GET', `${placePath}/getReviewsByRating`, params)

@@ -8,7 +8,8 @@ import {
     getTypePlacesApi,
     getRatingCountsPlacesApi,
     findByIdApi,
-    getDataReviewsApi
+    getDataReviewsApi,
+    getReviewsByRatingApi
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
@@ -58,6 +59,11 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
 
+    async function $getReviewsByRating (params) {
+        const response = await getReviewsByRatingApi(params)
+        return response
+    }
+
     //
     return {
         $loadImage,
@@ -66,7 +72,8 @@ export const usePlaceStore = defineStore('place', () => {
         $apiGetTypePlaces,
         $getRatingCountsPlaces,
         $findById,
-        $getDataReviews
+        $getDataReviews,
+        $getReviewsByRating
     }
 
 })
