@@ -7,3 +7,5 @@ export const getAllApi = (params) => apiHttp('GET', `${placePath}/getAll`, param
 export const getCategoriesByTypeApi = (params) => apiHttp('GET', `${placePath}/getCategoriesByType`, params)
 export const getTypePlacesApi = (params) => apiHttp('GET', `${placePath}/getTypePlaces`, params)
 export const getRatingCountsPlacesApi = (params) => apiHttp('GET', `${placePath}/getRatingCountsPlaces`, params)
+export const findByIdApi = (params) => apiHttp('GET', `${placePath}/findById`, params)
+export const getDataReviewsApi = (params) => apiHttp('GET', `${placePath}/getDataReviews`, params)

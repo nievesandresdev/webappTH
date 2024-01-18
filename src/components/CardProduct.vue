@@ -59,7 +59,9 @@
 
 <script setup>
     import { onMounted, computed } from 'vue'
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter();
     const {place, data} = defineProps({
         place: {
             type: Boolean,
@@ -112,6 +114,7 @@
         // var im = images[0].api ? images[0].url : `${url_hicitty}/storage/${store}/${images[0].url}` 
     }
     function go (item) {
+        router.push({name: 'PlaceDetail', params:{ id: item.id }})
     }
     function filterTitle (title,chars) {
         if (title) {

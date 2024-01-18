@@ -96,6 +96,9 @@
     .htext-gray-400 {
         color: var(--h-gray-400);
     }
+    .icon-gray-500{
+        filter: invert(74%) sepia(1%) saturate(277%) hue-rotate(8deg) brightness(86%) contrast(93%);
+    }
     /*
         ***
         alert colors

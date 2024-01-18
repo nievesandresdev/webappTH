@@ -105,10 +105,35 @@ button:focus {
   text-overflow: ellipsis; /* Agrega los tres puntos al final del texto truncado */
 }
 
+.carousel__pagination .carousel__pagination-button::after {
+  width: 0px;
+  height: 0px;
+}
+
+.carousel__pagination .carousel__pagination-button {
+  width: 12px;
+  height: 12px;
+  background-color: #bfbfbf ;
+  margin: 5px;
+  border-radius: 20px;
+}
+
+.carousel__pagination .carousel__pagination-button--active {
+  background-color: #fff ;
+}
+
+
 .carousel__prev, .carousel__next {
     top: 35%;
     background: white !important;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) !important;
     transition: all 2s ease;
     border-radius: 50% !important;
+}
+
+#carousel-reviews-place .carousel__prev{
+  left:-20px !important;
+}
+#carousel-reviews-place .carousel__next{
+  right:-20px !important;
 }

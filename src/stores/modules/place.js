@@ -6,7 +6,9 @@ import {
     getAllApi,
     getCategoriesByTypeApi,
     getTypePlacesApi,
-    getRatingCountsPlacesApi
+    getRatingCountsPlacesApi,
+    findByIdApi,
+    getDataReviewsApi
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
@@ -41,7 +43,20 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
 
-    
+    async function $findById (params) {
+        const response = await findByIdApi(params)
+        return response
+    }
+
+    async function $findById (params) {
+        const response = await findByIdApi(params)
+        return response
+    }
+
+    async function $getDataReviews (id) {
+        const response = await getDataReviewsApi({id})
+        return response
+    }
 
     //
     return {
@@ -49,7 +64,9 @@ export const usePlaceStore = defineStore('place', () => {
         $apiGetAll,
         $apiGetCategoriesByType,
         $apiGetTypePlaces,
-        $getRatingCountsPlaces
+        $getRatingCountsPlaces,
+        $findById,
+        $getDataReviews
     }
 
 })

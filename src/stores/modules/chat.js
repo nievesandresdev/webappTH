@@ -65,7 +65,6 @@ export const useChatStore = defineStore('chat', () => {
     //getters
 
     const hasUnreadMessages = computed(() => {
-        console.log('hasUnreadMessages',unreadMsgsRef.value)
         return unreadMsgsRef.value == true ? true : false;
     });
     //
