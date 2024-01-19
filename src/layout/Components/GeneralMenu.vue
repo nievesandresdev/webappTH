@@ -12,9 +12,12 @@
                     <div class="active absolute top-5 left-0 w-full" v-if="$route.name == 'Home'" />
                 </div>
                 <div  class="ml-2 mr-6 relative">
-                    <a href="javascript:void(0)" class="font-medium no-underline text-sm">
+                    <router-link
+                        class="font-medium no-underline text-sm"
+                        to="/instalaciones"
+                    >
                         {{ $utils.capitalize($t('layout.header.facilities')) }}
-                    </a>
+                    </router-link>
                     <div class="active absolute top-5 left-0 w-full" v-if="false" />
                 </div>
                 <div class="ml-2 mr-6 relative">

@@ -27,14 +27,14 @@
                     </router-link>
                     <div class="active mt-2 w-full" :class="{'invisible': $route.name != 'Home'}" />
                 </div>
-
                 <!--    INSTALACIONES    -->
                 <div class="relative mr-[2.5rem]">
-                    <a
+                    <router-link
+                        to="/instalaciones"
                         class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
                     >
                         {{ $utils.capitalize($t('layout.header.facilities')) }}
-                    </a>
+                    </router-link>
                     <!-- absolute top-5 left-0 -->
                     <div class="active mt-2 w-full"  :class="{'invisible': $route.name != 'FacilityList'}" />
                 </div>

@@ -18,7 +18,7 @@
                 </span>
             </router-link>
             <router-link
-                to="/"
+                to="/instalaciones"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
             >
                 <img

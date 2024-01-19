@@ -37,6 +37,14 @@ import ChatEn from './en/chat';
 import ChatEs from './es/chat';
 import ChatFr from './fr/chat';
 
+import FacilityEn from './en/facility';
+import FacilityEs from './es/facility';
+import FacilityFr from './fr/facility';
+
+import AboutEn from './en/about';
+import AboutEs from './es/about';
+import AboutFr from './fr/about';
+
 const messages = {
   en: {
     place: placeEn,
@@ -48,6 +56,8 @@ const messages = {
     stay: StayEn,
     guest: GuestEn,
     chat: ChatEn,
+    facility: FacilityEn,
+    about: AboutEn,
     // más módulos...
   },
   es: {
@@ -60,6 +70,8 @@ const messages = {
     stay: StayEs,
     guest: GuestEs,
     chat: ChatEs,
+    facility: FacilityEs,
+    about: AboutEs,
     // más módulos...
   },
   fr: {
@@ -72,6 +84,8 @@ const messages = {
     stay: StayFr,
     guest: GuestFr,
     chat: ChatFr,
+    facility: FacilityFr,
+    about: AboutFr,
     // más módulos...
   },
 };

@@ -78,15 +78,14 @@
                                 <h6 class="text-white text-lg sp:text-[22px] font-medium">{{ stayStore?.stayData?.room }}</h6>
                             </div>
                             <!-- v-if="hotelData.show_profile" -->
-                            <button
+                            <router-link
                                 v-if="hotelData.show_profile"
+                                :to="{name:'HotelAbout'}"
                                 class="hbtn-blur p-2 rounded-md font-medium text-[10px] sp:text-sm text-white underline mb-[5px] sp:mb-[8px] mr-[5px] sp:mr-[8px]"
                                 :class="{'hcursor-mobile':$utils.isMockup()}"
-                                :disabled="$utils.isMockup()"
-                                @click="goAbout()"
                             >
                                 {{ $t('home.btn-more-info') }}
-                            </button>
+                        </router-link>
                         </div>
                     </div>
                 </div>

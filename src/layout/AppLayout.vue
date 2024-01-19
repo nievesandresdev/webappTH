@@ -22,9 +22,9 @@
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
 			<MenuMobile  @markReadMsgs="markMsgsAsRead"/>
 		</div>
-        <template v-if="footer">
-            <TheFooter />
-        </template>
+        
+        <TheFooter v-if="showFooter" />
+        
 
 		<!-- <Notify v-if="$page.props.flash.id" :key="$page.props.flash.id" /> -->
 
@@ -63,12 +63,6 @@
     import { getUrlParam } from '@/utils/utils.js'
     // import Favicon from '../Components/Favicon.vue'
     /* eslint-disable */
-    const props = defineProps({
-       footer:{
-        type:Boolean,
-        default:'true'
-       }
-    })
 
     //store
     const hotelStore = useHotelStore()
@@ -98,6 +92,8 @@
     const isSubscribed = ref(false);
     const route = useRoute();
     provide('showMenuMobile', showMenuMobile);
+    const showFooter = ref(true);
+    provide('showFooter', showFooter);
 
     //ONMOUNTED
     onMounted(() => {

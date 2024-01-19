@@ -3,6 +3,8 @@ import homeRoutes from './homeRoutes'
 import experienceRoutes from './experienceRoutes'
 import placeRoutes from './placeRoutes'
 import chatRoutes from './chatRoutes'
+import facilityRoutes from './facilityRoutes'
+import hotelRoutes from './hotelRoutes'
 
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
@@ -16,6 +18,8 @@ const routes = [
   ...experienceRoutes,
   ...placeRoutes,
   ...chatRoutes,
+  ...facilityRoutes,
+  ...hotelRoutes,
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 

@@ -7,8 +7,7 @@ import { ref } from 'vue'
 export const pinia = createPinia();
 
 export const useMainStore = defineStore('main', () => {
-    // const URL_STORAGE = ref(process.env.VUE_APP_STORAGE_URL)
-    const URL_STORAGE = 'https://test.thehoster.io/'
+    const URL_STORAGE = ref(process.env.VUE_APP_STORAGE_URL)
     return {
         URL_STORAGE,
     }
