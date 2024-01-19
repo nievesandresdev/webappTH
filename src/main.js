@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import Toast from "vue-toastification";
+import 'vue-toastification/dist/index.css';
+
 
 import './assets/css/style.css'; 
 import './assets/css/custom.css'; 
@@ -25,6 +28,7 @@ function initializeApp () {
 
     const app = createApp(App);
 
+    app.use(Toast)
     app.use(pinia)
     app.use(i18n)
     app.use(router)

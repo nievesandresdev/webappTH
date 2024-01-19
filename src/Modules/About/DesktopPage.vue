@@ -22,7 +22,7 @@
             <div class="mb-[1.5rem]"  v-if="hotelData.phone || hotelData.email">
                 <div class="">
                     <p class="text-[1rem] leading-[110%] font-medium">
-                        <!-- {{ $('about.info') }} -->
+                        {{ $t('about.info') }}
                     </p>
                 </div>
                 <div class="flex mt-4 items-center" v-if="hotelData?.phone">
@@ -32,10 +32,10 @@
                             pressedSrc="/assets/icons/1.TH.COPY.SHAPED.svg"
                             altText="copy_phone"
                             :content="hotelData?.phone"
-                            :msg_copy="'Teléfono copiado con éxito'"
+                            :msg_copy="$t('about.msgCopyPhone')"
                         />
                     </div>
-                    <p class="text-[0.875rem leading-[110%] font-medium">
+                    <p class="text-[0.875rem] leading-[110%] font-medium">
                         {{ hotelData?.phone }}
                     </p>
                 </div>
@@ -46,10 +46,10 @@
                             pressedSrc="/assets/icons/1.TH.COPY.SHAPED.svg"
                             altText="copy_email"
                             :content="hotelData?.email"
-                            :msg_copy="'Email copiado con éxito'"
+                            :msg_copy="$t('about.msgCopyEmail')"
                         />
                     </div>
-                    <p class="text-[0.875rem leading-[110%] font-medium">
+                    <p class="text-[0.875rem] leading-[110%] font-medium">
                         {{ hotelData?.email }}
                     </p>
                 </div>
@@ -91,7 +91,7 @@
                                 :key="index"
                                 class="w-full h-[21.625rem] flex-shrink-0"
                             >
-                                <img :src="image.url" :alt="image.name" class="w-full h-full object-cover rounded-lg">
+                                <img :src="urlStorage+image.url" :alt="image.name" class="w-full h-full object-cover rounded-lg">
                             </div>
                         </div>
 
@@ -132,7 +132,7 @@
             <!-- Descripción  -->
             <div class="grid grid-cols-1 mb-[1.5rem] gap-2" v-if="hotelData?.translate.description">
                 <div>
-                    <p class="text-[0.875] leading-[150%] font-medium text-justify">
+                    <p class="text-[0.875rem] leading-[150%] font-medium text-justify">
                         {{hotelData?.translate.description}}
                     </p>
                 </div>
@@ -208,10 +208,10 @@
                         pressedSrc="/assets/icons/1.TH.COPY.SHAPED.svg"
                         altText="copy_email"
                         :content="hotelData?.address"
-                        :msg_copy="'Dirección copiada con éxito'"
+                        :msg_copy="$t('about.msgCopyAddress')"
                     />
                 </div>
-                <p class="text-[0.875rem leading-[110%] font-medium">
+                <p class="text-[0.875rem] leading-[110%] font-medium">
                     {{ hotelData?.address }}
                 </p>
             </div>
@@ -227,7 +227,6 @@
     const { hotelData } = hotelStore
     const showFooter = inject('showFooter');  
     onMounted(() => {
-        // addScrollListener();
         if(hotelData?.images?.length){
             carouselRef.value = document.getElementById('carousel');
             carouselWidth.value = carouselRef.value.offsetWidth;
@@ -243,7 +242,7 @@
 
 
 /*data*/
-
+    const urlStorage = process.env.VUE_APP_STORAGE_URL;
     const translateX = ref(0);
     const carouselRef = ref(null);
     const carouselWidth = ref(0);
@@ -307,21 +306,6 @@
     function openLink(link) {
         window.open(link, '_blank');
     }
-    // function addScrollListener() {
-    //     window.addEventListener('scroll', handleScroll);
-    // }
-    // function handleScroll() {
-    //     const headerOffsetTop = header.value.offsetTop;
-    //     const scrollY = window.scrollY;
-    //     const screenHeight = window.innerHeight;
-    //     const threshold = screenHeight * 0.2;
-
-    //     if (scrollY > threshold) {
-    //         isSticky.value = scrollY >= headerOffsetTop;
-    //     } else {
-    //         isSticky.value = false;
-    //     }
-    // }
 </script>
 <style>
 .container-info{

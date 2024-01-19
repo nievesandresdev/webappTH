@@ -3,18 +3,18 @@
     <footer class="bg-gray-900 w-full hidden md:block h-[54px]">
         <div class="container-fluid-landing h-full flex justify-start items-center">
                 <ul>
-                    <li class="li-footer text-white text-sm font-normal mr-4">
+                    <router-link :to="{name:'LegalWarning'}" class="li-footer text-white text-sm font-normal mr-4">
                         {{ $utils.capitalize($t('layout.footer.legal-warning')) }}
-                    </li>
-                    <li  class="li-footer text-white text-sm font-normal mr-4">
+                    </router-link>
+                    <router-link :to="{name:'PrivacyPolicies'}"  class="li-footer text-white text-sm font-normal mr-4">
                         {{ $utils.capitalize($t('layout.footer.privacy-policy')) }}
-                    </li>
-                    <li class="li-footer text-white text-sm font-normal mr-4">
+                    </router-link>
+                    <router-link :to="{name:'CookiePolicies'}" class="li-footer text-white text-sm font-normal mr-4">
                         {{ $utils.capitalize($t('layout.footer.privacy-cookies')) }}
-                    </li>
-                    <li class="li-footer text-white text-sm font-normal">
+                    </router-link>
+                    <router-link :to="{name:'TermsConditions'}" class="li-footer text-white text-sm font-normal">
                         {{ $utils.capitalize($t('layout.footer.terms-conditions')) }}
-                    </li>
+                    </router-link>
                 </ul>
         </div>
     </footer>

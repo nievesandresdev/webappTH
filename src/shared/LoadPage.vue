@@ -1,6 +1,6 @@
 <template>
     <!-- load page -->
-    <div class="hbg-white-100 flex flex-col" style="z-index: 2000;" :class="resize ? 'w-full h-full' : 'fixed  h-screen w-screen left-0 top-0'">
+    <div class="hbg-white-100 flex flex-col fixed h-screen w-screen left-0 top-0 z-[2000]">
         <div class="spinner-container mx-auto mt-auto">
             <svg class="spinner" viewBox="0 0 50 50">
                 <defs>
@@ -25,10 +25,6 @@
       message: {
         type: String,
         default: '',
-      },
-      resize: {
-        type: Boolean,
-        default: true,
       }
     })
 
@@ -37,7 +33,7 @@
 
     onMounted(async () => {
   const img = new Image();
-    img.src = '/vendor_asset/img/hoster/icons/resenas/hotel-bell-svgrepo-com.svg';
+    img.src = '/assets/icons/hotel-bell-svgrepo-com.svg';
     img.onload = () => {
       // La imagen ha sido cargada
     };

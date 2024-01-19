@@ -19,6 +19,7 @@
   </template>
 
   <script>
+  import { useToast } from "vue-toastification";
   export default {
     props: {
       class: {
@@ -45,6 +46,10 @@
         type: String,
         default: 'Copiado!',
       },
+    },
+    setup(){
+      const toast = useToast();
+      return { toast }
     },
     data() {
       return {
@@ -73,9 +78,11 @@
         setTimeout(() => {
           this.isPressed = false
         }, 300);
-        // this.$toast.success(this.msg_copy, {
-        //     position: "top-right",
-        // });
+        this.toast(this.msg_copy, {
+          toastClassName: "hbg-warning",
+          bodyClassName: ["text-sm", "font-medium","text-black"],
+          icon: false,
+      }); 
       }
     }
   };

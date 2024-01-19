@@ -26,7 +26,7 @@
         leave-to-class="transform scale-95 opacity-0"
       >
         <MenuItems
-          class="absolute right-0 w-48 origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow ring-1 ring-black/5 focus:outline-none mt-4 px-[8px] py-[8px]"
+          class="absolute right-0 w-48 origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow ring-1 ring-black/5 focus:outline-none mt-4 px-[8px] py-[8px] z-50"
         >
             <MenuItem
                 v-for="(item, index) in lgsAll"

@@ -1,9 +1,39 @@
 import axios from 'axios'
 import { i18n } from '@/i18n'
+import { usePreloaderStore } from '@/stores/modules/preloader';
+
 
 const locale = localStorage.getItem('locale') || 'es'
 const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
-console.log('API_URL_BACKEND',API_URL_BACKEND)
+
+function getPreloaderStore() {// función auxiliar que devuelve el store de preloader
+  return usePreloaderStore();
+}
+
+axios.interceptors.request.use(config => {
+  if (config.showPreloader !== false) {
+    const preloader = getPreloaderStore();
+    preloader.requestStarted();
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  if (response.config.showPreloader !== false) {
+    const preloader = getPreloaderStore();
+    preloader.requestFinished();
+  }
+  return response;
+}, error => {
+  if (!error.config || error.config.showPreloader !== false) {
+    const preloader = getPreloaderStore();
+    preloader.requestFinished();
+  }
+  return Promise.reject(error);
+});
+
 
 export const apiHttp = async (method, endpoint, data, options = {}) => {
     // const { token } = localStorage
