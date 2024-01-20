@@ -1,7 +1,7 @@
 export default {
     "title": 'Home',
     "title-welcome": "Welcome",
-    "btn-see-all": "what to visit",
+    "btn-see-all": "See all",
     "hab": "ROOM",
     "btn-more-info": "More information",
     "section-facility": {
@@ -33,5 +33,9 @@ export default {
       "btn-submit": "Submit",
       "message-success-title": "Thank you for sharing your experience!",
       "message-success-text": "We greatly value your feedback and will work to provide you with the best possible stay in the future."
+    },
+    "card-product":{
+      "recommended":"Recomended",
+      "featured":"Featured",
     }
   };

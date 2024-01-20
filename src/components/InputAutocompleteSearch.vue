@@ -13,14 +13,14 @@
                 <!-- v-if="innerWidth > 768" -->
                 <input
                     v-model="formSearch.search"
-                    class="pl-6 sp:pl-9 text-[10px] sp:text-xs lg:text-sm font-medium w-full h-full  border-none bg-white hidden md:block"
+                    class="pl-6 sp:pl-9 text-[10px] sp:text-xs lg:text-sm font-medium w-full h-full border-none bg-white hidden md:block"
                     :placeholder="`${$t('layout.input-search.search')}...`"
                     type="text"
                     @input="searchContent()"
                     @focus="searchContent()"
                 >
                 <button
-                    class="pl-6 sp:pl-9 text-[10px] sp:text-xs lg:text-sm font-medium w-full h-full  border-none bg-white text-left block md:hidden"
+                    class="pl-6 sp:pl-9 text-[10px] sp:text-xs lg:text-sm font-medium w-full h-full border-none bg-white text-left block md:hidden"
                     @click="searchContent()"
                 >
                     {{ formSearch.search ? formSearch.search : `${$t('layout.input-search.search')}...` }}
@@ -54,22 +54,27 @@
 
 <script setup>
     //import libraries
-    import { ref, computed, provide, watch, onMounted } from 'vue';
+    import { ref, computed, provide, watch, onMounted, onBeforeUnmount } from 'vue';
     import { slufy } from '@/utils/utils.js'
-        import { useUtilityStore } from '@/stores/modules/utility'
+    import { useRoute, useRouter   } from 'vue-router'
+    import { useUtilityStore } from '@/stores/modules/utility'
     //import component
     import InputSearchModalMobile from './InputSearchModalMobile'
 
     // PROPS
-    const props = defineProps({
-        type: String,
-        default: null
-    })
-
+    // const props = defineProps({
+    //     type: String,
+    //     default: null
+    // });
+    
+    //route  
+    const route  = useRoute();
+    const router = useRouter();
     // STORE
     const utilityStore = useUtilityStore()
 
     //DATA STATIC
+    const urlStorage = process.env.VUE_APP_STORAGE_URL;
     const attr = {
         key: 'today',
             highlight: {
@@ -119,7 +124,7 @@
     //DATA
     const formSearch = {
         search: '',
-        routeName: '',
+        typeSearch: '',
     }
     const showDropdown = ref(false)
     const refDropdown = ref(false)
@@ -132,15 +137,18 @@
     provide('data', data)
     provide('formSearch', formSearch)
 
-    onMounted(()=>{
-        formSearch.type = props.type
-    })    
-
     // FUNCTIONS
+    function defineTypeSearch(){
+        console.log('route.name',route.name)
+        formSearch.typeSearch = 'experience';
+        if(route.name == "PlaceList" ||  route.name == "PlaceDetail"){
+            formSearch.typeSearch = 'place';
+        }
+    }
+
     function toggleDropdown () {
         if (innerWidth < 768) {
             showDropdownMobile.value = true
-            console.log(showDropdownMobile)
             return
         }
         showDropdown.value = true
@@ -160,11 +168,14 @@
     }
 
     function searchContent () {
+        defineTypeSearch();
         clearTimeout(timeoutFormId.value)
         timeoutFormId.value = setTimeout(async () => {
+            console.log('formSearch',formSearch)
             const response = await utilityStore.$apiGetExpAndPlaceBySaearch(formSearch)
             if (response.ok) {
                 data.value = response.data
+                console.log('searchContent',response.data)
                 toggleDropdown()
             }
         }, formSearch.data ? 400 : 0)
@@ -174,33 +185,34 @@
         let path = {
             experience: {
                 path: img,
-                default: '/vendor_asset/img/default/default_activities.png',
             },
             place: {
-                path: `/storage/places/${img}`,
-                default: '/vendor_asset/img/default/default_activities.png',
+                path: `${urlStorage}storage/places/${img.image}`,
             },
             city: {
                 path: '/storage/city',
-                default: '/vendor_asset/img/default/default_cities.png',
             },
         }
-        let url = img ? `${path[type]['path']}` : path[type]['default']
+        let url = img ? `${path[type]['path']}` : null
         return url
     }
 
     function selectSearch (item) {
         formSearch.search = item.title
-        formSearch.type = item.type
         formSearch.id = item.id
         showDropdown.value = false
-        let city = $slufy(item.city)
-        const hoster = hotel.value.slug;
-        const slug = item?.slug;
+        if(item.type == 'place'){
+            router.push({name: 'PlaceDetail', params:{ id: item.id }})
+        }else{
+            router.push({name: 'ExperienceDetail', params:{ slug: item.slug }})
+        }
     }
 </script>
 
 <style lang="scss" scoped>
+    input:focus{
+        border:none !important;
+    }
     .vc-container{
         border: none !important;
     }

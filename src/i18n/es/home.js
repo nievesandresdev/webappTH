@@ -29,5 +29,10 @@ export default {
       "btn-submit": "Enviar",
       "message-success-title": "¡Gracias por compartir tu experiencia!",
       "message-success-text": "Valoramos mucho tu opinión y trabajaremos para ofrecerte la mejor estancia posible en el futuro."
+    },
+    "card-product":{
+      "recommended":"Recomendado",
+      "featured":"Destacado",
     }
   };
+  

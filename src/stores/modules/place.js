@@ -49,11 +49,6 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
 
-    async function $findById (params) {
-        const response = await findByIdApi(params)
-        return response
-    }
-
     async function $getDataReviews (id) {
         const response = await getDataReviewsApi({id})
         return response

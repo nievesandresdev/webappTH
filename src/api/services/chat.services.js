@@ -3,7 +3,7 @@ import {
     chatPath,
 } from '../config/apiRoute'
 
-export const sendMsgToHosterApi = (params) => apiHttp('POST', `${chatPath}/sendMsgToHoster`, params)
+export const sendMsgToHosterApi = (params) => apiHttp('POST', `${chatPath}/sendMsgToHoster`, params , { showPreloader: false })
 export const loadMessagesApi = (params) => apiHttp('POST', `${chatPath}/loadMessages`, params)
-export const markMsgsAsReadApi = (params) => apiHttp('POST', `${chatPath}/markMsgsAsRead`, params)
-export const unreadMsgsApi = (params) => apiHttp('GET', `${chatPath}/unreadMsgs`, params)
+export const markMsgsAsReadApi = (params) => apiHttp('POST', `${chatPath}/markMsgsAsRead`, params , { showPreloader: false })
+export const unreadMsgsApi = (params) => apiHttp('GET', `${chatPath}/unreadMsgs`, params , { showPreloader: false })

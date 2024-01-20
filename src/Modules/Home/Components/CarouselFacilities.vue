@@ -27,12 +27,12 @@
             v-for="(item, index) in items"
             :key="index"
             class="mr-3 card-width shrink-0 h-24 sp:h-40 rounded-lg relative"
-             @click="go_facility(item.id)"
+             @click="go_facility(item.id, $utils.isMockup())"
         >
-            <!-- <img 
-                :src="getImg(item)"
+            <img 
+                :src="facilityStore.$loadImage(item?.image?.url)"
                 class="object-cover rounded-lg w-full h-full"
-            > -->
+            >
             <div class="overlay rounded-lg absolute h-full z-10 w-full top-0 left-0" style="background: rgba(0, 0, 0, 0.3);"></div>
             <h2 class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-[10px] sp:text-base font-medium z-30 h-4 sp:h-6">
                 {{item.title[0].toUpperCase() + item.title.substring(1)}}
@@ -46,6 +46,7 @@
     import { onMounted, computed, ref, toRefs, watch } from 'vue'
     import { Carousel, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
+    import { useRouter } from 'vue-router'
 
     // STORE
     import { useFacilityStore } from '@/stores/modules/facility'
@@ -64,6 +65,7 @@
     })
 
     const { id, items } = toRefs(props)
+    const router = useRouter();
 
     //DATA
     const settings_cross = {
@@ -123,8 +125,10 @@
         })
     }
 
-    function go_facility (facility) {
-        console.log(facility)
+    function go_facility (facility,isMockup) {
+        if(!isMockup){
+            router.push({name:'FacilityDetail',params:{id:facility}})
+        }
     }
 
 </script>

@@ -101,12 +101,11 @@
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
-                    <a 
-                        @click="go_facilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
+                    </router-link>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
@@ -119,7 +118,7 @@
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
-                        @click="go_places(whatvisit_id, categories_places_defaults?.whatvisit?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    @click="goPlaces(crossellingsData?.whatvisit_id, firstCatWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -136,7 +135,7 @@
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
-                        @click="go_places(whereeat_id, categories_places_defaults?.whereeat?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.whereeat_id, firstCatWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -153,7 +152,7 @@
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
-                        @click="go_places(leisure_id, categories_places_defaults?.leisure?.id)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.leisure_id, firstCatLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -169,9 +168,9 @@
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-experience.title')) }}
                     </h2>
-                    <a @click="go_experiences" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)">
+                    <router-link :to="{name:'ExperienceList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)">
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
+                    </router-link>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
                     <CarouselExperiences id="0" :items="crossellingsData?.crosselling_experiences" />
@@ -188,14 +187,11 @@
     <script setup>
         //IMPORT
         import {
-            // onMounted,
             ref,
-            // inject,
-            // provide,
-            // defineProps
             onMounted,
             onBeforeMount,
         } from 'vue';//toRefs,
+        import { useRouter } from 'vue-router';
         //COMPONENTS
         import CarouselFacilities from './Components/CarouselFacilities.vue'
         import CarouselExperiences from './Components/CarouselExperiences.vue'
@@ -216,21 +212,54 @@
         import { useGuestStore } from '@/stores/modules/guest'
         const guestStore = useGuestStore()
         const { guestData } = guestStore
+        import { usePlaceStore } from '@/stores/modules/place'
+        const placeStore = usePlaceStore()
+        placeStore
 
+        const router = useRouter();
 
         // DATA
         const crossellingsData = ref(null)
+        const placeCategories = ref(null)
+        const firstCatWhatVisitId = ref(null)
+        const firstCatWhereEatId = ref(null)
+        const firstCatLeisureId  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
-        onBeforeMount (() => {
+        // onBeforeMount (() => {
+        // })
+
+        onMounted(() => {
             loadCrossellings()
+            getPlaceCategories();
         })
 
         // FUNCTION
+        async function getPlaceCategories(){
+            const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true})
+            if(response.ok)placeCategories.value = response.data;
+            console.log('crossellingsData.value',crossellingsData.value)
+            console.log('placeCategories.value',placeCategories.value)
+
+
+            firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id).id;
+            firstCatWhereEatId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whereeat_id).id;
+            firstCatLeisureId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.leisure_id).id;
+        }
+
         async function loadCrossellings () {
             crossellingsData.value = await hotelStore.$getCrossellings()
         }
-    
+
+        const goPlaces = (type, cat) => {
+            console.log('goPlaces type', type);
+            console.log('goPlaces cat', cat);
+            router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat } });
+        }
+
+        
+        
+        
     </script>
     
     <style scoped>

@@ -1,8 +1,8 @@
 <template>
     <header
         class="fixed bottom-0 left-0 w-full z-20 shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
+        :class="showChat && !hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
     >
-    <!-- :class="!hotel.chat_settings?.show_guest && !hotel.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'" -->
         <ul class="flex justify-between">
             <router-link
                 to="/"
@@ -23,7 +23,7 @@
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['facility'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
+                    :src="['FacilityList','FacilityDetail'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
                     alt="TH.FACILITY"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -40,7 +40,7 @@
                     alt="TH.PLACE"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
-                    {{ $utils.capitalize($t('layout.header.explore')) }}}
+                    {{ $utils.capitalize($t('layout.header.explore')) }}
                 </span>
             </router-link>
             <router-link
@@ -58,6 +58,7 @@
                 </span>
             </router-link>
             <li
+                v-if="showChat && ($utils.isMockup() || (!$utils.isMockup() && chatStore))"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
                 @click="markReadMsgs"
             >
@@ -80,6 +81,7 @@
     import { ref, provide, onMounted, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router';
     import { useChatStore } from '@/stores/modules/chat';
+    import { useHotelStore } from '@/stores/modules/hotel';
     defineProps({
         msgs_unread: {
             type: Boolean,
@@ -95,6 +97,8 @@
         //
     })
 
+    const hotelStore = useHotelStore()
+    const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
     //DATA
     const modal_find_reserve = ref(false)
     const modal_reserve = ref(false)
