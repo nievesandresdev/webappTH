@@ -3,7 +3,7 @@ const HomePage = () => import(/* webpackChunkName: "home" */ '../Modules/Home/Ho
 
 const homeRoutes = [
   {
-    path: '/',
+    path: '',
     component: AppLayout,
     meta: { verifyHotel: true },
     children: [

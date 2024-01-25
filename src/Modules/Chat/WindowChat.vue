@@ -166,6 +166,7 @@
             //servicio para enviar mensaje
             let text = msg.value;
             msg.value = null;
+            console.log('isAvailable.value',isAvailable.value)
             let params = {
                 text,
                 guestId : localStorage.getItem('guestId'),

@@ -15,6 +15,7 @@ export const useChatStore = defineStore('chat', () => {
     // ACTIONS
     async function sendMsgToHoster (params) {
         const response = await sendMsgToHosterApi(params)
+        console.log('sendMsgToHoster',response)
         return response
     }
 

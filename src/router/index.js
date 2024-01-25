@@ -24,9 +24,10 @@ const routes = [
   ...policiesRoutes,
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
+console.log('env.BASE_URL',process.env.BASE_URL)
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL + 'webapp'),
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Siempre desplazar a la parte superior cuando cambien las rutas
