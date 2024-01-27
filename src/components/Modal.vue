@@ -3,7 +3,7 @@
     <div class="fixed inset-0 bg-[#00000080]  z-[1000]" aria-hidden="true" />
 
         <div class="fixed inset-0 overflow-y-auto z-[1010]">
-            <div class="flex min-h-full items-center justify-center p-4 text-center">
+            <div :class="`${customBackdrop ? customBackdrop :'flex min-h-full items-center justify-center p-4 text-center'}`">
                 <DialogPanel
                     :class="`
                         w-full transform overflow-hidden transition-all
@@ -30,6 +30,10 @@ import { Dialog, DialogPanel} from '@headlessui/vue'
         customClasess: {
             type: String,
             default: '',
+        },
+        customBackdrop: {
+            type: String,
+            default: null,
         }
     })
     const emit = defineEmits('closeModal');

@@ -12,7 +12,7 @@
       >
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">
         <span
-          class="flex-grow truncate text-label font-medium mr-2"
+          class="flex-grow truncate text-label text-sm font-medium mr-2"
           :class="{
             'htext-gray-500': !error && !modelValue,
             'htext-alert-negative': error,

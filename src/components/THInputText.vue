@@ -1,32 +1,41 @@
 <template>
-    <label class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
-    <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
-    <input
-    :ref="id"
-    :id="id"
-    :type="type"
-    :class="computeClasses"
-    :placeholder="placeholderText"
-    :value="modelValue"
-    @input="validateInput"
-    @blur="$emit('blur')"
-    @keyup="keyupInput"
-    autocomplete="nope"
-    :disabled="disabled"
-    >
-    <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
-        <img
-            src="/assets/icons/1.TH.WARNING.svg"
-            alt="icon alert red"
-            class="inline w-4 h-4 mr-2"
-        />
-        {{ stringTextError }}
-    </p>
+    <div class="relative">
+        <label v-if="textLabel" class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
+        <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
+
+        <img v-if="iconLeft" class="w-6 h-6 absolute left-3 top-2" :src="iconLeft">
+        <input
+        :ref="id"
+        :id="id"
+        :type="type"
+        :class="computeClasses"
+        :placeholder="placeholderText"
+        :value="modelValue"
+        @input="validateInput"
+        @blur="$emit('blur')"
+        @keyup="keyupInput"
+        autocomplete="nope"
+        :disabled="disabled"
+        >
+        <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
+            <img
+                src="/assets/icons/1.TH.WARNING.svg"
+                alt="icon alert red"
+                class="inline w-4 h-4 mr-2"
+            />
+            {{ stringTextError }}
+        </p>
+        <img 
+            v-if="iconRight" 
+            @click="pressIconRight"
+            class="w-8 h-8 absolute right-2 top-1.5" :src="iconRight"
+        >
+    </div>
 </template>
 
 <script>
 export default {
-    emits: ['update:modelValue', 'handleError','keyupInput'],
+    emits: ['update:modelValue', 'handleError','keyupInput','pressIconRight'],
     data() {
         return {
             hasError: false,
@@ -58,6 +67,12 @@ export default {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             } else {
                 classes += ' hoverForm';
+            }
+            if(this.iconLeft){
+                classes += ' pl-[44px]';
+            }
+            if(this.iconRight){
+                classes += ' pr-[44px]';
             }
 
             Object.entries(this.customClasses).forEach(([key, value]) => {
@@ -118,6 +133,14 @@ export default {
             type: String,
             default: 'Campo requerido',
         },
+        iconLeft: {
+            type: String,
+            default: null,
+        },
+        iconRight: {
+            type: String,
+            default: null,
+        },
     },
     created(){
         if (this.isError) {
@@ -130,6 +153,9 @@ export default {
         }
     },
     methods: {
+        pressIconRight(){
+            this.$emit('pressIconRight');
+        },
         keyupInput(){
             this.$emit('keyupInput');
         },

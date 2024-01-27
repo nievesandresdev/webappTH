@@ -2,8 +2,11 @@ export default {
     "title": 'Home',
     "title-welcome": "Welcome",
     "btn-see-all": "See all",
-    "hab": "ROOM",
-    "btn-more-info": "More information",
+    "hab": "Room",
+    "btn-more-info": "Hotel information",
+    "stayTitle":"Stay",
+    "guestTitle":"Guests",
+    "invite":"Invite",
     "section-facility": {
       "title": "facilities"
     },
@@ -37,5 +40,12 @@ export default {
     "card-product":{
       "recommended":"Recomended",
       "featured":"Featured",
+    },
+    "inviteModal":{
+      "title":"Invite guests",
+      "inputLabel":"Invite another guest",
+      "inputPlaceholder":"Guest email",
+      "button":"Invite",
+      "textToast":"Invitation sent",
     }
   };

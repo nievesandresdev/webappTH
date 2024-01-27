@@ -141,3 +141,34 @@ button:focus {
   display: none !important;
 }
 
+/*UTILS TEXT*/
+.leading-110{
+  line-height: 110% !important;
+}
+.leading-90{
+  line-height: 90% !important;
+}
+
+/* Estilos para el toast en general */
+.warning-toast {
+  background-color: #FFD453; /* Color de fondo */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 8px; 
+  width: auto !important; 
+  min-width: 0;
+  min-height: 0;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* Estilos para el cuerpo del toast */
+.warning-toast-body {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 110%;
+  color:#333;
+  white-space: nowrap; 
+}
+
+

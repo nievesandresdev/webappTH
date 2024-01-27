@@ -4,13 +4,7 @@
         
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen"> 
-            <div class="w-full h-[150px] sp:h-[240px] lg:h-full relative">          
-                <!-- <img
-                    v-if="hotelData?.image"
-                    class="absolute inset-0 object-cover w-full h-[150px] sp:h-[240px] lg:h-full"
-                    :src="`${hotelData?.image ? storageUrl+hotelData?.image :storageUrl+'/storage/gallery/general-1.jpg'}`" 
-                    :alt="hotelData.name"
-                > -->
+            <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
                 <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="'background-image: url('+storageUrl+hotelData?.image+')'"></div>
                 <div v-else class="absolute inset-0 bg-cover bg-center" style="background-image: url('/storage/gallery/general-1.jpg');"></div>  
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
@@ -25,68 +19,59 @@
                 :class="hotelData.show_profile || stayStore?.stayData?.room  || $utils.isMockup() ? 'h-[70px] sp:h-[111px] gradient-bottom' : 'h-[30px] sp:h-[40px] gradient-bottom-min'"
                 style="background-image: url('/assets/img/home/gradient-mobile.png'); background-repeat: no-repeat; object-fit: cover;"
             />
+            <!-- card stay/guest -->
             <div
                 v-if="guestStore?.guestData"
-                :class="hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[14px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]'"
+                :class="hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]'"
                 class="absolute left-0 md:bottom-0 w-full lg:pb-[40px] flex justify-center"
             >
                 <div v-if="stayStore?.stayData && guestStore?.guestData?.name" class="container-fluid-landing">
-                    <div class="w-full lg:w-[453px] rounded-xl pt-2.5 pl-2.5 sp:pt-4 sp:pl-4 z-[10000]" style="background: rgba(206, 206, 206, 0.10); backdrop-filter: blur(40px)">
-                        <!-- mb-3 sp:mb-4 -->
-                        <div
-                            :class="hotelData.show_profile || stayStore?.stayData?.room ? 'mb-2.5 sp:mb-4' : 'pb-[8px] sp:pb-[16px]'"
-                            class="flex justify-between pr-[10px] sp:pr-[16px]"
-                        >
-                            <div class="w-[90px] sp:w-[184px] lg:w-[309px] truncate-1">
-                                <!-- mb-2 sp:mb-3 -->
-                                <h2
-                                    class="text-[12px] leading-[20px] sp:leading-[33px] sp:text-[22px] text-white font-medium"
-                                    :class="{'stayData && stayData.guest': !hotelData.show_profile && !stayStore?.stayData?.room}"
-                                >
-                                    {{ $t('home.title-welcome') }}
-                                </h2>
-                                <h2
-                                    class="text-[12px] leading-[20px] sp:leading-[33px] sp:text-[22px] text-white font-medium truncate-1"
-                                    :class="{'stayData && stayData.guest': !hotelData.show_profile && !stayStore?.stayData?.room}"
-                                >
-                                    {{ $utils.titleCase(guestStore?.guestData?.name) }}
-                                </h2>
-                            </div>
-                            <div class="flex">
-                                <div class="text-center mr-2.5 sp:mr-4">
-                                    <h4 v-if="stayStore?.stayData?.check_in" class="text-white text-xs sp:text-base font-medium">{{ $moment(stayStore?.stayData?.check_in).format('DD/MM') }}</h4>
-                                    <h6 v-if="stayStore?.stayData?.hour_checkin" class="text-white text-[8px] sp:text-xs font-medium">{{ stayStore?.stayData?.hour_checkin }}</h6>
+                    <!-- content card -->
+                    <div class="w-full lg:w-[453px] rounded-xl p-2.5 sp:p-4 z-[10000]" style="background: rgba(206, 206, 206, 0.10); backdrop-filter: blur(40px)">
+                        <!-- welcome to the guest -->
+                        <p class="text-sm font-semibold truncate text-white leading-110">
+                            {{ $t('home.title-welcome') }} {{ $utils.titleCase(guestStore?.guestData?.name) }}
+                        </p>
+                        <!-- settings button -->
+                        <div class="flex items-center mt-4">
+                            <p class="text-base font-semibold text-white leading-110">
+                                {{ $t('home.stayTitle') }}
+                            </p>
+                            <img @click="openStaySettings" class="w-6 h-6 ml-auto" src="/assets/icons/1.TH.SETTINGS.SHAPE.svg" alt="">
+                        </div>
+                        <!-- date stay and room -->
+                        <div class="flex items-center mt-2 justify-between">
+                            <div class="">
+                                <div class="inline-block">
+                                    <h4 class="text-sm font-medium leading-110 text-white">{{ $moment(stayStore?.stayData?.check_in).format('DD/MM') }}</h4>
+                                    <h5 v-if="stayStore?.stayData?.hour_checkin" class="text-xs font-medium leading-90 text-white mt-1">{{ stayStore?.stayData?.hour_checkin }}</h5>
                                 </div>
-                                <div class="text-center">
-                                    <h4 v-if="stayStore?.stayData?.check_out" class="text-white text-xs sp:text-base font-medium">{{$moment(stayStore?.stayData?.check_out).format('DD/MM')}}</h4>
-                                    <h6 v-if="stayStore?.stayData?.hour_checkout" class="text-white text-[8px] sp:text-xs font-medium">{{ stayStore?.stayData?.hour_checkout }}</h6>
+                                <div class="inline-block ml-4">
+                                    <h4 class="text-sm font-medium leading-110 text-white">{{$moment(stayStore?.stayData?.check_out).format('DD/MM')}}</h4>
+                                    <h5 v-if="stayStore?.stayData?.hour_checkout" class="text-xs font-medium leading-90 text-white mt-1">{{ stayStore?.stayData?.hour_checkout }}</h5>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            v-if="hotelData.show_profile || stayStore?.stayData?.room"
-                            class="flex items-end w-full justify-between"
-                            :class="{'justify-between': stayStore?.stayData?.room && hotelData.show_profile, 'justify-start': stayStore?.stayData?.room && !hotelData.show_profile, 'justify-end':  !stayStore?.stayData?.room && hotelData.show_profile,'no-hover':$utils.isMockup()}"
-                        >
-                            <div
-                                v-if="stayStore?.stayData?.room"
-                                class="text-start pb-[8px] sp:pb-[16px]"
-                            >
-                                <h4 class="text-white text-[6px] sp:text-[10px] lg:text-xs font-semibold">
-                                    {{ $t('home.hab') }}
-                                </h4>
-                                <h6 class="text-white text-lg sp:text-[22px] font-medium">{{ stayStore?.stayData?.room }}</h6>
+                            <div v-if="stayStore?.stayData?.room" class="text-right">
+                                <h5 class="text-xs font-medium leading-90 text-white">{{ $t('home.hab') }}</h5>
+                                <h4 class="text-sm font-medium leading-110 text-white mt-1">{{stayStore?.stayData?.room}}</h4>
                             </div>
-                            <!-- v-if="hotelData.show_profile" -->
-                            <router-link
-                                v-if="hotelData.show_profile"
-                                :to="{name:'HotelAbout'}"
-                                class="hbtn-blur p-2 rounded-md font-medium text-[10px] sp:text-sm text-white underline mb-[5px] sp:mb-[8px] mr-[5px] sp:mr-[8px]"
-                                :class="{'hcursor-mobile':$utils.isMockup()}"
-                            >
-                                {{ $t('home.btn-more-info') }}
-                        </router-link>
                         </div>
+                        <div class="flex mt-2 items-center">
+                            <p class="text-sm font-semibold text-white">
+                                {{ $t('home.guestTitle')}} 
+                                {{ stayStore?.stayData?.uniqueAccessesCount }} / 
+                                {{ stayStore?.stayData?.number_guests ?? stayStore?.stayData?.uniqueAccessesCount }}
+                            </p>
+                            <button 
+                                v-if="!stayStore?.completelyVisited"
+                                @click="openInvite" 
+                                class="hbtn-cta text-sm font-medium py-3 w-[104px] text-center ml-auto leading-3"
+                            >
+                                {{ $t('home.invite')}}
+                            </button>
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -94,8 +79,20 @@
         </section>
         <!-- end card banner -->
 
+        <!-- more info -->
+        <div v-if="hotelData?.show_profile" class="text-center mt-3">
+            <router-link
+                    :to="{name:'HotelAbout'}"
+                    class="hbtn-primary leading-90 text-xs font-medium p-2"
+                    :class="{'hcursor-mobile':$utils.isMockup()}"
+                >
+                    <img class="w-4 h-4 mr-1.5 inline" src="/assets/icons/1.TH.INFO.svg">
+                    {{ $t('home.btn-more-info') }}
+            </router-link>
+        </div>
+
         <!-- carousel's -->
-         <div class="mb-4 sp:mb-6" :class="{'-mt-8': !hotelData.show_profile && !stayStore?.stayData?.room && !$utils.isMockup()}">
+         <div class="mb-4 sp:mb-6 mt-4">
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
@@ -182,6 +179,9 @@
         <!-- FormSurvey -->
         <FormSurvey />
          <!-- END FormSurvey    -->
+
+         <InviteModal ref="inviteModal"/>
+         <StayDataModal ref="stayDataModal"/>
     </template>
     
     <script setup>
@@ -189,7 +189,7 @@
         import {
             ref,
             onMounted,
-            onBeforeMount,
+            computed,
         } from 'vue';//toRefs,
         import { useRouter } from 'vue-router';
         //COMPONENTS
@@ -199,6 +199,8 @@
         import FormSurvey from './Components/FormSurvey.vue'
         import HomePageFakeGuestWelcome from './HomePageFakeGuestWelcome.vue'
         import MenuHome from '@/layout/Components/MenuHome.vue'
+        import InviteModal from './Components/InviteModal.vue'
+        import StayDataModal from './Components/StayDataModal.vue';
 
         // STORE
         import { useMainStore } from '@/stores'
@@ -224,6 +226,8 @@
         const firstCatWhatVisitId = ref(null)
         const firstCatWhereEatId = ref(null)
         const firstCatLeisureId  = ref(null)
+        const inviteModal  = ref(null)
+        const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
         // onBeforeMount (() => {
@@ -238,8 +242,6 @@
         async function getPlaceCategories(){
             const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true})
             if(response.ok)placeCategories.value = response.data;
-            console.log('crossellingsData.value',crossellingsData.value)
-            console.log('placeCategories.value',placeCategories.value)
 
 
             firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id).id;
@@ -252,12 +254,18 @@
         }
 
         const goPlaces = (type, cat) => {
-            console.log('goPlaces type', type);
-            console.log('goPlaces cat', cat);
             router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat } });
         }
 
-        
+        const openInvite = () =>{
+            inviteModal.value.open();
+        }
+
+        const openStaySettings = () =>{
+            stayDataModal.value.open();
+        }
+
+        //computed
         
         
     </script>
@@ -304,7 +312,7 @@
             background-size: 100% 64px;
         }
         .gradient-bottom {
-            background-size: 100% 111px;
+            background-size: 100% 130px;
         }
         .gradient-top-min {
             background-size: 100% 48px;

@@ -6,13 +6,13 @@ export const usePreloaderStore = defineStore('preloader', () => {
 
   function requestStarted() {
     activeRequests.value++;
-    console.log('requestStarted',activeRequests.value)
+    // console.log('requestStarted',activeRequests.value)
   }
 
   function requestFinished() {
     if (activeRequests.value > 0) {
       activeRequests.value--;
-      console.log('requestFinished',activeRequests.value)
+      // console.log('requestFinished',activeRequests.value)
     }
   }
 

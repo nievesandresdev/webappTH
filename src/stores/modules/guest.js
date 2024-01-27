@@ -57,12 +57,12 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await findLastStayApi(guestId)
         const { ok } = response   
         if(ok){
-            stayStore.setStayData(response.data)
+            stayStore.setStayData(response.data,false)
             return response.data
         }
-        if(stayId.value){
-            const response = await stayStore.loadLocalStay();
-        }
+        // if(stayId.value){
+        //     const response = await stayStore.loadLocalStay();
+        // }
         return null
     }
 

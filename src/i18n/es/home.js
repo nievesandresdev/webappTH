@@ -1,9 +1,12 @@
 export default {
     "title": "Home",
-    "title-welcome": "Bienvenido",
+    "title-welcome": `Bienvenido`,
     "btn-see-all": "ver todo",
-    "hab": "HAB",
-    "btn-more-info": "Más información",
+    "hab": "Hab",
+    "btn-more-info": "Información del hotel",
+    "stayTitle":"Estancia",
+    "guestTitle":"Huéspedes",
+    "invite":"Invitar",
     "section-facility": {
       "title": "instalaciones"
     },
@@ -33,6 +36,13 @@ export default {
     "card-product":{
       "recommended":"Recomendado",
       "featured":"Destacado",
+    },
+    "inviteModal":{
+      "title":"Invitar huéspedes",
+      "inputLabel":"Invitar a otro huésped",
+      "inputPlaceholder":"Correo electrónico del huésped",
+      "button":"Invitar",
+      "textToast":"Invitación enviada"
     }
   };
   

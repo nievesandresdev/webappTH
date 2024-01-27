@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { 
     findAndValidAccessApi,
-    createAndInviteGuestApi
+    createAndInviteGuestApi,
+    existingStayThenMatchAndInviteApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 
 export const useStayStore = defineStore('stay', () => {
     
+    const router = useRouter();
     // STATE
     const stayData = ref(null)
     const stayId = ref(getUrlParam('e') || null)
@@ -16,6 +18,7 @@ export const useStayStore = defineStore('stay', () => {
 
     // ACTIONS
     async function loadLocalStay () {
+        console.log('loadLocalStay')
         if(stayData.value && !stayId.value) return stayData.value
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
@@ -44,22 +47,44 @@ export const useStayStore = defineStore('stay', () => {
         const { ok } = response   
         if(ok){
             stayData.value = ok ? response.data : null
+            setStayData(stayData.value,true)
             localStorage.setItem('stayId', stayData.value.id)
         }else{
             stayData.value = null;
         }
         return stayData.value
     }
-    function setStayData (data) {
+    async function setStayData (data) {
         stayData.value = data;
         localStorage.setItem('stayId', stayData.value.id)
+        await loadLocalStay();
+    }
+
+    async function existingStayThenMatchAndInvite (params) {
+        const response = await existingStayThenMatchAndInviteApi(params)
+        const { ok } = response   
+        if(ok){
+            stayData.value = ok ? response.data : null
+            console.log('existingStayThenMatchAndInvite',stayData.value)
+            localStorage.setItem('stayId', stayData.value.id)
+            router.push({name: 'Home',params:{e:stayData.value.id}})
+            // window.location.reload();
+        }
+        return stayData.value
     }
     //
+
+    // GETTERS
+    const stayDataComputed = computed(() => stayData.value);
+    const completelyVisited = computed(() => Number(stayData.value.number_guests) == stayData.value.uniqueAccessesCount);
+    
     return {
-        stayData,
+        stayData:stayDataComputed,
         setStayData,
         loadLocalStay,
-        createAndInviteGuest
+        createAndInviteGuest,
+        existingStayThenMatchAndInvite,
+        completelyVisited
     }
 
 })

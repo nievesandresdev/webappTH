@@ -167,6 +167,7 @@
     const loadWebStay = async () => {
         try {
             const stayLogResult = await stayStore.loadLocalStay();
+            console.log('loadWebStay',stayLogResult)
             showStayLog.value = stayLogResult ? false : true;
         } catch (error) {
             console.error("Error al cargar los datos locales:", error);

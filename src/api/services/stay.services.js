@@ -5,3 +5,4 @@ import {
 
 export const findAndValidAccessApi = (params) => apiHttp('GET', `${stayPath}/findAndValidAccess`, params)
 export const createAndInviteGuestApi = (params) => apiHttp('POST', `${stayPath}/createAndInviteGuest`, params)
+export const existingStayThenMatchAndInviteApi = (params) => apiHttp('POST', `${stayPath}/existingStayThenMatchAndInvite`, params)
