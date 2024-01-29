@@ -15,6 +15,12 @@ import { loadSubdomain } from '@/utils/utils.js'
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 
 const routes = [
+  // { path: '/', redirect: '/webapp' },
+  // {
+  //   path: '/webapp',
+  //   children: [
+  //   ]
+  // },
   ...homeRoutes,
   ...experienceRoutes,
   ...placeRoutes,
@@ -24,7 +30,6 @@ const routes = [
   ...policiesRoutes,
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
-console.log('env.BASE_URL',process.env.BASE_URL)
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL + 'webapp'),
