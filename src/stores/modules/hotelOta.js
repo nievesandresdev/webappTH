@@ -15,7 +15,6 @@ export const useHotelOtaStore = defineStore('hotelOta', () => {
     async function $getAll () {
 
         const response = await getAllApi()
-        console.log(response, 'res')
         const { ok, data } = response
         if (ok) {
             return data
