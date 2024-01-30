@@ -1,6 +1,6 @@
 <template>
     <Modal 
-            :openModal="true" 
+            :openModal="openInviteModal" 
             @closeModal="openInviteModal = false"
             :customBackdrop="'min-h-full relative'"
             :customClasess="'w-full absolute bottom-0.5 rounded-b-[0]'"
@@ -45,9 +45,10 @@
                 <THInputField
                     :textLabel="'Nº huéspedes'"
                     :options="options_n_guests"
-                    v-model="form.numberguests"
+                    v-model="form.numberGuests"
                     :top_dropdown="'top-0'"
                     :extra_dropdown="'dropdown-clasess'"
+                    mandatory
                 />
             </div>
             <div class="mt-6">
@@ -55,27 +56,40 @@
                     {{ $t('home.guestTitle')}} 
                 </h4>
             </div>
-            <div class="mt-4">
+            <div class="mt-4" v-for="(guest, index) in form.listGuest" :key="guest?.id">
                 <label class="text-sm mb-2 font-medium leading-110 flex w-full items-center">
-                    Huésped 1
-                    <img class="w-5 h-5 ml-auto" src="/assets/icons/1.TH.DELETE.svg" />
+                    Huésped {{ index+1 }}
+                    <img 
+                        class="w-5 h-5 ml-auto" 
+                        src="/assets/icons/1.TH.DELETE.svg" 
+                        v-if="guest?.id !== guestStore.guestData?.id"
+                    />
                 </label>
                 <div>
                     <THInputText
                         iconLeft="/assets/icons/1.TH.USER.svg"
-                        placeholder="..."
+                        placeholder="El campo debe estar relleno"
                         :type="'text'"
-                        v-model="form.room"
+                        v-model="form.listGuest[index].name"
+                        :showTextError="false"
+                        :customClasses="{
+                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].name.trim()
+                        }"
                     />
                 </div>
                 <div class="mt-2">
                     <THInputText
                         iconLeft="/assets/icons/1.TH.EMAIL.svg"
-                        iconRight="/assets/icons/2.TH.SendiconCIRCLE.svg"
-                        placeholder="..."
+                        :iconRight="'/assets/icons/2.TH.SendiconCIRCLE.jpg'"
+                        placeholder="El campo debe estar relleno"
                         :type="'email'"
-                        v-model="form.invitedEmail"
+                        v-model="form.listGuest[index].email"
+                        @handleError="emailError = $event"
                         @pressIconRight="sendInvitation('1')"
+                        :showTextError="false"
+                        :customClasses="{
+                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].email.trim()
+                        }"
                     />
                 </div>
                 <div class="mt-2">
@@ -84,7 +98,8 @@
                         placeholder_input="Teléfono del huésped"
                         iconLeft="/assets/icons/1.TH.TELEFONO.svg"
                         iconRight="/assets/icons/1.TH.I.dropdown.svg"
-                        v-model="form.phone"
+                        v-model="form.listGuest[index].phone"
+                        @handlePhoneError="phoneError = $event"
                     />
                 </div>
             </div>
@@ -104,9 +119,10 @@
     </Modal>
 </template>
 <script setup>
-    import { ref, reactive, computed } from 'vue'
+    import { ref, reactive, computed, onMounted } from 'vue'
     import { useToast } from "vue-toastification";
     import { useI18n } from 'vue-i18n';
+    import Moment from 'moment'
     import Modal from '@/components/Modal.vue'
     import THInputText from '@/components/THInputText.vue';
     import THInputField from '@/components/THInputField.vue';
@@ -119,42 +135,51 @@
     const { t } = useI18n();
 
     const stayStore = useStayStore();
-
     const guestStore = useGuestStore();
     const openInviteModal = ref(false)
     const emailError = ref(false);
+    const phoneError = ref(false);
     const errorsKey = ref([]);
+    const compareGuest = ref([]);
 
-    const open = () =>{
+    const open = async () =>{
+        loadDataModal()
         openInviteModal.value = true;
     }
     const form = reactive({
         checkDate:null,
         room:null,
-        numberguests:null,
-        phone:null,
-        invitedEmail: null,
-        currentStay: null,
-        currentGuest: null,
+        numberGuests:null,
+        stayId: null,
+        listGuest:[]
     });
 
+    const loadDataModal = async () =>{
+        let response = await stayStore.getGuestsAndSortByCurrentguestId(stayStore.stayData?.id,guestStore.guestData?.id)
+        form.listGuest = response
+        compareGuest.value = JSON.parse(JSON.stringify(response));
+        form.checkDate = {
+            start : stayStore.stayData?.check_in,
+            end : stayStore.stayData?.check_out
+        };
+        form.room = stayStore.stayData?.room
+        form.numberGuests = stayStore.stayData?.number_guests
+    }
 
     const submitForm = async () =>{
-        console.log('submitForm',stayStore.stayData)
-        form.currentStay = stayStore.stayData.id;
-        form.currentGuest = guestStore.guestData.id;
-        // let response = await stayStore.existingStayThenMatchAndInvite(form)
-        // openInviteModal.value = false
-        // setTimeout(() => {
-        //     toast(t('home.inviteModal.textToast'), {
-        //         toastClassName: "warning-toast",
-        //         bodyClassName: "warning-toast-body",
-        //         position: "top-right",
-        //         icon: false,
-        //         closeButton: false,  
-        //         hideProgressBar: true,
-        //     });
-        // }, 2000);
+        form.stayId = stayStore.stayData.id;
+        let response = await stayStore.updateStayAndGuests(form)
+        loadDataModal();
+        if(response){
+            toast('Cambios guardados', {
+                toastClassName: "warning-toast",
+                bodyClassName: "warning-toast-body",
+                position: "top-right",
+                icon: false,
+                closeButton: false,  
+                hideProgressBar: true,
+            });
+        }
     }
 
     const sendInvitation = (index) =>{
@@ -163,7 +188,26 @@
 
     //COMPUTED
     const valid = computed(() => {
-        return !emailError.value && form.invitedEmail
+        let stringForm = JSON.stringify(form.listGuest);
+        let stringCompare = JSON.stringify(compareGuest.value);
+        //
+        //revisar si no hay ningun nombre o email vacio
+        if(stringForm.includes('"email":""')) return false;
+        if(stringForm.includes('"name":""')) return false;
+        //
+        //revisar que no halla error en ningun input
+        let errors = emailError.value || phoneError.value
+        //
+        //validar si hay cambios respecto a los datos obtenidos
+        let changeGuests = stringForm !== stringCompare;
+        let dateCompare = {start : stayStore.stayData?.check_in,end : stayStore.stayData?.check_out};
+        let checkDate = {start : form.checkDate?.start,end : form.checkDate?.end};
+        let changeInDate = JSON.stringify(checkDate) !== JSON.stringify(dateCompare);
+        let changeRoom = form.room && form.room?.trim() !== stayStore.stayData?.room;
+        let changeNumberG = form.numberGuests?.trim() !== stayStore.stayData?.number_guests;
+        //
+        //
+        return (changeGuests || changeInDate || changeNumberG || changeRoom) && !errors
     })
 
 
@@ -187,6 +231,6 @@
 </script>
 <style scoped>
 .body-xs{
-    max-height: calc(78.3vh - 16px);
+    max-height: calc(78.3vh - 32px);
 }
 </style>

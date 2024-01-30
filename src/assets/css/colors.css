@@ -111,6 +111,7 @@
     .hbg-alert-negative {
         background-color: var(--alert-negative);
     }
+    .hborder-alert-negative:focus,
     .hborder-alert-negative:hover,
     .hborder-alert-negative {
         border: 1px solid var(--alert-negative) !important;

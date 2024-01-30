@@ -60,6 +60,9 @@
 </template>
 
 <script>
+import {
+    getPhoneCodesApi
+} from '@/api/services/utility.services'
 export default {
     data() {
         return {
@@ -129,8 +132,7 @@ export default {
         },
     },
     mounted(){
-        // this.get_code_list()
-        //
+        this.get_code_list()
     },
     methods: {
         search_codes(){
@@ -147,27 +149,24 @@ export default {
                 }
             }
         },
-        get_code_list(){
-            let phoneString = this.modelValue;
-            phoneString = phoneString.replace(/\s+/g, '');
-            // axios({
-            //     url: '/api/phone-codes',
-            //     method: 'GET',
-            // }).then( res => {
-            //     this.code_list = res.data
-
-            //     this.code_list.map(item => {
-            //         return item.value
-            //     })
-            //     .forEach(item => {
-            //         if(phoneString && phoneString.startsWith(item)){
-            //             this.code = item
-            //             this.phone = phoneString.replace(this.code, '')
-            //         }
-            //     })
-            // }).finally( res => {
-            //     this.initialLoad = true
-            // })
+        async get_code_list(){
+            try {
+                let response = await getPhoneCodesApi();
+                this.code_list = response.data;
+                if(this.modelValue){
+                    let phoneString = this.modelValue.replace(/\s+/g, '');
+                    this.code_list.forEach(item => {
+                        if(phoneString.startsWith(item.value)){
+                            this.code = item.value;
+                            this.phone = phoneString.replace(this.code, '');
+                        }
+                    });
+                }
+                this.initialLoad = true;
+            } catch (error) {
+                console.error('An error occurred while fetching the phone codes:', error);
+                this.code_list = []; // Establecer en un array vacío en caso de error para evitar problemas de iterabilidad
+            }
         },
         selectOption (value) {
             this.search_list = [];
