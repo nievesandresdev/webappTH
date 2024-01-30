@@ -97,9 +97,9 @@
 
     //ONMOUNTED
     onMounted(() => {
-        if(langWebByUrl.value){
-            localeStore.$change(langWebByUrl.value)
-        }
+        // if(langWebByUrl.value){
+        //     localeStore.$change(langWebByUrl.value)
+        // }
         setTimeout(() => {
             loadWebDataModals();
         }, 1000);

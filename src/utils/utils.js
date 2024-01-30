@@ -1,4 +1,4 @@
-export const  slufy = (text) => {
+const  slufy = (text) => {
     /* eslint-disable */ 
     if (!text) return ''
     return text
@@ -12,7 +12,7 @@ export const  slufy = (text) => {
     .replace(/\-\-+/g, '-')
 };
 
-export const formatPrice = (value, adjust = false) => {
+const formatPrice = (value, adjust = false) => {
     if (!value) return 0
     let price = Number(value)
     price = price < 0 ? price * -1 : price
@@ -24,12 +24,12 @@ export const formatPrice = (value, adjust = false) => {
     return price
 }
 
-export const capitalize = (text) => {
+const capitalize = (text) => {
     if (!text) return ''
     return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-export const camelCase = (text) => {
+const camelCase = (text) => {
     if (!text) return ''
     const words = text.split(' ')
     const camelCaseWords = words.map((word, index) => {
@@ -42,7 +42,7 @@ export const camelCase = (text) => {
     return camelCaseWords.join(' ')
 }
 
-export const titleCase = (text) => {
+const titleCase = (text) => {
     if (!text) return '' 
     return text.replace(
       /\w\S*/g,
@@ -52,18 +52,18 @@ export const titleCase = (text) => {
     )
 }
 
-export const  capitalizeFirstLetter = (string) => {
+const  capitalizeFirstLetter = (string) => {
     if (!string) return '' 
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-export const isMockup = () => {
+const isMockup = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mockup = urlParams.get('mockup');
     return (mockup === 'true');
 }
 
-export const transformDuration = (value) => {
+const transformDuration = (value) => {
     if (value) null
     let hours = Math.floor(value / 60)
     let minutes = value % 60
@@ -85,17 +85,42 @@ export const transformDuration = (value) => {
     return data
 }
 
-export const loadSubdomain = () => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const subdomain = urlParams.get('subdomain') || null
-    if (subdomain) {
-        localStorage.setItem('subdomain', subdomain)
-    }
+const loadSubdomain = () => {
+    const ENV = process.env.VUE_APP_ENVIROMENT || 'locale'
+    let subdomain = ENV === 'locale' ? extractSlugHotelToQuery() : extractSlugHoteltoHost()
+    localStorage.setItem('subdomain', subdomain)
+    console.log(subdomain, 'loadSubdomain')
     return subdomain
 }
 
-export const getUrlParam = (param) => {
+const extractSlugHotelToQuery = () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const subdomain = urlParams.get('subdomain') || null
+    return subdomain
+}
+
+const extractSlugHoteltoHost = () => {
+    const hostname = window.location.hostname; // Obtiene el hostname de la URL actual
+    const partes = hostname.split('.'); // Divide el hostname en partes separadas por puntos
+    const slugHotel = partes[0]; // El slug del hotel es la primera parte
+    return slugHotel;
+}
+
+const getUrlParam = (param) => {
     const urlParams = new URLSearchParams(window.location.search)
     const dataParam = urlParams.get(param)
     return dataParam
+}
+
+module.exports = {
+    slufy,
+    formatPrice,
+    capitalize,
+    camelCase,
+    titleCase,
+    capitalizeFirstLetter,
+    isMockup,
+    transformDuration,
+    loadSubdomain,
+    getUrlParam,
 }
