@@ -24,7 +24,6 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
-        console.log('hotelData',hotelData.value)
         return response.data
     }
 

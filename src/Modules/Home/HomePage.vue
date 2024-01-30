@@ -216,7 +216,8 @@
         const { guestData } = guestStore
         import { usePlaceStore } from '@/stores/modules/place'
         const placeStore = usePlaceStore()
-        placeStore
+        import { useLocaleStore } from '@/stores/modules/locale'
+        const localeStore = useLocaleStore()
 
         const router = useRouter();
 
@@ -233,20 +234,18 @@
         // onBeforeMount (() => {
         // })
 
-        onMounted(() => {
-            loadCrossellings()
-            getPlaceCategories();
+        onMounted(async () => {
+            await loadCrossellings();
+            await getPlaceCategories();
         })
 
         // FUNCTION
         async function getPlaceCategories(){
-            const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true})
+            const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true});
             if(response.ok)placeCategories.value = response.data;
-
-
-            firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id).id;
-            firstCatWhereEatId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whereeat_id).id;
-            firstCatLeisureId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.leisure_id).id;
+            firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id)?.id;
+            firstCatWhereEatId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whereeat_id)?.id;
+            firstCatLeisureId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.leisure_id)?.id;
         }
 
         async function loadCrossellings () {
