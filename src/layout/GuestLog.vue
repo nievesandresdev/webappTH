@@ -91,14 +91,11 @@ const { guestData } = guestStore;
 const form = reactive({
     name: guestData?.name ?? null,
     email: guestData?.email ?? null,
-    language: guestData?.lang_web || localStorage.getItem('locale') || 'es'
+    language: guestData?.lang_web ?? 'es',
 });
 
-onMounted(()=>{
-    console.log('guestmodla',guestData)
-})
-
 const submitForm = async () =>{
+    form.language = !form.language ? localStorage.getItem('locale') : form.language;
     processingForm.value = true
     const response = await guestStore.saveOrUpdate(form);
     processingForm.value = false

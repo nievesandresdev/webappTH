@@ -1,8 +1,8 @@
 <template>
     <Dialog :open="openModal" @close="closeModal" as="div" class="relative">
-    <div class="fixed inset-0 bg-[#00000080]  z-[1000]" aria-hidden="true" />
+    <div :class="`fixed inset-0 bg-[#00000080]  ${ZIndex}`" aria-hidden="true" />
 
-        <div class="fixed inset-0 overflow-y-auto z-[1010]">
+        <div :class="`fixed inset-0 overflow-y-auto ${ZIndex}`">
             <div :class="`${customBackdrop ? customBackdrop :'flex min-h-full items-center justify-center p-4 text-center'}`">
                 <DialogPanel
                     :class="`
@@ -34,6 +34,10 @@ import { Dialog, DialogPanel} from '@headlessui/vue'
         customBackdrop: {
             type: String,
             default: null,
+        },
+        ZIndex:{
+            type: String,
+            default: 'z-[1010]'
         }
     })
     const emit = defineEmits('closeModal');
