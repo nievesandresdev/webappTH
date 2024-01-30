@@ -4,7 +4,9 @@ import { useRouter } from 'vue-router'
 import { 
     findAndValidAccessApi,
     createAndInviteGuestApi,
-    existingStayThenMatchAndInviteApi
+    existingStayThenMatchAndInviteApi,
+    getGuestsAndSortByCurrentguestIdApi,
+    updateStayAndGuestsApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 
@@ -18,7 +20,7 @@ export const useStayStore = defineStore('stay', () => {
 
     // ACTIONS
     async function loadLocalStay () {
-        console.log('loadLocalStay')
+        // console.log('loadLocalStay')
         if(stayData.value && !stayId.value) return stayData.value
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
@@ -65,12 +67,30 @@ export const useStayStore = defineStore('stay', () => {
         const { ok } = response   
         if(ok){
             stayData.value = ok ? response.data : null
-            console.log('existingStayThenMatchAndInvite',stayData.value)
             localStorage.setItem('stayId', stayData.value.id)
             router.push({name: 'Home',params:{e:stayData.value.id}})
             // window.location.reload();
         }
         return stayData.value
+    }
+
+    async function getGuestsAndSortByCurrentguestId (stayId,guestId) {
+        const response = await getGuestsAndSortByCurrentguestIdApi(stayId,guestId)
+        const { ok } = response   
+        if(ok){
+            return response.data;
+        }
+        return []
+    }
+
+    async function updateStayAndGuests (params) {
+        let response = await updateStayAndGuestsApi(params);
+        if(response.ok && response.data){
+            let reloadStay = await loadLocalStay();
+            console.log('reloadStay',reloadStay)
+            return true;
+        }
+        return false;
     }
     //
 
@@ -84,7 +104,9 @@ export const useStayStore = defineStore('stay', () => {
         loadLocalStay,
         createAndInviteGuest,
         existingStayThenMatchAndInvite,
-        completelyVisited
+        completelyVisited,
+        getGuestsAndSortByCurrentguestId,
+        updateStayAndGuests
     }
 
 })
