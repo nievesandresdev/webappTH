@@ -87,15 +87,19 @@ const transformDuration = (value) => {
 
 const loadSubdomain = () => {
     const ENV = process.env.VUE_APP_ENVIROMENT || 'locale'
+    console.log('ENV',ENV)
     let subdomain = ENV === 'locale' ? extractSlugHotelToQuery() : extractSlugHoteltoHost()
-    localStorage.setItem('subdomain', subdomain)
-    console.log(subdomain, 'loadSubdomain')
+    console.log('loadSubdomain',subdomain)
+    if(subdomain){
+        localStorage.setItem('subdomain', subdomain)
+    }
     return subdomain
 }
 
 const extractSlugHotelToQuery = () => {
     const urlParams = new URLSearchParams(window.location.search)
     const subdomain = urlParams.get('subdomain') || null
+    console.log('extractSlugHotelToQuery',subdomain)
     return subdomain
 }
 
