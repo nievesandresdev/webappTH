@@ -15,7 +15,7 @@ export const useFacilityStore = defineStore('facility', () => {
     // ACTIONS
     function $loadImage (path) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/facility/${path}`
+        let url = `${URL_STORAGE}/storage/facility${path}`
         return url
     }
 
