@@ -18,8 +18,9 @@ export const useHotelStore = defineStore('hotel', () => {
         if (hotelData.value) return
         
         let params = {
-            subdomain: subdomain.value,
+            subdomain: localStorage.getItem('subdomain'),
         }
+        console.log('findByParamsApi',localStorage.getItem('subdomain'))
         const response = await findByParamsApi(params)
         const { ok } = response
 

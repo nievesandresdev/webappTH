@@ -128,7 +128,7 @@
         numberguests:'1',
         checkDate:null,
         listGuest:[],
-        language: localStorage.getItem('locale') || 'es',
+        language: 'es',
         guestId: null,
     });
     const errorsKey = ref([]);
@@ -163,9 +163,10 @@
     }
 
     const submit = async () => {
-        let guest = await guestStore.loadLocalGuest()
-        form.guestId = guest.id;
+        form.guestId = guestStore.guestData?.id;
+        form.language = !form.language ? localStorage.getItem('locale') : form.language;
         processingForm.value = true
+        console.log('formcreateAndInviteGuest',form)
         await stayStore.createAndInviteGuest(form);
         processingForm.value = false
         emit('closeModal');

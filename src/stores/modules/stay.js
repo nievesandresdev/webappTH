@@ -6,7 +6,8 @@ import {
     createAndInviteGuestApi,
     existingStayThenMatchAndInviteApi,
     getGuestsAndSortByCurrentguestIdApi,
-    updateStayAndGuestsApi
+    updateStayAndGuestsApi,
+    deleteGuestOfStayApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 
@@ -45,7 +46,9 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function createAndInviteGuest(data) {
+        console.log('datacreateAndInviteGuest',data)
         const response = await createAndInviteGuestApi(data)
+        console.log('createAndInviteGuest',response)
         const { ok } = response   
         if(ok){
             stayData.value = ok ? response.data : null
@@ -87,12 +90,21 @@ export const useStayStore = defineStore('stay', () => {
         let response = await updateStayAndGuestsApi(params);
         if(response.ok && response.data){
             let reloadStay = await loadLocalStay();
-            console.log('reloadStay',reloadStay)
             return true;
         }
         return false;
     }
-    //
+    
+    async function deleteGuestOfStay (stayId,guestId) {
+        const response = await deleteGuestOfStayApi(stayId,guestId)
+        console.log('deleteGuestOfStay',response)
+        const { ok } = response   
+        if(ok){
+            let reloadStay = await loadLocalStay();
+            return true;
+        }
+        return []
+    }
 
     // GETTERS
     const stayDataComputed = computed(() => stayData.value);
@@ -106,7 +118,8 @@ export const useStayStore = defineStore('stay', () => {
         existingStayThenMatchAndInvite,
         completelyVisited,
         getGuestsAndSortByCurrentguestId,
-        updateStayAndGuests
+        updateStayAndGuests,
+        deleteGuestOfStay
     }
 
 })

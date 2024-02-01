@@ -74,7 +74,6 @@
 
 
     const submitForm = async () =>{
-        console.log('submitForm',stayStore.stayData)
         form.currentStay = stayStore.stayData.id;
         form.currentGuest = guestStore.guestData.id;
         let response = await stayStore.existingStayThenMatchAndInvite(form)

@@ -25,17 +25,12 @@
             />
             {{ stringTextError }}
         </p>
-        <img 
-            v-if="iconRight" 
-            @click="pressIconRight"
-            class="w-8 h-8 absolute right-2 top-1.5" :src="iconRight"
-        >
     </div>
 </template>
 
 <script>
 export default {
-    emits: ['update:modelValue', 'handleError','keyupInput','pressIconRight'],
+    emits: ['update:modelValue', 'handleError','keyupInput'],
     data() {
         return {
             hasError: false,
@@ -138,8 +133,8 @@ export default {
             default: null,
         },
         iconRight: {
-            type: String,
-            default: null,
+            type: Boolean,
+            default: false,
         },
     },
     created(){
@@ -153,9 +148,6 @@ export default {
         }
     },
     methods: {
-        pressIconRight(){
-            this.$emit('pressIconRight');
-        },
         keyupInput(){
             this.$emit('keyupInput');
         },

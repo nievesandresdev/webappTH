@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import { 
     findByIdApi,
     saveOrUpdateApi,
-    findLastStayApi
+    findLastStayApi,
+    sendMailToApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -66,11 +67,20 @@ export const useGuestStore = defineStore('guest', () => {
         return null
     }
 
+    async function sendMailTo (params) {
+        const response = await sendMailToApi(params)
+        const { ok } = response   
+        if(ok){
+            return response.data
+        }
+        return false
+    }
     //
     return {
         guestData,
         loadLocalGuest,
-        saveOrUpdate
+        saveOrUpdate,
+        sendMailTo
     }
 
 })

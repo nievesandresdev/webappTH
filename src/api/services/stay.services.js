@@ -8,3 +8,4 @@ export const createAndInviteGuestApi = (params) => apiHttp('POST', `${stayPath}/
 export const existingStayThenMatchAndInviteApi = (params) => apiHttp('POST', `${stayPath}/existingStayThenMatchAndInvite`, params)
 export const getGuestsAndSortByCurrentguestIdApi = (stayId,guestId) => apiHttp('GET', `${stayPath}/getGuestsAndSortByCurrentguestIdApi/${stayId}/${guestId}`)
 export const updateStayAndGuestsApi = (params) => apiHttp('POST', `${stayPath}/updateStayAndGuests`, params)
+export const deleteGuestOfStayApi = (stayId,guestId) => apiHttp('POST', `${stayPath}/deleteGuestOfStay/${stayId}/${guestId}`)
