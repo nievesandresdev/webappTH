@@ -137,7 +137,7 @@
     }
 
     const getImg = (payload) => {
-        if (payload?.url) return `${urlStorage}storage/facility${payload.url}`
+        if (payload?.url) return `${urlStorage}/storage/facility${payload.url}`
         return null
     }
 

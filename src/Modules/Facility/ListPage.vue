@@ -53,7 +53,7 @@
         dataList.value = response;
     }
     const getImg = (payload) => {
-        if (payload?.images.length > 0) return `${urlStorage}storage/facility${payload.images[0].url}`
+        if (payload?.images.length > 0) return `${urlStorage}/storage/facility${payload.images[0].url}`
         return null
     }
             
