@@ -48,7 +48,7 @@
     >
         <div
             v-for="(item, index) in categoriesOfType" :key="index"
-            class="flex item-menu-cat rounded-full mb-0.5 sp:mb-1 top-0"
+            class="flex item-menu-cat rounded-full mb-0.5 sp:mb-1 top-0 p-1 spp-2"
             :class="{'item-menu-cat-active': item.id == formFilter.categoriplace,'hbg-gray-100':!(item.id == formFilter.categoriplace)}"
             @click="changeCategory(item.id, formFilter.typeplace)"
         >
@@ -428,8 +428,6 @@
 <style lang="scss" scoped>
 
     .item-menu-cat {
-        padding: 8px;
-        height: 32px;
         align-items: center;
     }
 

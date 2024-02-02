@@ -1,5 +1,5 @@
 <template>
-    <div v-if="mockup" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <!-- Migas de pan experiencias -->
     <div v-if="!experienceData">
         no Hay datos

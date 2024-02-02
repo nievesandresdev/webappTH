@@ -1,5 +1,5 @@
 <template>
-    <!-- <div v-if="mockup" class="fixed top-0 left-0 w-screen h-full z-[2000]" /> -->
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <div id="mobile-header-list" class="mobile-header md:hidden px-3.5 mt-4">
 
         <div class="flex items-center w-full justify-center mb-2.5 sp:mb-4">

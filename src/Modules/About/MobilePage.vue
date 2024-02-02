@@ -4,16 +4,16 @@
             ref="header"
         >
             <div class="ml-[8px] sp:ml-4">
-                <router-link :to="{name:'Home'}">
-                <img src="/assets/icons/back.svg" alt="back" class="h-[20px] sp:h-6 w-[20px] sp:w-6">
-                </router-link>
+                <div @click="goHome($utils.isMockup())">
+                    <img src="/assets/icons/back.svg" alt="back" class="h-[20px] sp:h-6 w-[20px] sp:w-6">
+                </div>
             </div>
-            <router-link 
-                :to="{name:'Home'}"
+            <div 
+                @click="goHome($utils.isMockup())"
                 class="text-[10px] sp:text-sm font-medium ml-[8px] sp:ml-4"
             >
                 {{ $t('about.mobileTitle')  }}
-            </router-link>
+            </div>
         </div>
 
         <!-- nombre del hotel  -->
@@ -127,7 +127,7 @@
                             :key="index"
                             class="w-full h-[120px] sp:h-[240px] flex-shrink-0"
                         >
-                            <img :src="urlStorage+image.url" :alt="image.name" class="w-full h-full object-cover">
+                            <img :src="printImg(image)" :alt="image.name" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
@@ -217,11 +217,13 @@
 
 <script setup>
     import { onMounted, onBeforeUnmount, ref, computed, inject } from 'vue';
+    import { useRouter } from 'vue-router';
     import ImageToggle from './components/ImageToggle.vue';
     import { useHotelStore } from '@/stores/modules/hotel'
     const hotelStore = useHotelStore()
     const { hotelData } = hotelStore
-
+    
+    const router = useRouter();
 
 
     onMounted(() => {
@@ -255,6 +257,19 @@
     /* computed */
 
     /* functions */
+    function printImg(img){
+        if(img?.type == "image-hotel"){
+            return urlStorage+img.url;
+        }
+        return img.url;
+    }
+
+    function goHome(isMockup){
+        if(!isMockup){
+            router.push({ name: 'Home'})
+        }
+    }
+
     function previousImage(isMockup) {
         if(!isMockup){
             const carouselWidthValue = carouselWidth.value;
