@@ -131,7 +131,7 @@
   //FUNCTION
   function getDaysOfWeekEnable () {
     let days_of_week = []
-    bookable_items.value.forEach(item_bookable => {
+    bookable_items.value?.forEach(item_bookable => {
       item_bookable.seasons.forEach(item_season => {
         item_season.pricingRecords.forEach(item_pricing => {
           let d = item_pricing.daysOfWeek
@@ -151,7 +151,7 @@
   function getUnavailableDates () {
     var unavailables = []
     let unavailable_dates_all = []
-    bookable_items.value.forEach((item_bookable, index_bookable) => {
+    bookable_items.value?.forEach((item_bookable, index_bookable) => {
         item_bookable.seasons.forEach(item_season => {
           item_season.pricingRecords.forEach(item_pricing => {
             item_pricing?.timedEntries?.forEach(item_time => {
@@ -192,7 +192,7 @@
     let day_date_test = date_test.locale('en').format("dddd").toUpperCase()
     let date_now = $moment()
     let v = true
-    bookable_items.value.forEach((item_bookable, index_bookable) => {
+    bookable_items.value?.forEach((item_bookable, index_bookable) => {
       item_bookable.seasons.forEach(item_season => {
 
         let start_date = ''
@@ -233,7 +233,7 @@
   }
   function getSeasons () {
     let sesions = []
-    bookable_items.value.forEach(item_bookable => {
+    bookable_items.value?.forEach(item_bookable => {
       item_bookable.seasons.forEach(item_season => {
         let start_date = ''
         let end_date = ''

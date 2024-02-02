@@ -21,13 +21,15 @@ export const useStayStore = defineStore('stay', () => {
 
     // ACTIONS
     async function loadLocalStay () {
-        // console.log('loadLocalStay')
         if(stayData.value && !stayId.value) return stayData.value
+        console.log('condicion 1 loadLocalStay')
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
+        console.log('condicion 2 loadLocalStay')
         let params = {
             stayId: stayId.value,
             guestId: guestId.value,
         }
+        console.log('findAndValidAccessApi',params)
         if(stayId.value){
             const response = await findAndValidAccessApi(params)
             const { ok } = response   
@@ -46,6 +48,7 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function createAndInviteGuest(data) {
+        guestId.value = data.guestId;
         console.log('datacreateAndInviteGuest',data)
         const response = await createAndInviteGuestApi(data)
         console.log('createAndInviteGuest',response)
@@ -68,6 +71,7 @@ export const useStayStore = defineStore('stay', () => {
     async function existingStayThenMatchAndInvite (params) {
         const response = await existingStayThenMatchAndInviteApi(params)
         const { ok } = response   
+        console.log('existingStayThenMatchAndInvite',response)
         if(ok){
             stayData.value = ok ? response.data : null
             localStorage.setItem('stayId', stayData.value.id)

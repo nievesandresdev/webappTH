@@ -168,7 +168,6 @@
         },
         selectOption(option) {
             this.showOptions = false;
-                console.log('selectOption',this.showOptions)
             if (!option.disabled) {
                 this.$emit('update:modelValue', option.value);
             }

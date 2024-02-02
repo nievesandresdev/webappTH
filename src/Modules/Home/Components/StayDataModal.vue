@@ -80,7 +80,7 @@
                         v-model="form.listGuest[index].name"
                         :showTextError="false"
                         :customClasses="{
-                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].name.trim()
+                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].name?.trim()
                         }"
                     />
                 </div>

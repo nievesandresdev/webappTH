@@ -43,7 +43,7 @@
                         <THInputField
                             :textLabel="'Nº huéspedes'"
                             :options="options_n_guests"
-                            v-model="form.numberguests"
+                            v-model="form.numberGuests"
                             :top_dropdown="'top-0'"
                             :extra_dropdown="'dropdown-clasess'"
                             mandatory
@@ -125,7 +125,7 @@
 
     //data
     const form = reactive({
-        numberguests:'1',
+        numberGuests:'1',
         checkDate:null,
         listGuest:[],
         language: 'es',
@@ -154,7 +154,6 @@
     }
 
     const addGuestToList = () =>{
-        console.log('addGuestToList')
         form.listGuest.push({email:null})
     }
     
@@ -166,7 +165,6 @@
         form.guestId = guestStore.guestData?.id;
         form.language = !form.language ? localStorage.getItem('locale') : form.language;
         processingForm.value = true
-        console.log('formcreateAndInviteGuest',form)
         await stayStore.createAndInviteGuest(form);
         processingForm.value = false
         emit('closeModal');

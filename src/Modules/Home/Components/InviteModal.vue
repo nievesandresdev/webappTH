@@ -78,6 +78,7 @@
         form.currentGuest = guestStore.guestData.id;
         let response = await stayStore.existingStayThenMatchAndInvite(form)
         openInviteModal.value = false
+        form.invitedEmail = null;
         setTimeout(() => {
             toast(t('home.inviteModal.textToast'), {
                 toastClassName: "warning-toast",

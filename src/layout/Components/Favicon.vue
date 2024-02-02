@@ -17,7 +17,6 @@ const Favicon = ref(hotelData?.favicon ? urlStorage+hotelData.favicon : defaultF
 onMounted(()=>{
     const faviconLink = document.querySelector("#appFavicon");
     faviconLink.href = Favicon.value;
-    console.log('Favicon.value',Favicon.value)
 })
 
 
