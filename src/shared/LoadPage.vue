@@ -12,10 +12,10 @@
                 </defs>
                 <circle ref="circle" cx="25" cy="25" r="20" fill="none" stroke="url(#spinnerGradient)" stroke-width="2.5" stroke-dasharray="125.6" stroke-dashoffset="125.6"></circle>
             </svg>
-            <img class="icon w-[81px] h-[81px]" src="/assets/icons/hotel-bell-svgrepo-com.svg" alt="">
+            <img class="icon w-14 sp:w-[81px] h-14 sp:h-[81px]" src="/assets/icons/hotel-bell-svgrepo-com.svg" alt="">
         </div>
         <p class="font-medium text-[24px] text-center mt-10">{{ message }}</p>
-        <img class="w-[216px] h-10 mt-[225px] mx-auto mb-auto" src="/assets/icons/1.TH.logo.full.svg" alt="">
+        <img class="w-[130px] sp:w-[216px] h-10 mt-[114px] sp:mt-[225px] mx-auto mb-auto" src="/assets/icons/1.TH.logo.full.svg" alt="">
     </div>
 </template>
 <script setup>
@@ -101,6 +101,21 @@ circle {
   top: 100px; /* Padding + spacing */
   left: 100px; /* Padding + spacing */
   z-index: 2;
+}
+@media(max-width:300px){
+  .spinner-container {
+    width: 200px; 
+    height: 200px;
+    margin-top:20px !important;
+  }
+  .spinner[data-v-71399cd6] {
+      width: 200px;
+      height: 176px;
+  } 
+  .icon{
+    top: 66px; 
+    left: 72px; 
+  }
 }
 
 </style>

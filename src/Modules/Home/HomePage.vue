@@ -80,13 +80,13 @@
         <!-- end card banner -->
 
         <!-- more info -->
-        <div v-if="hotelData?.show_profile" class="text-center mt-3">
+        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-3">
             <router-link
                     :to="{name:'HotelAbout'}"
-                    class="hbtn-primary leading-90 text-xs font-medium p-2"
+                    class="hbtn-primary leading-90 text-[10px] sp:text-xs font-medium p-1 sp:p-2"
                     :class="{'hcursor-mobile':$utils.isMockup()}"
                 >
-                    <img class="w-4 h-4 mr-1.5 inline" src="/assets/icons/1.TH.INFO.svg">
+                    <img class="w-3 sp:w-4 h-3 sp:h-4 mr-0.5 sp:mr-1.5 inline" src="/assets/icons/1.TH.INFO.svg">
                     {{ $t('home.btn-more-info') }}
             </router-link>
         </div>

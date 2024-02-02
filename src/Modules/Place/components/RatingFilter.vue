@@ -50,12 +50,12 @@
             <a 
                 href="javascript:void(0)"
                 @click="cleanPointFilter"
-                class="font-medium text-xs my-auto"
+                class="font-medium text-[10px] sp:text-xs my-auto"
             >
                 Quitar filtros
             </a>
             <button 
-                class="hbtn-primary font-medium text-sm h-10"
+                class="hbtn-primary font-medium text-[10px] text-sm h-10"
                 style="width:126px;"
                 @click="submitPointsFilter"
             >

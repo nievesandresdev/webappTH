@@ -7,7 +7,7 @@
     <div v-if="modalMobile" class="inline-block bg-white opacity-100 w-screen h-[95%] z-50 rounded-t-xl px-4 pt-6 pb-8 md:hidden fixed bottom-0 left-0 z-[4000]">
         <FormSurveyContent />
     </div>
-    <!-- styleContent="max-width: 428px !important;" -->4
+    <!-- styleContent="max-width: 428px !important;" -->
     <TransitionRoot appear :show="modal" as="template">
         <Dialog
             as="div"

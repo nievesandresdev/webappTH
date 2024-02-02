@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
-        <!-- <Favicon /> -->
+        <Favicon v-if="stayDataRef" />
 		<!-- Sidebar  -->
 		<div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
@@ -36,8 +36,8 @@
                 />
             </div>
         </transition>
-        <GuestLog :openModal="showGuestLog" @closeModal="closeGuestLog"/>
-        <StayLog :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
+        <GuestLog v-if="!$utils.isMockup()" :openModal="showGuestLog" @closeModal="closeGuestLog"/>
+        <StayLog v-if="!$utils.isMockup()" :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
 </template>
 
@@ -61,7 +61,7 @@
     //extra
     import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
     import { getUrlParam } from '@/utils/utils.js'
-    // import Favicon from '../Components/Favicon.vue'
+    import Favicon from './Components/Favicon.vue'
     /* eslint-disable */
 
     //store
@@ -167,7 +167,6 @@
     const loadWebStay = async () => {
         try {
             const stayLogResult = await stayStore.loadLocalStay();
-            console.log('loadWebStay',stayLogResult)
             showStayLog.value = stayLogResult ? false : true;
         } catch (error) {
             console.error("Error al cargar los datos locales:", error);

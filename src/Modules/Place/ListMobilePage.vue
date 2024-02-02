@@ -1,4 +1,5 @@
 <template>
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <div class="container-fluid-list">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 lg:pt-4 w-full gap-[12px] sp:gap-6">
         
@@ -81,7 +82,7 @@
 
 <script setup>
     import { onMounted, ref, provide, reactive, toRefs } from 'vue'
-    import { useRouter } from 'vue-router'
+    import { useRoute, useRouter } from 'vue-router'
     import { getUrlParam } from '@/utils/utils.js'
     const route = useRouter()
 
@@ -116,7 +117,7 @@
     const innerWidth = window.innerWidth
 
     // DATA
-    const mobileList = ref(false)
+    const mobileList = ref(queryRouter.value.mobile ?? false)
     const dropdownSerchCity = ref(false)
     const categoriplaces = ref([])
     const typeplaces = ref([])
@@ -146,6 +147,7 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
+        console.log('mobileList',mobileList.value)
     })
 
     // PROVIDER

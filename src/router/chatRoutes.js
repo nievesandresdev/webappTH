@@ -1,5 +1,6 @@
-const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
-const WindowChatMobile = () => import(/* webpackChunkName: "home" */ '@/Modules/Chat/WindowMobile.vue')
+const AppLayout = () => import('@/layout/AppLayout')
+const WindowChatMobile = () => import('@/Modules/Chat/WindowMobile.vue')
+const FakeChatMobile = () => import('@/Modules/Chat/FakeWindowChat.vue')
 
 const chatRoutes = [
   {
@@ -11,6 +12,12 @@ const chatRoutes = [
         name: 'WindowChatMobile',
         path: '',
         component: WindowChatMobile
+      },
+      {
+        name: 'FakeChatMobile',
+        path: 'fake',
+        component: FakeChatMobile,
+        props: (route) => ({ paramsRouter: {...route.params} })
       },
     ],
   },

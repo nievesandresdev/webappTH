@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <!-- Preloader -->
-    <LoadPage v-if="activeRequests > 0" />
-
+      <LoadPage v-if="activeRequests > 0" />
     <!-- Resto de la aplicación -->
     <router-view />
   </div>
