@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
         <div class="flex items-center py-[4px] sp:py-2 mb-[12px] sp:mb-6 hbg-white-100 z-10 sticky top-0"
             ref="header"
         >
