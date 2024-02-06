@@ -5,9 +5,9 @@
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="'background-image: url('+storageUrl+hotelData?.image+')'"></div>
-                <div v-else class="absolute inset-0 bg-cover bg-center" style="background-image: url('/storage/gallery/general-1.jpg');"></div>  
-                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" :style="`background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div>
+                <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
+                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
                 <div
                     class="block lg:hidden absolute inset-x-0 -bottom-0.5 w-full"
                     :class="hotelData.show_profile || stayStore?.stayData?.room || $utils.isMockup() ? 'h-[40px] sp:h-16 gradient-top' : 'h-[30px] sp:h-12 gradient-top-min'"

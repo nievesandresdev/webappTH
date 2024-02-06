@@ -3,7 +3,7 @@
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
                 <template v-if="hotelData?.logo">
-                    <img :src="hotelData?.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
+                    <img :src="storageUrl+hotelData?.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
                 </template>
                 <template v-else>
                     <div class="w-full h-full flex items-center justify-start">   
@@ -74,9 +74,9 @@
 <script setup>
 import { ref, provide, onMounted } from 'vue'
 import { useHotelStore } from '@/stores/modules/hotel'
-
 import DropdownLanguage from '../Components/DropdownLanguage'
 import DropdownLanguageMobile from '../Components/DropdownLanguageMobile'
+import { useMainStore } from '@/stores'
 
 const modal_lang = ref(false)
 
@@ -84,7 +84,8 @@ const modal_lang = ref(false)
 
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
-
+const mainStore = useMainStore()
+const storageUrl = mainStore.URL_STORAGE
 //PROVIDE
 provide('modal_lang', modal_lang)
 //INJECT
