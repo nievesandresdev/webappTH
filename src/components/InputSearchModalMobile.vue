@@ -41,7 +41,7 @@
                     class="flex items-center hover:bg-gray-200 w-full cursor-pointer"
                     @click="selectSearch(item)"
                 >
-                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="item.image">
+                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="getImage(item.image)">
                     <div class="border-b border-gray-300 w-full truncate-1 h-full" :class="item.type == 'city' ? 'py-3.5' : 'py-2'">
                         <p class="text-sm font-medium truncate-1" :class="{'mb-1': item.type == 'city'}">{{item.title}}</p>
                         <p
@@ -68,6 +68,7 @@
     const emit = defineEmits(['inputSearch'])
 
     //DATA STATIC
+    const urlStorage = process.env.VUE_APP_STORAGE_URL;
     const translate = {
         btn_search: {
             es: 'Buscar',
@@ -96,8 +97,8 @@
     const showDropdownMobile = inject('showDropdownMobile')
 
     // FUNCTION
-    function getImage () {
-
+    function getImage (item) {
+        return `${urlStorage}/storage/places/${item.image}`
     }
 
     function selectSearch () {

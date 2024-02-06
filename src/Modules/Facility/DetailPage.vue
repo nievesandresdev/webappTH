@@ -38,7 +38,7 @@
                 <div v-if="facility?.images?.length > 0" class="w-[40%]" id="carousel-facility">
                     <Carousel v-model="currentSlide" :settings="settings_cross" :breakpoints="breakpoints">
                         <Slide v-for="(item, index) in facility?.images" :key="index">
-                            <div class="relative h-[295px] lg:h-[295px] w-full lg:w-[510px]">
+                            <div class="relative h-[295px] w-full lg:w-[510px]">
                                 <img 
                                     :src="getImg(item)" alt="img"
                                     class="w-full h-full object-cover rounded-lg"
@@ -65,7 +65,7 @@
             
             <Carousel v-model="currentSlide" :settings="settings_cross" :breakpoints="breakpoints">
                 <Slide v-for="(item, index) in facility?.images" :key="index">
-                    <div class="relative h-[295px] lg:h-[295px] w-full">
+                    <div class="relative h-[190px] sp:h-[295px] w-full">
                         <img 
                             :src="getImg(item)" alt="img"
                             class=" w-full h-full"
