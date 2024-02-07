@@ -1,0 +1,54 @@
+export default {
+    "breadcrumbs": {
+        "explore": "Explore",
+    },
+    "list-page": {
+        "title": "Explora en",
+        "text-count-list": "{count} lugares encontradas",
+        "btn-load-more": "Cargar más"
+        // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
+    },
+    "results":'Sin resultados...',
+    "seaching":'Buscando...',
+    "categorySearch":'encontrados',
+    "city":"Ciudad",
+    "types":{
+        "que-visitar":"Qué visitar",
+        "donde-comer":"Dónde comer",
+        "ocio":"Ocio"
+    },
+    "categories":{
+        "monumentos":"Monumentos",
+        "museos":"Museos",
+        "zonas-verdes":"Zonas verdes",
+        "cafeterías-y-postres":"Cafeterías y postres",
+        "restaurantes":"Restaurantes",
+        "vida-nocturna":"Vida nocturna",
+        "copas":"Copas",
+        "compras":"Compras",
+        "otros":"Otros",
+    },
+    "detail":{
+        'titleList': "Explora",
+        "opinionsTitle":"Opiniones de la info. turística",
+        "opinionsWord":"Opiniones",
+        "recommended": "Recomendado",
+        "recommendationWord": "Recomendación",
+        "featured": "Destacado",
+        "callWord": "Llamar",
+        "dataInterest":{
+            "title":"Datos de interés",
+            "priceRange":'Rangos de precios',
+            "diet":"Dietas especiales",
+            "others":"Otros",
+        },
+        "locationWord": "Ubicación",
+        "starWord": "Estrella",
+        "starsWord": "Estrellas",
+        "ratingTitle": "Puntuacion",
+        "noComment": "No se escribio comentario",
+        "seeMoreComment": "Ver mas",
+        "seeAllComments": "Ver todas las opiniones",
+        "titleAllReviews": "Opiniones de la info. turística"
+    },
+}

@@ -1,0 +1,53 @@
+export default {
+    "breadcrumbs": {
+        "explore": "Explore",
+    },
+    "list-page": {
+        "title": "Explorer dans",
+        "text-count-list": "{count} lieux trouvés",
+        "btn-load-more": "Charger plus"
+    },
+    "results":'Sans résultats...',
+    "seaching":'Recherche...',
+    "categorySearch":'rencontrés',
+    "city":"Ville",
+    "types":{
+        "que-visitar":"Que visiter",
+        "donde-comer":"Où manger",
+        "ocio":"Loisirs"
+    },
+    "categories":{
+        "monumentos":"Monuments",
+        "museos":"Musées",
+        "zonas-verdes":"Zones vertes",
+        "cafeterías-y-postres":"Cafétérias et desserts",
+        "restaurantes":"Restaurants",
+        "vida-nocturna":"vie nocturne",
+        "copas":"Tasses",
+        "compras":"Shopping",
+        "otros":"Autres",
+    },
+    "detail":{
+        'titleList': "Explorer",
+        "opinionsTitle":"Avis sur l'information touristique",
+        "opinionsWord":"Opinions",
+        "recommended": "Recommandé",
+        "recommendationWord": "Recommendation ",
+        "featured": "En vedette",
+        "callWord": "Appel",
+        "dataInterest":{
+            "title":"Données d'intérêt",
+            "priceRange":'Rangos de precios',
+            "diet":"Régimes spéciaux",
+            "others":"Autres",
+        },
+        "locationWord": "Emplacement",
+        "starWord": "Étoile",
+        "starsWord": "Étoiles",
+        "ratingTitle": "Pointage",
+        "noComment": "Pas de commentaire",
+        "seeMoreComment": "Voir plus",
+        "seeAllComments": "Voir tous les avis",
+        "titleAllReviews": "Avis sur l'information touristique"
+    },
+}
