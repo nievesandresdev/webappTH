@@ -49,7 +49,6 @@ export const useStayStore = defineStore('stay', () => {
 
     async function createAndInviteGuest(data) {
         guestId.value = data.guestId;
-        console.log('datacreateAndInviteGuest',data)
         const response = await createAndInviteGuestApi(data)
         console.log('createAndInviteGuest',response)
         const { ok } = response   
@@ -62,6 +61,7 @@ export const useStayStore = defineStore('stay', () => {
         }
         return stayData.value
     }
+
     async function setStayData (data) {
         stayData.value = data;
         localStorage.setItem('stayId', stayData.value.id)

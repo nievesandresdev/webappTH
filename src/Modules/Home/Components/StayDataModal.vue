@@ -1,8 +1,8 @@
 <template>
     <Modal 
             :openModal="openInviteModal" 
-            :customBackdrop="'min-h-full relative'"
-            :customClasess="'w-full md:w-[600px] absolute bottom-0.5 rounded-b-[0] md:rounded-b-[0.85rem] md:inset-0 md:m-0 md:mx-auto md:my-4'"
+            :customBackdrop="'h-screen relative'"
+            :customClasess="'w-full md:w-[600px] fixed bottom-0 rounded-b-[0] md:rounded-b-[0.85rem] md:inset-0 md:m-0 md:mx-auto md:my-4'"
         >
         <div class="relative text-center p-4 text-lg font-medium border-b leading-110">
             <img 
@@ -114,7 +114,7 @@
                         textLabel="+ Prefijo"
                         placeholder_input="Teléfono del huésped"
                         iconLeft="/assets/icons/1.TH.TELEFONO.svg"
-                        iconRight="/assets/icons/1.TH.I.dropdown.svg"
+                        iconRight="/assets/icons/1.TH.I.DROPDOWN.svg"
                         v-model="form.listGuest[index].phone"
                         @handlePhoneError="phoneError = $event"
                     />
@@ -313,7 +313,7 @@
 <style scoped>
 @media (max-width:767px){
     .body-xs{
-        max-height: calc(78.3vh - 32px);
+        max-height: 66vh;
     }
 }
 

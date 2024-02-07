@@ -1,7 +1,7 @@
 <template>
     <!-- load page -->
     <div class="hbg-white-100 flex flex-col fixed h-screen w-screen left-0 top-0 z-[2000]">
-        <div class="spinner-container mx-auto mt-auto">
+        <div class="spinner-container mx-auto my-auto">
             <svg class="spinner" viewBox="0 0 50 50">
                 <defs>
                     <linearGradient id="spinnerGradient" x1="100%" y1="0%" x2="0%" y2="0%">
@@ -15,7 +15,7 @@
             <img class="icon w-14 sp:w-[81px] h-14 sp:h-[81px]" src="/assets/icons/hotel-bell-svgrepo-com.svg" alt="">
         </div>
         <p class="font-medium text-[24px] text-center mt-10">{{ message }}</p>
-        <img class="w-[130px] sp:w-[216px] h-10 mt-[114px] sp:mt-[225px] mx-auto mb-auto" src="/assets/icons/1.TH.logo.full.svg" alt="">
+        <!-- <img class="w-[130px] sp:w-[216px] h-10 mt-[114px] sp:mt-[225px] mx-auto mb-auto" src="/assets/icons/1.TH.logo.full.svg" alt=""> -->
     </div>
 </template>
 <script setup>
