@@ -3,7 +3,7 @@
         <!-- FIRST ROW -->
         <div class="flex items-center">
             <!-- tags -->
-            <div class="flex items-center overflow-x-auto max-w-[196px] lg:max-w-[600px]">
+            <div class="flex items-center overflow-x-auto max-w-[132px] sp:max-w-[196px] lg:max-w-[600px]">
                 <!-- tag recomendado -->
                 <div v-if="placeData?.recomendations" class="mr-1 lg:mr-2">
                     <div class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC]">
@@ -44,10 +44,10 @@
                         v-for="(value, index) in 5"
                         :key="index"
                         :src="Math.round(converStar(placeData?.num_stars)) >= value ? url_star+'star_yellow.svg' : url_star+'star_not_filled.svg'" 
-                        class="w-[10px] sp:w-[20px] lg:w-[24px] inline mr-2"
+                        class="w-[10px] sp:w-[20px] lg:w-[24px] inline mr-0.5 sp:mr-1 lg:mr-2"
                     />
                 </div>
-                <p class="text-[8px] sp:text-xs lg:text-sm font-medium text-right mt-2 mr-2">
+                <p class="text-[8px] sp:text-xs lg:text-sm font-medium text-right mt-2">
                     {{ placeData?.num_reviews }}
                     {{ $t('place.detail.opinionsWord') }}
                 </p>
