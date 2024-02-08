@@ -17,13 +17,15 @@
         <div class="pt-1.5 sp:pt-4 mb-2 flex justify-between items-center h-6 sp:h-12">
             <div class="mr-1 overflow-x-auto flex flex-1 h-4 sp:h-6">
                 <div>
-                    <div v-if="data.recommended || data.place_featured" class="whitespace-nowrap px-1 sp:px-2 h-full rounded-full bg-yellow-100 font-medium text-gray-400 mr-1 leading-6 text-[6px] sp:text-[10px]">
-                        <template v-if="data.recommended">
-                            {{ $utils.capitalize($t('home.card-product.recommended')) }}
-                        </template>
-                        <template v-else-if="data.place_featured">
-                            {{ $utils.capitalize($t('home.card-product.featured')) }}
-                        </template>
+                    <div v-if="data.recommended || data.place_featured" class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC] mr-2">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
+                            <template v-if="data.recommended">
+                                {{ $utils.capitalize($t('home.card-product.recommended')) }}
+                            </template>
+                            <template v-else-if="data.place_featured">
+                                {{ $utils.capitalize($t('home.card-product.featured')) }}
+                            </template>
+                        </p>
                     </div>
                 </div>
                 <div

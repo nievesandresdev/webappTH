@@ -208,8 +208,6 @@ export default {
         },
         formatDate (dates) {
             if (dates){
-                // console.log('dates')
-                // console.log(dates)
                 var date_start = this.moment(dates.start).format("YYYY-MM-DD")
                 var date_end = this.moment(dates.end).format("YYYY-MM-DD")
                 var label = this.moment(dates.start).format("DD/MM/YYYY")+' - '+this.moment(dates.end).format("DD/MM/YYYY")

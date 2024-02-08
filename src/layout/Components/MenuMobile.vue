@@ -6,7 +6,7 @@
         <ul class="flex justify-between">
             <router-link
                 to="/"
-                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
+                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
             >
                 <img
                     class="mx-auto  w-4 h-4 sp:w-6 sp:h-6"
@@ -19,7 +19,7 @@
             </router-link>
             <router-link
                 to="/instalaciones"
-                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
+                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
@@ -32,20 +32,30 @@
             </router-link>
             <router-link
                 to="/places"
-                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
+                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
             >
                 <img
-                    class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['PlaceList', 'placeShow'].includes($route.name) ? `/assets/icons/explora-hover.svg` : `/assets/icons/explora-default.svg`"
+                    v-if="['PlaceList', 'placeShow'].includes($route.name)"
+                    class="mx-auto w-3.5 h-3.5 sp:w-5 sp:h-5 sp:mt-0.5"
+                    src="/assets/icons/explora-hover.svg"
                     alt="TH.PLACE"
                 >
-                <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
+                <img
+                    v-else
+                    class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
+                    src="/assets/icons/explora-default.svg"
+                    alt="TH.PLACE"
+                >
+                <span 
+                    class="text-[6px] sp:text-[10px] block" 
+                    :class="['PlaceList', 'placeShow'].includes($route.name) ? 'mt-1 sp:mt-[6px]': 'mt-[2px] sp:mt-1'"
+                >
                     {{ $utils.capitalize($t('layout.header.explore')) }}
                 </span>
             </router-link>
             <router-link
                 to="/experiencias"
-                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px]"
+                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
                 
             >
                 <img

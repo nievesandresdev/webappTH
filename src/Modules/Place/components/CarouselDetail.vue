@@ -30,7 +30,10 @@
     <div id="carousel-show-place-mobile" v-if="place?.place_images?.length > 0"  class="md:hidden relative">
         <Carousel :items-to-show="1">
             <Slide v-for="(img, index) in place.place_images" :key="index">
-                <router-link to="/places" class="rounded-full bg-white p-[4px] sp:p-2 absolute top-[8px] sp:top-4 left-[8px] sp:left-4">
+                <router-link 
+                    :to="{ name : 'PlaceList', query: { typeplace: place.type_place?.id, categoriplace: place?.categori_places_id, mobile : true } }"
+                    class="rounded-full bg-white p-[4px] sp:p-2 absolute top-[8px] sp:top-4 left-[8px] sp:left-4"
+                >
                     <img class="w-4" src="/assets/icons/arrow-back.svg"/>
                 </router-link>
                 <img 
@@ -50,6 +53,7 @@
     <!-- END MOBILE Carousel Imagenes Places -->
 </template>
 <script setup>
+    import { onMounted } from 'vue';
     import { Carousel, Pagination, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
     import { useMainStore } from '@/stores'
@@ -61,6 +65,10 @@
             default:{}
         }
     })
+    onMounted(()=>{
+        console.log('props.place',props.place)
+    })
+    
     const storageUrl = mainStore.URL_STORAGE
 
     function getImagePath(image) {

@@ -253,7 +253,7 @@
         }
 
         const goPlaces = (type, cat) => {
-            router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat } });
+            router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
         }
 
         const openInvite = () =>{

@@ -77,6 +77,7 @@
     }
 
     function changeLocale (lg) {
+        console.log('primero',lg)
         localeStore.$changeAndReload(lg)
     }
 
