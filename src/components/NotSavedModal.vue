@@ -11,11 +11,13 @@
                 src="/assets/icons/1.TH.CLOSE.svg" alt=""
                 @click="notSavedModal = false"
             >
-            Cambios sin guardar
+            {{ $t('stay.noSavedM.title') }}
         </div>
 
         <div class="body-xs mt-6 px-4 overflow-y-auto">
-            <p class="text-sm leading-[150%]">Tienes cambios sin guardar. Para poder actualizar la información debes guardar los cambios realizados.</p>
+            <p class="text-sm leading-[150%]">
+                {{ $t('stay.noSavedM.body') }}
+            </p>
         </div>
 
         
@@ -24,13 +26,13 @@
                 class="text-xs font-medium leading-[90%] underline" 
                 @click="exit"
             >
-                Salir sin guardar
+                {{ $t('stay.noSavedM.exitButton') }}
             </button>
             <button 
                 @click="saveChanges"
                 class="hbtn-primary py-3 px-4 text-sm font-medium leading-110"
             >
-                Guardar
+                {{ $t('stay.noSavedM.saveButton') }}
             </button>
         </div>
     </Modal>

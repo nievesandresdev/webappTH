@@ -21,7 +21,7 @@
             />
             <!-- card stay/guest -->
             <div
-                v-if="guestStore?.guestData"
+                v-if="guestStore?.guestData"  
                 :class="hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]'"
                 class="absolute left-0 md:bottom-0 w-full lg:pb-[40px] flex justify-center"
             >
@@ -44,11 +44,11 @@
                             <div class="">
                                 <div class="inline-block">
                                     <h4 class="text-sm font-medium leading-110 text-white">{{ $moment(stayStore?.stayData?.check_in).format('DD/MM') }}</h4>
-                                    <h5 v-if="stayStore?.stayData?.hour_checkin" class="text-xs font-medium leading-90 text-white mt-1">{{ stayStore?.stayData?.hour_checkin }}</h5>
+                                    <h5 v-if="hotelData?.checkin" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkin }}</h5>
                                 </div>
                                 <div class="inline-block ml-4">
                                     <h4 class="text-sm font-medium leading-110 text-white">{{$moment(stayStore?.stayData?.check_out).format('DD/MM')}}</h4>
-                                    <h5 v-if="stayStore?.stayData?.hour_checkout" class="text-xs font-medium leading-90 text-white mt-1">{{ stayStore?.stayData?.hour_checkout }}</h5>
+                                    <h5 v-if="hotelData?.checkout" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkout }}</h5>
                                 </div>
                             </div>
                             <div v-if="stayStore?.stayData?.room" class="text-right">

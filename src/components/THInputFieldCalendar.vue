@@ -170,7 +170,7 @@ export default {
                 return this.modelValue
             },
             set (val) {
-                console.log('set')
+                // console.log('set',val)
                 this.dates_selected = this.formatDate(val).label;
                 this.$emit('update:modelValue', this.formatDate(val))
                 this.showOptions = false;
