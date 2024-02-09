@@ -31,7 +31,7 @@
             </div>
 
             <!-- Carousel Imagenes Experiencias-->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="hidden lg:block relative">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="hidden lg:block relative overflow-hidden">
                 <div class="absolute bottom-0 left-0 w-full" style="z-index: 100000 !important;">
                     <div class="container-fluid-landing flex justify-start w-full">     
                         <div
@@ -73,7 +73,7 @@
             <!-- END Carousel Imagenes Places -->
 
             <!-- MOBILE Carousel Imagenes Places -->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative overflow-hidden">
                 <Carousel :items-to-show="1">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
                         <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4">
@@ -108,7 +108,9 @@
                                 {{ experienceData?.title }}
                             </h2>
                             <h2 class="lg:hidden text-[12px] sp:text-[22px] mt-[4px] sp:mt-2 font-medium">
-                                <span class="text-[10px] sp:text-sm font-normal">desde</span> {{ $utils.formatPrice(experienceData?.from_price) }}€
+                                <span class="text-[10px] sp:text-sm font-normal">
+                                    {{  $t('experience.card-experience.from') }}
+                                </span> {{ $utils.formatPrice(experienceData?.from_price) }}€
                             </h2>
                             <p v-if="variantPrice" class="lg:hidden text-[8px] sp:text-xs mt-[4px] sp:mt-2 font-medium">{{ $t('experience.detail-page.text-variand-price') }}</p>
                             
@@ -124,7 +126,7 @@
                                 </div>
                                 <div class="flex item-center">
                                     <span class="text-[10px] sp:text-sm mr-[8px] sp:mr-2 font-semibold">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</span>
-                                    <span class="text-[10px] sp:text-sm font-medium mr-[8px] sp:mr-2">{{ experienceData?.reviews.total_reviews }} opiniones</span>
+                                    <span class="text-[10px] sp:text-sm font-medium mr-[8px] sp:mr-2">{{ experienceData?.reviews.total_reviews }} {{ $t('experience.detail-page.opinions-word') }}</span>
                                     <span class="text-[10px] sp:text-sm font-medium hidden md:inline mr-[8px] sp:mr-2">|</span>
                                     <span class="text-[10px] sp:text-sm hidden md:inline font-medium">{{ experienceData?.city_experince }}, España</span>
                                 </div>

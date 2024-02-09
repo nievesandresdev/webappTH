@@ -35,7 +35,7 @@
                 class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
             >
                 <img
-                    v-if="['PlaceList', 'placeShow'].includes($route.name)"
+                    v-if="['PlaceList', 'PlaceDetail'].includes($route.name)"
                     class="mx-auto w-3.5 h-3.5 sp:w-5 sp:h-5 sp:mt-0.5"
                     src="/assets/icons/explora-hover.svg"
                     alt="TH.PLACE"
@@ -48,7 +48,7 @@
                 >
                 <span 
                     class="text-[6px] sp:text-[10px] block" 
-                    :class="['PlaceList', 'placeShow'].includes($route.name) ? 'mt-1 sp:mt-[6px]': 'mt-[2px] sp:mt-1'"
+                    :class="['PlaceList', 'PlaceDetail'].includes($route.name) ? 'mt-1 sp:mt-[6px]': 'mt-[2px] sp:mt-1'"
                 >
                     {{ $utils.capitalize($t('layout.header.explore')) }}
                 </span>

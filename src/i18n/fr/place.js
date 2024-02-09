@@ -11,6 +11,7 @@ export default {
     "seaching":'Recherche...',
     "categorySearch":'rencontrés',
     "city":"Ville",
+    "cityPlaceholder":"Destinations...",
     "types":{
         "que-visitar":"Que visiter",
         "donde-comer":"Où manger",
@@ -20,7 +21,7 @@ export default {
         "monumentos":"Monuments",
         "museos":"Musées",
         "zonas-verdes":"Zones vertes",
-        "cafeterías-y-postres":"Cafétérias et desserts",
+        "cafeterias-y-postres":"Cafétérias et desserts",
         "restaurantes":"Restaurants",
         "vida-nocturna":"vie nocturne",
         "copas":"Tasses",
@@ -37,7 +38,7 @@ export default {
         "callWord": "Appel",
         "dataInterest":{
             "title":"Données d'intérêt",
-            "priceRange":'Rangos de precios',
+            "priceRange":'Rangos de prix',
             "diet":"Régimes spéciaux",
             "others":"Autres",
         },
@@ -48,6 +49,15 @@ export default {
         "noComment": "Pas de commentaire",
         "seeMoreComment": "Voir plus",
         "seeAllComments": "Voir tous les avis",
-        "titleAllReviews": "Avis sur l'information touristique"
+        "titleAllReviews": "Avis sur l'information touristique",
+        "exploreIn":"Explorez dans",
+        "filters":{
+            "title": "Plus de filtres",
+            "ratings": "Notes",
+            "star": "étoile",
+            "stars": "étoiles",
+            "remove": "Supprimer",
+            "apply": "Appliquer",
+        }
     },
 }

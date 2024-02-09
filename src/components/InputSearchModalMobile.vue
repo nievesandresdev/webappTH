@@ -28,7 +28,7 @@
                     v-model="formSearch.search"
                     type="text"
                     class="border-2 rounded-lg w-full py-2 border-gray-300 pl-12"
-                    :placeholder="$route.name == 'PlaceList' ? 'Destinos...' : $t('layout.input-search.placeholder')"
+                    :placeholder="$route.name == 'PlaceList' ? $t('place.cityPlaceholder') : $t('layout.input-search.placeholder')"
                     @input="inputSearch()"
                 >
             </div>

@@ -3,8 +3,12 @@
         <h1 class="hidden lg:block text-[32px] mt-[8px] sp:mt-2 font-medium">
             <span class="text-[10px] sp:text-sm font-normal">desde</span> {{ $utils.formatPrice(experienceData.from_price) }}€
         </h1>
-        <p v-if="variantPrice" class="hidden lg:block text-xs mt-4 lg:mt-0 font-medium">El precio varía dependiendo del tamaño del grupo</p>
-        <h3 class="text-[10px] sp:text-base mt-[12px] sp:mt-6 mb-[8px] sp:mb-4 font-medium">¿Cuándo quieres disfrutar de esta experiencia?</h3>
+        <p v-if="variantPrice" class="hidden lg:block text-xs mt-4 lg:mt-0 font-medium">
+            {{ $t('experience.detail-page.variant-price') }}
+        </p>
+        <h3 class="text-[10px] sp:text-base mt-[12px] sp:mt-6 mb-[8px] sp:mb-4 font-medium">
+            {{ $t('experience.detail-page.when-experience-label') }}
+        </h3>
         <DetailPageSectionReserveCalendar />
         <div
             class="people mt-[12px] sp:mt-6"
@@ -12,7 +16,7 @@
 
             <div class="relative">
                 <span v-if="formReserve.date" class="reservar-span inline-block mb-3.5 lg:mb-4">
-                    Puedes reservar un máximo de {{maxSeats}} plazas
+                    {{ $t('experience.detail-page.maximum-reserves-label',{ maxSeats }) }}
                 </span>
                 <div v-if="formReserve.date" class="flex flex-col gap-4">
                     <div
@@ -48,14 +52,14 @@
                     :disabled="!formReserve.date || formReserve.ages.length <= 0 || !validMaxSeats"
                     @click="getDetailOptions()"
                 >
-                    Ver disponibilidad
+                {{ $t('experience.detail-page.availability-label') }}
                 </button>
                 <p class="text-[8px] sp:text-sm font-medium mt-[12px] sp:mt-6">
                     <template v-if="experienceData['cancellation_policy'] == 'STANDARD'">
-                        Cancelación gratuita
+                        {{ $t('experience.detail-page.free-cancellation-label') }}
                     </template>
                     <template v-else>
-                        No reembolsable
+                        {{ $t('experience.detail-page.non-refundable-cancellation-label') }}
                     </template>
                 </p>
                 <!-- <p class="text-sm font-medium mt-2">Hasta 24 horas de anticipación</p> -->

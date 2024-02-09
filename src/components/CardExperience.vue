@@ -53,7 +53,8 @@
             </p>
         </div>
         <h5 
-            class="truncate-2 text-xs sp:text-base font-medium h-8 sp:h-11 mt-0 sp:mt-2.5"
+            class="text-xs sp:text-base font-medium mt-0 sp:mt-2.5"
+            :class="{'h-8 sp:h-11 truncate-2':truncateTitle}"
         >
             {{data.title}}
         </h5>
@@ -72,7 +73,8 @@
             </div>
         </div>
         <h4  class="text-xs sp:text-base mt-1 sp:mt-2 mb-2 sp:mb-4">
-            Desde {{ $utils.formatPrice(data.from_price) }}€
+            {{ $t('experience.card-experience.from') }} {{ $utils.formatPrice(data.from_price) }}€
+            
         </h4>
     </div>
 </template>
@@ -86,6 +88,10 @@
         data: {
             type: Object,
             default: () => ({}),
+        },
+        truncateTitle:{
+            type: Boolean,
+            default: true,
         },
     })
 

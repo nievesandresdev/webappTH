@@ -8,7 +8,8 @@ export default {
         "and": "and",
         "recommed": "recommended",
         "prominent": "prominent",
-        "annulation-gratuite": "free cancelation"
+        "annulation-gratuite": "free cancelation",
+        "from":"From",
     },
     "list-page": {
         "title": "Experiences in",
@@ -59,6 +60,13 @@ export default {
         "text-politic-standar-3": "Any changes made less than 24 hours before the start time of the experience will not be accepted.",
         "text-politic-standar-4": "If you cancel at least 24 hours before the start time of the experience, the amount paid will not be refunded.",
         "text-politic-standar-5": "Cut-off times are based on the local time of the experience.",
-        "text-politic-notrembolsable": "This experience is non-refundable and cannot be changed for any reason. If you cancel or request a modification, the amount paid will not be refunded."
+        "text-politic-notrembolsable": "This experience is non-refundable and cannot be changed for any reason. If you cancel or request a modification, the amount paid will not be refunded.",
+        "opinions-word":"opinions",
+        "variant-price":"The price varies depending on the size of the group",
+        "when-experience-label":"When do you want to enjoy this experience?",
+        "maximum-reserves-label":"You can reserve a maximum of {maxSeats} seats",
+        "availability-label":"See availability",
+        "free-cancellation-label":"Free cancellation",
+        "non-refundable-cancellation-label":"Non-refundable",
     }
 }

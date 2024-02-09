@@ -12,6 +12,7 @@ export default {
     "seaching":'Buscando...',
     "categorySearch":'encontrados',
     "city":"Ciudad",
+    "cityPlaceholder":"Destinos...",
     "types":{
         "que-visitar":"Qué visitar",
         "donde-comer":"Dónde comer",
@@ -21,7 +22,7 @@ export default {
         "monumentos":"Monumentos",
         "museos":"Museos",
         "zonas-verdes":"Zonas verdes",
-        "cafeterías-y-postres":"Cafeterías y postres",
+        "cafeterias-y-postres":"Cafeterías y postres",
         "restaurantes":"Restaurantes",
         "vida-nocturna":"Vida nocturna",
         "copas":"Copas",
@@ -49,6 +50,15 @@ export default {
         "noComment": "No se escribio comentario",
         "seeMoreComment": "Ver mas",
         "seeAllComments": "Ver todas las opiniones",
-        "titleAllReviews": "Opiniones de la info. turística"
+        "titleAllReviews": "Opiniones de la info. turística",
+        "exploreIn":"Explora en",
+        "filters":{
+            "title":"Más filtros",
+            "ratings":"Valoraciones",
+            "star":"estrella",
+            "stars":"estrellas",
+            "remove":"Quitar filtros",
+            "apply":"Aplicar filtros",
+        }
     },
 }

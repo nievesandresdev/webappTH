@@ -268,7 +268,7 @@
                 <div v-if="experiencesData.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 lg:gap-6" style="max-width:954px;">
                     <template v-for="item in experiencesData" :key="item.id">
                             <div style="card-exp">
-                                <CardExperience :data="item" />
+                                <CardExperience :data="item" :truncateTitle="false"/>
                             </div>
                     </template>
                 </div>

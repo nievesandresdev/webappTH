@@ -7,7 +7,7 @@
                 <!-- tag recomendado -->
                 <div v-if="placeData?.recomendations" class="mr-1 lg:mr-2">
                     <div class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
                             {{ $t('place.detail.recommended') }}
                         </p>
                     </div>
@@ -15,7 +15,7 @@
                 <!-- tag destacado -->
                 <div v-if="placeData?.place_featured" class="mr-1 lg:mr-2">
                     <div class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
                             {{ $t('place.detail.featured') }}
                         </p>
                     </div>
@@ -23,7 +23,7 @@
                 <!-- tag type places -->
                 <div class="hidden md:inline">
                     <div class="tag py-1 px-2 h-6 rounded-full bg-[#EBF4F9]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
                             {{ $t('place.types.'+slufy(placeData?.type_place?.name)) }}
                         </p>
                     </div>
@@ -31,7 +31,7 @@
                 <!-- tag categoriplace -->
                 <div class="pl-1 lg:pl-2">
                     <div class="tag py-1 px-2 h-6 rounded-full bg-[#EBF4F9]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
                             {{ $t('place.categories.'+slufy(placeData?.category)) }}
                         </p>
                     </div>

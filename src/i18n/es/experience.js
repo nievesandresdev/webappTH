@@ -8,7 +8,8 @@ export default {
         "and": "y",
         "recommed": "recomendado",
         "prominent": "destacado",
-        "annulation-gratuite": "cancelación gratuita"
+        "annulation-gratuite": "cancelación gratuita",
+        "from":"Desde",
     },
     "list-page": {
         "title": "Experiencias en",
@@ -61,5 +62,12 @@ export default {
         "text-politic-standar-4": "Si cancela al menos 24 horas antes de la hora de inicio de la experiencia, el monto de pago no será reembolsado.",
         "text-politic-standar-5": "Los horarios de corte se basan en la hora local de la experiencia.",
         "text-politic-notrembolsable": "Esta experiencia no es reembolsable y no se puede cambiar por ningún motivo. Si la cancela o pide una modificación, no se le devolverá el importe abonado.",
+        "opinions-word":"opiniones",
+        "variant-price":"El precio varía dependiendo del tamaño del grupo",
+        "when-experience-label":"¿Cuándo quieres disfrutar de esta experiencia?",
+        "maximum-reserves-label":"Puedes reservar un máximo de {maxSeats} plazas",
+        "availability-label":"Ver disponibilidad",
+        "free-cancellation-label":"Cancelación gratuita",
+        "non-refundable-cancellation-label":"No reembolsable",
     }
 }

@@ -126,14 +126,15 @@
 
         
         <div class="flex items-center justify-between p-4 border-t mt-4">
-            <button 
-                class="text-xs font-medium underline leading-[90%]"
+            <div 
+                class="text-xs font-medium leading-[90%]"
                 :class="{'opacity-40':!hasChanges && !changeNumberG}"
                 :disabled="!hasChanges && !changeNumberG"
                 @click="loadDataModal" 
+                style="text-decoration: underline;"
             >
                 {{ $t('stay.dataModal.cancelButton') }}
-            </button>
+            </div>
             <button 
                 class="hbtn-cta py-3 px-4 text-sm leading-110"
                 :class="{'cta-disabled':!valid}"
