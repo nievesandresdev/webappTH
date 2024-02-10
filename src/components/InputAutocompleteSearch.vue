@@ -139,7 +139,6 @@
 
     // FUNCTIONS
     function defineTypeSearch(){
-        console.log('route.name',route.name)
         formSearch.typeSearch = 'experience';
         if(route.name == "PlaceList" ||  route.name == "PlaceDetail"){
             formSearch.typeSearch = 'place';
@@ -171,11 +170,9 @@
         defineTypeSearch();
         clearTimeout(timeoutFormId.value)
         timeoutFormId.value = setTimeout(async () => {
-            console.log('formSearch',formSearch)
             const response = await utilityStore.$apiGetExpAndPlaceBySaearch(formSearch)
             if (response.ok) {
                 data.value = response.data
-                console.log('searchContent',response.data)
                 toggleDropdown()
             }
         }, formSearch.data ? 400 : 0)

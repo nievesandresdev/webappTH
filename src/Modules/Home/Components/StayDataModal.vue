@@ -1,8 +1,8 @@
 <template>
     <Modal 
             :openModal="openInviteModal" 
-            :customBackdrop="'min-h-full relative'"
-            :customClasess="'w-full md:w-[600px] absolute bottom-0.5 rounded-b-[0] md:rounded-b-[0.85rem] md:inset-0 md:m-0 md:mx-auto md:my-4'"
+            :customBackdrop="'h-screen relative'"
+            :customClasess="'w-full md:w-[600px] fixed bottom-0 rounded-b-[0] md:rounded-b-[0.85rem] md:inset-0 md:m-0 md:mx-auto md:my-4'"
         >
         <div class="relative text-center p-4 text-lg font-medium border-b leading-110">
             <img 
@@ -10,16 +10,16 @@
                 src="/assets/icons/1.TH.CLOSE.svg" alt=""
                 @click="closeModal"
             >
-            Estancia
+            {{ $t('stay.dataModal.title') }}
         </div>
 
         <div class="body-xs mt-4 px-4 overflow-y-auto md:max-h-[540px]">
             <div class="">
                 <label class="text-sm mb-2 font-medium block leading-110">
-                    {{ $utils.capitalize($t('stay.stayLog.checkDate.label')) }}
+                    {{ $utils.capitalize($t('stay.dataModal.checkDate.label')) }}
                 </label>
                 <THInputCalendar
-                    :textLabel="$t('stay.stayLog.checkDate.placeholder')"
+                    :textLabel="$t('stay.dataModal.checkDate.placeholder')"
                     v-model="form.checkDate"
                     :error="errorsKey.includes('checkDate')"
                     :show_error_msg="false"
@@ -29,42 +29,42 @@
             </div>
             <div class="mt-4">
                 <label class="text-sm mb-2 font-medium block leading-110">
-                    Habitación
+                    {{ $utils.capitalize($t('stay.dataModal.room.label')) }}
                 </label>
                 <THInputText
-                    :placeholder="'Nº habitación'"
+                    :placeholder="$t('stay.dataModal.room.placeholder')"
                     :type="'text'"
                     v-model="form.room"
                 />
             </div>
             <div class="mt-4">
                 <label class="text-sm mb-2 font-medium block leading-110">
-                    Nº huéspedes que se alojarán
+                    {{ $t('stay.dataModal.howPeople') }}
                 </label>
                 <THInputField
-                    :textLabel="'Nº huéspedes'"
+                    :textLabel="$t('stay.dataModal.howPeople')"
                     :options="options_n_guests"
                     v-model="form.numberGuests"
                     :top_dropdown="'top-0'"
                     :extra_dropdown="'dropdown-clasess'"
-                    :error="form.listGuest?.length > 0 && form.numberGuests < form.listGuest?.length"
+                    :error="invalidNguest"
                     mandatory
                 />
                 <p 
-                    v-if="form.listGuest?.length > 0 && form.numberGuests < form.listGuest?.length" 
+                    v-if="invalidNguest" 
                     class="mt-2 text-sm font-medium htext-alert-negative leading-110"
                 >
-                    Debes eliminar huéspedes para esta acción
+                    {{ $t('stay.dataModal.howPeopleError') }}
                 </p>
             </div>
             <div class="mt-6">
                 <h4 class="text-base font-medium leading-110">
-                    {{ $t('home.guestTitle')}} 
+                    {{ $t('stay.dataModal.guestsTitle') }}
                 </h4>
             </div>
             <div class="mt-4" v-for="(guest, index) in form.listGuest" :key="guest?.id">
                 <label class="text-sm mb-2 font-medium leading-110 flex w-full items-center">
-                    Huésped {{ index+1 }}
+                    {{ $t('stay.dataModal.guestLabel') }} {{ index+1 }}
                     <img 
                         class="w-5 h-5 ml-auto" 
                         src="/assets/icons/1.TH.DELETE.svg" 
@@ -75,12 +75,13 @@
                 <div>
                     <THInputText
                         iconLeft="/assets/icons/1.TH.USER.svg"
-                        placeholder="El campo debe estar relleno"
+                        :placeholder="$t('stay.dataModal.placehoderNull')"
                         :type="'text'"
                         v-model="form.listGuest[index].name"
                         :showTextError="false"
                         :customClasses="{
-                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].name?.trim()
+                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].name?.trim(),
+                            'hborder-black-100':form.listGuest[index].name
                         }"
                     />
                 </div>
@@ -99,22 +100,23 @@
                     <THInputText
                         iconLeft="/assets/icons/1.TH.EMAIL.svg"
                         :iconRight="true"
-                        placeholder="El campo debe estar relleno"
+                        :placeholder="$t('stay.dataModal.placehoderNull')"
                         :type="'email'"
                         v-model="form.listGuest[index].email"
                         @handleError="emailError = $event"
                         :showTextError="false"
                         :customClasses="{
-                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].email.trim()
+                            'hborder-alert-negative placeholder-negative':!form.listGuest[index].email.trim(),
+                            'hborder-black-100':form.listGuest[index].email
                         }"
                     />
                 </div>
                 <div class="mt-2">
                     <THInputSelectPhone
-                        textLabel="+ Prefijo"
-                        placeholder_input="Teléfono del huésped"
+                        :textLabel="$t('stay.dataModal.phone.prefix')"
+                        :placeholder_input="$t('stay.dataModal.phone.number')"
                         iconLeft="/assets/icons/1.TH.TELEFONO.svg"
-                        iconRight="/assets/icons/1.TH.I.dropdown.svg"
+                        iconRight="/assets/icons/1.TH.I.DROPDOWN.svg"
                         v-model="form.listGuest[index].phone"
                         @handlePhoneError="phoneError = $event"
                     />
@@ -124,26 +126,27 @@
 
         
         <div class="flex items-center justify-between p-4 border-t mt-4">
-            <button 
-                class="text-xs font-medium underline leading-[90%]"
-                :class="{'opacity-40':!hasChanges}"
-                :disabled="!hasChanges"
+            <div 
+                class="text-xs font-medium leading-[90%]"
+                :class="{'opacity-40':!hasChanges && !changeNumberG}"
+                :disabled="!hasChanges && !changeNumberG"
                 @click="loadDataModal" 
+                style="text-decoration: underline;"
             >
-                Cancelar
-            </button>
+                {{ $t('stay.dataModal.cancelButton') }}
+            </div>
             <button 
                 class="hbtn-cta py-3 px-4 text-sm leading-110"
                 :class="{'cta-disabled':!valid}"
                 :disabled="!valid"
                 @click="submitForm" 
             >
-                Guardar
+                {{ $t('stay.dataModal.saveButton') }}
             </button>
         </div>
     </Modal>
 
-    <NotSavedModal ref="notSavedModal" @saveChanges="submitForm" @exit="openInviteModal = false"/>
+    <NotSavedModal ref="notSavedModal" @saveChanges="submitForm" @exit="closeNosaved"/>
 </template>
 <script setup>
     import { ref, reactive, computed, onMounted } from 'vue'
@@ -180,7 +183,8 @@
         room:null,
         numberGuests:null,
         stayId: null,
-        listGuest:[]
+        listGuest:[],
+        deleteList:[]
     });
 
     const loadDataModal = async () =>{
@@ -196,7 +200,11 @@
     }
 
     const submitForm = async () => {
+        if(invalidNguest.value){
+            form.numberGuests = stayStore.stayData?.number_guests;
+        }
         form.stayId = stayStore.stayData.id;
+        console.log('submitForm',form)
         let response = await stayStore.updateStayAndGuests(form)
         loadDataModal();
         if(response){
@@ -212,7 +220,6 @@
     }
 
     const sendInvitation = async (index) => {
-        console.log('sendMailToGuest')
         let params = {
             guestEmail : form.listGuest[index].email,
             stayId: stayStore.stayData?.id,
@@ -232,28 +239,36 @@
     }
 
     const closeModal = () => {
-        console.log('closeModal',hasChanges.value)
-        if(hasChanges.value){
+        // console.log('closeModal',hasChanges.value)
+        if(hasChanges.value && changeNumberG.value || hasChanges.value){
             notSavedModal.value.open();
         }else{
+            form.checkDate = null;
             openInviteModal.value = false;
         }
     }
+    const closeNosaved = () => {
+        form.checkDate = null;
+        openInviteModal.value = false
+    }
 
     const deleteGuest = async (guestId) => {
-        console.log('deleteGuest',guestId)
-        let deleteG = await stayStore.deleteGuestOfStay(stayStore.stayData?.id,guestId)
-        loadDataModal();
-        if(deleteG){
-            toast('Cambios guardados', {
-                toastClassName: "warning-toast",
-                bodyClassName: "warning-toast-body",
-                position: "top-right",
-                icon: false,
-                closeButton: false,  
-                hideProgressBar: true,
-            });
-        }
+        form.deleteList.push(guestId)
+        form.listGuest = form.listGuest.filter(item => item.id !== guestId);
+        console.log('form.deleteList',form.deleteList)
+        console.log('form.listGuest',form.listGuest)
+        // let deleteG = await stayStore.deleteGuestOfStay(stayStore.stayData?.id,guestId)
+        // loadDataModal();
+        // if(deleteG){
+        //     toast('Cambios guardados', {
+        //         toastClassName: "warning-toast",
+        //         bodyClassName: "warning-toast-body",
+        //         position: "top-right",
+        //         icon: false,
+        //         closeButton: false,  
+        //         hideProgressBar: true,
+        //     });
+        // }
     }
 
     //COMPUTED
@@ -262,7 +277,7 @@
         let stringCompare = JSON.stringify(compareGuest.value);
         //
         //revisa si numero de huespedes es menor a los huespdes actuales
-        if(form.listGuest?.length > 0 && Number(form.numberGuests) < form.listGuest?.length) return false;
+        if(invalidNguest.value) return false;
         //
         //revisar si no hay ningun nombre o email vacio
         if(stringForm.includes('"email":""')) return false;
@@ -272,11 +287,10 @@
         let errors = emailError.value || phoneError.value
         //
         //
-        return hasChanges.value && !errors
+        return (hasChanges.value || changeNumberG.value) && !errors
     })
 
     const hasChanges = computed(() => {
-
         //validar si hay cambios respecto a los datos obtenidos
         let stringForm = JSON.stringify(form.listGuest);
         let stringCompare = JSON.stringify(compareGuest.value);
@@ -285,9 +299,16 @@
         let checkDate = {start : form.checkDate?.start,end : form.checkDate?.end};
         let changeInDate = JSON.stringify(checkDate) !== JSON.stringify(dateCompare);
         let changeRoom = form.room && form.room?.trim() !== stayStore.stayData?.room;
-        let changeNumberG = form.numberGuests?.trim() !== stayStore.stayData?.number_guests;
         
-        return (changeGuests || changeInDate || changeNumberG || changeRoom)
+        return (changeGuests || changeInDate || changeRoom)
+    })
+
+    const changeNumberG = computed(() => {
+        return form.numberGuests?.trim() !== stayStore.stayData?.number_guests;
+    })
+
+    const invalidNguest = computed(() => {
+        return form.listGuest?.length > 0 && Number(form.numberGuests) < form.listGuest?.length
     })
     
     
@@ -313,7 +334,7 @@
 <style scoped>
 @media (max-width:767px){
     .body-xs{
-        max-height: calc(78.3vh - 32px);
+        max-height: 66vh;
     }
 }
 

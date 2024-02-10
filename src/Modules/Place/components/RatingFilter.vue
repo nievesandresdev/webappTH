@@ -15,12 +15,12 @@
                     src="/assets/icons/close.svg"
                 >
             </a>
-            <p class="text-center font-medium text-lg">Más filtros</p>
+            <p class="text-center font-medium text-lg">{{ $t('place.detail.filters.title') }}</p>
         </div>
         <div class="overflow-y-auto pb-6 max-h-[27rem]">
             <div class="points px-4 mt-6 text-left">
                 <label class="mb-0 text-base font-medium">
-                    Valoraciones
+                    {{ $t('place.detail.filters.ratings') }}
                 </label>
                 <div class="mt-2">
                     <div
@@ -35,7 +35,10 @@
                                 :value="item.id"
                                 :checked="points.includes(item.id)"
                             >
-                            <p class="inline text-sm">{{ item.name }}</p>
+                            <p class="inline text-sm">
+                                {{ item.id }}
+                                {{ Number(item.id) > 1 ? $t('place.detail.filters.stars') : $t('place.detail.filters.star') }}
+                            </p>
                         </div>
                         <p class="font-medium text-sm ml-auto">
                             {{ countPoints[String(index+1)] }}
@@ -52,14 +55,14 @@
                 @click="cleanPointFilter"
                 class="font-medium text-[10px] sp:text-xs my-auto"
             >
-                Quitar filtros
+                {{ $t('place.detail.filters.remove') }}
             </a>
             <button 
                 class="hbtn-primary font-medium text-[10px] text-sm h-10"
                 style="width:126px;"
                 @click="submitPointsFilter"
             >
-                Aplicar filtros
+                {{ $t('place.detail.filters.apply') }}
             </button>
         </div>
     </Modal>

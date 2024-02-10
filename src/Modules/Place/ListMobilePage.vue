@@ -14,9 +14,7 @@
                     >
                         <img class="w-[6px] sp:w-[10px]"  src="/assets/icons/explora/back.svg"/>
                     </button>
-
-                    Explora en
-
+                    {{ $t('place.detail.exploreIn') }}
                     <span class="py-2 cursor-pointer p-0">
                         {{ $utils.capitalize(formFilter.city) }}
                     </span>

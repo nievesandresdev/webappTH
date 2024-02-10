@@ -8,7 +8,8 @@ export default {
         "and": "et",
         "recommed": "recommandé",
         "prominent": "remarquable",
-        "annulation-gratuite": "annulation gratuite"
+        "annulation-gratuite": "annulation gratuite",
+        "from":"De",
     },
     "list-page": {
         "title": "Expériences dans",
@@ -29,7 +30,7 @@ export default {
         "btn-more-filter": "Plus de filtres",
         "btn-submit-filter": "Appliquer des filtres",
         "text-count-list": "Expériences mitigées",
-        "text-count-list-mobile": "Se han encontrado {count} experiencias.",
+        "text-count-list-mobile": "{count} expériences ont été trouvées.",
         "without-results": {
             "title": "Aucune expérience trouvée",
             "text": "Aucune expérience trouvée dans cette ville. Nous vous invitons à explorer d'autres villes, où vous découvrirez diverses expériences et activités."
@@ -59,6 +60,13 @@ export default {
         "text-politic-standar-3": "Tout changement effectué moins de 24 heures avant le début de l'expérience ne sera pas accepté.",
         "text-politic-standar-4": "Si vous annulez au moins 24 heures avant le début de l'expérience, le montant payé ne sera pas remboursé.",
         "text-politic-standar-5": "Les horaires de clôture sont basés sur l'heure locale de l'expérience.",
-        "text-politic-notrembolsable": "Cette expérience n'est pas remboursable et ne peut être modifiée pour aucune raison. Si vous annulez ou demandez une modification, le montant payé ne vous sera pas remboursé."
+        "text-politic-notrembolsable": "Cette expérience n'est pas remboursable et ne peut être modifiée pour aucune raison. Si vous annulez ou demandez une modification, le montant payé ne vous sera pas remboursé.",
+        "opinions-word":"opinions",
+        "variant-price":"Le prix varie en fonction de la taille du groupe",
+        "when-experience-label":"Quand souhaitez-vous profiter de cette expérience ?",
+        "maximum-reserves-label":"Vous pouvez réserver un maximum de {maxSeats} places",
+        "availability-label":"Voir disponibilité",
+        "free-cancellation-label":"Annulation gratuite",
+        "non-refundable-cancellation-label":"Non remboursable",
     }
 }
