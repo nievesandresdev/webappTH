@@ -1,23 +1,17 @@
-# Etapa de construcción
-FROM node:18 AS build-stage
+# Usar imagen base de Nginx
+FROM nginx:stable-alpine
 
-WORKDIR /app
+# Establecer el directorio de trabajo en el directorio donde Nginx sirve los archivos
+WORKDIR /usr/share/nginx/html
 
-# Copiar los archivos de definición de paquetes y limpiar si es necesario
-COPY package*.json ./
+# Eliminar archivos predeterminados de Nginx
+RUN rm -rf ./*
 
-# Instalar dependencias y construir el proyecto
-RUN npm install
-COPY . .
-RUN npm run build
+# Copiar los archivos estáticos construidos
+COPY dist .
 
-# Etapa de producción
-FROM nginx:stable-alpine as production-stage
-
-# Copiar el build del stage anterior
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# Configurar nginx para servir la aplicación
+# Exponer el puerto 80
 EXPOSE 80
 
+# Iniciar Nginx en primer plano
 CMD ["nginx", "-g", "daemon off;"]
