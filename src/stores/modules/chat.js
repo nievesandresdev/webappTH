@@ -27,6 +27,7 @@ export const useChatStore = defineStore('chat', () => {
         let params = {
             stayId: localStorage.getItem('stayId')
         }
+        console.log('loadMessagesApi')
         const response = await loadMessagesApi(params)
         const { ok } = response;
         if(ok){
