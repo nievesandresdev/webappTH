@@ -1,19 +1,23 @@
-FROM node:18
-
-RUN npm install -g serve
+# Etapa de construcción
+FROM node:18 AS build-stage
 
 WORKDIR /app
 
+# Copiar los archivos de definición de paquetes y limpiar si es necesario
 COPY package*.json ./
 
-RUN rm -rf node_modules package-lock.json
-
+# Instalar dependencias y construir el proyecto
 RUN npm install
-
 COPY . .
-
 RUN npm run build
 
-EXPOSE 8080
+# Etapa de producción
+FROM nginx:stable-alpine as production-stage
 
-CMD ["serve", "-s", "dist", "-l", "8080"]
+# Copiar el build del stage anterior
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# Configurar nginx para servir la aplicación
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
