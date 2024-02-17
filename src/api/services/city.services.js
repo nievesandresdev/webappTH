@@ -3,4 +3,4 @@ import {
     cityPath,
 } from '../config/apiRoute'
 
-export const getAllApi = (params) => apiHttp('GET', `${cityPath}/getAll`, params)
+export const getAllApi = (params) => apiHttp('GET', `${cityPath}/getAll`, params , { showPreloader: false })

@@ -8,7 +8,7 @@
                 class=""
                 @click="openModalFilter"
             >
-                <img class="inline-block md:hidden w-3.5 sp:w-4 h-3.5 sp:h-4 absolute top-3.5 sp:top-4 right-3.5 mt-2.5 mr-4" src="/assets/icons/icon-filter.svg">
+                <img class="inline-block md:hidden w-3.5 sp:w-6 h-3.5 sp:h-6 absolute top-3.5 sp:top-3 right-3.5 mt-2.5 mr-4" src="/assets/icons/icon-filter.svg">
             </button>
         </div>
 
