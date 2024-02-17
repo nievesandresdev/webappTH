@@ -1,17 +1,17 @@
-# Usar imagen base de Nginx
-FROM nginx:stable-alpine
+FROM node:18
 
-# Establecer el directorio de trabajo en el directorio donde Nginx sirve los archivos
-WORKDIR /usr/share/nginx/html
+# Instalar el paquete 'serve' para servir la aplicación
+RUN npm install -g serve
 
-# Eliminar archivos predeterminados de Nginx
-RUN rm -rf ./*
+# Establecer el directorio de trabajo en /app
+WORKDIR /app
 
-# Copiar los archivos estáticos construidos
-COPY dist .
+# Copiar el directorio 'dist' ya construido en el directorio de trabajo
+# Asegúrate de que el directorio 'dist' se haya construido y esté presente en el contexto de construcción
+COPY dist /app
 
-# Exponer el puerto 80
-EXPOSE 80
+# Exponer el puerto 8080
+EXPOSE 8080
 
-# Iniciar Nginx en primer plano
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para servir la aplicación
+CMD ["serve", "-s", ".", "-l", "8080"]
