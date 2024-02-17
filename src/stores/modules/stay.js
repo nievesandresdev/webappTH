@@ -28,6 +28,7 @@ export const useStayStore = defineStore('stay', () => {
             guestId: guestId.value,
         }
         if(stayId.value){
+            console.log('findAndValidAccessApi')
             const response = await findAndValidAccessApi(params)
             const { ok } = response   
             if(ok && response.data){
@@ -59,6 +60,7 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function setStayData (data) {
+        console.log('setStayData')
         stayData.value = data;
         localStorage.setItem('stayId', stayData.value.id)
         await loadLocalStay();

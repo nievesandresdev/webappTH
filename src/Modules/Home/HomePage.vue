@@ -235,8 +235,9 @@
         // })
 
         onMounted(async () => {
-            await loadCrossellings();
-            await getPlaceCategories();
+            // await loadCrossellings();
+            // await getPlaceCategories();
+            await Promise.all([loadCrossellings(),getPlaceCategories()])
         })
 
         // FUNCTION
