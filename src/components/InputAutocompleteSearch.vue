@@ -5,7 +5,7 @@
         <div
             class="input-search__search h-full relative flex-1 w-auto"
         >
-            <img class="inline-block w-3 sp:w-4 h-3 sp:h-4 md:w-5 md:h-5 absolute top-2 sp:top-2.5 left-1.5  sp:left-2.5 md:top-1.5 md:left-2.5" src="/assets/icons/search.svg">
+            <img class="inline-block w-3 sp:w-4 h-3 sp:h-4 md:w-5 md:h-5 absolute top-2 sp:top-2.5 left-1.5 sp:left-2.5 md:top-1.5 md:left-2.5" src="/assets/icons/search.svg">
             <div
             ref="refDropdown" 
                 class="w-full h-full border-none bg-white"
@@ -13,7 +13,7 @@
                 <!-- v-if="innerWidth > 768" -->
                 <input
                     v-model="formSearch.search"
-                    class="pl-6 sp:pl-9 text-[10px] sp:text-xs lg:text-sm font-medium w-full h-full border-none bg-white hidden md:block"
+                    class="pl-6 sp:pl-9 text-[10px] sp:text-sm lg:text-sm font-medium w-full h-full border-none bg-white hidden md:block"
                     :placeholder="`${$t('layout.input-search.search')}...`"
                     type="text"
                     @input="searchContent()"
@@ -54,10 +54,11 @@
 
 <script setup>
     //import libraries
-    import { ref, computed, provide, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, computed, provide, reactive, onMounted, onBeforeUnmount } from 'vue';
     import { slufy } from '@/utils/utils.js'
     import { useRoute, useRouter   } from 'vue-router'
     import { useUtilityStore } from '@/stores/modules/utility'
+    import { getUrlParam } from '@/utils/utils.js'
     //import component
     import InputSearchModalMobile from './InputSearchModalMobile'
 
@@ -122,10 +123,12 @@
     }
 
     //DATA
-    const formSearch = {
+    const formSearch = reactive ({
         search: '',
         typeSearch: '',
-    }
+        typePlace:null,
+        categoryPlace:null
+    })
     const showDropdown = ref(false)
     const refDropdown = ref(false)
     const timeoutFormId = ref(null)
@@ -167,6 +170,8 @@
     }
 
     function searchContent () {
+        formSearch.typePlace = getUrlParam('typeplace') ?? null;
+        formSearch.categoryPlace = getUrlParam('categoriplace') ?? null;
         defineTypeSearch();
         clearTimeout(timeoutFormId.value)
         timeoutFormId.value = setTimeout(async () => {

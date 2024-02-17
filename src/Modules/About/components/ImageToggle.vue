@@ -77,12 +77,15 @@
         document.body.removeChild(el);
         setTimeout(() => {
           this.isPressed = false
-        }, 300);
+        }, 300);  
         this.toast(this.msg_copy, {
-          toastClassName: "hbg-warning",
-          bodyClassName: ["text-sm", "font-medium","text-black"],
-          icon: false,
-      }); 
+            toastClassName: "warning-toast",
+            bodyClassName: "warning-toast-body",
+            position: "top-right",
+            icon: false,
+            closeButton: false,  
+            hideProgressBar: true,
+        });
       }
     }
   };

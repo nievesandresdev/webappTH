@@ -7,7 +7,7 @@
         >
             <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
             <div class="fixed inset-0 flex w-screen items-center justify-center z-[1200] ">
-                <DialogPanel class="w-full max-w-[90%] bg-white rounded-[0.85rem] p-4">
+                <DialogPanel class="w-full max-w-[90%] bg-white rounded-[0.85rem]">
                     <div class="px-3.5 py-3.5 sticky z-30 border-b top-0 bg-white rounded-t-xl">
                         <a 
                             class="absolute z-50 top-5 left-6 font-semibold"
@@ -84,10 +84,10 @@
                                     {{ $t('experience.list-page.section-filter.label-duration') }}
                                 </h2>
                                 <div 
-                                    class="mt-2 flex justify-content-between"
+                                    class="mt-2 flex justify-between"
                                     v-for="dur in durationList" :key="dur.id"
                                 >
-                                    <span>
+                                    <div class="flex">
                                         <input
                                             v-model="formFilter.duration"
                                             :value="dur.id" type="checkbox"
@@ -97,14 +97,14 @@
                                         <label class="text-sm mb-0">
                                             {{dur.name[$i18n.locale]}}
                                         </label>
-                                    </span>
+                                    </div>
                                     <span class="inline-block text-sm">{{ numbersByFilterDuration?.duration?.[dur.id]?.['count'] }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div 
-                        class="px-3.5 py-3.5 sticky z-30 border-t bottom-0 bg-white rounded-b-xl flex justify-between"
+                        class="px-3.5 py-3.5 sticky z-30 border-t bottom-0 bg-white rounded-b-xl flex justify-between items-center"
                     >
                         <a 
                             href="javascript:void(0)"
@@ -114,7 +114,7 @@
                             {{ $t('experience.list-page.section-filter-history.btn-close') }}
                         </a>
                         <button 
-                            class="font-medium text-sm border border-dark p-1.5 rounded"
+                            class="hbtn-primary text-sm p-1.5"
                             @click="submitFilter"
                         >
                             {{ $t('experience.list-page.btn-submit-filter') }}

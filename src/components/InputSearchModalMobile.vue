@@ -41,7 +41,7 @@
                     class="flex items-center hover:bg-gray-200 w-full cursor-pointer"
                     @click="selectSearch(item)"
                 >
-                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="getImage(item.image)">
+                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="getImage(item)">
                     <div class="border-b border-gray-300 w-full truncate-1 h-full" :class="item.type == 'city' ? 'py-3.5' : 'py-2'">
                         <p class="text-sm font-medium truncate-1" :class="{'mb-1': item.type == 'city'}">{{item.title}}</p>
                         <p
@@ -59,6 +59,9 @@
 
 <script setup>
     import { ref, inject } from 'vue'
+    import { useRouter   } from 'vue-router'
+
+    const router = useRouter();
 
     // STORE
     import { useExperienceStore } from '@/stores/modules/experience'
@@ -98,11 +101,19 @@
 
     // FUNCTION
     function getImage (item) {
-        return `${urlStorage}/storage/places/${item.image}`
+        console.log('getImage',item)
+        console.log()
+        if(item.type == 'place')return `${urlStorage}/storage/places/${item.image.image}`
+        return item.image;
     }
 
-    function selectSearch () {
-
+    function selectSearch (item) {
+        closeModal();
+        if(item.type == 'place'){
+            router.push({name: 'PlaceDetail', params:{ id: item.id }})
+        }else{
+            router.push({name: 'ExperienceDetail', params:{ slug: item.slug }})
+        }
     }
 
     function closeModal () {
