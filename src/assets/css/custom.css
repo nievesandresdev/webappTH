@@ -23,6 +23,11 @@ button:focus {
   box-shadow: none !important;
 }
 
+button:focus {
+  border-width: 0;
+}
+
+
 /* @import './hoster-colors'; */
 /* @import './hoster-buttons'; */
 

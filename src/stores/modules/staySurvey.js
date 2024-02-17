@@ -14,6 +14,7 @@ export const useStaySurveyStore = defineStore('staySurvey', () => {
     // ACTIONS
 
     async function $findByParams (data) {
+        console.log('findByParamsApi')
         const response = await findByParamsApi(data)
         if (response.ok) {
             surveyData.value = response.data

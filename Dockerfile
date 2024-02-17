@@ -1,23 +1,17 @@
-# Etapa de construcción
-FROM node:18 AS build-stage
+FROM node:18
 
+# Instalar el paquete 'serve' para servir la aplicación
+RUN npm install -g serve
+
+# Establecer el directorio de trabajo en /app
 WORKDIR /app
 
-# Copiar los archivos de definición de paquetes y limpiar si es necesario
-COPY package*.json ./
+# Copiar el directorio 'dist' ya construido en el directorio de trabajo
+# Asegúrate de que el directorio 'dist' se haya construido y esté presente en el contexto de construcción
+COPY dist /app
 
-# Instalar dependencias y construir el proyecto
-RUN npm install
-COPY . .
-RUN npm run build
+# Exponer el puerto 8080
+EXPOSE 8080
 
-# Etapa de producción
-FROM nginx:stable-alpine as production-stage
-
-# Copiar el build del stage anterior
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# Configurar nginx para servir la aplicación
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para servir la aplicación
+CMD ["serve", "-s", ".", "-l", "8080"]
