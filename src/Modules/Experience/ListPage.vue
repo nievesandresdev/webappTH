@@ -402,7 +402,10 @@
     // COMPUTED
     const filterActive = computed(() => {
         for (const key in queryRouter.value) {
-            if (queryRouter.value[key] != '' && queryRouter.value[key] != null || (Array.isArray(queryRouter.value[key]) && queryRouter.value[key].length > 0)) {
+            if (
+                ['price_min', 'price_max', 'duration', 'search'].includes(key) &&
+                ((queryRouter.value[key] != '' && queryRouter.value[key] != null) || (Array.isArray(queryRouter.value[key]) && queryRouter.value[key].length > 0))
+              ) {
                 return true
             }
         }
