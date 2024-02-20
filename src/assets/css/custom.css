@@ -149,6 +149,16 @@ button:focus {
   display: none !important;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  background-color: transparent;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /*UTILS TEXT*/
 .leading-110{
   line-height: 110% !important;
@@ -179,4 +189,6 @@ button:focus {
   white-space: nowrap; 
 }
 
-
+.underline{
+  text-decoration: underline !important;
+}

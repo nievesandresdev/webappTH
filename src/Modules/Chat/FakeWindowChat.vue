@@ -1,6 +1,6 @@
 <template>
     
-    <div class="height-chat hbg-gray-200 flex flex-col">
+    <div class="height-chat hbg-gray-200 flex flex-col overflow-hidden no-scrollbar mb-[-26px]">
         <!-- header -->
         <div class="xs:py-2 py-3.5 text-center shadow-hoster hbg-white-100">
             <h1 class="xs:text-xs text-base font-medium">{{settings.name}}</h1>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <!-- body chat -->
-        <div class="body-chat flex-grow flex flex-col xs:p-2 p-3.5 overflow-y-auto">
+        <div class="body-chat flex-grow flex flex-col xs:p-2 p-3.5 overflow-y-auto  no-scrollbar">
             <!-- info chat -->
             <div class="hbg-white-100 rounded-[10px] xs:p-2 p-3.5">
                 <p class="xs:text-[0.53rem] sm:text-sm text-center leading-[150%]">
@@ -29,7 +29,7 @@
             <template v-if="$route.query.responses">
                 <template v-for="msg in chatMessages" :key="msg">
                     <div v-if="msg.show" class="w-3/4" :class="{'ml-auto':msg.by == 'Guest'}" >
-                        <p class="text-[9px] p-1 rounded-6 mt-2" :class="{'hbg-gray-100':msg.by == 'Guest','hbg-white-100':msg.by !== 'Guest'}">
+                        <p class="text-[9px] p-1 rounded-[6px] mt-2" :class="{'hbg-gray-100':msg.by == 'Guest','hbg-white-100':msg.by !== 'Guest'}">
                             {{ msg.text }}
                         </p>
                         <p class="text-[8px] text-right">
