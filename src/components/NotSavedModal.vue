@@ -21,13 +21,15 @@
         </div>
 
         
-        <div class="flex items-center justify-between px-4 pb-4 mt-6">
-            <button 
-                class="text-xs font-medium leading-[90%] underline" 
+        <div class="flex justify-between px-4 pb-4 mt-6 items-center">
+            <a
+                href="javascript:void(0)"
+                class="text-xs font-medium underline" 
                 @click="exit"
+                style="text-decoration: underline;"
             >
                 {{ $t('stay.noSavedM.exitButton') }}
-            </button>
+            </a>
             <button 
                 @click="saveChanges"
                 class="hbtn-primary py-3 px-4 text-sm font-medium leading-110"
