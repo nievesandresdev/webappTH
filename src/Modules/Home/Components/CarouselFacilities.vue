@@ -30,7 +30,7 @@
              @click="go_facility(item.id, $utils.isMockup())"
         >
             <img 
-                :src="facilityStore.$loadImage(item?.image?.url)"
+                :src="facilityStore.$loadImage(item?.image)"
                 class="object-cover rounded-lg w-full h-full"
             >
             <div class="overlay rounded-lg absolute h-full z-10 w-full top-0 left-0" style="background: rgba(0, 0, 0, 0.3);"></div>

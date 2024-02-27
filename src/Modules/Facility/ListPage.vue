@@ -23,7 +23,7 @@
                 class="cursor-pointer card-facility-content  relative rounded-[10px]"
             >
                 <img
-                    :src="getImg(item)" alt="img"
+                    :src="facilityStore.$loadImage(item?.images?.[0])" alt="img"
                     class="w-full h-full object-cover rounded-[10px]"
                 >
                 <div class="overlay rounded-[10px] absolute h-full z-10 w-full top-0 left-0 card-facility" >
@@ -53,6 +53,7 @@
         dataList.value = response;
     }
     const getImg = (payload) => {
+        
         if (payload?.images.length > 0) return `${urlStorage}/storage/facility${payload.images[0].url}`
         return null
     }
