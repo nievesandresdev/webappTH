@@ -20,7 +20,7 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile  @markReadMsgs="markMsgsAsRead"/>
+			<MenuMobile  @markReadMsgs="markMsgsAsRead" @openInboxModal="openInboxModal"/>
 		</div>
         
         <TheFooter v-if="showFooter" />
@@ -36,6 +36,14 @@
                 />
             </div>
         </transition>
+        
+        <!-- modal inbox -->
+        <transition name="modal">
+            <InboxModal v-if="showInboxModal" @close="showInboxModal = false"/>
+        </transition>
+        <div v-show="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
+        <!-- modal inbox -->
+        
         <GuestLog v-if="!$utils.isMockup()" :openModal="showGuestLog" @closeModal="closeGuestLog"/>
         <StayLog v-if="!$utils.isMockup()" :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
@@ -52,6 +60,7 @@
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
     import Chat from '@/Modules/Chat/WindowChat.vue'
+    import InboxModal from './Components/InboxModal'
     //stores
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest'
@@ -80,6 +89,7 @@
     const showStayLog = ref(false)
     const chatSettings = ref(hotelStore?.hotelData?.chatSettings ?? {});
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
+    const showInboxModal = ref(false); 
     const showMenuMobile = ref(true); 
     const langWebByUrl = ref(getUrlParam('lang'));
     //chat
@@ -117,6 +127,10 @@
             pusher.value.unsubscribe(channel_chat.value);
         }
     });
+
+    const openInboxModal = ()  =>{
+        showInboxModal.value = true;
+    }
 
     const connect_pusher = () => {
         if (stayDataRef.value && !isSubscribed.value) {
@@ -256,6 +270,22 @@
     .slide-enter-active, .slide-leave-active {
     transition: transform 0.5s;
     }
+
+    /* Estado inicial del modal al entrar */
+    .modal-enter-from,
+    .modal-leave-to {
+    transform: translateY(100%);
+    }
+
+    .slide-enter-to, .slide-leave-from {
+        transform: translateY(0);
+    }
+    .modal-enter-active,.modal-leave-active {
+    transition: transform 0.3s ease;
+    }
+
+
+
 
 
 </style>

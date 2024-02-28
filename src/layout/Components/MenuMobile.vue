@@ -1,6 +1,6 @@
 <template>
     <header
-        class="fixed bottom-0 left-0 w-full z-20 shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
+        class="fixed bottom-0 left-0 w-full z-[2000] shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
         :class="showChat && !hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
     >
         <ul class="flex justify-between">
@@ -70,6 +70,20 @@
             <li
                 v-if="showChat && ($utils.isMockup() || (!$utils.isMockup() && chatStore))"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
+                @click="openInboxModal"
+            >
+                <img
+                    class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
+                    :src="['WindowChatMobile'].includes($route.name) || ['QueriesIndex'].includes($route.name) ? `/assets/icons/1.TH.MailBoxACTIVE.svg` : `/assets/icons/1.TH.MailBox.svg`"
+                    alt="1.TH.MailBox"
+                >
+                <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
+                    Inbox
+                </span>
+            </li>
+            <!-- <li
+                v-if="showChat && ($utils.isMockup() || (!$utils.isMockup() && chatStore))"
+                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
                 @click="markReadMsgs"
             >
                 <span v-if="chatStore.hasUnreadMessages" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
@@ -81,7 +95,7 @@
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
                     Chat
                 </span>
-            </li>
+            </li> -->
         </ul>
     </header>
     
@@ -99,7 +113,7 @@
         },
     })
 
-    const emit  = defineEmits(['markReadMsgs'])
+    const emit  = defineEmits(['markReadMsgs','openInboxModal'])
     const router = useRouter();
     const chatStore = useChatStore();
     //ONMOUNTED
@@ -112,6 +126,7 @@
     //DATA
     const modal_find_reserve = ref(false)
     const modal_reserve = ref(false)
+    const showInboxModal = ref(false);
     /* eslint-disable */
     const modal_lang = ref(false)
 
@@ -123,17 +138,13 @@
     //COMPuted
     //FUNCTIONS
     function markReadMsgs(){
-        // if(!isMockup){
-            emit('markReadMsgs')
-            router.push({ name: 'WindowChatMobile' });
-        // }
+        emit('markReadMsgs')
+        router.push({ name: 'WindowChatMobile' });
     }
 
-    // function go_route(ruta){
-        // if(!isMockup){
-            // Inertia.get(ruta)
-        // }
-    // }
+    function openInboxModal(){
+        emit('openInboxModal')
+    }
 
 </script>
 
