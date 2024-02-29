@@ -45,6 +45,10 @@ import AboutEn from './en/about';
 import AboutEs from './es/about';
 import AboutFr from './fr/about';
 
+import QueryEn from './en/query';
+import QueryEs from './es/query';
+import QueryFr from './fr/query';
+
 const messages = {
   en: {
     place: placeEn,
@@ -58,6 +62,7 @@ const messages = {
     chat: ChatEn,
     facility: FacilityEn,
     about: AboutEn,
+    query: QueryEn,
     // más módulos...
   },
   es: {
@@ -72,6 +77,7 @@ const messages = {
     chat: ChatEs,
     facility: FacilityEs,
     about: AboutEs,
+    query: QueryEs,
     // más módulos...
   },
   fr: {
@@ -86,6 +92,7 @@ const messages = {
     chat: ChatFr,
     facility: FacilityFr,
     about: AboutFr,
+    query: QueryFr,
     // más módulos...
   },
 };

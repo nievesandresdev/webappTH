@@ -10,3 +10,11 @@
         </div>
     </div>
 </template>
+<script setup>
+defineProps({
+    text:{
+        type:String,
+        default:null
+    }
+})
+</script>
