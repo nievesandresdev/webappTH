@@ -1,6 +1,9 @@
 <template>
     <div class="queries-head hshadow p-4 relative">
-        <img class="absolute top-4 left-4" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon">
+        <img 
+            @click="goBack"
+            class="absolute top-4 left-4" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
+        >
         <h1 class="text-center text-base font-medium">Consultas</h1>
     </div>
 
@@ -11,21 +14,37 @@
             :text="feedbackText"
         />
 
+        <!-- pre-stay -->
         <TextQuery 
-            v-if="period == 'pre-stay' && !currentQuery?.answered" 
+            v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
             :settings="settings"
             :data="currentQuery"
             @showFeedback="showFeedback"
         />
-        <!-- <IconsQuery /> -->
-        <!-- <ResponseCard />  -->
+        <!-- in-stay & post-stay -->
+        <IconsQuery 
+            v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" 
+            :settings="settings"
+            :data="currentQuery"
+            @loadReponses="loadReponses"
+            @showFeedback="showFeedback"
+        />
+
+        <template v-for="res in responses" :key="res?.id">
+            <ResponseCard 
+                :response="res.comment"
+                :qualification="res.qualification"
+                :period="res.period"
+            /> 
+        </template>
     </div>
 </template>
 <script setup>
 import { onBeforeMount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import TextQuery from './Components/TextQuery.vue';
-// import IconsQuery from './Components/IconsQuery.vue'
-// import ResponseCard from './Components/ResponseCard.vue';
+import IconsQuery from './Components/IconsQuery.vue'
+import ResponseCard from './Components/ResponseCard.vue';
 import FlashFeedback from './Components/FlashFeedback.vue'
 //stores
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
@@ -38,10 +57,15 @@ const queryStore = useQueryStore();
 const stayStore = useStayStore();
 const guestStore = useGuestStore();
 
+const router = useRouter();
+
 onBeforeMount(async ()=>{
     await getQuerySettings();
     await getCurrentPeriod();
-    await getCurrentQuery();
+    if(period.value){
+        await getCurrentQuery();
+    }
+    await queryStore.$existingPendingQuery()
     await getResponses();
 })
 
@@ -80,7 +104,6 @@ async function getResponses(){
         stayId : stayStore.stayData.id,
         guestId : guestStore.guestData.id
     }
-    // console.log('getResponses',params)
     responses.value = await queryStore.$getRecentlySortedResponses(params);
     // console.log('responses.value',responses.value)
 }
@@ -88,7 +111,15 @@ async function getResponses(){
 function showFeedback(text){
     showFlashFeedback.value = true;
     feedbackText.value = text;
+    loadReponses();
+}
+
+function loadReponses(){
     getCurrentQuery();
     getResponses();
+}
+
+function goBack() {
+  router.go(-1);
 }
 </script>

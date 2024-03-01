@@ -54,9 +54,9 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findLastStay (guestId) {
-        console.log('findLastStayApi')
         if(localStorage.getItem('stayId')) return;
         const response = await findLastStayApi(guestId)
+        console.log('findLastStay',response)
         const { ok } = response   
         if(ok){
             stayStore.setStayData(response.data,false)

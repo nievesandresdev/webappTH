@@ -11,7 +11,7 @@
             <div 
                 v-if="stayDataRef && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
-                :class="{'hbg-warning':chatStore.hasUnreadMessages,'hbg-gray-100':!chatStore.hasUnreadMessages}"
+                :class="{'hbg-warning':chatStore.countUnreadMessages,'hbg-gray-100':!chatStore.countUnreadMessages}"
                 @click="openWindowChat" 
             >
                 <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
@@ -20,7 +20,7 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile  @markReadMsgs="markMsgsAsRead" @openInboxModal="openInboxModal"/>
+			<MenuMobile  @openInboxModal="openInboxModal"/>
 		</div>
         
         <TheFooter v-if="showFooter" />
@@ -210,12 +210,6 @@
 
     const openWindowChat = () => {
         openChat.value = true;
-        if(stayDataRef.value){
-            chatStore.markMsgsAsRead();
-        }
-    }
-
-    const markMsgsAsRead = () => {
         if(stayDataRef.value){
             chatStore.markMsgsAsRead();
         }

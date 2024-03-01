@@ -23,27 +23,33 @@
         @click="modalLocale = false"
     >
     </div>
-    <div v-if="modalLocale" class="bg-white opacity-100 w-screen h-[45%] z-50 rounded-t-xl px-4 pb-4 pt-[20px] md:hidden z-[4000] fixed bottom-0 left-0">
-        <div class="text-center relative mb-6 bg-white">
-            <button class="absolute left-0" @click="modalLocale = false">
-                <img 
-                    src="/assets/icons/1.TH.CLOSE.svg" alt="icon_close" 
-                    class="w-6 h-6"
-                >
-            </button>
-            <h2 class="text-sm font-medium inline-block">{{ $utils.capitalize($t('layout.dropdownLanguage.title')) }}</h2>
+    <div v-if="modalLocale" class="bg-white opacity-100 w-screen rounded-t-xl md:hidden z-[4000] fixed bottom-0 left-0 text-center">
+        <span class="w-[64px] h-1 hbg-gray-200 inline-block rounded-full"></span>
+        <div class="mt-1.5 relative px-4">
+            <img 
+                class="w-6 h-6 absolute left-4 cursor-pointer" 
+                src="/assets/icons/close.svg" 
+                @click="modalLocale = false"
+            >
+            <h2 class="text-center text-sm font-medium">{{ $utils.capitalize($t('layout.dropdownLanguage.title')) }}</h2>
         </div>
-        <ul class="bg-white">
+         
+        <ul class="bg-white mt-4">
             <li     
                 v-for="(item, index) in lgsAll"
                 :key="index"
+                class="p-4 relative hover-gray-100"
+                @click.prevent="changeLocale(item.value)"
             >
-                <a class="cursor-pointer text-sm flex justify-between items-center p-1"  @click.prevent="changeLocale(item.value)">
-                    <span>
-                        <img class="inline-block mr-1" :src="item.srcIcon" :alt="item.srcIcon" width="25">
+                <div class="absolute w-full bottom-0 left-0 px-4">
+                    <div class="hbg-gray-400 h-[1px] rounded-full"></div>
+                </div>
+                <a class="flex justify-between items-center">
+                    <span class="text-sm font-medium flex items-center">
+                        <img class="mr-2 w-6 h-6" :src="item.srcIcon" :alt="item.srcIcon">
                         {{ item.label }}
                     </span>
-                    <img v-if="localeStore.localeCurrent == item.value" class=" inline-block icon-green" src="/assets/icons/TH.I.CHECK.BLACK.svg" alt="TH.I.CHECK.BLACK">
+                    <img v-if="localeStore.localeCurrent == item.value" class="w-6 h-6" src="/assets/icons/Checkcircle.svg" alt="Checkcircle icon">
                 </a>
             </li>
         </ul>
@@ -56,9 +62,9 @@
 
     const modalLocale = ref(false)
     const lgsAll = ref([
-        {label: 'Español', value: 'es', srcIcon: '/assets/icons/espana.png'},
-        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/francia.png'},
-        {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/reino-unido.png'},
+        {label: 'Español', value: 'es', srcIcon: '/assets/icons/1.TH.español.svg'},
+        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/1.TH.frances.svg'},
+        {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/1.TH.INGLES.svg'},
     ])
     const localeStore = useLocaleStore()
 

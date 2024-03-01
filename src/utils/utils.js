@@ -87,7 +87,6 @@ const transformDuration = (value) => {
 
 const loadSubdomain = () => {
     const ENV = process.env.VUE_APP_ENVIROMENT || 'locale'
-    console.log('ENV',ENV)
     let subdomain = ENV === 'locale' ? extractSlugHotelToQuery() : extractSlugHoteltoHost()
     if(subdomain){
         localStorage.setItem('subdomain', subdomain)

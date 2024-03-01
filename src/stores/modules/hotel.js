@@ -30,7 +30,6 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $getCrossellings () {
-        console.log('getCrossellingsApi')
         const response = await getCrossellingsApi()
         const { ok, data } = response
         if (ok) {

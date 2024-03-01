@@ -1,8 +1,11 @@
 <template>
-    <div class="hshadow rounded-[6px] p-4">
-        <h1 class="text-base font-medium leading-[150%]">Hola {{ guestStore.guestData.name }},</h1>
+    <div class="hshadow rounded-[6px] p-4 mb-4">
+        <h1 class="text-base font-medium leading-[150%]">
+            {{ $t('query.form.hello') }} 
+            {{ guestStore.guestData.name }},
+        </h1>
         <p class="mt-4 text-sm font-medium">
-            ¿Hay algo que podamos hacer para tu llegada al hotel?
+            {{ $t('query.settings.question'+data?.period)}}
         </p>
         <div class="mt-4">
             <TextareaAutogrow 
@@ -21,7 +24,7 @@
                 :disabled="!textarea"
                 @click="saveQuery"
             >
-                Enviar
+            {{ $t('query.form.send') }} 
             </button>
         </div>
     </div>

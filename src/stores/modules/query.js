@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import {
     getCurrentPeriodApi,
     getRecentlySortedResponsesApi,
     firstOrCreateApi,
-    saveResponseApi
+    saveResponseApi,
+    existingPendingQueryApi
 } from '@/api/services/query.services'
 
 export const useQueryStore = defineStore('query', () => {
     
     // STATE
+    const pendingQuery = ref([]);
 
     // ACTIONS
     async function $getCurrentPeriod (data) {
@@ -23,7 +25,6 @@ export const useQueryStore = defineStore('query', () => {
     }
 
     async function $getRecentlySortedResponses (data) {
-
         const response = await getRecentlySortedResponsesApi(data)
         const { ok } = response   
         if(ok){
@@ -49,12 +50,31 @@ export const useQueryStore = defineStore('query', () => {
         }
     }
 
+    async function $existingPendingQuery () {
+
+        let params = {
+            stayId :localStorage.getItem('stayId'),
+            guestId :localStorage.getItem('guestId'),
+        };
+        const response = await existingPendingQueryApi(params)
+        const { ok } = response   
+        if(ok){
+            pendingQuery.value = response.data;
+            console.log('pendingQuery.value',pendingQuery.value)
+        }
+    }
     //
+
+    const hasPendingQuery = computed(() => {
+        return pendingQuery.value;
+    });
     return {
         $getCurrentPeriod,
         $getRecentlySortedResponses,
         $firstOrCreate,
-        $saveResponse
+        $saveResponse,
+        $existingPendingQuery,
+        hasPendingQuery
     }
 
 })
