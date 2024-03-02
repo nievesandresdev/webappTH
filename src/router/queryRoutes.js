@@ -1,5 +1,6 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const QueriesIndex = () => import('@/Modules/Queries/QueriesIndex.vue')
+const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
 
 const chatRoutes = [
   {
@@ -11,6 +12,12 @@ const chatRoutes = [
         name: 'QueriesIndex',
         path: '',
         component: QueriesIndex
+      },
+      {
+        name: 'FakeQueriesIndex',
+        path: 'fake',
+        component: FakeQueriesIndex,
+        props: (route) => ({ paramsRouter: {...route.query} })
       },
     ],
   },

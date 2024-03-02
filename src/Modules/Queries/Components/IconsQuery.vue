@@ -1,14 +1,16 @@
 <template>
-    <div class="hshadow rounded-[6px] p-4 mb-4">
-        <h1 class="text-base font-medium leading-[150%]">
+    <div class="hshadow rounded-[6px] p-2 sp:p-4 mb-2 sp:mb-4">
+        <h1 class="text-xs sp:text-base font-medium leading-[150%]">
             <template v-if="data?.period == 'post-stay'">
-                {{ $t('query.form.thanksAll') }} {{ guestStore.guestData.name }}
+                {{ $t('query.form.thanksAll') }} 
+                {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
             </template>
             <template v-else>
-                ¿{{ $t('query.form.whatsup') }} {{ guestStore.guestData.name }}?
+                ¿{{ $t('query.form.whatsup') }} 
+                {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
             </template>
         </h1>
-        <p class="mt-4 text-sm font-medium">
+        <p class="mt-2 sp:mt-4 text-[10px] sp:text-sm font-medium">
             {{ $t('query.settings.question'+data?.period)}}
         </p>
         <div class="mt-4">
@@ -29,10 +31,10 @@
                 customClasses="min-h-[120px]"
             />
         </div>
-        <div class="text-right mt-6">
+        <div class="text-right mt-3 sp:mt-6">
             <!-- :disabled="!form.type" -->
             <button 
-                class="hbtn-cta py-3 px-4 text-sm"
+            class="hbtn-cta py-1.5 sp:py-3 px-2 sp:px-4 text-[10px] sp:text-sm"
                 :class="{'cta-disabled' : !form.type}"
                 :disabled="!form.type"
                 @click="submit"

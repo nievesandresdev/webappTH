@@ -10,7 +10,7 @@
         <div class="cursor-pointer relative flex h-full w-full">
             <textarea
                 :id="id" 
-                class="auto-height p-3 rounded-[6px] flex-grow text-sm w-full border-0"
+                class="auto-height p-1.5 sp:p-3 rounded-[6px] flex-grow text-sm w-full border-0"
                 :class="`
                     ${isOverLimit ? 'placeholder-negative htext-alert-negative':''}
                     ${customClasses}
@@ -24,7 +24,7 @@
     </div>
     <p 
         v-if="showWordLimit" 
-        class="text-right text-xs htext-gray-500 mt-2"
+        class="text-right text-[8px] sp:text-xs htext-gray-500 mt-0.5 sp:mt-2"
         :class="{'htext-alert-negative': isOverLimit}"
     >{{ wordCount }}/{{ wordLimit }}</p>
 </template>
@@ -98,5 +98,11 @@ textarea::placeholder {
     font-size: 14px;
     font-weight: 400;
     line-height: 150%; 
+}
+
+@media (max-width:300px){
+    textarea::placeholder {
+        font-size: 8px;
+    }
 }
 </style>
