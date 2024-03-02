@@ -10,7 +10,7 @@
         <div class="cursor-pointer relative flex h-full w-full">
             <textarea
                 :id="id" 
-                class="auto-height p-3 rounded-[6px] flex-grow text-sm w-full border-0 font-medium"
+                class="auto-height p-3 rounded-[6px] flex-grow text-sm w-full border-0"
                 :class="`
                     ${isOverLimit ? 'placeholder-negative htext-alert-negative':''}
                     ${customClasses}

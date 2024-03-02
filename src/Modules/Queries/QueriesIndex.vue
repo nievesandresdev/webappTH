@@ -62,6 +62,9 @@ const router = useRouter();
 onBeforeMount(async ()=>{
     await getQuerySettings();
     await getCurrentPeriod();
+    if(!guestStore?.guestData?.id){
+        await stayStore.loadLocalStay();
+    }
     if(period.value){
         await getCurrentQuery();
     }
@@ -82,17 +85,20 @@ async function getQuerySettings(){
 }
 
 async function getCurrentPeriod(){
+    if(!stayStore?.stayData?.id){
+        await stayStore.loadLocalStay();
+    }
     let params = {
-        stayId : stayStore.stayData.id
+        stayId : stayStore?.stayData?.id
     }
     period.value = await queryStore.$getCurrentPeriod(params);
-    // console.log('period.value',period.value)
+    console.log('period.value',period.value)
 }
 
 async function getCurrentQuery(){
     let params = {
-        stayId : stayStore.stayData.id,
-        guestId : guestStore.guestData.id,
+        stayId : stayStore?.stayData?.id,
+        guestId : guestStore?.guestData?.id,
         period : period.value,
     }
     currentQuery.value = await queryStore.$firstOrCreate(params);
@@ -101,8 +107,8 @@ async function getCurrentQuery(){
 
 async function getResponses(){
     let params = {
-        stayId : stayStore.stayData.id,
-        guestId : guestStore.guestData.id
+        stayId : stayStore?.stayData?.id,
+        guestId : guestStore?.guestData?.id,
     }
     responses.value = await queryStore.$getRecentlySortedResponses(params);
     // console.log('responses.value',responses.value)

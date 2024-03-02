@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center space-x-4">
+  <div class="flex justify-center gap-4">
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('WRONG')">
+      <button class="w-[48px] h-[48px] flex justify-center items-center" @click="selectEmoji('WRONG')">
         <img
           @mouseover="hoverEmoji({face: 'WRONG', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'WRONG', state: 'DEFAULT'})"
@@ -15,7 +15,7 @@
       >{{ $t('home.form-survey.btn-wrong') }}</span>
     </div>
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
+      <button class="w-[48px] h-[48px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
         <img
           @mouseover="hoverEmoji({face: 'NORMAL', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'NORMAL', state: 'DEFAULT'})"
@@ -29,7 +29,7 @@
       >{{ $t('home.form-survey.btn-normal') }}</span>
     </div>
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('GOOD')">
+      <button class="w-[48px] h-[48px] flex justify-center items-center" @click="selectEmoji('GOOD')">
         <img
           @mouseover="hoverEmoji({face: 'GOOD', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'GOOD', state: 'DEFAULT'})"

@@ -5,7 +5,7 @@
   
       <!-- Full-screen container to center the panel -->
       <div 
-        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200]" 
+        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[2500]" 
         :class="openModal ? 'dialog-enter-active' : 'dialog-leave-active'"
     >
         <!-- The actual dialog panel -->

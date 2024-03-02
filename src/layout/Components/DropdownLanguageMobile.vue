@@ -63,8 +63,8 @@
     const modalLocale = ref(false)
     const lgsAll = ref([
         {label: 'Español', value: 'es', srcIcon: '/assets/icons/1.TH.español.svg'},
-        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/1.TH.frances.svg'},
         {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/1.TH.INGLES.svg'},
+        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/1.TH.frances.svg'},
     ])
     const localeStore = useLocaleStore()
 
