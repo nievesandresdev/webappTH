@@ -74,7 +74,13 @@
                 <span v-if="(chatStore.countUnreadMessages || queryStore.hasPendingQuery) && !$utils.isMockup()" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['WindowChatMobile'].includes($route.name) || ['QueriesIndex'].includes($route.name) ? `/assets/icons/1.TH.MailBoxACTIVE.svg` : `/assets/icons/1.TH.MailBox.svg`"
+                    :src="
+                        ['FakeQueriesIndex'].includes($route.name) || 
+                        ['WindowChatMobile'].includes($route.name) || 
+                        ['QueriesIndex'].includes($route.name) ?
+                             `/assets/icons/1.TH.MailBoxACTIVE.svg` : 
+                             `/assets/icons/1.TH.MailBox.svg`
+                    "
                     alt="1.TH.MailBox"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">

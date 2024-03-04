@@ -1,4 +1,5 @@
 <template>
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[5000]" />
     <div class="queries-head hshadow p-3 sp:p-4 relative">
         <img 
             @click="goBack"
