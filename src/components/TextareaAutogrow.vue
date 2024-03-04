@@ -16,7 +16,7 @@
                     ${customClasses}
                 `"
                 :value="modelValue"
-                @input="autoGrow"
+                @input="handleInput"
                 ref="autoHeightTextarea"
                 :placeholder="placeholder"
             ></textarea>
@@ -57,11 +57,21 @@ const props = defineProps({
     },
     customClasses: {
         type: String,
-        default: 'Debes añadir un texto'
+        default: ''
     },
 });
 
 const autoHeightTextarea = ref(null);
+
+const handleInput = (event) => {
+    const inputValue = event.target.value;
+    if (inputValue.length <= props.wordLimit) {
+        autoGrow(event); // Solo llama a autoGrow si el texto está dentro del límite
+    } else {
+        event.target.value = inputValue.substring(0, props.wordLimit); // Trunca el valor a wordLimit
+        emit('update:modelValue', event.target.value);
+    }
+};
 
 const autoGrow = (event) => {
     event.target.style.height = '36px'; 
@@ -83,7 +93,6 @@ watch(() => props.modelValue, async () => {
 });
 
 </script>
-
 <style scoped>
 textarea:focus {
     border: none;
