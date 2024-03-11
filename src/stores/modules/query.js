@@ -6,7 +6,8 @@ import {
     getRecentlySortedResponsesApi,
     firstOrCreateApi,
     saveResponseApi,
-    existingPendingQueryApi
+    existingPendingQueryApi,
+    visitedApi
 } from '@/api/services/query.services'
 
 export const useQueryStore = defineStore('query', () => {
@@ -51,6 +52,15 @@ export const useQueryStore = defineStore('query', () => {
         }
     }
 
+    async function $visited (params) {
+
+        const response = await visitedApi(params)
+        const { ok } = response   
+        if(ok){
+            return response.data
+        }
+    }
+
     async function $existingPendingQuery () {
 
         let params = {
@@ -65,6 +75,10 @@ export const useQueryStore = defineStore('query', () => {
             pendingQuery.value = response.data;
         }
     }
+
+    async function $setPendingQuery(value) {
+        pendingQuery.value = value;
+    }
     //
 
     const hasPendingQuery = computed(() => {
@@ -77,6 +91,9 @@ export const useQueryStore = defineStore('query', () => {
         $firstOrCreate,
         $saveResponse,
         $existingPendingQuery,
+        $visited,
+        $setPendingQuery,
+        //
         hasPendingQuery
     }
 

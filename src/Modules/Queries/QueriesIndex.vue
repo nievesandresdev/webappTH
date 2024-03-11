@@ -60,6 +60,7 @@ const guestStore = useGuestStore();
 const router = useRouter();
 
 onBeforeMount(async ()=>{
+    queryStore.$setPendingQuery(false);
     await getQuerySettings();
     await getCurrentPeriod();
     if(!guestStore?.guestData?.id){
@@ -68,7 +69,6 @@ onBeforeMount(async ()=>{
     if(period.value){
         await getCurrentQuery();
     }
-    await queryStore.$existingPendingQuery()
     await getResponses();
 })
 
@@ -101,7 +101,7 @@ async function getCurrentQuery(){
         guestId : guestStore?.guestData?.id,
         period : period.value,
     }
-    currentQuery.value = await queryStore.$firstOrCreate(params);
+    currentQuery.value = await queryStore.$visited(params);
     // console.log('currentQuery.value',currentQuery.value)
 }
 

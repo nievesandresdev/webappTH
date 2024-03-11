@@ -8,6 +8,7 @@ export const getRecentlySortedResponsesApi = (params) => apiHttp('GET', `${query
 export const firstOrCreateApi = (params) => apiHttp('POST', `${queryPath}/firstOrCreate`, params)
 export const saveResponseApi = (params) => apiHttp('POST', `${queryPath}/saveResponse`, params)
 export const existingPendingQueryApi = (params) => apiHttp('GET', `${queryPath}/existingPendingQuery`, params)
+export const visitedApi = (params) => apiHttp('POST', `${queryPath}/visited`, params)
 
 
 

@@ -22,6 +22,7 @@ export const useGuestStore = defineStore('guest', () => {
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
+        console.log('loadLocalGuest');
         if(guestData.value && !guestId.value) return guestData.value
         if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) guestId.value = localStorage.getItem('guestId');
         
@@ -41,6 +42,7 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function saveOrUpdate (data) {
+        console.log('saveOrUpdate');
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
@@ -54,6 +56,7 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findLastStay (guestId) {
+        console.log('findLastStay');
         if(localStorage.getItem('stayId')) return;
         const response = await findLastStayApi(guestId)
         console.log('findLastStay',response)
