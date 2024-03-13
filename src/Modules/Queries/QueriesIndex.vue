@@ -32,7 +32,7 @@
 
         <template v-for="res in responses" :key="res?.id">
             <ResponseCard 
-                :response="res.comment"
+                :response="res.comment[res.response_lang]"
                 :qualification="res.qualification"
                 :period="res.period"
             /> 

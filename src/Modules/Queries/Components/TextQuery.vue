@@ -64,23 +64,22 @@ async function saveQuery(){
     let params = {
         queryId : props.data.id,
         comment : textarea.value,
+        stayId : props.data.stay_id,
     }
-    console.log('params',params)
     let response = await queryStore.$saveResponse(params);
-    console.log('saveQuery',response)
-    // if(response){
-    //     emit('showFeedback',props.settings.pre_stay_thanks.es);
-    //     setTimeout(() => {
-    //         toast(t('query.textToast.sendQueryText'), {
-    //             toastClassName: "warning-toast",
-    //             bodyClassName: "warning-toast-body",
-    //             position: "top-right",
-    //             icon: false,
-    //             closeButton: false,  
-    //             hideProgressBar: true,
-    //         });
-    //     }, 1000);
-    // }
+    if(response){
+        emit('showFeedback',props.settings.pre_stay_thanks.es);
+        setTimeout(() => {
+            toast(t('query.textToast.sendQueryText'), {
+                toastClassName: "warning-toast",
+                bodyClassName: "warning-toast-body",
+                position: "top-right",
+                icon: false,
+                closeButton: false,  
+                hideProgressBar: true,
+            });
+        }, 1000);
+    }
 }
 
 </script>
