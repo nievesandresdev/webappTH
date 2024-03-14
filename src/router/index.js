@@ -12,8 +12,11 @@ import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { loadSubdomain } from '@/utils/utils.js'
 
+import middlewarePipeline from '@/middlewares'
+
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
+const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
 
 const routes = [
   // { path: '/', redirect: '/webapp' },
@@ -30,6 +33,7 @@ const routes = [
   ...hotelRoutes,
   ...queryRoutes,
   ...policiesRoutes,
+  { path: '/compartir', name: 'ScreenNotAllowed', component: ScreenNotAllowed },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 
@@ -43,16 +47,35 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
-  const hotelStore = useHotelStore()
-  const localeStore = useLocaleStore()
-  localeStore.$load()
-  loadSubdomain()
-  await hotelStore.$load()
-  let hotel = hotelStore.hotelData
+  const hotelStore = useHotelStore();
+  const localeStore = useLocaleStore();
+  localeStore.$load();
+  loadSubdomain();
+  await hotelStore.$load();
+  let hotel = hotelStore.hotelData;
   if (to.meta.verifyHotel && !hotel) {
-    next({ name: 'NotFound' })
+    next({ name: 'NotFound' });
   }
-  next()
-})
+  next();
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  /** Navigate to next if middleware is not applied */
+  if (!to.meta.middleware) {
+      return next();
+  }
+
+  const middleware = to.meta.middleware;
+  const context = {
+    to,
+    from,
+    next,
+    //   store  | You can also pass store as an argument
+  }
+  return middleware[0]({
+      ...context,
+      next:middlewarePipeline(context, middleware,1)
+  });
+});
+
+export default router;

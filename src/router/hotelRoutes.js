@@ -6,7 +6,7 @@ const homeRoutes = [
   {
     path: '/sobre-nosotros',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: { verifyHotel: true,  },
     children: [
       {
         name: 'HotelAbout',
