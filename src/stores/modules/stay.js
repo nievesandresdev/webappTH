@@ -10,9 +10,11 @@ import {
     deleteGuestOfStayApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
+import { useQueryStore } from '@/stores/modules/query';
 
 export const useStayStore = defineStore('stay', () => {
     
+    const queryStore = useQueryStore()
     const router = useRouter();
     // STATE
     const stayData = ref(null)
@@ -21,6 +23,7 @@ export const useStayStore = defineStore('stay', () => {
 
     // ACTIONS
     async function loadLocalStay () {
+        console.log('loadLocalStay');
         if(stayData.value && !stayId.value) return stayData.value
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
@@ -28,12 +31,12 @@ export const useStayStore = defineStore('stay', () => {
             guestId: guestId.value,
         }
         if(stayId.value){
-            console.log('findAndValidAccessApi')
             const response = await findAndValidAccessApi(params)
             const { ok } = response   
             if(ok && response.data){
                 stayData.value = ok ? response.data : null
                 localStorage.setItem('stayId', stayData.value.id)
+                await queryStore.$existingPendingQuery()
                 return response.data
             }else{
                 stayData.value = null;
@@ -60,8 +63,8 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function setStayData (data) {
-        console.log('setStayData')
         stayData.value = data;
+        console.log('setStayData',stayData.value)
         localStorage.setItem('stayId', stayData.value.id)
         await loadLocalStay();
     }

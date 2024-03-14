@@ -10,13 +10,13 @@
         <div class="cursor-pointer relative flex h-full w-full">
             <textarea
                 :id="id" 
-                class="auto-height p-3 rounded-[6px] flex-grow text-sm w-full border-0 font-medium"
+                class="auto-height p-1.5 sp:p-3 rounded-[6px] flex-grow text-sm w-full border-0"
                 :class="`
                     ${isOverLimit ? 'placeholder-negative htext-alert-negative':''}
                     ${customClasses}
                 `"
                 :value="modelValue"
-                @input="autoGrow"
+                @input="handleInput"
                 ref="autoHeightTextarea"
                 :placeholder="placeholder"
             ></textarea>
@@ -24,7 +24,7 @@
     </div>
     <p 
         v-if="showWordLimit" 
-        class="text-right text-xs htext-gray-500 mt-2"
+        class="text-right text-[8px] sp:text-xs htext-gray-500 mt-0.5 sp:mt-2"
         :class="{'htext-alert-negative': isOverLimit}"
     >{{ wordCount }}/{{ wordLimit }}</p>
 </template>
@@ -57,11 +57,21 @@ const props = defineProps({
     },
     customClasses: {
         type: String,
-        default: 'Debes añadir un texto'
+        default: ''
     },
 });
 
 const autoHeightTextarea = ref(null);
+
+const handleInput = (event) => {
+    const inputValue = event.target.value;
+    if (inputValue.length <= props.wordLimit) {
+        autoGrow(event); // Solo llama a autoGrow si el texto está dentro del límite
+    } else {
+        event.target.value = inputValue.substring(0, props.wordLimit); // Trunca el valor a wordLimit
+        emit('update:modelValue', event.target.value);
+    }
+};
 
 const autoGrow = (event) => {
     event.target.style.height = '36px'; 
@@ -83,7 +93,6 @@ watch(() => props.modelValue, async () => {
 });
 
 </script>
-
 <style scoped>
 textarea:focus {
     border: none;
@@ -98,5 +107,11 @@ textarea::placeholder {
     font-size: 14px;
     font-weight: 400;
     line-height: 150%; 
+}
+
+@media (max-width:300px){
+    textarea::placeholder {
+        font-size: 8px;
+    }
 }
 </style>

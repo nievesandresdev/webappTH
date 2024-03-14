@@ -37,7 +37,7 @@ import { Dialog, DialogPanel} from '@headlessui/vue'
         },
         ZIndex:{
             type: String,
-            default: 'z-[1010]'
+            default: 'z-[5000]'
         }
     })
     const emit = defineEmits('closeModal');

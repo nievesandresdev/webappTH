@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-center space-x-4">
+  <div class="flex justify-center gap-2 sp:gap-4">
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('WRONG')">
+      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('WRONG')">
         <img
           @mouseover="hoverEmoji({face: 'WRONG', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'WRONG', state: 'DEFAULT'})"
@@ -9,13 +9,13 @@
           alt="1.TH.EMOJI.WRONG"
         />
       </button>
-      <span
-        class="text-[10px] font-semibold mt-2"
+      <p
+        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'WRONG' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-wrong') }}</span>
+      >{{ $t('home.form-survey.btn-wrong') }}</p>
     </div>
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
+      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
         <img
           @mouseover="hoverEmoji({face: 'NORMAL', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'NORMAL', state: 'DEFAULT'})"
@@ -23,13 +23,13 @@
           alt="1.TH.EMOJI.NORMAL"
         />
       </button>
-      <span
-        class="text-[10px] font-semibold mt-2"
+      <p
+        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'NORMAL' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-normal') }}</span>
+      >{{ $t('home.form-survey.btn-normal') }}</p>
     </div>
     <div class="text-center">
-      <button class="w-[56px] h-[56px] flex justify-center items-center" @click="selectEmoji('GOOD')">
+      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('GOOD')">
         <img
           @mouseover="hoverEmoji({face: 'GOOD', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'GOOD', state: 'DEFAULT'})"
@@ -37,10 +37,10 @@
           alt="1.TH.EMOJI.GOOD"
         />
       </button>
-      <span
-        class="text-[10px] font-semibold mt-2"
+      <p
+        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'GOOD' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-good') }}</span>
+      >{{ $t('home.form-survey.btn-good') }}</p>
     </div>
   </div>
 </template>

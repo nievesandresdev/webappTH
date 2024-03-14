@@ -11,7 +11,7 @@ export const useChatStore = defineStore('chat', () => {
     
     // STATE
     const messages = ref([]);
-    const unreadMsgsRef = ref([]);
+    const unreadMsgsRef = ref(0);
     // ACTIONS
     async function sendMsgToHoster (params) {
         const response = await sendMsgToHosterApi(params)
@@ -44,7 +44,7 @@ export const useChatStore = defineStore('chat', () => {
         const response = await markMsgsAsReadApi(params)
         const { ok } = response;
         if(ok){
-            unreadMsgsRef.value = false;
+            unreadMsgsRef.value = 0;
             return response.data;
         }
         return null;
@@ -58,16 +58,14 @@ export const useChatStore = defineStore('chat', () => {
         const response = await unreadMsgsApi(params)
         const { ok } = response;
         if(ok){
-            unreadMsgsRef.value = true;
-        }else{
-            unreadMsgsRef.value = false;
+            unreadMsgsRef.value = response.data;
         }
     }
 
     //getters
 
-    const hasUnreadMessages = computed(() => {
-        return unreadMsgsRef.value == true ? true : false;
+    const countUnreadMessages = computed(() => {
+        return unreadMsgsRef.value;
     });
     //
 
@@ -79,7 +77,7 @@ export const useChatStore = defineStore('chat', () => {
         markMsgsAsRead,
         unreadMsgs,
         unreadMsgsRef,
-        hasUnreadMessages
+        countUnreadMessages
     }
 
 })
