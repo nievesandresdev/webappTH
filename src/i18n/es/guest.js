@@ -1,6 +1,6 @@
 export default{
     "guestLog":{
-        "title":"Acceso a la webappXXX",
+        "title":"Acceso a la webapp",
         "name":{
             "label":"Nombre y apellidos",
             "placeholder": "Introduce tu nombre y apellidos",

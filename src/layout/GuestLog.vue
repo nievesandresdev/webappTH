@@ -12,7 +12,7 @@
         <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
                 <h1 class="text-lg font-medium text-center leading-6 pt-4">
-                    {{ $utils.capitalize($t('guest.guestLog.title')) }}
+                    {{ $utils.capitalize($t('guest.guestLog.title')) }} Esto es una prueba 
                 </h1>
                 <div class="absolute top-3 right-4">
                     <MiniLangDropdown v-model="form.language" />
