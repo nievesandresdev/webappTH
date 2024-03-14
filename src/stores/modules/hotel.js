@@ -20,12 +20,12 @@ export const useHotelStore = defineStore('hotel', () => {
         let params = {
             subdomain: localStorage.getItem('subdomain'),
         }
-        console.log('findByParamsApi',localStorage.getItem('subdomain'))
+        // console.log('findByParamsApi',localStorage.getItem('subdomain'))
         const response = await findByParamsApi(params)
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
-        console.log('hotelData',hotelData.value)
+        // console.log('hotelData',hotelData.value)
         return response.data
     }
 

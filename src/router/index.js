@@ -47,6 +47,7 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
+  console.log('entro a beforeEach')
   const hotelStore = useHotelStore();
   const localeStore = useLocaleStore();
   localeStore.$load();
