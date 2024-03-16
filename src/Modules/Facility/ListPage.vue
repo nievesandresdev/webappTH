@@ -27,8 +27,10 @@
                     class="w-full h-full object-cover rounded-[10px]"
                 >
                 <div class="overlay rounded-[10px] absolute h-full z-10 w-full top-0 left-0 card-facility" >
-                    <span class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white font-medium text-xs sp:text-[22px] z-30 h-6" >
-                        {{ $utils.capitalize(item.title) }}
+                    <span 
+                        class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white font-medium text-xs sp:text-[22px] z-30 h-6" 
+                        v-html="$utils.capitalize(item.title)"
+                    >
                     </span>
                 </div>
             </router-link>

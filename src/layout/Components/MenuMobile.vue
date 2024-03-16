@@ -23,7 +23,7 @@
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['FacilityList','FacilityDetail'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
+                    :src="['FacilityList','FacilityDetail','FacilityDetailFake'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
                     alt="TH.FACILITY"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">

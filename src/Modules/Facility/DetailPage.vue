@@ -79,12 +79,12 @@
         </div>
         <div class="px-4">
             <div class="mb-2.5 sp:mb-6">
-                <h2 class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4">
-                    {{ facility?.title }}
-                </h2>
+                <h2 
+                    class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4"
+                    v-html="facility?.title"
+                ></h2>
                 <div class="justify">
-                    <p class="text-[10px] sp:text-sm">
-                        {{ facility?.description }}
+                    <p class="text-[10px] sp:text-sm" v-html="facility?.description">
                     </p>
                 </div>
             </div>
