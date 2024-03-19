@@ -10,8 +10,10 @@
                                 :src="facilityStore.$loadImage(item?.image?.url)"
                                 class="object-cover rounded-lg"
                             >
-                            <h1 class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-base font-medium z-30 h-6">
-                                {{item.title[0].toUpperCase() + item.title.substring(1)}}
+                            <h1 
+                                class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-base font-medium z-30 h-6"
+                                v-html="item.title[0].toUpperCase() + item.title.substring(1)"
+                            >
                             </h1>
                         </div>
                     </div>
@@ -34,8 +36,10 @@
                 class="object-cover rounded-lg w-full h-full"
             >
             <div class="overlay rounded-lg absolute h-full z-10 w-full top-0 left-0" style="background: rgba(0, 0, 0, 0.3);"></div>
-            <h2 class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-[10px] sp:text-base font-medium z-30 h-4 sp:h-6">
-                {{item.title[0].toUpperCase() + item.title.substring(1)}}
+            <h2 
+                class="absolute top-0 bottom-0 left-0 right-0 m-auto text-center text-white text-[10px] sp:text-base font-medium z-30 h-4 sp:h-6"
+                v-html="item.title[0].toUpperCase() + item.title.substring(1)"
+            >
             </h2>   
         </div>
     </div>

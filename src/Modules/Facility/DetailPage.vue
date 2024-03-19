@@ -9,8 +9,7 @@
                 {{ $t('facility.facilitiesWord') }}
             </router-link>
             <img src="/assets/icons/stroke.svg" class="inline mx-1">
-            <span class="text-sm font-medium htext-gray-500">
-                {{ $utils.capitalize(facility?.title) }}
+            <span class="text-sm font-medium htext-gray-500" v-html="$utils.capitalize(facility?.title)">
             </span>
         </div>
         <section>
