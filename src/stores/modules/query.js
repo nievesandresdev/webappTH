@@ -67,7 +67,7 @@ export const useQueryStore = defineStore('query', () => {
             stayId :localStorage.getItem('stayId'),
             guestId :localStorage.getItem('guestId'),
         };
-        console.log('existingPendingQuery',params)
+        // console.log('existingPendingQuery',params)
         const response = await existingPendingQueryApi(params)
         console.log('existingPendingQuery',response.data)
         const { ok } = response   
@@ -82,7 +82,7 @@ export const useQueryStore = defineStore('query', () => {
     //
 
     const hasPendingQuery = computed(() => {
-        console.log('hasPendingQuery',pendingQuery.value)
+        // console.log('hasPendingQuery',pendingQuery.value)
         return pendingQuery.value;
     });
     return {

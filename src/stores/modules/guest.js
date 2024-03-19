@@ -22,7 +22,7 @@ export const useGuestStore = defineStore('guest', () => {
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
-        console.log('loadLocalGuest');
+        // console.log('loadLocalGuest');
         if(guestData.value && !guestId.value) return guestData.value
         if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) guestId.value = localStorage.getItem('guestId');
         

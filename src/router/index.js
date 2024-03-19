@@ -47,13 +47,13 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
-  console.log('entro a beforeEach')
   const hotelStore = useHotelStore();
-  const localeStore = useLocaleStore();
-  localeStore.$load();
-  loadSubdomain();
   await hotelStore.$load();
   let hotel = hotelStore.hotelData;
+  const localeStore = useLocaleStore();
+  localeStore.$load(hotel?.language_default_webapp);
+  loadSubdomain();
+
   if (to.meta.verifyHotel && !hotel) {
     next({ name: 'NotFound' });
   }
