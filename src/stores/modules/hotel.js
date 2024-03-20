@@ -6,13 +6,25 @@ import {
     getCrossellingsApi,
 } from '@/api/services/hotel.services'
 
+// import { useMainStore } from '@/stores'
+// const mainStore = useMainStore()
+
 export const useHotelStore = defineStore('hotel', () => {
     
     // STATE
     const hotelData = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
-
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
     // ACTIONS
+
+    function $loadImage (url) {
+        if (!url) return;
+        let type = url.includes('https://') ? 'CDN' : 'STORAGE';
+        console.log(process.env.VUE_APP_STORAGE_URL, 'process.env.VUE_APP_STORAGE_URL')
+        url = type != 'CDN' ? `${URL_STORAGE}${url}` : url;
+        console.log(url, 'url')
+        return url;
+    }
 
     async function $load () {
         if (hotelData.value) return
@@ -46,6 +58,7 @@ export const useHotelStore = defineStore('hotel', () => {
         subdomain,
         $load,
         $getCrossellings,
+        $loadImage,
     }
 
 })
