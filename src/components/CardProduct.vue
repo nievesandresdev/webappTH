@@ -17,7 +17,7 @@
         <div class="pt-1.5 sp:pt-4 mb-2 flex justify-between items-center h-6 sp:h-12">
             <div class="mr-1 overflow-x-auto flex flex-1 h-4 sp:h-6">
                 <div>
-                    <div v-if="data.recommended || data.place_featured" class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC] mr-2">
+                    <div v-if="data.recommended || data.place_featured" class="tag py-0.5 sp:py-1 px-2 h-3 sp:h-6 rounded-full bg-[#FFEBCC] mr-2">
                         <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
                             <template v-if="data.recommended">
                                 {{ $utils.capitalize($t('home.card-product.recommended')) }}
@@ -30,7 +30,7 @@
                 </div>
                 <div
                     v-if="place && data.category && $t(`category.${$utils.slufy(data.category)}`)"
-                    class="whitespace-nowrap px-1 sp:px-2 h-full rounded-full bg-blue-100 font-medium text-gray-400 leading-6  text-[6px] sp:text-[10px]"
+                    class="whitespace-nowrap px-1 sp:px-2 h-3 sp:h-full rounded-full bg-blue-100 font-medium text-gray-400 leading-3 sp:leading-6  text-[6px] sp:text-[10px]"
                 >
                     {{ $utils.capitalize($t(`category.${$utils.slufy(data.category)}`)) }}
                 </div>
@@ -57,12 +57,12 @@
         <h6  v-if="data?.price_discount > 0" class="font-medium line-through mb-2 text-[10px] sp:text-[10px]">Desde {{ data.price }}€</h6>
         <h5 v-if="!place" class="text-[12px] sp:text-base font-medium mb-4" :class="{'text-orangec': data?.price_discount > 0}">Desde {{ data?.price_discount > 0 ? data?.price_discount : data.price }}€</h5>
         <div class="flex items-center mt-2" v-if="distance">
-            <img class="w-4 h-4 mr-1" src="/assets/icons/1.TH.Location.svg" alt="Location">
-            <p class="text-xs font-medium">{{ data.cityName }}</p>
+            <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.Location.svg" alt="Location">
+            <p class="text-[8px] sp:text-xs font-medium">{{ data.cityName }}</p>
         </div>
         <div class="flex items-center mt-2" v-if="distance">
-            <img class="w-4 h-4 mr-1" src="/assets/icons/1.TH.footstep.svg" alt="distance">
-            <p class="text-xs font-medium"> a {{ distance }} km</p>
+            <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.footstep.svg" alt="distance">
+            <p class="text-[8px] sp:text-xs font-medium"> a {{ distance }} km</p>
         </div>
     </button>
 </template>
