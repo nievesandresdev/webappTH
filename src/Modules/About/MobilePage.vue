@@ -128,7 +128,7 @@
                             :key="index"
                             class="w-full h-[120px] sp:h-[240px] flex-shrink-0"
                         >
-                            <img :src="printImg(image)" :alt="image.name" class="w-full h-full object-cover">
+                            <img :src="hotelStore.$loadImage(image)" :alt="image.name" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
