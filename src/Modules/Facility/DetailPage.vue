@@ -66,7 +66,7 @@
                 <Slide v-for="(item, index) in facility?.images" :key="index">
                     <div class="relative h-[190px] sp:h-[295px] w-full">
                         <img 
-                            :src="getImg(item)" alt="img"
+                            :src="facilityStore.$loadImag(item)" alt="img"
                             class=" w-full h-full"
                         >
                     </div>
