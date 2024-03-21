@@ -16,9 +16,9 @@
                     </button>
                     {{ $t('place.detail.exploreIn') }}
                     <span class="py-2 cursor-pointer p-0">
-                        {{ $utils.capitalize(formFilter.city) }}
+                        {{ $utils.capitalize(hotelData.zone) }}
                     </span>
-                    <div  
+                    <!-- <div  
                         v-if="!dropdownSerchCity && !mobileList" 
                         @click="dropdownSerchCity = !dropdownSerchCity"
                         style="background-color:#f3f3f3;"
@@ -37,7 +37,7 @@
                             @closeModal="dropdownSerchCity = false"
                             @submitSearchCity="submitSearchCity"
                         />
-                    </div>
+                    </div> -->
                 </h2>
                 <!-- fin title movil -->
 
@@ -54,8 +54,18 @@
 
                 <template v-if="mobileList">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[8px] sp:gap-4 xl:gap-6 pt-[8px] sp:pt-4 px-3.5 md:px-0 mb-[10px] mb-20 lg:mb-0">
-                        <div v-for="item in placesData" :key="item.id">
-                            <CardProduct place heightImg="card-img" :data="item"/>
+                        <div v-for="(item, index) in placesData" :key="item.id">
+                            <p 
+                                v-if="placesData[index-1]?.cityName == hotelData.zone && hotelData.zone !== item.cityName"
+                                class="py-4 text-base font-medium hborder-top-gray-400"
+                            >
+                                {{countOtherCities}} lugares cerca de {{ hotelData.zone }}
+                            </p>   
+                            <CardProduct 
+                                place heightImg="card-img" 
+                                :data="item"
+                                :distance="item.cityName !== hotelData.zone ? nearCitiesData[item.city] : null"
+                            />
                         </div>
                     </div>
 
@@ -111,6 +121,9 @@
     import { usePlaceStore } from '@/stores/modules/place'
     const placeStore = usePlaceStore()
 
+    import { useCityStore } from '@/stores/modules/city'
+    const cityStore = useCityStore()
+
     // DATA STATIC
     const innerWidth = window.innerWidth
 
@@ -121,7 +134,9 @@
     const typeplaces = ref([])
     const placesData = ref([])
     const ratingFilter = ref(null);
+    const countOtherCities = ref(0);
     const countPoints = ref([])
+    const nearCitiesData = ref([])
     const formFilter = reactive({
         categoriplace: null,
         typeplace: null,
@@ -157,10 +172,18 @@
     // FUNCTION
     async function loadPlaces () {
         const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
+        console.log('loadPlaces', response)
         if (response.ok) {
-            Object.assign(paginateData, response.data.paginate)
+            Object.assign(paginateData, response.data.places.paginate)
             page.value = paginateData.current_page
-            placesData.value = [...placesData.value, ...response.data.data]
+            placesData.value = [...placesData.value, ...response.data.places.data]
+            countOtherCities.value = response.data.countOtherCities;
+            console.log('countOtherCities',countOtherCities.value)
+        }
+        const cities = await cityStore.$getNearCitiesData()
+        if(cities.ok){
+            nearCitiesData.value = cities.data;
+            console.log('nearCitiesData.value',nearCitiesData.value)
         }
     }
 

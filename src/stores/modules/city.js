@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 import {
     getAllApi,
+    getNearCitiesDataApi
 } from '@/api/services/city.services'
 
 export const useCityStore = defineStore('city', () => {
@@ -15,9 +16,16 @@ export const useCityStore = defineStore('city', () => {
         return response
     }
 
+    async function $getNearCitiesData (params) {
+        const response = await getNearCitiesDataApi(params)
+        console.log(response, 'response')
+        return response
+    }
+
     //
     return {
         $apiGetAll,
+        $getNearCitiesData
     }
 
 })

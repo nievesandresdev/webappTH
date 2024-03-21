@@ -53,9 +53,17 @@
                 </div>
             </div>
         </div>
-        <h5 class="truncate-2 text-[10px] sp:text-sm font-medium h-6 sp:h-10">{{ data.title }}</h5>
+        <h5 class="truncate-2 text-[10px] sp:text-sm font-medium h-6 sp:h-10" v-html="data.title"></h5>
         <h6  v-if="data?.price_discount > 0" class="font-medium line-through mb-2 text-[10px] sp:text-[10px]">Desde {{ data.price }}€</h6>
         <h5 v-if="!place" class="text-[12px] sp:text-base font-medium mb-4" :class="{'text-orangec': data?.price_discount > 0}">Desde {{ data?.price_discount > 0 ? data?.price_discount : data.price }}€</h5>
+        <div class="flex items-center mt-2" v-if="distance">
+            <img class="w-4 h-4 mr-1" src="/assets/icons/1.TH.Location.svg" alt="Location">
+            <p class="text-xs font-medium">{{ data.cityName }}</p>
+        </div>
+        <div class="flex items-center mt-2" v-if="distance">
+            <img class="w-4 h-4 mr-1" src="/assets/icons/1.TH.footstep.svg" alt="distance">
+            <p class="text-xs font-medium"> a {{ distance }} km</p>
+        </div>
     </button>
 </template>
 
@@ -76,7 +84,11 @@
         heightImg: {
             type: String,
             default: '',
-        }
+        },
+        distance: {
+            type: String,
+            default: null,
+        },
     })
 
         // STORE
