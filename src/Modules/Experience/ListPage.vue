@@ -15,27 +15,7 @@
         <!-- title,language,filters IN MOBILE-->
         <div class="mt-0 sp:mt-3.5 md:hidden flex justify-between">
             <h2 class="text-xs sp:text-lg font-medium my-auto relative w-full">
-                {{ $t('experience.list-page.title') }}
-                <template v-if="innerWidth <= 700">
-                    <THSearchCity
-                        right
-                        :open="dropdownSerchCity"
-                        @update:open="dropdownSerchCity = $event"
-                        :data="formFilter"
-                        :endpoint="'activities.list'"
-                        @submitSearchCity="submitSearchCity($event)"
-                    >
-                        <template v-slot:button>
-                            <span class="py-2 cursor-pointer p-0 inline-block" id="listCity" @click="dropdownSerchCity = !dropdownSerchCity">
-                                {{ formFilter.city || hotelData.zone }}
-                                <img
-                                    :src="`/assets/icons/${!dropdownSerchCity ? '1.TH.I.DROPDOWN.svg' : '1.TH.I.DROPDOWN.OPEN.svg'}`" alt="icon_close"
-                                    class="w-4 h-4 ml-1 inline-block"
-                                >
-                            </span>
-                        </template>
-                    </THSearchCity>
-                </template>
+                {{ $t('experience.list-page.title') }} {{ hotelData.zone }}
             </h2>
         </div>
         <!--END title,language,filters IN MOBILE-->
@@ -266,9 +246,19 @@
 
                 <!--CARDS -->
                 <div v-if="experiencesData.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 lg:gap-6" style="max-width:954px;">
-                    <template v-for="item in experiencesData" :key="item.id">
+                    <template v-for="(item, index) in experiencesData" :key="item.id">
+                            <p 
+                                v-if="experiencesData[index-1]?.city_experince == hotelData.zone && hotelData.zone !== item.city_experince"
+                                class="pt-4 text-[10px] sp:text-base font-medium hborder-top-gray-400"
+                            >
+                            {{countOtherCities}} experiencias cerca de {{ hotelData.zone }}
+                            </p> 
                             <div style="card-exp">
-                                <CardExperience :data="item" :truncateTitle="false"/>
+                                <CardExperience 
+                                    :data="item" 
+                                    :truncateTitle="false"
+                                    :distance="item.city_experince !== hotelData.zone ? nearCitiesData[item.slug_city] : null"
+                                />
                             </div>
                     </template>
                 </div>
@@ -342,6 +332,9 @@
     import { useExperienceStore } from '@/stores/modules/experience'
     const experienceStore = useExperienceStore()
     
+    import { useCityStore } from '@/stores/modules/city'
+    const cityStore = useCityStore()
+
 
     // DATA STATIC
     const durationList = [
@@ -355,6 +348,7 @@
     // DATA
     const modalFilter = ref(false)
     const dropdownSerchCity = ref(false)
+    const nearCitiesData = ref([])
     const formFilterCity = reactive({
         city: ''
     })
@@ -377,6 +371,7 @@
     })
     const page = ref(1)
     const experiencesCount = ref(0)
+    const countOtherCities = ref(0)
     const containerFilter = ref(null)
     const numbersByFilterDuration = ref(null)
 
@@ -427,9 +422,16 @@
 
         const response = await experienceStore.$apiGetAll({page: page.value,...formFilter})
         if (response.ok) {
-            Object.assign(paginateData, response.data.paginate)
+            Object.assign(paginateData, response.data.experiences.paginate)
             page.value = paginateData.current_page
-            experiencesData.value = [...experiencesData.value, ...response.data.data]
+            experiencesData.value = [...experiencesData.value, ...response.data.experiences.data]
+            countOtherCities.value = response.data.countOtherCities;
+        }
+
+        const cities = await cityStore.$getNearCitiesData()
+        if(cities.ok){
+            nearCitiesData.value = cities.data;
+            console.log('nearCitiesData.value',nearCitiesData.value)
         }
     }
     function submitSearchCity (city) {
