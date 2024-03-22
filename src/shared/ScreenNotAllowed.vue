@@ -100,7 +100,7 @@
         </div>
     </section> -->
     <section class="w-full min-h-screen">
-        <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] 1xl:mb-auto">
+        <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] ">
             <h1 class="font-semibold text-[40px] w-[661px] text-center">Hotel tayko Sevilla</h1>
             <div class="flex justify-between">
                 <div class="w-[661px] space-y-[40px]">
