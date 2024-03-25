@@ -1,0 +1,78 @@
+<template>
+    <button
+        class="py-2 px-3 text-sm font-medium relative w-full hbtn-primary text-center"
+        @click="goOta()"
+    >
+         <div class="absolute top-1.5 left-3">
+            <img
+                class="w-6 h-6"
+                :src="`/assets/icons/${nameIcons[ota]}`"
+                alt="icon OTA link"
+            />
+        </div>
+        {{textButton}}
+    </button>
+</template>
+<script setup>
+    import { ref, onMounted } from 'vue'
+    import { useHotelStore } from '@/stores/modules/hotel'
+    const hotelStore = useHotelStore()
+    const { hotelData } = hotelStore
+    
+    import { useHotelOtaStore } from '@/stores/modules/hotelOta'
+    const hotelOtaStore = useHotelOtaStore()
+
+    const { ota } = defineProps({
+        ota:{
+            type: String,
+            default : null
+        },
+        textButton:{
+            type: String,
+            default : 'Texto del boton'
+        }
+    })
+    
+    const urlReview = ref(null);
+    const hotelOtasData = ref(null);
+    const nameIcons = {
+        google : '1.TH.GOOGLE.svg',
+        tripadvisor : '1.TH.TRIPADVISOR.svg',
+    };
+
+    onMounted(async ()=>{
+        let response = await hotelOtaStore.$getAll();
+        hotelOtasData.value = response;
+        loadOtaUrl();
+    })
+
+    function loadOtaUrl () {
+        let searchOta = hotelOtasData.value.find(item => item.enum_ota == ota)
+        if(ota == "google" && searchOta){
+            let placeid = hotelData.google_maps_place_id
+            urlReview.value = placeid ? `https://search.google.com/local/writereview?placeid=${placeid}` : ''
+        }
+        if(ota == "tripadvisor" && searchOta){
+            urlReview.value = searchOta?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchOta?.url)}` : ''
+        }
+
+    }
+
+    function goOta () {
+        if(urlReview.value){
+            window.open(urlReview.value, '_blank')
+        }
+    }
+
+    // AUX
+    function matchUrl (url) {
+        const regex = /Hotel_Review-(.*?)-Reviews/
+        const matches = url.match(regex)
+        if (matches && matches[1]) {
+        const result = matches[1]
+        return result
+        } else {
+            return ''
+        }
+    }
+</script>

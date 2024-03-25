@@ -31,8 +31,10 @@
         />
 
         <template v-for="res in responses" :key="res?.id">
+            <LinksReview v-if="res.period == 'post-stay' && res.qualification == 'GOOD'"
+            />
             <ResponseCard 
-                :response="res.comment[res.response_lang]"
+                :response="res.comment ? res.comment[res.response_lang] : null"
                 :qualification="res.qualification"
                 :period="res.period"
             /> 
@@ -46,6 +48,7 @@ import TextQuery from './Components/TextQuery.vue';
 import IconsQuery from './Components/IconsQuery.vue'
 import ResponseCard from './Components/ResponseCard.vue';
 import FlashFeedback from './Components/FlashFeedback.vue'
+import LinksReview from './Components/LinksReview.vue'
 //stores
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 import { useQueryStore } from '@/stores/modules/query';
@@ -81,7 +84,6 @@ const feedbackText = ref(null);
 
 async function getQuerySettings(){
     settings.value = await querySettingsStore.$getAll();
-    // console.log('settings',settings.value)
 }
 
 async function getCurrentPeriod(){
@@ -92,7 +94,6 @@ async function getCurrentPeriod(){
         stayId : stayStore?.stayData?.id
     }
     period.value = await queryStore.$getCurrentPeriod(params);
-    console.log('period.value',period.value)
 }
 
 async function getCurrentQuery(){
@@ -102,7 +103,6 @@ async function getCurrentQuery(){
         period : period.value,
     }
     currentQuery.value = await queryStore.$visited(params);
-    // console.log('currentQuery.value',currentQuery.value)
 }
 
 async function getResponses(){
@@ -111,7 +111,6 @@ async function getResponses(){
         guestId : guestStore?.guestData?.id,
     }
     responses.value = await queryStore.$getRecentlySortedResponses(params);
-    // console.log('responses.value',responses.value)
 }
 
 function showFeedback(text){

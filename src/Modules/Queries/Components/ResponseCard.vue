@@ -29,7 +29,6 @@ const { qualification } = defineProps({
 })
 
 const qualificationTranslate = () => {
-    console.log('qualificationTranslate',qualification)
     if(!qualification) return 
 
     let string;

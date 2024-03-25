@@ -79,17 +79,16 @@ async function submit(){
     let params = {
         queryId : props.data.id,
         comment : textarea.value,
-        qualification : form.type
+        qualification : form.type,
+        stayId : props.data.stay_id,
     }
-    console.log('params',params)
     let response = await queryStore.$saveResponse(params);
-    console.log('submit',response)
     if(response){
         emit('loadReponses')
         //se envia solo para post-stay igual a GOOD
-        if(form.type == 'GOOD' && props.data?.period == 'post-stay'){
-            emit('showFeedback',props.settings.post_stay_thanks_good.es);
-        }
+        // if(form.type == 'GOOD' && props.data?.period == 'post-stay'){
+        //     emit('showFeedback',props.settings.post_stay_thanks_good.es);
+        // }
         setTimeout(() => {
             toast(t('query.textToast.sendQueryText'), {
                 toastClassName: "warning-toast",
