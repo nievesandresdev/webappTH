@@ -101,11 +101,11 @@
     </section> -->
     <section class="w-full min-h-screen">
         <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] ">
-            <h1 class="font-semibold text-[40px] w-[661px] text-center">Hotel tayko Sevilla</h1>
+            <h1 class="font-semibold text-[40px] w-[661px] text-center">{{ hotelData.name }}</h1>
             <div class="flex justify-between">
                 <div class="w-[661px] space-y-[40px]">
                     <div class="title">
-                        <h2 class="text-[32px] font-medium text-center">
+                        <h2 class="text-[32px] font-semibold text-center">
                             Descubre, Explora, Disfruta, Conecta. <br>
                             Todo a tu alcance.
                         </h2>
@@ -157,7 +157,7 @@
                                     alt="explora-default"
                                 >
                             </div>
-                            <p class="text-[17px] font-bold text-center">Descubre</p>
+                            <p class="text-[17px] font-semibold text-center">Descubre</p>
                         </div>
                         <div class="flex flex-col justify-center">
                             <div class="inline-block p-[12px]">
@@ -167,7 +167,7 @@
                                     alt="explora-default"
                                 >
                             </div>
-                            <p class="text-[17px] font-bold text-center">Explora</p>
+                            <p class="text-[17px] font-semibold text-center">Explora</p>
                         </div>
                         <div class="flex flex-col justify-center">
                             <div class="inline-block p-[12px]">
@@ -177,7 +177,7 @@
                                     alt="explora-default"
                                 >
                             </div>
-                            <p class="text-[17px] font-bold text-center">Disfruta</p>
+                            <p class="text-[17px] font-semibold text-center">Disfruta</p>
                         </div>
                         <div class="flex flex-col justify-center">
                             <div class="inline-block p-[12px]">
@@ -187,7 +187,7 @@
                                     alt="explora-default"
                                 >
                             </div>
-                            <p class="text-[17px] font-bold text-center">Conecta</p>
+                            <p class="text-[17px] font-semibold text-center">Conecta</p>
                         </div>
                     </div>
                 </div> 
