@@ -16,12 +16,13 @@ export const useLocaleStore = defineStore('locale', () => {
         localeCurrent.value = lg
     }
 
-    function $load () {
+    function $load (languageParam = null) {
         // console.log('i18n.global.locale')
         const urlParams = new URLSearchParams(window.location.search)
         let locale = localStorage.getItem('locale') ?? urlParams.get('lang');
-        locale = availableLocation.value.includes(locale) ? locale : 'es'
-        $change(locale)
+        locale = languageParam || locale;
+        locale = availableLocation.value.includes(locale) ? locale : 'es';
+        $change(locale);
     }
 
     function $changeAndReload (lg) {

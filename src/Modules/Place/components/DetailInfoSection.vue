@@ -56,8 +56,7 @@
         
         <!-- SECOND ROW -->
         <div>
-            <h1 class="text-xs sp:text-lg lg:text-[22px] font-medium mt-[8px] sp:mt-4 lg:mt-6">
-                {{ placeData?.title }}
+            <h1 class="text-xs sp:text-lg lg:text-[22px] font-medium mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.title">
             </h1>
             <div v-if="placeData?.type_place?.name == 'Dónde comer'">
                 <p v-if="placeData?.range_prices || placeData?.type_cuisine" class="text-[8px] sp:text-sm mt-2.5 sp:mt-4 ">
@@ -140,8 +139,7 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4">
-                    {{placeData?.recomendations?.message}}
+                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendations?.message"
                 </p>
             </div>
         </div>

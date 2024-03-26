@@ -3,7 +3,7 @@
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
                 <template v-if="hotelData?.logo">
-                    <img :src="storageUrl+hotelData?.logo" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
+                    <img :src="hotelStore.$loadImage(hotelData?.logo)" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
                 </template>
                 <template v-else>
                     <div class="w-full h-full flex items-center justify-start">   

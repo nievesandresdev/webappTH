@@ -4,6 +4,10 @@
     <div ref="myDiv" class="hbg-gray-200 flex flex-col relative">
         <!-- header -->
         <div class="py-4 text-center shadow-hoster hbg-white-100 sticky top-0 left-0">
+            <img 
+                @click="goBack"
+                class="absolute top-8 left-4" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
+            >
             <img @click="closeChat" class="absolute top-4 left-4 w-6 h-6 hidden lg:block cursor-pointer" src="/assets/icons/back-arrow-on-circle.svg">
             <h1 class="xs:text-xs text-base font-medium">{{settings.name}}</h1>
             <div class="text-center xs:mt-0 mt-1.5">
@@ -73,6 +77,8 @@
     import ScheduleModal from './ScheduleModal.vue';
     
     import Moment from 'moment'
+    import { useRouter } from 'vue-router';
+
     import { useStayStore } from '@/stores/modules/stay'
     import { useChatStore } from '@/stores/modules/chat'
     import { useHotelStore } from '@/stores/modules/hotel';
@@ -85,6 +91,7 @@
     //imports components
     const emit = defineEmits(['closechat'])
     const langPage = 'es';
+    const router = useRouter();
     //PROPS
     const props = defineProps({
         settings: {
@@ -151,7 +158,9 @@
         scheduleModal.value.open();
     }
     
-
+    const goBack = () => {
+        router.go(-1);
+    }
     const hideMenu = () => {
     showMenuMobile.value = false;
     setDivHeight()

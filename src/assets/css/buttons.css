@@ -11,7 +11,7 @@
     font-weight: 500;
     align-items: center;
 }
-.hbtn-primary > img{
+.hbtn-primary > .primary-icon{
     filter:invert(11%) sepia(11%) saturate(40%) hue-rotate(335deg) brightness(55%) contrast(118%)
 }
 .hbtn-primary span{
@@ -27,8 +27,8 @@
     font-weight: 500;
     text-decoration: none;
 }
-.primary-active img,
-.hbtn-primary:hover img{
+.primary-active .primary-icon,
+.hbtn-primary:hover .primary-icon{
     filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
 }
 .primary-active > span,

@@ -1,7 +1,7 @@
 <template>
     <header
-        class="fixed bottom-0 left-0 w-full z-20 shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
-        :class="showChat && !hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
+        class="fixed bottom-0 left-0 w-full z-[2000] shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
+        :class="!hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
     >
         <ul class="flex justify-between">
             <router-link
@@ -23,7 +23,7 @@
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['FacilityList','FacilityDetail'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
+                    :src="['FacilityList','FacilityDetail','FacilityDetailFake'].includes($route.name) ? `/assets/icons/instalations-hover.svg` : `/assets/icons/instalations-default.svg`"
                     alt="TH.FACILITY"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
@@ -68,18 +68,23 @@
                 </span>
             </router-link>
             <li
-                v-if="showChat && ($utils.isMockup() || (!$utils.isMockup() && chatStore))"
                 class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
-                @click="markReadMsgs"
+                @click="openInboxModal"
             >
-                <span v-if="chatStore.hasUnreadMessages" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
+                <span v-if="(chatStore.countUnreadMessages || queryStore.hasPendingQuery) && !$utils.isMockup()" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
-                    :src="['WindowChatMobile'].includes($route.name) ? `/assets/icons/1.TH.ChatBubble.svg` : `/assets/icons/Chatbubblelineoutline.svg`"
-                    alt="TH.CHAT"
+                    :src="
+                        ['FakeQueriesIndex'].includes($route.name) || 
+                        ['WindowChatMobile'].includes($route.name) || 
+                        ['QueriesIndex'].includes($route.name) ?
+                             `/assets/icons/1.TH.MailBoxACTIVE.svg` : 
+                             `/assets/icons/1.TH.MailBox.svg`
+                    "
+                    alt="1.TH.MailBox"
                 >
                 <span class="text-[6px] sp:text-[10px] block mt-[2px] sp:mt-1">
-                    Chat
+                    Inbox
                 </span>
             </li>
         </ul>
@@ -92,6 +97,8 @@
     import { useRouter } from 'vue-router';
     import { useChatStore } from '@/stores/modules/chat';
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useQueryStore } from '@/stores/modules/query';
+    
     defineProps({
         msgs_unread: {
             type: Boolean,
@@ -99,12 +106,13 @@
         },
     })
 
-    const emit  = defineEmits(['markReadMsgs'])
+    const emit  = defineEmits(['openInboxModal'])
     const router = useRouter();
     const chatStore = useChatStore();
+    const queryStore = useQueryStore();
     //ONMOUNTED
-    onMounted(() => {
-        //
+    onMounted(async () => {
+        await queryStore.$existingPendingQuery()
     })
 
     const hotelStore = useHotelStore()
@@ -112,6 +120,7 @@
     //DATA
     const modal_find_reserve = ref(false)
     const modal_reserve = ref(false)
+    const showInboxModal = ref(false);
     /* eslint-disable */
     const modal_lang = ref(false)
 
@@ -122,18 +131,9 @@
     provide('modal_reserve', modal_reserve)
     //COMPuted
     //FUNCTIONS
-    function markReadMsgs(){
-        // if(!isMockup){
-            emit('markReadMsgs')
-            router.push({ name: 'WindowChatMobile' });
-        // }
+    function openInboxModal(){
+        emit('openInboxModal')
     }
-
-    // function go_route(ruta){
-        // if(!isMockup){
-            // Inertia.get(ruta)
-        // }
-    // }
 
 </script>
 

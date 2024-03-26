@@ -190,5 +190,9 @@ button:focus {
 }
 
 .underline{
-  text-decoration: underline !important;
+  text-decoration: underline  !important;
+}
+
+.hshadow{
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 }

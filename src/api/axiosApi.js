@@ -5,6 +5,7 @@ import { usePreloaderStore } from '@/stores/modules/preloader';
 
 const locale = localStorage.getItem('locale') || 'es'
 const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
+const X_KEY_API = process.env.VUE_APP_X_KEY_API
 
 function getPreloaderStore() {// función auxiliar que devuelve el store de preloader
   return usePreloaderStore();
@@ -42,7 +43,8 @@ export const apiHttp = async (method, endpoint, data, options = {}) => {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
-      'Hotel-SUBDOMAIN': subdomain
+      'Hotel-SUBDOMAIN': subdomain,
+      'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
  // eslint-disable-next-line no-prototype-builtins

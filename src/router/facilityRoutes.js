@@ -1,6 +1,7 @@
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 const ListPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ListPage.vue')
 const DetailPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPage.vue')
+const DetailPageFake = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPageFake.vue')
 
 const homeRoutes = [
   {
@@ -19,6 +20,11 @@ const homeRoutes = [
         path: ':id',
         component: DetailPage,
         props: (route) => ({ paramsRouter: {...route.params} })
+      },
+      {
+        name: 'FacilityDetailFake',
+        path: 'fakedetail',
+        component: DetailPageFake
       },
     ],
   },

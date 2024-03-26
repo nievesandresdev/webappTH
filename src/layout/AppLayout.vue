@@ -11,7 +11,7 @@
             <div 
                 v-if="stayDataRef && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
-                :class="{'hbg-warning':chatStore.hasUnreadMessages,'hbg-gray-100':!chatStore.hasUnreadMessages}"
+                :class="{'hbg-warning':chatStore.countUnreadMessages,'hbg-gray-100':!chatStore.countUnreadMessages}"
                 @click="openWindowChat" 
             >
                 <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
@@ -20,7 +20,7 @@
 		<!-- Footer  -->
         
 		<div id="NavMobilePartner" class="md:hidden" :class="{'hidden':!showMenuMobile}">
-			<MenuMobile  @markReadMsgs="markMsgsAsRead"/>
+			<MenuMobile  @openInboxModal="openInboxModal"/>
 		</div>
         
         <TheFooter v-if="showFooter" />
@@ -36,6 +36,14 @@
                 />
             </div>
         </transition>
+        
+        <!-- modal inbox -->
+        <transition name="modal">
+            <InboxModal v-if="showInboxModal" @close="showInboxModal = false"/>
+        </transition>
+        <div v-show="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
+        <!-- modal inbox -->
+        
         <GuestLog v-if="!$utils.isMockup()" :openModal="showGuestLog" @closeModal="closeGuestLog"/>
         <StayLog v-if="!$utils.isMockup()" :openModal="showStayLog" @back="updateGuest"  @closeModal="closeStayLog"/>
 	</div>
@@ -52,6 +60,7 @@
     import GuestLog from './GuestLog.vue'
     import StayLog from './StayLog.vue';
     import Chat from '@/Modules/Chat/WindowChat.vue'
+    import InboxModal from './Components/InboxModal'
     //stores
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest'
@@ -80,6 +89,7 @@
     const showStayLog = ref(false)
     const chatSettings = ref(hotelStore?.hotelData?.chatSettings ?? {});
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
+    const showInboxModal = ref(false); 
     const showMenuMobile = ref(true); 
     const langWebByUrl = ref(getUrlParam('lang'));
     //chat
@@ -117,6 +127,10 @@
             pusher.value.unsubscribe(channel_chat.value);
         }
     });
+
+    const openInboxModal = ()  =>{
+        showInboxModal.value = true;
+    }
 
     const connect_pusher = () => {
         if (stayDataRef.value && !isSubscribed.value) {
@@ -201,12 +215,6 @@
         }
     }
 
-    const markMsgsAsRead = () => {
-        if(stayDataRef.value){
-            chatStore.markMsgsAsRead();
-        }
-    }
-
     watch(() => stayStore.stayData, async (newStayData) => {
     stayDataRef.value = newStayData;
     // Intentar conectar pusher con los nuevos datos
@@ -256,6 +264,22 @@
     .slide-enter-active, .slide-leave-active {
     transition: transform 0.5s;
     }
+
+    /* Estado inicial del modal al entrar */
+    .modal-enter-from,
+    .modal-leave-to {
+    transform: translateY(100%);
+    }
+
+    .slide-enter-to, .slide-leave-from {
+        transform: translateY(0);
+    }
+    .modal-enter-active,.modal-leave-active {
+    transition: transform 0.3s ease;
+    }
+
+
+
 
 
 </style>

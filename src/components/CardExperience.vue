@@ -76,6 +76,14 @@
             {{ $t('experience.card-experience.from') }} {{ $utils.formatPrice(data.from_price) }}€
             
         </h4>
+        <div class="flex items-center mt-2" v-if="distance">
+            <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.Location.svg" alt="Location">
+            <p class="text-[8px] sp:text-xs font-medium">{{ data.city_experince }}</p>
+        </div>
+        <div class="flex items-center mt-2" v-if="distance">
+            <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.footstep.svg" alt="distance">
+            <p class="text-[8px] sp:text-xs font-medium"> a {{ distance }} km</p>
+        </div>
     </div>
 </template>
 
@@ -92,6 +100,10 @@
         truncateTitle:{
             type: Boolean,
             default: true,
+        },
+        distance: {
+            type: String,
+            default: null,
         },
     })
 

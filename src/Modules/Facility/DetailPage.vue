@@ -9,8 +9,7 @@
                 {{ $t('facility.facilitiesWord') }}
             </router-link>
             <img src="/assets/icons/stroke.svg" class="inline mx-1">
-            <span class="text-sm font-medium htext-gray-500">
-                {{ $utils.capitalize(facility?.title) }}
+            <span class="text-sm font-medium htext-gray-500" v-html="$utils.capitalize(facility?.title)">
             </span>
         </div>
         <section>
@@ -40,7 +39,7 @@
                         <Slide v-for="(item, index) in facility?.images" :key="index">
                             <div class="relative h-[295px] w-full lg:w-[510px]">
                                 <img 
-                                    :src="getImg(item)" alt="img"
+                                    :src="facilityStore.$loadImage(item?.images?.[0])" alt="img"
                                     class="w-full h-full object-cover rounded-lg"
                                 >
                             </div>
@@ -67,7 +66,7 @@
                 <Slide v-for="(item, index) in facility?.images" :key="index">
                     <div class="relative h-[190px] sp:h-[295px] w-full">
                         <img 
-                            :src="getImg(item)" alt="img"
+                            :src="facilityStore.$loadImage(item)" alt="img"
                             class=" w-full h-full"
                         >
                     </div>
@@ -79,12 +78,12 @@
         </div>
         <div class="px-4">
             <div class="mb-2.5 sp:mb-6">
-                <h2 class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4">
-                    {{ facility?.title }}
-                </h2>
+                <h2 
+                    class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4"
+                    v-html="facility?.title"
+                ></h2>
                 <div class="justify">
-                    <p class="text-[10px] sp:text-sm">
-                        {{ facility?.description }}
+                    <p class="text-[10px] sp:text-sm" v-html="facility?.description">
                     </p>
                 </div>
             </div>

@@ -13,9 +13,12 @@ export const useFacilityStore = defineStore('facility', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (path) {
+    function $loadImage (img) {
+        if (!img) return;
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/facility${path}`
+        let { type, url } = img
+        // url = type != 'CDN' ? `${URL_STORAGE}/storage/facility${url}` : url
+        url = type != 'CDN' ? `${URL_STORAGE}${url}` : url
         return url
     }
 

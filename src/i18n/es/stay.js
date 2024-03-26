@@ -7,7 +7,7 @@ export default{
         },
         "howPeople":"¿Cuántas personas se alojarán?",
         "button":"Siguiente",
-        "backButton":"Volver a atrás",
+        "backButton":"Volver atrás",
         "addGuest":"+ Enviar a otro huésped",
         "deleteGuest":"Eliminar",
         "guest": "Huesped",

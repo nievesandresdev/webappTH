@@ -1,11 +1,11 @@
 <template>
     <Dialog :open="openModal" class="relative">
       <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-      <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[1000]" aria-hidden="true" />
+      <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]" aria-hidden="true" />
   
       <!-- Full-screen container to center the panel -->
       <div 
-        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[1200]" 
+        class="fixed left-0 lg:top-0 bottom-0 lg:right-0 flex w-screen items-center justify-center z-[2500]" 
         :class="openModal ? 'dialog-enter-active' : 'dialog-leave-active'"
     >
         <!-- The actual dialog panel -->
