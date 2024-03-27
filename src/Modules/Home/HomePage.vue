@@ -3,7 +3,7 @@
         <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
         
         <!-- card banner -->
-        <section class="relative h-[210px] sp:h-[345px] lg:h-screen"> 
+        <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
                 <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${hotelStore.$loadImage(hotelData?.image)})`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
@@ -23,7 +23,7 @@
             <!-- card stay/guest -->
             <div
                 v-if="guestStore?.guestData"  
-                :class="hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]'"
+                :class="class_position_card_stay"
                 class="absolute left-0 md:bottom-0 w-full lg:pb-[40px] flex justify-center"
             >
                 <div v-if="stayStore?.stayData && guestStore?.guestData?.name" class="container-fluid-landing">
@@ -44,12 +44,20 @@
                         <div class="flex items-center mt-2 justify-between">
                             <div class="">
                                 <div class="inline-block">
-                                    <h4 class="text-sm font-medium leading-110 text-white">{{ $moment(stayStore?.stayData?.check_in).format('DD/MM') }}</h4>
-                                    <h5 v-if="hotelData?.checkin" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkin }}</h5>
+                                    <h4 class="text-sm font-medium leading-110 text-white">
+                                        {{ stayStore?.stayData?.check_in ? $moment(stayStore?.stayData?.check_in).format('DD/MM') : '' }}
+                                    </h4>
+                                    <h5 class="text-xs font-medium leading-90 text-white mt-1 ">
+                                        {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkin : '' }}
+                                    </h5>
                                 </div>
                                 <div class="inline-block ml-4">
-                                    <h4 class="text-sm font-medium leading-110 text-white">{{$moment(stayStore?.stayData?.check_out).format('DD/MM')}}</h4>
-                                    <h5 v-if="hotelData?.checkout" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkout }}</h5>
+                                    <h4 class="text-sm font-medium leading-110 text-white" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                        {{ stayStore?.stayData?.check_out ? $moment(stayStore?.stayData?.check_out).format('DD/MM') : '' }}
+                                    </h4>
+                                    <h5 class="text-xs font-medium leading-90 text-white mt-1" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                        {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkout : '' }}
+                                    </h5>
                                 </div>
                             </div>
                             <div v-if="stayStore?.stayData?.room" class="text-right">
@@ -81,7 +89,7 @@
         <!-- end card banner -->
 
         <!-- more info -->
-        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-3">
+        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-4">
             <router-link
                     :to="{name:'HotelAbout'}"
                     class="hbtn-primary leading-90 text-[10px] sp:text-xs font-medium p-1 sp:p-2"
@@ -93,9 +101,9 @@
         </div>
 
         <!-- carousel's -->
-         <div class="mb-4 sp:mb-6 mt-4">
+         <div class="mb-4 sp:mb-6 mt-4" :class="!hotelData?.show_profile ? 'sp:mt-[-56px] z-[20]' : ''">
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                <div class="flex justify-between items-center mt-4 sp:mt-6">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
@@ -239,6 +247,15 @@
             // await loadCrossellings();
             // await getPlaceCategories();
             await Promise.all([loadCrossellings(),getPlaceCategories()])
+        })
+
+        // COMPUTED
+        const class_position_card_stay = computed(() => {
+            
+            let class_enables= '';
+            class_enables = hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]';
+            // class_enables = !hotelData.value?.show_profile ? 'bottom-[0px]' : '';
+            return class_enables;
         })
 
         // FUNCTION

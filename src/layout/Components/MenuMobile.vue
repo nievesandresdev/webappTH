@@ -54,6 +54,7 @@
                 </span>
             </router-link>
             <router-link
+                v-if="show_experiences"
                 to="/experiencias"
                 class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
                 
@@ -116,6 +117,7 @@
     })
 
     const hotelStore = useHotelStore()
+    const { show_experiences } = hotelStore?.hotelData
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
     //DATA
     const modal_find_reserve = ref(false)
