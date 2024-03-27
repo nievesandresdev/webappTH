@@ -101,9 +101,9 @@
     </section> -->
     <section class="w-full min-h-screen">
         <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] ">
-            <h1 class="font-semibold text-[40px] w-[661px] text-center">{{ hotelData.name }}</h1>
+            <h1 class="font-semibold text-[40px] w-[643px] text-center">{{ hotelData.name }}</h1>
             <div class="flex justify-between">
-                <div class="w-[661px] space-y-[40px]">
+                <div class="w-[643px] space-y-[40px]">
                     <div class="title">
                         <h2 class="text-[32px] font-semibold text-center">
                             Descubre, Explora, Disfruta, Conecta. <br>
