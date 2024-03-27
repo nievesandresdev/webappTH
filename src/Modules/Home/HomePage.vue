@@ -101,7 +101,7 @@
         </div>
 
         <!-- carousel's -->
-         <div class="mb-4 sp:mb-6 mt-4" :class="!hotelData?.show_profile ? 'sp:mt-[-56px] z-[20]' : ''">
+         <div class="mb-4 sp:mb-6 mt-4" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''">
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-6">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
