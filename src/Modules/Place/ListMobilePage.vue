@@ -171,6 +171,7 @@
 
     // FUNCTION
     async function loadPlaces () {
+        console.log(formFilter, 'formFilter')
         const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
         console.log('loadPlaces', response)
         if (response.ok) {
