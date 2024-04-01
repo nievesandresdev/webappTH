@@ -2,6 +2,8 @@ const AppLayout = () => import('@/layout/AppLayout')
 const QueriesIndex = () => import('@/Modules/Queries/QueriesIndex.vue')
 const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const chatRoutes = [
   {
     path: '/consultas',

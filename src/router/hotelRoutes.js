@@ -2,6 +2,8 @@ const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayou
 const DesktopPage = () => import(/* webpackChunkName: "home" */ '@/Modules/About/DesktopPage.vue')
 const MobilePage = () => import(/* webpackChunkName: "home" */ '@/Modules/About/MobilePage.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const homeRoutes = [
   {
     path: '/sobre-nosotros',

@@ -2,6 +2,8 @@ const AppLayout = () => import('@/layout/AppLayout')
 const WindowChatMobile = () => import('@/Modules/Chat/WindowMobile.vue')
 const FakeChatMobile = () => import('@/Modules/Chat/FakeWindowChat.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const chatRoutes = [
   {
     path: '/mobile-chat',

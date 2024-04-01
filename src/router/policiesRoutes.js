@@ -4,6 +4,8 @@ const PrivacyPolicies = () => import(/* webpackChunkName: "home" */ '../Modules/
 const CookiePolicies = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/CookiePolicies.vue')
 const TermsConditions = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/TermsConditions.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const homeRoutes = [
     {
         path: '/politicas',
