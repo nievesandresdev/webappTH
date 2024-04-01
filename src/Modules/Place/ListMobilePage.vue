@@ -203,7 +203,7 @@
     }
 
     async function loadCategoriPlaces () {
-        const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true})
+        const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true})
         if (response.ok) {
             categoriplaces.value = response.data
         }
