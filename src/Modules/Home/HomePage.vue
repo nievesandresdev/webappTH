@@ -107,11 +107,18 @@
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
-                    <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    <!-- <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
+                    </router-link> -->
+                    <a 
+                    @click="goFacilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                        style="z-index: 2000 !important;"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
@@ -285,6 +292,11 @@
 
         const goPlaces = (type, cat) => {
             router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
+        }
+
+        const goFacilities = () => {
+            console.log('facilities')
+            router.push({ name: 'FacilityList' });
         }
 
         const openInvite = () =>{
