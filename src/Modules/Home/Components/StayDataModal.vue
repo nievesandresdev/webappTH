@@ -1,6 +1,6 @@
 <template>
     <Modal 
-            :openModal="false" 
+            :openModal="openInviteModal" 
             :customBackdrop="'h-screen relative'"
             :customClasess="'w-full md:w-[600px] fixed bottom-0 rounded-b-[0] md:rounded-b-[0.85rem] md:inset-0 md:m-0 md:mx-auto md:my-4'"
         >

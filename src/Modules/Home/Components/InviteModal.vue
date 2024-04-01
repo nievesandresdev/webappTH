@@ -1,6 +1,6 @@
 <template>
     <Modal 
-            :openModal="false" 
+            :openModal="openInviteModal" 
             @closeModal="openInviteModal = false"
             :customBackdrop="'min-h-full relative'"
             :customClasess="'w-full absolute bottom-0.5 rounded-b-[0]'"
