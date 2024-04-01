@@ -193,16 +193,19 @@
                 </div> 
                 <!-- pb-[20px] pt-[10px] px-[12px] -->
                 <!-- <div class="w-[293px] h-[582px]" style="background-image: url('/assets/img/1.TH.DEV.MOCKUPTRANSPARENTE.svg'); object-fit: cover;"> -->
-                <div class="w-[293px] h-[582px] relative pt-[50px] px-[25px] pb-[45px]">
+                <div class="w-[293px] h-[582px] relative pt-[50px] px-[25px] pb-[45px] overflow-hidden">
                     <img
                         class="w-[293px] h-[582px] absolute top-0 left-0"
+                        style="z-index: 0;"
                         src="/assets/img/1.TH.DEV.MOCKUPTRANSPARENTE.svg"
                         alt="1.TH.DEV.MOCKUPTRANSPARENTE"
                     >
-                    <iframe 
-                        class="w-full h-full z-10"
-                        :src="urlHuespedMockup">
-                    </iframe>
+                    <div class="w-[293px] h-[582px] absolute top-0 left-0 pt-[50px] px-[25px] pb-[45px]" style="z-index: 1000 !important;">
+                        <iframe
+                            class="w-full h-full z-[1000]"
+                            :src="urlHuespedMockup">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
