@@ -5,7 +5,7 @@
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${hotelStore.$loadImage(hotelData?.image)})`"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
                 <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
@@ -141,7 +141,6 @@
                     <CarouselPlaces id="0" :items="crossellingsData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
-
             <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
