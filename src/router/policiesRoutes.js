@@ -8,7 +8,12 @@ const homeRoutes = [
     {
         path: '/politicas',
         component: AppLayout,
-        meta: { verifyHotel: true },
+        meta: {
+            verifyHotel: true,
+            middleware: [
+              isMobile
+           ]
+          },
         children: [
         {
             name: 'LegalWarning',

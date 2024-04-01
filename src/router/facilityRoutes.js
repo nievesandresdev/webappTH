@@ -7,7 +7,12 @@ const homeRoutes = [
   {
     path: '/instalaciones',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'FacilityList',

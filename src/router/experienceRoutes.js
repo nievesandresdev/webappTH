@@ -6,7 +6,12 @@ const homeRoutes = [
   {
     path: '/experiencias',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'ExperienceList',

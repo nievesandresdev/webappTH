@@ -7,7 +7,12 @@ const homeRoutes = [
   {
     path: '/places',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'PlaceList',

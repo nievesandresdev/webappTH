@@ -6,7 +6,12 @@ const chatRoutes = [
   {
     path: '/consultas',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'QueriesIndex',

@@ -6,7 +6,12 @@ const chatRoutes = [
   {
     path: '/mobile-chat',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'WindowChatMobile',
