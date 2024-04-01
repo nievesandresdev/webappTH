@@ -3,7 +3,8 @@
         class="fixed bottom-0 left-0 w-full z-[2000] shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
         :class="!hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
     >
-        <ul class="flex justify-between">
+        <ul class="flex justify-between relative">
+            <div v-if="$utils.isMockup()" class="absolute top-0 left-0 w-full h-full z-10"></div>
             <router-link
                 to="/"
                 class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"

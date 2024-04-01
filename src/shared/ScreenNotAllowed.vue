@@ -194,6 +194,7 @@
                 <!-- pb-[20px] pt-[10px] px-[12px] -->
                 <!-- <div class="w-[293px] h-[582px]" style="background-image: url('/assets/img/1.TH.DEV.MOCKUPTRANSPARENTE.svg'); object-fit: cover;"> -->
                 <div class="w-[293px] h-[582px] relative pt-[50px] px-[25px] pb-[45px] overflow-hidden">
+                   
                     <img
                         class="w-[293px] h-[582px] absolute top-0 left-0"
                         style="z-index: 0;"
