@@ -171,6 +171,7 @@
 
     // FUNCTION
     async function loadPlaces () {
+        console.log(formFilter, 'formFilter')
         const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
         console.log('loadPlaces', response)
         if (response.ok) {
@@ -202,7 +203,7 @@
     }
 
     async function loadCategoriPlaces () {
-        const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true})
+        const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true})
         if (response.ok) {
             categoriplaces.value = response.data
         }

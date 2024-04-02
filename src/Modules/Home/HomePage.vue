@@ -5,7 +5,7 @@
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${hotelStore.$loadImage(hotelData?.image)})`"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
                 <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
@@ -107,11 +107,18 @@
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
-                    <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    <!-- <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
+                    </router-link> -->
+                    <a 
+                    @click="goFacilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                        style="z-index: 2000 !important;"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
@@ -124,7 +131,7 @@
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
-                    @click="goPlaces(crossellingsData?.whatvisit_id, firstCatWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    @click="goPlaces(crossellingsData?.whatvisit_id, catWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -134,14 +141,13 @@
                     <CarouselPlaces id="0" :items="crossellingsData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
-
             <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.whereeat_id, firstCatWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.whereeat_id, catWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -158,7 +164,7 @@
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.leisure_id, firstCatLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.leisure_id, catLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -233,9 +239,9 @@
         // DATA
         const crossellingsData = ref(null)
         const placeCategories = ref(null)
-        const firstCatWhatVisitId = ref(null)
-        const firstCatWhereEatId = ref(null)
-        const firstCatLeisureId  = ref(null)
+        const catWhatVisitId = ref(null)
+        const catWhereEatId = ref(null)
+        const catLeisureId  = ref(null)
         const inviteModal  = ref(null)
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
@@ -262,9 +268,21 @@
         async function getPlaceCategories(){
             const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true});
             if(response.ok)placeCategories.value = response.data;
-            firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id)?.id;
-            firstCatWhereEatId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whereeat_id)?.id;
-            firstCatLeisureId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.leisure_id)?.id;
+            let typePlacesIds = placeCategories.value?.reduce((categoriesObject, categoryCurrent) => {
+                if ((categoryCurrent.name_type_place == 'Qué visitar') && !categoriesObject.catWhatVisitId) {
+                    categoriesObject.catWhatVisitId = categoryCurrent.categori_places_id;
+                }
+                if ((categoryCurrent.name_type_place == 'Dónde comer') && !categoriesObject.catWhereEatId) {
+                    categoriesObject.catWhereEatId = categoryCurrent.categori_places_id;
+                }
+                if ((categoryCurrent.name_type_place == 'Ocio') && !categoriesObject.catLeisureId) {
+                    categoriesObject.catLeisureId = categoryCurrent.categori_places_id;
+                }
+                return categoriesObject;
+            }, {catWhatVisitId: null, catWhereEatId: null, catLeisureId: null});
+            catWhatVisitId.value = typePlacesIds.catWhatVisitId;
+            catWhereEatId.value = typePlacesIds.catWhereEatId;
+            catLeisureId.value = typePlacesIds.catLeisureId;
         }
 
         async function loadCrossellings () {
@@ -273,6 +291,11 @@
 
         const goPlaces = (type, cat) => {
             router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
+        }
+
+        const goFacilities = () => {
+            console.log('facilities')
+            router.push({ name: 'FacilityList' });
         }
 
         const openInvite = () =>{

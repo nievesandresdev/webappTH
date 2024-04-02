@@ -419,7 +419,7 @@
     }
 
     async function loadExperiences () {
-
+        console.log(formFilter, 'formFilter')
         const response = await experienceStore.$apiGetAll({page: page.value,...formFilter})
         if (response.ok) {
             Object.assign(paginateData, response.data.experiences.paginate)
