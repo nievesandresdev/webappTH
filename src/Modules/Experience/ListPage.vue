@@ -257,7 +257,7 @@
                                 <CardExperience 
                                     :data="item" 
                                     :truncateTitle="false"
-                                    :distance="item.city_experince !== hotelData.zone ? nearCitiesData[item.slug_city] : null"
+                                    :distance="item.city_experince !== hotelData.zone ? item.distance : null"
                                 />
                             </div>
                     </template>
