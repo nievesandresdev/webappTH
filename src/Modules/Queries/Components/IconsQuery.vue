@@ -14,7 +14,7 @@
             {{ $t('query.settings.question'+data?.period)}}
         </p>
         <div class="mt-4">
-            <FormSurveyContentTabEmojis />
+            <FormSurveyContentTabEmojis :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
         </div>
         <div class="mt-4" v-if="form.type" :class="{'hidden': form.type == 'GOOD' && data?.period == 'post-stay'}">
             <p class="text-sm">
