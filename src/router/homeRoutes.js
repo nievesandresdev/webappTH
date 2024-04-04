@@ -1,5 +1,8 @@
-const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
-const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/HomePage.vue')
+//const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
+//const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/HomePage.vue')
+
+import AppLayout from '@/layout/AppLayout';
+import HomePage from '@/Modules/Home/HomePage.vue';
 
 import isMobile from '@/middlewares/isMobile'
 
