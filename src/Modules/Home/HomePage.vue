@@ -3,9 +3,9 @@
         <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
         
         <!-- card banner -->
-        <section class="relative h-[210px] sp:h-[345px] lg:h-screen"> 
+        <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${hotelStore.$loadImage(hotelData?.image)})`"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
                 <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
                 <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
@@ -23,7 +23,7 @@
             <!-- card stay/guest -->
             <div
                 v-if="guestStore?.guestData"  
-                :class="hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]'"
+                :class="class_position_card_stay"
                 class="absolute left-0 md:bottom-0 w-full lg:pb-[40px] flex justify-center"
             >
                 <div v-if="stayStore?.stayData && guestStore?.guestData?.name" class="container-fluid-landing">
@@ -44,12 +44,20 @@
                         <div class="flex items-center mt-2 justify-between">
                             <div class="">
                                 <div class="inline-block">
-                                    <h4 class="text-sm font-medium leading-110 text-white">{{ $moment(stayStore?.stayData?.check_in).format('DD/MM') }}</h4>
-                                    <h5 v-if="hotelData?.checkin" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkin }}</h5>
+                                    <h4 class="text-sm font-medium leading-110 text-white">
+                                        {{ stayStore?.stayData?.check_in ? $moment(stayStore?.stayData?.check_in).format('DD/MM') : '' }}
+                                    </h4>
+                                    <h5 class="text-xs font-medium leading-90 text-white mt-1 ">
+                                        {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkin : '' }}
+                                    </h5>
                                 </div>
                                 <div class="inline-block ml-4">
-                                    <h4 class="text-sm font-medium leading-110 text-white">{{$moment(stayStore?.stayData?.check_out).format('DD/MM')}}</h4>
-                                    <h5 v-if="hotelData?.checkout" class="text-xs font-medium leading-90 text-white mt-1">{{ hotelData?.checkout }}</h5>
+                                    <h4 class="text-sm font-medium leading-110 text-white" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                        {{ stayStore?.stayData?.check_out ? $moment(stayStore?.stayData?.check_out).format('DD/MM') : '' }}
+                                    </h4>
+                                    <h5 class="text-xs font-medium leading-90 text-white mt-1" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                        {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkout : '' }}
+                                    </h5>
                                 </div>
                             </div>
                             <div v-if="stayStore?.stayData?.room" class="text-right">
@@ -81,7 +89,7 @@
         <!-- end card banner -->
 
         <!-- more info -->
-        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-3">
+        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-4">
             <router-link
                     :to="{name:'HotelAbout'}"
                     class="hbtn-primary leading-90 text-[10px] sp:text-xs font-medium p-1 sp:p-2"
@@ -93,17 +101,24 @@
         </div>
 
         <!-- carousel's -->
-         <div class="mb-4 sp:mb-6 mt-4">
+         <div class="mb-4 sp:mb-6 mt-4" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''">
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
+                <div class="flex justify-between items-center mt-4 sp:mt-6">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
-                    <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    <!-- <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
+                    </router-link> -->
+                    <a 
+                    @click="goFacilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
+                        style="z-index: 2000 !important;"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
@@ -116,7 +131,7 @@
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
-                    @click="goPlaces(crossellingsData?.whatvisit_id, firstCatWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    @click="goPlaces(crossellingsData?.whatvisit_id, catWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -126,14 +141,13 @@
                     <CarouselPlaces id="0" :items="crossellingsData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
-
             <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex justify-between items-center mt-4 sp:mt-8">
                     <h2 class="text-xs sp:text-base lg:text-lg font-medium">
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.whereeat_id, firstCatWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.whereeat_id, catWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -150,7 +164,7 @@
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.leisure_id, firstCatLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingsData?.leisure_id, catLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
@@ -225,9 +239,9 @@
         // DATA
         const crossellingsData = ref(null)
         const placeCategories = ref(null)
-        const firstCatWhatVisitId = ref(null)
-        const firstCatWhereEatId = ref(null)
-        const firstCatLeisureId  = ref(null)
+        const catWhatVisitId = ref(null)
+        const catWhereEatId = ref(null)
+        const catLeisureId  = ref(null)
         const inviteModal  = ref(null)
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
@@ -241,13 +255,34 @@
             await Promise.all([loadCrossellings(),getPlaceCategories()])
         })
 
+        // COMPUTED
+        const class_position_card_stay = computed(() => {
+            
+            let class_enables= '';
+            class_enables = hotelData.show_profile || stayStore?.stayData?.room ? 'bottom-[8px] sp:bottom-[9px]' : 'bottom-[32px] sp:bottom-[56px] sp:bottom-[64px]';
+            // class_enables = !hotelData.value?.show_profile ? 'bottom-[0px]' : '';
+            return class_enables;
+        })
+
         // FUNCTION
         async function getPlaceCategories(){
             const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true});
             if(response.ok)placeCategories.value = response.data;
-            firstCatWhatVisitId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whatvisit_id)?.id;
-            firstCatWhereEatId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.whereeat_id)?.id;
-            firstCatLeisureId.value = placeCategories.value?.find(cat => cat.type_places_id == crossellingsData.value?.leisure_id)?.id;
+            let typePlacesIds = placeCategories.value?.reduce((categoriesObject, categoryCurrent) => {
+                if ((categoryCurrent.name_type_place == 'Qué visitar') && !categoriesObject.catWhatVisitId) {
+                    categoriesObject.catWhatVisitId = categoryCurrent.categori_places_id;
+                }
+                if ((categoryCurrent.name_type_place == 'Dónde comer') && !categoriesObject.catWhereEatId) {
+                    categoriesObject.catWhereEatId = categoryCurrent.categori_places_id;
+                }
+                if ((categoryCurrent.name_type_place == 'Ocio') && !categoriesObject.catLeisureId) {
+                    categoriesObject.catLeisureId = categoryCurrent.categori_places_id;
+                }
+                return categoriesObject;
+            }, {catWhatVisitId: null, catWhereEatId: null, catLeisureId: null});
+            catWhatVisitId.value = typePlacesIds.catWhatVisitId;
+            catWhereEatId.value = typePlacesIds.catWhereEatId;
+            catLeisureId.value = typePlacesIds.catLeisureId;
         }
 
         async function loadCrossellings () {
@@ -256,6 +291,11 @@
 
         const goPlaces = (type, cat) => {
             router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
+        }
+
+        const goFacilities = () => {
+            console.log('facilities')
+            router.push({ name: 'FacilityList' });
         }
 
         const openInvite = () =>{

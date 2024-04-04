@@ -20,9 +20,9 @@ export const useHotelStore = defineStore('hotel', () => {
     function $loadImage (url) {
         if (!url) return;
         let type = url.includes('https://') ? 'CDN' : 'STORAGE';
-        console.log(process.env.VUE_APP_STORAGE_URL, 'process.env.VUE_APP_STORAGE_URL')
+        // console.log(process.env.VUE_APP_STORAGE_URL, 'process.env.VUE_APP_STORAGE_URL')
         url = type != 'CDN' ? `${URL_STORAGE}${url}` : url;
-        console.log(url, 'url')
+        // console.log(url, 'url')
         return url;
     }
 

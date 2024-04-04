@@ -101,9 +101,9 @@
     </section> -->
     <section class="w-full min-h-screen">
         <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] ">
-            <h1 class="font-semibold text-[40px] w-[661px] text-center">{{ hotelData.name }}</h1>
+            <h1 class="font-semibold text-[40px] w-[643px] text-center">{{ hotelData.name }}</h1>
             <div class="flex justify-between">
-                <div class="w-[661px] space-y-[40px]">
+                <div class="w-[643px] space-y-[40px]">
                     <div class="title">
                         <h2 class="text-[32px] font-semibold text-center">
                             Descubre, Explora, Disfruta, Conecta. <br>
@@ -193,16 +193,20 @@
                 </div> 
                 <!-- pb-[20px] pt-[10px] px-[12px] -->
                 <!-- <div class="w-[293px] h-[582px]" style="background-image: url('/assets/img/1.TH.DEV.MOCKUPTRANSPARENTE.svg'); object-fit: cover;"> -->
-                <div class="w-[293px] h-[582px] relative pt-[50px] px-[25px] pb-[45px]">
+                <div class="w-[293px] h-[582px] relative pt-[50px] px-[25px] pb-[45px] overflow-hidden">
+                   
                     <img
                         class="w-[293px] h-[582px] absolute top-0 left-0"
+                        style="z-index: 0;"
                         src="/assets/img/1.TH.DEV.MOCKUPTRANSPARENTE.svg"
                         alt="1.TH.DEV.MOCKUPTRANSPARENTE"
                     >
-                    <iframe 
-                        class="w-full h-full z-10"
-                        :src="urlHuespedMockup">
-                    </iframe>
+                    <div class="w-[293px] h-[582px] absolute top-0 left-0 pt-[50px] px-[25px] pb-[45px]" style="z-index: 1000 !important;">
+                        <iframe
+                            class="w-full h-full z-[1000]"
+                            :src="urlHuespedMockup">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>

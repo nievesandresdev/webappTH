@@ -27,9 +27,9 @@
 <script setup>
     import { ref, provide, onMounted, nextTick, inject, watch, reactive } from 'vue'
 
+    import { isMockup } from '@/utils/utils';
     import FormSurveyContent from './FormSurveyContent.vue'
     import { Dialog, TransitionRoot } from '@headlessui/vue'
-    
     // STATE
     import { useHotelStore } from '@/stores/modules/hotel'
     const hotelStore = useHotelStore()
@@ -66,8 +66,8 @@
     provide('modalMobile', modalMobile)
 
     //inject
-    const mockup = false
     const $moment = inject('$moment')
+    const $utils = inject('$utils')
 
     // watch stayData
     watch(()=>guestStore.guestData?.id, async (value) => {
@@ -91,7 +91,8 @@
     //function
     function openSurvey () {
         setTimeout(() => {
-            if (mockup.value) return;
+            let mockup = isMockup();
+            if (mockup) return;
             const stay = stayStore.stayData
             const guest = guestStore.guestData
             if (stay && !staySurveyStore.surveyData) {

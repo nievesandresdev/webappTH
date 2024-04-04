@@ -3,11 +3,18 @@ const ListDesktopPage = () => import(/* webpackChunkName: "home" */ '@/Modules/P
 const ListMobilePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Place/ListMobilePage.vue')
 const DetailPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Place/DetailPage.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const homeRoutes = [
   {
     path: '/places',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'PlaceList',

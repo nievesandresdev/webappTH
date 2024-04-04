@@ -3,11 +3,18 @@ const ListPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility
 const DetailPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPage.vue')
 const DetailPageFake = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPageFake.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const homeRoutes = [
   {
     path: '/instalaciones',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'FacilityList',

@@ -2,11 +2,18 @@ const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayou
 const ListPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Experience/ListPage.vue')
 const DetailPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Experience/DetailPage.vue')
 
+import isMobile from '@/middlewares/isMobile'
+
 const homeRoutes = [
   {
     path: '/experiencias',
     component: AppLayout,
-    meta: { verifyHotel: true },
+    meta: {
+      verifyHotel: true,
+      middleware: [
+        isMobile
+     ]
+    },
     children: [
       {
         name: 'ExperienceList',
