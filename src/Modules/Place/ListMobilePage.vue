@@ -59,12 +59,14 @@
                                 v-if="placesData[index-1]?.cityName == hotelData.zone && hotelData.zone !== item.cityName"
                                 class="py-4 text-[10px] sp:text-base font-medium hborder-top-gray-400"
                             >
-                                {{countOtherCities}} lugares cerca de {{ hotelData.zone }}
+                                {{countOtherCities}} 
+                                {{ countOtherCities > 1 ? 'lugares' : 'lugar' }} cerca de 
+                                {{ hotelData.zone }}
                             </p>   
                             <CardProduct 
                                 place heightImg="card-img" 
                                 :data="item"
-                                :distance="item.cityName !== hotelData.zone ? nearCitiesData[item.city] : null"
+                                :distance="item.cityName !== hotelData.zone ? item.distance : null"
                             />
                         </div>
                     </div>
