@@ -15,10 +15,8 @@ import { loadSubdomain } from '@/utils/utils.js'
 import middlewarePipeline from '@/middlewares'
 
 // COMPONENTS
-//const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
-//const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
-import NotFoundPage from '@/shared/NotFoundPage.vue';
-import ScreenNotAllowed from '@/shared/ScreenNotAllowed.vue';
+const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
+const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
 
 const routes = [
   // { path: '/', redirect: '/webapp' },
