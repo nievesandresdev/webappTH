@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { i18n } from '@/i18n'
 import { usePreloaderStore } from '@/stores/modules/preloader';
+import { useLocaleStore } from '@/stores/modules/locale';
 
 
-const locale = localStorage.getItem('locale') || 'es'
+
+// const locale = localStorage.getItem('locale') || 'es'
 const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
 const X_KEY_API = process.env.VUE_APP_X_KEY_API
 
@@ -37,6 +39,10 @@ axios.interceptors.response.use(response => {
 
 
 export const apiHttp = async (method, endpoint, data, options = {}) => {
+
+  const localeStore = useLocaleStore();
+  const locale = localeStore.localeCurrent ?? 'es';
+
     // const { token } = localStorage
     const subdomain = localStorage.getItem('subdomain') || null
     const defaultHeaders = {
