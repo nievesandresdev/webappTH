@@ -12,7 +12,7 @@
       <p
         class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'WRONG' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-wrong') }}</p>
+      >{{ $t(btnWrongText) }}</p>
     </div>
     <div class="text-center">
       <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
@@ -26,7 +26,7 @@
       <p
         class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'NORMAL' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-normal') }}</p>
+      >{{ $t(btnNormalText) }}</p>
     </div>
     <div class="text-center">
       <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('GOOD')">
@@ -40,13 +40,29 @@
       <p
         class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
         :class="form.type && form.type == 'GOOD' ? 'text-black' : 'htext-gray-500'"
-      >{{ $t('home.form-survey.btn-good') }}</p>
+      >{{ $t(btnGoodText) }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, reactive, inject } from "vue";
+import { reactive, inject, onMounted, ref } from "vue";
+
+const props = defineProps({
+  userFor:{
+    type:String,
+    default:null
+  }
+})
+
+const btnWrongText = ref('home.form-survey.btn-wrong');
+const btnNormalText = ref('home.form-survey.btn-normal');
+const btnGoodText = ref('home.form-survey.btn-good');
+
+onMounted(()=>{
+  translateTextButtons()
+})
+
 
 // DATA STATIC
 const STATUS_EMOJIS = {
@@ -82,6 +98,18 @@ const form = inject('form')
 //COMPUTED
 
 //FUNCTION
+function translateTextButtons(){
+  if(props.userFor == "queries-stay"){
+    btnWrongText.value = 'query.form.btn-wrong-stay';
+    btnNormalText.value = 'query.form.btn-normal-stay';
+    btnGoodText.value = 'query.form.btn-good-stay';
+  }
+  if(props.userFor == "queries-poststay"){
+    btnWrongText.value = 'query.form.btn-wrong-poststay';
+    btnNormalText.value = 'query.form.btn-normal-poststay';
+    btnGoodText.value = 'query.form.btn-good-poststay';
+  }
+}
 function hoverEmoji(payload) {
   let { face, state } = payload;
   state_emojis[face].state = STATUS_EMOJIS[state_emojis[face].state];

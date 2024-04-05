@@ -1,17 +1,15 @@
-FROM node:18
-
-# Instalar el paquete 'serve' para servir la aplicación
-RUN npm install -g serve
-
-# Establecer el directorio de trabajo en /app
+FROM node:18-alpine as build-stage
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Copiar el directorio 'dist' ya construido en el directorio de trabajo
-# Asegúrate de que el directorio 'dist' se haya construido y esté presente en el contexto de construcción
-COPY dist /app
+# etapa de producción
+FROM nginx:1.13.12-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Exponer el puerto 8080
-EXPOSE 8080
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Comando para servir la aplicación
-CMD ["serve", "-s", ".", "-l", "8080"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

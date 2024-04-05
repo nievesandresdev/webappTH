@@ -7,7 +7,13 @@ export default {
         "title": "Queries",
         "hello": "Hello",
         "whatsup": "What's up",
-        "thanksAll" : "Thank you for everything"
+        "thanksAll" : "Thank you for everything",
+        "btn-wrong-stay": "Very bad",
+        "btn-normal-stay": "Normal",
+        "btn-good-stay": "Very good",
+        "btn-wrong-poststay": "Very bad",
+        "btn-normal-poststay": "Normal",
+        "btn-good-poststay": "Very good",
     },
     "settings": {
         "questionpre-stay": "Is there anything we can do for your arrival at the hotel?",
