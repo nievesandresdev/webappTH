@@ -153,7 +153,7 @@
                             <div class="inline-block p-[12px]">
                                 <img
                                     class="w-[65px]"
-                                    src="/assets/icons/explora-default.svg"
+                                    src="/assets/icons/instalations-default.svg"
                                     alt="explora-default"
                                 >
                             </div>

@@ -13,6 +13,7 @@ import { useLocaleStore } from '@/stores/modules/locale'
 import { loadSubdomain } from '@/utils/utils.js'
 
 import middlewarePipeline from '@/middlewares'
+import isDesktop from '@/middlewares/isDesktop'
 
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
@@ -33,7 +34,12 @@ const routes = [
   ...hotelRoutes,
   ...queryRoutes,
   ...policiesRoutes,
-  { path: '/compartir', name: 'ScreenNotAllowed', component: ScreenNotAllowed },
+  {
+    path: '/compartir',
+    name: 'ScreenNotAllowed',
+    component: ScreenNotAllowed,
+    beforeEnter: [isDesktop]
+  },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 
