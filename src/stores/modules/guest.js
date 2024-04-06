@@ -10,11 +10,8 @@ import {
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
-<<<<<<< HEAD
 import { useLocaleStore } from '@/stores/modules/locale'
-=======
 import { useQueryStore } from '@/stores/modules/query';
->>>>>>> 806b72a2b396b1d6a772d2156574da6259a4fbb4
 
 export const useGuestStore = defineStore('guest', () => {
     
