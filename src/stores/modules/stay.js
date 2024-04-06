@@ -31,12 +31,12 @@ export const useStayStore = defineStore('stay', () => {
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
             stayId: stayId.value,
-            guestId: guestId.value,
+            guestId: guestId.value ?? localStorage.getItem('guestId'),
             guestEmail:null
         }
-        console.log('stayId.value',stayId.value)
         if(stayId.value){
             const response = await findAndValidAccessApi(params)
+            console.log('findAndValidAccessApi',response)
             const { ok } = response   
             if(ok && response.data){
                 stayData.value = ok ? response.data : null
@@ -52,7 +52,6 @@ export const useStayStore = defineStore('stay', () => {
                     //     router.push({name: 'Home',params:{e:stayData.value.id}})
                     // }
                 }
-                await queryStore.$existingPendingQuery()
                 return response.data
             }else{
                 stayData.value = null;
@@ -72,6 +71,7 @@ export const useStayStore = defineStore('stay', () => {
             stayData.value = ok ? response.data : null
             setStayData(stayData.value,true)
             localStorage.setItem('stayId', stayData.value.id)
+            await queryStore.$existingPendingQuery()
         }else{
             stayData.value = null;
         }
@@ -82,6 +82,7 @@ export const useStayStore = defineStore('stay', () => {
         stayData.value = data;
         console.log('setStayData',stayData.value)
         localStorage.setItem('stayId', stayData.value.id)
+        await queryStore.$existingPendingQuery()
         await loadLocalStay();
     }
 
@@ -91,6 +92,7 @@ export const useStayStore = defineStore('stay', () => {
         if(ok){
             stayData.value = ok ? response.data : null
             localStorage.setItem('stayId', stayData.value.id)
+            await queryStore.$existingPendingQuery()
             router.push({name: 'Home',params:{e:stayData.value.id}})
             // window.location.reload();
         }
