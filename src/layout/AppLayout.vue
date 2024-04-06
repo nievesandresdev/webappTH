@@ -51,7 +51,7 @@
 
 <script setup>
     // vue
-    import { onMounted, ref, onUnmounted, watch, provide } from 'vue';
+    import { onMounted, ref, onUnmounted, watch, provide, inject } from 'vue';
     import { useRoute } from 'vue-router';
     // components
     import GeneralMenu from './Components/GeneralMenu.vue'
@@ -69,7 +69,7 @@
     import { useChatStore } from '@/stores/modules/chat';
     //extra
     import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
-    import { getUrlParam } from '@/utils/utils.js'
+    import { getUrlParam, isMockup } from '@/utils/utils.js'
     import Favicon from './Components/Favicon.vue'
     /* eslint-disable */
 
@@ -105,13 +105,17 @@
     const showFooter = ref(true);
     provide('showFooter', showFooter);
 
+    // const $utils = inject('$utils');
+
     //ONMOUNTED
     onMounted(() => {
         // if(langWebByUrl.value){
         //     localeStore.$change(langWebByUrl.value)
         // }
         setTimeout(() => {
-            loadWebDataModals();
+            if (!isMockup()) {
+                loadWebDataModals();
+            }
         }, 1000);
     //     const urlParams = new URLSearchParams(window.location.search);
     //     const mockup = urlParams.get('mockup');
@@ -122,7 +126,7 @@
     })
 
     onUnmounted(() => {
-        if (channel_chat.value) {
+        if (channel_chat.value && !isMockup()) {
             channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
             pusher.value.unsubscribe(channel_chat.value);
         }
@@ -216,12 +220,14 @@
     }
 
     watch(() => stayStore.stayData, async (newStayData) => {
-    stayDataRef.value = newStayData;
-    // Intentar conectar pusher con los nuevos datos
-      connect_pusher();
-      if(stayDataRef.value){
-        chatStore.unreadMsgs();
-      }
+        if (!isMockup()) {
+            stayDataRef.value = newStayData;
+            // Intentar conectar pusher con los nuevos datos
+            connect_pusher();
+            if(stayDataRef.value){
+                chatStore.unreadMsgs();
+            }
+        }
     }, { immediate: true });
     
 </script>

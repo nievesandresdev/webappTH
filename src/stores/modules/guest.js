@@ -41,7 +41,6 @@ export const useGuestStore = defineStore('guest', () => {
             const response = await findByIdApi(guestId.value)
             const { ok } = response   
             if(ok && response.data){
-                console.log('entro')
                 guestData.value = ok ? response.data : null
                 localStorage.setItem('guestId', guestData.value.id)
                 localeStore.$load(guestData.value.lang_web)
