@@ -10,7 +10,11 @@ import {
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
+<<<<<<< HEAD
 import { useLocaleStore } from '@/stores/modules/locale'
+=======
+import { useQueryStore } from '@/stores/modules/query';
+>>>>>>> 806b72a2b396b1d6a772d2156574da6259a4fbb4
 
 export const useGuestStore = defineStore('guest', () => {
     
@@ -19,6 +23,7 @@ export const useGuestStore = defineStore('guest', () => {
     const guestId = ref(getUrlParam('g') || null)
     const stayId = ref(getUrlParam('e') || null)
     //stay store
+    const queryStore = useQueryStore()
     const stayStore = useStayStore()
     const { stayData } = stayStore
     // LOCALE
@@ -43,6 +48,7 @@ export const useGuestStore = defineStore('guest', () => {
                 guestData.value = ok ? response.data : null
                 localStorage.setItem('guestId', guestData.value.id)
                 localeStore.$load(guestData.value.lang_web)
+                await queryStore.$existingPendingQuery()
                 findLastStay(guestData.value.id);
             }else{
                 guestData.value = null;
@@ -59,6 +65,7 @@ export const useGuestStore = defineStore('guest', () => {
         if(ok && response.data){
             guestData.value = ok ? response.data : null
             localStorage.setItem('guestId', guestData.value.id)
+            await queryStore.$existingPendingQuery()
             await findLastStay(guestData.value.id);
         }else{
             guestData.value = null;
@@ -85,6 +92,7 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await findLastStayApi(guestId)
         const { ok } = response   
         if(ok){
+            await queryStore.$existingPendingQuery()
             stayStore.setStayData(response.data,false)
             return response.data
         }

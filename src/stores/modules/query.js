@@ -67,12 +67,13 @@ export const useQueryStore = defineStore('query', () => {
             stayId :localStorage.getItem('stayId'),
             guestId :localStorage.getItem('guestId'),
         };
-        // console.log('existingPendingQuery',params)
-        const response = await existingPendingQueryApi(params)
-        console.log('existingPendingQuery',response.data)
-        const { ok } = response   
-        if(ok){
-            pendingQuery.value = response.data;
+        if(params.stayId && params.guestId){
+            const response = await existingPendingQueryApi(params)
+            console.log('existingPendingQuery',response.data)
+            const { ok } = response   
+            if(ok){
+                pendingQuery.value = response.data;
+            }
         }
     }
 
