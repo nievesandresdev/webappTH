@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import { 
     findByIdApi,
     saveOrUpdateApi,
     findLastStayApi,
-    sendMailToApi
+    sendMailToApi,
+    updateLanguageApi,
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
+import { useLocaleStore } from '@/stores/modules/locale'
 
 export const useGuestStore = defineStore('guest', () => {
     
@@ -19,6 +21,12 @@ export const useGuestStore = defineStore('guest', () => {
     //stay store
     const stayStore = useStayStore()
     const { stayData } = stayStore
+    // LOCALE
+    const localeStore = useLocaleStore()
+
+    // COMPUTED
+    
+
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
@@ -31,18 +39,21 @@ export const useGuestStore = defineStore('guest', () => {
             const response = await findByIdApi(guestId.value)
             const { ok } = response   
             if(ok && response.data){
+                console.log('entro')
                 guestData.value = ok ? response.data : null
                 localStorage.setItem('guestId', guestData.value.id)
+                localeStore.$load(guestData.value.lang_web)
                 findLastStay(guestData.value.id);
             }else{
                 guestData.value = null;
+                
             }
         }
+
         return guestData.value
     }
 
     async function saveOrUpdate (data) {
-        console.log('saveOrUpdate');
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
@@ -55,11 +66,23 @@ export const useGuestStore = defineStore('guest', () => {
         return guestData.value
     }
 
+    async function updateLanguage (lg) {
+        if (!guestData.value?.id) return;
+        let data = {
+            language: lg,
+            guest_id: guestData.value.id
+        }
+        const response = await updateLanguageApi(data)  
+        const { ok } = response
+        if(ok && response.data){
+            localeStore.$load(lg)
+            window.location.reload()
+        }
+    }
+
     async function findLastStay (guestId) {
-        console.log('findLastStay');
         if(localStorage.getItem('stayId')) return;
         const response = await findLastStayApi(guestId)
-        console.log('findLastStay',response)
         const { ok } = response   
         if(ok){
             stayStore.setStayData(response.data,false)
@@ -81,6 +104,7 @@ export const useGuestStore = defineStore('guest', () => {
         guestData,
         loadLocalGuest,
         saveOrUpdate,
+        updateLanguage,
         sendMailTo
     }
 

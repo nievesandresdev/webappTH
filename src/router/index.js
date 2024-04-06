@@ -9,6 +9,7 @@ import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
 
 import { useHotelStore } from '@/stores/modules/hotel'
+import { useGuestStore } from '@/stores/modules/guest'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { loadSubdomain } from '@/utils/utils.js'
 
@@ -54,11 +55,14 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore();
+  const guestStore = useGuestStore();
   loadSubdomain();
   await hotelStore.$load();
   let hotel = hotelStore.hotelData;
-  const localeStore = useLocaleStore();
-  localeStore.$load(hotel?.language_default_webapp);
+  if (!guestStore.guestData && !localStorage.getItem('guestId')) {
+    const localeStore = useLocaleStore();
+    localeStore.$load(hotel?.language_default_webapp);
+  }
 
   if (to.meta.verifyHotel && !hotel) {
     next({ name: 'NotFound' });

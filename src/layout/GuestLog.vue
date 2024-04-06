@@ -70,6 +70,10 @@ import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
 import { Dialog } from '@headlessui/vue'
 import { useGuestStore } from '@/stores/modules/guest'
 import { useLocaleStore } from '@/stores/modules/locale'
+import { useHotelStore } from '@/stores/modules/hotel'
+
+const hotelStore = useHotelStore();
+const { hotelData } = hotelStore;
 
 const props = defineProps({
     openModal: {
@@ -91,7 +95,8 @@ const { guestData } = guestStore;
 const form = reactive({
     name: guestData?.name ?? null,
     email: guestData?.email ?? null,
-    language: guestData?.lang_web ?? 'es',
+    // language: guestData?.lang_web ?? 'es',
+    language: hotelData.language_default_webapp ?? 'es',
 });
 
 const submitForm = async () =>{

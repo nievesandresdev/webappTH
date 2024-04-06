@@ -42,7 +42,6 @@ export const apiHttp = async (method, endpoint, data, options = {}) => {
 
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
-
     // const { token } = localStorage
     const subdomain = localStorage.getItem('subdomain') || null
     const defaultHeaders = {

@@ -59,6 +59,7 @@
 <script setup>
     import { ref, watch } from 'vue'
     import { useLocaleStore } from '@/stores/modules/locale'
+    import { useGuestStore } from '@/stores/modules/guest'
 
     const modalLocale = ref(false)
     const lgsAll = ref([
@@ -67,6 +68,7 @@
         {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/1.TH.frances.svg'},
     ])
     const localeStore = useLocaleStore()
+    const guestStore = useGuestStore()
 
 
     watch(modalLocale, (value) => {
@@ -83,8 +85,7 @@
     }
 
     function changeLocale (lg) {
-        console.log('primero',lg)
-        localeStore.$changeAndReload(lg)
+        guestStore.updateLanguage(lg)
     }
 
 </script>
