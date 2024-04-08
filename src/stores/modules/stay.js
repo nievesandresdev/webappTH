@@ -13,6 +13,7 @@ import {
 import { getUrlParam } from '@/utils/utils.js'
 import { useQueryStore } from '@/stores/modules/query';
 import { useGuestStore } from '@/stores/modules/guest';
+import { useLocaleStore } from '@/stores/modules/locale';
 
 export const useStayStore = defineStore('stay', () => {
     
@@ -23,10 +24,11 @@ export const useStayStore = defineStore('stay', () => {
     const stayData = ref(null)
     const stayId = ref(getUrlParam('e') || null)
     const guestId = ref(getUrlParam('g') || null)
+    // LOCALE
+    const localeStore = useLocaleStore()
 
     // ACTIONS
     async function loadLocalStay () {
-        console.log('loadLocalStay');
         if(stayData.value && !stayId.value) return stayData.value
         if(!stayData.value && !stayId.value && localStorage.getItem('stayId')) stayId.value = localStorage.getItem('stayId');
         let params = {
@@ -36,16 +38,16 @@ export const useStayStore = defineStore('stay', () => {
         }
         if(stayId.value){
             const response = await findAndValidAccessApi(params)
-            console.log('findAndValidAccessApi',response)
+            // console.log('findAndValidAccessApi',response)
             const { ok } = response   
             if(ok && response.data){
                 stayData.value = ok ? response.data : null
-                console.log('guestId',localStorage.getItem('guestId'))
+                // console.log('guestId',localStorage.getItem('guestId'))
                 if(localStorage.getItem('guestId')){
                     params.guestEmail = guestStore.guestData?.email;
-                    console.log('params',params)
+                    // console.log('params',params)
                     let saveAccess = await existingThenMatchOrSaveApi(params);
-                    console.log('existingThenMatchOrSaveApi',saveAccess)
+                    // console.log('existingThenMatchOrSaveApi',saveAccess)
                     // if(saveAccess.ok && (stayData.value?.id !== saveAccess?.data?.id)){
                     //     stayData.value = ok ? saveAccess.data : null
                     //     localStorage.setItem('stayId', stayData.value.id)
@@ -65,13 +67,14 @@ export const useStayStore = defineStore('stay', () => {
 
     async function createAndInviteGuest(data) {
         guestId.value = data.guestId;
+        // console.log(data, 'createAndInviteGuest form')
         const response = await createAndInviteGuestApi(data)
-        const { ok } = response   
+        // console.log(response, 'createAndInviteGuest response')
+        const { ok } = response
         if(ok){
             stayData.value = ok ? response.data : null
-            setStayData(stayData.value,true)
-            localStorage.setItem('stayId', stayData.value.id)
-            await queryStore.$existingPendingQuery()
+            setStayData(stayData.value)
+            // await queryStore.$existingPendingQuery()
         }else{
             stayData.value = null;
         }
@@ -80,11 +83,27 @@ export const useStayStore = defineStore('stay', () => {
 
     async function setStayData (data) {
         stayData.value = data;
-        console.log('setStayData',stayData.value)
+        // console.log('setStayData',stayData.value)
         localStorage.setItem('stayId', stayData.value.id)
+        let formattedLangs = {
+            en: 'en',
+            es: 'es',
+            fr: 'fr',
+        }
+        let otherFomattedLangs = {
+            'Inglés': 'en',
+            'Español': 'es',
+            'Francés': 'fr',
+        }
+        // console.log(stayData.value.language, 'stayData.value.language d')
+        let lang = otherFomattedLangs[stayData.value.language] ?? formattedLangs[stayData.value.language]
+        // console.log('setStayData lg', lang)
+        localeStore.$load(lang)
         await queryStore.$existingPendingQuery()
         await loadLocalStay();
     }
+
+
 
     async function existingStayThenMatchAndInvite (params) {
         const response = await existingStayThenMatchAndInviteApi(params)

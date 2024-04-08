@@ -32,9 +32,11 @@ export const useGuestStore = defineStore('guest', () => {
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
-        // console.log('loadLocalGuest');
+        // console.log('loadLocalGuest')
         if(guestData.value && !guestId.value) return guestData.value
-        if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) guestId.value = localStorage.getItem('guestId');
+        if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) {
+            guestId.value = localStorage.getItem('guestId');
+        }
         
     
         if(guestId.value){
@@ -51,7 +53,7 @@ export const useGuestStore = defineStore('guest', () => {
                 
             }
         }
-
+        console.log(guestData.value, 'guestData.value s')
         return guestData.value
     }
 
@@ -86,7 +88,7 @@ export const useGuestStore = defineStore('guest', () => {
     async function findLastStay (guestId) {
         if(localStorage.getItem('stayId')) return;
         const response = await findLastStayApi(guestId)
-        const { ok } = response   
+        const { ok } = response
         if(ok){
             await queryStore.$existingPendingQuery()
             stayStore.setStayData(response.data,false)

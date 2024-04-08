@@ -16,6 +16,8 @@ import { loadSubdomain } from '@/utils/utils.js'
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
 
+import utils from '@/utils/utils.js'
+
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
@@ -59,7 +61,7 @@ router.beforeEach( async (to, from, next) => {
   loadSubdomain();
   await hotelStore.$load();
   let hotel = hotelStore.hotelData;
-  if (!guestStore.guestData && !localStorage.getItem('guestId')) {
+  if (utils.isMockup() || !localStorage.getItem('guestId')) {
     const localeStore = useLocaleStore();
     localeStore.$load(hotel?.language_default_webapp);
   }

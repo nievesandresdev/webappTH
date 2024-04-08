@@ -108,7 +108,7 @@
     import { Dialog } from '@headlessui/vue'
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest'
-    
+    import { useHotelStore } from '@/stores/modules/hotel'
 
     const props = defineProps({
         openModal: {
@@ -122,13 +122,14 @@
     const guestStore = useGuestStore()
 
     const stayStore = useStayStore()
-
+    const hotelStore = useHotelStore();
+    const { hotelData } = hotelStore;
     //data
     const form = reactive({
         numberGuests:'1',
         checkDate:null,
         listGuest:[],
-        language: 'es',
+        language: hotelData.language_default_webapp ?? 'es',
         guestId: null,
     });
     const errorsKey = ref([]);
@@ -147,6 +148,10 @@
         {value:'10',label:'10',},
     ] 
 
+
+    onMounted(() => {
+        console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
+    })
 
     //functions
     const guestDelete = (i) =>{

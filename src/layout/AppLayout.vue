@@ -87,6 +87,8 @@
     const windowWidth = ref(window.innerWidth);
     const showGuestLog = ref(false)
     const showStayLog = ref(false)
+    const guestProcesed = ref(false)
+    const stayProcesed = ref(false)
     const chatSettings = ref(hotelStore?.hotelData?.chatSettings ?? {});
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
     const showInboxModal = ref(false); 
@@ -167,9 +169,10 @@
 
 
     const loadWebDataModals = async () => {
-
+        console.log('loadWebDataModals')
         try {
             const guestLogResult = await guestStore.loadLocalGuest();
+            console.log(guestLogResult, 'guestLogResult')
             showGuestLog.value = guestLogResult ? false : true;
             if(guestLogResult && !guestLogResult.name){
                 showGuestLog.value = true;
@@ -188,6 +191,10 @@
             showStayLog.value = stayLogResult ? false : true;
         } catch (error) {
             console.error("Error al cargar los datos locales:", error);
+        } finally {
+            console.log('all proceesed')
+            guestProcesed.value = true
+            stayProcesed.value = true
         }
     };
 

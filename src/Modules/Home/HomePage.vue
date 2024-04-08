@@ -205,6 +205,7 @@
             ref,
             onMounted,
             computed,
+            watch,
         } from 'vue';//toRefs,
         import { useRouter } from 'vue-router';
         //COMPONENTS
@@ -249,11 +250,16 @@
         // onBeforeMount (() => {
         // })
 
-        onMounted(async () => {
-            // await loadCrossellings();
-            // await getPlaceCategories();
-            await Promise.all([loadCrossellings(),getPlaceCategories()])
-        })
+        // onMounted(async () => {
+        //     await Promise.all([loadCrossellings(),getPlaceCategories()])
+        // })
+
+        watch(()=>stayStore.stayData, (newStayData) => {
+            console.log(newStayData, 'newStayData watch')
+            // if (newStayData) {
+                Promise.all([loadCrossellings(),getPlaceCategories()]);
+            // }
+        }, { immediate: true })
 
         // COMPUTED
         const class_position_card_stay = computed(() => {
@@ -286,6 +292,7 @@
         }
 
         async function loadCrossellings () {
+            console.log('cross')
             crossellingsData.value = await hotelStore.$getCrossellings()
         }
 
