@@ -18,11 +18,11 @@ export const useLocaleStore = defineStore('locale', () => {
 
     function $load (languageParam = null) {
         // console.log('i18n.global.locale')
-        const urlParams = new URLSearchParams(window.location.search)
-        let locale = localStorage.getItem('locale') ?? urlParams.get('lang');
-        locale = languageParam || locale;
+        const urlParams = new URLSearchParams(window.location.search);
+        let locale = urlParams.get('lang') || languageParam || localStorage.getItem('locale');
         locale = availableLocation.value.includes(locale) ? locale : 'es';
         $change(locale);
+        return locale;
     }
 
     function $changeAndReload (lg) {
