@@ -20,7 +20,6 @@ export const useLocaleStore = defineStore('locale', () => {
         // console.log('i18n.global.locale')
         const urlParams = new URLSearchParams(window.location.search);
         let locale = urlParams.get('lang') || languageParam || localStorage.getItem('locale');
-        locale = availableLocation.value.includes(locale) ? locale : 'es';
         $change(locale);
         return locale;
     }
