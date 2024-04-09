@@ -73,15 +73,18 @@
     watch(()=>guestStore.guestData?.id, async (value) => {
         })
     watch(()=>stayStore.stayData?.id, async (value) => {
-        await nextTick()
-        await staySurveyStore.$findByParams({guest_id: guestStore.guestData?.id, stay_id: stayStore.stayData?.id})
+        // await nextTick()
+        if (value) [
+            await staySurveyStore.$findByParams({guest_id: guestStore.guestData?.id, stay_id: stayStore.stayData?.id})
+        ]
+        if (value && !staySurveyStore.surveyData) {
+            await hotelOtaStore.$getAll()
+        }
         openSurvey()
     })
 
     //onmounted
     onMounted(async() => {
-        await nextTick()
-        await hotelOtaStore.$getAll()
     })
 
     function close () {
