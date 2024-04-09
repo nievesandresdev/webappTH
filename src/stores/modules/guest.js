@@ -12,6 +12,7 @@ import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useQueryStore } from '@/stores/modules/query';
+import router from '@/router';
 
 export const useGuestStore = defineStore('guest', () => {
     
@@ -81,7 +82,7 @@ export const useGuestStore = defineStore('guest', () => {
         const { ok } = response
         if(ok && response.data){
             localeStore.$load(lg)
-            window.location.reload()
+            // window.location.reload()
         }
     }
 

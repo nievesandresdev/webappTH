@@ -57,7 +57,11 @@
 </template>
 
 <script setup>
-    import { ref, watch } from 'vue'
+    import { ref, watch, nextTick } from 'vue'
+
+     import { useRouter } from 'vue-router'
+    const route = useRouter()
+
     import { useLocaleStore } from '@/stores/modules/locale'
     import { useGuestStore } from '@/stores/modules/guest'
 
@@ -84,8 +88,12 @@
         modalLocale.value = true
     }
 
-    function changeLocale (lg) {
-        guestStore.updateLanguage(lg)
+    async function changeLocale (lg) {
+        await guestStore.updateLanguage(lg)
+        route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
+            window.location.reload();
+        })
+           
     }
 
 </script>
