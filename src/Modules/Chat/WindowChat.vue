@@ -159,8 +159,13 @@
     }
     
     const goBack = () => {
-        router.go(-1);
+        if (window.history.length > 1) {
+            router.go(-1);
+        } else {
+            router.push({ name: 'Home'})
+        }
     }
+
     const hideMenu = () => {
     showMenuMobile.value = false;
     setDivHeight()

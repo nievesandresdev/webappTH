@@ -28,10 +28,10 @@
                 <img class="w-6 h-6" src="/assets/icons/Chatbubblelineoutline.svg" alt="Consultas icon">
                 <p class="text-sm font-semibold mx-2">Chat</p>
                 <span 
-                    v-if="chatStore.countUnreadMessages"
+                    v-if="chatStore.countUnreadMessages > 0"
                     class="hbg-warning text-xs font-semibold rounded-full py-0.5 w-5"
                 > 
-                    {{ chatStore.countUnreadMessages }}
+                    {{ Number(chatStore.countUnreadMessages) }}
                 </span>
                 <img src="/assets/icons/next.svg" class="w-6 h-6 ml-auto" alt="next icon">   
             </button>
