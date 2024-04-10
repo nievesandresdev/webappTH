@@ -18,7 +18,7 @@
                     href="javascript:void(0)" 
                     class="black-link text-xs lg:text-sm font-medium inline mr-2"
                     @click="openHorary"
-                >{{$utils.capitalize($t('chat.horary'))}}.</a>
+                >{{$utils.capitalize($t('chat.horary'))}}..</a>
             </div>
         </div>
         <!-- body chat -->
@@ -49,8 +49,8 @@
                 @input="autoGrow"
                 v-model="msg"
                 @focus="hideMenu"
-                @blur="showMenu"
-                @keyup.enter="e => { sendMsg(e); showMenu(); }"
+                @blur="showMenuDelayed"
+                @keyup.enter="e => { sendMsg(e); showMenuDelayed(); }"
                 @keydown.enter="e => handleEnter(e)"
             ></textarea>
             <div class="ml-2 my-auto" >
@@ -172,9 +172,14 @@
     };
 
     const showMenu = () => {
-    showMenuMobile.value = true;
-    setDivHeight()
-};
+        showMenuMobile.value = true;
+        setDivHeight()
+    };
+
+    const showMenuDelayed = () => {
+    setTimeout(showMenu, 100); // Retrasa la ejecución de showMenu
+    };
+
     const sendMsg = (e)=>{
         showMenuMobile.value = true;
         if (!e.shiftKey && msg.value) {
