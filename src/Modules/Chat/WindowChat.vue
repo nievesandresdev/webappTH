@@ -18,7 +18,7 @@
                     href="javascript:void(0)" 
                     class="black-link text-xs lg:text-sm font-medium inline mr-2"
                     @click="openHorary"
-                >{{$utils.capitalize($t('chat.horary'))}}</a>
+                >{{$utils.capitalize($t('chat.horary'))}}.</a>
             </div>
         </div>
         <!-- body chat -->
