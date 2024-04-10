@@ -192,7 +192,7 @@
         <!-- end carousel's -->
         
         <!-- FormSurvey -->
-        <FormSurvey />
+        <!-- <FormSurvey /> -->
          <!-- END FormSurvey    -->
 
          <InviteModal ref="inviteModal"/>
