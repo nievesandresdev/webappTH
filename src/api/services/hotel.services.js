@@ -5,3 +5,4 @@ import {
 
 export const findByParamsApi = (params) => apiHttp('GET', `${hotelPath}/findByParams`, params)
 export const getCrossellingsApi = () => apiHttp('GET', `${hotelPath}/getAllCrossellings`)
+export const getChatHoursApi = () => apiHttp('GET', `${hotelPath}/getChatHours`)

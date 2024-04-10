@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import {
     findByParamsApi,
     getCrossellingsApi,
+    getChatHoursApi
 } from '@/api/services/hotel.services'
 
 // import { useMainStore } from '@/stores'
@@ -13,6 +14,7 @@ export const useHotelStore = defineStore('hotel', () => {
     
     // STATE
     const hotelData = ref(null)
+    const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
     // ACTIONS
@@ -49,15 +51,27 @@ export const useHotelStore = defineStore('hotel', () => {
         return;        
     }
 
+    async function $loadChatHours () {
+        const response = await getChatHoursApi()
+        const { ok, data } = response
+        chatHours.value = ok ? response.data : null
+        console.log('chatHoursloadChatHours',chatHours.value)
+        return response.data
+    }
+
+    
+
 
 
     //
     return {
         hotelData,
+        chatHours,
         subdomain,
         $load,
         $getCrossellings,
         $loadImage,
+        $loadChatHours
     }
 
 })

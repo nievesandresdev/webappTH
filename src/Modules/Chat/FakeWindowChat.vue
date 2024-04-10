@@ -58,7 +58,7 @@
             </p>
             <!-- body -->
             <div class="p-2">
-                <template v-for="schedule in hotelStore?.hotelData?.chatHours" :key="schedule">
+                <template v-for="schedule in hotelStore?.chatHours" :key="schedule">
                     <div v-if="schedule.active" class="flex items-start mt-1">
                         <p class="w-14 text-[10px] font-medium">{{ schedule.day }}</p>
                         <p class="text-[10px] font-medium">
@@ -86,7 +86,8 @@
 
 
     //mounted
-    onMounted(() => {
+    onMounted(async () => {
+        await hotelStore.$loadChatHours(); 
         watchAvailability();
         createMessages()
     });
@@ -99,7 +100,7 @@
     const watchAvailability = () =>{
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
-        const todaysAvailability = hotelStore?.hotelData?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
+        const todaysAvailability = hotelStore?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
         if (!todaysAvailability || !todaysAvailability.active) {
             return false;
         }

@@ -87,7 +87,7 @@
     const { stayData } = stayStore;
     const chatStore = useChatStore();
     const hotelStore = useHotelStore();
-    const { hotelData } = hotelStore;
+    const { hotelData, chatHours } = hotelStore;
     //imports components
     const emit = defineEmits(['closechat'])
     const langPage = 'es';
@@ -110,8 +110,6 @@
 
     //mounted
     onMounted( async () => {
-        console.log('settings',props.settings)
-        watchAvailability();
         nextTick(() => {
             const textarea = document.getElementById('text-auto');
             autoGrow({ target: textarea });  
@@ -124,6 +122,7 @@
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
         clearTimeouts();
+        watchAvailability();
     });
 
     onBeforeUnmount(() => {
@@ -154,7 +153,8 @@
 
     const showMenuMobile = inject('showMenuMobile');
     //functions
-    const openHorary = () =>{
+    const openHorary = async () =>{
+        await hotelStore.$loadChatHours(); 
         scheduleModal.value.open();
     }
     
@@ -199,11 +199,12 @@
         }
     }
 
-    const watchAvailability = () =>{
-        console.log('hotelData.chatHours',hotelData.chatHours)
+    const watchAvailability = async () =>{
+        let loadChatHours = await hotelStore.$loadChatHours(); 
+        console.log('chatHourswatchAvailability',loadChatHours)
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
-        const todaysAvailability = hotelData.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
+        const todaysAvailability = loadChatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
         if (!todaysAvailability || !todaysAvailability.active) {
             return false;
         }

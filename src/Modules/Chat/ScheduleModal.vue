@@ -13,7 +13,7 @@
             {{$utils.capitalize($t('chat.scheduleTitle'))}}
         </p>
         <div class="px-4 pb-4 overflow-y-auto max-h-[400px]">
-            <template v-for="schedule in hotelData.chatHours" :key="schedule">
+            <template v-for="schedule in hotelStore.chatHours" :key="schedule">
                 <div v-if="schedule.active" class="flex items-start">
                     <p class="w-24 text-sm font-medium mt-4 text-left">{{ schedule.day }}</p>
                     <div class="">
