@@ -18,7 +18,7 @@
                     href="javascript:void(0)" 
                     class="black-link text-xs lg:text-sm font-medium inline mr-2"
                     @click="openHorary"
-                >{{$utils.capitalize($t('chat.horary'))}}..</a>
+                >{{$utils.capitalize($t('chat.horary'))}}</a>
             </div>
         </div>
         <!-- body chat -->
@@ -146,9 +146,9 @@
 
     // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
     watch(messages, (newMessages) => {
-    nextTick(() => {
-        scrollToBottom();
-    });
+        nextTick(() => {
+            scrollToBottom();
+        });
     }, { deep: true });
 
     const showMenuMobile = inject('showMenuMobile');
@@ -174,6 +174,7 @@
     const showMenu = () => {
         showMenuMobile.value = true;
         setDivHeight()
+        setTimeout(scrollToBottom, 100);
     };
 
     const showMenuDelayed = () => {
