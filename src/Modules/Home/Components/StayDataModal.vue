@@ -196,16 +196,16 @@
             end : stayStore.stayData?.check_out
         };
         form.room = stayStore.stayData?.room
-        form.numberGuests = stayStore.stayData?.number_guests
+        form.numberGuests = String(stayStore.stayData?.number_guests)
     }
 
     const submitForm = async () => {
         if(invalidNguest.value){
-            form.numberGuests = stayStore.stayData?.number_guests;
+            form.numberGuests = String(stayStore.stayData?.number_guests);
         }
         form.stayId = stayStore.stayData.id;
-        console.log('submitForm',form)
         let response = await stayStore.updateStayAndGuests(form)
+        await guestStore.updateLocalGuest();
         loadDataModal();
         if(response){
             toast('Cambios guardados', {

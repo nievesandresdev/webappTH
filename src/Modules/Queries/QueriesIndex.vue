@@ -66,9 +66,9 @@ onBeforeMount(async ()=>{
     queryStore.$setPendingQuery(false);
     await getQuerySettings();
     await getCurrentPeriod();
-    if(!guestStore?.guestData?.id){
-        await stayStore.loadLocalStay();
-    }
+    // if(!guestStore?.guestData?.id){
+    //     await stayStore.loadLocalStay();
+    // }
     if(period.value){
         await getCurrentQuery();
     }

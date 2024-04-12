@@ -84,26 +84,31 @@ const props = defineProps({
 
 const emit = defineEmits(['closeModal']);
 
+const guestStore = useGuestStore()
+const { getLocalGuest } = guestStore;
+
 //data
 const errorsKey = ref([]);
 const emailError = ref(false);
+const guestData = ref(null);
 const subject = ref(null);
 const processingForm = ref(false);
-const guestStore = useGuestStore()
-const { guestData } = guestStore;
+
 
 const form = reactive({
-    name: guestData?.name ?? null,
-    email: guestData?.email ?? null,
-    // language: guestData?.lang_web ?? 'es',
+    name: guestData.value?.name ?? null,
+    email: guestData.value?.email ?? null,
+    // language: guestData.value?.lang_web ?? 'es',
     language: hotelData.language_default_webapp ?? 'es',
 });
+
 
 const submitForm = async () =>{
     form.language = !form.language ? localStorage.getItem('locale') : form.language;
     processingForm.value = true
     const response = await guestStore.saveOrUpdate(form);
     processingForm.value = false
+    
     if(response){
         emit('closeModal')
     }
@@ -115,12 +120,14 @@ const valid = computed(() => {
 })
 
 // Observa los cambios en guestData y actualiza el formulario
-watch(() => guestStore.guestData, (newGuestData) => {
-if (newGuestData) {
-form.name = newGuestData.name;
-form.email = newGuestData.email;
-form.language = newGuestData.lang_web;
-}
+watch(() => props.openModal, (newGuestData) => {
+    guestData.value = getLocalGuest();
+    console.log('props.openModal Guest Log')
+    if (guestData.value) {
+        form.name = guestData.value?.name;
+        form.email = guestData.value?.email;
+        form.language = guestData.value?.lang_web;
+    }
 }, { immediate: true }); // El flag 'immediate' asegura que se ejecute inmediatamente después de la creación del watcher
 </script>   
 <style scoped>

@@ -4,6 +4,7 @@ import {
 } from '../config/apiRoute'
 
 export const findAndValidAccessApi = (params) => apiHttp('GET', `${stayPath}/findAndValidAccess`, params)
+export const existsAndValidateApi = (params) => apiHttp('GET', `${stayPath}/existsAndValidate`, params)
 export const createAndInviteGuestApi = (params) => apiHttp('POST', `${stayPath}/createAndInviteGuest`, params)
 export const existingStayThenMatchAndInviteApi = (params) => apiHttp('POST', `${stayPath}/existingStayThenMatchAndInvite`, params)
 export const existingThenMatchOrSaveApi = (params) => apiHttp('POST', `${stayPath}/existingThenMatchOrSave`, params)

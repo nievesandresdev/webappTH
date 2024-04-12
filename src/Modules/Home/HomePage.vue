@@ -8,7 +8,7 @@
                 <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
                 <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
-                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;`"></div>
+                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;"></div>
                 <div
                     class="block lg:hidden absolute inset-x-0 -bottom-0.5 w-full"
                     :class="hotelData.show_profile || stayStore?.stayData?.room || $utils.isMockup() ? 'h-[40px] sp:h-16 gradient-top' : 'h-[30px] sp:h-12 gradient-top-min'"
@@ -255,7 +255,7 @@
         // })
 
         watch(()=>stayStore.stayData, (newStayData) => {
-            console.log(newStayData, 'newStayData watch')
+            // console.log(newStayData, 'newStayData watch')
             // if (newStayData) {
                 Promise.all([loadCrossellings(),getPlaceCategories()]);
             // }
@@ -292,7 +292,6 @@
         }
 
         async function loadCrossellings () {
-            console.log('cross')
             crossellingsData.value = await hotelStore.$getCrossellings()
         }
 
@@ -301,7 +300,6 @@
         }
 
         const goFacilities = () => {
-            console.log('facilities')
             router.push({ name: 'FacilityList' });
         }
 

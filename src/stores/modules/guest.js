@@ -17,9 +17,9 @@ import router from '@/router';
 export const useGuestStore = defineStore('guest', () => {
     
     // STATE
-    const guestData = ref(null)
-    const guestId = ref(getUrlParam('g') || null)
-    const stayId = ref(getUrlParam('e') || null)
+    const guestData = ref(getLocalGuest());
+    const guestId = ref(getUrlParam('g'))
+    const stayId = ref(null)
     //stay store
     const queryStore = useQueryStore()
     const stayStore = useStayStore()
@@ -33,12 +33,12 @@ export const useGuestStore = defineStore('guest', () => {
     // ACTIONS
     // http://localhost:81/?e=34&lang=es&subdomain=nobuhotelsevilla&g=9
     async function loadLocalGuest () {
-        // console.log('loadLocalGuest')
-        if(guestData.value && !guestId.value) return guestData.value
-        if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) {
-            guestId.value = localStorage.getItem('guestId');
-        }
-        
+        // if(guestData.value && !guestId.value) return guestData.value
+        // if(!guestData.value && !guestId.value && localStorage.getItem('guestId')) {
+        //     guestId.value = localStorage.getItem('guestId');
+        // }
+        guestId.value = getUrlParam('g');
+        if(!guestId.value) return null;
     
         if(guestId.value){
             const response = await findByIdApi(guestId.value)
@@ -46,15 +46,14 @@ export const useGuestStore = defineStore('guest', () => {
             if(ok && response.data){
                 guestData.value = ok ? response.data : null
                 localStorage.setItem('guestId', guestData.value.id)
+                localStorage.setItem('guestData', JSON.stringify(response.data))
                 localeStore.$load(guestData.value.lang_web)
+                await findLastStay(guestData.value.id);
                 await queryStore.$existingPendingQuery()
-                findLastStay(guestData.value.id);
             }else{
                 guestData.value = null;
-                
             }
         }
-        console.log(guestData.value, 'guestData.value s')
         return guestData.value
     }
 
@@ -62,10 +61,18 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
-            guestData.value = ok ? response.data : null
-            localStorage.setItem('guestId', guestData.value.id)
-            await queryStore.$existingPendingQuery()
-            await findLastStay(guestData.value.id);
+            localStorage.setItem('guestId', response.data.id)
+            localStorage.setItem('guestData', JSON.stringify(response.data))
+            guestData.value = response.data;
+            if(guestData.value){
+                await findLastStay(guestData.value.id);
+                await queryStore.$existingPendingQuery()
+                let stayId = localStorage.getItem('stayId')
+                if(!stayId && getUrlParam('e')){
+                    console.log('entro para crear estancias url')
+                    stayStore.loadLocalStay();
+                }
+            }
         }else{
             guestData.value = null;
         }
@@ -87,11 +94,11 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findLastStay (guestId) {
-        if(localStorage.getItem('stayId')) return;
+        // if(localStorage.getItem('stayData')) return;
         const response = await findLastStayApi(guestId)
+        console.log('findLastStayApiGuest',response)
         const { ok } = response
         if(ok){
-            await queryStore.$existingPendingQuery()
             stayStore.setStayData(response.data,false)
             return response.data
         }
@@ -106,13 +113,35 @@ export const useGuestStore = defineStore('guest', () => {
         }
         return false
     }
+
+    function getLocalGuest() {
+        let localData = localStorage.getItem('guestData');
+        if(!localData) return null;
+        return localData ? JSON.parse(localData) : null;
+    }
+
+    async function updateLocalGuest() {
+        const response = await findByIdApi(guestData.value.id)
+        if(response.ok){
+            guestData.value = response.data;
+            localStorage.getItem('guestData',JSON.stringify(response.data));
+        }
+    }
+    
     //
+
+    const guestDataComputed = computed(() => {
+        return guestData.value
+    });
+
     return {
-        guestData,
+        guestData:guestDataComputed,
         loadLocalGuest,
         saveOrUpdate,
         updateLanguage,
-        sendMailTo
+        sendMailTo,
+        getLocalGuest,
+        updateLocalGuest
     }
 
 })

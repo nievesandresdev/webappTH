@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
-        <Favicon v-if="stayDataRef" />
+        <Favicon v-if="stayData" />
 		<!-- Sidebar  -->
 		<div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
@@ -9,7 +9,7 @@
 			<slot></slot>
             <router-view></router-view>
             <div 
-                v-if="stayDataRef && showChat && windowWidth > 767" 
+                v-if="stayData && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
                 :class="{'hbg-warning':chatStore.countUnreadMessages,'hbg-gray-100':!chatStore.countUnreadMessages}"
                 @click="openWindowChat" 
@@ -75,11 +75,8 @@
 
     //store
     const hotelStore = useHotelStore()
-    const stayStore = useStayStore()
-    const { stayData } = stayStore;
-    const stayDataRef = ref(null)
-
-    const guestStore = useGuestStore()
+    const { stayData, getLocalStay, existsAndValidate, cleanStayData } = useStayStore()
+    const { guestData, getLocalGuest, loadLocalGuest, saveOrUpdate } = useGuestStore()
     const localeStore = useLocaleStore()
     const chatStore = useChatStore()
 
@@ -114,17 +111,19 @@
         // if(langWebByUrl.value){
         //     localeStore.$change(langWebByUrl.value)
         // }
-        setTimeout(() => {
-            if (!isMockup()) {
-                loadWebDataModals();
-            }
-        }, 1000);
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     const mockup = urlParams.get('mockup');
-    //     if (mockup === 'true') {
-    //         // Cambia el cursor para el mockup
-    //         document.body.style.cursor = "url('/vendor_asset/img/hoster/2-th-hotspot.cur'), auto";
-    //     }
+        // setTimeout(() => {
+        //     if (!isMockup()) {
+        //         loadWebDataModals();
+        //     }
+        // }, 1000);
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const mockup = urlParams.get('mockup');
+        //     if (mockup === 'true') {
+        //         // Cambia el cursor para el mockup
+        //         document.body.style.cursor = "url('/vendor_asset/img/hoster/2-th-hotspot.cur'), auto";
+        //     }
+        validateCurrentStay()
+        checkUrlOrGetForms()
     })
 
     onUnmounted(() => {
@@ -134,13 +133,52 @@
         }
     });
 
+    const validateCurrentStay = async () =>{
+        if(guestData && stayData){
+            let exist = await existsAndValidate(stayData?.id)
+            if(!exist){
+                cleanStayData();
+                await saveOrUpdate(guestData);
+            }
+        }
+    }
+    const checkUrlOrGetForms = async () =>{
+        let response = await loadLocalGuest();
+        console.log('checkUrlOrGetForms',response)
+        if(!response){
+            getStayModals()
+        }else{
+            let dataGuest = getLocalGuest();
+            if(dataGuest && !dataGuest?.name){
+                showGuestLog.value = true;
+            }else{
+                getStayModals()
+            }
+        }
+    }
+
+    const getStayModals = () =>{
+        let dataGuest = getLocalGuest();
+        let dataStay = getLocalStay();
+        console.log('dataGuest',dataGuest)
+        console.log('dataStay',dataStay)
+        if(!dataGuest || dataGuest && !dataGuest?.name){
+            showGuestLog.value = true;
+        }else{
+            if(!dataStay){
+                showStayLog.value = true;
+            }
+        }
+        
+    }
+
     const openInboxModal = ()  =>{
         showInboxModal.value = true;
     }
 
     const connect_pusher = () => {
-        if (stayDataRef.value && !isSubscribed.value) {
-            const channelName = 'private-update-chat.' + stayDataRef.value.id;
+        if (stayData && !isSubscribed.value) {
+            const channelName = 'private-update-chat.' + stayData.id;
             if (!isChannelSubscribed(channelName)) {
                 channel_chat.value = channelName;
                 pusher.value = getPusherInstance();
@@ -158,8 +196,8 @@
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
-        } else if (!stayDataRef.value && isSubscribed.value) {
-            // Lógica para desuscribirse del canal si stayDataRef.value es null o undefined
+        } else if (!stayData && isSubscribed.value) {
+            // Lógica para desuscribirse del canal si stayData es null o undefined
             if (channel_chat.value) {
             pusher.value.unsubscribe(channel_chat.value);
             isSubscribed.value = false; // Marcar como no suscrito
@@ -168,47 +206,47 @@
     };
 
 
-    const loadWebDataModals = async () => {
-        console.log('loadWebDataModals')
-        try {
-            const guestLogResult = await guestStore.loadLocalGuest();
-            console.log(guestLogResult, 'guestLogResult')
-            showGuestLog.value = guestLogResult ? false : true;
-            if(guestLogResult && !guestLogResult.name){
-                showGuestLog.value = true;
-            }
-            if (!showGuestLog.value) {
-                loadWebStay();
-            }
-        } catch (error) {
-            console.error("Error al cargar los datos locales:", error);
-        }
-    };
+    // const loadWebDataModals = async () => {
+    //     try {
+    //         const guestLogResult = await guestStore.loadLocalGuest();
+    //         showGuestLog.value = guestLogResult ? false : true;
+    //         if(guestLogResult && !guestLogResult.name){
+    //             showGuestLog.value = true;
+    //         }
+    //         if (!showGuestLog.value) {
+    //             loadWebStay();
+    //         }
+    //     } catch (error) {
+    //         console.error("Error al cargar los datos locales:", error);
+    //     }
+    // };
 
-    const loadWebStay = async () => {
-        try {
-            const stayLogResult = await stayStore.loadLocalStay();
-            showStayLog.value = stayLogResult ? false : true;
-        } catch (error) {
-            console.error("Error al cargar los datos locales:", error);
-        } finally {
-            console.log('all proceesed')
-            guestProcesed.value = true
-            stayProcesed.value = true
-        }
-    };
+    // const loadWebStay = async () => {
+    //     try {
+    //         const stayLogResult = await stayStore.loadLocalStay();
+    //         showStayLog.value = stayLogResult ? false : true;
+    //     } catch (error) {
+    //         console.error("Error al cargar los datos locales:", error);
+    //     } finally {
+    //         guestProcesed.value = true
+    //         stayProcesed.value = true
+    //     }
+    // };
 
     const closeGuestLog = () => {
         showGuestLog.value = false;
+        console.log('closeGuestLog')
         setTimeout(() => {
-            loadWebStay();
+            // loadWebStay();
+            getStayModals();
         }, 1000);
     }
 
     const closeStayLog = () => {
         setTimeout(() => {
-            showStayLog.value = false
-        }, 1000);
+            showStayLog.value = false;
+            getStayModals();
+        }, 500);
     }
     
 
@@ -221,18 +259,17 @@
 
     const openWindowChat = () => {
         openChat.value = true;
-        if(stayDataRef.value){
+        if(stayData){
             chatStore.markMsgsAsRead();
         }
     }
 
-    watch(() => stayStore.stayData, async (newStayData) => {
+    watch(() => stayData, async (newStayData) => {
         if (!isMockup()) {
-            stayDataRef.value = newStayData;
-            // Intentar conectar pusher con los nuevos datos
-            connect_pusher();
-            if(stayDataRef.value){
-                chatStore.unreadMsgs();
+            // localStorage.setItem('stayData',newStayData);
+            // stayData = newStayData;
+            if(newStayData){
+                connect_pusher();
             }
         }
     }, { immediate: true });

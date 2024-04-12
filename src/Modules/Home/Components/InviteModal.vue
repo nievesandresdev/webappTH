@@ -53,7 +53,9 @@
     import THInputText from '@/components/THInputText.vue';
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest';
+    import { useRouter } from 'vue-router'
 
+    const router = useRouter();
     const toast = useToast();
     const { t } = useI18n();
 
@@ -79,6 +81,7 @@
         let response = await stayStore.existingStayThenMatchAndInvite(form)
         openInviteModal.value = false
         form.invitedEmail = null;
+        router.push({name: 'Home'})
         setTimeout(() => {
             toast(t('home.inviteModal.textToast'), {
                 toastClassName: "warning-toast",

@@ -100,7 +100,7 @@
   </template>
   
   <script setup>
-    import { onMounted, reactive, ref, computed } from 'vue';
+    import { onMounted, reactive, ref, computed, watch  } from 'vue';
     import THInputText from '@/components/THInputText.vue';
     import THInputField from '@/components/THInputField.vue';
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
@@ -152,6 +152,12 @@
     onMounted(() => {
         console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
     })
+
+    // Watcher
+    watch(() => props.openModal, (newValue, oldValue) => {
+        // Aquí puedes agregar cualquier lógica que necesites ejecutar cuando openModal cambie
+        console.log(`openModal changed from ${oldValue} to ${newValue}`);
+    });
 
     //functions
     const guestDelete = (i) =>{
