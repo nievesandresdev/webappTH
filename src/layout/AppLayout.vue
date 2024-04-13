@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
-        <Favicon v-if="stayData" />
+        <Favicon v-if="stayStore.stayData" />
 		<!-- Sidebar  -->
 		<div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
@@ -9,7 +9,7 @@
 			<slot></slot>
             <router-view></router-view>
             <div 
-                v-if="stayData && showChat && windowWidth > 767" 
+                v-if="stayStore.stayData && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
                 :class="{'hbg-warning':chatStore.countUnreadMessages,'hbg-gray-100':!chatStore.countUnreadMessages}"
                 @click="openWindowChat" 
@@ -75,7 +75,8 @@
 
     //store
     const hotelStore = useHotelStore()
-    const { stayData, getLocalStay, existsAndValidate, cleanStayData } = useStayStore()
+    const stayStore = useStayStore()
+    // const { getLocalStay, existsAndValidate, cleanStayData } 
     const { guestData, getLocalGuest, loadLocalGuest, saveOrUpdate } = useGuestStore()
     const localeStore = useLocaleStore()
     const chatStore = useChatStore()
@@ -128,23 +129,23 @@
 
     onUnmounted(() => {
         if (channel_chat.value && !isMockup()) {
+            console.log('se desmonto pusher')
             channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
             pusher.value.unsubscribe(channel_chat.value);
         }
     });
 
     const validateCurrentStay = async () =>{
-        if(guestData && stayData){
-            let exist = await existsAndValidate(stayData?.id)
+        if(guestData && stayStore.stayData){
+            let exist = await stayStore.existsAndValidate(stayStore.stayData?.id)
             if(!exist){
-                cleanStayData();
+                stayStore.cleanStayData();
                 await saveOrUpdate(guestData);
             }
         }
     }
     const checkUrlOrGetForms = async () =>{
         let response = await loadLocalGuest();
-        console.log('checkUrlOrGetForms',response)
         if(!response){
             getStayModals()
         }else{
@@ -159,9 +160,7 @@
 
     const getStayModals = () =>{
         let dataGuest = getLocalGuest();
-        let dataStay = getLocalStay();
-        console.log('dataGuest',dataGuest)
-        console.log('dataStay',dataStay)
+        let dataStay = stayStore.getLocalStay();
         if(!dataGuest || dataGuest && !dataGuest?.name){
             showGuestLog.value = true;
         }else{
@@ -177,13 +176,15 @@
     }
 
     const connect_pusher = () => {
-        if (stayData && !isSubscribed.value) {
-            const channelName = 'private-update-chat.' + stayData.id;
+        console.log('connect_pusher')
+        if (stayStore.stayData && !isSubscribed.value) {
+            const channelName = 'private-update-chat.' + stayStore.stayData.id;
             if (!isChannelSubscribed(channelName)) {
                 channel_chat.value = channelName;
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    console.log('App\\Events\\UpdateChatEvent')
                     chatStore.addMessage(data.message);
                     // si el chat esta abierto se marca como leido el mensaje
                     if(
@@ -196,8 +197,8 @@
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
-        } else if (!stayData && isSubscribed.value) {
-            // Lógica para desuscribirse del canal si stayData es null o undefined
+        } else if (!stayStore.stayData && isSubscribed.value) {
+            // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
             if (channel_chat.value) {
             pusher.value.unsubscribe(channel_chat.value);
             isSubscribed.value = false; // Marcar como no suscrito
@@ -235,7 +236,6 @@
 
     const closeGuestLog = () => {
         showGuestLog.value = false;
-        console.log('closeGuestLog')
         setTimeout(() => {
             // loadWebStay();
             getStayModals();
@@ -259,15 +259,16 @@
 
     const openWindowChat = () => {
         openChat.value = true;
-        if(stayData){
+        if(stayStore.stayData){
             chatStore.markMsgsAsRead();
         }
     }
 
-    watch(() => stayData, async (newStayData) => {
+    watch(() => stayStore.stayData, async (newStayData) => {
         if (!isMockup()) {
             // localStorage.setItem('stayData',newStayData);
             // stayData = newStayData;
+            console.log('LAYOUT newStayData',newStayData)
             if(newStayData){
                 connect_pusher();
             }
