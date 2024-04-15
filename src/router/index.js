@@ -58,12 +58,15 @@ const router = createRouter({
 router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore();
   const guestStore = useGuestStore();
+  const localeStore = useLocaleStore();
   loadSubdomain();
   await hotelStore.$load();
   let hotel = hotelStore.hotelData;
+  
   if (utils.isMockup() || !localStorage.getItem('guestId')) {
-    const localeStore = useLocaleStore();
     localeStore.$load(hotel?.language_default_webapp);
+  } else if (!utils.isMockup()) {
+    localeStore.$load();
   }
 
   if (to.meta.verifyHotel && !hotel) {

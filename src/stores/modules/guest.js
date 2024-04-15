@@ -88,6 +88,7 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await updateLanguageApi(data)  
         const { ok } = response
         if(ok && response.data){
+            console.log(lg, 'updateLanguage')
             localeStore.$load(lg)
             // window.location.reload()
         }
@@ -96,7 +97,6 @@ export const useGuestStore = defineStore('guest', () => {
     async function findLastStay (guestId) {
         // if(localStorage.getItem('stayData')) return;
         const response = await findLastStayApi(guestId)
-        console.log('findLastStayApiGuest',response)
         const { ok } = response
         if(ok){
             stayStore.setStayData(response.data,false)
