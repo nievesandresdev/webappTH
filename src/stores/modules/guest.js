@@ -88,8 +88,8 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await updateLanguageApi(data)  
         const { ok } = response
         if(ok && response.data){
-            console.log(lg, 'updateLanguage')
-            localeStore.$load(lg)
+            // console.log(lg, 'updateLanguage')
+            // localeStore.$load(lg)
             // window.location.reload()
         }
     }

@@ -8,7 +8,7 @@ export const useLocaleStore = defineStore('locale', () => {
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
     const availableLocation = ref(['es', 'en', 'fr'])
 
-    
+
 
     // ACTIONS
     function $change (lg) {

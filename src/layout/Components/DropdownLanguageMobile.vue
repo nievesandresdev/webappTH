@@ -90,8 +90,9 @@
 
     async function changeLocale (lg) {
         await guestStore.updateLanguage(lg)
+        localeStore.$change(lg)
         // route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
-        route.replace({ name: 'Home', query: {} }).then(() => {
+        route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
             window.location.reload();
         })
            
