@@ -94,8 +94,7 @@
         // route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
         route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
             window.location.reload();
-        })
-           
+        });
     }
 
 </script>
