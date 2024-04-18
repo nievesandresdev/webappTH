@@ -140,7 +140,7 @@
             let exist = await stayStore.existsAndValidate(stayStore.stayData?.id)
             if(!exist){
                 stayStore.cleanStayData();
-                await saveOrUpdate(guestData);
+                await saveOrUpdate(guestData, true);
             }
         }
     }

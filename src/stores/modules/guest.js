@@ -57,7 +57,7 @@ export const useGuestStore = defineStore('guest', () => {
         return guestData.value
     }
 
-    async function saveOrUpdate (data) {
+    async function saveOrUpdate (data, reload = false) {
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
@@ -72,6 +72,9 @@ export const useGuestStore = defineStore('guest', () => {
                     console.log('entro para crear estancias url')
                     stayStore.loadLocalStay();
                 }
+            }
+            if(reload){
+                window.location.reload();
             }
         }else{
             guestData.value = null;

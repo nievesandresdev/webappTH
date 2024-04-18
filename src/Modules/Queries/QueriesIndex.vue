@@ -111,6 +111,7 @@ async function getResponses(){
         guestId : guestStore?.guestData?.id,
     }
     responses.value = await queryStore.$getRecentlySortedResponses(params);
+    console.log('responses.value',responses.value)
 }
 
 function showFeedback(text){
