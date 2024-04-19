@@ -1,8 +1,9 @@
 <template>
     <header
         class="fixed bottom-0 left-0 w-full z-[2000] shadow-md border-t-2 border-gray-300 bg-white pt-2.5 sp:pt-3.5 sp:pb-3.5"
-        :class="!hotelStore?.hotelData?.show_experiences ? 'px-10 sp:px-12' : 'px-4 sp:px-6'"
+        :class="!hotelStore?.hotelData?.show_experiences ? 'px-6 sp:px-12' : 'px-2 sp:px-6'"
     >
+
         <ul class="flex justify-between relative">
             <div v-if="$utils.isMockup()" class="absolute top-0 left-0 w-full h-full z-10"></div>
             <router-link
@@ -70,7 +71,7 @@
                 </span>
             </router-link>
             <li
-                class="text-center no-link flex-col item-justify w-[56px] sp:w-[66px] relative"
+                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px] relative"
                 @click="openInboxModal"
             >
                 <span v-if="(chatStore.countUnreadMessages || queryStore.hasPendingQuery) && !$utils.isMockup()" class="hbg-warning h-3 w-3 rounded-full absolute right-0 top-0 left-4 mx-auto z-10"></span>
@@ -79,6 +80,7 @@
                     :src="
                         ['FakeQueriesIndex'].includes($route.name) || 
                         ['WindowChatMobile'].includes($route.name) || 
+                        ['FakeChatMobile'].includes($route.name) || 
                         ['QueriesIndex'].includes($route.name) ?
                              `/assets/icons/1.TH.MailBoxACTIVE.svg` : 
                              `/assets/icons/1.TH.MailBox.svg`
