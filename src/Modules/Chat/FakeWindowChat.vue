@@ -3,7 +3,7 @@
     <div class="height-chat hbg-gray-200 flex flex-col overflow-hidden no-scrollbar mb-[-26px]">
         <!-- header -->
         <div class="xs:py-2 py-3.5 text-center shadow-hoster hbg-white-100">
-            <h1 class="xs:text-xs text-base font-medium">{{settings.name}}</h1>
+            <h1 class="text-base font-medium xs:text-xs">{{settings.name}}</h1>
             <div class="text-center xs:mt-0 mt-1.5">
                 <p v-if="isAvailable" class="htext-green-600 xs:text-[10px] text-xs inline mr-2">Disponible</p>
                 <p v-else class="htext-alert-negative xs:text-[10px] text-xs inline mr-2">No disponible</p>
@@ -19,7 +19,7 @@
                 </p>
                 <div class="xs:mt-2 mt-3.5 flex flex-wrap justify-center">
                     <img 
-                        class="xs:w-4 xs:h-4 w-5 h-5 mx-2" 
+                        class="w-5 h-5 mx-2 xs:w-4 xs:h-4" 
                         v-for="lg in settings.languages" 
                         :src="'/assets/icons/'+lg.abbreviation+'.svg'" alt=""
                         :key="lg"
@@ -40,20 +40,20 @@
             </template>
         </div>
         <!-- input chat -->
-        <div class="input-chat xs:px-3 px-6 py-2 flex hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
-            <input type="text" class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2 min-w-[0px]">
-            <img class="ml-2 xs:w-4 xs:h-4 w-6 h-6 my-auto cursor-pointer" src="/assets/icons/2.TH.Sendicon.svg" alt="">
+        <div class="flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
+            <input type="text" class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2 min-w-[0px]" :disabled="$utils.isMockup()">
+            <img class="w-6 h-6 my-auto ml-2 cursor-pointer xs:w-4 xs:h-4" src="/assets/icons/2.TH.Sendicon.svg" alt="">
         </div>
 
     </div>
 
 
     <!-- modal mockup -->
-    <div v-if="$route.query.showAvailability" class="h-screen w-screen fixed top-0 left-0" style="background-color: rgba(0, 0, 0, 0.50);z-index:3000">  
+    <div v-if="$route.query.showAvailability" class="fixed top-0 left-0 w-screen h-screen" style="background-color: rgba(0, 0, 0, 0.50);z-index:3000">  
         <div class="hbg-white-100 rounded-[10px] absolute top-16 left-0 mx-2">
             <!-- header -->
             <p class="relative text-center py-2 text-[11px] font-medium border-b px-2">
-                <img class="w-4 h-4 absolute left-2 top-2" src="/assets/icons/1.TH.CLOSE.svg" alt="">
+                <img class="absolute w-4 h-4 left-2 top-2" src="/assets/icons/1.TH.CLOSE.svg" alt="">
                 Disponibilidad del Chat
             </p>
             <!-- body -->

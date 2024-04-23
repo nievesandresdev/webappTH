@@ -1,22 +1,22 @@
 <template>
-    <!-- <div class="height-chat hbg-gray-200 flex flex-col relative"> -->
+    <!-- <div class="relative flex flex-col height-chat hbg-gray-200"> -->
     <ScheduleModal  ref="scheduleModal"/>
-    <div ref="myDiv" class="hbg-gray-200 flex flex-col relative">
+    <div ref="myDiv" class="relative flex flex-col hbg-gray-200">
         <!-- header -->
-        <div class="py-4 text-center shadow-hoster hbg-white-100 sticky top-0 left-0">
+        <div class="sticky top-0 left-0 py-4 text-center shadow-hoster hbg-white-100">
             <img 
                 @click="goBack"
                 class="absolute top-8 left-4" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
             >
-            <img @click="closeChat" class="absolute top-4 left-4 w-6 h-6 hidden lg:block cursor-pointer" src="/assets/icons/back-arrow-on-circle.svg">
-            <h1 class="xs:text-xs text-base font-medium">{{settings.name}}</h1>
+            <img @click="closeChat" class="absolute hidden w-6 h-6 cursor-pointer top-4 left-4 lg:block" src="/assets/icons/back-arrow-on-circle.svg">
+            <h1 class="text-base font-medium xs:text-xs">{{settings.name}}</h1>
             <div class="text-center xs:mt-0 mt-1.5">
                 <p class="xs:text-[10px] text-xs inline mr-2" :class="isAvailable?'htext-green-600':'htext-alert-negative'">
                     {{isAvailable ? $t('chat.availabilty') : $t('chat.notAvailabilty')}}
                 </p>
                 <a 
                     href="javascript:void(0)" 
-                    class="black-link text-xs lg:text-sm font-medium inline mr-2"
+                    class="inline mr-2 text-xs font-medium black-link lg:text-sm"
                     @click="openHorary"
                 >{{$utils.capitalize($t('chat.horary'))}}</a>
             </div>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <!-- input chat -->
-        <div class="input-chat xs:px-3 px-6 py-2 flex hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
+        <div class="flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
             <textarea 
                 id="text-auto" 
                 class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2" :placeholder="$t('chat.inputChat')"
@@ -53,7 +53,7 @@
                 @keyup.enter="e => { sendMsg(e); showMenuDelayed(); }"
                 @keydown.enter="e => handleEnter(e)"
             ></textarea>
-            <div class="ml-2 my-auto" >
+            <div class="my-auto ml-2" >
                 <IconHover 
                     @click="sendMsg"
                     @touchend.prevent.stop="sendMsg"
