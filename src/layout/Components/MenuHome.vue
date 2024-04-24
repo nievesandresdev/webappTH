@@ -1,4 +1,5 @@
 <template>
+    <meta property="og:image" :content="`${hotelStore.$loadImage(hotelData?.image)}`" />
     <header id="header" class="block h-[50px] sp:h-[72px]" style="z-index: 1000 !important;">
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
@@ -6,9 +7,9 @@
                     <img :src="hotelStore.$loadImage(hotelData?.logo)" alt="Logo" class="w-auto h-[20px] sp:h-[40px]">
                 </template>
                 <template v-else>
-                    <div class="w-full h-full flex items-center justify-start">   
+                    <div class="flex items-center justify-start w-full h-full">   
                         <h4 
-                            class="text-xs sp:text-base font-medium text-white"
+                            class="text-xs font-medium text-white sp:text-base"
                         >
                             {{ hotelData?.name }}
                         </h4>
@@ -21,33 +22,33 @@
                 <div class="relative mr-[40px]">
                     <router-link
                         to="/"
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2 "
+                        class="p-2 mb-2 text-sm font-medium no-underline rounded-md hbtn-blur htext-white-100 "
                     >
                         Home
                     </router-link>
-                    <div class="active mt-2 w-full" :class="{'invisible': $route.name != 'Home'}" />
+                    <div class="w-full mt-2 active" :class="{'invisible': $route.name != 'Home'}" />
                 </div>
                 <!--    INSTALACIONES    -->
                 <div class="relative mr-[2.5rem]">
                     <router-link
                         to="/instalaciones"
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
+                        class="p-2 mb-2 text-sm font-medium no-underline rounded-md hbtn-blur htext-white-100"
                     >
                         {{ $utils.capitalize($t('layout.header.facilities')) }}
                     </router-link>
                     <!-- absolute top-5 left-0 -->
-                    <div class="active mt-2 w-full"  :class="{'invisible': $route.name != 'FacilityList'}" />
+                    <div class="w-full mt-2 active"  :class="{'invisible': $route.name != 'FacilityList'}" />
                 </div>
 
                 <!--    PLACES    -->
                 <div class="relative mr-[2.5rem]">
                     <router-link
                         to="/places"
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
+                        class="p-2 mb-2 text-sm font-medium no-underline rounded-md hbtn-blur htext-white-100"
                     >
                         {{ $utils.capitalize($t('layout.header.explore')) }}
                     </router-link>
-                    <div class="active mt-2 w-full"  :class="{'invisible': !['PlaceList', 'PlaceDetail'].includes($route.name)}" />
+                    <div class="w-full mt-2 active"  :class="{'invisible': !['PlaceList', 'PlaceDetail'].includes($route.name)}" />
                 </div>
 
                 <!--    EXPERIENCES    -->
@@ -56,15 +57,15 @@
                 <div  class="relative mr-[2.5rem]">
                     <router-link
                         to="/experiencias"
-                        class="hbtn-blur p-2 rounded-md font-medium no-underline htext-white-100 text-sm mb-2"
+                        class="p-2 mb-2 text-sm font-medium no-underline rounded-md hbtn-blur htext-white-100"
                     >
                         {{ $utils.capitalize($t('layout.header.experiences')) }}
                     </router-link>
-                    <div class="active mt-2 w-full"  :class="{'invisible': $route.name != 'ExperienceList'}" />
+                    <div class="w-full mt-2 active"  :class="{'invisible': $route.name != 'ExperienceList'}" />
 
                 </div>
             </div>
-            <div class="hidden md:flex items-center justify-end ml-auto">
+            <div class="items-center justify-end hidden ml-auto md:flex">
                 <DropdownLanguage />
             </div>
         </div>
