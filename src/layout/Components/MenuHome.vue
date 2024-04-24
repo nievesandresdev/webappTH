@@ -102,7 +102,7 @@ onMounted(() => {
     metaTag.content = hotelStore.$loadImage(hotelData?.image);
     metaTag.title = hotelData?.name;
 
-    console.log('metaTag',metaTag)
+    console.log('metaTag',metaTag,hotelData?.image)
 
     // Agregar la etiqueta meta al <head>
     document.head.appendChild(metaTag);
