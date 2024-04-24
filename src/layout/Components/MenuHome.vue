@@ -1,5 +1,4 @@
 <template>
-    
     <header id="header" class="block h-[50px] sp:h-[72px]" style="z-index: 1000 !important;">
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
@@ -87,12 +86,24 @@ const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
 const mainStore = useMainStore()
 const storageUrl = mainStore.URL_STORAGE
+
+//meta variables
+    
 //PROVIDE
 provide('modal_lang', modal_lang)
 //INJECT
 // const hoster = inject('hoster')
 
 onMounted(() => {
+    // Crear la etiqueta meta y atributos
+    console.log(hotelData?.image, hotelData?.name)
+    const metaTag = document.createElement('meta');
+    metaTag.name = 'og:image';
+    metaTag.content = hotelStore.$loadImage(hotelData?.image);
+    metaTag.title = hotelData?.name;
+
+    // Agregar la etiqueta meta al <head>
+    document.head.appendChild(metaTag);
 })
 
 //COMPUTEDS

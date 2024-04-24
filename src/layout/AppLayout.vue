@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper flex flex-col xs:hcursor-mobile relative">
+	<div class="relative flex flex-col wrapper xs:hcursor-mobile">
         <Favicon v-if="stayStore.stayData" />
 		<!-- Sidebar  -->
 		<div v-if="$route.name != 'Home'" class="hidden md:block">
