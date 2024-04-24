@@ -248,12 +248,40 @@
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
-        onMounted(async () => {
+        // Hook de inicialización
+        onMounted(() => {
+            // Crear las etiquetas meta y configurar atributos
+            const ogSiteNameTag = createMetaTag('og:site_name', hotelData.name);
+            const ogTitleTag = createMetaTag('og:title', hotelData.name);
+            // url de la imagen de fondo del header
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
+            const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+
+            console.log('backgroundImageUrl',backgroundImageUrl)
+            const ogImageTag = createMetaTag('og:image', backgroundImageUrl);
+            //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
+
+            // Agregar las etiquetas meta al <head>
+            document.head.appendChild(ogSiteNameTag);
+            document.head.appendChild(ogTitleTag);
+            document.head.appendChild(ogImageTag);
+            //document.head.appendChild(ogDescriptionTag);
+        });
+
+        // Función para crear una etiqueta meta
+        function createMetaTag(property, content) {
+            const metaTag = document.createElement('meta');
+            metaTag.setAttribute('property', property);
+            metaTag.content = content;
+            return metaTag;
+        }
+
+        /* onMounted(async () => {
             // Crear la etiqueta meta y atributos
             await nextTick();
             
             const metaTag = document.createElement('meta');
-            metaTag.name = 'og:image';
+            metaTag.setAttribute('property', 'og:image'); // Ejemplo de atributo "property"
 
             // url de la imagen de fondo del header
             const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
@@ -270,7 +298,7 @@
 
             // Agregar la etiqueta meta al <head>
             document.head.appendChild(metaTag);
-        })
+        }) */
 
         // onBeforeMount (() => {
         // })
