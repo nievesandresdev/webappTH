@@ -206,6 +206,7 @@
             onMounted,
             computed,
             watch,
+            nextTick 
         } from 'vue';//toRefs,
         import { useRouter } from 'vue-router';
         //COMPONENTS
@@ -247,14 +248,15 @@
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
-        onMounted(() => {
+        onMounted(async () => {
             // Crear la etiqueta meta y atributos
+            await nextTick();
             
             const metaTag = document.createElement('meta');
             metaTag.name = 'og:image';
 
             // url de la imagen de fondo del header
-            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'),"");
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
             const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
 
             console.log('backgroundImageUrl',backgroundImageUrl)
