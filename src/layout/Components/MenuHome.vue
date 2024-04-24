@@ -96,11 +96,13 @@ provide('modal_lang', modal_lang)
 
 onMounted(() => {
     // Crear la etiqueta meta y atributos
-    console.log(hotelData?.image, hotelData?.name)
+    console.log('ksuhks',hotelStore.$loadImage(hotelData?.image))
     const metaTag = document.createElement('meta');
     metaTag.name = 'og:image';
     metaTag.content = hotelStore.$loadImage(hotelData?.image);
     metaTag.title = hotelData?.name;
+
+    console.log('metaTag',metaTag)
 
     // Agregar la etiqueta meta al <head>
     document.head.appendChild(metaTag);
