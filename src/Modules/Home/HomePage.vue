@@ -261,10 +261,13 @@
             const ogImageTag = createMetaTag('og:image', backgroundImageUrl);
             //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
 
-            // Agregar las etiquetas meta al <head>
-            document.head.appendChild(ogSiteNameTag);
-            document.head.appendChild(ogTitleTag);
-            document.head.appendChild(ogImageTag);
+            // Encontrar la etiqueta existente <meta name="viewport">
+        const viewportMetaTag = document.querySelector('meta[name="viewport"]');
+
+        // Insertar las nuevas etiquetas después de la etiqueta <meta name="viewport">
+        viewportMetaTag.parentNode.insertBefore(ogSiteNameTag, viewportMetaTag.nextSibling);
+        viewportMetaTag.parentNode.insertBefore(ogTitleTag, viewportMetaTag.nextSibling);
+        viewportMetaTag.parentNode.insertBefore(ogImageTag, viewportMetaTag.nextSibling);
             //document.head.appendChild(ogDescriptionTag);
         });
 
