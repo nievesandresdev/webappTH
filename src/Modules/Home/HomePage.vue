@@ -249,15 +249,15 @@
 
         onMounted(() => {
             // Crear la etiqueta meta y atributos
-            console.log('ksuhks',hotelStore.$loadImage(hotelData?.image))
+            
             const metaTag = document.createElement('meta');
             metaTag.name = 'og:image';
 
             // url de la imagen de fondo del header
-            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'),"");
             const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
 
-            //console.log('backgroundImageUrl',backgroundImageUrl)
+            console.log('backgroundImageUrl',backgroundImageUrl)
 
             // Configurar la etiqueta meta con la URL de la imagen de fondo
             metaTag.content = backgroundImageUrl;
