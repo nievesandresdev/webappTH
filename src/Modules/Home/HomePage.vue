@@ -249,7 +249,9 @@
         const storageUrl = mainStore.URL_STORAGE
 
         // Hook de inicialización
-        onMounted(() => {
+        onMounted(async() => {
+
+            await nextTick();
             // Crear las etiquetas meta y configurar atributos
             const ogSiteNameTag = createMetaTag('og:site_name', hotelData.name);
             const ogTitleTag = createMetaTag('og:title', hotelData.name);
