@@ -253,6 +253,7 @@
             // Crear las etiquetas meta y configurar atributos
             const ogSiteNameTag = createMetaTag('og:site_name', hotelData.name);
             const ogTitleTag = createMetaTag('og:title', hotelData.name);
+            const ogTypeTag = createMetaTag('og:type', 'website');
             // url de la imagen de fondo del header
             const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
             const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
@@ -262,12 +263,13 @@
             //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
 
             // Encontrar la etiqueta existente <meta name="viewport">
-        const viewportMetaTag = document.querySelector('meta[name="viewport"]');
+            const viewportMetaTag = document.querySelector('meta[name="viewport"]');
 
-        // Insertar las nuevas etiquetas después de la etiqueta <meta name="viewport">
-        viewportMetaTag.parentNode.insertBefore(ogSiteNameTag, viewportMetaTag.nextSibling);
-        viewportMetaTag.parentNode.insertBefore(ogTitleTag, viewportMetaTag.nextSibling);
-        viewportMetaTag.parentNode.insertBefore(ogImageTag, viewportMetaTag.nextSibling);
+            // Insertar las nuevas etiquetas después de la etiqueta <meta name="viewport">
+            viewportMetaTag.parentNode.insertBefore(ogSiteNameTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogTitleTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogImageTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogTypeTag, viewportMetaTag.nextSibling);
             //document.head.appendChild(ogDescriptionTag);
         });
 
