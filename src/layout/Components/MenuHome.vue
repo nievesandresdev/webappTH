@@ -1,5 +1,5 @@
 <template>
-    <meta property="og:image" :content="`${hotelStore.$loadImage(hotelData?.image)}`" />
+    
     <header id="header" class="block h-[50px] sp:h-[72px]" style="z-index: 1000 !important;">
         <div class="container-fluid-landing flex items-center justify-start py-2.5 sp:py-4 pr-2">
             <div class=" w-[150px] sp:w-[207px] h-[20px] sp:h-[40px]">
