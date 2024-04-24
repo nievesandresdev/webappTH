@@ -5,7 +5,7 @@
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-center bg-cover" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-center bg-cover bg-hotel" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
                 <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-center bg-cover" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
                 <div v-else class="absolute inset-0 bg-center bg-cover" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
                 <div class="absolute inset-x-0 bottom-0 hidden h-16 lg:block" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;"></div>
@@ -248,18 +248,27 @@
         const storageUrl = mainStore.URL_STORAGE
 
         onMounted(() => {
-        // Crear la etiqueta meta y atributos
-        console.log('ksuhks',hotelStore.$loadImage(hotelData?.image))
-        const metaTag = document.createElement('meta');
-        metaTag.name = 'og:image';
-        metaTag.content = hotelStore.$loadImage(hotelData?.image);
-        metaTag.title = hotelData?.name;
+            // Crear la etiqueta meta y atributos
+            console.log('ksuhks',hotelStore.$loadImage(hotelData?.image))
+            const metaTag = document.createElement('meta');
+            metaTag.name = 'og:image';
 
-        console.log('metaTag',metaTag,hotelData?.image,storageUrl,storageUrl+hotelData?.image)
+            // url de la imagen de fondo del header
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
+            const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
 
-        // Agregar la etiqueta meta al <head>
-        document.head.appendChild(metaTag);
-    })
+            //console.log('backgroundImageUrl',backgroundImageUrl)
+
+            // Configurar la etiqueta meta con la URL de la imagen de fondo
+            metaTag.content = backgroundImageUrl;
+            //metaTag.content = hotelStore.$loadImage(hotelData?.image);
+            metaTag.title = hotelData?.name;
+
+            //console.log('metaTag',metaTag,metaTag.content)
+
+            // Agregar la etiqueta meta al <head>
+            document.head.appendChild(metaTag);
+        })
 
         // onBeforeMount (() => {
         // })
