@@ -206,7 +206,8 @@
             onMounted,
             computed,
             watch,
-            nextTick 
+            nextTick, 
+            h
         } from 'vue';//toRefs,
         import { useRouter } from 'vue-router';
         //COMPONENTS
@@ -218,6 +219,7 @@
         import MenuHome from '@/layout/Components/MenuHome.vue'
         import InviteModal from './Components/InviteModal.vue'
         import StayDataModal from './Components/StayDataModal.vue';
+        import { useHead } from '@vueuse/head'
 
         // STORE
         import { useMainStore } from '@/stores'
@@ -248,8 +250,25 @@
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
+        useHead({
+            // Can be static or computed
+            title: computed(() => hotelData.name),
+            meta: [
+                {
+                    name: `description`,
+                    content: computed(() => hotelData.description),
+                },
+                {
+                    property: 'og:image',
+                    content: computed(() => hotelStore.$loadImage(hotelData?.image)),
+                }
+
+                ],
+        
+        })
+
         // Hook de inicialización
-        onMounted(async() => {
+        /* onMounted(async() => {
 
             await nextTick();
             // Crear las etiquetas meta y configurar atributos
@@ -274,7 +293,7 @@
             viewportMetaTag.parentNode.insertBefore(ogTypeTag, viewportMetaTag.nextSibling);
             //document.head.appendChild(ogDescriptionTag);
         });
-
+ */
         // Función para crear una etiqueta meta
         function createMetaTag(property, content) {
             const metaTag = document.createElement('meta');

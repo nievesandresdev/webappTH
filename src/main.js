@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router';
 import Toast from "vue-toastification";
 import 'vue-toastification/dist/index.css';
+import { createHead } from '@vueuse/head'
+
 
 
 import './assets/css/style.css'; 
@@ -22,6 +24,8 @@ import { pinia } from './stores';
 import * as utils from './utils/utils.js'
 // import { useHotelStore } from '@/stores/modules/hotel'
 
+const head = createHead()
+
 function initializeApp () {
     moment.locale('es')
     moment.tz.setDefault('Europe/Madrid')
@@ -32,6 +36,7 @@ function initializeApp () {
     app.use(pinia)
     app.use(i18n)
     app.use(router)
+    app.use(head)
     app.config.globalProperties.$utils = utils
     app.config.globalProperties.$moment = moment
     app.provide('$moment', app.config.globalProperties.$moment)
