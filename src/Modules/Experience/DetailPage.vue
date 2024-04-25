@@ -157,13 +157,13 @@
                                                     alt="1.TH.IDIOMA"
                                                     class="mr-2 inline w-6"
                                                 />
-                                                {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: availablelanguages.firstLanguage, numbers: availablelanguages?.first }) : availablelanguages?.first }}
+                                                {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: $t(`language.${availablelanguages.firstLanguage}`), numbers: availablelanguages?.first }) : availablelanguages?.first }}
                                             </span>
                                         </button>
                                     </template>
                                     <template v-slot:content>
                                         <p class="text-sm font-medium mb-4">Idiomas disponibles:</p>
-                                        <p class="text-sm">{{ experienceData?.language_experince }}</p>
+                                        <p class="text-sm">{{ availablelanguages.languages?.map(lg => $t(`language.${lg}`)).join(', ') }}</p>
                                     </template>
                                 </THTooltip>
                                 <span class="text-sm flex items-center mr-6">
@@ -237,7 +237,7 @@
                                             alt="1.TH.IDIOMA"
                                             class="mr-[4px] sp:mr-2 inline w-[12px] sp:w-6"
                                         />
-                                    {{ availablelanguages.length > 0 ? `${availablelanguages.firstLanguage} y ${availablelanguages.numbers} más` : availablelanguages?.first }}
+                                    {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: $utils.titleCase($t(`language.${availablelanguages.firstLanguage}`)), numbers: availablelanguages?.length }) : availablelanguages?.firstLanguage }}
                                     </span>
                                 </li>
                                 <li class="border-b border-gray-300 py-[8px] sp:py-4">
@@ -464,7 +464,7 @@
     const { hotelData } = hotelStore
 
     import { useExperienceStore } from '@/stores/modules/experience'
-    import experience from '../../i18n/en/experience'   
+    import experience from '../../i18n/en/experience'
     const experienceStore = useExperienceStore()
 
     // DATA STATIC
@@ -515,6 +515,12 @@
         interval_date: null,
     })
     const productOptions = ref([])
+    const availablelanguages = ref({
+        numbers: null,
+        firstLanguage: null,
+        length: null,
+        languages: null,
+    })
 
     onMounted(() => {
         loadExperience()
@@ -547,16 +553,18 @@
     const variantPrice = computed(() => {
         return schedulesData?.bookableItems?.[0].seasons?.[0].pricingRecords?.[0].pricingDetails?.[0]?.maxTravelers
     })
-    const availablelanguages = computed( ()  => {
-        let languages = experienceData?.value.language_experince
-        languages = languages?.split(', ')
-        let text = ''
-        return {
-            'numbers': languages?.length - 1,
-            'firstLanguage': languages?.[0],
-            'length': languages?.length,
-        }
-    })
+    // const availablelanguages = computed( ()  => {
+    //     let l = experienceViatorData.value
+    //     console.log(l, 'l')
+    //     let languages = experienceData?.value.language_experince
+    //     languages = languages?.split(', ')
+    //     let text = ''
+    //     return {
+    //         'numbers': languages?.length - 1,
+    //         'firstLanguage': languages?.[0],
+    //         'length': languages?.length,
+    //     }
+    // })
     const textDescription = computed( ()  => {
         let text = experienceData?.value.description
         if (collapseDescription.value) {
@@ -639,7 +647,22 @@
         const response = await experienceStore.$apiFindInVIatorByShortId({shortId})
         if (response.ok) {
             experienceViatorData.value = response.data
+            loadLanguagesAvailables()
         }
+    }
+    function loadLanguagesAvailables () {
+        const { languageGuides } = experienceViatorData.value
+        const codesLanguages = languageGuides
+            .filter(lg => lg?.language)
+            .map(lg => lg.language)
+        const nameslanguages = codesLanguages
+        const languagesAvailablesData = {
+            numbers: nameslanguages?.length - 1,
+            firstLanguage: nameslanguages?.[0],
+            length: nameslanguages?.length,
+            languages: nameslanguages,
+        }
+        Object.assign(availablelanguages.value, languagesAvailablesData)
     }
     async function loadSchedulesInViator () {
         let shortId = getShortId()

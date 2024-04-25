@@ -49,6 +49,10 @@ import QueryEn from './en/query';
 import QueryEs from './es/query';
 import QueryFr from './fr/query';
 
+import LanguageEn from './en/language';
+import LanguageEs from './es/language';
+import LanguageFr from './fr/language';
+
 const messages = {
   en: {
     place: placeEn,
@@ -63,6 +67,7 @@ const messages = {
     facility: FacilityEn,
     about: AboutEn,
     query: QueryEn,
+    language: LanguageEn,
     // más módulos...
   },
   es: {
@@ -78,6 +83,7 @@ const messages = {
     facility: FacilityEs,
     about: AboutEs,
     query: QueryEs,
+    language: LanguageEs,
     // más módulos...
   },
   fr: {
@@ -93,6 +99,7 @@ const messages = {
     facility: FacilityFr,
     about: AboutFr,
     query: QueryFr,
+    language: LanguageFr,
     // más módulos...
   },
 };

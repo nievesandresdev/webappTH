@@ -34,15 +34,15 @@ export const useStayStore = defineStore('stay', () => {
         stayId.value = getUrlParam('e');
         if(!stayId.value) return null;
         let dataGuest = guestStore.getLocalGuest();
-        console.log('loadLocalStay - dataGuest',dataGuest)
+        // console.log('loadLocalStay - dataGuest',dataGuest)
         let params = {
             stayId: stayId.value,
             guestId: dataGuest.id,
             guestEmail:dataGuest.email
         }
-        console.log('params',params)
+        // console.log('params',params)
         let currentStayResponse = await existingThenMatchOrSaveApi(params);
-        console.log('existingThenMatchOrSaveApi',currentStayResponse)
+        // console.log('existingThenMatchOrSaveApi',currentStayResponse)
         if(currentStayResponse.ok){
             await setStayData(currentStayResponse.data)
             await queryStore.$existingPendingQuery()
@@ -119,10 +119,10 @@ export const useStayStore = defineStore('stay', () => {
 
     async function existingStayThenMatchAndInvite (params) {
         const response = await existingStayThenMatchAndInviteApi(params)
-        console.log('existingStayThenMatchAndInviteApi',response)
+        // console.log('existingStayThenMatchAndInviteApi',response)
         const { ok } = response   
         if(ok){
-            console.log('despues de soliciutd',response.data)
+            // console.log('despues de soliciutd',response.data)
             setStayData(response.data)
             await queryStore.$existingPendingQuery()
         }
@@ -140,7 +140,7 @@ export const useStayStore = defineStore('stay', () => {
 
     async function updateStayAndGuests (params) {
         let response = await updateStayAndGuestsApi(params);
-        console.log('updateStayAndGuestsApi',response)
+        // console.log('updateStayAndGuestsApi',response)
         if(response.ok && response.data){
             // let reloadStay = await loadLocalStay();
             await setStayData(response.data)
@@ -162,7 +162,7 @@ export const useStayStore = defineStore('stay', () => {
     async function existsAndValidate (stayId) {
         let params = {stayId}
         const response = await existsAndValidateApi(params)
-        console.log('existsAndValidateApi',response)
+        // console.log('existsAndValidateApi',response)
         const { ok } = response   
         if(ok && response.data){
             return true;
@@ -184,7 +184,7 @@ export const useStayStore = defineStore('stay', () => {
 
     // GETTERS
     const stayDataComputed = computed(() => {
-        console.log('stayDataComputed',stayData.value)
+        // console.log('stayDataComputed',stayData.value)
         if(stayData.value){
             chatStore.unreadMsgs();
         }
