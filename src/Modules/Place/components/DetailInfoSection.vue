@@ -139,7 +139,7 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendations?.message"
+                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendation_language_current"
                 </p>
             </div>
         </div>
