@@ -207,7 +207,7 @@
                                         {{ $t('experience.detail-page.title-recomendation') }}
                                     </span>
                                 </div>
-                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm" v-html="experienceData?.recomendations.message" />
+                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm" v-html="experienceData?.recomendation_language_current" />
                             </div>
                             
                             <!-- descripcion -->
