@@ -250,7 +250,7 @@
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
 
-        useHead({
+        /* useHead({
             // Can be static or computed
             title: computed(() => hotelData.name),
             meta: [
@@ -265,10 +265,10 @@
 
                 ],
         
-        })
+        }) */
 
         // Hook de inicialización
-        /* onMounted(async() => {
+        onMounted(async() => {
 
             await nextTick();
             // Crear las etiquetas meta y configurar atributos
@@ -293,7 +293,7 @@
             viewportMetaTag.parentNode.insertBefore(ogTypeTag, viewportMetaTag.nextSibling);
             //document.head.appendChild(ogDescriptionTag);
         });
- */
+
         // Función para crear una etiqueta meta
         function createMetaTag(property, content) {
             const metaTag = document.createElement('meta');
