@@ -9,6 +9,7 @@ export default {
         "recommed": "recomendado",
         "prominent": "destacado",
         "annulation-gratuite": "cancelación gratuita",
+        "non-refundable": "no reembolsable",
         "from":"Desde",
     },
     "list-page": {

@@ -48,7 +48,7 @@
                     {{ $t('experience.card-experience.annulation-gratuite').toUpperCase() }}
                 </template>
                 <template v-else>
-                    {{ $t('experience.card-experience.annulation-gratuite').toUpperCase() }}
+                    {{ $t('experience.card-experience.non-refundable').toUpperCase() }}
                 </template>
             </p>
         </div>

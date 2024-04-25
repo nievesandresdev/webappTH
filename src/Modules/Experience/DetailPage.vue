@@ -74,11 +74,11 @@
 
             <!-- MOBILE Carousel Imagenes Places -->
             <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative overflow-hidden">
+                <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4 z-10">
+                    <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
+                </button>
                 <Carousel :items-to-show="1">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
-                        <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4">
-                            <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
-                        </button>
                         <img 
                             :src="img.url"
                             :alt="img.url"
@@ -172,7 +172,7 @@
                                         alt="1.TH.MOBILE"
                                         class="mr-2 inline w-6"
                                     />
-                                    {{ $t('experience.detail-page.tag-ticket-mobile') }}}
+                                    {{ $t('experience.detail-page.tag-ticket-mobile') }}
                                 </span>
                             </div>
 
@@ -207,9 +207,7 @@
                                         {{ $t('experience.detail-page.title-recomendation') }}
                                     </span>
                                 </div>
-                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm">
-                                    {{ experienceData?.recomendations.message }}
-                                </p>
+                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm" v-html="experienceData?.recomendations.message" />
                             </div>
                             
                             <!-- descripcion -->
@@ -326,7 +324,7 @@
                                                     {{ startMeet }}
                                                 </span>
                                             </p>
-                                            <a :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
+                                            <a v-if="mapLinkStart" :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                     <div class="flex justify-start items-center mt-[8px] sp:mt-4">
@@ -342,7 +340,7 @@
                                                     {{ endMeet }}
                                                 </span>
                                             </p>
-                                            <a v-if="locations.value?.[1]" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
+                                            <a v-if="mapLinkEnd" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -581,46 +579,22 @@
         return experienceData.value?.location
     })
     const mapLinkStart = computed(() => {
-        if (locations.value?.[0].provider == 'GOOGLE') {
-            if (locations[0]?.result?.geometry) {
-                const lat = locations[0].result.geometry.location.lat
-                const lng = locations[0].result.geometry.location.lng
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
-        } else {
-            if (locations[0]?.center) {
-                const lat = locations[0].center.latitude
-                const lng = locations[0].center.longitude
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
+        const lat = experienceData?.value?.metting_point_latitude
+        const lng = experienceData?.value?.metting_point_longitude
+        if (lat && lng) {
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+            return mapsUrl;
         }
+        return;
     })
     const mapLinkEnd = computed(() => {
-        if (locations.value?.[1].provider == 'GOOGLE') {
-            if (locations[1]?.result?.geometry) {
-                const lat = locations[1].result.geometry.lat
-                const lng = locations[1].result.geometry.lng
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
-        } else {
-            if (locations[1]?.center) {
-                const lat = locations[1].center.latitude
-                const lng = locations[1].center.longitude
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
+        const lat = experienceData?.value?.end_point_latitude
+        const lng = experienceData?.value?.end_point_longitude
+        if (lat && lng) {
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+            return mapsUrl;
         }
+        return;
     })
     const startMeet = computed(()  => {
         if (locations.value?.[0].provider == 'GOOGLE') {
