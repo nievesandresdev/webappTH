@@ -11,19 +11,19 @@
                 <div class="container-fluid-landing">
                     
                     <!-- desktop-list-breadcrumb -->
-                    <router-link to="/" class="text-sm font-medium text-gray-ao inline-block">
+                    <router-link to="/" class="inline-block text-sm font-medium text-gray-ao">
                         Home
                     </router-link>
-                    <p class="inline text-gray-ao lg:mx-2 inline-block">
+                    <p class="inline-block inline text-gray-ao lg:mx-2">
                     >
                     </p>
-                    <router-link to="/experiencias" class="text-sm font-medium text-gray-ao inline-block">
+                    <router-link to="/experiencias" class="inline-block text-sm font-medium text-gray-ao">
                         {{ $t('experience.breadcrumbs.experiences') }}
                     </router-link>
-                    <p class="inline text-gray-ao lg:mx-2 inline-block">
+                    <p class="inline-block inline text-gray-ao lg:mx-2">
                     >
                     </p>
-                    <p class="text-sm font-medium text-gray-ao inline-block">
+                    <p class="inline-block text-sm font-medium text-gray-ao">
                     {{ experienceData?.title }}
                     </p>
                     <!-- END desktop-list-breadcrumb -->
@@ -31,9 +31,9 @@
             </div>
 
             <!-- Carousel Imagenes Experiencias-->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="hidden lg:block relative overflow-hidden">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="relative hidden overflow-hidden lg:block">
                 <div class="absolute bottom-0 left-0 w-full" style="z-index: 100000 !important;">
-                    <div class="container-fluid-landing flex justify-start w-full">     
+                    <div class="flex justify-start w-full container-fluid-landing">     
                         <div
                             class="text-[10px] text-white font-semibold rounded p-1 flex mb-4"
                             style="rgba(206, 206, 206, 0.10); backdrop-filter: blur(40px);"
@@ -59,8 +59,8 @@
                 </div>
                 <Carousel :items-to-show="3">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
-                        <div class="carousel__item mx-auto">
-                            <img :src="img.url" class="block w-full h-full rounded-10 object-cover"
+                        <div class="mx-auto carousel__item">
+                            <img :src="img.url" class="block object-cover w-full h-full rounded-10"
                                 :alt="img.url">
                         </div>
                     </Slide>
@@ -73,7 +73,7 @@
             <!-- END Carousel Imagenes Places -->
 
             <!-- MOBILE Carousel Imagenes Places -->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative overflow-hidden">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="relative overflow-hidden md:hidden">
                 <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4 z-10">
                     <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
                 </button>
@@ -82,7 +82,7 @@
                         <img 
                             :src="img.url"
                             :alt="img.url"
-                            class="block w-full h-32 sp:h-60 object-cover"
+                            class="block object-cover w-full h-32 sp:h-60"
                             style="border-radius: 0px 0px 10px 10px;"
                         >
                     </Slide>
@@ -93,15 +93,15 @@
             </div>
             <!-- END MOBILE Carousel Imagenes Places -->
 
-            <div id="content-detail" class="container-fluid-landing mb-6 lg:mb-0">
+            <div id="content-detail" class="mb-6 container-fluid-landing lg:mb-0">
                 <div class="grid grid-cols-1 lg:grid-cols-3 mt-4 lg:mt-6  lg:mb-[40px] no-gutters">
 
                     <!-- Datos Experiencia-->
 
-                    <div class="lg:col-span-2 px-0">
+                    <div class="px-0 lg:col-span-2">
                         <!-- seccion y contenido -->
 
-                        <div class="px-0 content-section pt-0 w-full" style="gap: 8px">
+                        <div class="w-full px-0 pt-0 content-section" style="gap: 8px">
 
                             <!-- titulo -->
                             <h2 class="text-[14px] sp:text-[22px] font-medium">
@@ -133,12 +133,12 @@
                             </div>
 
                             <!-- duracion -->
-                            <div class="mt-4 hidden lg:flex">
-                                <span class="text-sm flex items-center mr-6">
+                            <div class="hidden mt-4 lg:flex">
+                                <span class="flex items-center mr-6 text-sm">
                                     <img
                                         :src="`/assets/icons/1.TH.CLOCK.svg`"
                                         alt="1.TH.CLOCK"
-                                        class="mr-2 inline w-6"
+                                        class="inline w-6 mr-2"
                                     />
                                     {{ duration }}
                                 </span>
@@ -149,28 +149,28 @@
                                 >
                                     <template v-slot:button>
                                         <button
-                                            class="underline hbtn-tertiary mr-6"
+                                            class="mr-6 underline hbtn-tertiary"
                                         >
-                                            <span class="text-sm flex items-center">
+                                            <span class="flex items-center text-sm">
                                                 <img
                                                     :src="`/assets/icons/1.TH.IDIOMA.svg`"
                                                     alt="1.TH.IDIOMA"
-                                                    class="mr-2 inline w-6"
+                                                    class="inline w-6 mr-2"
                                                 />
                                                 {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: availablelanguages.firstLanguage, numbers: availablelanguages?.first }) : availablelanguages?.first }}
                                             </span>
                                         </button>
                                     </template>
                                     <template v-slot:content>
-                                        <p class="text-sm font-medium mb-4">Idiomas disponibles:</p>
+                                        <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
                                         <p class="text-sm">{{ experienceData?.language_experince }}</p>
                                     </template>
                                 </THTooltip>
-                                <span class="text-sm flex items-center mr-6">
+                                <span class="flex items-center mr-6 text-sm">
                                     <img
                                         :src="`/assets/icons/1.TH.MOBILE.svg`"
                                         alt="1.TH.MOBILE"
-                                        class="mr-2 inline w-6"
+                                        class="inline w-6 mr-2"
                                     />
                                     {{ $t('experience.detail-page.tag-ticket-mobile') }}
                                 </span>
@@ -314,7 +314,7 @@
                             </div>
                             <div class="mt-[10px] sp:mt-2.5 lg:mt-4 lg:mb-0">
                                 <div class="mt-[4px] sp:mt-2">
-                                    <div class="flex justify-start items-center">
+                                    <div class="flex items-center justify-start">
                                         <img src="/assets/icons/1.TH.PINPOINT.svg" class="w-[12px] sp:w-5 h-[12px] sp:h-5 mr-[4px] sp:mr-2"
                                             alt="1.TH.PINPOINT">
                                         <div>
@@ -421,8 +421,8 @@
                     </div>
 
                     <!-- Calendario -->
-                    <div v-if="experienceViatorData && schedulesData" id="" class="hidden lg:block lg:col-span-1 pl-4 pr-2 fixed-calendar relative z-10">
-                        <div class="container-calendar h-36 w-full sticky rounded-2xl p-4 z-10" id="container-calendar">
+                    <div v-if="experienceViatorData && schedulesData" id="" class="relative z-10 hidden pl-4 pr-2 lg:block lg:col-span-1 fixed-calendar">
+                        <div class="sticky z-10 w-full p-4 container-calendar h-36 rounded-2xl" id="container-calendar">
                             <DetailPageSectionReserve />
                         </div>
                     </div>
