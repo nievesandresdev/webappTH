@@ -9,6 +9,7 @@ export default {
         "recommed": "recommended",
         "prominent": "prominent",
         "annulation-gratuite": "free cancelation",
+        "non-refundable": "non refundable",
         "from":"From",
     },
     "list-page": {
@@ -32,7 +33,7 @@ export default {
         "text-count-list": "Mixed experiences",
         "text-count-list-mobile": "{count} Experiences have been found.",
         "without-results": {
-            "title": "No experiences founds",
+            "title": "No experiences found",
             "text": "No experiences found in this city. We invite you to explore other cities, where you will discover various experiences and activities."
         },
         "btn-load-more": "Load more"

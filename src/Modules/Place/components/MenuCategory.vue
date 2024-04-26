@@ -1,7 +1,7 @@
 <template>
 
     <div
-        class="w-full flex menu-scroll-top md:hidden"
+        class="flex w-full menu-scroll-top md:hidden"
         :class="{'sticky top-0 left-0 w-full bg-white z-30':!mobileList}"
     >
         <template v-if="mobileList">
@@ -15,11 +15,21 @@
             </div>
         </template>
         <template v-else>
-            <div
+           <!-- codigo anterior  
+             <div
                 v-for="(item, index) in typeplacesTranslate" :key="index"
                 @click="slideToSection(index)"
                 class="text-center menu-mobile-font pt-2.5 w-1/3"
                 :class="{'menu-mobile-active': (scroll > 384 && scroll < 650 && index == 1) || (scroll < 384 && index == 0) || (scroll > 650 && index == 2)}"
+            >
+                <span class="text-sm font-medium">{{ item.name }}</span>
+            </div> -->
+
+            <div
+                v-for="(item, index) in typeplacesTranslate" :key="index"
+                @click="slideToSection(index)"
+                class="text-center menu-mobile-font pt-2.5 w-1/3"
+                :class="{'menu-mobile-active': (scroll > 384 && scroll < 519 && index == 1) || (scroll < 384 && index == 0) || (scroll > 520 && index == 2 )}"
             >
                 <span class="text-sm font-medium">{{ item.name }}</span>
             </div>
@@ -66,7 +76,7 @@
     <template v-if="!mobileList">
         <div
             v-for="(item, index) in typeplacesTranslate" :key="index"
-            class="w-full px-4 lg:hidden pt-4"
+            class="w-full px-4 pt-4 lg:hidden"
         >
             <h1 class="title-card-category" v-if="item.id != 5">{{item.name}}</h1>
             <div
@@ -88,10 +98,10 @@
                             <div class="w-14 h-14 hbg-white-100 rounded-[6px] ml-4 my-8">
                                 <img class="w-full py-2.5 px-2"  :src="itemCat.icon" alt="" srcset="">
                             </div>
-                            <span class="z-30 text-card-explora absolute font-explora" >
+                            <span class="absolute z-30 text-card-explora font-explora" >
                                 {{ itemCat.name }}
                             </span>
-                            <span class="count-card absolute">{{ itemCat.count }}</span>
+                            <span class="absolute count-card">{{ itemCat.count }}</span>
                         </div>
                     </div>
                 </div>
@@ -99,7 +109,7 @@
         </div>
     </template>
 
-    <div class="hidden md:block w-full">
+    <div class="hidden w-full md:block">
         <div
             v-for="(itemType, indexType) in typeplacesTranslate"
             class="w-full"
@@ -107,7 +117,7 @@
         >
             <!-- :style="(formFilter.typeplace == itemType.id)  && !formFilter.categoriplace ? 'background: #EBF4F9; border-radius: 0px 20px 20px 0px;' : ''" -->
             <p
-                class="pl-2 font-medium pt-2 pb-2 text-sm filters"
+                class="pt-2 pb-2 pl-2 text-sm font-medium filters"
                 @click="changeCategory('typeplace', itemType.id)"
             >
                 {{ itemType.name }}
@@ -115,14 +125,14 @@
             <templete v-for="(itemCategory, indexCat) in itemType.categori_places">
                 <div
                     v-if="itemCategory.show == 1"
-                    class="flex aling-center filters pt-2 pb-2 cursor-pointer"
+                    class="flex pt-2 pb-2 cursor-pointer aling-center filters"
                     :style="((formFilter.typeplace == itemType.id) && (formFilter.categoriplace == itemCategory.id)) ? 'background: #EBF4F9; border-radius: 0px 20px 20px 0px;' : ''"
                     @click="changeCategory(itemCategory.id, itemCategory.type_places_id)"
                 >
-                    <div class="inline-block ml-4 w-6 h-6">
-                        <img class=" w-full h-full" :src="itemCategory.icon" alt="monumento image">
+                    <div class="inline-block w-6 h-6 ml-4">
+                        <img class="w-full h-full " :src="itemCategory.icon" alt="monumento image">
                     </div>
-                    <p class="pl-3 text-sm inline-block">{{ itemCategory.name }}</p>
+                    <p class="inline-block pl-3 text-sm">{{ itemCategory.name }}</p>
                 </div>
             </templete>
         </div>
@@ -206,8 +216,8 @@
             },
             compras: {
                 es: 'Compras',
-                en: 'Shoppings',
-                fr: 'Shoppings',
+                en: 'Shopping',
+                fr: 'Shopping',
             },
             otros: {
                 es: 'Otros',

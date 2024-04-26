@@ -5,10 +5,10 @@
         <!-- card banner -->
         <section class="relative h-[210px] sp:h-[345px] lg:h-screen z-[10]"> 
             <div class="w-full h-[150px] sp:h-[226px] lg:h-full relative">          
-                <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
-                <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
-                <div v-else class="absolute inset-0 bg-cover bg-center" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
-                <div class="hidden lg:block absolute inset-x-0 bottom-0 h-16" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;"></div>
+                <div v-if="hotelData.image" class="absolute inset-0 bg-center bg-cover bg-hotel" :style="`background-image: url('${hotelStore.$loadImage(hotelData?.image)}'); background-size: cover;`"></div>
+                <!-- <div v-if="hotelData.image" class="absolute inset-0 bg-center bg-cover" :style="`background-image: url(${storageUrl+hotelData?.image})`"></div> -->
+                <div v-else class="absolute inset-0 bg-center bg-cover bg-hotel" :style="`background-image: url(${storageUrl}/storage/gallery/general-1.jpg)`"></div>  
+                <div class="absolute inset-x-0 bottom-0 hidden h-16 lg:block" style="background-image: url('/assets/img/home/gradient-white.png'); background-repeat: no-repeat;  background-size: 100% 64px;"></div>
                 <div
                     class="block lg:hidden absolute inset-x-0 -bottom-0.5 w-full"
                     :class="hotelData.show_profile || stayStore?.stayData?.room || $utils.isMockup() ? 'h-[40px] sp:h-16 gradient-top' : 'h-[30px] sp:h-12 gradient-top-min'"
@@ -16,7 +16,7 @@
                 />
             </div>
             <div
-                class="lg:hidden w-full"
+                class="w-full lg:hidden"
                 :class="hotelData.show_profile || stayStore?.stayData?.room  || $utils.isMockup() ? 'h-[70px] sp:h-[111px] gradient-bottom' : 'h-[30px] sp:h-[40px] gradient-bottom-min'"
                 style="background-image: url('/assets/img/home/gradient-mobile.png'); background-repeat: no-repeat; object-fit: cover;"
             />
@@ -30,7 +30,7 @@
                     <!-- content card -->
                     <div class="w-full lg:w-[453px] rounded-xl p-2.5 sp:p-4 z-[10000]" style="background: rgba(206, 206, 206, 0.10); backdrop-filter: blur(40px)">
                         <!-- welcome to the guest -->
-                        <p class="text-sm font-semibold truncate text-white leading-110">
+                        <p class="text-sm font-semibold text-white truncate leading-110">
                             {{ $t('home.title-welcome') }} {{ $utils.titleCase(guestStore?.guestData?.name) }}
                         </p>
                         <!-- settings button -->
@@ -41,31 +41,31 @@
                             <img @click="openStaySettings" class="w-6 h-6 ml-auto" src="/assets/icons/1.TH.SETTINGS.SHAPE.svg" alt="">
                         </div>
                         <!-- date stay and room -->
-                        <div class="flex items-center mt-2 justify-between">
+                        <div class="flex items-center justify-between mt-2">
                             <div class="">
                                 <div class="inline-block">
-                                    <h4 class="text-sm font-medium leading-110 text-white">
+                                    <h4 class="text-sm font-medium text-white leading-110">
                                         {{ stayStore?.stayData?.check_in ? $moment(stayStore?.stayData?.check_in).format('DD/MM') : '' }}
                                     </h4>
-                                    <h5 class="text-xs font-medium leading-90 text-white mt-1 ">
+                                    <h5 class="mt-1 text-xs font-medium text-white leading-90 ">
                                         {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkin : '' }}
                                     </h5>
                                 </div>
                                 <div class="inline-block ml-4">
-                                    <h4 class="text-sm font-medium leading-110 text-white" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                    <h4 class="text-sm font-medium text-white leading-110" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
                                         {{ stayStore?.stayData?.check_out ? $moment(stayStore?.stayData?.check_out).format('DD/MM') : '' }}
                                     </h4>
-                                    <h5 class="text-xs font-medium leading-90 text-white mt-1" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
+                                    <h5 class="mt-1 text-xs font-medium text-white leading-90" :class="{'h-3': !hotelData?.checkin || !hotelData?.checkout}">
                                         {{ hotelData?.checkin && hotelData?.checkout ? hotelData?.checkout : '' }}
                                     </h5>
                                 </div>
                             </div>
                             <div v-if="stayStore?.stayData?.room" class="text-right">
-                                <h5 class="text-xs font-medium leading-90 text-white">{{ $t('home.hab') }}</h5>
-                                <h4 class="text-sm font-medium leading-110 text-white mt-1">{{stayStore?.stayData?.room}}</h4>
+                                <h5 class="text-xs font-medium text-white leading-90">{{ $t('home.hab') }}</h5>
+                                <h4 class="mt-1 text-sm font-medium text-white leading-110">{{stayStore?.stayData?.room}}</h4>
                             </div>
                         </div>
-                        <div class="flex mt-2 items-center">
+                        <div class="flex items-center mt-2">
                             <p class="text-sm font-semibold text-white">
                                 {{ $t('home.guestTitle')}} 
                                 {{ stayStore?.stayData?.uniqueAccessesCount }} / 
@@ -89,7 +89,7 @@
         <!-- end card banner -->
 
         <!-- more info -->
-        <div v-if="hotelData?.show_profile" class="text-center mt-2 sp:mt-4">
+        <div v-if="hotelData?.show_profile" class="mt-2 text-center sp:mt-4">
             <router-link
                     :to="{name:'HotelAbout'}"
                     class="hbtn-primary leading-90 text-[10px] sp:text-xs font-medium p-1 sp:p-2"
@@ -101,10 +101,10 @@
         </div>
 
         <!-- carousel's -->
-         <div class="mb-4 sp:mb-6 mt-4" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''">
+         <div class="mt-4 mb-4 sp:mb-6" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''">
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-6">
-                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                <div class="flex items-center justify-between mt-4 sp:mt-6">
+                    <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}
                     </h2>
                     <!-- <router-link :to="{name:'FacilityList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
@@ -126,8 +126,8 @@
             </section>
 
             <section v-if="crossellingsData?.crosselling_places_whatvisit?.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
-                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                <div class="flex items-center justify-between mt-4 sp:mt-8">
+                    <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
@@ -142,8 +142,8 @@
                 </div>
             </section>
             <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
-                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                <div class="flex items-center justify-between mt-4 sp:mt-8">
+                    <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
@@ -159,8 +159,8 @@
             </section>
             
             <section v-if="crossellingsData?.crosselling_places_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
-                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                <div class="flex items-center justify-between mt-4 sp:mt-8">
+                    <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
@@ -176,8 +176,8 @@
             </section>
 
             <section v-if="crossellingsData?.crosselling_experiences?.length > 0 && hotelData.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
-                <div class="flex justify-between items-center mt-4 sp:mt-8">
-                    <h2 class="text-xs sp:text-base lg:text-lg font-medium">
+                <div class="flex items-center justify-between mt-4 sp:mt-8">
+                    <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-experience.title')) }}
                     </h2>
                     <router-link :to="{name:'ExperienceList'}" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)">
@@ -206,6 +206,8 @@
             onMounted,
             computed,
             watch,
+            nextTick, 
+            h
         } from 'vue';//toRefs,
         import { useRouter } from 'vue-router';
         //COMPONENTS
@@ -217,6 +219,7 @@
         import MenuHome from '@/layout/Components/MenuHome.vue'
         import InviteModal from './Components/InviteModal.vue'
         import StayDataModal from './Components/StayDataModal.vue';
+        import { useHead } from '@vueuse/head'
 
         // STORE
         import { useMainStore } from '@/stores'
@@ -246,6 +249,82 @@
         const inviteModal  = ref(null)
         const stayDataModal  = ref(null)
         const storageUrl = mainStore.URL_STORAGE
+
+        /* useHead({
+            // Can be static or computed
+            title: computed(() => hotelData.name),
+            meta: [
+                {
+                    name: `description`,
+                    content: computed(() => hotelData.description),
+                },
+                {
+                    property: 'og:image',
+                    content: computed(() => hotelStore.$loadImage(hotelData?.image)),
+                }
+
+                ],
+        
+        }) */
+
+        // Hook de inicialización
+        onMounted(async() => {
+
+            await nextTick();
+            // Crear las etiquetas meta y configurar atributos
+            const ogSiteNameTag = createMetaTag('og:site_name', hotelData.name);
+            const ogTitleTag = createMetaTag('og:title', hotelData.name);
+            const ogTypeTag = createMetaTag('og:type', 'website');
+            // url de la imagen de fondo del header
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
+            const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+
+            console.log('backgroundImageUrl',backgroundImageUrl)
+            const ogImageTag = createMetaTag('og:image', backgroundImageUrl);
+            //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
+
+            // Encontrar la etiqueta existente <meta name="viewport">
+            const viewportMetaTag = document.querySelector('meta[name="viewport"]');
+
+            // Insertar las nuevas etiquetas después de la etiqueta <meta name="viewport">
+            viewportMetaTag.parentNode.insertBefore(ogSiteNameTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogTitleTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogImageTag, viewportMetaTag.nextSibling);
+            viewportMetaTag.parentNode.insertBefore(ogTypeTag, viewportMetaTag.nextSibling);
+            //document.head.appendChild(ogDescriptionTag);
+        });
+
+        // Función para crear una etiqueta meta
+        function createMetaTag(property, content) {
+            const metaTag = document.createElement('meta');
+            metaTag.setAttribute('property', property);
+            metaTag.content = content;
+            return metaTag;
+        }
+
+        /* onMounted(async () => {
+            // Crear la etiqueta meta y atributos
+            await nextTick();
+            
+            const metaTag = document.createElement('meta');
+            metaTag.setAttribute('property', 'og:image'); // Ejemplo de atributo "property"
+
+            // url de la imagen de fondo del header
+            const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
+            const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+
+            console.log('backgroundImageUrl',backgroundImageUrl)
+
+            // Configurar la etiqueta meta con la URL de la imagen de fondo
+            metaTag.content = backgroundImageUrl;
+            //metaTag.content = hotelStore.$loadImage(hotelData?.image);
+            metaTag.title = hotelData?.name;
+
+            //console.log('metaTag',metaTag,metaTag.content)
+
+            // Agregar la etiqueta meta al <head>
+            document.head.appendChild(metaTag);
+        }) */
 
         // onBeforeMount (() => {
         // })

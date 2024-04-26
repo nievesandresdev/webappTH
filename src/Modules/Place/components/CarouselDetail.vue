@@ -3,7 +3,7 @@
     <div id="carousel-show-place" v-if="place?.place_images?.length > 0"  class="hidden lg:block">
         <Carousel :items-to-show="3">
             <Slide v-for="(img, index) in place.place_images" :key="index">
-                <div class="carousel__item mx-auto">
+                <div class="mx-auto carousel__item">
                     <img :src="getImagePath(img)" class="block w-full h-full rounded-[10px] object-cover"
                         alt="...">
                 </div>
@@ -16,18 +16,18 @@
     </div>
     <!-- END Carousel Imagenes Places -->
     <!-- TABLET Carousel Imagenes Places -->
-    <div class="hidden md:flex lg:hidden overflow-x-auto">
+    <div class="hidden overflow-x-auto md:flex lg:hidden">
         <template  v-for="(img, index) in place?.place_images" :key="index">
             <img 
                 :src="getImagePath(img)" 
-                class="block h-72 object-cover mr-4"
+                class="block object-cover mr-4 h-72"
                 style="min-width:24rem"
             >
         </template>
     </div>
     <!-- END Carousel Imagenes Places -->
     <!-- MOBILE Carousel Imagenes Places -->
-    <div id="carousel-show-place-mobile" v-if="place?.place_images?.length > 0"  class="md:hidden relative">
+    <div id="carousel-show-place-mobile" v-if="place?.place_images?.length > 0"  class="relative md:hidden">
         <Carousel :items-to-show="1">
             <Slide v-for="(img, index) in place.place_images" :key="index">
                 <router-link 

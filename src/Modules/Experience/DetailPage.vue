@@ -11,19 +11,19 @@
                 <div class="container-fluid-landing">
                     
                     <!-- desktop-list-breadcrumb -->
-                    <router-link to="/" class="text-sm font-medium text-gray-ao inline-block">
+                    <router-link to="/" class="inline-block text-sm font-medium text-gray-ao">
                         Home
                     </router-link>
-                    <p class="inline text-gray-ao lg:mx-2 inline-block">
+                    <p class="inline-block inline text-gray-ao lg:mx-2">
                     >
                     </p>
-                    <router-link to="/experiencias" class="text-sm font-medium text-gray-ao inline-block">
+                    <router-link to="/experiencias" class="inline-block text-sm font-medium text-gray-ao">
                         {{ $t('experience.breadcrumbs.experiences') }}
                     </router-link>
-                    <p class="inline text-gray-ao lg:mx-2 inline-block">
+                    <p class="inline-block inline text-gray-ao lg:mx-2">
                     >
                     </p>
-                    <p class="text-sm font-medium text-gray-ao inline-block">
+                    <p class="inline-block text-sm font-medium text-gray-ao">
                     {{ experienceData?.title }}
                     </p>
                     <!-- END desktop-list-breadcrumb -->
@@ -31,9 +31,9 @@
             </div>
 
             <!-- Carousel Imagenes Experiencias-->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="hidden lg:block relative overflow-hidden">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place"  class="relative hidden overflow-hidden lg:block">
                 <div class="absolute bottom-0 left-0 w-full" style="z-index: 100000 !important;">
-                    <div class="container-fluid-landing flex justify-start w-full">     
+                    <div class="flex justify-start w-full container-fluid-landing">     
                         <div
                             class="text-[10px] text-white font-semibold rounded p-1 flex mb-4"
                             style="rgba(206, 206, 206, 0.10); backdrop-filter: blur(40px);"
@@ -59,8 +59,8 @@
                 </div>
                 <Carousel :items-to-show="3">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
-                        <div class="carousel__item mx-auto">
-                            <img :src="img.url" class="block w-full h-full rounded-10 object-cover"
+                        <div class="mx-auto carousel__item">
+                            <img :src="img.url" class="block object-cover w-full h-full rounded-10"
                                 :alt="img.url">
                         </div>
                     </Slide>
@@ -73,16 +73,16 @@
             <!-- END Carousel Imagenes Places -->
 
             <!-- MOBILE Carousel Imagenes Places -->
-            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="md:hidden relative overflow-hidden">
+            <div v-if="experienceData?.images?.length > 0" id="carousel-show-place-mobile"  class="relative overflow-hidden md:hidden">
+                <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4 z-10">
+                    <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
+                </button>
                 <Carousel :items-to-show="1">
                     <Slide v-for="(img, index) in experienceData?.images" :key="index">
-                        <button @click="$router.go(-1)" class="rounded-full bg-white p-1 sp:p-2 absolute top-2.5 sp:top-4 left-2.5 sp:left-4">
-                            <img class="w-2.5 sp:w-4" src="/assets/icons/arrow-back.svg"/>
-                        </button>
                         <img 
                             :src="img.url"
                             :alt="img.url"
-                            class="block w-full h-32 sp:h-60 object-cover"
+                            class="block object-cover w-full h-32 sp:h-60"
                             style="border-radius: 0px 0px 10px 10px;"
                         >
                     </Slide>
@@ -93,15 +93,15 @@
             </div>
             <!-- END MOBILE Carousel Imagenes Places -->
 
-            <div id="content-detail" class="container-fluid-landing mb-6 lg:mb-0">
+            <div id="content-detail" class="mb-6 container-fluid-landing lg:mb-0">
                 <div class="grid grid-cols-1 lg:grid-cols-3 mt-4 lg:mt-6  lg:mb-[40px] no-gutters">
 
                     <!-- Datos Experiencia-->
 
-                    <div class="lg:col-span-2 px-0">
+                    <div class="px-0 lg:col-span-2">
                         <!-- seccion y contenido -->
 
-                        <div class="px-0 content-section pt-0 w-full" style="gap: 8px">
+                        <div class="w-full px-0 pt-0 content-section" style="gap: 8px">
 
                             <!-- titulo -->
                             <h2 class="text-[14px] sp:text-[22px] font-medium">
@@ -124,6 +124,7 @@
                                         class="w-[10px] sp:w-4"
                                     />
                                 </div>
+                                holaa
                                 <div class="flex item-center">
                                     <span class="text-[10px] sp:text-sm mr-[8px] sp:mr-2 font-semibold">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</span>
                                     <span class="text-[10px] sp:text-sm font-medium mr-[8px] sp:mr-2">{{ experienceData?.reviews.total_reviews }} {{ $t('experience.detail-page.opinions-word') }}</span>
@@ -133,12 +134,12 @@
                             </div>
 
                             <!-- duracion -->
-                            <div class="mt-4 hidden lg:flex">
-                                <span class="text-sm flex items-center mr-6">
+                            <div class="hidden mt-4 lg:flex">
+                                <span class="flex items-center mr-6 text-sm">
                                     <img
                                         :src="`/assets/icons/1.TH.CLOCK.svg`"
                                         alt="1.TH.CLOCK"
-                                        class="mr-2 inline w-6"
+                                        class="inline w-6 mr-2"
                                     />
                                     {{ duration }}
                                 </span>
@@ -149,30 +150,35 @@
                                 >
                                     <template v-slot:button>
                                         <button
-                                            class="underline hbtn-tertiary mr-6"
+                                            class="mr-6 underline hbtn-tertiary"
                                         >
-                                            <span class="text-sm flex items-center">
+                                            <span class="flex items-center text-sm">
                                                 <img
                                                     :src="`/assets/icons/1.TH.IDIOMA.svg`"
                                                     alt="1.TH.IDIOMA"
-                                                    class="mr-2 inline w-6"
+                                                    class="inline w-6 mr-2"
                                                 />
-                                                {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: availablelanguages.firstLanguage, numbers: availablelanguages?.first }) : availablelanguages?.first }}
+                                                {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: $t(`language.${availablelanguages.firstLanguage}`), numbers: availablelanguages?.first }) : availablelanguages?.first }}
                                             </span>
                                         </button>
                                     </template>
                                     <template v-slot:content>
-                                        <p class="text-sm font-medium mb-4">Idiomas disponibles:</p>
+<<<<<<< HEAD
+                                        <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
                                         <p class="text-sm">{{ experienceData?.language_experince }}</p>
+=======
+                                        <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
+                                        <p class="text-sm">{{ availablelanguages.languages?.map(lg => $t(`language.${lg}`)).join(', ') }}</p>
+>>>>>>> f7309d994c98b58977ea00e3ce3ed58eb2f477ce
                                     </template>
                                 </THTooltip>
-                                <span class="text-sm flex items-center mr-6">
+                                <span class="flex items-center mr-6 text-sm">
                                     <img
                                         :src="`/assets/icons/1.TH.MOBILE.svg`"
                                         alt="1.TH.MOBILE"
-                                        class="mr-2 inline w-6"
+                                        class="inline w-6 mr-2"
                                     />
-                                    {{ $t('experience.detail-page.tag-ticket-mobile') }}}
+                                    {{ $t('experience.detail-page.tag-ticket-mobile') }}
                                 </span>
                             </div>
 
@@ -207,9 +213,7 @@
                                         {{ $t('experience.detail-page.title-recomendation') }}
                                     </span>
                                 </div>
-                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm">
-                                    {{ experienceData?.recomendations.message }}
-                                </p>
+                                <p class="mt-[12px] sp:mt-6 text-[8px] sp:text-sm" v-html="experienceData?.recomendation_language_current" />
                             </div>
                             
                             <!-- descripcion -->
@@ -239,7 +243,7 @@
                                             alt="1.TH.IDIOMA"
                                             class="mr-[4px] sp:mr-2 inline w-[12px] sp:w-6"
                                         />
-                                    {{ availablelanguages.length > 0 ? `${availablelanguages.firstLanguage} y ${availablelanguages.numbers} más` : availablelanguages?.first }}
+                                    {{ availablelanguages.length > 0 ? $t('experience.detail-page.tooltip-language', {language: $utils.titleCase($t(`language.${availablelanguages.firstLanguage}`)), numbers: availablelanguages?.length }) : availablelanguages?.firstLanguage }}
                                     </span>
                                 </li>
                                 <li class="border-b border-gray-300 py-[8px] sp:py-4">
@@ -316,7 +320,7 @@
                             </div>
                             <div class="mt-[10px] sp:mt-2.5 lg:mt-4 lg:mb-0">
                                 <div class="mt-[4px] sp:mt-2">
-                                    <div class="flex justify-start items-center">
+                                    <div class="flex items-center justify-start">
                                         <img src="/assets/icons/1.TH.PINPOINT.svg" class="w-[12px] sp:w-5 h-[12px] sp:h-5 mr-[4px] sp:mr-2"
                                             alt="1.TH.PINPOINT">
                                         <div>
@@ -326,7 +330,7 @@
                                                     {{ startMeet }}
                                                 </span>
                                             </p>
-                                            <a :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
+                                            <a v-if="mapLinkStart" :href="mapLinkStart" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                     <div class="flex justify-start items-center mt-[8px] sp:mt-4">
@@ -342,7 +346,7 @@
                                                     {{ endMeet }}
                                                 </span>
                                             </p>
-                                            <a v-if="locations.value?.[1]" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
+                                            <a v-if="mapLinkEnd" :href="mapLinkEnd" target="_blank" class="text-[8px] sp:text-sm">{{ $t('experience.detail-page.btn-eye-map') }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -423,8 +427,8 @@
                     </div>
 
                     <!-- Calendario -->
-                    <div v-if="experienceViatorData && schedulesData" id="" class="hidden lg:block lg:col-span-1 pl-4 pr-2 fixed-calendar relative z-10">
-                        <div class="container-calendar h-36 w-full sticky rounded-2xl p-4 z-10" id="container-calendar">
+                    <div v-if="experienceViatorData && schedulesData" id="" class="relative z-10 hidden pl-4 pr-2 lg:block lg:col-span-1 fixed-calendar">
+                        <div class="sticky z-10 w-full p-4 container-calendar h-36 rounded-2xl" id="container-calendar">
                             <DetailPageSectionReserve />
                         </div>
                     </div>
@@ -466,7 +470,7 @@
     const { hotelData } = hotelStore
 
     import { useExperienceStore } from '@/stores/modules/experience'
-    import experience from '../../i18n/en/experience'   
+    import experience from '../../i18n/en/experience'
     const experienceStore = useExperienceStore()
 
     // DATA STATIC
@@ -517,6 +521,12 @@
         interval_date: null,
     })
     const productOptions = ref([])
+    const availablelanguages = ref({
+        numbers: null,
+        firstLanguage: null,
+        length: null,
+        languages: null,
+    })
 
     onMounted(() => {
         loadExperience()
@@ -549,16 +559,18 @@
     const variantPrice = computed(() => {
         return schedulesData?.bookableItems?.[0].seasons?.[0].pricingRecords?.[0].pricingDetails?.[0]?.maxTravelers
     })
-    const availablelanguages = computed( ()  => {
-        let languages = experienceData?.value.language_experince
-        languages = languages?.split(', ')
-        let text = ''
-        return {
-            'numbers': languages?.length - 1,
-            'firstLanguage': languages?.[0],
-            'length': languages?.length,
-        }
-    })
+    // const availablelanguages = computed( ()  => {
+    //     let l = experienceViatorData.value
+    //     console.log(l, 'l')
+    //     let languages = experienceData?.value.language_experince
+    //     languages = languages?.split(', ')
+    //     let text = ''
+    //     return {
+    //         'numbers': languages?.length - 1,
+    //         'firstLanguage': languages?.[0],
+    //         'length': languages?.length,
+    //     }
+    // })
     const textDescription = computed( ()  => {
         let text = experienceData?.value.description
         if (collapseDescription.value) {
@@ -581,46 +593,22 @@
         return experienceData.value?.location
     })
     const mapLinkStart = computed(() => {
-        if (locations.value?.[0].provider == 'GOOGLE') {
-            if (locations[0]?.result?.geometry) {
-                const lat = locations[0].result.geometry.location.lat
-                const lng = locations[0].result.geometry.location.lng
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
-        } else {
-            if (locations[0]?.center) {
-                const lat = locations[0].center.latitude
-                const lng = locations[0].center.longitude
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
+        const lat = experienceData?.value?.metting_point_latitude
+        const lng = experienceData?.value?.metting_point_longitude
+        if (lat && lng) {
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+            return mapsUrl;
         }
+        return;
     })
     const mapLinkEnd = computed(() => {
-        if (locations.value?.[1].provider == 'GOOGLE') {
-            if (locations[1]?.result?.geometry) {
-                const lat = locations[1].result.geometry.lat
-                const lng = locations[1].result.geometry.lng
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
-        } else {
-            if (locations[1]?.center) {
-                const lat = locations[1].center.latitude
-                const lng = locations[1].center.longitude
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
-                return mapsUrl;
-            } else {
-                return '#'
-            }
+        const lat = experienceData?.value?.end_point_latitude
+        const lng = experienceData?.value?.end_point_longitude
+        if (lat && lng) {
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+            return mapsUrl;
         }
+        return;
     })
     const startMeet = computed(()  => {
         if (locations.value?.[0].provider == 'GOOGLE') {
@@ -665,7 +653,22 @@
         const response = await experienceStore.$apiFindInVIatorByShortId({shortId})
         if (response.ok) {
             experienceViatorData.value = response.data
+            loadLanguagesAvailables()
         }
+    }
+    function loadLanguagesAvailables () {
+        const { languageGuides } = experienceViatorData.value
+        const codesLanguages = languageGuides
+            .filter(lg => lg?.language)
+            .map(lg => lg.language)
+        const nameslanguages = codesLanguages
+        const languagesAvailablesData = {
+            numbers: nameslanguages?.length - 1,
+            firstLanguage: nameslanguages?.[0],
+            length: nameslanguages?.length,
+            languages: nameslanguages,
+        }
+        Object.assign(availablelanguages.value, languagesAvailablesData)
     }
     async function loadSchedulesInViator () {
         let shortId = getShortId()

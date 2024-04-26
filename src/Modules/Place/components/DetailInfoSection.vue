@@ -38,7 +38,7 @@
                 </div>
             </div>
             <!-- rating  mobile-->
-            <div class="lg:hidden ml-auto">
+            <div class="ml-auto lg:hidden">
                 <div>
                     <img
                         v-for="(value, index) in 5"
@@ -58,6 +58,9 @@
         <div>
             <h1 class="text-xs sp:text-lg lg:text-[22px] font-medium mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.title">
             </h1>
+            <p class="text-xs sp:text-sm lg:text-[22px] font-normal mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.description">
+
+            </p>
             <div v-if="placeData?.type_place?.name == 'Dónde comer'">
                 <p v-if="placeData?.range_prices || placeData?.type_cuisine" class="text-[8px] sp:text-sm mt-2.5 sp:mt-4 ">
                     <template v-if="placeData?.range_prices">
@@ -139,7 +142,7 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendations?.message"
+                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendation_language_current"
                 </p>
             </div>
         </div>
@@ -213,7 +216,7 @@
                 <div class="mx-[-16px] lg:mx-0 lg:rounded-[10px] h-[160px] lg:h-[215px]" id="location"></div>
             </div>
             <p v-if="placeData?.address" class="text-[8px] sp:text-sm font-medium lg:font-normal mt-[4px] sp:mt-2">
-                <i class="fas fa-map-marker-alt mr-2"></i>{{placeData?.address}}
+                <i class="mr-2 fas fa-map-marker-alt"></i>{{placeData?.address}}
             </p>
         </div>
 

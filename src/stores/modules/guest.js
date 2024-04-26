@@ -57,7 +57,7 @@ export const useGuestStore = defineStore('guest', () => {
         return guestData.value
     }
 
-    async function saveOrUpdate (data) {
+    async function saveOrUpdate (data, reload = false) {
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
@@ -72,6 +72,9 @@ export const useGuestStore = defineStore('guest', () => {
                     console.log('entro para crear estancias url')
                     stayStore.loadLocalStay();
                 }
+            }
+            if(reload){
+                window.location.reload();
             }
         }else{
             guestData.value = null;
@@ -88,7 +91,8 @@ export const useGuestStore = defineStore('guest', () => {
         const response = await updateLanguageApi(data)  
         const { ok } = response
         if(ok && response.data){
-            localeStore.$load(lg)
+            // console.log(lg, 'updateLanguage')
+            // localeStore.$load(lg)
             // window.location.reload()
         }
     }
@@ -96,7 +100,6 @@ export const useGuestStore = defineStore('guest', () => {
     async function findLastStay (guestId) {
         // if(localStorage.getItem('stayData')) return;
         const response = await findLastStayApi(guestId)
-        console.log('findLastStayApiGuest',response)
         const { ok } = response
         if(ok){
             stayStore.setStayData(response.data,false)
