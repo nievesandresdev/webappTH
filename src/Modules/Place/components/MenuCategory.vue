@@ -216,8 +216,8 @@
             },
             compras: {
                 es: 'Compras',
-                en: 'Shoppings',
-                fr: 'Shoppings',
+                en: 'Shopping',
+                fr: 'Shopping',
             },
             otros: {
                 es: 'Otros',

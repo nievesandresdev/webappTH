@@ -162,8 +162,13 @@
                                         </button>
                                     </template>
                                     <template v-slot:content>
+<<<<<<< HEAD
+                                        <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
+                                        <p class="text-sm">{{ experienceData?.language_experince }}</p>
+=======
                                         <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
                                         <p class="text-sm">{{ availablelanguages.languages?.map(lg => $t(`language.${lg}`)).join(', ') }}</p>
+>>>>>>> f7309d994c98b58977ea00e3ce3ed58eb2f477ce
                                     </template>
                                 </THTooltip>
                                 <span class="flex items-center mr-6 text-sm">
