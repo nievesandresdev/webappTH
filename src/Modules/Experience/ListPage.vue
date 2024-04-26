@@ -254,10 +254,11 @@
                             {{countOtherCities}} experiencias cerca de {{ hotelData.zone }}
                             </p> 
                             <div style="card-exp">
+                                    <!-- :distance="item.city_experince !== hotelData.zone ? item.distance : null" -->
                                 <CardExperience 
                                     :data="item" 
                                     :truncateTitle="false"
-                                    :distance="item.city_experince !== hotelData.zone ? item.distance : null"
+                                    :distance="item.distance"
                                 />
                             </div>
                     </template>
