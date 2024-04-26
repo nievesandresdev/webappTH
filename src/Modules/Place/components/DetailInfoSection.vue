@@ -58,6 +58,9 @@
         <div>
             <h1 class="text-xs sp:text-lg lg:text-[22px] font-medium mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.title">
             </h1>
+            <p class="text-xs sp:text-sm lg:text-[22px] font-normal mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.description">
+
+            </p>
             <div v-if="placeData?.type_place?.name == 'Dónde comer'">
                 <p v-if="placeData?.range_prices || placeData?.type_cuisine" class="text-[8px] sp:text-sm mt-2.5 sp:mt-4 ">
                     <template v-if="placeData?.range_prices">

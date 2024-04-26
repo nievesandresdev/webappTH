@@ -124,6 +124,7 @@
                                         class="w-[10px] sp:w-4"
                                     />
                                 </div>
+                                holaa
                                 <div class="flex item-center">
                                     <span class="text-[10px] sp:text-sm mr-[8px] sp:mr-2 font-semibold">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</span>
                                     <span class="text-[10px] sp:text-sm font-medium mr-[8px] sp:mr-2">{{ experienceData?.reviews.total_reviews }} {{ $t('experience.detail-page.opinions-word') }}</span>
