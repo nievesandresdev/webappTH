@@ -34,8 +34,8 @@ export default {
       "message-success-text": "Nous apprécions grandement votre opinion et travaillerons pour vous offrir le meilleur séjour possible à l'avenir."
     },
     "card-product":{
-      "recommended":"Recomended",
-      "featured":"Featured",
+      "recommended":"recommandé",
+      "featured":"présenté",
     },
     "inviteModal":{
       "title": "Inviter des invités",

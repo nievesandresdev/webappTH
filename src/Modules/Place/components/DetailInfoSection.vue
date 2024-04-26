@@ -38,7 +38,7 @@
                 </div>
             </div>
             <!-- rating  mobile-->
-            <div class="lg:hidden ml-auto">
+            <div class="ml-auto lg:hidden">
                 <div>
                     <img
                         v-for="(value, index) in 5"
@@ -213,7 +213,7 @@
                 <div class="mx-[-16px] lg:mx-0 lg:rounded-[10px] h-[160px] lg:h-[215px]" id="location"></div>
             </div>
             <p v-if="placeData?.address" class="text-[8px] sp:text-sm font-medium lg:font-normal mt-[4px] sp:mt-2">
-                <i class="fas fa-map-marker-alt mr-2"></i>{{placeData?.address}}
+                <i class="mr-2 fas fa-map-marker-alt"></i>{{placeData?.address}}
             </p>
         </div>
 

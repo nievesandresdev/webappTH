@@ -43,7 +43,7 @@ export default {
         "tag-featured": "Mis en avant",
         "text-variand-price": "Le prix varie en fonction de la taille du groupe",
         "tag-ticket-mobile": "Billet mobile",
-        "title-recomendation": "Recommendation",
+        "title-recomendation": "Recommandation",
         "title-description": "Description",
         "title-description-mobile": "Aperçu général",
         "tooltip-language": "{language} et {numbers} de plus",

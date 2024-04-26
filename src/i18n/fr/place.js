@@ -33,7 +33,7 @@ export default {
         "opinionsTitle":"Avis sur l'information touristique",
         "opinionsWord":"Opinions",
         "recommended": "Recommandé",
-        "recommendationWord": "Recommendation ",
+        "recommendationWord": "Recommandation ",
         "featured": "En vedette",
         "callWord": "Appel",
         "dataInterest":{
