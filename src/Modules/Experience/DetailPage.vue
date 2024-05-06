@@ -340,7 +340,7 @@
                                             <p class="text-[8px] sp:text-sm font-medium">
                                                 {{ $t('experience.detail-page.subtitle-point-end') }}:
                                                 <span v-if="!locations.value?.[1]?.formatted_address" class="font-normal lg:font-medium">
-                                                    Esta actividad finaliza en el punto de encuentro inicial.
+                                                    {{ $t('experience.detail-page.ends-point-at-meeting-point') }}.
                                                 </span>
                                                 <span v-else class="font-normal lg:font-medium">
                                                     {{ endMeet }}

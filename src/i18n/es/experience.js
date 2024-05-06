@@ -54,6 +54,7 @@ export default {
         "btn-eye-map": "Ver en Google Maps",
         "subtitle-point-start": "Punto de encuentro",
         "subtitle-point-end": "Punto de finalización",
+        "ends-point-at-meeting-point": "Esta actividad finaliza en el punto de encuentro inicial",
         "title-other-information": "Información adicional",
         "title-politic-cancelation": "Política de cancelación",
         "text-politic-standar-1": "Puede cancelar hasta 24 horas antes de la experiencia para obtener un reembolso completo.",
