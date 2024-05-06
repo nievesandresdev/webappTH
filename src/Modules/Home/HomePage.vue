@@ -115,7 +115,6 @@
                     <a 
                     @click="goFacilities()" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
-                        style="z-index: 2000 !important;"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
