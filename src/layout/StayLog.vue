@@ -120,7 +120,7 @@
     const emit = defineEmits(['closeModal','back']);
     //store
     const guestStore = useGuestStore()
-
+     const { guestData } = guestStore;
     const stayStore = useStayStore()
     const hotelStore = useHotelStore();
     const { hotelData } = hotelStore;
@@ -129,7 +129,8 @@
         numberGuests:'1',
         checkDate:null,
         listGuest:[],
-        language: hotelData.language_default_webapp ?? 'es',
+        // language: hotelData.language_default_webapp ?? 'es',
+        language: guestData?.lang_web ?? localStorage.getItem('locale') ?? hotelData?.language_default_webapp ?? 'es',
         guestId: null,
     });
     const errorsKey = ref([]);
@@ -150,13 +151,15 @@
 
 
     onMounted(() => {
-        console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
+        
+        // console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
     })
 
     // Watcher
     watch(() => props.openModal, (newValue, oldValue) => {
         // Aquí puedes agregar cualquier lógica que necesites ejecutar cuando openModal cambie
-        console.log(`openModal changed from ${oldValue} to ${newValue}`);
+        // console.log(`openModal changed from ${oldValue} to ${newValue}`);
+        form.language =  guestData?.lang_web ?? localStorage.getItem('locale') ?? hotelData?.language_default_webapp ?? 'es'
     });
 
     //functions

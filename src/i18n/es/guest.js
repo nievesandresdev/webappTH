@@ -8,7 +8,7 @@ export default{
         "email":{
             "label":"Correo electrónico",
             "placeholder":"Introduce tu correo electrónico",
-            "error":"correo electrónico no válido"
+            "error":"Correo electrónico no válido"
         },
         "button":"Siguiente",
         "backButton":"Volver a atrás",

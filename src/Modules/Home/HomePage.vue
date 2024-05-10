@@ -278,7 +278,7 @@
             const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
             const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
 
-            console.log('backgroundImageUrl',backgroundImageUrl)
+            // console.log('backgroundImageUrl',backgroundImageUrl)
             const ogImageTag = createMetaTag('og:image', backgroundImageUrl);
             //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
 
@@ -332,7 +332,8 @@
         //     await Promise.all([loadCrossellings(),getPlaceCategories()])
         // })
 
-        watch(()=>stayStore.stayData, (newStayData) => {
+        watch([() => stayStore.stayData, () => localeStore.localeCurrent], ([newStayData, newLocaleData]) => {
+            console.log(localeStore.localeCurrent, 'watch')
             // console.log(newStayData, 'newStayData watch')
             // if (newStayData) {
                 Promise.all([loadCrossellings(),getPlaceCategories()]);

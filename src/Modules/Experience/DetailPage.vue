@@ -124,7 +124,6 @@
                                         class="w-[10px] sp:w-4"
                                     />
                                 </div>
-                                holaa
                                 <div class="flex item-center">
                                     <span class="text-[10px] sp:text-sm mr-[8px] sp:mr-2 font-semibold">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</span>
                                     <span class="text-[10px] sp:text-sm font-medium mr-[8px] sp:mr-2">{{ experienceData?.reviews.total_reviews }} {{ $t('experience.detail-page.opinions-word') }}</span>
@@ -163,13 +162,8 @@
                                         </button>
                                     </template>
                                     <template v-slot:content>
-<<<<<<< HEAD
-                                        <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
-                                        <p class="text-sm">{{ experienceData?.language_experince }}</p>
-=======
                                         <p class="mb-4 text-sm font-medium">Idiomas disponibles:</p>
                                         <p class="text-sm">{{ availablelanguages.languages?.map(lg => $t(`language.${lg}`)).join(', ') }}</p>
->>>>>>> f7309d994c98b58977ea00e3ce3ed58eb2f477ce
                                     </template>
                                 </THTooltip>
                                 <span class="flex items-center mr-6 text-sm">
