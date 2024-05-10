@@ -23,7 +23,7 @@
                 alt="icon alert red"
                 class="inline w-4 h-4 mr-2"
             />
-            {{ stringTextError }}
+            {{ textError }}
         </p>
     </div>
 </template>

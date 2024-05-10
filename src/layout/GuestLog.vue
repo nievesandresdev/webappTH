@@ -45,7 +45,6 @@
                     />
                 </div>
             </div>
-            
             <div class="mt-6 text-right p-4 border-t">
                 <button 
                     type="submit"
