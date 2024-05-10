@@ -1,6 +1,7 @@
 <template>
     <button
         class="py-2 px-3 text-sm font-medium relative w-full hbtn-primary text-center"
+        :class="customClasess"
         @click="goOta()"
     >
          <div class="absolute top-1.5 left-3">
@@ -30,7 +31,11 @@
         textButton:{
             type: String,
             default : 'Texto del boton'
-        }
+        },
+        customClasess:{
+            type: String,
+            default : ''
+        },
     })
     
     const urlReview = ref(null);

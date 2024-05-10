@@ -2,20 +2,20 @@
 	<div class="relative flex flex-col wrapper xs:hcursor-mobile">
         <Favicon v-if="stayStore.stayData" />
 		<!-- Sidebar  -->
-		<div v-if="$route.name != 'Home'" class="hidden md:block">
+		<!-- <div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
-		</div>
+		</div> -->
 		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
 			<slot></slot>
             <router-view></router-view>
-            <div 
+            <!-- <div 
                 v-if="stayStore.stayData && showChat && windowWidth > 767" 
                 class="bubble-chat block fixed bottom-[30px] right-[30px] cursor-pointer p-4 rounded-full"
                 :class="{'hbg-warning':chatStore.countUnreadMessages,'hbg-gray-100':!chatStore.countUnreadMessages}"
                 @click="openWindowChat" 
             >
                 <img class="w-10 h-10" src="/assets/icons/Chatbubblelineoutline.svg" alt="chat">
-            </div>
+            </div> -->
 		</div>
 		<!-- Footer  -->
         
@@ -23,19 +23,16 @@
 			<MenuMobile  @openInboxModal="openInboxModal"/>
 		</div>
         
-        <TheFooter v-if="showFooter" />
-        
+        <!-- <TheFooter v-if="showFooter" /> -->
 
-		<!-- <Notify v-if="$page.props.flash.id" :key="$page.props.flash.id" /> -->
-
-        <transition name="slide">
+        <!-- <transition name="slide">
             <div v-if="openChat && windowWidth > 767" class="window-chat hbg-white-100 w-[438px] hidden lg:block fixed right-0 bottom-0 z-[1000]">
                 <Chat 
                     @closechat="openChat = false"
                     :settings="chatSettings" 
                 />
             </div>
-        </transition>
+        </transition> -->
         
         <!-- modal inbox -->
         <transition name="modal">

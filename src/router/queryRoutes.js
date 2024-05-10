@@ -18,7 +18,8 @@ const chatRoutes = [
       {
         name: 'QueriesIndex',
         path: '',
-        component: QueriesIndex
+        component: QueriesIndex,
+        meta: { skipMobileCheck: true }
       },
       {
         name: 'FakeQueriesIndex',

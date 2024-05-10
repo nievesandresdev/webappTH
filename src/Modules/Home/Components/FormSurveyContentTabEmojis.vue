@@ -1,44 +1,68 @@
 <template>
-  <div class="flex justify-center gap-2 sp:gap-4">
-    <div class="text-center">
-      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('WRONG')">
+  <div class="flex justify-center">
+    <div 
+      class="text-center px-1 sp:px-2 md:px-4"
+      :class="form.type && form.type !== 'WRONG' ? '' : 'mt-[-8px]'"
+    >
+      <button 
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        :class="form.type && form.type !== 'WRONG' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        @click="selectEmoji('WRONG')"
+      >
         <img
+          class="mx-auto w-full h-full"
           @mouseover="hoverEmoji({face: 'WRONG', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'WRONG', state: 'DEFAULT'})"
-          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.${state_emojis?.WRONG?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.${state_emojis?.WRONG?.state}.NEW.svg`"
           alt="1.TH.EMOJI.WRONG"
         />
       </button>
       <p
-        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
+        class="text-[6px] sp:text-[10px] md:text-xs font-semibold mt-2"
         :class="form.type && form.type == 'WRONG' ? 'text-black' : 'htext-gray-500'"
       >{{ $t(btnWrongText) }}</p>
     </div>
-    <div class="text-center">
-      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('NORMAL')">
+    <div 
+      class="text-center px-1 sp:px-2 md:px-4"
+      :class="form.type && form.type !== 'NORMAL' ? '' : 'mt-[-8px]'"
+    >
+      <button 
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        :class="form.type && form.type !== 'NORMAL' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        @click="selectEmoji('NORMAL')"
+      >
         <img
+          class="mx-auto w-full h-full"
           @mouseover="hoverEmoji({face: 'NORMAL', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'NORMAL', state: 'DEFAULT'})"
-          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.${state_emojis?.NORMAL?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.${state_emojis?.NORMAL?.state}.NEW.svg`"
           alt="1.TH.EMOJI.NORMAL"
         />
       </button>
       <p
-        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
+        class="text-[6px] sp:text-[10px] md:text-xs font-semibold mt-2"
         :class="form.type && form.type == 'NORMAL' ? 'text-black' : 'htext-gray-500'"
       >{{ $t(btnNormalText) }}</p>
     </div>
-    <div class="text-center">
-      <button class="w-8 sp:w-[48px] h-8 sp:h-[48px] flex justify-center items-center" @click="selectEmoji('GOOD')">
+    <div 
+      class="text-center px-1 sp:px-2 md:px-4"
+      :class="form.type && form.type !== 'GOOD' ? '' : 'mt-[-8px]'"
+    >
+      <button 
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        :class="form.type && form.type !== 'GOOD' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        @click="selectEmoji('GOOD')"
+      >
         <img
+          class="mx-auto w-full h-full"
           @mouseover="hoverEmoji({face: 'GOOD', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'GOOD', state: 'DEFAULT'})"
-          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.${state_emojis?.GOOD?.state}.svg`"
+          :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.${state_emojis?.GOOD?.state}.NEW.svg`"
           alt="1.TH.EMOJI.GOOD"
         />
       </button>
       <p
-        class="text-[6px] sp:text-[10px] font-semibold mt-0.5 sp:mt-2"
+        class="text-[6px] sp:text-[10px] md:text-xs font-semibold mt-2"
         :class="form.type && form.type == 'GOOD' ? 'text-black' : 'htext-gray-500'"
       >{{ $t(btnGoodText) }}</p>
     </div>

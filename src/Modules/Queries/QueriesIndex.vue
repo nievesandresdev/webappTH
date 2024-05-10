@@ -1,18 +1,15 @@
 <template>
-    <div class="queries-head hshadow p-4 relative">
-        <img 
-            @click="goBack"
-            class="absolute top-4 left-4" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
-        >
-        <h1 class="text-center text-base font-medium">Consultas</h1>
-    </div>
+    <Head /> 
 
-    <div class="queries-body h-[81vh] overflow-y-auto px-4 py-6">
-
+    <div class="queries-body h-[81vh] md:h-full overflow-y-auto px-2 md:px-0 py-6 md:py-8 md:w-[650px] md:mx-auto">
+        
+        
         <FlashFeedback 
-            v-if="showFlashFeedback"
+            v-if="showFlashFeedback  && period == 'pre-stay'""
             :text="feedbackText"
         />
+        <!-- feedback poststay desktop-->
+        <ThanksDesktop v-if="showFlashFeedback && period == 'post-stay'"/>
 
         <!-- pre-stay -->
         <TextQuery 
@@ -22,13 +19,14 @@
             @showFeedback="showFeedback"
         />
         <!-- in-stay & post-stay -->
-        <IconsQuery 
-            v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" 
-            :settings="settings"
-            :data="currentQuery"
-            @loadReponses="loadReponses"
-            @showFeedback="showFeedback"
-        />
+        <div class="md:mt-12" v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
+            <IconsQuery 
+                :settings="settings"
+                :data="currentQuery"
+                @loadReponses="loadReponses"
+                @showFeedback="showFeedback"
+            />
+        </div>
 
         <template v-for="res in responses" :key="res?.id">
             <LinksReview v-if="res.period == 'post-stay' && res.qualification == 'GOOD'"
@@ -48,7 +46,9 @@ import TextQuery from './Components/TextQuery.vue';
 import IconsQuery from './Components/IconsQuery.vue'
 import ResponseCard from './Components/ResponseCard.vue';
 import FlashFeedback from './Components/FlashFeedback.vue'
+import ThanksDesktop from './Components/ThanksDesktop.vue'
 import LinksReview from './Components/LinksReview.vue'
+import Head from './Components/HeadIndex.vue'
 //stores
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 import { useQueryStore } from '@/stores/modules/query';
@@ -123,9 +123,5 @@ function showFeedback(text){
 function loadReponses(){
     getCurrentQuery();
     getResponses();
-}
-
-function goBack() {
-  router.go(-1);
 }
 </script>
