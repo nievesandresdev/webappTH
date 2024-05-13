@@ -39,15 +39,6 @@ const querySettingsStore = useQuerySettingsStore();
 
 onBeforeMount(async ()=>{
     await getQuerySettings();
-    // await getCurrentPeriod();
-    // if(!guestStore?.guestData?.id){
-    //     await stayStore.loadLocalStay();
-    // }
-    // if(period.value){
-    //     await getCurrentQuery();
-    // }
-    // await queryStore.$existingPendingQuery()
-    // await getResponses();
 })
 
 const props = defineProps({

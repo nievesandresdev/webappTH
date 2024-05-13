@@ -1,7 +1,7 @@
 <template>
     <div class="hshadow md:shadow-none rounded-[6px] p-4 md:p-0 bg-white mb-4">
         <img 
-            class="w-6 h-6 hidden md:inline-block" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
+            class="w-6 h-6 hidden md:inline-block invisible" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
         >
         <h1 class="text-base md:text-[36px] font-medium md:font-semibold md:mt-6 md:leading-10">¡Nos alegra que hayas disfrutado en {{hotelData.name}}!</h1>
         <p class="mt-2 md:mt-6 text-sm md:text-[24px] md:leading-7">Tu experiencia es muy importante, compartirla ayudaría a otros viajeros a conocernos.</p>

@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div 
       class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type !== 'WRONG' ? '' : 'mt-[-8px]'"
+      :class="form.type && form.type == 'WRONG' ? 'mt-[-8px]' : ''"
     >
       <button 
         class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
@@ -24,7 +24,7 @@
     </div>
     <div 
       class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type !== 'NORMAL' ? '' : 'mt-[-8px]'"
+      :class="form.type && form.type == 'NORMAL' ? 'mt-[-8px]' : ''"
     >
       <button 
         class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
@@ -46,7 +46,7 @@
     </div>
     <div 
       class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type !== 'GOOD' ? '' : 'mt-[-8px]'"
+      :class="form.type && form.type == 'GOOD' ? 'mt-[-8px]' : ''"
     >
       <button 
         class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"

@@ -66,9 +66,6 @@ onBeforeMount(async ()=>{
     queryStore.$setPendingQuery(false);
     await getQuerySettings();
     await getCurrentPeriod();
-    // if(!guestStore?.guestData?.id){
-    //     await stayStore.loadLocalStay();
-    // }
     if(period.value){
         await getCurrentQuery();
     }
@@ -88,7 +85,7 @@ async function getQuerySettings(){
 
 async function getCurrentPeriod(){
     if(!stayStore?.stayData?.id){
-        await stayStore.loadLocalStay();
+        await guestStore.loadLocalGuest();
     }
     let params = {
         stayId : stayStore?.stayData?.id
@@ -107,8 +104,8 @@ async function getCurrentQuery(){
 
 async function getResponses(){
     let params = {
-        stayId : stayStore?.stayData?.id,
-        guestId : guestStore?.guestData?.id,
+        stayId :localStorage.getItem('stayId'),
+        guestId :localStorage.getItem('guestId'),
     }
     responses.value = await queryStore.$getRecentlySortedResponses(params);
     console.log('responses.value',responses.value)
