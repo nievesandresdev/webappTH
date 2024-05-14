@@ -15,11 +15,17 @@
 <script setup>
 import { computed } from 'vue';
 import { useHotelStore } from '@/stores/modules/hotel';
+import { useRouter } from 'vue-router';
 
 const hotelStore = useHotelStore();
+const router = useRouter();
 
 function goBack() {
-  router.go(-1);
+  if (window.history.length > 1) {
+    router.go(-1);
+  } else {
+    router.push({ name: 'Home'})
+  }
 }
 
 const nameHotel = computed(() => {
