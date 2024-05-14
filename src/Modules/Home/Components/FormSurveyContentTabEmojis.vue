@@ -5,7 +5,7 @@
       :class="form.type && form.type == 'WRONG' ? 'mt-[-8px]' : ''"
     >
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
         :class="form.type && form.type !== 'WRONG' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
         @click="selectEmoji('WRONG')"
       >
@@ -27,7 +27,7 @@
       :class="form.type && form.type == 'NORMAL' ? 'mt-[-8px]' : ''"
     >
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
         :class="form.type && form.type !== 'NORMAL' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
         @click="selectEmoji('NORMAL')"
       >
@@ -49,7 +49,7 @@
       :class="form.type && form.type == 'GOOD' ? 'mt-[-8px]' : ''"
     >
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px]"
+        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
         :class="form.type && form.type !== 'GOOD' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
         @click="selectEmoji('GOOD')"
       >
