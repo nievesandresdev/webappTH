@@ -5,7 +5,7 @@
         
         
         <FlashFeedback 
-            v-if="showFlashFeedback  && period == 'pre-stay'""
+            v-if="showFlashFeedback  && period == 'pre-stay'"
             :text="feedbackText"
         />
         <!-- feedback poststay desktop-->

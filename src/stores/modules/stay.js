@@ -54,6 +54,7 @@ export const useStayStore = defineStore('stay', () => {
         if(ok){
             stayData.value = ok ? response.data : null
             setStayData(stayData.value)
+            await queryStore.$existingPendingQuery()
         }else{
             stayData.value = null;
         }

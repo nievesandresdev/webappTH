@@ -13,7 +13,7 @@ import {
 export const useQueryStore = defineStore('query', () => {
     
     // STATE
-    const pendingQuery = ref([]);
+    const pendingQuery = ref(false);
 
     // ACTIONS
     async function $getCurrentPeriod (data) {
@@ -83,7 +83,7 @@ export const useQueryStore = defineStore('query', () => {
     //
 
     const hasPendingQuery = computed(() => {
-        // console.log('hasPendingQuery',pendingQuery.value)
+        console.log('hasPendingQuery',pendingQuery.value)
         return pendingQuery.value;
     });
     return {
