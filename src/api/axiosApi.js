@@ -6,7 +6,8 @@ import { useLocaleStore } from '@/stores/modules/locale';
 
 
 // const locale = localStorage.getItem('locale') || 'es'
-const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
+const URL_BASE_BACKEND_GENERAL = process.env.VUE_APP_API_URL_BACKEND_GENERAL
+const URL_BASE_BACKEND_HELPER = process.env.VUE_APP_API_URL_BACKEND_HELPER
 const X_KEY_API = process.env.VUE_APP_X_KEY_API
 
 function getPreloaderStore() {// función auxiliar que devuelve el store de preloader
@@ -38,7 +39,8 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}) => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL') => {
+  let api_url_backend =  SLUG_API === 'API_GENERAL' ? URL_BASE_BACKEND_GENERAL : URL_BASE_BACKEND_HELPER
 
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
@@ -58,7 +60,7 @@ export const apiHttp = async (method, endpoint, data, options = {}) => {
  method = method.toLowerCase()
 let paramAxios = {
   method,
-  url: `${API_URL_BACKEND}/${endpoint}`,
+  url: `${api_url_backend}/${endpoint}`,
   data,
   params: data,
   ...options,
