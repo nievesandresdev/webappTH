@@ -1,6 +1,7 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const QueriesIndex = () => import('@/Modules/Queries/QueriesIndex.vue')
 const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
+const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtas.vue')
 
 import isMobile from '@/middlewares/isMobile'
 
@@ -25,6 +26,12 @@ const chatRoutes = [
         name: 'FakeQueriesIndex',
         path: 'fake',
         component: FakeQueriesIndex,
+        props: (route) => ({ paramsRouter: {...route.query} })
+      },
+      {
+        name: 'FakeLinksOtas',
+        path: 'fakeLinkOtas',
+        component: FakeLinksOtas,
         props: (route) => ({ paramsRouter: {...route.query} })
       },
     ],
