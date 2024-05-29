@@ -8,7 +8,7 @@
         >
         <h1 class="text-center text-xs font-medium">Consultas</h1>
     </div>
-    <div class="queries-body h-[75vh] so:h-[81vh] overflow-y-auto px-2 py-4">
+    <div class="queries-body h-[75vh] sp:h-[81vh] overflow-y-auto px-2 py-4">
         <!-- pre-stay -->
         <TextQuery 
             v-if="params.period == 'pre-stay'"
