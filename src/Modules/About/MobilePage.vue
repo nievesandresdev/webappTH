@@ -190,17 +190,6 @@
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>
-            <div id="pinterest" class="border-b hborder-bottom-gray-400 py-[10px] sp:py-4 flex items-center social"
-                @click="openLink(hotelData?.pinterest_url,$utils.isMockup())"
-                :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
-                v-if="hotelData?.pinterest_url"
-            >
-                <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-4 sp:w-5 h-4 sp:h-5 mr-[12px] sp:mr-4">
-                <div class="h-[10px] sp:h-5 flex flex-grow items-center">
-                    <p class="text-[10px] sp:text-sm font-medium">Pinterest</p>
-                </div>
-                <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
-            </div>
             <div id="facebook" class="py-[10px] sp:py-4 flex items-center social"
                 @click="openLink(hotelData?.facebook_url,$utils.isMockup())"
                 :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
@@ -209,6 +198,17 @@
                 <img src="/assets/icons/facebook.svg" alt="facebook" class="w-[14px] sp:w-[18px] h-4 sp:h-5 mr-[12px] sp:mr-4">
                 <div class="h-5 flex flex-grow items-center">
                     <p class="text-[10px] sp:text-sm font-medium">Facebook</p>
+                </div>
+                <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
+            </div>
+            <div id="pinterest" class="border-b hborder-bottom-gray-400 py-[10px] sp:py-4 flex items-center social"
+                @click="openLink(hotelData?.pinterest_url,$utils.isMockup())"
+                :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
+                v-if="hotelData?.pinterest_url"
+            >
+                <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-4 sp:w-5 h-4 sp:h-5 mr-[12px] sp:mr-4">
+                <div class="h-[10px] sp:h-5 flex flex-grow items-center">
+                    <p class="text-[10px] sp:text-sm font-medium">Pinterest</p>
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>

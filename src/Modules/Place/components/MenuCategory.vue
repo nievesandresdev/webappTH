@@ -122,7 +122,7 @@
             >
                 {{ itemType.name }}
             </p>
-            <templete v-for="(itemCategory, indexCat) in itemType.categori_places">
+            <template v-for="(itemCategory, indexCat) in itemType.categori_places">
                 <div
                     v-if="itemCategory.show == 1"
                     class="flex pt-2 pb-2 cursor-pointer aling-center filters"
@@ -134,7 +134,7 @@
                     </div>
                     <p class="inline-block pl-3 text-sm">{{ itemCategory.name }}</p>
                 </div>
-            </templete>
+            </template>
         </div>
     </div>
 </template>

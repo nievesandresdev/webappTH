@@ -161,24 +161,6 @@
                     </div>
                 </div>
                 <div v-if="(hotelData?.pinterest_url || hotelData?.facebook_url) && hotelData?.instagram_url" class="border-b"></div>
-                <div id="pinterest" class="cursor-pointer py-4 flex items-center social"
-                    @click="openLink(hotelData?.pinterest_url)"
-                    @mousedown="activate"
-                    @mouseup="deactivate"
-                    :class="{ active: isActive }"
-                    v-if="hotelData?.pinterest_url"
-                >
-                    <div class="w-5 mr-4">
-                        <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-5 h-5">
-                    </div>
-                    <div class="h-5 flex flex-grow items-center">
-                        <p class="text-[0.875rem] font-medium leading-[110%]">Pinterest</p>
-                    </div>
-                    <div class="w-[1.5rem]">
-                        <img src="/assets/icons/next.svg" alt="next" class="w-[1.5rem] h-[1.5rem]">
-                    </div>
-                </div>
-                <div v-if="hotelData?.facebook_url && hotelData?.pinterest_url" class="border-b"></div>
                 <div id="facebook" class="cursor-pointer py-4 flex items-center social"
                     @click="openLink(hotelData?.facebook_url)"
                     @mousedown="activate"
@@ -191,6 +173,24 @@
                     </div>
                     <div class="h-5 flex flex-grow items-center">
                         <p class="text-[0.875rem] font-medium leading-[110%]">Facebook</p>
+                    </div>
+                    <div class="w-[1.5rem]">
+                        <img src="/assets/icons/next.svg" alt="next" class="w-[1.5rem] h-[1.5rem]">
+                    </div>
+                </div>
+                <div v-if="hotelData?.facebook_url && hotelData?.pinterest_url" class="border-b"></div>
+                <div id="pinterest" class="cursor-pointer py-4 flex items-center social"
+                    @click="openLink(hotelData?.pinterest_url)"
+                    @mousedown="activate"
+                    @mouseup="deactivate"
+                    :class="{ active: isActive }"
+                    v-if="hotelData?.pinterest_url"
+                >
+                    <div class="w-5 mr-4">
+                        <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-5 h-5">
+                    </div>
+                    <div class="h-5 flex flex-grow items-center">
+                        <p class="text-[0.875rem] font-medium leading-[110%]">Pinterest</p>
                     </div>
                     <div class="w-[1.5rem]">
                         <img src="/assets/icons/next.svg" alt="next" class="w-[1.5rem] h-[1.5rem]">
