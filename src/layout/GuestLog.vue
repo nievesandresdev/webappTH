@@ -121,7 +121,7 @@ const valid = computed(() => {
 // Observa los cambios en guestData y actualiza el formulario
 watch(() => props.openModal, (newGuestData) => {
     guestData.value = getLocalGuest();
-    console.log('props.openModal Guest Log')
+    // console.log('props.openModal Guest Log')
     if (guestData.value) {
         form.name = guestData.value?.name;
         form.email = guestData.value?.email;

@@ -91,7 +91,7 @@
         debounce.value = setTimeout(async() => {
             if(city.value){
                 const response = await cityStore.$apiGetAll({search: city.value})
-                console.log(response, 'response')
+                // console.log(response, 'response')
                 if (response.ok) {
                     cities.value = response.data
                 }

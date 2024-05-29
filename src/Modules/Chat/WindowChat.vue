@@ -187,7 +187,7 @@
             //servicio para enviar mensaje
             let text = msg.value;
             msg.value = null;
-            console.log('isAvailable.value',isAvailable.value)
+            // console.log('isAvailable.value',isAvailable.value)
             let params = {
                 text,
                 guestId : localStorage.getItem('guestId'),
@@ -207,7 +207,7 @@
 
     const watchAvailability = async () =>{
         let loadChatHours = await hotelStore.$loadChatHours(); 
-        console.log('chatHourswatchAvailability',loadChatHours)
+        // console.log('chatHourswatchAvailability',loadChatHours)
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
         const todaysAvailability = loadChatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
@@ -221,7 +221,7 @@
             const currentMoment = Moment(currentTime, 'HH:mm');
             return currentMoment.isBetween(startMoment, endMoment, null, '[]');
         });
-        console.log('isAvailable.value',isAvailable.value)
+        // console.log('isAvailable.value',isAvailable.value)
     }
     
     const closeChat = () => {

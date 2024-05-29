@@ -101,8 +101,8 @@
 
     // FUNCTION
     function getImage (item) {
-        console.log('getImage',item)
-        console.log()
+        // console.log('getImage',item)
+        // console.log()
         if(item.type == 'place')return `${urlStorage}/storage/places/${item.image.image}`
         return item.image;
     }

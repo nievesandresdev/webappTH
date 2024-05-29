@@ -126,7 +126,7 @@
 
     onUnmounted(() => {
         if (channel_chat.value && !isMockup()) {
-            console.log('se desmonto pusher')
+            // console.log('se desmonto pusher')
             channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
             pusher.value.unsubscribe(channel_chat.value);
         }
@@ -173,7 +173,7 @@
     }
 
     const connect_pusher = () => {
-        console.log('connect_pusher')
+        // console.log('connect_pusher')
         if (stayStore.stayData && !isSubscribed.value) {
             const channelName = 'private-update-chat.' + stayStore.stayData.id;
             if (!isChannelSubscribed(channelName)) {
@@ -265,7 +265,7 @@
         if (!isMockup()) {
             // localStorage.setItem('stayData',newStayData);
             // stayData = newStayData;
-            console.log('LAYOUT newStayData',newStayData)
+            // console.log('LAYOUT newStayData',newStayData)
             if(newStayData){
                 connect_pusher();
             }
