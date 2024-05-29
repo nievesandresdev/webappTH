@@ -160,7 +160,7 @@
                         <img src="/assets/icons/next.svg" alt="next" class="w-[1.5rem] h-[1.5rem]">
                     </div>
                 </div>
-                <div v-if="(hotelData?.pinterest_url || hotelData?.facebook_url) && hotelData?.instagram_url" class="border-b"></div>
+                <div v-if="( hotelData?.facebook_url) && hotelData?.instagram_url" class="border-b"></div>
                 <div id="facebook" class="cursor-pointer py-4 flex items-center social"
                     @click="openLink(hotelData?.facebook_url)"
                     @mousedown="activate"
