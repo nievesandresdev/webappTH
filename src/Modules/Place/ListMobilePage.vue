@@ -162,7 +162,7 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
-        console.log('mobileList',mobileList.value)
+        // console.log('mobileList',mobileList.value)
     })
 
     // PROVIDER
@@ -173,20 +173,20 @@
 
     // FUNCTION
     async function loadPlaces () {
-        console.log(formFilter, 'formFilter')
+        // console.log(formFilter, 'formFilter')
         const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
-        console.log('loadPlaces', response)
+        // console.log('loadPlaces', response)
         if (response.ok) {
             Object.assign(paginateData, response.data.places.paginate)
             page.value = paginateData.current_page
             placesData.value = [...placesData.value, ...response.data.places.data]
             countOtherCities.value = response.data.countOtherCities;
-            console.log('countOtherCities',countOtherCities.value)
+            // console.log('countOtherCities',countOtherCities.value)
         }
         const cities = await cityStore.$getNearCitiesData()
         if(cities.ok){
             nearCitiesData.value = cities.data;
-            console.log('nearCitiesData.value',nearCitiesData.value)
+            // console.log('nearCitiesData.value',nearCitiesData.value)
         }
     }
 
@@ -219,7 +219,7 @@
         };
         let response = await placeStore.$getRatingCountsPlaces(params);
         countPoints.value = response.ok ? response.data : [];
-        console.log('countPoints.value',countPoints.value)
+        // console.log('countPoints.value',countPoints.value)
     }
 
     function submitSearchCity (city) {

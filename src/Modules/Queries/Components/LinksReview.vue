@@ -31,7 +31,7 @@ const requestTexts = ref(null);
 
 onBeforeMount(async ()=>{
     requestTexts.value = await requestSettingsStore.$getPostStayRequestData();
-    console.log('requestTexts.value',requestTexts.value)  
+    // console.log('requestTexts.value',requestTexts.value)  
 })
 
 </script>

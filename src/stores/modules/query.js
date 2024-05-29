@@ -69,7 +69,7 @@ export const useQueryStore = defineStore('query', () => {
         };
         if(params.stayId && params.guestId){
             const response = await existingPendingQueryApi(params)
-            console.log('existingPendingQuery',response.data)
+            // console.log('existingPendingQuery',response.data)
             const { ok } = response   
             if(ok){
                 pendingQuery.value = response.data;

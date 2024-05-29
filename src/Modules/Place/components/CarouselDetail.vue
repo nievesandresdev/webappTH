@@ -66,7 +66,7 @@
         }
     })
     onMounted(()=>{
-        console.log('props.place',props.place)
+        // console.log('props.place',props.place)
     })
     
     const storageUrl = mainStore.URL_STORAGE

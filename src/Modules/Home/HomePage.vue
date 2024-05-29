@@ -376,7 +376,7 @@
         }
         async function loadCrossellingsPlaces () {
             crossellingPlacesData.value = await placeStore.$getCrosselling()
-            console.log(crossellingPlacesData.value, 'crossellingPlacesData.value')
+            // console.log(crossellingPlacesData.value, 'crossellingPlacesData.value')
         }
 
         const goPlaces = (type, cat) => {

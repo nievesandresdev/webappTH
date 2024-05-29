@@ -14,7 +14,7 @@ export const useUtilityStore = defineStore('utility', () => {
     async function $apiGetExpAndPlaceBySaearch (data) {
 
         const response = await getExpAndPlaceBySaearchApi(data)
-        console.log(response, 'search res')
+        // console.log(response, 'search res')
         return response
          
     }

@@ -252,7 +252,7 @@
     }
 
     const createMap = () => {
-        console.log('createMap',props.placeData)
+        // console.log('createMap',props.placeData)
         if(props.placeData){
             var script = document.createElement('script');
             script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2pl-RXaMKbahzdX9yl0CRFc3-_fbtMog&libraries=places&callback=initMap';

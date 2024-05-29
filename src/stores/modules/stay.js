@@ -77,7 +77,7 @@ export const useStayStore = defineStore('stay', () => {
             'Francés': 'fr',
         }
         let lang = otherFomattedLangs[stayData.value.language] ?? formattedLangs[stayData.value.language]
-        console.log(lang, 'setStayData')
+        // console.log(lang, 'setStayData')
         localeStore.$load(lang)
     }
 

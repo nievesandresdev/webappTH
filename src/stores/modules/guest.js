@@ -64,7 +64,7 @@ export const useGuestStore = defineStore('guest', () => {
                 await queryStore.$existingPendingQuery()
                 let stayId = localStorage.getItem('stayId')
                 if(!stayId && getUrlParam('e')){
-                    console.log('entro para crear estancias url')
+                    // console.log('entro para crear estancias url')
                     stayStore.loadLocalStay();
                 }
             }
