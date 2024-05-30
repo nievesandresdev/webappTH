@@ -190,7 +190,7 @@
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>
-            <div id="facebook" class="py-[10px] sp:py-4 flex items-center social"
+            <div id="facebook" class="py-[10px] sp:py-4 flex items-center social border-b hborder-bottom-gray-400"
                 @click="openLink(hotelData?.facebook_url,$utils.isMockup())"
                 :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
                 v-if="hotelData?.facebook_url"
@@ -201,7 +201,7 @@
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>
-            <div id="pinterest" class="border-b hborder-bottom-gray-400 py-[10px] sp:py-4 flex items-center social"
+            <div id="pinterest" class="py-[10px] sp:py-4 flex items-center social"
                 @click="openLink(hotelData?.pinterest_url,$utils.isMockup())"
                 :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
                 v-if="hotelData?.pinterest_url"
