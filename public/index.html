@@ -18,5 +18,18 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() { //agregar tag manager, si lo agrego directo en el inicio del body me pinta el iframe como string.
+                var noscript = document.createElement('noscript');
+                var iframe = document.createElement('iframe');
+                iframe.src = "https://www.googletagmanager.com/ns.html?id=GTM-NQBC9Q7";
+                iframe.height = "0";
+                iframe.width = "0";
+                iframe.style.display = "none";
+                iframe.style.visibility = "hidden";
+                noscript.appendChild(iframe);
+                document.body.insertAdjacentElement('afterbegin', noscript);
+            });
+    </script>
 </body>
 </html>
