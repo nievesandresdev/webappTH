@@ -17,18 +17,25 @@
     color: var(--h-black-100);
 }
 
-.hbtn-primary:focus,
-.primary-active,
-.hbtn-primary:hover{
+@media (hover: hover) and (pointer: fine) {
+    .hbtn-primary:focus, .primary-active, .hbtn-primary:hover {
+        background-color: var(--h-white-100);
+        border: 1px solid var(--h-green-700);
+        color: var(--h-green-700);
+        text-decoration: none;
+    }
+
+    .primary-active .primary-icon,.hbtn-primary:hover .primary-icon{
+        filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
+    }
+}
+.hbtn-primary:active {
     background-color: var(--h-white-100);
     border: 1px solid var(--h-green-700);
     color: var(--h-green-700);
     text-decoration: none;
 }
-.primary-active .primary-icon,
-.hbtn-primary:hover .primary-icon{
-    filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
-}
+
 .primary-active > span,
 .hbtn-primary:hover > span{
     color: var(--h-green-700);

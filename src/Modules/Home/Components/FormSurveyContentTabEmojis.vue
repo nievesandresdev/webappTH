@@ -1,16 +1,13 @@
 <template>
   <div class="flex justify-center">
-    <div 
-      class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type == 'WRONG' ? 'mt-[-8px]' : ''"
-    >
+    <div class="text-center px-1 sp:px-2 md:px-4">
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
-        :class="form.type && form.type !== 'WRONG' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('WRONG')"
       >
         <img
-          class="mx-auto w-full h-full"
+          class="mx-auto mt-auto"
+          :class="form.type && form.type !== 'WRONG' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14' : 'w-full h-full'"
           @mouseover="hoverEmoji({face: 'WRONG', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'WRONG', state: 'DEFAULT'})"
           :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.${state_emojis?.WRONG?.state}.NEW.svg`"
@@ -22,17 +19,14 @@
         :class="form.type && form.type == 'WRONG' ? 'text-black' : 'htext-gray-500'"
       >{{ $t(btnWrongText) }}</p>
     </div>
-    <div 
-      class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type == 'NORMAL' ? 'mt-[-8px]' : ''"
-    >
+    <div class="text-center px-1 sp:px-2 md:px-4">
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
-        :class="form.type && form.type !== 'NORMAL' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('NORMAL')"
       >
         <img
-          class="mx-auto w-full h-full"
+          class="mx-auto mt-auto"
+          :class="form.type && form.type !== 'NORMAL' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14' : 'w-full h-full'"
           @mouseover="hoverEmoji({face: 'NORMAL', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'NORMAL', state: 'DEFAULT'})"
           :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.${state_emojis?.NORMAL?.state}.NEW.svg`"
@@ -44,17 +38,14 @@
         :class="form.type && form.type == 'NORMAL' ? 'text-black' : 'htext-gray-500'"
       >{{ $t(btnNormalText) }}</p>
     </div>
-    <div 
-      class="text-center px-1 sp:px-2 md:px-4"
-      :class="form.type && form.type == 'GOOD' ? 'mt-[-8px]' : ''"
-    >
+    <div class="text-center px-1 sp:px-2 md:px-4">
       <button 
-        class="block relative w-8 h-8 sp:w-[48px] sp:h-[48px] mx-auto"
-        :class="form.type && form.type !== 'GOOD' ? 'md:w-14 md:h-14' : 'md:w-16 md:h-16'"
+        class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('GOOD')"
       >
         <img
-          class="mx-auto w-full h-full"
+          class="mx-auto mt-auto"
+          :class="form.type && form.type !== 'GOOD' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14' : 'w-full h-full'"
           @mouseover="hoverEmoji({face: 'GOOD', state: 'HOVER'})"
           @mouseleave="hoverEmoji({face: 'GOOD', state: 'DEFAULT'})"
           :src="`/assets/icons/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.${state_emojis?.GOOD?.state}.NEW.svg`"
@@ -79,6 +70,7 @@ const props = defineProps({
   }
 })
 
+const windowWidth = ref(window.innerWidth);
 const btnWrongText = ref('home.form-survey.btn-wrong');
 const btnNormalText = ref('home.form-survey.btn-normal');
 const btnGoodText = ref('home.form-survey.btn-good');
@@ -135,8 +127,10 @@ function translateTextButtons(){
   }
 }
 function hoverEmoji(payload) {
-  let { face, state } = payload;
-  state_emojis[face].state = STATUS_EMOJIS[state_emojis[face].state];
+  if(windowWidth.value > 1020){
+    let { face, state } = payload;
+    state_emojis[face].state = STATUS_EMOJIS[state_emojis[face].state];
+  }
 }
 
 function selectEmoji(face) {
