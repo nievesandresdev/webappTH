@@ -3,7 +3,7 @@
 *****  PRIMARY
 **********
 */
-.hbtn-primary{
+.hbtn-primary, .hbtn-primary:focus{
     background-color: var(--h-white-100);
     border: 1px solid var(--h-black-100);
     border-radius: 6px;
@@ -18,7 +18,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .hbtn-primary:focus, .primary-active, .hbtn-primary:hover {
+    .primary-active, .hbtn-primary:hover {
         background-color: var(--h-white-100);
         border: 1px solid var(--h-green-700);
         color: var(--h-green-700);
