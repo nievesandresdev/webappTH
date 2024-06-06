@@ -1,8 +1,8 @@
 <template>
-    <!-- @click="goOta()" -->
     <button
         class="py-1.5 sp:py-2 px-1.5 sp:px-3 text-[9px] sp:text-sm font-medium relative w-full hbtn-primary text-center"
         :class="customClasess"
+        @click="goOta()"
     >
          <div class="absolute top-1 sp:top-1.5 sp:left-3">
             <img
