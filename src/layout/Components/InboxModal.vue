@@ -13,7 +13,7 @@
         <div class="mt-4">
             <button @click="goQueries" class="p-4 flex items-center w-full hover-gray-100">
                 <img class="w-6 h-6" src="/assets/icons/1.TH.Consultas.svg" alt="Consultas icon">
-                <p class="text-sm font-semibold mx-2">Consultas</p>
+                <p class="text-sm font-semibold mx-2">Feedback</p>
                 <span 
                 v-if="queryStore.hasPendingQuery"
                     class="hbg-warning text-xs font-semibold rounded-full py-0.5 w-5"

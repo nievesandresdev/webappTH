@@ -4,7 +4,7 @@ export default{
     },
     "form": {
         "send" : "Enviar",
-        "title": "Consultas",
+        "title": "Feedback",
         "hello" : "Hola",
         "whatsup" : "Qué tal",
         "thanksAll" : "Gracias por todo",
