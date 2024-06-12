@@ -83,7 +83,6 @@ export const useQueryStore = defineStore('query', () => {
     //
 
     const hasPendingQuery = computed(() => {
-        console.log('hasPendingQuery',pendingQuery.value)
         return pendingQuery.value;
     });
     return {
