@@ -1,7 +1,7 @@
 <template>
-    <!-- <div class="relative flex flex-col  hbg-gray-200"> -->
+    <!-- <div class="relative flex flex-col height-chat hbg-gray-200"> -->
     <ScheduleModal  ref="scheduleModal"/>
-    <div ref="myDiv" class="relative flex flex-col hbg-gray-200 height-chat">
+    <div ref="myDiv" class="relative flex flex-col hbg-gray-200">
         <!-- header -->
         <div class="sticky top-0 left-0 py-4 text-center shadow-hoster hbg-white-100">
             <img 
@@ -42,18 +42,17 @@
             </div>
         </div>
         <!-- input chat -->
-        <div class="sticky bottom-0 left-0 flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
+        <div class="flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
             <textarea 
                 id="text-auto" 
                 class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2" :placeholder="$t('chat.inputChat')"
                 @input="autoGrow"
                 v-model="msg"
-                @focus="disableScroll"
-                @blur="enableScroll"
-                @keyup.enter="e => { sendMsg(e); }"
+                @focus="hideMenu"
+                @blur="showMenuDelayed"
+                @keyup.enter="e => { sendMsg(e); showMenuDelayed(); }"
                 @keydown.enter="e => handleEnter(e)"
             ></textarea>
-
             <div class="my-auto ml-2" >
                 <IconHover 
                     @click="sendMsg"
@@ -111,46 +110,49 @@
 
     //mounted
     onMounted( async () => {
-        window.addEventListener('resize', setVH);
-        setVH();
-
-
+        nextTick(() => {
+            const textarea = document.getElementById('text-auto');
+            autoGrow({ target: textarea });  
+        })
+        // Establecer la altura inicial
+        setDivHeight();
+        
+        // Actualizar la altura cuando cambie el tamaño de la ventana
+        window.addEventListener('resize', setDivHeight);
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
         clearTimeouts();
         watchAvailability();
     });
 
+    onBeforeUnmount(() => {
+        // Limpiar el evento al salir
+        window.removeEventListener('resize', setDivHeight);
+    });
 
     const myDiv = ref(null); // ref para tu div
 
-    //functions
-    let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
-
-function disableScroll() {
-  originalBodyOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
-  // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
-  window.addEventListener('touchmove', preventScroll, { passive: false });
-}
-
-function enableScroll() {
-  document.body.style.overflow = originalBodyOverflow;
-  window.removeEventListener('touchmove', preventScroll);
-}
-
-function preventScroll(e) {
-  e.preventDefault();
-}
-
-
-
-
-    const setVH = () => {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    const setDivHeight = () => {
+        if(showMenuMobile.value){
+            if (window.innerWidth <= 1020) {
+            myDiv.value.style.height = `${window.innerHeight - 74}px`;
+            } else {
+            myDiv.value.style.height = '100%';
+            }
+        }else{
+            myDiv.value.style.height = `100vh`;
+        }
     };
 
+    // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
+    watch(messages, (newMessages) => {
+        nextTick(() => {
+            scrollToBottom();
+        });
+    }, { deep: true });
+
+    const showMenuMobile = inject('showMenuMobile');
+    //functions
     const openHorary = async () =>{
         await hotelStore.$loadChatHours(); 
         scheduleModal.value.open();
@@ -164,9 +166,23 @@ function preventScroll(e) {
         }
     }
 
+    const hideMenu = () => {
+    showMenuMobile.value = false;
+    setDivHeight()
+    };
+
+    const showMenu = () => {
+        showMenuMobile.value = true;
+        setDivHeight()
+        setTimeout(scrollToBottom, 100);
+    };
+
+    const showMenuDelayed = () => {
+    setTimeout(showMenu, 100); // Retrasa la ejecución de showMenu
+    };
 
     const sendMsg = (e)=>{
-        // showMenuMobile.value = true;
+        showMenuMobile.value = true;
         if (!e.shiftKey && msg.value) {
             //servicio para enviar mensaje
             let text = msg.value;
@@ -235,19 +251,9 @@ function preventScroll(e) {
             timeouts.value = [];
         }
     };
-
-    // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
-    watch(messages, (newMessages) => {
-        nextTick(() => {
-            scrollToBottom();
-        });
-    }, { deep: true });
 </script>
     
-<style>
-.height-chat {
-  height: calc(var(--vh, 1vh) * 100); /* Esto asegura que el contenedor del chat ocupe el 100% del viewport */
-}
+<style scoped>
 textarea:hover::placeholder {
     color: var(--h-green-600);
 }
@@ -257,7 +263,7 @@ textarea:hover::placeholder {
     overflow-y: hidden;
     resize: none; 
 }
-/* @media (min-width:1020px){
+@media (min-width:1020px){
     .height-chat{
         height: 100%;
     }
@@ -265,8 +271,14 @@ textarea:hover::placeholder {
 @media (max-width:1020px){
     .height-chat {
         height: calc(100vh - 64px);
-    } 
-}*/
+    }
+/* 
+    .height-chat-keyboard {
+        height: calc(100vh - 40vh); 
+    } */
+
+
+}
 
 </style>
         
