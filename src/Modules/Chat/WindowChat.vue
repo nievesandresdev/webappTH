@@ -166,7 +166,6 @@ function preventScroll(e) {
 
 
     const sendMsg = (e)=>{
-        // showMenuMobile.value = true;
         if (!e.shiftKey && msg.value) {
             //servicio para enviar mensaje
             let text = msg.value;
