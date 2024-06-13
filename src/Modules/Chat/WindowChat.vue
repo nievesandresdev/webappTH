@@ -1,7 +1,13 @@
 <template>
     <!-- <div class="relative flex flex-col  hbg-gray-200"> -->
     <ScheduleModal  ref="scheduleModal"/>
-    <div ref="myDiv" class="relative flex flex-col hbg-gray-200 height-chat">
+    <div ref="myDiv" 
+        class="relative flex flex-col hbg-gray-200"
+        :class="{
+            'height-chat' : showMenuMobile,
+            'height-chat-open-keyboard': !showMenuMobile
+        }"
+    >
         <!-- header -->
         <div class="sticky top-0 left-0 py-4 text-center shadow-hoster hbg-white-100">
             <img 
@@ -108,6 +114,7 @@
     const timeouts = ref([]);
     const scheduleModal = ref(null);
     
+    const showMenuMobile = inject('showMenuMobile');
 
     //mounted
     onMounted( async () => {
@@ -128,15 +135,17 @@
     let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
 
 function disableScroll() {
-  originalBodyOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
-  // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
-  window.addEventListener('touchmove', preventScroll, { passive: false });
+    showMenuMobile.value = false;
+    originalBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
+    window.addEventListener('touchmove', preventScroll, { passive: false });
 }
 
 function enableScroll() {
-  document.body.style.overflow = originalBodyOverflow;
-  window.removeEventListener('touchmove', preventScroll);
+    showMenuMobile.value = true;
+    document.body.style.overflow = originalBodyOverflow;
+    window.removeEventListener('touchmove', preventScroll);
 }
 
 function preventScroll(e) {
@@ -245,7 +254,10 @@ function preventScroll(e) {
     
 <style>
 .height-chat {
-  height: calc(var(--vh, 1vh) * 100); /* Esto asegura que el contenedor del chat ocupe el 100% del viewport */
+  height: calc((var(--vh, 1vh) * 100) - 72px);
+}
+.height-chat-open-keyboard {
+  height: calc(var(--vh, 1vh) * 100); 
 }
 textarea:hover::placeholder {
     color: var(--h-green-600);
