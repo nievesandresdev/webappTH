@@ -1,6 +1,7 @@
 <template>
-    <div :open="openModal" class="relative">
-        <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]"></div>
+    <div v-if="openModal" class="relative">
+        <!-- guest -->
+        <!-- <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]"></div> -->
 
         <!-- Full-screen container to center the panel -->
         <div 

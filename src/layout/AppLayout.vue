@@ -38,7 +38,7 @@
         <transition name="modal">
             <InboxModal v-if="showInboxModal" @close="showInboxModal = false"/>
         </transition>
-        <div v-show="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
+        <div v-if="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
         <!-- modal inbox -->
         
         <GuestLog v-if="!$utils.isMockup()" :openModal="showGuestLog" @closeModal="closeGuestLog"/>
