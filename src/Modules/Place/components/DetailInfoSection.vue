@@ -72,7 +72,7 @@
                 </p>
                 <div class="mt-4 space-x-2 flex items-center md:justify-start mx-[-16px] lg:mx-0">
                     <button
-                        v-if="placeData?.url_menu.length > 4"
+                        v-if="placeData?.url_menu?.length > 4"
                         class="md:border-r border-gray-200 text-[8px] sp:text-sm flex flex-col md:flex-row justify-center items-center w-1/4 lg:w-auto"
                         @click="openLink(place.url_menu)"
                     >

@@ -38,7 +38,7 @@
         <transition name="modal">
             <InboxModal v-if="showInboxModal" @close="showInboxModal = false"/>
         </transition>
-        <div v-show="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
+        <div v-if="showInboxModal" class="fixed inset-0 bg-[#00000080] z-[1500]"></div>
         <!-- modal inbox -->
         
         <GuestLog v-if="!$utils.isMockup()" :openModal="showGuestLog" @closeModal="closeGuestLog"/>
@@ -113,7 +113,6 @@
 
     onUnmounted(() => {
         if (channel_chat.value && !isMockup()) {
-            // console.log('se desmonto pusher')
             channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
             pusher.value.unsubscribe(channel_chat.value);
         }
@@ -164,7 +163,6 @@
     }
 
     const connect_pusher = () => {
-        // console.log('connect_pusher')
         if (stayStore.stayData && !isSubscribed.value) {
             const channelName = 'private-update-chat.' + stayStore.stayData.id;
             if (!isChannelSubscribed(channelName)) {
@@ -172,15 +170,14 @@
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
-                    // console.log('App\\Events\\UpdateChatEvent')
-                    chatStore.addMessage(data.message);
+                    // chatStore.addMessage(data.message);
                     // si el chat esta abierto se marca como leido el mensaje
-                    if(
-                        data.message.by == 'Hoster' && openChat.value || 
-                        data.message.by == 'Hoster' && route.name == 'WindowChatMobile'
-                    ){
-                        await chatStore.markMsgsAsRead();
-                    }
+                    // if(
+                    //     data.message.by == 'Hoster' && openChat.value || 
+                    //     data.message.by == 'Hoster' && route.name == 'WindowChatMobile'
+                    // ){
+                    //     await chatStore.markMsgsAsRead();
+                    // }
                     await chatStore.unreadMsgs();
                 });
             isSubscribed.value = true; // Marcar como suscrito
@@ -256,7 +253,6 @@
         if (!isMockup()) {
             // localStorage.setItem('stayData',newStayData);
             // stayData = newStayData;
-            // console.log('LAYOUT newStayData',newStayData)
             if(newStayData){
                 connect_pusher();
             }

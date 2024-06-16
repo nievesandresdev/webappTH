@@ -8,7 +8,7 @@
             <img
                 v-if="data.place_images?.[0]?.url"
                 class="object-cover w-full h-full overflow-hidden rounded-t-lg img lg:h-48 2xl:h-52"
-                :src="placeStore.$loadImage(data.place_images?.[0]?.image)"
+                :src="placeStore.$loadImage(data.place_images?.[0]?.image, data.place_images?.[0]?.type)"
                 alt="img_act"
                 loading="lazy"
             >

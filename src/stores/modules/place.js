@@ -23,10 +23,15 @@ export const usePlaceStore = defineStore('place', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (path) {
+    function $loadImage (path, type) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/places/${path}`
+
+        let model = 'places';
+        if(type == "gallery") model = 'gallery'; 
+
+        let url = `${URL_STORAGE}/storage/${model}/${path}`
         return url
+
     }
 
     async function $apiGetAll (params) {

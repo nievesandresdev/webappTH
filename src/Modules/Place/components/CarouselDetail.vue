@@ -4,7 +4,7 @@
         <Carousel :items-to-show="3">
             <Slide v-for="(img, index) in place.place_images" :key="index">
                 <div class="mx-auto carousel__item">
-                    <img :src="getImagePath(img)" class="block w-full h-full rounded-[10px] object-cover"
+                    <img :src="placeStore.$loadImage(img?.image, img?.type)" class="block w-full h-full rounded-[10px] object-cover"
                         alt="...">
                 </div>
             </Slide>
@@ -19,7 +19,7 @@
     <div class="hidden overflow-x-auto md:flex lg:hidden">
         <template  v-for="(img, index) in place?.place_images" :key="index">
             <img 
-                :src="getImagePath(img)" 
+                :src="placeStore.$loadImage(img?.image, img?.type)"
                 class="block object-cover mr-4 h-72"
                 style="min-width:24rem"
             >
@@ -28,16 +28,16 @@
     <!-- END Carousel Imagenes Places -->
     <!-- MOBILE Carousel Imagenes Places -->
     <div id="carousel-show-place-mobile" v-if="place?.place_images?.length > 0"  class="relative md:hidden">
+        <router-link 
+            :to="{ name : 'PlaceList', query: { typeplace: place.type_place?.id, categoriplace: place?.categori_places_id, mobile : true } }"
+            class="rounded-full bg-white p-[4px] sp:p-2 absolute top-[8px] sp:top-4 left-[8px] sp:left-4 z-10"
+        >
+            <img class="w-4" src="/assets/icons/arrow-back.svg"/>
+        </router-link>
         <Carousel :items-to-show="1">
             <Slide v-for="(img, index) in place.place_images" :key="index">
-                <router-link 
-                    :to="{ name : 'PlaceList', query: { typeplace: place.type_place?.id, categoriplace: place?.categori_places_id, mobile : true } }"
-                    class="rounded-full bg-white p-[4px] sp:p-2 absolute top-[8px] sp:top-4 left-[8px] sp:left-4"
-                >
-                    <img class="w-4" src="/assets/icons/arrow-back.svg"/>
-                </router-link>
                 <img 
-                    :src="getImagePath(img)" 
+                    :src="placeStore.$loadImage(img?.image, img?.type)"
                     class="block w-full h-[130px] sp:h-60 object-cover"
                     style="border-radius: 0px 0px 10px 10px;"
                 >
@@ -56,8 +56,10 @@
     import { onMounted } from 'vue';
     import { Carousel, Pagination, Slide, Navigation } from 'vue3-carousel'
     import 'vue3-carousel/dist/carousel.css'
-    import { useMainStore } from '@/stores'
-    const mainStore = useMainStore()
+    //store
+    import { usePlaceStore } from '@/stores/modules/place'
+    const placeStore = usePlaceStore()
+
 
     const props = defineProps({
         place:{
@@ -69,11 +71,6 @@
         // console.log('props.place',props.place)
     })
     
-    const storageUrl = mainStore.URL_STORAGE
-
-    function getImagePath(image) {
-        return `${storageUrl}/storage/places/${image.image}`
-    }
 </script>
 <style scoped>
 

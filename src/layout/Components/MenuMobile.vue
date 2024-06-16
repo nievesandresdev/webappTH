@@ -32,9 +32,9 @@
                     {{ $utils.capitalize($t('layout.header.facilities')) }}
                 </span>
             </router-link>
-            <router-link
-                to="/places"
-                class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
+            <button
+                @click="reloadPage('/places')"
+                class="text-center no-link flex flex-col item-justify w-[42px] sp:w-[66px]"
             >
                 <img
                     v-if="['PlaceList', 'PlaceDetail'].includes($route.name)"
@@ -49,12 +49,12 @@
                     alt="TH.PLACE"
                 >
                 <span 
-                    class="text-[6px] sp:text-[10px] block" 
+                    class="text-[6px] sp:text-[10px] block w-full" 
                     :class="['PlaceList', 'PlaceDetail'].includes($route.name) ? 'mt-1 sp:mt-[6px]': 'mt-[2px] sp:mt-1'"
                 >
                     {{ $utils.capitalize($t('layout.header.explore')) }}
                 </span>
-            </router-link>
+            </button>
             <router-link
                 v-if="show_experiences"
                 to="/experiencias"
@@ -138,6 +138,10 @@
     //FUNCTIONS
     function openInboxModal(){
         emit('openInboxModal')
+    }
+
+    function reloadPage(url) {
+        window.location.href = url;
     }
 
 </script>

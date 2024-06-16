@@ -1,7 +1,12 @@
 <template>
-    <!-- <div class="relative flex flex-col  hbg-gray-200"> -->
     <ScheduleModal  ref="scheduleModal"/>
-    <div ref="myDiv" class="relative flex flex-col hbg-gray-200 height-chat">
+    <div ref="myDiv" 
+        class="relative flex flex-col hbg-gray-200 height-chat"
+    >
+    <!-- :class="{
+            'height-chat' : showMenuMobile,
+            'height-chat-open-keyboard': !showMenuMobile
+        }" -->
         <!-- header -->
         <div class="sticky top-0 left-0 py-4 text-center shadow-hoster hbg-white-100">
             <img 
@@ -73,7 +78,9 @@
         
 <script setup>
     //import libraries
-    import { onMounted, ref, inject, computed, nextTick, watch, onBeforeUnmount } from 'vue';
+    import { onMounted, ref, computed, nextTick, watch, onUnmounted } from 'vue';
+    import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
+
     import IconHover from '@/components/IconHover.vue'
     import ScheduleModal from './ScheduleModal.vue';
     
@@ -107,7 +114,10 @@
     const isAvailable = ref(false);
     const timeouts = ref([]);
     const scheduleModal = ref(null);
-    
+    //pusher
+    const isSubscribed = ref(false);
+    const channel_chat = ref(null);
+    const pusher = ref(null);   
 
     //mounted
     onMounted( async () => {
@@ -119,8 +129,15 @@
         setTimeout(scrollToBottom, 50);
         clearTimeouts();
         watchAvailability();
+        connect_pusher();
     });
 
+    onUnmounted(() => {
+        if (channel_chat.value) {
+            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+            pusher.value.unsubscribe(channel_chat.value);
+        }
+    });
 
     const myDiv = ref(null); // ref para tu div
 
@@ -128,15 +145,15 @@
     let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
 
 function disableScroll() {
-  originalBodyOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
-  // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
-  window.addEventListener('touchmove', preventScroll, { passive: false });
+    originalBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
+    window.addEventListener('touchmove', preventScroll, { passive: false });
 }
 
 function enableScroll() {
-  document.body.style.overflow = originalBodyOverflow;
-  window.removeEventListener('touchmove', preventScroll);
+    document.body.style.overflow = originalBodyOverflow;
+    window.removeEventListener('touchmove', preventScroll);
 }
 
 function preventScroll(e) {
@@ -166,7 +183,6 @@ function preventScroll(e) {
 
 
     const sendMsg = (e)=>{
-        // showMenuMobile.value = true;
         if (!e.shiftKey && msg.value) {
             //servicio para enviar mensaje
             let text = msg.value;
@@ -236,6 +252,28 @@ function preventScroll(e) {
         }
     };
 
+    const connect_pusher = () => {
+        if (!isSubscribed.value) {
+            const channelName = 'private-update-chat.' + stayStore.stayData.id;
+            if (!isChannelSubscribed(channelName)) {
+                channel_chat.value = channelName;
+                pusher.value = getPusherInstance();
+                channel_chat.value = pusher.value.subscribe(channel_chat.value);
+                channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    chatStore.addMessage(data.message);
+                    await chatStore.markMsgsAsRead();
+                });
+            isSubscribed.value = true; // Marcar como suscrito
+            }
+        } else if (!stayStore.stayData && isSubscribed.value) {
+            // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
+            if (channel_chat.value) {
+            pusher.value.unsubscribe(channel_chat.value);
+            isSubscribed.value = false; // Marcar como no suscrito
+            }
+        }
+    };
+
     // Suponiendo que messages es una ref() y se actualiza correctamente en otra parte del código
     watch(messages, (newMessages) => {
         nextTick(() => {
@@ -245,8 +283,14 @@ function preventScroll(e) {
 </script>
     
 <style>
+/* .height-chat {
+  height: calc((var(--vh, 1vh) * 100) - 72px);
+}
+.height-chat-open-keyboard {
+  height: calc(var(--vh, 1vh) * 100); 
+} */
 .height-chat {
-  height: calc(var(--vh, 1vh) * 100); /* Esto asegura que el contenedor del chat ocupe el 100% del viewport */
+  height: calc(var(--vh, 1vh) * 100); 
 }
 textarea:hover::placeholder {
     color: var(--h-green-600);
