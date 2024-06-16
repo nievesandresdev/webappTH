@@ -1,4 +1,4 @@
-export default{
+export default {
     "mobileTitle": "Hotelinformationen",
     "info": "Kontaktinformationen",
     "horary": "Check-in / Check-out Zeiten",

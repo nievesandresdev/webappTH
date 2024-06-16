@@ -91,7 +91,7 @@
         },
     })
 
-    console.log('dataPlaceres', data)
+    // console.log('dataPlaceres', data)
 
         // STORE
     import { usePlaceStore } from '@/stores/modules/place'

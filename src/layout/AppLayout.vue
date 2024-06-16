@@ -106,22 +106,9 @@
 
     //ONMOUNTED
     onMounted(() => {
-        // if(langWebByUrl.value){
-        //     localeStore.$change(langWebByUrl.value)
-        // }
-        // setTimeout(() => {
-        //     if (!isMockup()) {
-        //         loadWebDataModals();
-        //     }
-        // }, 1000);
-        //     const urlParams = new URLSearchParams(window.location.search);
-        //     const mockup = urlParams.get('mockup');
-        //     if (mockup === 'true') {
-        //         // Cambia el cursor para el mockup
-        //         document.body.style.cursor = "url('/vendor_asset/img/hoster/2-th-hotspot.cur'), auto";
-        //     }
         validateCurrentStay()
         checkUrlOrGetForms()
+        loadLanguagesAll()
     })
 
     onUnmounted(() => {
@@ -155,6 +142,10 @@
         }
     }
 
+    const loadLanguagesAll = async () =>{
+        await localeStore.$apiGetAll();
+    }
+
     const getStayModals = () =>{
         let dataGuest = getLocalGuest();
         let dataStay = stayStore.getLocalStay();
@@ -181,7 +172,7 @@
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
-                    console.log('App\\Events\\UpdateChatEvent')
+                    // console.log('App\\Events\\UpdateChatEvent')
                     chatStore.addMessage(data.message);
                     // si el chat esta abierto se marca como leido el mensaje
                     if(
