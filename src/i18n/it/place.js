@@ -1,0 +1,63 @@
+export default {
+    "breadcrumbs": {
+        "explore": "Esplora",
+    },
+    "list-page": {
+        "title": "Esplora a",
+        "text-count-list": "{count} luoghi trovati",
+        "btn-load-more": "Carica altri"
+    },
+    "results": "Nessun risultato...",
+    "seaching": "Ricerca in corso...",
+    "categorySearch": "trovato",
+    "city": "Città",
+    "cityPlaceholder": "Destinazioni...",
+    "types": {
+        "que-visitar": "Cosa visitare",
+        "donde-comer": "Dove mangiare",
+        "ocio": "Tempo libero"
+    },
+    "categories": {
+        "monumentos": "Monumenti",
+        "museos": "Musei",
+        "zonas-verdes": "Zone verdi",
+        "cafeterias-y-postres": "Caffetterie e dolci",
+        "restaurantes": "Ristoranti",
+        "vida-nocturna": "Vita notturna",
+        "copas": "Bicchieri",
+        "compras": "Shopping",
+        "otros": "Altri",
+    },
+    "detail": {
+        "titleList": "Esplora",
+        "opinionsTitle": "Opinioni sull'informazione turistica",
+        "opinionsWord": "Opinioni",
+        "recommended": "Raccomandato",
+        "recommendationWord": "Raccomandazione",
+        "featured": "In evidenza",
+        "callWord": "Chiama",
+        "dataInterest": {
+            "title": "Dati di interesse",
+            "priceRange": "Fasce di prezzo",
+            "diet": "Diete speciali",
+            "others": "Altri",
+        },
+        "locationWord": "Località",
+        "starWord": "Stella",
+        "starsWord": "Stelle",
+        "ratingTitle": "Valutazione",
+        "noComment": "Nessun commento scritto",
+        "seeMoreComment": "Vedi altro",
+        "seeAllComments": "Vedi tutte le opinioni",
+        "titleAllReviews": "Opinioni sull'informazione turistica",
+        "exploreIn": "Esplora a",
+        "filters": {
+            "title": "Altri filtri",
+            "ratings": "Valutazioni",
+            "star": "stella",
+            "stars": "stelle",
+            "remove": "Rimuovi filtri",
+            "apply": "Applica filtri",
+        }
+    },
+}
