@@ -347,7 +347,8 @@
                             </div>
 
                             <!-- detalles -->
-                            <h1 class="mt-[10px] sp:mt-6 md:mt-8 text-[12px] sp:text-base lg:text-lg font-medium border-t lg:border-0">
+                            <!-- border-t lg:border-0 -->
+                            <h1 class="mt-[10px] sp:mt-6 md:mt-8 text-[12px] sp:text-base lg:text-lg font-medium">
                                 {{ $t('experience.detail-page.title-other-information') }}
                             </h1>
                             <ul class="flex flex-wrap mt-[8px] sp:mt-4 gap-x-[12px] gap-y-[8px] sp:gap-x-6 sp:gap-y-4" style="list-style-type: disc !important;">
@@ -367,7 +368,7 @@
                             </ul>
 
                             <!-- Politicas de cancelacion -->
-                            <h1 class="mt-[12px] sp:mt-6 lg:mt-8 text-[12px] sp:text-base lg:text-lg font-medium border-t lg:border-0">
+                            <h1 class="mt-[12px] sp:mt-6 lg:mt-8 text-[12px] sp:text-base lg:text-lg font-medium">
                                 {{ $t('experience.detail-page.title-politic-cancelation') }}
                             </h1>
                             <div
