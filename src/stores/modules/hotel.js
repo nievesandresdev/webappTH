@@ -53,10 +53,10 @@ export const useHotelStore = defineStore('hotel', () => {
 
     async function $loadChatHours () {
         const response = await getChatHoursApi()
-        console.log('chatHoursResponse',response)
+        // console.log('chatHoursResponse',response)
         const { ok, data } = response
         chatHours.value = ok ? response.data : null
-        console.log('chatHoursloadChatHours',chatHours.value)
+        // console.log('chatHoursloadChatHours',chatHours.value)
         return response.data
     }
 

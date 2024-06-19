@@ -1,7 +1,7 @@
 <template>
-    <Dialog :open="openModal" class="relative">
-      <!-- The backdrop, rendered as a fixed sibling to the panel container -->
-      <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]" aria-hidden="true" />
+    <div v-if="openModal" class="relative">
+      <!-- stay -->
+      <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]"></div>
   
       <!-- Full-screen container to center the panel -->
       <div 
@@ -9,7 +9,7 @@
         :class="openModal ? 'dialog-enter-active' : 'dialog-leave-active'"
     >
         <!-- The actual dialog panel -->
-        <DialogPanel class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
+        <div class="w-full lg:max-w-[360px] bg-white rounded-t-[0.85rem] lg:rounded-b-[0.85rem]">
             <div class="relative">
                 <h1 class="text-lg font-medium text-center leading-6 pt-4">
                     {{ $utils.capitalize($t('stay.stayLog.title')) }}
@@ -94,9 +94,9 @@
                     </button>
                 </div>
             </div>
-        </DialogPanel>
+        </div>
       </div>
-    </Dialog>
+    </div>
   </template>
   
   <script setup>
@@ -105,7 +105,7 @@
     import THInputField from '@/components/THInputField.vue';
     import MiniLangDropdown from '@/layout/Components/MiniLangDropdown.vue';
     import THInputCalendar from '@/components/THInputFieldCalendar.vue'
-    import { Dialog } from '@headlessui/vue'
+    // import { Dialog } from '@headlessui/vue'
     import { useStayStore } from '@/stores/modules/stay'
     import { useGuestStore } from '@/stores/modules/guest'
     import { useHotelStore } from '@/stores/modules/hotel'
@@ -120,7 +120,7 @@
     const emit = defineEmits(['closeModal','back']);
     //store
     const guestStore = useGuestStore()
-
+     const { guestData } = guestStore;
     const stayStore = useStayStore()
     const hotelStore = useHotelStore();
     const { hotelData } = hotelStore;
@@ -129,7 +129,8 @@
         numberGuests:'1',
         checkDate:null,
         listGuest:[],
-        language: hotelData.language_default_webapp ?? 'es',
+        // language: hotelData.language_default_webapp ?? 'es',
+        language: guestData?.lang_web ?? localStorage.getItem('locale') ?? hotelData?.language_default_webapp ?? 'es',
         guestId: null,
     });
     const errorsKey = ref([]);
@@ -150,13 +151,15 @@
 
 
     onMounted(() => {
-        console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
+        
+        // console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
     })
 
     // Watcher
     watch(() => props.openModal, (newValue, oldValue) => {
         // Aquí puedes agregar cualquier lógica que necesites ejecutar cuando openModal cambie
-        console.log(`openModal changed from ${oldValue} to ${newValue}`);
+        // console.log(`openModal changed from ${oldValue} to ${newValue}`);
+        form.language =  guestData?.lang_web ?? localStorage.getItem('locale') ?? hotelData?.language_default_webapp ?? 'es'
     });
 
     //functions

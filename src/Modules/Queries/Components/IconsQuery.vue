@@ -1,6 +1,6 @@
 <template>
-    <div class="hshadow rounded-[6px] p-2 sp:p-4 mb-2 sp:mb-4">
-        <h1 class="text-xs sp:text-base font-medium leading-[150%]">
+    <div class="hshadow md:shadow-none rounded-[6px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0">
+        <h1 class="text-xs sp:text-base md:text-[21px] font-medium md:font-normal leading-[150%]">
             <template v-if="data?.period == 'post-stay'">
                 {{ $t('query.form.thanksAll') }} 
                 {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
@@ -10,31 +10,31 @@
                 {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
             </template>
         </h1>
-        <p class="mt-2 sp:mt-4 text-[10px] sp:text-sm font-medium">
+        <p class="mt-2 sp:mt-4 md:mt-6 text-[10px] sp:text-sm md:text-[36px] font-medium md:font-semibold md:leading-10">
             {{ $t('query.settings.question'+data?.period)}}
         </p>
-        <div class="mt-4">
+        <div class="mt-4 md:mt-10">
             <FormSurveyContentTabEmojis :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
         </div>
-        <div class="mt-4" v-if="form.type" :class="{'hidden': form.type == 'GOOD' && data?.period == 'post-stay'}">
-            <p class="text-sm">
+        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': form.type == 'GOOD' && data?.period == 'post-stay'}">
+            <p class="text-sm md:text-[21px] md:leading-[120%]">
                 {{ settings[thanksHoster].es }}
             </p>
         </div>
-        <div class="mt-4" v-if="form.type" :class="{'hidden': form.type == 'GOOD' && data?.period == 'post-stay'}">
+        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': form.type == 'GOOD' && data?.period == 'post-stay'}">
             <TextareaAutogrow 
                 :id="'textarea1'"
                 v-model="textarea" 
                 :wordLimit="300"
                 :placeholder="settings[commentHoster].es"
                 showWordLimit
-                customClasses="min-h-[120px]"
+                customClasses="min-h-[120px] md:text-[21px] md:min-h-[250px]"
             />
         </div>
-        <div class="text-right mt-3 sp:mt-6">
+        <div class="text-right mt-3 sp:mt-6 md:mt-8">
             <!-- :disabled="!form.type" -->
             <button 
-            class="hbtn-cta py-1.5 sp:py-3 px-2 sp:px-4 text-[10px] sp:text-sm"
+            class="hbtn-cta py-1.5 sp:py-3 px-2 sp:px-4 text-[10px] md:text-base sp:text-sm font-medium"
                 :class="{'cta-disabled' : !form.type}"
                 :disabled="!form.type"
                 @click="submit"
@@ -86,9 +86,9 @@ async function submit(){
     if(response){
         emit('loadReponses')
         //se envia solo para post-stay igual a GOOD
-        // if(form.type == 'GOOD' && props.data?.period == 'post-stay'){
-        //     emit('showFeedback',props.settings.post_stay_thanks_good.es);
-        // }
+        if(form.type !== 'GOOD' && props.data?.period == 'post-stay'){
+            emit('showFeedback',null);
+        }
         setTimeout(() => {
             toast(t('query.textToast.sendQueryText'), {
                 toastClassName: "warning-toast",
@@ -123,3 +123,10 @@ const modifiedPeriod = computed(() => {
     return modifiedString;
 })
 </script>
+<style>
+@media (min-width:767px){
+    #textarea1::placeholder{
+        font-size: 21px;
+    }
+}
+</style>

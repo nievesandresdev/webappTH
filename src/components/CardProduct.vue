@@ -1,21 +1,21 @@
 <template>
     <button 
-        class="w-full card-exp rounded-t-lg text-left" @click="go(data)" :disabled="$utils.isMockup()"
+        class="w-full text-left rounded-t-lg card-exp" @click="go(data)" :disabled="$utils.isMockup()"
         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
     >
         <!-- cursor-pointer -->
-        <div class="container-image rounded-t-lg w-full" :class="heightImg">
+        <div class="w-full rounded-t-lg container-image" :class="heightImg">
             <img
                 v-if="data.place_images?.[0]?.url"
-                class="img w-full h-full lg:h-48 2xl:h-52 overflow-hidden rounded-t-lg object-cover"
-                :src="placeStore.$loadImage(data.place_images?.[0]?.image)"
+                class="object-cover w-full h-full overflow-hidden rounded-t-lg img lg:h-48 2xl:h-52"
+                :src="placeStore.$loadImage(data.place_images?.[0]?.image, data.place_images?.[0]?.type)"
                 alt="img_act"
                 loading="lazy"
             >
-            <div v-else class="w-full h-full bg-gray-50 rounded-t-lg"></div>
+            <div v-else class="w-full h-full rounded-t-lg bg-gray-50"></div>
         </div>
         <div class="pt-1.5 sp:pt-4 mb-2 flex justify-between items-center h-6 sp:h-12">
-            <div class="mr-1 overflow-x-auto flex flex-1 h-4 sp:h-6">
+            <div class="flex flex-1 h-4 mr-1 overflow-x-auto sp:h-6">
                 <div>
                     <div v-if="data.recommended || data.place_featured" class="tag py-0.5 sp:py-1 px-2 h-3 sp:h-6 rounded-full bg-[#FFEBCC] mr-2">
                         <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500">
@@ -36,8 +36,8 @@
                 </div>
             </div>
             <div v-if="place && data?.num_reviews > 0 " class="flex items-center w-[65px] sp:w-[103px]">
-                <div class="flex flex-col mr-1 w-full">
-                    <span class="flex m-0 p-0 h-max">
+                <div class="flex flex-col w-full mr-1">
+                    <span class="flex p-0 m-0 h-max">
                         <img
                             v-for="(value, index) in 5"
                             :key="index"
@@ -90,6 +90,8 @@
             default: null,
         },
     })
+
+    // console.log('dataPlaceres', data)
 
         // STORE
     import { usePlaceStore } from '@/stores/modules/place'

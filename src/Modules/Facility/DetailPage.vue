@@ -129,9 +129,9 @@
     })
 
     const getFacility = async () => {
-        console.log('getFacility',paramsRouter.value.id)
+        // console.log('getFacility',paramsRouter.value.id)
         let response = await facilityStore.$findById(paramsRouter.value.id);
-        console.log('getFacility',response)
+        // console.log('getFacility',response)
         facility.value = response;
     }
 

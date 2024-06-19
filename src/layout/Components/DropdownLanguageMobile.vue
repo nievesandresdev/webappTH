@@ -36,20 +36,24 @@
          
         <ul class="bg-white mt-4">
             <li     
-                v-for="(item, index) in lgsAll"
+                v-for="(lg, index) in localeStore.availableLocation"
                 :key="index"
                 class="p-4 relative hover-gray-100"
-                @click.prevent="changeLocale(item.value)"
+                @click.prevent="changeLocale(lg)"
             >
                 <div class="absolute w-full bottom-0 left-0 px-4">
                     <div class="hbg-gray-400 h-[1px] rounded-full"></div>
                 </div>
                 <a class="flex justify-between items-center">
                     <span class="text-sm font-medium flex items-center">
-                        <img class="mr-2 w-6 h-6" :src="item.srcIcon" :alt="item.srcIcon">
-                        {{ item.label }}
+                        <img
+                            class="mr-2 w-6 h-6"
+                            :src="`/assets/icons/languages/${lg}.svg`"
+                            :alt="lg"
+                        >
+                        {{ $utils.capitalize($t(`language.${lg}`)) }}
                     </span>
-                    <img v-if="localeStore.localeCurrent == item.value" class="w-6 h-6" src="/assets/icons/Checkcircle.svg" alt="Checkcircle icon">
+                    <img v-if="localeStore.localeCurrent == lg" class="w-6 h-6" src="/assets/icons/Checkcircle.svg" alt="Checkcircle icon">
                 </a>
             </li>
         </ul>
@@ -66,14 +70,8 @@
     import { useGuestStore } from '@/stores/modules/guest'
 
     const modalLocale = ref(false)
-    const lgsAll = ref([
-        {label: 'Español', value: 'es', srcIcon: '/assets/icons/1.TH.español.svg'},
-        {label: 'Inglés', value: 'en', srcIcon: '/assets/icons/1.TH.INGLES.svg'},
-        {label: 'Francés', value: 'fr', srcIcon: '/assets/icons/1.TH.frances.svg'},
-    ])
     const localeStore = useLocaleStore()
     const guestStore = useGuestStore()
-
 
     watch(modalLocale, (value) => {
         if (value) {
@@ -90,11 +88,8 @@
 
     async function changeLocale (lg) {
         await guestStore.updateLanguage(lg)
-        localeStore.$change(lg)
-        // route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
-        route.replace({ name: 'Home', query: {lang: lg} }).then(() => {
-            window.location.reload();
-        });
+        localeStore.$load(lg)
+         modalLocale.value = false
     }
 
 </script>

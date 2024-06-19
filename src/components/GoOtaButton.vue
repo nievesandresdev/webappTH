@@ -1,11 +1,12 @@
 <template>
     <button
-        class="py-2 px-3 text-sm font-medium relative w-full hbtn-primary text-center"
+        class="py-1.5 sp:py-2 px-1.5 sp:px-3 text-[9px] sp:text-sm font-medium relative w-full hbtn-primary text-center"
+        :class="customClasess"
         @click="goOta()"
     >
-         <div class="absolute top-1.5 left-3">
+         <div class="absolute top-1 sp:top-1.5 sp:left-3">
             <img
-                class="w-6 h-6"
+                class="w-4 sp:w-6 h-4 sp:h-6"
                 :src="`/assets/icons/${nameIcons[ota]}`"
                 alt="icon OTA link"
             />
@@ -30,7 +31,11 @@
         textButton:{
             type: String,
             default : 'Texto del boton'
-        }
+        },
+        customClasess:{
+            type: String,
+            default : ''
+        },
     })
     
     const urlReview = ref(null);

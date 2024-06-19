@@ -1,6 +1,6 @@
 <template>
     <div
-        class="rounded-[6px] w-full" 
+        class="textarea-border rounded-[6px] w-full" 
         :class="{
             'hborder-alert-negative': isOverLimit,
             'hborder-black-100': modelValue,
@@ -114,4 +114,18 @@ textarea::placeholder {
         font-size: 8px;
     }
 }
+
+.textarea-border:hover{
+    color: var(--h-green-600);
+    border: 1px solid var(--h-green-600) !important;
+}
+
+.textarea-border:hover > textarea::placeholder{
+    color: var(--h-green-600);
+}
+
+.textarea-border:hover textarea::placeholder {
+    color: var(--h-green-600);
+    opacity: 1;
+  }
 </style>

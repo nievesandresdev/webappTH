@@ -255,8 +255,8 @@
     const deleteGuest = async (guestId) => {
         form.deleteList.push(guestId)
         form.listGuest = form.listGuest.filter(item => item.id !== guestId);
-        console.log('form.deleteList',form.deleteList)
-        console.log('form.listGuest',form.listGuest)
+        // console.log('form.deleteList',form.deleteList)
+        // console.log('form.listGuest',form.listGuest)
         // let deleteG = await stayStore.deleteGuestOfStay(stayStore.stayData?.id,guestId)
         // loadDataModal();
         // if(deleteG){

@@ -124,53 +124,53 @@
                 </div>
             </section>
 
-            <section v-if="crossellingsData?.crosselling_places_whatvisit?.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_whatvisit?.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                     </h2>
                     <a 
-                    @click="goPlaces(crossellingsData?.whatvisit_id, catWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                    @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselPlaces id="0" :items="crossellingsData?.crosselling_places_whatvisit" place />
+                    <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
-            <section v-if="crossellingsData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.whereeat_id, catWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselPlaces id="1" :items="crossellingsData?.crosselling_places_whereeat" />
+                    <CarouselPlaces id="1" :items="crossellingPlacesData?.crosselling_places_whereeat" />
                 </div>
             </section>
             
-            <section v-if="crossellingsData?.crosselling_places_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}
                     </h2>
                     <a 
-                        @click="goPlaces(crossellingsData?.leisure_id, catLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
+                        @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)" class="text-[10px] sp:text-sm underline see_all mr-3.5 lg:mr-0" href="javascript:void(0)"
                         :class="{'hcursor-mobile no-hover':$utils.isMockup()}"
                     >
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselPlaces id="2" :items="crossellingsData?.crosselling_places_leisure" />
+                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" />
                 </div>
             </section>
 
@@ -241,6 +241,7 @@
 
         // DATA
         const crossellingsData = ref(null)
+        const crossellingPlacesData = ref(null)
         const placeCategories = ref(null)
         const catWhatVisitId = ref(null)
         const catWhereEatId = ref(null)
@@ -278,7 +279,7 @@
             const backgroundImageStyle = getComputedStyle(document.querySelector('.bg-hotel'));
             const backgroundImageUrl = backgroundImageStyle.backgroundImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
 
-            console.log('backgroundImageUrl',backgroundImageUrl)
+            // console.log('backgroundImageUrl',backgroundImageUrl)
             const ogImageTag = createMetaTag('og:image', backgroundImageUrl);
             //const ogDescriptionTag = createMetaTag('og:description', metaDescription.value);
 
@@ -332,10 +333,11 @@
         //     await Promise.all([loadCrossellings(),getPlaceCategories()])
         // })
 
-        watch(()=>stayStore.stayData, (newStayData) => {
+        watch([() => stayStore.stayData, () => localeStore.localeCurrent], ([newStayData, newLocaleData]) => {
+            // console.log(localeStore.localeCurrent, 'watch')
             // console.log(newStayData, 'newStayData watch')
             // if (newStayData) {
-                Promise.all([loadCrossellings(),getPlaceCategories()]);
+                Promise.all([loadCrossellingsPlaces(), loadCrossellings(), getPlaceCategories()]);
             // }
         }, { immediate: true })
 
@@ -371,6 +373,10 @@
 
         async function loadCrossellings () {
             crossellingsData.value = await hotelStore.$getCrossellings()
+        }
+        async function loadCrossellingsPlaces () {
+            crossellingPlacesData.value = await placeStore.$getCrosselling()
+            // console.log(crossellingPlacesData.value, 'crossellingPlacesData.value')
         }
 
         const goPlaces = (type, cat) => {

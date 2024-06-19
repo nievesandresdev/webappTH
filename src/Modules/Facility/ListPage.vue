@@ -51,7 +51,7 @@
 
     const getData = async () => {
         let response = await facilityStore.$getAll();
-        console.log('getData',response)
+        // console.log('getData',response)
         dataList.value = response;
     }
     const getImg = (payload) => {

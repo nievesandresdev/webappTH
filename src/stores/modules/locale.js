@@ -2,13 +2,24 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { i18n } from '@/i18n'
 
+import {
+    getAllApi,
+} from '@/api/services/language.services'
+
 export const useLocaleStore = defineStore('locale', () => {
     
     // STATE
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
     const availableLocation = ref(['es', 'en', 'fr'])
 
-
+    async function $apiGetAll () {
+        const response = await getAllApi()
+        const { ok, data } = response
+        if (ok) {
+            return availableLocation.value = data
+        }
+        return [];     
+    }
 
     // ACTIONS
     function $change (lg) {
@@ -33,10 +44,12 @@ export const useLocaleStore = defineStore('locale', () => {
 
     //
     return {
+        $apiGetAll,
         localeCurrent,
         $change,
         $load,
         $changeAndReload,
+        availableLocation,
     }
 
 })

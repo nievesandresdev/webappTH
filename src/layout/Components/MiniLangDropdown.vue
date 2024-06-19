@@ -2,9 +2,7 @@
   <Menu as="div" class="relative inline-block text-left">
       <div>
           <MenuButton class="p-2 flex items-center">
-              <img v-if="modelValue === 'es'" class="w-4 h-4 inline-block" src="/assets/icons/español.svg" alt="">
-              <img v-if="modelValue === 'fr'" class="w-4 h-4 inline-block" src="/assets/icons/frances.svg" alt="">
-              <img v-if="modelValue === 'en'" class="w-4 h-4 inline-block" src="/assets/icons/ingles.svg" alt="">
+              <img class="w-4 h-4 inline-block" :src="`/assets/icons/languages/${modelValue}.svg`" :alt="lg">
               <img
                   class="ml-2 w-4"
                   :class="{ 'rotate-180': toggleLang }"
@@ -23,13 +21,13 @@
           leave-to-class="transform scale-95 opacity-0"
       >
           <MenuItems class="absolute left-0 origin-top-right rounded-lg bg-white shadow w-full z-[300]">
-              <MenuItem v-for="(item, index) in lgsAll" :key="index">
+              <MenuItem v-for="(lg, index) in localeStore.availableLocation" :key="index">
                   <button
                       class="flex p-3 hover:bg-gray-100 w-full text-left"
-                      :class="{ 'hidden': modelValue === item.value }"
-                      @click="updateLocale(item.value)"
+                      :class="{ 'hidden': modelValue === lg }"
+                      @click="updateLocale(lg)"
                   >
-                      <img class="block mx-auto w-4" :src="item.srcIcon" :alt="item.value">
+                      <img class="block mx-auto w-4" :src="`/assets/icons/languages/${lg}.svg`" :alt="lg">
                   </button>
               </MenuItem>
           </MenuItems>

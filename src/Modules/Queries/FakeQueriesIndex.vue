@@ -6,9 +6,9 @@
             class="absolute top-3.5 left-3.5 w-3 h-3" 
             src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
         >
-        <h1 class="text-center text-xs font-medium">Consultas</h1>
+        <h1 class="text-center text-xs font-medium">Feedback</h1>
     </div>
-    <div class="queries-body h-[75vh] so:h-[81vh] overflow-y-auto px-2 py-4">
+    <div class="queries-body h-[75vh] sp:h-[81vh] overflow-y-auto px-2 py-4">
         <!-- pre-stay -->
         <TextQuery 
             v-if="params.period == 'pre-stay'"
@@ -39,15 +39,6 @@ const querySettingsStore = useQuerySettingsStore();
 
 onBeforeMount(async ()=>{
     await getQuerySettings();
-    // await getCurrentPeriod();
-    // if(!guestStore?.guestData?.id){
-    //     await stayStore.loadLocalStay();
-    // }
-    // if(period.value){
-    //     await getCurrentQuery();
-    // }
-    // await queryStore.$existingPendingQuery()
-    // await getResponses();
 })
 
 const props = defineProps({

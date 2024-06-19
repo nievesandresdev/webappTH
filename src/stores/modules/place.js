@@ -9,43 +9,76 @@ import {
     getRatingCountsPlacesApi,
     findByIdApi,
     getDataReviewsApi,
-    getReviewsByRatingApi
+    getReviewsByRatingApi,
+    getCrossellingApi,
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
 const mainStore = useMainStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
 
 export const usePlaceStore = defineStore('place', () => {
     
     // STATE
 
     // ACTIONS
-    function $loadImage (path) {
+    function $loadImage (path, type) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/places/${path}`
+
+        let model = 'places';
+        if(type == "gallery") model = 'gallery'; 
+
+        let url = `${URL_STORAGE}/storage/${model}/${path}`
         return url
+
     }
 
     async function $apiGetAll (params) {
-        const response = await getAllApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getAllApi(newParams)
         return response
     }
     async function $apiGetCategoriesByType (params) {
-        const response = await getCategoriesByTypeApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getCategoriesByTypeApi(newParams)
         return response
     }
     async function $apiGetTypePlaces (params) {
-        const response = await getTypePlacesApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getTypePlacesApi(newParams)
         return response
     }
 
     async function $getRatingCountsPlaces (params) {
-        const response = await getRatingCountsPlacesApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getRatingCountsPlacesApi(newParams)
         return response
     }
 
     async function $findById (params) {
-        const response = await findByIdApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await findByIdApi(newParams)
         return response
     }
 
@@ -55,8 +88,26 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $getReviewsByRating (params) {
-        const response = await getReviewsByRatingApi(params)
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getReviewsByRatingApi(newParams)
         return response
+    }
+    async function $getCrosselling (params) {
+        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            ...params
+        }
+        const response = await getCrossellingApi(newParams)
+        const { ok, data } = response
+        if (ok) {
+            return data
+        }
+        return;       
     }
 
     //
@@ -68,7 +119,8 @@ export const usePlaceStore = defineStore('place', () => {
         $getRatingCountsPlaces,
         $findById,
         $getDataReviews,
-        $getReviewsByRating
+        $getReviewsByRating,
+        $getCrosselling,
     }
 
 })

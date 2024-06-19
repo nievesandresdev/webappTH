@@ -1,5 +1,5 @@
 <template>
-    <div class="hshadow rounded-[6px] p-4 mb-4">
+    <div class="hshadow rounded-[6px] p-4 mb-4 md:hidden">
         <div class="flex">
             <h1 class="text-sm font-medium">{{ $t('query.settings.question'+period)}}</h1>
             <img class="w-8 h-8 ml-4" src="/assets/icons/Checkcircle.svg" alt="Checkcircle icon">

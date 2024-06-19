@@ -72,7 +72,7 @@
                 </p>
                 <div class="mt-4 space-x-2 flex items-center md:justify-start mx-[-16px] lg:mx-0">
                     <button
-                        v-if="placeData?.url_menu.length > 4"
+                        v-if="placeData?.url_menu?.length > 4"
                         class="md:border-r border-gray-200 text-[8px] sp:text-sm flex flex-col md:flex-row justify-center items-center w-1/4 lg:w-auto"
                         @click="openLink(place.url_menu)"
                     >
@@ -142,7 +142,7 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendation_language_current"
+                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendation_language_current">
                 </p>
             </div>
         </div>
@@ -252,7 +252,7 @@
     }
 
     const createMap = () => {
-        console.log('createMap',props.placeData)
+        // console.log('createMap',props.placeData)
         if(props.placeData){
             var script = document.createElement('script');
             script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2pl-RXaMKbahzdX9yl0CRFc3-_fbtMog&libraries=places&callback=initMap';

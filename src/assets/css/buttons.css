@@ -3,12 +3,11 @@
 *****  PRIMARY
 **********
 */
-.hbtn-primary{
+.hbtn-primary, .hbtn-primary:focus{
     background-color: var(--h-white-100);
     border: 1px solid var(--h-black-100);
     border-radius: 6px;
     color: var(--h-black-100);
-    font-weight: 500;
     align-items: center;
 }
 .hbtn-primary > .primary-icon{
@@ -18,19 +17,25 @@
     color: var(--h-black-100);
 }
 
-.hbtn-primary:focus,
-.primary-active,
-.hbtn-primary:hover{
+@media (hover: hover) and (pointer: fine) {
+    .primary-active, .hbtn-primary:hover {
+        background-color: var(--h-white-100);
+        border: 1px solid var(--h-green-700);
+        color: var(--h-green-700);
+        text-decoration: none;
+    }
+
+    .primary-active .primary-icon,.hbtn-primary:hover .primary-icon{
+        filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
+    }
+}
+.hbtn-primary:active {
     background-color: var(--h-white-100);
     border: 1px solid var(--h-green-700);
     color: var(--h-green-700);
-    font-weight: 500;
     text-decoration: none;
 }
-.primary-active .primary-icon,
-.hbtn-primary:hover .primary-icon{
-    filter: invert(41%) sepia(70%) saturate(352%) hue-rotate(116deg) brightness(94%) contrast(96%);
-}
+
 .primary-active > span,
 .hbtn-primary:hover > span{
     color: var(--h-green-700);
@@ -42,7 +47,6 @@
     background-color: var(--h-white-100);
     border: 1px solid var(--h-gray-300);
     color: var(--h-gray-500);
-    font-weight: 500;
 }
 .primary-disabled > span,
 .primary-disabled:hover > span{
@@ -62,7 +66,6 @@
     border: 1px solid var(--h-gray-400);
     border-radius: 6px;
     color: var(--h-black-100);
-    font-weight: 500;
     display: flex;
     align-items: center;
 }
@@ -70,7 +73,6 @@
     background-color: var(--h-white-100);
     border: 1px solid var(--h-green-600);
     color: var(--h-green-600);
-    font-weight: 500;
     text-decoration: none;
 }
 .secondary-active,
@@ -89,7 +91,6 @@
     background-color: var(--h-black-200);
     border: 1px solid var(--h-black-200);
     color: var(--h-white-100);
-    font-weight: 500;
 }
 
 .hbtn-green{
@@ -109,16 +110,13 @@
     background-color: var(--h-yellow) !important;
     border-radius: 6px;
     color: var(--h-black-100);
-    font-weight: 500;
 }
 .hbtn-cta:active {
     background-color: #EBC44C !important;
-    font-weight: 500;
 }
 @media (hover: hover) {
     .hbtn-cta:hover {
         background-color: #EBC44C !important;
-        font-weight: 500;
     }
 }
 
@@ -127,7 +125,6 @@
 .cta-disabled:hover{
     background-color: var(--h-gray-300) !important;
     color: var(--h-gray-500);
-    font-weight: 500;
 }
 
 /*
@@ -161,14 +158,12 @@
     border: 1px solid var(--h-black-100);
     border-radius: 6px;
     color: var(--h-black-100);
-    font-weight: 500;
 }
 
 .chip-primary:hover{
     background-color: var(--h-white-100);
     border: 1px solid var(--h-green-600);
     color: var(--h-green-600);
-    font-weight: 500;
 }
 .chip-primary:hover{
     color: var(--h-green-600);
@@ -179,7 +174,6 @@
     background-color: var(--h-green-200);
     border: 1px solid var(--h-green-700);
     color: var(--h-green-600);
-    font-weight: 500;
 }
 
 .chip-primary-disabled,
@@ -187,7 +181,6 @@
     background-color: var(--h-white-100);
     border: 1px solid var(--h-gray-300);
     color: var(--h-gray-500);
-    font-weight: 500;
 }
 
 .chip-primary:hover > .chip-primary-icon{

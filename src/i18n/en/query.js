@@ -14,6 +14,8 @@ export default {
         "btn-wrong-poststay": "Very bad",
         "btn-normal-poststay": "Normal",
         "btn-good-poststay": "Very good",
+        "poststay-bad-thanks-title": "Reply sent", 
+        "poststay-bad-thanks-subtitle": "Thank you very much for your time",
     },
     "settings": {
         "questionpre-stay": "Is there anything we can do for your arrival at the hotel?",

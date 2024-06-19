@@ -4,9 +4,19 @@
         <MenuButton
           class="hbtn-blur p-2 rounded-md flex items-center"
         >
-            <img  v-if="localeStore.localeCurrent == 'es'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/espana.png" alt="">
-            <img  v-if="localeStore.localeCurrent == 'fr'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/francia.png" alt="">
-            <img  v-if="localeStore.localeCurrent == 'en'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/reino-unido.png" alt="">
+            <template
+              v-for="(lg, index) in localeStore.availableLocation"
+            :key="index"
+            >
+              <img
+                v-if="localeStore.localeCurrent == 'es'"
+                class="w-4 sp:w-[22px] inline-block"
+                :src="`/assets/icons/languages/${lg}.svg`"
+                alt=""
+              >
+            </template>
+            <!-- <img  v-if="localeStore.localeCurrent == 'fr'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/francia.png" alt="">
+            <img  v-if="localeStore.localeCurrent == 'en'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/reino-unido.png" alt=""> -->
 
             <img
                 class="ml-1 w-3 sp:w-4 icon-white"
@@ -47,7 +57,7 @@
 
 <script setup>
     import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-    import { ref, inject, watch } from 'vue'
+    import { ref, inject, watch,onMounted } from 'vue'
     import { useLocaleStore } from '@/stores/modules/locale'
 
     const lgsAll = ref([
@@ -62,6 +72,9 @@
     function changeLocale (lg) {
         localeStore.$changeAndReload(lg)
     }
+    onMounted(() => {
+      // console.log(localeStore.availableLocation)
+    })
 
 </script>
 
