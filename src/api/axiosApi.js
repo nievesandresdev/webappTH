@@ -50,7 +50,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
-      'Hotel-SUBDOMAIN': subdomain,
+      'subdomainHotel': subdomain,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
@@ -65,7 +65,6 @@ let paramAxios = {
   params: data,
   ...options,
 } 
-
  const servicePromise = axios(paramAxios)
 
  try {
