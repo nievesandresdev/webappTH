@@ -30,8 +30,8 @@ export const usePlaceStore = defineStore('place', () => {
         let model = 'places';
         if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
 
-        let url = `${URL_STORAGE}/storage/${model}/${path}`
-        return url
+        let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
+        return urlFull
 
     }
 
