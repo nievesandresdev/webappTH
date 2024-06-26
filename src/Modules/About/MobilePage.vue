@@ -21,8 +21,8 @@
         <div class="px-[8px] sp:px-4">
             <div>
                 <h1 class="text-base sp:text-[22px] font-medium leading-[150%]">
-                    {{ hotelData?.translate.type }}<br>
-                    {{ hotelData?.translate.name }}
+                    {{ hotelData?.type }}<br>
+                    {{ hotelData?.name }}
                 </h1>
 
             </div>
