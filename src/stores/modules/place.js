@@ -23,11 +23,12 @@ export const usePlaceStore = defineStore('place', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (path, type) {
-        let { URL_STORAGE } = mainStore
-
+    function $loadImage (item) {
+        let { image: path, type, url } = item ?? {};
+        let { URL_STORAGE } = mainStore;
+        
         let model = 'places';
-        if(type == "gallery") model = 'gallery'; 
+        if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
 
         let url = `${URL_STORAGE}/storage/${model}/${path}`
         return url

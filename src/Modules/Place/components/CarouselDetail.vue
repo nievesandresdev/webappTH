@@ -4,7 +4,7 @@
         <Carousel :items-to-show="3">
             <Slide v-for="(img, index) in place.place_images" :key="index">
                 <div class="mx-auto carousel__item">
-                    <img :src="placeStore.$loadImage(img?.image, img?.type)" class="block w-full h-full rounded-[10px] object-cover"
+                    <img :src="placeStore.$loadImage(img)" class="block w-full h-full rounded-[10px] object-cover"
                         alt="...">
                 </div>
             </Slide>
@@ -19,7 +19,7 @@
     <div class="hidden overflow-x-auto md:flex lg:hidden">
         <template  v-for="(img, index) in place?.place_images" :key="index">
             <img 
-                :src="placeStore.$loadImage(img?.image, img?.type)"
+                :src="placeStore.$loadImage(img)"
                 class="block object-cover mr-4 h-72"
                 style="min-width:24rem"
             >
@@ -37,7 +37,7 @@
         <Carousel :items-to-show="1">
             <Slide v-for="(img, index) in place.place_images" :key="index">
                 <img 
-                    :src="placeStore.$loadImage(img?.image, img?.type)"
+                    :src="placeStore.$loadImage(img)"
                     class="block w-full h-[130px] sp:h-60 object-cover"
                     style="border-radius: 0px 0px 10px 10px;"
                 >
