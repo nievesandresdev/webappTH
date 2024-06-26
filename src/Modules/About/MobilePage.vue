@@ -227,7 +227,8 @@
     const router = useRouter();
 
 
-    onMounted(() => {
+    onMounted(async () => {
+        await hotelStore.$load()
         if(hotelData?.images?.length){
             carouselRef.value = document.getElementById('carousel');
             carouselWidth.value = carouselRef.value.offsetWidth;
