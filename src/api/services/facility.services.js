@@ -3,5 +3,5 @@ import {
     facilityPath,
 } from '../config/apiRoute'
 
-export const getAllApi = () => apiHttp('GET', `${facilityPath}/getAll`)
+export const getAllApi = (params) => apiHttp('GET', `${facilityPath}/getAll`, params)
 export const findByIdApi = (id) => apiHttp('GET', `${facilityPath}/findById/${id}`)
