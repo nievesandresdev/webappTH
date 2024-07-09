@@ -30,6 +30,7 @@ export const useFacilityStore = defineStore('facility', () => {
 
     async function $getAll () {
         let params = {visible: 1}
+        //
         const response = await getAllApi(params)
         if(response.ok) return response.data
         return []
