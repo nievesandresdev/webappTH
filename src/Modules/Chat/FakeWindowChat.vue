@@ -42,7 +42,7 @@
         <!-- input chat -->
         <div class="flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
             <input type="text" class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2 min-w-[0px]" :disabled="$utils.isMockup()">
-            <img class="w-6 h-6 my-auto ml-2 cursor-pointer xs:w-4 xs:h-4" src="/assets/icons/2.TH.Sendicon.svg" alt="">
+            <img class="w-6 h-6 my-auto ml-2 xs:w-4 xs:h-4" src="/assets/icons/2.TH.Sendicon.svg" alt="">
         </div>
 
     </div>
@@ -149,12 +149,13 @@
     
 <style scoped>
 .height-chat{
-    height: calc(100vh - 72px);
+    /* height: calc(100vh - 72px); */
+    height: 100vh;
 }
-@media (max-width:250px){
+/* @media (max-width:250px){
     .height-chat{
         height: calc(100vh - 38px);
     }
-}
+} */
 </style>
         
