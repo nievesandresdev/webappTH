@@ -2,7 +2,6 @@
     <Head /> 
 
     <div class="queries-body h-[81vh] md:h-full overflow-y-auto px-2 md:px-0 py-6 md:py-8 md:w-[650px] md:mx-auto">
-
         <FlashFeedback 
             v-if="showFlashFeedback  && period == 'pre-stay'"
             :text="feedbackText"
@@ -34,13 +33,32 @@
                 :response="res.comment ? res.comment[res.response_lang] : null"
                 :qualification="res.qualification"
                 :period="res.period"
+                :id="res.id"
+                v-if="EditPeriod !== res.period"
             /> 
+            <!-- componentes para editar -->
+            <template v-else>
+                <TextQuery 
+                    v-if="EditPeriod == 'pre-stay'" 
+                    :settings="settings"
+                    :data="res"
+                    @showFeedback="showFeedback"
+                />
+                <div class="mb-2 sp:mb-4" v-else>
+                    <IconsQuery 
+                        :settings="settings"
+                        :data="res"
+                        @loadReponses="loadReponses"
+                        @showFeedback="showFeedback"
+                    />
+                </div>      
+            </template>
         </template>
         
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref, computed } from 'vue';
+import { onBeforeMount, ref, computed, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import TextQuery from './Components/TextQuery.vue';
 import IconsQuery from './Components/IconsQuery.vue'
@@ -71,6 +89,11 @@ const responses = ref([]);
 const showFlashFeedback = ref(false);
 const feedbackText = ref(null);
 const requestTo = ref(null);
+//
+const EditId = ref(null);
+const EditPeriod = ref(null);
+const EditComment = ref(null);
+const EditQualification = ref(null);
 
 onBeforeMount(async ()=>{
     queryStore.$setPendingQuery(false);
@@ -157,4 +180,8 @@ const showLinks = computed(()=>{
                     
 })
 
+provide('EditId',EditId);
+provide('EditPeriod',EditPeriod);
+provide('EditComment',EditComment);
+provide('EditQualification',EditQualification);
 </script>

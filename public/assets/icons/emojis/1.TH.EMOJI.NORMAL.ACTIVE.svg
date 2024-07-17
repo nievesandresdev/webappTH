@@ -1,0 +1,22 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="1.TH.Emoji" filter="url(#filter0_d_4939_129561)">
+<g id="Vector">
+<path d="M44 22C44 33.0456 35.0456 42 24 42C12.9556 42 4 33.0456 4 22C4 10.9556 12.9556 2 24 2C35.0456 2 44 10.9556 44 22Z" fill="#FFD453"/>
+<path d="M16.7778 24.2222C18.3119 24.2222 19.5556 22.4811 19.5556 20.3333C19.5556 18.1856 18.3119 16.4444 16.7778 16.4444C15.2437 16.4444 14 18.1856 14 20.3333C14 22.4811 15.2437 24.2222 16.7778 24.2222Z" fill="#333333"/>
+<path d="M31.2222 24.2222C32.7563 24.2222 34 22.4811 34 20.3333C34 18.1856 32.7563 16.4444 31.2222 16.4444C29.6881 16.4444 28.4444 18.1856 28.4444 20.3333C28.4444 22.4811 29.6881 24.2222 31.2222 24.2222Z" fill="#333333"/>
+<path d="M31.7778 30.8889H16.2222C15.6089 30.8889 15.1111 30.3922 15.1111 29.7778C15.1111 29.1633 15.6089 28.6667 16.2222 28.6667H31.7778C32.3922 28.6667 32.8889 29.1633 32.8889 29.7778C32.8889 30.3922 32.3922 30.8889 31.7778 30.8889Z" fill="#333333"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_4939_129561" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4939_129561"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4939_129561" result="shape"/>
+</filter>
+</defs>
+</svg>

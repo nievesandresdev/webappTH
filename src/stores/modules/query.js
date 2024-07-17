@@ -44,8 +44,9 @@ export const useQueryStore = defineStore('query', () => {
     }
 
     async function $saveResponse (params) {
-
+        console.log('params',params)
         const response = await saveResponseApi(params)
+        console.log('response',response)
         const { ok } = response   
         if(ok){
             return response.data
