@@ -104,6 +104,7 @@ onBeforeMount(async ()=>{
         await getCurrentQuery();
     }
     await getResponses();
+    console.log('requestTo mounted')
     let response = await requestSettingsStore.$getPostStayRequestData();
     requestTo.value = response.request_to;
     // console.log('requestTo.value',requestTo.value)
@@ -161,20 +162,21 @@ const postStayQuery = computed(()=>{
 })
 
 const showLinks = computed(()=>{
-    
-    if(!postStayQuery.value && period.value == 'post-stay' && requestTo.value == 'positive, normal and not answered queries'){
+    console.log('requestTo.value',requestTo.value)
+    if(!requestTo.value) return false;
+    if(!postStayQuery.value && period.value == 'post-stay' && requestTo.value.includes('NOTANSWERED')){
         return true;
     }
 
     if(postStayQuery.value){
         let condition1 = period.value == 'post-stay' && 
                         postStayQuery.value.answered && 
-                        postStayQuery.value.qualification == 'GOOD' && 
-                        requestTo.value == 'positive queries'; 
+                        ['GOOD','VERYGOOD'].includes(postStayQuery.value.qualification) && 
+                        !requestTo.value.includes('NOTANSWERED'); 
         let condition2 = period.value == 'post-stay' &&
                         postStayQuery.value.answered && 
-                        (postStayQuery.value.qualification == 'NORMAL' || postStayQuery.value.qualification == 'GOOD') &&
-                        requestTo.value == 'positive, normal and not answered queries';
+                        ['NORMAL','GOOD','VERYGOOD'].includes(postStayQuery.value.qualification) &&
+                        requestTo.value.includes('NOTANSWERED');
         return condition1 || condition2;
     }
     return false;

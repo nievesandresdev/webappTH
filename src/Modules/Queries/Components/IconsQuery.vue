@@ -16,12 +16,12 @@
         <div class="mt-4 md:mt-10">
             <FormSurveyContentTabEmojis :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
         </div>
-        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period == 'post-stay'}">
+        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}">
             <p class="text-sm md:text-[21px] md:leading-[120%]">
                 {{ settings[thanksHoster].es }}
             </p>
         </div>
-        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period == 'post-stay'}">
+        <div class="mt-4 md:mt-6" v-if="form.type" :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}">
             <TextareaAutogrow 
                 :id="'textarea1'"
                 v-model="textarea" 

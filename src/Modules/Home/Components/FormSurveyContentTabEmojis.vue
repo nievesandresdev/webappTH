@@ -177,6 +177,7 @@ function translateTextButtons(){
 // }
 
 function selectEmoji(face) {
+  if(!face) return;
   const EMOJIS = Object.keys(state_emojis);
   state_emojis[face].mode = "ACTIVE";
   form.type = face;
