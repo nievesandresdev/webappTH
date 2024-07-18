@@ -33,6 +33,7 @@
                 :response="res.comment ? res.comment[res.response_lang] : null"
                 :qualification="res.qualification"
                 :period="res.period"
+                :currentPeriod="period"
                 :id="res.id"
                 v-if="EditPeriod !== res.period"
             /> 

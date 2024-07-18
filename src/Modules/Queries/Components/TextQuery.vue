@@ -81,8 +81,13 @@ async function saveQuery(){
     let response = await queryStore.$saveResponse(params);
     if(response){
         emit('showFeedback',props.settings.pre_stay_thanks.es);
+        let textRes = 'query.textToast.sendQueryText';
+        if(EditPeriod.value){
+            textRes = 'query.textToast.updateQueryText';
+        }
+        cancelChanges();
         setTimeout(() => {
-            toast(t('query.textToast.sendQueryText'), {
+            toast(t(textRes), {
                 toastClassName: "warning-toast",
                 bodyClassName: "warning-toast-body",
                 position: "top-right",

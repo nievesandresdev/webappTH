@@ -13,6 +13,7 @@
         </div>
         <div class="text-right mt-4">
             <button 
+                v-if="currentPeriod == period"
                 class="hbtn-primary py-3 px-4 text-sm font-medium leading-[110%]"
                 @click="editQuery"
             >
@@ -43,6 +44,10 @@ const { qualification, period, response, id } = defineProps({
         default:null
     },
     id:{
+        type:String,
+        default:null
+    },
+    currentPeriod:{
         type:String,
         default:null
     },

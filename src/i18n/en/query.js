@@ -1,6 +1,7 @@
 export default {
     "textToast": {
-        "sendQueryText": "Response sent"
+        "sendQueryText": "Response sent",
+        "updateQueryText" : "Amendment submitted"
     },
     "form": {
         "send": "Send",

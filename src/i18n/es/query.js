@@ -1,6 +1,7 @@
 export default{
     "textToast": {
-        "sendQueryText" : "Respuesta enviada"
+        "sendQueryText" : "Respuesta enviada",
+        "updateQueryText" : "Modificación enviada",
     },
     "form": {
         "send" : "Enviar",
