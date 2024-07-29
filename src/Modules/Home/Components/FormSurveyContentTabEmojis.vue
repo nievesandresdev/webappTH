@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center mx-[-4px] sp:mx-[-8px] md:mx-[-16px]">
-    <div class="text-center px-1 sp:px-2 md:px-4">
+    <div class="text-center px-0.5 sp:px-2 md:px-4">
       <button 
         class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('VERYWRONG')"
@@ -17,7 +17,7 @@
         :class="form.type && form.type == 'VERYWRONG' ? 'htext-black-100' : 'htext-gray-500'"
       >{{ $t(btnVeryWrongText) }}</p>
     </div>
-    <div class="text-center px-1 sp:px-2 md:px-4">
+    <div class="text-center px-0.5 sp:px-2 md:px-4">
       <button 
         class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('WRONG')"
@@ -34,7 +34,7 @@
         :class="form.type && form.type == 'WRONG' ? 'htext-black-100' : 'htext-gray-500'"
       >{{ $t(btnWrongText) }}</p>
     </div>
-    <div class="text-center px-1 sp:px-2 md:px-4">
+    <div class="text-center px-0.5 sp:px-2 md:px-4">
       <button 
         class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('NORMAL')"
@@ -51,7 +51,7 @@
         :class="form.type && form.type == 'NORMAL' ? 'htext-black-100' : 'htext-gray-500'"
       >{{ $t(btnNormalText) }}</p>
     </div>
-    <div class="text-center px-1 sp:px-2 md:px-4">
+    <div class="text-center px-0.5 sp:px-2 md:px-4">
       <button 
         class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('GOOD')"
@@ -68,7 +68,7 @@
         :class="form.type && form.type == 'GOOD' ? 'htext-black-100' : 'htext-gray-500'"
       >{{ $t(btnGoodText) }}</p>
     </div>
-    <div class="text-center px-1 sp:px-2 md:px-4">
+    <div class="text-center px-0.5 sp:px-2 md:px-4">
       <button 
         class="flex w-8 h-8 mx-auto sp:w-12 sp:h-12 lg:w-16 lg:h-16"
         @click="selectEmoji('VERYGOOD')"
