@@ -34,7 +34,7 @@ export const usePlaceStore = defineStore('place', () => {
         // return urlFull
 
         if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
-        return `${URL_STORAGE}/storage/places/${image}`;
+        return `${URL_STORAGE}/storage/places/${path}`;
 
     }
 
@@ -44,6 +44,7 @@ export const usePlaceStore = defineStore('place', () => {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
+        console.log(newParams, 'newParams');
         const response = await getAllApi(newParams)
         return response
     }
