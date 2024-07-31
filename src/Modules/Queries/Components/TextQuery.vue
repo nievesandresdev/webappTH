@@ -22,11 +22,18 @@
                 customClasses="min-h-[70px] sp:min-h-[120px]"
             />
         </div>
-        <div class="text-right mt-3 sp:mt-6">
+        <div class="mt-3 sp:mt-6 flex items-center">
             <button 
-                class="hbtn-cta py-1.5 sp:py-3 px-2 sp:px-4 text-[10px] sp:text-sm"
-                :class="{'cta-disabled' : !textarea}"
-                :disabled="!textarea"
+                v-if="EditPeriod == data?.period"
+                class="text-xs font-semibold leading-[130%] underline"
+                @click="cancelChanges"
+            >
+                Cancelar
+            </button>
+            <button 
+                class="hbtn-cta py-1.5 sp:py-3 px-2 sp:px-4 text-[10px] sp:text-sm ml-auto"
+                :class="{'cta-disabled' : !changes}"
+                :disabled="!changes"
                 @click="saveQuery"
             >
             {{ $t('query.form.send') }} 
@@ -35,7 +42,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, inject, computed } from 'vue'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
@@ -47,6 +54,11 @@ const emit = defineEmits(['showFeedback']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
 
+const EditId = inject('EditId');
+const EditPeriod = inject('EditPeriod');
+const EditComment = inject('EditComment');
+const EditQualification = inject('EditQualification');
+
 const props = defineProps({
     settings:{
         type: Array,
@@ -57,7 +69,7 @@ const props = defineProps({
         default:{}
     },
 })
-const textarea = ref(null);
+const textarea = ref(EditComment.value);
 const guestStore = useGuestStore();
 
 async function saveQuery(){
@@ -69,8 +81,13 @@ async function saveQuery(){
     let response = await queryStore.$saveResponse(params);
     if(response){
         emit('showFeedback',props.settings.pre_stay_thanks.es);
+        let textRes = 'query.textToast.sendQueryText';
+        if(EditPeriod.value){
+            textRes = 'query.textToast.updateQueryText';
+        }
+        cancelChanges();
         setTimeout(() => {
-            toast(t('query.textToast.sendQueryText'), {
+            toast(t(textRes), {
                 toastClassName: "warning-toast",
                 bodyClassName: "warning-toast-body",
                 position: "top-right",
@@ -82,4 +99,15 @@ async function saveQuery(){
     }
 }
 
+const cancelChanges = () =>{
+    EditId.value = null;
+    EditPeriod.value = null;
+    EditComment.value = null;
+    EditQualification.value = null;
+}
+
+const changes = computed(()=>{
+    let commment  = props.data.comment ? props.data.comment[props.data.response_lang] : null;
+    return  textarea.value && textarea.value !== commment;                    
+})
 </script>

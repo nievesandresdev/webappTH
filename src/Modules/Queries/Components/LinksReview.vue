@@ -3,7 +3,7 @@
         <img 
             class="w-6 h-6 hidden md:inline-block invisible" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
         >
-        <h1 class="text-[10px] sp:text-base md:text-[36px] font-medium md:font-semibold md:mt-6 leading-3 sp:leading-5 md:leading-[110%]">{{ requestTexts?.title }}</h1>
+        <h1 class="text-[10px] sp:text-base md:text-[36px] font-medium md:font-semibold md:mt-6 leading-3 sp:leading-5 md:leading-[110%]" v-html="requestTexts?.title"></h1>
         <div class="description-container1 mt-2 md:mt-6" v-html="requestTexts?.text1"></div>
         <div class="buttons">
             <div v-if="requestTexts?.otas_enabled?.google" class="mt-0 sp:mt-2 text-center">
