@@ -34,7 +34,7 @@
                     {{$utils.capitalize($t('chat.languages'))}}
                 </p>
                 <div class="flex flex-wrap justify-center" style="margin-left:-8px;margin-right:-8px;">
-                    <img class="w-7 lg:w-5 mt-3.5 mx-2" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/'+lg.abbreviation+'.svg'" alt="">
+                    <img class="w-7 lg:w-5 mt-3.5 mx-2" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
                 </div>
             </div>
             <div v-for="msg in messages" :key="msg" class="min-w-[156px] lg:min-w-[125px] max-w-[246px] lg:max-w-[336px] mb-3.5 lg:mb-6" :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}">
