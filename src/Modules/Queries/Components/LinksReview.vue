@@ -6,10 +6,10 @@
         <h1 class="text-[10px] sp:text-base md:text-[36px] font-medium md:font-semibold md:mt-6 leading-3 sp:leading-5 md:leading-[110%]" v-html="requestTexts?.title"></h1>
         <div class="description-container1 mt-2 md:mt-6" v-html="requestTexts?.text1"></div>
         <div class="buttons">
-            <div v-if="requestTexts?.otas_enabled?.google" class="mt-0 sp:mt-2 text-center">
+            <div v-if="requestTexts?.otas_enabled?.google && requestTexts?.buttonAnchor" class="mt-0 sp:mt-2 text-center">
                 <GoOtaButton customClasess="max-w-[310px] md:font-semibold" ota="google" textButton="Continuar con Google"/>
             </div>
-            <div v-if="requestTexts?.otas_enabled?.tripadvisor" class="mt-2 sp:mt-4 md:mt-6 text-center">
+            <div v-if="requestTexts?.otas_enabled?.tripadvisor && requestTexts?.buttonAnchor" class="mt-2 sp:mt-4 md:mt-6 text-center">
                 <GoOtaButton customClasess="max-w-[310px] md:font-semibold" ota="tripadvisor" textButton="Continuar con Tripadvisor" />
             </div>
             <div class="description-container2 mt-3 sp:mt-6 md:mt-8" v-html="requestTexts?.text2"></div>
