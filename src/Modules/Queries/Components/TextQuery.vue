@@ -50,7 +50,7 @@ import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
 
 const toast = useToast();
-const emit = defineEmits(['showFeedback']);
+const emit = defineEmits(['showFeedback','loadReponses']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
 
@@ -80,6 +80,7 @@ async function saveQuery(){
     }
     let response = await queryStore.$saveResponse(params);
     if(response){
+        emit('loadReponses');
         emit('showFeedback',props.settings.pre_stay_thanks.es);
         let textRes = 'query.textToast.sendQueryText';
         if(EditPeriod.value){

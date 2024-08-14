@@ -15,6 +15,7 @@
             :settings="settings"
             :data="currentQuery"
             @showFeedback="showFeedback"
+            @loadReponses="loadReponses"
         />
         <!-- in-stay & post-stay -->
         <div class="md:mt-12" v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
@@ -104,7 +105,6 @@ onBeforeMount(async ()=>{
         await getCurrentQuery();
     }
     await getResponses();
-    console.log('requestTo mounted')
     let response = await requestSettingsStore.$getPostStayRequestData();
     requestTo.value = response.request_to;
     // console.log('requestTo.value',requestTo.value)
@@ -162,7 +162,7 @@ const postStayQuery = computed(()=>{
 })
 
 const showLinks = computed(()=>{
-    console.log('requestTo.value',requestTo.value)
+    // console.log('requestTo.value',requestTo.value)
     if(!requestTo.value) return false;
     if(!postStayQuery.value && period.value == 'post-stay' && requestTo.value.includes('NOTANSWERED')){
         return true;

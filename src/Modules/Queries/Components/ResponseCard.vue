@@ -15,7 +15,7 @@
             <button 
                 v-if="currentPeriod == period"
                 class="hbtn-primary py-3 px-4 text-sm font-medium leading-[110%]"
-                @click="editQuery"
+                @click="editQuery(response, qualification)"
             >
                 Modificar
             </button>
@@ -53,11 +53,11 @@ const { qualification, period, response, id } = defineProps({
     },
 })
 
-const editQuery = () => {
+const editQuery = (res, qualif) => {
     EditId.value = id;
     EditPeriod.value = period;
-    EditComment.value = response;
-    EditQualification.value = qualification;
+    EditComment.value = res;
+    EditQualification.value = qualif;
 }
 
 const qualificationTranslate = (qualification, period) => {

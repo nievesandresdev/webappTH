@@ -128,8 +128,8 @@ const changes = computed(()=>{
 })
 
 const thanksHoster = computed(() => {
-    let thanks =  '_thanks_good'
-    if([form.type].includes(['WRONG','VERYWRONG','NORMAL'])){
+    let thanks =  '_thanks_good';
+    if(['WRONG','VERYWRONG','NORMAL'].includes(form.type)){
         thanks = '_thanks_normal';
     }
     return modifiedPeriod.value+thanks;
