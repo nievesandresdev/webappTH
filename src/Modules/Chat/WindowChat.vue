@@ -118,12 +118,21 @@
     const isSubscribed = ref(false);
     const channel_chat = ref(null);
     const pusher = ref(null);   
+    const screenOff = ref(null);   
 
     //mounted
     onMounted( async () => {
         window.addEventListener('resize', setVH);
         setVH();
-
+        document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            console.log('La página está en segundo plano.');
+            screenOff.value = true;
+        } else {
+            console.log('La página está activa.');
+            screenOff.value = false;
+        }
+        });
 
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
@@ -144,24 +153,21 @@
     //functions
     let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
 
-function disableScroll() {
-    originalBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
-    window.addEventListener('touchmove', preventScroll, { passive: false });
-}
+    function disableScroll() {
+        originalBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
+        window.addEventListener('touchmove', preventScroll, { passive: false });
+    }
 
-function enableScroll() {
-    document.body.style.overflow = originalBodyOverflow;
-    window.removeEventListener('touchmove', preventScroll);
-}
+    function enableScroll() {
+        document.body.style.overflow = originalBodyOverflow;
+        window.removeEventListener('touchmove', preventScroll);
+    }
 
-function preventScroll(e) {
-  e.preventDefault();
-}
-
-
-
+    function preventScroll(e) {
+    e.preventDefault();
+    }
 
     const setVH = () => {
         let vh = window.innerHeight * 0.01;
@@ -172,7 +178,7 @@ function preventScroll(e) {
         await hotelStore.$loadChatHours(); 
         scheduleModal.value.open();
     }
-    
+
     const goBack = () => {
         if (window.history.length > 1) {
             router.go(-1);
@@ -223,7 +229,7 @@ function preventScroll(e) {
         });
         // console.log('isAvailable.value',isAvailable.value)
     }
-    
+
     const closeChat = () => {
         emit('closechat');
     }
@@ -239,7 +245,7 @@ function preventScroll(e) {
         event.target.style.height = '40px';
         event.target.style.height = event.target.scrollHeight + 'px';
     }
-    
+
     const scrollToBottom = () => {
         var chatContainer = document.querySelector('.body-chat');
         chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -260,8 +266,12 @@ function preventScroll(e) {
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    if(screenOff.value){
+                        alert('la pantalla esta apagada');
+                    }
                     chatStore.addMessage(data.message);
                     await chatStore.markMsgsAsRead();
+
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
