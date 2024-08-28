@@ -266,12 +266,12 @@
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
-                    if(screenOff.value){
-                        alert('la pantalla esta apagada');
+                    //se marca como leido solo si la pantalla no esta apagada 
+                    //o si no esta minimizado el navegador
+                    if(!screenOff.value){
+                        await chatStore.markMsgsAsRead();
                     }
                     chatStore.addMessage(data.message);
-                    await chatStore.markMsgsAsRead();
-
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
