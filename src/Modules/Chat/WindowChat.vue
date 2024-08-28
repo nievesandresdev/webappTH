@@ -126,10 +126,9 @@
         setVH();
         document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            console.log('La página está en segundo plano.');
             screenOff.value = true;
         } else {
-            console.log('La página está activa.');
+            chatStore.markMsgsAsRead();
             screenOff.value = false;
         }
         });
