@@ -124,14 +124,7 @@
     onMounted( async () => {
         window.addEventListener('resize', setVH);
         setVH();
-        document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            screenOff.value = true;
-        } else {
-            chatStore.markMsgsAsRead();
-            screenOff.value = false;
-        }
-        });
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
@@ -141,16 +134,30 @@
     });
 
     onUnmounted(() => {
-        if (channel_chat.value) {
-            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
-            pusher.value.unsubscribe(channel_chat.value);
-        }
+        unsubscribeChatEvent()
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
+    
+    const handleVisibilityChange = () => {
+    if (document.hidden) {
+        screenOff.value = true;
+    } else {
+        chatStore.markMsgsAsRead();
+        screenOff.value = false;
+    }
+};
 
     const myDiv = ref(null); // ref para tu div
 
     //functions
     let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
+
+    function unsubscribeChatEvent() {
+        if (channel_chat.value) {
+            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+            pusher.value.unsubscribe(channel_chat.value);
+        }
+    }
 
     function disableScroll() {
         originalBodyOverflow = document.body.style.overflow;
@@ -179,6 +186,7 @@
     }
 
     const goBack = () => {
+        // unsubscribeChatEvent()
         if (window.history.length > 1) {
             router.go(-1);
         } else {
@@ -192,7 +200,6 @@
             //servicio para enviar mensaje
             let text = msg.value;
             msg.value = null;
-            // console.log('isAvailable.value',isAvailable.value)
             let params = {
                 text,
                 guestId : localStorage.getItem('guestId'),
@@ -212,7 +219,6 @@
 
     const watchAvailability = async () =>{
         let loadChatHours = await hotelStore.$loadChatHours(); 
-        // console.log('chatHourswatchAvailability',loadChatHours)
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
         const todaysAvailability = loadChatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
@@ -226,7 +232,6 @@
             const currentMoment = Moment(currentTime, 'HH:mm');
             return currentMoment.isBetween(startMoment, endMoment, null, '[]');
         });
-        // console.log('isAvailable.value',isAvailable.value)
     }
 
     const closeChat = () => {
@@ -268,7 +273,7 @@
                     //se marca como leido solo si la pantalla no esta apagada 
                     //o si no esta minimizado el navegador
                     if(!screenOff.value){
-                        await chatStore.markMsgsAsRead();
+                        await chatStore.markMsgsAsRead('lleno');
                     }
                     chatStore.addMessage(data.message);
                 });
@@ -277,8 +282,8 @@
         } else if (!stayStore.stayData && isSubscribed.value) {
             // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
             if (channel_chat.value) {
-            pusher.value.unsubscribe(channel_chat.value);
-            isSubscribed.value = false; // Marcar como no suscrito
+                pusher.value.unsubscribe(channel_chat.value);
+                isSubscribed.value = false; // Marcar como no suscrito
             }
         }
     };

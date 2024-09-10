@@ -37,7 +37,8 @@ export const useChatStore = defineStore('chat', () => {
         return messages.value
     }
 
-    async function markMsgsAsRead() {
+    async function markMsgsAsRead(test = null) {
+        console.log('UpdateChatEvent markMsgsAsRead',test)
         let params = {
             stayId: localStorage.getItem('stayId'),
             guestId: localStorage.getItem('guestId'),
@@ -65,6 +66,10 @@ export const useChatStore = defineStore('chat', () => {
         }
     }
 
+    function setUnreadMsgsCount(count) {
+        unreadMsgsRef.value = count;
+    }
+
     //getters
 
     const countUnreadMessages = computed(() => {
@@ -80,7 +85,8 @@ export const useChatStore = defineStore('chat', () => {
         markMsgsAsRead,
         unreadMsgs,
         unreadMsgsRef,
-        countUnreadMessages
+        countUnreadMessages,
+        setUnreadMsgsCount
     }
 
 })
