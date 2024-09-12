@@ -21,7 +21,7 @@
                     <img 
                         class="w-5 h-5 mx-2 xs:w-4 xs:h-4" 
                         v-for="lg in settings.languages" 
-                        :src="'/assets/icons/'+lg.abbreviation+'.svg'" alt=""
+                        :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt=""
                         :key="lg"
                     >
                 </div>
