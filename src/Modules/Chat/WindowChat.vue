@@ -183,8 +183,8 @@
     };
 
     const openHorary = async () =>{
-        await hotelStore.$loadChatHours(); 
         scheduleModalIsOpen.value = true;
+        await hotelStore.$loadChatHours(); 
     }
 
     const goBack = () => {

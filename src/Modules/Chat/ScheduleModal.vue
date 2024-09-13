@@ -1,9 +1,5 @@
 <template>
-    <Modal 
-            :openModal="scheduleModalIsOpen" 
-            @closeModal="scheduleModalIsOpen = false"
-            :customClasess="'max-w-[500px]'"
-        >
+    <ModalNative top="16%" width="320px">
         <p class="relative text-center p-4 text-lg font-medium border-b">
             <img 
                 class="w-5 h-5 absolute left-4 top-5 cursor-pointer" 
@@ -25,20 +21,16 @@
             </template>
             <p class="text-xs mt-4 text-left">{{$utils.capitalize($t('chat.scheduleNote'))}}</p>
         </div>
-    </Modal>
+    </ModalNative>
 </template>
 <script setup>
-    import { ref, inject } from 'vue'
-    import Modal from '@/components/Modal.vue'
-    import { useHotelStore } from '@/stores/modules/hotel';
+import { ref, inject, provide } from 'vue'
+import ModalNative from '@/components/ModalNative.vue'
+import { useHotelStore } from '@/stores/modules/hotel';
 
-    const scheduleModalIsOpen = inject('scheduleModalIsOpen')
-    const hotelStore = useHotelStore();
-    const { hotelData } = hotelStore;
+const hotelStore = useHotelStore();
+const { hotelData } = hotelStore;
 
-
-    defineExpose({
-        open
-    });
-    
+const modalNativeIsOpen = inject('scheduleModalIsOpen')
+provide('modalNativeIsOpen',modalNativeIsOpen)
 </script>
