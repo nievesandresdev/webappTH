@@ -4,7 +4,7 @@
             <img 
                 class="w-5 h-5 absolute left-4 top-5 cursor-pointer" 
                 src="/assets/icons/1.TH.CLOSE.svg" alt=""
-                @click="scheduleModalIsOpen = false"
+                @click="modalNativeIsOpen = false"
             >
             {{$utils.capitalize($t('chat.scheduleTitle'))}}
         </p>
