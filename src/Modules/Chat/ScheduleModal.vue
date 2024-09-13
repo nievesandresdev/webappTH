@@ -1,14 +1,14 @@
 <template>
     <Modal 
-            :openModal="openScheduleModal" 
-            @closeModal="openScheduleModal = false"
+            :openModal="scheduleModalIsOpen" 
+            @closeModal="scheduleModalIsOpen = false"
             :customClasess="'max-w-[500px]'"
         >
         <p class="relative text-center p-4 text-lg font-medium border-b">
             <img 
                 class="w-5 h-5 absolute left-4 top-5 cursor-pointer" 
                 src="/assets/icons/1.TH.CLOSE.svg" alt=""
-                @click="openScheduleModal = false"
+                @click="scheduleModalIsOpen = false"
             >
             {{$utils.capitalize($t('chat.scheduleTitle'))}}
         </p>
@@ -28,17 +28,14 @@
     </Modal>
 </template>
 <script setup>
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
     import Modal from '@/components/Modal.vue'
     import { useHotelStore } from '@/stores/modules/hotel';
 
-    const openScheduleModal = ref(false)
+    const scheduleModalIsOpen = inject('scheduleModalIsOpen')
     const hotelStore = useHotelStore();
     const { hotelData } = hotelStore;
 
-    const open = () =>{
-        openScheduleModal.value = true;
-    }
 
     defineExpose({
         open

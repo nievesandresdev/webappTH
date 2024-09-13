@@ -174,6 +174,7 @@
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\NotifyUnreadMsgGuest', async (data) => {
+                    // console.log('test NotifyUnreadMsgGuest', data)
                     chatStore.setUnreadMsgsCount(data.countUnreadMsgsByGuest);
                     // chatStore.addMessage(data.message);
                     // si el chat esta abierto se marca como leido el mensaje

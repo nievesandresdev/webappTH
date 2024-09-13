@@ -38,7 +38,6 @@ export const useChatStore = defineStore('chat', () => {
     }
 
     async function markMsgsAsRead(test = null) {
-        console.log('UpdateChatEvent markMsgsAsRead',test)
         let params = {
             stayId: localStorage.getItem('stayId'),
             guestId: localStorage.getItem('guestId'),

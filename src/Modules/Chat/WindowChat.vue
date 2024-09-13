@@ -1,5 +1,5 @@
 <template>
-    <ScheduleModal  ref="scheduleModal"/>
+    <ScheduleModal/>
     <div ref="myDiv" 
         class="relative flex flex-col hbg-gray-200 height-chat"
     >
@@ -78,7 +78,7 @@
         
 <script setup>
     //import libraries
-    import { onMounted, ref, computed, nextTick, watch, onUnmounted } from 'vue';
+    import { onMounted, ref, provide, nextTick, watch, onUnmounted } from 'vue';
     import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 
     import IconHover from '@/components/IconHover.vue'
@@ -88,9 +88,11 @@
     import { useRouter } from 'vue-router';
 
     import { useStayStore } from '@/stores/modules/stay'
+    import { useGuestStore } from '@/stores/modules/guest'
     import { useChatStore } from '@/stores/modules/chat'
     import { useHotelStore } from '@/stores/modules/hotel';
     //store
+    const guestStore = useGuestStore();
     const stayStore = useStayStore();
     const { stayData } = stayStore;
     const chatStore = useChatStore();
@@ -113,7 +115,7 @@
     const msg = ref(null);
     const isAvailable = ref(false);
     const timeouts = ref([]);
-    const scheduleModal = ref(null);
+    const scheduleModalIsOpen = ref(false);
     //pusher
     const isSubscribed = ref(false);
     const channel_chat = ref(null);
@@ -182,7 +184,7 @@
 
     const openHorary = async () =>{
         await hotelStore.$loadChatHours(); 
-        scheduleModal.value.open();
+        scheduleModalIsOpen.value = true;
     }
 
     const goBack = () => {
@@ -264,12 +266,14 @@
 
     const connect_pusher = () => {
         if (!isSubscribed.value) {
-            const channelName = 'private-update-chat.' + stayStore.stayData.id;
+            let guest = guestStore.getLocalGuest();
+            const channelName = 'private-update-chat.' + guest.id;
             if (!isChannelSubscribed(channelName)) {
                 channel_chat.value = channelName;
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    // console.log('test UpdateChatEvent', data)
                     //se marca como leido solo si la pantalla no esta apagada 
                     //o si no esta minimizado el navegador
                     if(!screenOff.value){
@@ -294,6 +298,8 @@
             scrollToBottom();
         });
     }, { deep: true });
+
+    provide('scheduleModalIsOpen',scheduleModalIsOpen)
 </script>
     
 <style>
