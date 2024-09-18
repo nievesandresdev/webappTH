@@ -29,7 +29,7 @@
     </div>
 </template>
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import TextQuery from './Components/TextQuery.vue';
 import IconsQuery from './Components/IconsQuery.vue'
 
@@ -37,7 +37,7 @@ import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 
 const querySettingsStore = useQuerySettingsStore();
 
-onBeforeMount(async ()=>{
+onMounted(async ()=>{
     await getQuerySettings();
 })
 
@@ -53,7 +53,16 @@ const settings = ref([]);
 
 async function getQuerySettings(){
     settings.value = await querySettingsStore.$getAll();
-    console.log('settings',settings.value)
+    console.log('settings.value',settings.value)
 }
 
+const EditId = ref(null);
+const EditPeriod = ref(null);
+const EditComment = ref(null);
+const EditQualification = ref(null);
+
+provide('EditId',EditId);
+provide('EditPeriod',EditPeriod);
+provide('EditComment',EditComment);
+provide('EditQualification',EditQualification);
 </script>

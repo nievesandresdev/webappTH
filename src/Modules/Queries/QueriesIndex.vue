@@ -2,7 +2,6 @@
     <Head /> 
 
     <div class="queries-body h-[81vh] md:h-full overflow-y-auto px-2 md:px-0 py-6 md:py-8 md:w-[650px] md:mx-auto">
-
         <FlashFeedback 
             v-if="showFlashFeedback  && period == 'pre-stay'"
             :text="feedbackText"
@@ -16,6 +15,7 @@
             :settings="settings"
             :data="currentQuery"
             @showFeedback="showFeedback"
+            @loadReponses="loadReponses"
         />
         <!-- in-stay & post-stay -->
         <div class="md:mt-12" v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
@@ -34,13 +34,33 @@
                 :response="res.comment ? res.comment[res.response_lang] : null"
                 :qualification="res.qualification"
                 :period="res.period"
+                :currentPeriod="period"
+                :id="res.id"
+                v-if="EditPeriod !== res.period"
             /> 
+            <!-- componentes para editar -->
+            <template v-else>
+                <TextQuery 
+                    v-if="EditPeriod == 'pre-stay'" 
+                    :settings="settings"
+                    :data="res"
+                    @showFeedback="showFeedback"
+                />
+                <div class="mb-2 sp:mb-4" v-else>
+                    <IconsQuery 
+                        :settings="settings"
+                        :data="res"
+                        @loadReponses="loadReponses"
+                        @showFeedback="showFeedback"
+                    />
+                </div>      
+            </template>
         </template>
         
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref, computed } from 'vue';
+import { onBeforeMount, ref, computed, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import TextQuery from './Components/TextQuery.vue';
 import IconsQuery from './Components/IconsQuery.vue'
@@ -71,6 +91,11 @@ const responses = ref([]);
 const showFlashFeedback = ref(false);
 const feedbackText = ref(null);
 const requestTo = ref(null);
+//
+const EditId = ref(null);
+const EditPeriod = ref(null);
+const EditComment = ref(null);
+const EditQualification = ref(null);
 
 onBeforeMount(async ()=>{
     queryStore.$setPendingQuery(false);
@@ -137,24 +162,29 @@ const postStayQuery = computed(()=>{
 })
 
 const showLinks = computed(()=>{
-    
-    if(!postStayQuery.value && period.value == 'post-stay' && requestTo.value == 'positive, normal and not answered queries'){
+    // console.log('requestTo.value',requestTo.value)
+    if(!requestTo.value) return false;
+    if(!postStayQuery.value && period.value == 'post-stay' && requestTo.value.includes('NOTANSWERED')){
         return true;
     }
 
     if(postStayQuery.value){
         let condition1 = period.value == 'post-stay' && 
                         postStayQuery.value.answered && 
-                        postStayQuery.value.qualification == 'GOOD' && 
-                        requestTo.value == 'positive queries'; 
+                        ['GOOD','VERYGOOD'].includes(postStayQuery.value.qualification) && 
+                        !requestTo.value.includes('NOTANSWERED'); 
         let condition2 = period.value == 'post-stay' &&
                         postStayQuery.value.answered && 
-                        (postStayQuery.value.qualification == 'NORMAL' || postStayQuery.value.qualification == 'GOOD') &&
-                        requestTo.value == 'positive, normal and not answered queries';
+                        ['NORMAL','GOOD','VERYGOOD'].includes(postStayQuery.value.qualification) &&
+                        requestTo.value.includes('NOTANSWERED');
         return condition1 || condition2;
     }
     return false;
                     
 })
 
+provide('EditId',EditId);
+provide('EditPeriod',EditPeriod);
+provide('EditComment',EditComment);
+provide('EditQualification',EditQualification);
 </script>

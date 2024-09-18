@@ -1,5 +1,5 @@
 <template>
-    <ScheduleModal  ref="scheduleModal"/>
+    <ScheduleModal/>
     <div ref="myDiv" 
         class="relative flex flex-col hbg-gray-200 height-chat"
     >
@@ -34,7 +34,7 @@
                     {{$utils.capitalize($t('chat.languages'))}}
                 </p>
                 <div class="flex flex-wrap justify-center" style="margin-left:-8px;margin-right:-8px;">
-                    <img class="w-7 lg:w-5 mt-3.5 mx-2" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/'+lg.abbreviation+'.svg'" alt="">
+                    <img class="w-7 lg:w-5 mt-3.5 mx-2" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
                 </div>
             </div>
             <div v-for="msg in messages" :key="msg" class="min-w-[156px] lg:min-w-[125px] max-w-[246px] lg:max-w-[336px] mb-3.5 lg:mb-6" :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}">
@@ -78,7 +78,7 @@
         
 <script setup>
     //import libraries
-    import { onMounted, ref, computed, nextTick, watch, onUnmounted } from 'vue';
+    import { onMounted, ref, provide, nextTick, watch, onUnmounted } from 'vue';
     import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 
     import IconHover from '@/components/IconHover.vue'
@@ -88,9 +88,11 @@
     import { useRouter } from 'vue-router';
 
     import { useStayStore } from '@/stores/modules/stay'
+    import { useGuestStore } from '@/stores/modules/guest'
     import { useChatStore } from '@/stores/modules/chat'
     import { useHotelStore } from '@/stores/modules/hotel';
     //store
+    const guestStore = useGuestStore();
     const stayStore = useStayStore();
     const { stayData } = stayStore;
     const chatStore = useChatStore();
@@ -113,17 +115,18 @@
     const msg = ref(null);
     const isAvailable = ref(false);
     const timeouts = ref([]);
-    const scheduleModal = ref(null);
+    const scheduleModalIsOpen = ref(false);
     //pusher
     const isSubscribed = ref(false);
     const channel_chat = ref(null);
     const pusher = ref(null);   
+    const screenOff = ref(null);   
 
     //mounted
     onMounted( async () => {
         window.addEventListener('resize', setVH);
         setVH();
-
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
         messages.value =  await chatStore.loadMessages();
         setTimeout(scrollToBottom, 50);
@@ -133,35 +136,46 @@
     });
 
     onUnmounted(() => {
-        if (channel_chat.value) {
-            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
-            pusher.value.unsubscribe(channel_chat.value);
-        }
+        unsubscribeChatEvent()
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
     });
+    
+    const handleVisibilityChange = () => {
+    if (document.hidden) {
+        screenOff.value = true;
+    } else {
+        chatStore.markMsgsAsRead();
+        screenOff.value = false;
+    }
+};
 
     const myDiv = ref(null); // ref para tu div
 
     //functions
     let originalBodyOverflow; // Almacenamos la configuración original del overflow del body
 
-function disableScroll() {
-    originalBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
-    window.addEventListener('touchmove', preventScroll, { passive: false });
-}
+    function unsubscribeChatEvent() {
+        if (channel_chat.value) {
+            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+            pusher.value.unsubscribe(channel_chat.value);
+        }
+    }
 
-function enableScroll() {
-    document.body.style.overflow = originalBodyOverflow;
-    window.removeEventListener('touchmove', preventScroll);
-}
+    function disableScroll() {
+        originalBodyOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
+        window.addEventListener('touchmove', preventScroll, { passive: false });
+    }
 
-function preventScroll(e) {
-  e.preventDefault();
-}
+    function enableScroll() {
+        document.body.style.overflow = originalBodyOverflow;
+        window.removeEventListener('touchmove', preventScroll);
+    }
 
-
-
+    function preventScroll(e) {
+    e.preventDefault();
+    }
 
     const setVH = () => {
         let vh = window.innerHeight * 0.01;
@@ -169,11 +183,12 @@ function preventScroll(e) {
     };
 
     const openHorary = async () =>{
+        scheduleModalIsOpen.value = true;
         await hotelStore.$loadChatHours(); 
-        scheduleModal.value.open();
     }
-    
+
     const goBack = () => {
+        // unsubscribeChatEvent()
         if (window.history.length > 1) {
             router.go(-1);
         } else {
@@ -187,7 +202,6 @@ function preventScroll(e) {
             //servicio para enviar mensaje
             let text = msg.value;
             msg.value = null;
-            // console.log('isAvailable.value',isAvailable.value)
             let params = {
                 text,
                 guestId : localStorage.getItem('guestId'),
@@ -207,7 +221,6 @@ function preventScroll(e) {
 
     const watchAvailability = async () =>{
         let loadChatHours = await hotelStore.$loadChatHours(); 
-        // console.log('chatHourswatchAvailability',loadChatHours)
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
         const todaysAvailability = loadChatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
@@ -221,9 +234,8 @@ function preventScroll(e) {
             const currentMoment = Moment(currentTime, 'HH:mm');
             return currentMoment.isBetween(startMoment, endMoment, null, '[]');
         });
-        // console.log('isAvailable.value',isAvailable.value)
     }
-    
+
     const closeChat = () => {
         emit('closechat');
     }
@@ -239,7 +251,7 @@ function preventScroll(e) {
         event.target.style.height = '40px';
         event.target.style.height = event.target.scrollHeight + 'px';
     }
-    
+
     const scrollToBottom = () => {
         var chatContainer = document.querySelector('.body-chat');
         chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -254,22 +266,28 @@ function preventScroll(e) {
 
     const connect_pusher = () => {
         if (!isSubscribed.value) {
-            const channelName = 'private-update-chat.' + stayStore.stayData.id;
+            let guest = guestStore.getLocalGuest();
+            const channelName = 'private-update-chat.' + guest.id;
             if (!isChannelSubscribed(channelName)) {
                 channel_chat.value = channelName;
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
                 channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                    // console.log('test UpdateChatEvent', data)
+                    //se marca como leido solo si la pantalla no esta apagada 
+                    //o si no esta minimizado el navegador
+                    if(!screenOff.value){
+                        await chatStore.markMsgsAsRead('lleno');
+                    }
                     chatStore.addMessage(data.message);
-                    await chatStore.markMsgsAsRead();
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
         } else if (!stayStore.stayData && isSubscribed.value) {
             // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
             if (channel_chat.value) {
-            pusher.value.unsubscribe(channel_chat.value);
-            isSubscribed.value = false; // Marcar como no suscrito
+                pusher.value.unsubscribe(channel_chat.value);
+                isSubscribed.value = false; // Marcar como no suscrito
             }
         }
     };
@@ -280,6 +298,8 @@ function preventScroll(e) {
             scrollToBottom();
         });
     }, { deep: true });
+
+    provide('scheduleModalIsOpen',scheduleModalIsOpen)
 </script>
     
 <style>

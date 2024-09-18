@@ -111,12 +111,16 @@
         loadLanguagesAll()
     })
 
-    onUnmounted(() => {
+    // onUnmounted(() => {
+    //     unSubscribePusher();
+    // });
+
+    const unSubscribePusher = () =>{
         if (channel_chat.value && !isMockup()) {
-            channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+            channel_chat.value.unbind('App\\Events\\NotifyUnreadMsgGuest');
             pusher.value.unsubscribe(channel_chat.value);
         }
-    });
+    }
 
     const validateCurrentStay = async () =>{
         if(guestData && stayStore.stayData){
@@ -164,12 +168,14 @@
 
     const connect_pusher = () => {
         if (stayStore.stayData && !isSubscribed.value) {
-            const channelName = 'private-update-chat.' + stayStore.stayData.id;
+            const channelName = 'private-notify-unread-msg-guest.' + guestData?.id;
             if (!isChannelSubscribed(channelName)) {
                 channel_chat.value = channelName;
                 pusher.value = getPusherInstance();
                 channel_chat.value = pusher.value.subscribe(channel_chat.value);
-                channel_chat.value.bind('App\\Events\\UpdateChatEvent', async (data) => {
+                channel_chat.value.bind('App\\Events\\NotifyUnreadMsgGuest', async (data) => {
+                    // console.log('test NotifyUnreadMsgGuest', data)
+                    chatStore.setUnreadMsgsCount(data.countUnreadMsgsByGuest);
                     // chatStore.addMessage(data.message);
                     // si el chat esta abierto se marca como leido el mensaje
                     // if(
@@ -178,15 +184,15 @@
                     // ){
                     //     await chatStore.markMsgsAsRead();
                     // }
-                    await chatStore.unreadMsgs();
+                    // await chatStore.unreadMsgs();
                 });
             isSubscribed.value = true; // Marcar como suscrito
             }
         } else if (!stayStore.stayData && isSubscribed.value) {
             // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
             if (channel_chat.value) {
-            pusher.value.unsubscribe(channel_chat.value);
-            isSubscribed.value = false; // Marcar como no suscrito
+                pusher.value.unsubscribe(channel_chat.value);
+                isSubscribed.value = false; // Marcar como no suscrito
             }
         }
     };
@@ -254,6 +260,7 @@
             // localStorage.setItem('stayData',newStayData);
             // stayData = newStayData;
             if(newStayData){
+                unSubscribePusher();
                 connect_pusher();
             }
         }

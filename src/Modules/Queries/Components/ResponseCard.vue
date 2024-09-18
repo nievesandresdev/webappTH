@@ -6,14 +6,31 @@
         </div>
         <div class="mt-4 flex">
             <img class="w-6 h-6 mr-2" src="/assets/icons/1.TH.AnswerReview.svg" alt="AnswerReview icon">
-            <p class="text-sm"> {{ qualificationTranslate(qualification) }} {{ response }}</p>
+            <p class="text-sm"> 
+                {{ period !== 'pre-stay'  ? $t(qualificationTranslate(qualification, period))+'.' : ''}} 
+                {{ response }}
+            </p>
+        </div>
+        <div class="text-right mt-4">
+            <button 
+                v-if="currentPeriod == period"
+                class="hbtn-primary py-3 px-4 text-sm font-medium leading-[110%]"
+                @click="editQuery(response, qualification)"
+            >
+                Modificar
+            </button>
         </div>
     </div>
 </template>
 <script setup>
-import { reactive, provide, computed, ref } from 'vue';
+import { inject } from 'vue';
 
-const { qualification } = defineProps({
+const EditId = inject('EditId');
+const EditPeriod = inject('EditPeriod');
+const EditComment = inject('EditComment');
+const EditQualification = inject('EditQualification');
+
+const { qualification, period, response, id } = defineProps({
     period:{
         type:String,
         default:null
@@ -26,16 +43,27 @@ const { qualification } = defineProps({
         type:String,
         default:null
     },
+    id:{
+        type:String,
+        default:null
+    },
+    currentPeriod:{
+        type:String,
+        default:null
+    },
 })
 
-const qualificationTranslate = () => {
+const editQuery = (res, qualif) => {
+    EditId.value = id;
+    EditPeriod.value = period;
+    EditComment.value = res;
+    EditQualification.value = qualif;
+}
+
+const qualificationTranslate = (qualification, period) => {
     if(!qualification) return 
-
-    let string;
-    qualification == 'GOOD' ? string = 'Muy buena.' : '';
-    qualification == 'NORMAL' ? string = 'Normal.' : '';
-    qualification == 'WRONG' ? string = 'Muy mala.' : '';
-
-    return string;
+    let keyPeriod = period == 'in-stay' ? 'stay' : 'poststay';
+    let keyFeel = qualification.toLowerCase();
+    return `query.form.btn-${keyFeel}-${keyPeriod}`;
 }
 </script>

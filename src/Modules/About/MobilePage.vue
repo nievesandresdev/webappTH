@@ -170,7 +170,7 @@
         <!-- Descripción  -->
         <div class="px-[8px] sp:px-4 mt-[20px] sp:mt-6" v-if="hotelData?.translate.description">
             <p class="text-[10px] sp:text-sm font-medium">
-                {{ hotelData?.translate.description }}
+                {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
             </p>
         </div>
 
@@ -221,8 +221,13 @@
     import { useRouter } from 'vue-router';
     import ImageToggle from './components/ImageToggle.vue';
     import { useHotelStore } from '@/stores/modules/hotel'
+    import { useLocaleStore } from '@/stores/modules/locale'
+    
+
     const hotelStore = useHotelStore()
     const { hotelData } = hotelStore
+
+    const localeStore = useLocaleStore()
     
     const router = useRouter();
 
