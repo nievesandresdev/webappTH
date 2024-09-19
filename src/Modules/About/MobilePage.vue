@@ -120,7 +120,7 @@
         </div>
 
         <!-- Descripción  -->
-        <div class="px-[8px] sp:px-4 mt-[20px] sp:mt-6" v-if="hotelData?.translate.description">
+        <div class="px-[8px] sp:px-4 mt-[20px] sp:mt-6" v-if="hotelData?.description">
             <p class="text-[10px] sp:text-sm font-medium">
                 {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
             </p>
