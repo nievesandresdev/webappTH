@@ -480,9 +480,7 @@
         for (const [key, value] of Object.entries(queryRouter.value || {})) {
             if (formFilter.hasOwnProperty(key)) {
                 if (['duration', 'score'].includes(key)) {
-                    console.log(key, value);
                     if (typeof value === 'string') {
-                        console.log(key, value);
                         formFilter[key].push(value);
                         // filtersSelected[key].push(value);
                     } else {
