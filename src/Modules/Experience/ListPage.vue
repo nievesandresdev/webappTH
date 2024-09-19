@@ -359,6 +359,10 @@
         duration: [],
         search:null,
         city: null,
+        all_cities: false,
+        free_cancelation: false,
+        score: [],
+        featured: false,
     })
     const countDuration = ref([])
     const experiencesData = ref([])
@@ -475,7 +479,7 @@
                 formFilter[key] = value
             }
         }
-        // console.log(formFilter, 'loadQueryInForm')
+        console.log(formFilter, 'loadQueryInForm')
     }
 
     function clearFilters () {
