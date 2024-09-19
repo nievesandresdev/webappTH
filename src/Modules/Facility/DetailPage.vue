@@ -76,7 +76,7 @@
                 </template>
             </Carousel> 
         </div>
-        <div class="px-4">
+        <div class="px-4" :class="facility?.images?.length == 0 ? 'mt-10' : ''">
             <div class="mb-2.5 sp:mb-6">
                 <h2 
                     class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4"
