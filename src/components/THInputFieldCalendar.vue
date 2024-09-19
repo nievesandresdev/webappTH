@@ -32,7 +32,7 @@
                 <img v-if="icon_right" :src="icon_right" :class="icon_right_class">
             </template>
         </buttom>
-        <div
+        <!-- <div
             class="dropdown-calendar absolute z-50 left-0"
             v-if="showOptions && w_screen > 767"
         >
@@ -42,12 +42,13 @@
                 is-range
                 :min-date="NoMinDate ? null : minDate"
             />
-        </div>
+        </div> -->
         <!-- calendar-mobile -->
+        <!-- v-show="showOptions && w_screen <= 767" -->
         <transition name="slide-fade">
             <div
                 class="dropdown-calendar fixed z-50 left-0 top-6 hbg-white-100 p-4"
-                v-show="showOptions && w_screen <= 767"
+                v-show="showOptions"
             >
                 <div class="relative mb-6">
                     <img 
@@ -91,7 +92,7 @@ export default {
             selected: false,
             dropdown: null,
             dates_selected:this.modelValue,
-            w_screen:window.screen.width
+            // w_screen:window.screen.width
         }
     },
     emits: ['update:modelValue'],

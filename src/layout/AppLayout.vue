@@ -5,7 +5,7 @@
 		<!-- <div v-if="$route.name != 'Home'" class="hidden md:block">
 			<GeneralMenu/>
 		</div> -->
-		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16':showMenuMobile,'mb-0':!showMenuMobile}">
+		<div id="content" class="flex-1 lg:mb-0" :class="{'mb-16 sp:mb-[92px]':showMenuMobile,'mb-0':!showMenuMobile}">
 			<slot></slot>
             <router-view></router-view>
             <!-- <div 
