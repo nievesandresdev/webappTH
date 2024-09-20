@@ -1,5 +1,5 @@
 <template>
-    <div v-if="openModal" class="relative">
+    <div v-if="false" class="relative">
         <!-- guest -->
         <div class="fixed top-0 left-0 h-screen w-full bg-[#00000080] z-[2000]"></div>
 

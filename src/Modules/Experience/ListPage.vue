@@ -427,7 +427,7 @@
     async function loadExperiences () {
         // console.log(formFilter, 'formFilter')
         let query = {...filterNonNullAndNonEmpty(formFilter)}
-        console.log(query, 'loadExperiences query');
+        // console.log(query, 'loadExperiences query');
         const response = await experienceStore.$apiGetAll({page: page.value, ...query})
         if (response.ok) {
             Object.assign(paginateData, response.data.experiences.paginate)
