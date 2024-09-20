@@ -164,6 +164,7 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
+        console.log('dddd');
         // console.log('mobileList',mobileList.value)
     })
 
