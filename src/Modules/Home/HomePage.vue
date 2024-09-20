@@ -99,10 +99,11 @@
                     {{ $t('home.btn-more-info') }}
             </router-link>
         </div>
+        
 
         <!-- carousel's -->
-         <div class="mt-4 mb-4 sp:mb-6" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''">
-            <section v-if="crossellingsData?.crosselling_facilities?.length > 0" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
+         <div class="mt-4 mb-4 sp:mb-6" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''" >
+            <section v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-6">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-facility.title')) }}

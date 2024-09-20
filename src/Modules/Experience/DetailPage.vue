@@ -347,6 +347,7 @@
                             </div>
 
                             <!-- detalles -->
+                            <!--  -->
                             <!-- border-t lg:border-0 -->
                             <h1 class="mt-[10px] sp:mt-6 md:mt-8 text-[12px] sp:text-base lg:text-lg font-medium">
                                 {{ $t('experience.detail-page.title-other-information') }}

@@ -76,7 +76,7 @@
                 </template>
             </Carousel> 
         </div>
-        <div class="px-4">
+        <div class="px-4" :class="facility?.images?.length == 0 ? 'mt-10' : ''">
             <div class="mb-2.5 sp:mb-6">
                 <h2 
                     class="text-xs sp:text-base lg:text-[22px] font-medium mb-1.5 sp:mb-4"
@@ -92,15 +92,23 @@
                     {{ $t('facility.horaryWord') }}
                 </h2>
             </div>
-            <div v-if="facility?.schedule" class="row">
+            <!-- <div v-if="facility?.schedules" class="row">
                 <div class="col-12 justify">
                     <p
-                        v-html="facility?.schedule"
+                        v-html="facility?.schedules"
                         class="text-[10px] sp:text-sm"
                     >
                     </p>
                 </div>
+            </div> -->
+            <div v-if="facility?.schedules" class="row">
+                <div class="col-12">
+                    <p v-for="(schedule, index) in activeWeekdays" :key="index" class="text-[10px] sp:text-sm">
+                        Horario : {{ schedule.name }} {{ schedule.times[0].start }} - {{ schedule.times[0].end }}
+                    </p>
+                </div>
             </div>
+
         </div>
         
     </div>
@@ -123,6 +131,8 @@
     const currentSlide = ref(0);
     const facility = ref(null);
     const facilityStore = useFacilityStore();
+    const activeWeekdays = ref([]);
+
 
     onMounted(() => {
         getFacility();
@@ -133,6 +143,13 @@
         let response = await facilityStore.$findById(paramsRouter.value.id);
         // console.log('getFacility',response)
         facility.value = response;
+
+        // Procesar el JSON de schedules y filtrar los días activos de lunes a viernes
+        const schedules = JSON.parse(facility.value.schedules);
+
+        activeWeekdays.value = schedules.filter(day => {
+            return day.active;
+        });
     }
 
     const getImg = (payload) => {

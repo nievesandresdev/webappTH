@@ -143,6 +143,8 @@
         categoriplace: null,
         typeplace: null,
         points: [],
+        distances: [],
+        all_cities: false,
         search:null,
         city: null,
     })
@@ -162,6 +164,7 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
+        console.log('dddd');
         // console.log('mobileList',mobileList.value)
     })
 
@@ -173,8 +176,9 @@
 
     // FUNCTION
     async function loadPlaces () {
-        // console.log(formFilter, 'formFilter')
-        const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        // console.log(query, 'loadExperiences query');
+        const response = await placeStore.$apiGetAll({page: page.value,...query})
         // console.log('loadPlaces', response)
         if (response.ok) {
             Object.assign(paginateData, response.data.places.paginate)
@@ -238,9 +242,29 @@
     function loadQueryInFormFilter () {
         for (const [key, value] of Object.entries(queryRouter.value || {})) {
             if (formFilter.hasOwnProperty(key)) {
-                formFilter[key] = value
+                if (['duration', 'distances'].includes(key)) {
+                    if (typeof value === 'string') {
+                        formFilter[key].push(value);
+                        // filtersSelected[key].push(value);
+                    } else {
+                        formFilter[key] = value;
+                        // filtersSelected[key] = value;
+                    }
+                }else {
+                    formFilter[key] = validValueQuery(key, value);
+                    // filtersSelected[key] = validValueQuery(key, value);
+                }
             }
         }
+        // console.log(formFilter, 'loadQueryInForm')
+    }
+
+    function validValueQuery (field, value) {
+
+        if (value === 'false') return false;
+        if (value === 'true') return true;
+
+        return value;
     }
 
     function clearFilters () {

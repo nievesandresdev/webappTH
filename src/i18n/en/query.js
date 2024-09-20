@@ -1,19 +1,25 @@
 export default {
     "textToast": {
-        "sendQueryText": "Response sent"
+        "sendQueryText": "Response sent",
+        "updateQueryText" : "Amendment submitted"
     },
     "form": {
         "send": "Send",
+        "cancel" : "Cancel",
         "title": "Queries",
         "hello": "Hello",
         "whatsup": "What's up",
         "thanksAll" : "Thank you for everything",
-        "btn-wrong-stay": "Very bad",
+        "btn-verywrong-stay": "Very bad",
+        "btn-wrong-stay": "Bad",
         "btn-normal-stay": "Normal",
-        "btn-good-stay": "Very good",
-        "btn-wrong-poststay": "Very bad",
+        "btn-good-stay": "Good",
+        "btn-verygood-stay": "Very good",
+        "btn-verywrong-poststay": "Very bad",
+        "btn-wrong-poststay": "Bad",
         "btn-normal-poststay": "Normal",
-        "btn-good-poststay": "Very good",
+        "btn-good-poststay": "Good",
+        "btn-verygood-poststay": "Very good",
         "poststay-bad-thanks-title": "Reply sent", 
         "poststay-bad-thanks-subtitle": "Thank you very much for your time",
     },

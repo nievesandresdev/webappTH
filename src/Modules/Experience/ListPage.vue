@@ -359,6 +359,10 @@
         duration: [],
         search:null,
         city: null,
+        all_cities: false,
+        free_cancelation: false,
+        score: [],
+        featured: false,
     })
     const countDuration = ref([])
     const experiencesData = ref([])
@@ -413,7 +417,8 @@
 
     // FUNCTION
     async function loadNumbersByFilters () {
-        const response = await experienceStore.$apiGetNumbersByFilters(formFilter)
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        const response = await experienceStore.$apiGetNumbersByFilters({...query});
         if (response.ok) {
             numbersByFilterDuration.value = response.data
         }
@@ -421,7 +426,9 @@
 
     async function loadExperiences () {
         // console.log(formFilter, 'formFilter')
-        const response = await experienceStore.$apiGetAll({page: page.value,...formFilter})
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        // console.log(query, 'loadExperiences query');
+        const response = await experienceStore.$apiGetAll({page: page.value, ...query})
         if (response.ok) {
             Object.assign(paginateData, response.data.experiences.paginate)
             page.value = paginateData.current_page
@@ -432,7 +439,6 @@
         const cities = await cityStore.$getNearCitiesData()
         if(cities.ok){
             nearCitiesData.value = cities.data;
-            console.log('nearCitiesData.value',nearCitiesData.value)
         }
     }
     function submitSearchCity (city) {
@@ -445,7 +451,9 @@
         loadExperiences()
     }
     function submitFilter (){
-        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilter)} })
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        
+        route.push({ name: 'ExperienceList', query })
         page.value = 1
         experiencesData.value = []
         closeModalFilter()
@@ -472,10 +480,29 @@
     function loadQueryInFormFilter () {
         for (const [key, value] of Object.entries(queryRouter.value || {})) {
             if (formFilter.hasOwnProperty(key)) {
-                formFilter[key] = value
+                if (['duration', 'score'].includes(key)) {
+                    if (typeof value === 'string') {
+                        formFilter[key].push(value);
+                        // filtersSelected[key].push(value);
+                    } else {
+                        formFilter[key] = value;
+                        // filtersSelected[key] = value;
+                    }
+                }else {
+                    formFilter[key] = validValueQuery(key, value);
+                    // filtersSelected[key] = validValueQuery(key, value);
+                }
             }
         }
         // console.log(formFilter, 'loadQueryInForm')
+    }
+
+    function validValueQuery (field, value) {
+
+        if (value === 'false') return false;
+        if (value === 'true') return true;
+
+        return value;
     }
 
     function clearFilters () {

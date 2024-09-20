@@ -7,8 +7,8 @@
             <div class="grid grid-cols-1 gap-2 mb-[1.5rem]">
                 <div>
                     <h1 class="text-[1.375rem] leading-[150%] font-medium">
-                        {{ hotelData.translate.type }}<br>
-                        {{ hotelData.translate.name }} <br>
+                        {{ hotelData.type }}<br>
+                        {{ hotelData.name }} <br>
                     </h1>
                 </div>
                 <div class="flex" v-if="hotelData.category">

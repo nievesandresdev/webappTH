@@ -46,7 +46,7 @@ export default {
         "locationWord": "Ubicación",
         "starWord": "Estrella",
         "starsWord": "Estrellas",
-        "ratingTitle": "Puntuacion",
+        "ratingTitle": "Puntuación",
         "noComment": "No se escribio comentario",
         "seeMoreComment": "Ver mas",
         "seeAllComments": "Ver todas las opiniones",

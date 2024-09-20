@@ -54,6 +54,7 @@ export const useExperienceStore = defineStore('experience', () => {
 
     //
     return {
+        $loadImage,
         $apiGetAll,
         $apiGetNumbersByFilters,
         $apiFindBySlug,
