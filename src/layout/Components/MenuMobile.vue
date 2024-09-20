@@ -22,6 +22,7 @@
             <router-link
                 to="/instalaciones"
                 class="text-center no-link flex-col item-justify w-[42px] sp:w-[66px]"
+                v-show="hotelStore?.hotelData?.show_facilities"
             >
                 <img
                     class="mx-auto w-4 h-4 sp:w-6 sp:h-6"
@@ -114,13 +115,14 @@
     const router = useRouter();
     const chatStore = useChatStore();
     const queryStore = useQueryStore();
+    
     //ONMOUNTED
     onMounted(async () => {
         await queryStore.$existingPendingQuery()
     })
 
     const hotelStore = useHotelStore()
-    const { show_experiences } = hotelStore?.hotelData
+    const { show_experiences,show_facilities } = hotelStore?.hotelData
     const showChat = hotelStore?.hotelData?.chatSettings.show_guest ?? false;
     //DATA
     const modal_find_reserve = ref(false)
