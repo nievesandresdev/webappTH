@@ -417,7 +417,8 @@
 
     // FUNCTION
     async function loadNumbersByFilters () {
-        const response = await experienceStore.$apiGetNumbersByFilters(formFilter)
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        const response = await experienceStore.$apiGetNumbersByFilters({...query});
         if (response.ok) {
             numbersByFilterDuration.value = response.data
         }
@@ -426,7 +427,7 @@
     async function loadExperiences () {
         // console.log(formFilter, 'formFilter')
         let query = {...filterNonNullAndNonEmpty(formFilter)}
-        // console.log(query, 'loadExperiences query');
+        console.log(query, 'loadExperiences query');
         const response = await experienceStore.$apiGetAll({page: page.value, ...query})
         if (response.ok) {
             Object.assign(paginateData, response.data.experiences.paginate)

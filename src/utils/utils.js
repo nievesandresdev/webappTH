@@ -113,6 +113,18 @@ const getUrlParam = (param) => {
     return dataParam
 }
 
+const formatTypeLodging = (valueType) => {
+    const typeLodging = {
+      hotel: "Hotel",
+      hostal: "Hostal",
+      pensión: "Pensión",
+      ca: "Complejo de apartamentos",
+      at: "Apartamento turístico",
+      vft: "Vivienda con fines turísticos",
+    }
+    return typeLodging?.[valueType] ?? null;
+  }
+
 module.exports = {
     slufy,
     formatPrice,
@@ -124,4 +136,5 @@ module.exports = {
     transformDuration,
     loadSubdomain,
     getUrlParam,
+    formatTypeLodging,
 }

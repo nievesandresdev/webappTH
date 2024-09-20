@@ -34,7 +34,8 @@
                             class="flex items-center hover:bg-gray-200 w-full px-3.5 cursor-pointer"
                             @click="selectSearch(item)"
                         >
-                            <img class="rounded-lg w-10 h-10 mr-2" :src="placeStore.$loadImage(item.image)">
+                            <!-- {{ item.image }} -->
+                            <img class="rounded-lg w-10 h-10 mr-2" :src="item.type == 'experience' ? experienceStore.$loadImage(item.image) : placeStore.$loadImage(item.image)">
                             <div class="border-b border-gray-300 w-full truncate-1 py-2">
                                 <p class="text-sm font-medium truncate-1" v-html="item.title"></p>
                                 <p
@@ -61,6 +62,11 @@
     import { getUrlParam } from '@/utils/utils.js'
     //import component
     import InputSearchModalMobile from './InputSearchModalMobile'
+
+    import { useExperienceStore } from '@/stores/modules/experience';
+    const experienceStore = useExperienceStore();
+    import { usePlaceStore } from '@/stores/modules/place';
+    const placeStore = usePlaceStore();
 
     // PROPS
     // const props = defineProps({

@@ -41,7 +41,7 @@
                     class="flex items-center hover:bg-gray-200 w-full cursor-pointer"
                     @click="selectSearch(item)"
                 >
-                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="placeStore.$loadImage(item.image)">
+                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="item.type == 'experience' ? item.image : placeStore.$loadImage(item.image)">
                     <div class="border-b border-gray-300 w-full truncate-1 h-full" :class="item.type == 'city' ? 'py-3.5' : 'py-2'">
                         <p class="text-sm font-medium truncate-1" :class="{'mb-1': item.type == 'city'}" v-html="item.title"></p>
                         <p
