@@ -28,14 +28,10 @@
   const dataGuest = ref(null);
 
   function signInWithGoogle() {
-    // Inicializar el flujo de Google Sign-In
-    window.google.accounts.id.initialize({
-      client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID, // Reemplaza con tu Client ID
-      callback: handleCredentialResponse,
-    })
-  
-    // Mostrar el prompt de Google
-    window.google.accounts.id.prompt()
+    const currentUrl = window.location.href
+    console.log('currentUrl',window.location.href)
+    // Redirigir al usuario a la API para iniciar el flujo de autenticación
+    window.location.href = `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/guest/auth/google?redirect=${encodeURIComponent(currentUrl)}`
   }
   
   async function handleCredentialResponse(response) {
@@ -55,7 +51,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 50vh;
     background-color: #f5f5f5;
   }
   
@@ -76,14 +72,6 @@
     background-color: #357ae8;
   }
   </style>
-  
-  <!-- <script setup>
-  import { authWithGoogle } from '@/api/services/guest.services'
 
-  async function signInWithGoogle(){
-    const res = await authWithGoogle();
-    console.log('test res',res)
-  }
-  </script> -->
   
   
