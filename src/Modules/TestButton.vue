@@ -5,27 +5,42 @@
         Continuar con Google
       </button>
     </div>
-    <div v-if="dataGuest" class="mt-10">
-        <h1 class="text-base leading-5 mt-2">{{  dataGuest.firstName }}</h1>
-        <h1 class="text-base leading-5 mt-2">{{  dataGuest.lastName }}</h1>
+    <div v-if="dataGuest.email" class="mt-10 p-4 hbg-gray-200 shadow rounded-[10px] mx-6">
+      <h1 class="text-xl font-medium leading-5 mb-6">Datos obtenidos:</h1>
+      <h1 class="text-base leading-5">ID: {{  dataGuest.googleId }}</h1>
+        <h1 class="text-base leading-5 mt-2">NAMES: {{  dataGuest.names }}</h1>
         <h1 class="text-base leading-5 mt-2">{{  dataGuest.email }}</h1>
         <img class="w-10 h-10 rounded-full mt-6" :src="dataGuest.avatar" alt="">
     </div>
   </template>
   
   <script setup>
-  import { ref, onMounted } from 'vue'
+  import { reactive, onMounted } from 'vue'
   import { authWithGoogle } from '@/api/services/guest.services'
-  import axios from 'axios'
+  import { getUrlParam } from '@/utils/utils.js'
   import { useRouter } from 'vue-router'
   
   const router = useRouter()
   
   onMounted(() => {
-    console.log('Origen actual:', window.location.origin)
+    let names = getUrlParam('names')
+    let googleId = getUrlParam('googleId')
+    let email = getUrlParam('email')
+    let avatar = getUrlParam('avatar')
+    console.log('email',email)
+    names ? dataGuest.names = names : null;
+    googleId ? dataGuest.googleId = googleId : null;
+    email ? dataGuest.email = email : null;
+    avatar ? dataGuest.avatar = avatar : null;
+    console.log('dataGuest',dataGuest)
   })
 
-  const dataGuest = ref(null);
+  const dataGuest = reactive({
+    names:null,
+    email:null,
+    avatar:null,
+    googleId:null,
+  });
 
   function signInWithGoogle() {
     const currentUrl = window.location.href
@@ -34,16 +49,16 @@
     window.location.href = `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/guest/auth/google?redirect=${encodeURIComponent(currentUrl)}`
   }
   
-  async function handleCredentialResponse(response) {
-    console.log('response', response)
-    const token = response.credential
+  // async function handleCredentialResponse(response) {
+  //   console.log('response', response)
+  //   const token = response.credential
     
-    let data = { token };
-    const res = await authWithGoogle(data);
-    dataGuest.value = res.data;
-    console.log('test res',res)
+  //   let data = { token };
+  //   const res = await authWithGoogle(data);
+  //   dataGuest.value = res.data;
+  //   console.log('test res',res)
     
-  }
+  // }
   </script>
   
   <style scoped>
