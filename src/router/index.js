@@ -21,6 +21,7 @@ import utils from '@/utils/utils.js'
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
+const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
 
 const routes = [
   // { path: '/', redirect: '/webapp' },
@@ -42,6 +43,11 @@ const routes = [
     name: 'ScreenNotAllowed',
     component: ScreenNotAllowed,
     beforeEnter: [isDesktop]
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: GoogleButton
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
