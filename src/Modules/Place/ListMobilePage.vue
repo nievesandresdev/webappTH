@@ -51,18 +51,18 @@
                     :mobileList="mobileList"
                     @openModalFilter="openModalFilter"
                 />
-                dddd
                 <template v-if="mobileList">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[8px] sp:gap-4 xl:gap-6 pt-[8px] sp:pt-4 px-3.5 md:px-0 mb-[10px] mb-20 lg:mb-0">
                         <div v-for="(item, index) in placesData" :key="item.id">
                             <p 
                                 v-if="(placesData[index-1]?.cityName == hotelData.zone && hotelData.zone !== item.cityName) || (index == 0 && hotelData.zone !== item.cityName)"
-                                class="py-4 text-[10px] sp:text-base font-medium hborder-top-gray-400"
+                                class="pb-4 text-[10px] sp:text-base font-medium"
+                                :class="{ 'hborder-top-gray-400 pt-4': index != 0 }"
                             >
                                 {{countOtherCities}} 
                                 {{ countOtherCities > 1 ? 'lugares' : 'lugar' }} cerca de 
                                 {{ hotelData.zone }}
-                            </p>   
+                            </p>
                             <CardProduct 
                                 place heightImg="card-img" 
                                 :data="item"
