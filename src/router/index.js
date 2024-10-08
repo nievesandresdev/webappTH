@@ -51,7 +51,7 @@ const routes = [
     component: GoogleButton
   },
   {
-    path: '/test-facebook',
+    path: '/testFacebook',
     name: 'TestFacebook',
     component: TestFacebook
   },
