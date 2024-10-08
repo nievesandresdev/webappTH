@@ -23,7 +23,7 @@ const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFo
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
 const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
 const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
-const DeleteDataFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/DeleteDataFacebook.vue')
+
 const routes = [
   // { path: '/', redirect: '/webapp' },
   // {
@@ -54,11 +54,6 @@ const routes = [
     path: '/test-facebook',
     name: 'TestFacebook',
     component: TestFacebook
-  },
-  {
-    path: '/DeleteDataFacebook',
-    name: 'DeleteDataFacebook',
-    component: DeleteDataFacebook
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
