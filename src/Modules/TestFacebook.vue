@@ -6,11 +6,13 @@
       </button>
     </div>
     <div v-if="dataGuest.email" class="mt-10 p-4 hbg-gray-200 shadow rounded-[10px] mx-6">
+        
       <h1 class="text-xl font-medium leading-5 mb-6">Datos obtenidos:</h1>
       <h1 class="text-base leading-5">ID: {{  dataGuest.facebookId }}</h1>
         <h1 class="text-base leading-5 mt-2">NAMES: {{  dataGuest.names }}</h1>
         <h1 class="text-base leading-5 mt-2">{{  dataGuest.email }}</h1>
         <img class="w-10 h-10 rounded-full mt-6" :src="dataGuest.avatar" alt="">
+
     </div>
   </template>
   
