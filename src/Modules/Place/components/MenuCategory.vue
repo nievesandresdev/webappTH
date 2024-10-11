@@ -189,10 +189,10 @@
                 en: 'Museums',
                 fr: 'Musées',
             },
-            'zonas-verdes': {
-                es: 'Zonas verdes',
-                en: 'Parkland',
-                fr: 'Zones vertes',
+            naturaleza: {
+                es: 'Naturaleza',
+                en: 'Nature',
+                fr: 'Nature',
             },
             restaurantes: {
                 es: 'Restaurantes',
@@ -250,7 +250,7 @@
     const iconsCategoriplaces = {
         monumentos:'/assets/icons/explora/icon-monumentos.svg',
         museos:'/assets/icons/explora/1.Th.MUSEOS.svg',
-        'zonas-verdes': '/assets/icons/explora/1.TH.PARQUES.svg',
+        'naturaleza': '/assets/icons/explora/1.TH.PARQUES.svg',
         restaurantes :'/assets/icons/explora/1.TH.DONDE COMER.svg',
         heladerias:'/assets/icons/explora/1.TH.I.heladería.svg',
         'cafeterias-y-postres':'/assets/icons/explora/1.TH.CAFETERIAS.svg',
@@ -262,7 +262,7 @@
     const iconsCat = {
         monumentos:'/assets/icons/explora/icon-monuments-cat.svg',
         museos:'/assets/icons/explora/icon-museo-cat.svg',
-        'zonas-verdes': '/assets/icons/explora/icon-parques-cat.svg',
+        'naturaleza': '/assets/icons/explora/icon-parques-cat.svg',
         restaurantes :'/assets/icons/explora/icon-restaurantes-cat.svg',
         heladerias:'/assets/icons/explora/icon-heladerias-cat.svg',
         'cafeterias-y-postres':'/assets/icons/explora/icon-cafeterias-cat.svg',
@@ -275,7 +275,7 @@
     const imagesCategory = {
         monumentos:'/assets/icons/explora/monumentos.svg',
         museos:'/assets/icons/explora/museos.svg',
-        'zonas-verdes': '/assets/icons/explora/parques.svg',
+        'naturaleza': '/assets/icons/explora/parques.svg',
         restaurantes :'/assets/icons/explora/restaurantes.svg',
         heladerias:'/assets/icons/explora/heladerias.svg',
         'cafeterias-y-postres':'/assets/icons/explora/cafeterias.svg',
@@ -316,7 +316,6 @@
                     show: item.show,
                 }
         })
-        // console.log('cats',cats)
         return cats;
     })
 
