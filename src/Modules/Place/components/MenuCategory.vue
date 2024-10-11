@@ -189,7 +189,7 @@
                 en: 'Museums',
                 fr: 'Musées',
             },
-            'naturaleza': {
+            naturaleza: {
                 es: 'Naturaleza',
                 en: 'Nature',
                 fr: 'Nature',
@@ -316,7 +316,6 @@
                     show: item.show,
                 }
         })
-        // console.log('cats',cats)
         return cats;
     })
 

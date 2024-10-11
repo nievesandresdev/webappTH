@@ -22,6 +22,7 @@ import utils from '@/utils/utils.js'
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
 const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
+const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 
 const routes = [
   // { path: '/', redirect: '/webapp' },
@@ -48,6 +49,11 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: GoogleButton
+  },
+  {
+    path: '/testFacebook',
+    name: 'TestFacebook',
+    component: TestFacebook
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
