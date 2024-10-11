@@ -316,7 +316,6 @@
                     show: item.show,
                 }
         })
-        // console.log('cats',cats)
         return cats;
     })
 
