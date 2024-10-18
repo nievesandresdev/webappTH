@@ -175,7 +175,7 @@
                 </div>
             </section>
 
-            <section v-if="crossellingsData?.crosselling_experiences?.length > 0 && hotelData.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences" id="h-home-experiences" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-experience.title')) }}
@@ -185,7 +185,7 @@
                     </router-link>
                 </div>
                 <div class="mt-2.5 sp:mt-4">
-                    <CarouselExperiences id="0" :items="crossellingsData?.crosselling_experiences" />
+                    <CarouselExperiences id="0" :items="crossellingPlacesData?.crosselling_experiences" />
                 </div>
             </section>
         </div>
@@ -338,7 +338,7 @@
             // console.log(localeStore.localeCurrent, 'watch')
             // console.log(newStayData, 'newStayData watch')
             // if (newStayData) {
-                Promise.all([loadCrossellingsPlaces(), loadCrossellings(), getPlaceCategories()]);
+                Promise.all([loadCrossellings(), getPlaceCategories()]);
             // }
         }, { immediate: true })
 
@@ -373,10 +373,7 @@
         }
 
         async function loadCrossellings () {
-            crossellingsData.value = await hotelStore.$getCrossellings()
-        }
-        async function loadCrossellingsPlaces () {
-            crossellingPlacesData.value = await placeStore.$getCrosselling()
+            crossellingPlacesData.value = await placeStore.$getCrosselling();
             // console.log(crossellingPlacesData.value, 'crossellingPlacesData.value')
         }
 
