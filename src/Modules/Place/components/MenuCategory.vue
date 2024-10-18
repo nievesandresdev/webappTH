@@ -189,7 +189,7 @@
                 en: 'Museums',
                 fr: 'Musées',
             },
-            naturaleza: {
+            'naturaleza': {
                 es: 'Naturaleza',
                 en: 'Nature',
                 fr: 'Nature',
