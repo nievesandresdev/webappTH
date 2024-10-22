@@ -44,7 +44,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
   let api_url_backend;
   api_url_backend =  SLUG_API === 'API_HELPER' ? URL_BASE_BACKEND_HELPER : URL_BASE_BACKEND_GENERAL;
   api_url_backend =  SLUG_API === 'API_REVIEW' ? URL_BASE_BACKEND_REVIEW : URL_BASE_BACKEND_GENERAL;
-  console.log('api_url_backend',api_url_backend)
+  
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
     // const { token } = localStorage
