@@ -56,7 +56,7 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let classes = 'hinput-primary h-10 rounded-[6px] text-sm font-medium w-full px-3 py-2 block';
+            let classes = 'hinput-primary h-10 rounded-[10px] text-sm font-medium w-full px-3 py-2 block';
 
             if (this.hasError || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';

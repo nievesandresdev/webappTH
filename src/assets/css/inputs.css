@@ -3,22 +3,25 @@ input[type=radio]:hover {
 }
 
 .hinput-primary{
-    border: 1px solid #BFBFBF;
-    color: #333333;
-    border-radius: 6px;
+    border: 1px solid var(--h-black-100);
+    color: var(--h-black-100);
 }
-.hinput-primary:focus{
+/* .hinput-primary:focus{
     outline: none;
-    border: 1px solid #333333;
-}
+    border: 1px solid var(--h-black-100);
+} */
 
-.hinput-primary:hover{
+/* .hinput-primary:hover{
     border: 1px solid var(--h-green-600);
-}
+} */
 
 .hinput-primary:hover::placeholder,
 .hinput-primary:hover{
-    color: var(--h-green-600);
+    color: var(--Input-text-placeholder, rgba(51, 51, 51, 0.25));
+    font-family: Lato;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px; /* 114.286% */
 }
 
 .hinput-error{

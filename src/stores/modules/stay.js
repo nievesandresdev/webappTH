@@ -144,7 +144,7 @@ export const useStayStore = defineStore('stay', () => {
     // GETTERS
     const stayDataComputed = computed(() => {
         if(stayData.value){
-            chatStore.unreadMsgs();
+            // chatStore.unreadMsgs();
         }
         return stayData.value
     });
