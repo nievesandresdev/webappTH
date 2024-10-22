@@ -1,5 +1,4 @@
 :root {
-    --h-white-100: #FFFFFF;
     /*
         green
     */
@@ -36,7 +35,34 @@
     --alert-negative: #FF6666;
     --alert-alert: #FFC506;
     --alert-info: #AAD1E6;
-}
+    /*
+        new design system
+    */
+    --Text-disabled: #33333340;
+    --Surface-color-1-disabled: #33333380;
+    --Text-on-color-1-disabled: #fafafa40;
+    --Border-secondary: #E9E9E9;
+}   
+
+    /*
+        disabled
+    */
+
+    .disabled-text{
+        color : var(--Text-disabled);
+    }
+
+    /*
+        secondary
+    */
+    .bg-border-secondary{
+        background-color: var(--Border-secondary);
+    }
+
+
+
+
+
     /*
         ***
         green colors
@@ -156,6 +182,9 @@
         color: var(--h-black-200);
     }
     .hborder-black-100{
+        border: 1px solid var(--h-black-100);
+    }
+    .focus-hborder-black-100:focus{
         border: 1px solid var(--h-black-100);
     }
     .hbg-gray-400{

@@ -3,19 +3,19 @@
         <label v-if="textLabel" class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
         <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
 
-        <img v-if="iconLeft" class="w-6 h-6 absolute left-3 top-2" :src="iconLeft">
+        <img v-if="iconLeft" class="w-5 h-5 absolute left-2 top-2.5" :src="iconLeft">
         <input
-        :ref="id"
-        :id="id"
-        :type="type"
-        :class="computeClasses"
-        :placeholder="placeholderText"
-        :value="modelValue"
-        @input="validateInput"
-        @blur="$emit('blur')"
-        @keyup="keyupInput"
-        autocomplete="nope"
-        :disabled="disabled"
+            :ref="id"
+            :id="id"
+            :type="showPass ? 'text' : type"
+            :class="computeClasses"
+            :placeholder="placeholderText"
+            :value="modelValue"
+            @input="validateInput"
+            @blur="$emit('blur')"
+            @keyup="keyupInput"
+            autocomplete="nope"
+            :disabled="disabled"
         >
         <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
             <img
@@ -25,6 +25,13 @@
             />
             {{ textError }}
         </p>
+        <button 
+            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-3 right-2"
+            :class="{'disabled-text':!modelValue || modelValue == ''}"
+            v-if="type === 'password'"
+            @click="showPass = !showPass"
+            :disabled="!modelValue || modelValue == ''"
+        > {{ showPass ? 'Ocultar' :'Mostrar'}}</button>
     </div>
 </template>
 
@@ -34,6 +41,7 @@ export default {
     data() {
         return {
             hasError: false,
+            showPass: false,
             stringTextError: ''
         };
     },
@@ -56,7 +64,8 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let classes = 'hinput-primary h-10 rounded-[10px] text-sm font-medium w-full px-3 py-2 block';
+            let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
+            let classes = `hinput-primary hborder-black-100 focus-hborder-black-100 h-10 rounded-[10px] text-sm font-medium w-full block ${paddingDefault}`;
 
             if (this.hasError || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
@@ -64,10 +73,10 @@ export default {
                 classes += ' hoverForm';
             }
             if(this.iconLeft){
-                classes += ' pl-[44px]';
+                classes += ' pl-[33px]';
             }
             if(this.iconRight){
-                classes += ' pr-[44px]';
+                classes += ' pr-[33px]';
             }
 
             Object.entries(this.customClasses).forEach(([key, value]) => {
@@ -197,14 +206,14 @@ export default {
 [type='url']:focus {
     --tw-ring-inset: none;
     --tw-ring-color: none;
-    border-color: initial;
+    /* border-color: initial; */
 }
-
+/* 
 input::placeholder{
     font-size: 14px;
     color: var(--h-gray-500);
     font-weight: 500;
-}
+} */
 
 
 </style>
