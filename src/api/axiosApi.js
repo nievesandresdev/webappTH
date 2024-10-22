@@ -41,10 +41,11 @@ axios.interceptors.response.use(response => {
 
 
 export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL') => {
-  let api_url_backend;
-  api_url_backend =  SLUG_API === 'API_HELPER' ? URL_BASE_BACKEND_HELPER : URL_BASE_BACKEND_GENERAL;
-  api_url_backend =  SLUG_API === 'API_REVIEW' ? URL_BASE_BACKEND_REVIEW : URL_BASE_BACKEND_GENERAL;
-  
+  let api_url_backend = URL_BASE_BACKEND_GENERAL;
+  // console.log('test SLUG_API',SLUG_API)
+  SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
+  SLUG_API === 'API_REVIEW' ? api_url_backend = URL_BASE_BACKEND_REVIEW : '';
+  // console.log('test api_url_backend',api_url_backend)
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
     // const { token } = localStorage
