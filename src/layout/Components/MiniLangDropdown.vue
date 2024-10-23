@@ -1,10 +1,10 @@
 <template>
   <Menu as="div" class="relative inline-block text-left">
       <div>
-          <MenuButton class="p-2 flex items-center">
-              <img class="w-4 h-4 inline-block" :src="`/assets/icons/languages/${modelValue}.svg`" :alt="lg">
+          <MenuButton class="flex items-center">
+              <img class="w-5 h-5 inline-block" :src="`/assets/icons/languages/${modelValue}.svg`" :alt="lg">
               <img
-                  class="ml-2 w-4"
+                  class="ml-1 w-6 h-6"
                   :class="{ 'rotate-180': toggleLang }"
                   src="/assets/icons/1.TH.I.DROPDOWN.svg"
                   alt="1.TH.DROPDOWNSHAPE"

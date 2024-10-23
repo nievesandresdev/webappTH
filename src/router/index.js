@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import homeRoutes from './homeRoutes'
-import experienceRoutes from './experienceRoutes'
-import placeRoutes from './placeRoutes'
-import chatRoutes from './chatRoutes'
-import facilityRoutes from './facilityRoutes'
-import hotelRoutes from './hotelRoutes'
-import queryRoutes from './queryRoutes'
-import policiesRoutes from './policiesRoutes'
+import GeneralRoutes from './GeneralRoutes'
+// import experienceRoutes from './experienceRoutes'
+// import placeRoutes from './placeRoutes'
+// import chatRoutes from './chatRoutes'
+// import facilityRoutes from './facilityRoutes'
+// import hotelRoutes from './hotelRoutes'
+// import queryRoutes from './queryRoutes'
+// import policiesRoutes from './policiesRoutes'
 
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useGuestStore } from '@/stores/modules/guest'
@@ -21,40 +21,34 @@ import utils from '@/utils/utils.js'
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
-const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
-const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
+// const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
+// const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 
 const routes = [
-  // { path: '/', redirect: '/webapp' },
-  // {
-  //   path: '/webapp',
-  //   children: [
-  //   ]
-  // },
-  ...homeRoutes,
-  ...experienceRoutes,
-  ...placeRoutes,
-  ...chatRoutes,
-  ...facilityRoutes,
-  ...hotelRoutes,
-  ...queryRoutes,
-  ...policiesRoutes,
+  ...GeneralRoutes,
+  // ...experienceRoutes,
+  // ...placeRoutes,
+  // ...chatRoutes,
+  // ...facilityRoutes,
+  // ...hotelRoutes,
+  // ...queryRoutes,
+  // ...policiesRoutes,
   {
     path: '/compartir',
     name: 'ScreenNotAllowed',
     component: ScreenNotAllowed,
     beforeEnter: [isDesktop]
   },
-  {
-    path: '/test',
-    name: 'Test',
-    component: GoogleButton
-  },
-  {
-    path: '/testFacebook',
-    name: 'TestFacebook',
-    component: TestFacebook
-  },
+  // {
+  //   path: '/test',
+  //   name: 'Test',
+  //   component: GoogleButton
+  // },
+  // {
+  //   path: '/testFacebook',
+  //   name: 'TestFacebook',
+  //   component: TestFacebook
+  // },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 
@@ -71,9 +65,9 @@ router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore();
   const guestStore = useGuestStore();
   const localeStore = useLocaleStore();
-  loadSubdomain();
-  await hotelStore.$load();
-  let hotel = hotelStore.hotelData;
+  // loadSubdomain();
+  // await hotelStore.$load();
+  // let hotel = hotelStore.hotelData;
   
   if (utils.isMockup() || !localStorage.getItem('guestId')) {
     localeStore.$load(hotel?.language_default_webapp);

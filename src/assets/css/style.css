@@ -31,8 +31,6 @@ body {
 input:focus{
     --tw-ring-inset: none !important;
     --tw-ring-color: none !important;
-    border-color: initial !important;
-    border: 1px solid var(--h-green-600);
 }
 
 input[type="number"]::-webkit-inner-spin-button, 
