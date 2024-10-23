@@ -338,7 +338,7 @@
             // console.log(localeStore.localeCurrent, 'watch')
             // console.log(newStayData, 'newStayData watch')
             // if (newStayData) {
-                Promise.all([loadCrossellings(), getPlaceCategories()]);
+                Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
             // }
         }, { immediate: true })
 
@@ -373,6 +373,9 @@
         }
 
         async function loadCrossellings () {
+            crossellingsData.value = await hotelStore.$getCrossellings()
+        }
+        async function loadCrossellingsPlaces () {
             crossellingPlacesData.value = await placeStore.$getCrosselling();
             // console.log(crossellingPlacesData.value, 'crossellingPlacesData.value')
         }
