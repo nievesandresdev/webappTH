@@ -17,7 +17,7 @@
             :class="{'primary-disabled':!validSubmitButton}"
             @click="goRegisterOrLoginEmail()"
         >
-            Continuar
+            Continuar 
         </button>
         <!-- separator -->
         <div class="mt-6 h-[17px] flex items-center">
@@ -72,6 +72,7 @@ async function goRegisterOrLoginEmail(){
 }
 
 const validSubmitButton = computed(()=>{
-    return !emailError.value && Boolean(form.email.trim()) && !inputActive.value;
+    return !emailError.value && Boolean(form.email.trim());
+    // && !inputActive.value;
 })
 </script>

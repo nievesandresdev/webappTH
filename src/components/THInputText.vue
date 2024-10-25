@@ -17,7 +17,11 @@
             autocomplete="nope"
             :disabled="disabled"
         >
-        <p v-if="isError && showTextError || hasError && showTextError" class="lato text-xs font-bold leading-[16px] htext-alert-negative">
+        <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
+        <p 
+            v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >
             <!-- <img
                 src="/assets/icons/1.TH.WARNING.svg"
                 alt="icon alert red"
@@ -42,6 +46,7 @@ export default {
         return {
             hasError: false,
             showPass: false,
+            showEmailError: false,
             stringTextError: ''
         };
     },
@@ -69,7 +74,7 @@ export default {
             let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block ${paddingDefault}`;
 
 
-            if (this.hasError || this.isError) {
+            if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             }
             if(this.iconLeft){
@@ -86,6 +91,12 @@ export default {
             });
 
             return classes;
+        },
+        errorWhenTypeEmail(){
+            return this.showEmailError && this.hasError && this.type === 'email';
+        },
+        errorWhenOtherType(){
+            return this.hasError && this.type !== 'email';
         }
     },
     // watch: {
@@ -159,19 +170,20 @@ export default {
     methods: {
         onBlur(){
             this.$emit('blur');
-            if (this.type === 'email') {
-                this.validateEmail();
-            } 
-            this.$emit('handleError',this.hasError);
+            this.showEmailError = true;
         },
         keyupInput(){
             this.$emit('keyupInput');
         },
         validateInput(event) {
+            this.showEmailError = false
             const inputValue = this.$refs[this.id].value;
             // console.log("inputValue", inputValue);
             if (inputValue) {
-                if (this.type === 'url') {
+                if (this.type === 'email') {
+                    this.validateEmail();
+                    this.$emit('handleError',this.hasError);
+                } else if (this.type === 'url') {
                 this.validateURL();
                 }
             }else{
