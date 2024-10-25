@@ -59,6 +59,17 @@ export const useGuestStore = defineStore('guest', () => {
         return ok ? response.data : null;
     }
 
+    async function findByIdInSetLocalGuest (guestId) {    
+        const response = await findByIdApi(guestId)
+        console.log('response fys g',response)
+        const { ok } = response   
+        guestData.value = ok ? response.data : null;
+        if(guestData){
+            localStorage.setItem('guestId', guestData.value.id)
+            localStorage.setItem('guestData', JSON.stringify(guestData.value))
+        }
+    }
+
     async function findByEmail (params) {    
         console.log('findByEmail params',params)
         const response = await findByEmailApi(params)
@@ -155,7 +166,8 @@ export const useGuestStore = defineStore('guest', () => {
         getLocalGuest,
         updateLocalGuest,
         findById,
-        findByEmail
+        findByEmail,
+        findByIdInSetLocalGuest
     }
 
 })
