@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import GeneralRoutes from './GeneralRoutes'
+import chainRoutes from './chainRoutes'
 // import experienceRoutes from './experienceRoutes'
 // import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
@@ -21,11 +21,11 @@ import utils from '@/utils/utils.js'
 // COMPONENTS
 const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFoundPage.vue')
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
-// const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
-// const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
+const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
+const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 
 const routes = [
-  ...GeneralRoutes,
+  ...chainRoutes,
   // ...experienceRoutes,
   // ...placeRoutes,
   // ...chatRoutes,
@@ -39,16 +39,16 @@ const routes = [
     component: ScreenNotAllowed,
     beforeEnter: [isDesktop]
   },
-  // {
-  //   path: '/test',
-  //   name: 'Test',
-  //   component: GoogleButton
-  // },
-  // {
-  //   path: '/testFacebook',
-  //   name: 'TestFacebook',
-  //   component: TestFacebook
-  // },
+  {
+    path: '/test',
+    name: 'Test',
+    component: GoogleButton
+  },
+  {
+    path: '/testFacebook',
+    name: 'TestFacebook',
+    component: TestFacebook
+  },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
 ]
 

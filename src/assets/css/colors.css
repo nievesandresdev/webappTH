@@ -42,6 +42,7 @@
     --Surface-color-1-disabled: #33333380;
     --Text-on-color-1-disabled: #fafafa40;
     --Border-secondary: #E9E9E9;
+
 }   
 
     /*
@@ -50,6 +51,10 @@
 
     .disabled-text{
         color : var(--Text-disabled);
+    }
+
+    .hborder-disabled{
+        border-color : var(--Text-disabled);
     }
 
     /*

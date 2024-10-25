@@ -7,6 +7,7 @@ import {
     findLastStayApi,
     sendMailToApi,
     updateLanguageApi,
+    findByEmailApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -50,6 +51,19 @@ export const useGuestStore = defineStore('guest', () => {
             }
         }
         return guestData.value
+    }
+
+    async function findById (guestId) {    
+        const response = await findByIdApi(guestId)
+        const { ok } = response   
+        return ok ? response.data : null;
+    }
+
+    async function findByEmail (params) {    
+        console.log('findByEmail params',params)
+        const response = await findByEmailApi(params)
+        const { ok } = response   
+        return ok ? response.data : null;
     }
 
     async function saveOrUpdate (data, reload = false) {
@@ -139,7 +153,9 @@ export const useGuestStore = defineStore('guest', () => {
         updateLanguage,
         sendMailTo,
         getLocalGuest,
-        updateLocalGuest
+        updateLocalGuest,
+        findById,
+        findByEmail
     }
 
 })
