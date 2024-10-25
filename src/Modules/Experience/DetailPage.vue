@@ -193,7 +193,7 @@
                                 class="mt-[12px] sp:mt-6 md:mt-8 p-[12px] sp:p-6 rounded-xl border border-gray-300"
                             >
                                 <H3 class="text-[12px] sp:text-lg font-medium">
-                                    {{ experienceData?.recomendations.hotel.name }}
+                                    {{ hotelData.name }}
                                 </H3>
                                 <div class="mt-2">
                                     <span
