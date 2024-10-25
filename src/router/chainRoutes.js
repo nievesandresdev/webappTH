@@ -2,7 +2,7 @@ const ChainLanding = () => import(/* webpackChunkName: "home" */ '@/Modules/Chai
 const CompleteRegister = () => import(/* webpackChunkName: "home" */ '@/Modules/Chain/CompleteRegister.vue')
 const HotelsList = () => import(/* webpackChunkName: "home" */ '@/Modules/Chain/HotelsList.vue')
 const CreateStay = () => import(/* webpackChunkName: "home" */ '@/Modules/Chain/CreateStay.vue')
-const GeneralRoutes = [
+const chainRoutes = [
   {
     path: '',
     children: [
@@ -20,4 +20,4 @@ const GeneralRoutes = [
   },
 ];
 
-export default GeneralRoutes;
+export default chainRoutes;

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import chainRoutes from './chainRoutes'
+import homeRoutes from './homeRoutes'
 // import experienceRoutes from './experienceRoutes'
 // import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
@@ -11,7 +12,7 @@ import chainRoutes from './chainRoutes'
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useGuestStore } from '@/stores/modules/guest'
 import { useLocaleStore } from '@/stores/modules/locale'
-import { loadSubdomain } from '@/utils/utils.js'
+import { saveHotelSlug } from '@/utils/utils.js'
 
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
@@ -24,15 +25,14 @@ const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/S
 const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
 const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 
+
+import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
+
 const routes = [
+  //
+  //
+  // Rutas que no requieren el slug del hotel
   ...chainRoutes,
-  // ...experienceRoutes,
-  // ...placeRoutes,
-  // ...chatRoutes,
-  // ...facilityRoutes,
-  // ...hotelRoutes,
-  // ...queryRoutes,
-  // ...policiesRoutes,
   {
     path: '/compartir',
     name: 'ScreenNotAllowed',
@@ -49,11 +49,32 @@ const routes = [
     name: 'TestFacebook',
     component: TestFacebook
   },
+  //
+  //
+  // Rutas dinámicas (con slug)
+  {
+    path: '/:hotelSlug',
+    children: [
+      // aquí van todas las rutas que dependen del slug del hotel
+      ...homeRoutes,
+      // ...experienceRoutes,
+      // ...placeRoutes,
+      // ...chatRoutes,
+      // ...facilityRoutes,
+      // ...hotelRoutes,
+      // ...queryRoutes,
+      // ...policiesRoutes,
+    ]
+  },
+
+  // Captura para cualquier URL no reconocida (debe ir al final)
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
-]
+];
+
+
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL + 'webapp'),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Siempre desplazar a la parte superior cuando cambien las rutas
@@ -65,9 +86,10 @@ router.beforeEach( async (to, from, next) => {
   const hotelStore = useHotelStore();
   const guestStore = useGuestStore();
   const localeStore = useLocaleStore();
-  // loadSubdomain();
-  // await hotelStore.$load();
-  // let hotel = hotelStore.hotelData;
+  saveHotelSlug(to.params.hotelSlug);
+  await hotelStore.$load();
+  let hotel = hotelStore.hotelData;
+  console.log('test hotelStore.load', hotel)
   
   if (utils.isMockup() || !localStorage.getItem('guestId')) {
     localeStore.$load(hotel?.language_default_webapp);
