@@ -1,0 +1,55 @@
+<template>
+    <div class="w-full h-[76px] px-4 py-6 hshadow flex items-center justify-between">
+        <div class="flex items-center justify-center">
+            <button @click="goBack" class="w-6 h-6 text-[#333333] mr-2">
+                <img src="/assets/icons/WA.chevron.svg" alt="Chevron Icon" />
+            </button>
+            <span class="text-[20px] font-bold lato">{{ title }}</span>
+        </div>
+        
+        <button
+            v-if="showButton"
+            @click="navigateToRoute"
+            class="lato flex items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
+        >
+            {{ buttonText }}
+        </button>
+    </div>
+</template>
+
+<script setup>
+// import { useRouter } from 'vue-router';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    title: {
+        type: String,
+        default: 'Mi cuenta'
+    },
+    showButton: {
+        type: Boolean,
+        default: false
+    },
+    buttonText: {
+        type: String,
+        default: 'Crear estancia'
+    },
+    routeName: {
+        type: String,
+        default: null
+    }
+});
+
+const goBack = () => {
+    window.history.back();
+};
+
+const navigateToRoute = () => {
+    if (props.routeName) {
+        console.log(`Navigating to route: ${props.routeName}`);
+        // router.push({ name: props.routeName });
+    } else {
+        console.log("Route not specified");
+    }
+};
+</script>
