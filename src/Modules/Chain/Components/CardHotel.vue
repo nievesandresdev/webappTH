@@ -1,20 +1,42 @@
 <template>
-    <div class="shadow-guest rounded-[20px] overflow-hidden">
-        <img class="h-[226px] w-full" src="/assets/img/img-test.jpg" alt="">
+    <div @click="selectHotel" class="shadow-guest rounded-[20px] overflow-hidden">
+        <img 
+            class="h-[226px] w-full" 
+            v-if="data.image"
+            :src="hotelStore.$loadImage(data.image)" 
+            alt="image hotel"
+        >
+        <div v-else class="h-[226px] w-full hbg-gray-400" ></div>
         <div class="hbg-gray-100 p-4">
-            <h2 class="lato text-lg font-bold leading-[28px]">Riu Maspalomas</h2>
-            <div class="flex items-center gap-1 mt-3">
+            <h2 class="lato text-lg font-bold leading-[28px]">{{data.name}}</h2>
+            <div v-if="data.category" class="flex items-center gap-1 mt-3">
                 <img class="w-4 h-4" src="/assets/icons/WA.star.svg" alt="">
-                <p class="lato text-sm font-bold leading-[16px]">5 estrellas</p>
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.category}} estrellas</p>
             </div>
-            <div class="flex items-center gap-1 mt-2">
+            <div v-if="data.address" class="flex items-center gap-1 mt-2">
                 <img class="w-4 h-4" src="/assets/icons/WA.map.svg" alt="">
-                <p class="lato text-sm font-bold leading-[16px]">Calle Velarde 21B, 41005</p>
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.address}}</p>
             </div>
             <div class="flex items-center gap-1 mt-2">
                 <img class="w-4 h-4" src="/assets/icons/WA.pointer.svg" alt="">
-                <p class="lato text-sm font-bold leading-[16px]">Gran Canaria</p>
+                <p class="lato text-sm font-bold leading-[16px]">{{data.zone}}</p>
             </div>
         </div>
     </div>
 </template>
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+//store
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+
+const props = defineProps({
+    data:Object
+})
+
+function selectHotel(){
+    router.push({ name:'CreateStayFromChain', params:{ hotelSlug : props.data.subdomain}})
+}
+
+</script>

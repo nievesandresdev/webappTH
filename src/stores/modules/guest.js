@@ -61,7 +61,6 @@ export const useGuestStore = defineStore('guest', () => {
 
     async function findByIdInSetLocalGuest (guestId) {    
         const response = await findByIdApi(guestId)
-        console.log('response fys g',response)
         const { ok } = response   
         guestData.value = ok ? response.data : null;
         if(guestData){
@@ -71,7 +70,6 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findByEmail (params) {    
-        console.log('findByEmail params',params)
         const response = await findByEmailApi(params)
         const { ok } = response   
         return ok ? response.data : null;
@@ -100,6 +98,15 @@ export const useGuestStore = defineStore('guest', () => {
             guestData.value = null;
         }
         return guestData.value
+    }
+
+    async function saveOrUpdateByEmail (data) {
+        const response = await saveOrUpdateApi(data)
+        const { ok } = response   
+        if(ok && response.data){
+            return response.data
+        }
+        return null
     }
 
     async function updateLanguage (lg) {
@@ -150,7 +157,13 @@ export const useGuestStore = defineStore('guest', () => {
             localStorage.getItem('guestData',JSON.stringify(response.data));
         }
     }
-    
+
+    function setLocalGuest(data) {
+        guestData.value = data;
+        localStorage.setItem('guestId', guestData.value.id)
+        localStorage.setItem('guestData', JSON.stringify(data))
+        return guestData.value;
+    }
     //
 
     const guestDataComputed = computed(() => {
@@ -161,13 +174,15 @@ export const useGuestStore = defineStore('guest', () => {
         guestData:guestDataComputed,
         loadLocalGuest,
         saveOrUpdate,
+        saveOrUpdateByEmail,
         updateLanguage,
         sendMailTo,
         getLocalGuest,
         updateLocalGuest,
         findById,
         findByEmail,
-        findByIdInSetLocalGuest
+        findByIdInSetLocalGuest,
+        setLocalGuest
     }
 
 })

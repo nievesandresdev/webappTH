@@ -86,7 +86,7 @@ const transformDuration = (value) => {
 }
 
 const saveHotelSlug = (subdomain) => {
-    console.log('test subdomain',subdomain)
+    console.log('test saveHotelSlug',subdomain)
     if(subdomain){
         localStorage.setItem('subdomain', subdomain)
     }
@@ -94,26 +94,7 @@ const saveHotelSlug = (subdomain) => {
 }
 
 
-const loadChainSubdomain = () => {
-    const ENV = process.env.VUE_APP_ENVIROMENT || 'locale'
-    let subdomain = ENV === 'locale' ? extractChainSubdomainToQuery() : extractChainSubdomaintoHost()
-    if(subdomain){
-        localStorage.setItem('subdomain', subdomain)
-    }
-    return subdomain
-}
 
-const extractChainSubdomainToQuery = () => {
-    const chainSubdomain = getUrlParam('chainsubdomain') || null
-    return chainSubdomain
-}
-
-const extractChainSubdomaintoHost = () => {
-    const hostname = window.location.hostname; // Obtiene el hostname de la URL actual
-    const partes = hostname.split('.'); // Divide el hostname en partes separadas por puntos
-    const slugHotel = partes[0]; // El slug del hotel es la primera parte
-    return slugHotel;
-}
 
 const getUrlParam = (param) => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -144,5 +125,5 @@ module.exports = {
     transformDuration,
     saveHotelSlug,
     getUrlParam,
-    formatTypeLodging,
+    formatTypeLodging
 }

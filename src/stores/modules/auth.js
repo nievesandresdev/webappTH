@@ -1,8 +1,14 @@
 import { defineStore } from 'pinia'
 
+import { 
+    findByEmailApi
+} from '@/api/services/guest.services';
+
 import {
-    registerOrLoginWEmailApi
+    registerOrLoginWEmailApi,
+    updateGuestByIdApi
 } from '@/api/services/auth.services'
+
 
 export const useAuthStore = defineStore('auth', () => {
     
@@ -19,9 +25,15 @@ export const useAuthStore = defineStore('auth', () => {
         return response.ok ? response.data : null;
     }
 
+    async function $updateGuestById (params) {
+        const response = await updateGuestByIdApi(params)
+        return response.ok ? response.data : null;
+    }
+
     //
     return {
-        $registerOrLogin
+        $registerOrLogin,
+        $updateGuestById
     }
 
 })

@@ -49,12 +49,14 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
     // const { token } = localStorage
-    const subdomain = localStorage.getItem('subdomain') || null
+    const subdomain = localStorage.getItem('subdomain') || null;
+    const chainSubdomain = localStorage.getItem('chainSubdomain') || null;
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
       'subdomainHotel': subdomain,
+      'chainSubdomain': chainSubdomain,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }

@@ -46,11 +46,16 @@
 <script setup>
 import { reactive, ref, computed  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+//router
+import { useRouter } from 'vue-router';
+const router = useRouter();
 //stores
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
+// import { useChainStore } from '@/stores/modules/chain'
+// const chainStore = useChainStore()
 
 const emailError = ref(false)
 const inputActive = ref(false)
@@ -67,8 +72,15 @@ async function goRegisterOrLogin(type){
 
 async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
-    let res = await guestStore.findByEmail(params);
-    console.log('test findByEmail',res)
+    let find = await guestStore.findByEmail(params);
+    if(find){
+        console.log('test find',find)
+    }else{
+        let save = await guestStore.saveOrUpdateByEmail(params);
+        if(save) router.push({ name : 'CompleteRegister', query:{ g: save.id }});
+    }
+    
+    // console.log('test goRegisterOrLoginEmail',res)
 }
 
 const validSubmitButton = computed(()=>{
