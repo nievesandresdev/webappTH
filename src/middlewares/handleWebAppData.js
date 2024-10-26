@@ -55,7 +55,8 @@ export default async function handleWebAppData({ to, from, next }) {
     //data extra
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        localeStore.$load(hotel?.language_default_webapp);
+        let lang = hotel?.language_default_webapp ?? 'es'
+        localeStore.$load(lang);
     } else if (!utils.isMockup()) {
         localeStore.$load();
     }
