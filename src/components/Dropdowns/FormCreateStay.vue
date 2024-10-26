@@ -8,7 +8,12 @@
             :minDate="null"
             mandatory
         />
-        <button class="block mt-6 hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest primary-disabled">
+        <button 
+            @click="submit"
+            class="block mt-6 hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
+            :class="{'primary-disabled':!form.checkDate}"
+            :disabled="!form.checkDate"
+        >
             Crear y acceder a la estancia
         </button>
     </div>
@@ -16,8 +21,32 @@
 <script setup>
 import { reactive } from 'vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
+//stores
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore();
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
+//router
+import { navigateTo } from '@/utils/navigation'
 
 const form = reactive({
+    numberGuests:'1',
     checkDate:null,
+    listGuest:[],
+    language: 'es',
+    guestId: null,
 });
+
+const submit = async () => {
+    let guest = guestStore.getLocalGuest();
+    form.guestId = guest?.id;
+    form.language = localStorage.getItem('locale') ?? 'es';
+    let stay = await stayStore.createAndInviteGuest(form);
+    if(stay){
+        navigateTo('Home')
+    }
+
+    // processingForm.value = false
+    // emit('closeModal');
+}
 </script>
