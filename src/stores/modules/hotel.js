@@ -40,6 +40,7 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
+        console.log('test hotelData.value',hotelData.value)
         return response.data
     }
 
@@ -66,6 +67,11 @@ export const useHotelStore = defineStore('hotel', () => {
         return response
     }
 
+    async function $setLocalHotel (subdomain) {
+        localStorage.setItem('subdomain',subdomain)
+        subdomain.value = subdomain;
+    }
+
     
 
 
@@ -79,7 +85,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $getCrossellings,
         $loadImage,
         $loadChatHours,
-        $findByIdApi
+        $findByIdApi,
+        $setLocalHotel
     }
 
 })

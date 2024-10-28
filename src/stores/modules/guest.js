@@ -7,10 +7,12 @@ import {
     findLastStayApi,
     sendMailToApi,
     updateLanguageApi,
-    findByEmailApi
+    findByEmailApi,
+    findAndValidLastStayApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
+import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useQueryStore } from '@/stores/modules/query';
 import router from '@/router';
@@ -23,6 +25,7 @@ export const useGuestStore = defineStore('guest', () => {
     const stayId = ref(null)
     //stay store
     const queryStore = useQueryStore()
+    const hotelStore = useHotelStore()
     const stayStore = useStayStore()
     const { stayData } = stayStore
     // LOCALE
@@ -135,6 +138,20 @@ export const useGuestStore = defineStore('guest', () => {
         return null
     }
 
+    async function findAndValidLastStayAndLogHotel (params) {
+        const response = await findAndValidLastStayApi(params)
+        const { ok } = response
+        if(ok){
+            await stayStore.setStayData(response.data,false)
+            if(!localStorage.getItem('subdomain')){
+                await hotelStore.$setLocalHotel(response.data.hotelSubdomain)
+                await hotelStore.$load()
+            }
+            return response.data
+        }
+        return null
+    }
+
     async function sendMailTo (params) {
         const response = await sendMailToApi(params)
         const { ok } = response   
@@ -182,7 +199,8 @@ export const useGuestStore = defineStore('guest', () => {
         findById,
         findByEmail,
         findByIdInSetLocalGuest,
-        setLocalGuest
+        setLocalGuest,
+        findAndValidLastStayAndLogHotel
     }
 
 })
