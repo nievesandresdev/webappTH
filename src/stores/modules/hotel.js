@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import {
     findByParamsApi,
     getCrossellingsApi,
-    getChatHoursApi
+    getChatHoursApi,
+    findByIdApi
 } from '@/api/services/hotel.services'
 
 // import { useMainStore } from '@/stores'
@@ -60,6 +61,11 @@ export const useHotelStore = defineStore('hotel', () => {
         return response.data
     }
 
+    async function $findByIdApi (id) {
+        const response = await findByIdApi(id)
+        return response
+    }
+
     
 
 
@@ -72,7 +78,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $load,
         $getCrossellings,
         $loadImage,
-        $loadChatHours
+        $loadChatHours,
+        $findByIdApi
     }
 
 })

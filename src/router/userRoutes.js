@@ -1,4 +1,5 @@
 const ProfilePage = () => import('@/Modules/User/ProfilePage.vue')
+const MyStays = () => import('@/Modules/User/MyStays.vue')
 
 const profileRoutes = [
   {
@@ -9,6 +10,12 @@ const profileRoutes = [
         path: 'perfil',
         component: ProfilePage
       },
+      {
+        name: 'MyStays',
+        path: 'mis-estancias',
+        component: MyStays
+      },
+      
     ],
   },
 ];

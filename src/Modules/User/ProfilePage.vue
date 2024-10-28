@@ -6,29 +6,29 @@
             <div class="w-10 h-10 rounded-full bg-cover bg-center bg-lightgray shadow-profile"
                 style="background-image: url('https://via.placeholder.com/40');">
             </div>
-            <p class="text-[#333333] text-[20px] font-bold lato mt-2">¡Hola, Alejandro!</p>
+            <p class="text-[#333333] text-[20px] font-bold lato mt-2">¡Hola, {{guestData.name}}!</p>
         </div>
 
         <!-- Contenedor con información y botón de compartir -->
         <div class="flex flex-col p-4 gap-2 w-full mt-6 rounded-[20px] border border-[#E9E9E9] bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative hshadow-button">
             <div>
-                <p class="text-[16px] font-bold lato text-[#333333] mb-3">Riu Costa del Sol</p>
+                <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelData.name }}</p>
                 <div class="flex items-center text-[14px] font-bold text-[#333333] mb-2">
                     <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
-                    <span class="lato">Málaga</span>
+                    <span class="lato">{{ hotelData.zone }}</span>
                 </div>
                 <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2">
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.calendar.svg" class="w-4 h-4 mr-1" alt="Calendar Icon" />
-                        <span class="lato">12 Ago-19 Ago</span>
+                        <span class="lato">{{ formattedDates }}</span>
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                        <span class="lato">12</span>
+                        <span class="lato">{{ stayData.rooms ?? '-' }}</span>
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
-                        <span class="lato">2</span>
+                        <span class="lato">{{ stayData.number_guests }}</span>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <p class="text-[14px] font-medium lato text-[#333333]">Gestiona tus estancias</p>
             </div>
             <div class="flex">
-                <img @click="handleChevronClick" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+                <img @click="handleMyStays" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
             </div>
         </div>
 
@@ -71,13 +71,19 @@
             <span class="text-[14px] font-bold lato text-[#333333] underline">Cerrar sesión</span>
         </div>
 
-        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
+        <THInputText
+            :textLabel="'sss'"
+            :placeholder="'asdssd'"
+            v-model="form.name"
+            
+        />
+
+        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" :showButton="true" :buttonText="'hola'">
             <div class="flex flex-col items-start">
                 <div class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
                     <p class="text-[20px] font-bold text-[#333333] lato">Compartir estancia</p>
                 </div>
-                <!-- Enlaces de compartir -->
                 <a :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/WA.Whatsapp.svg" class="w-6 h-6" alt="Whatsapp Icon" />
                     <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Whatsapp</p>
@@ -111,14 +117,11 @@
         </BottomModal>
     </div>
 </template>
-
-
-
-
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed,reactive } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
-import BottomModal from '@/components/BottomModal.vue';
+import BottomModal from './Components/BottomModal.vue';
+import THInputText from '@/components/THInputText.vue';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
@@ -126,17 +129,19 @@ const { toastSuccess } = handleToast();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
+
 import { useStayStore } from '@/stores/modules/stay';
+import router from '@/router';
 const stayStore = useStayStore();
 
 const isModalOpen = ref(false);
-const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
 
-// URLs para compartir
-const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(shareUrl)}`);
-const mailtoShareUrl = computed(() => `mailto:?subject=Compartir Estancia&body=${encodeURIComponent(shareUrl)}`);
-const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareUrl)}`);
-const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=Compartir Estancia`);
+
+const guestData = ref({});
+const hotelData = ref({});
+const stayData = ref({});
 
 // Referencia al input para copiar el link
 const shareLinkInput = ref(null);
@@ -152,17 +157,68 @@ const copyToClipboard = () => {
     }
 };
 
-const handleChevronClick = () => {
+const form = reactive({
+    name: '',
+    email: ''
+});
+
+const handleMyStays = () => {
     console.log("Redirigiendo a la página de estancias...");
+    router.push({ name: 'MyStays' });
 };
 
 onMounted(() => {
-    let guest = guestStore.getLocalGuest();
-    console.log('home guest', guest);
+    guestData.value = guestStore.getLocalGuest();
+    //console.log('home guest', guestData.id);
 
-    let stay = stayStore.getLocalStay();
-    console.log('home stay', stay);
+    stayData.value = stayStore.getLocalStay();
+    //console.log('home stay', stay);
+
+    console.log({
+        stayData: stayData.value,
+        guestData: guestData.value
+    })
+
+    getHotelbyId(stayData.value.hotel_id);
+
 });
+
+const formattedDates = computed(() => {
+    const checkInDate = formatDate(stayData.value.check_in);
+    const checkOutDate = formatDate(stayData.value.check_out);
+    return `${checkInDate} - ${checkOutDate}`;
+});
+
+
+const getHotelbyId = async (id) => {
+    const response = await hotelStore.$findByIdApi(id);
+
+    if(response.ok){
+        hotelData.value = response.data;
+    }else{
+        console.log('error', response);
+    }
+    
+};
+
+const formatDate = (dateString) => {
+    const utcDate = new Date(dateString + 'T00:00:00Z');
+    const options = { day: '2-digit', month: 'short', timeZone: 'Europe/Madrid' };
+    return utcDate.toLocaleDateString('es-ES', options).replace(/\s+/g, ' ');
+};
+
+// URLs para compartir
+const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
+
+// Definimos shareMessage como un valor computed para que tome hotelData.name cuando esté disponible
+const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl}`);
+
+const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(shareMessage.value)}`);
+const mailtoShareUrl = computed(() => `mailto:?subject=Únete a nuestra estancia&body=${encodeURIComponent(shareMessage.value)}`);
+const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareMessage.value)}`);
+const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
+
+
 </script>
 
 <style scoped>

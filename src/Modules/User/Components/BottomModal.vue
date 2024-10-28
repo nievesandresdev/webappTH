@@ -11,6 +11,15 @@
             </div>
             <!-- Contenido dinámico del modal -->
             <slot></slot>
+
+            <!-- Botón opcional al final del modal -->
+            <button
+                v-if="showButton"
+                @click="handleSubmit"
+                class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
+            >
+                {{ buttonText }}
+            </button>
         </div>
     </div>
 </template>
@@ -22,6 +31,14 @@ const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
+    },
+    showButton: {
+        type: Boolean,
+        default: false
+    },
+    buttonText: {
+        type: String,
+        default: 'Acción'
     }
 });
 
@@ -30,6 +47,11 @@ const emit = defineEmits(['update:isOpen']);
 // Función para cerrar el modal
 const closeModal = () => {
     emit('update:isOpen', false);
+};
+
+// Función para manejar la acción del botón
+const handleSubmit = () => {
+    console.log("Botón del modal clickeado");
 };
 </script>
 
