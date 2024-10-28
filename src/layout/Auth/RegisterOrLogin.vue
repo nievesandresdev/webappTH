@@ -44,7 +44,7 @@
     </div>
 </template>
 <script setup>
-import { reactive, ref, computed  } from 'vue';
+import { reactive, ref, computed, inject  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
 //router
 import { useRouter } from 'vue-router';
@@ -57,13 +57,11 @@ const guestStore = useGuestStore()
 // import { useChainStore } from '@/stores/modules/chain'
 // const chainStore = useChainStore()
 
+const emit = defineEmits(['enterPasswordToLogin'])
+
 const emailError = ref(false)
 const inputActive = ref(false)
-
-const form = reactive({
-    email:'',
-    type: null
-})
+const form = inject('form')
 
 async function goRegisterOrLogin(type){
     let params = { type, email: form.email}
@@ -74,7 +72,7 @@ async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
     let find = await guestStore.findByEmail(params);
     if(find){
-        console.log('test find',find)
+        emit('enterPasswordToLogin')
     }else{
         let save = await guestStore.saveOrUpdateByEmail(params);
         if(save) router.push({ name : 'CompleteRegister', query:{ g: save.id }});

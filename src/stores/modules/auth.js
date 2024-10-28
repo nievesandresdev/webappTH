@@ -6,12 +6,17 @@ import {
 
 import {
     registerOrLoginWEmailApi,
-    updateGuestByIdApi
+    updateGuestByIdApi,
+    confirmPasswordApi
 } from '@/api/services/auth.services'
+
+import { useGuestStore } from '@/stores/modules/guest';
+
 
 
 export const useAuthStore = defineStore('auth', () => {
     
+    const guestStore = useGuestStore()
     // STATE
 
     // ACTIONS
@@ -30,10 +35,20 @@ export const useAuthStore = defineStore('auth', () => {
         return response.ok ? response.data : null;
     }
 
+    async function $sendPasswordAndLogin (params) {
+        const response = await confirmPasswordApi(params)
+        if(response.ok && response.data){
+            guestStore.setLocalGuest(response.data)
+            return response.data;
+        }
+        return null
+    }
+
     //
     return {
         $registerOrLogin,
-        $updateGuestById
+        $updateGuestById,
+        $sendPasswordAndLogin
     }
 
 })
