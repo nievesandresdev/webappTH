@@ -2,18 +2,18 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { getUrlParam } from '@/utils/utils.js'
 import {
-    getHotelsListApi
+    getHotelsListApi,
+    findBySubdomainApi
 } from '@/api/services/chain.services'
 
 export const useChainStore = defineStore('chain', () => {
     
      // STATE
      const chainSubdomain = ref(localStorage.getItem('chainSubdomain') || '')
-
+     const chainData = ref(localStorage.getItem('chainData') || null)
     // ACTIONS
     async function $getHotelsList() {
         const response = await getHotelsListApi([])
-        console.log('test response',response.data)
         return response.ok ? response.data : []; 
         
     }
@@ -50,13 +50,27 @@ export const useChainStore = defineStore('chain', () => {
         return slugHotel;
     }
 
+    async function $loadChainData(){
+        const response = await findBySubdomainApi()
+        if(response.ok){
+            chainData.value = response.data;
+            localStorage.setItem('chainData', JSON.stringify(chainData.value))
+            return   chainData.value; 
+        }
+        return null; 
+        
+        
+    }
+
     //
     return {
         chainSubdomain,
         $setChainSubdomain,
         $loadChainSubdomain,
         $goRegisterOrLoginEmail,
-        $getHotelsList
+        $getHotelsList,
+        $loadChainData,
+        chainData
     }
 
 })

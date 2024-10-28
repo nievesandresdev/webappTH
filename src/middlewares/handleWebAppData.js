@@ -18,6 +18,9 @@ export default async function handleWebAppData({ to, from, next }) {
     const chainSubdomain = localStorage.getItem('chainSubdomain');//http://localhost:81/?chainsubdomain=nobusevillatex
     if (!chainSubdomain) {
         return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
+    }else{
+        let chain = await chainStore.$loadChainData();
+        if(!chain) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }
     // console.log('test chainSubdomain',chainStore.chainSubdomain)
     ////////////////////////////////////////////////////////
