@@ -5,7 +5,8 @@ import {
     findByParamsApi,
     getCrossellingsApi,
     getChatHoursApi,
-    findByIdApi
+    findByIdApi,
+    staysByHotel
 } from '@/api/services/hotel.services'
 
 // import { useMainStore } from '@/stores'
@@ -79,6 +80,10 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelData.value = null;
     }
 
+    async function $staysByHotel (id) { //aquir ecibo el chain_id = id
+        const response = await staysByHotel(id)
+        return response
+    }
     
 
 
@@ -88,6 +93,7 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelData,
         chatHours,
         subdomain,
+        $staysByHotel,
         $load,
         $getCrossellings,
         $loadImage,

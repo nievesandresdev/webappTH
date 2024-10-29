@@ -9,33 +9,14 @@
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">¡Hola, {{guestData.name}}!</p>
         </div>
 
-        <!-- Contenedor con información y botón de compartir -->
-        <div class="flex flex-col p-4 gap-2 w-full mt-6 rounded-[20px] border border-[#E9E9E9] bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative hshadow-button">
-            <div>
-                <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelData.name }}</p>
-                <div class="flex items-center text-[14px] font-bold text-[#333333] mb-2">
-                    <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
-                    <span class="lato">{{ hotelData.zone }}</span>
-                </div>
-                <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2">
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.calendar.svg" class="w-4 h-4 mr-1" alt="Calendar Icon" />
-                        <span class="lato">{{ formattedDates }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                        <span class="lato">{{ stayData.rooms ?? '-' }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
-                        <span class="lato">{{ stayData.number_guests }}</span>
-                    </div>
-                </div>
-            </div>
-            <button @click="isModalOpen = true" class="absolute bottom-4 right-4 flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] shadow-md hshadow-button">
-                <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6 p-0.5" alt="Arrow Icon" />
-            </button>
-        </div>
+        <!-- Contenedor de hotel y estancia boton compartir -->
+        <StayCard 
+            :hotel="hotelData" 
+            :stay="stayData" 
+            :showButtonShared="true"
+            @sharedStay="openModalShared"
+            :isLoading="loading"
+        />
 
         <!-- Sección "Mis estancias" -->
         <div class="flex p-4 gap-[1px] w-full mt-4 rounded-[10px] border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] hshadow-button relative">
@@ -78,7 +59,7 @@
             
         />
 
-        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" :showButton="true" :buttonText="'hola'">
+        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
             <div class="flex flex-col items-start">
                 <div class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
@@ -121,7 +102,9 @@
 import { ref, onMounted, computed,reactive } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import BottomModal from './Components/BottomModal.vue';
+import StayCard from './Components/StayCard.vue';
 import THInputText from '@/components/THInputText.vue';
+import router from '@/router';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
@@ -133,7 +116,6 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
 import { useStayStore } from '@/stores/modules/stay';
-import router from '@/router';
 const stayStore = useStayStore();
 
 const isModalOpen = ref(false);
@@ -142,6 +124,7 @@ const isModalOpen = ref(false);
 const guestData = ref({});
 const hotelData = ref({});
 const stayData = ref({});
+const loading = ref(true);
 
 // Referencia al input para copiar el link
 const shareLinkInput = ref(null);
@@ -155,6 +138,10 @@ const copyToClipboard = () => {
 
         //isModalOpen.value = false;
     }
+};
+
+const openModalShared = () => {
+    isModalOpen.value = true;
 };
 
 const form = reactive({
@@ -183,11 +170,7 @@ onMounted(() => {
 
 });
 
-const formattedDates = computed(() => {
-    const checkInDate = formatDate(stayData.value.check_in);
-    const checkOutDate = formatDate(stayData.value.check_out);
-    return `${checkInDate} - ${checkOutDate}`;
-});
+
 
 
 const getHotelbyId = async (id) => {
@@ -198,14 +181,22 @@ const getHotelbyId = async (id) => {
     }else{
         console.log('error', response);
     }
+
+    loading.value = false;
     
 };
+
+/* const formattedDates = computed(() => {
+    const checkInDate = formatDate(stayData.value.check_in);
+    const checkOutDate = formatDate(stayData.value.check_out);
+    return `${checkInDate} - ${checkOutDate}`;
+});
 
 const formatDate = (dateString) => {
     const utcDate = new Date(dateString + 'T00:00:00Z');
     const options = { day: '2-digit', month: 'short', timeZone: 'Europe/Madrid' };
     return utcDate.toLocaleDateString('es-ES', options).replace(/\s+/g, ' ');
-};
+}; */
 
 // URLs para compartir
 const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
