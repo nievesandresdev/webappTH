@@ -1,6 +1,9 @@
 <template>
     <BottomSheet :open-bottom-sheet="true">
-        <img class="absolute top-[-89px] w-full h-[189px] z-[-1]" src="/assets/icons/EllipseCHAINHOME.svg">
+        <img 
+            v-if="route.name !== 'Home'"
+            class="absolute top-[-89px] w-full h-[189px] z-[-1]" src="/assets/icons/EllipseCHAINHOME.svg"
+        >
         <div class="px-4 pt-4">
             <WelcomeMsg v-if="!showEnterPassword"/>
             <!-- {{ $utils.capitalize($t('guest.guestLog.title')) }} -->
@@ -20,7 +23,6 @@
                 </div>
             </div>
         </div>
-      
     </BottomSheet>
 </template>
 <script setup>
@@ -28,8 +30,12 @@ import { ref, reactive, provide } from 'vue'
 import BottomSheet from '@/components/Modal/BottomSheet.vue'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import WelcomeMsg from '@/Modules/Chain/Components/WelcomeMsg.vue';
-import RegisterOrLogin from '@/layout/Auth/RegisterOrLogin.vue';
-import PasswordToLogin from '@/layout/Auth/PasswordToLogin.vue';
+import RegisterOrLogin from './Components/RegisterOrLogin.vue';
+import PasswordToLogin from './Components/PasswordToLogin.vue';
+
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
 const showEnterPassword = ref(false)
 
 const form = reactive({

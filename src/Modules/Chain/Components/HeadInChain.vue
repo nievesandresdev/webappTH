@@ -4,7 +4,7 @@
             v-if="goBack" 
             class="w-6 h-6 mr-auto" 
             src="/assets/icons/WA.chevron.svg"
-            @click="goBack"
+            @click="goBackMethod"
         >
         <h1 :class="titleClasses">{{ text }}</h1>
         <DropdownChangeLanguage />
@@ -15,14 +15,17 @@ import DropdownChangeLanguage from '@/components/Dropdowns/DropdownChangeLanguag
 const emit = defineEmits(['goBack'])
 defineProps({
     text:String,
-    goBack:Boolean,
+    goBack:{
+        type:Boolean,
+        default: false
+    },
     titleClasses:{
         type:Boolean,
         default: 'h-[28px] lato text-[20px] font-bold leading-[28px] w-[255px] text-center'
     },
 })
 
-const goBack = () =>{
+const goBackMethod = () =>{
     emit('goBack')
 }
 </script>

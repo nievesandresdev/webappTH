@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="h-screen bg-gray-600 w-full">
         new home page
     </div>
 </template>

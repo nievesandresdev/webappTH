@@ -72,6 +72,13 @@ export const useHotelStore = defineStore('hotel', () => {
         subdomain.value = subdomain;
     }
 
+    function $deleteLocalHotel () {
+        console.log('test deleteLocalHotel')
+        localStorage.removeItem('subdomain',subdomain)
+        subdomain.value = null;
+        hotelData.value = null;
+    }
+
     
 
 
@@ -86,7 +93,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $loadImage,
         $loadChatHours,
         $findByIdApi,
-        $setLocalHotel
+        $setLocalHotel,
+        $deleteLocalHotel
     }
 
 })

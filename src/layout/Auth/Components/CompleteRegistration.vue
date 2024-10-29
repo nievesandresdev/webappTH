@@ -87,10 +87,15 @@ async function submit(){
     if(method.value == 'google' && method.value == 'tripadvisor') form.password = null;
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
-    if(hotelStore.hotelData){
-        
+    await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
+    if(localStorage.getItem('stayId')){
+            navigateTo('Home')
     }else{
-        router.push({ name:'HotelsList' })
+        if(localStorage.getItem('subdomain')){
+            router.push({ name:'CreateStayFromChain' })
+        }else{
+            router.push({ name:'HotelsList' })
+        }
     }
 }
 
