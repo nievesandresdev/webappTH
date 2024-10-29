@@ -8,7 +8,8 @@ import {
     updateStayAndGuestsApi,
     deleteGuestOfStayApi,
     existingThenMatchOrSaveApi,
-    existsAndValidateApi
+    existsAndValidateApi,
+    findbyIdApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useQueryStore } from '@/stores/modules/query';
@@ -141,6 +142,17 @@ export const useStayStore = defineStore('stay', () => {
         localStorage.removeItem('stayData')
     }
 
+    async function findByIdInSetLocalStay (stayId) {    
+        const response = await findbyIdApi(stayId)
+        console.log('response fys s',response)
+        const { ok } = response   
+        stayData.value = ok ? response.data : null;
+        if(stayData){
+            localStorage.setItem('stayId', stayData.value.id)
+            localStorage.setItem('stayData', JSON.stringify(stayData.value))
+        }
+    }
+
     // GETTERS
     const stayDataComputed = computed(() => {
         if(stayData.value){
@@ -162,7 +174,8 @@ export const useStayStore = defineStore('stay', () => {
         deleteGuestOfStay,
         getLocalStay,
         existsAndValidate,
-        cleanStayData
+        cleanStayData,
+        findByIdInSetLocalStay
     }
 
 })

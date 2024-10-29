@@ -12,36 +12,41 @@
             :placeholder="placeholderText"
             :value="modelValue"
             @input="validateInput"
-            @blur="$emit('blur')"
+            @blur="onBlur"
             @keyup="keyupInput"
             autocomplete="nope"
             :disabled="disabled"
         >
-        <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
-            <img
+        <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
+        <p 
+            v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >
+            <!-- <img
                 src="/assets/icons/1.TH.WARNING.svg"
                 alt="icon alert red"
                 class="inline w-4 h-4 mr-2"
-            />
+            /> -->
             {{ textError }}
         </p>
         <button 
             href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-3 right-2"
-            :class="{'disabled-text':!modelValue || modelValue == ''}"
+            :class="{'disabled-text':!modelValue || modelValue == '' || disabled}"
             v-if="type === 'password'"
             @click="showPass = !showPass"
-            :disabled="!modelValue || modelValue == ''"
+            :disabled="!modelValue || modelValue == '' || disabled"
         > {{ showPass ? 'Ocultar' :'Mostrar'}}</button>
     </div>
 </template>
 
 <script>
 export default {
-    emits: ['update:modelValue', 'handleError','keyupInput'],
+    emits: ['update:modelValue', 'handleError','keyupInput','blur'],
     data() {
         return {
             hasError: false,
             showPass: false,
+            showEmailError: false,
             stringTextError: ''
         };
     },
@@ -65,12 +70,12 @@ export default {
         },
         computeClasses() {
             let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
-            let classes = `hinput-primary hborder-black-100 focus-hborder-black-100 h-10 rounded-[10px] text-sm font-medium w-full block ${paddingDefault}`;
+            let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
+            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block ${paddingDefault}`;
 
-            if (this.hasError || this.isError) {
+
+            if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
-            } else {
-                classes += ' hoverForm';
             }
             if(this.iconLeft){
                 classes += ' pl-[33px]';
@@ -86,13 +91,19 @@ export default {
             });
 
             return classes;
+        },
+        errorWhenTypeEmail(){
+            return this.showEmailError && this.hasError && this.type === 'email';
+        },
+        errorWhenOtherType(){
+            return this.hasError && this.type !== 'email';
         }
     },
-    watch: {
-        hasError () {
-            this.$emit('handleError',this.hasError)
-        }
-    },
+    // watch: {
+    //     hasError () {
+            
+    //     }
+    // },
     props: {
         id: {
             type: String,
@@ -157,15 +168,21 @@ export default {
         }
     },
     methods: {
+        onBlur(){
+            this.$emit('blur');
+            this.showEmailError = true;
+        },
         keyupInput(){
             this.$emit('keyupInput');
         },
         validateInput(event) {
+            this.showEmailError = false
             const inputValue = this.$refs[this.id].value;
             // console.log("inputValue", inputValue);
             if (inputValue) {
                 if (this.type === 'email') {
                     this.validateEmail();
+                    this.$emit('handleError',this.hasError);
                 } else if (this.type === 'url') {
                 this.validateURL();
                 }
@@ -181,8 +198,7 @@ export default {
 
             if (!emailRegex.test(inputValue)) {
                 this.hasError = true;
-
-                this.$emit('update:modelValue', null);
+                // this.$emit('update:modelValue', null);
             }
         },
 

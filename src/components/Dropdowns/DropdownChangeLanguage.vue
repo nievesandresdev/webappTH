@@ -1,20 +1,18 @@
 <template>
-    <div ref="ref_lang_menu" class="absolute top-0 right-0  mt-[4px] sp:mt-[16px] mr-[3px] sp:mr-[8px] md:hidden" style="z-index: 1000 !important;">
+    <div ref="ref_lang_menu">
         <button 
-            id="toggle-lang-menu" class="hbtn-blur p-2 rounded-md flex items-center" 
+            id="toggle-lang-menu" class="flex items-center" 
             @click="toggleDropdown"
             :class="{'hcursor-mobile':$utils.isMockup()}"
             :disabled="$utils.isMockup()"
         >
-            <img v-if="localeStore.localeCurrent == 'es'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/espana.png" alt="">
-            <img v-if="localeStore.localeCurrent == 'fr'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/francia.png" alt="">
-            <img v-if="localeStore.localeCurrent == 'en'" class="w-4 sp:w-[22px] inline-block" src="/assets/icons/reino-unido.png" alt="">
-<!-- rotate-180 -->
+            <img class="w-5 h-5 inline-block" :src="`/assets/icons/languages/${localeStore.localeCurrent}.svg`" :alt="localeStore.localeCurrent">
             <img
-                class="ml-1 w-3 sp:w-4 icon-white"
-                src="/assets/icons/1.TH.I.DROPDOWN.svg"
-                alt="1.TH.DROPDOWNSHAPE"
-            >
+                  class="ml-1 w-6 h-6"
+                  :class="{ 'rotate-180': toggleLang }"
+                  src="/assets/icons/1.TH.I.DROPDOWN.svg"
+                  alt="1.TH.DROPDOWNSHAPE"
+              >
     </button>
     </div>
     <div

@@ -3,21 +3,19 @@
         <buttom
             :disabled="disabled"
             @click="toggleshow"
-            class="box-input-field flex items-center hoverForm"
+            class="flex items-center hoverForm"
             :class="{
-                'h-10 rounded-[6px] py-2 px-3':true,
-                'hborder-gray-400': !error && !modelValue,
+                'h-10 rounded-[10px] p-2 hborder-black-100':true,
                 'hborder-alert-negative': error,
-                'hborder-black-100': modelValue && !error,
                 'button-disabled':disabled && !error
             }"
         >
             <img :src="icon_left" :class="icon_left_class">
             <span
-                class="flex-grow truncate text-label"
+                class="flex-grow truncate"
                 :class="{
-                'text-sm font-medium':true,
-                'htext-gray-500': !error && !modelValue,
+                'lato text-sm font-medium leading-[16px]':true,
+                'disabled-text': !error && !modelValue,
                 'htext-alert-negative': error,
                 'htext-black-100': modelValue,
             }"
@@ -32,32 +30,20 @@
                 <img v-if="icon_right" :src="icon_right" :class="icon_right_class">
             </template>
         </buttom>
-        <!-- <div
-            class="dropdown-calendar absolute z-50 left-0"
-            v-if="showOptions && w_screen > 767"
-        >
-            <DatePicker
-                v-model="value"
-                expanded
-                is-range
-                :min-date="NoMinDate ? null : minDate"
-            />
-        </div> -->
-        <!-- calendar-mobile -->
-        <!-- v-show="showOptions && w_screen <= 767" -->
+        <div v-show="showOptions" @click="toggleshow" class="fixed h-screen w-full bg-[#00000080] z-[100] top-0 left-0"></div>
         <transition name="slide-fade">
             <div
-                class="dropdown-calendar fixed z-50 left-0 top-6 hbg-white-100 p-4"
+                class="dropdown-calendar bg-white fixed z-[150] left-0 top-10 hbg-white-100 px-4 pt-6"
                 v-show="showOptions"
             >
                 <div class="relative mb-6">
                     <img 
-                        class="w-6 h-6 absolute left-0 top-1" 
-                        src="/assets/icons/1.TH.BACK.svg" 
+                        class="w-6 h-6 absolute left-0 top-[1px]" 
+                        src="/assets/icons/WA.chevron.svg" 
                         alt="volver a formulario huesped"
                         @click="showOptions = false"
                     >
-                    <h3 class="text-lg font-medium text-center">Calendario</h3>
+                    <h3 class="lato text-lg font-bold text-center leading-[18px] h-[28px]">Calendario</h3>
                 </div>
                 <DatePicker
                     v-model="value"
@@ -119,11 +105,11 @@ export default {
         },
         icon_left:{
             type: String,
-            default: '/assets/icons/1.TH.SCHEDULE.svg',
+            default: '/assets/icons/WA.calendar.svg',
         },
         icon_left_class:{
             type: String,
-            default: 'h-6 w-6 mr-2',
+            default: 'h-5 w-5 mr-2',
         },
         icon_right:{
             type: String,
@@ -259,12 +245,6 @@ export default {
 
 }
 
-.box-input-field:hover{
-    border-color:var(--h-green-600) !important;
-}
-.box-input-field:hover > .text-label{
-    color:var(--h-green-600) !important;
-}
 .dropdown-calendar{
     box-shadow: 0px 3.5px 7px rgba(0, 0, 0, 0.15);
     border-radius: 0px 0px 10px 10px;
@@ -287,9 +267,6 @@ export default {
     border: 1px solid var(--h-gray-400) !important;
     background-color: var(--h-gray-200) !important;
     cursor: default !important;
-}
-.button-disabled:hover > .text-label {
-    color: var(--h-gray-500) !important;
 }
 
 .slide-fade-enter-from, .slide-fade-leave-active {

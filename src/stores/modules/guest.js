@@ -7,9 +7,12 @@ import {
     findLastStayApi,
     sendMailToApi,
     updateLanguageApi,
+    findByEmailApi,
+    findAndValidLastStayApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
+import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useQueryStore } from '@/stores/modules/query';
 import router from '@/router';
@@ -22,6 +25,7 @@ export const useGuestStore = defineStore('guest', () => {
     const stayId = ref(null)
     //stay store
     const queryStore = useQueryStore()
+    const hotelStore = useHotelStore()
     const stayStore = useStayStore()
     const { stayData } = stayStore
     // LOCALE
@@ -52,6 +56,28 @@ export const useGuestStore = defineStore('guest', () => {
         return guestData.value
     }
 
+    async function findById (guestId) {    
+        const response = await findByIdApi(guestId)
+        const { ok } = response   
+        return ok ? response.data : null;
+    }
+
+    async function findByIdInSetLocalGuest (guestId) {    
+        const response = await findByIdApi(guestId)
+        const { ok } = response   
+        guestData.value = ok ? response.data : null;
+        if(guestData){
+            localStorage.setItem('guestId', guestData.value.id)
+            localStorage.setItem('guestData', JSON.stringify(guestData.value))
+        }
+    }
+
+    async function findByEmail (params) {    
+        const response = await findByEmailApi(params)
+        const { ok } = response   
+        return ok ? response.data : null;
+    }
+
     async function saveOrUpdate (data, reload = false) {
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
@@ -75,6 +101,15 @@ export const useGuestStore = defineStore('guest', () => {
             guestData.value = null;
         }
         return guestData.value
+    }
+
+    async function saveOrUpdateByEmail (data) {
+        const response = await saveOrUpdateApi(data)
+        const { ok } = response   
+        if(ok && response.data){
+            return response.data
+        }
+        return null
     }
 
     async function updateLanguage (lg) {
@@ -103,6 +138,20 @@ export const useGuestStore = defineStore('guest', () => {
         return null
     }
 
+    async function findAndValidLastStayAndLogHotel (params) {
+        const response = await findAndValidLastStayApi(params)
+        const { ok } = response
+        if(ok){
+            await stayStore.setStayData(response.data,false)
+            if(!localStorage.getItem('subdomain')){
+                await hotelStore.$setLocalHotel(response.data.hotelSubdomain)
+                await hotelStore.$load()
+            }
+            return response.data
+        }
+        return null
+    }
+
     async function sendMailTo (params) {
         const response = await sendMailToApi(params)
         const { ok } = response   
@@ -125,7 +174,13 @@ export const useGuestStore = defineStore('guest', () => {
             localStorage.getItem('guestData',JSON.stringify(response.data));
         }
     }
-    
+
+    function setLocalGuest(data) {
+        guestData.value = data;
+        localStorage.setItem('guestId', guestData.value.id)
+        localStorage.setItem('guestData', JSON.stringify(data))
+        return guestData.value;
+    }
     //
 
     const guestDataComputed = computed(() => {
@@ -136,10 +191,16 @@ export const useGuestStore = defineStore('guest', () => {
         guestData:guestDataComputed,
         loadLocalGuest,
         saveOrUpdate,
+        saveOrUpdateByEmail,
         updateLanguage,
         sendMailTo,
         getLocalGuest,
-        updateLocalGuest
+        updateLocalGuest,
+        findById,
+        findByEmail,
+        findByIdInSetLocalGuest,
+        setLocalGuest,
+        findAndValidLastStayAndLogHotel
     }
 
 })

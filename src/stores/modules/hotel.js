@@ -4,7 +4,9 @@ import { ref } from 'vue'
 import {
     findByParamsApi,
     getCrossellingsApi,
-    getChatHoursApi
+    getChatHoursApi,
+    findByIdApi,
+    staysByHotel
 } from '@/api/services/hotel.services'
 
 // import { useMainStore } from '@/stores'
@@ -39,6 +41,7 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
+        console.log('test hotelData.value',hotelData.value)
         return response.data
     }
 
@@ -60,6 +63,27 @@ export const useHotelStore = defineStore('hotel', () => {
         return response.data
     }
 
+    async function $findByIdApi (id) {
+        const response = await findByIdApi(id)
+        return response
+    }
+
+    async function $setLocalHotel (subdomain) {
+        localStorage.setItem('subdomain',subdomain)
+        subdomain.value = subdomain;
+    }
+
+    function $deleteLocalHotel () {
+        console.log('test deleteLocalHotel')
+        localStorage.removeItem('subdomain',subdomain)
+        subdomain.value = null;
+        hotelData.value = null;
+    }
+
+    async function $staysByHotel (id) { //aquir ecibo el chain_id = id
+        const response = await staysByHotel(id)
+        return response
+    }
     
 
 
@@ -69,10 +93,14 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelData,
         chatHours,
         subdomain,
+        $staysByHotel,
         $load,
         $getCrossellings,
         $loadImage,
-        $loadChatHours
+        $loadChatHours,
+        $findByIdApi,
+        $setLocalHotel,
+        $deleteLocalHotel
     }
 
 })

@@ -11,3 +11,4 @@ export const existingThenMatchOrSaveApi = (params) => apiHttp('POST', `${stayPat
 export const getGuestsAndSortByCurrentguestIdApi = (stayId,guestId) => apiHttp('GET', `${stayPath}/getGuestsAndSortByCurrentguestIdApi/${stayId}/${guestId}`)
 export const updateStayAndGuestsApi = (params) => apiHttp('POST', `${stayPath}/updateStayAndGuests`, params)
 export const deleteGuestOfStayApi = (stayId,guestId) => apiHttp('POST', `${stayPath}/deleteGuestOfStay/${stayId}/${guestId}`)
+export const findbyIdApi = (stayId) => apiHttp('GET', `${stayPath}/findbyId/${stayId}`)
