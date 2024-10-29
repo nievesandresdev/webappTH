@@ -144,8 +144,7 @@ export const useGuestStore = defineStore('guest', () => {
         if(ok){
             await stayStore.setStayData(response.data,false)
             if(!localStorage.getItem('subdomain')){
-                await hotelStore.$setLocalHotel(response.data.hotelSubdomain)
-                await hotelStore.$load()
+                await hotelStore.$setAndLoadLocalHotel(response.data.hotelSubdomain)
             }
             return response.data
         }
