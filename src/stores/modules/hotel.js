@@ -31,7 +31,7 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $load () {
-        if (hotelData.value) return
+        if (hotelData.value || !localStorage.getItem('subdomain')) return
         
         let params = {
             subdomain: localStorage.getItem('subdomain'),

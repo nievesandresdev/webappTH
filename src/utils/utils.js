@@ -86,7 +86,6 @@ const transformDuration = (value) => {
 }
 
 const saveHotelSlug = (subdomain) => {
-    console.log('test saveHotelSlug',subdomain)
     if(subdomain){
         localStorage.setItem('subdomain', subdomain)
     }
