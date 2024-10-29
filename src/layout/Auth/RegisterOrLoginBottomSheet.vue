@@ -33,6 +33,7 @@ import PasswordToLogin from '@/layout/Auth/PasswordToLogin.vue';
 const showEnterPassword = ref(false)
 
 const form = reactive({
+    id:'',
     email:'',
     type: null,
     password: null

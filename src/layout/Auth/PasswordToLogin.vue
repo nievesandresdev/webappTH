@@ -26,10 +26,18 @@
 </template>
 <script setup>
 import { reactive, ref, inject } from 'vue'
+import { navigateTo } from '@/utils/navigation'
 import THInputText from '@/components/THInputText.vue';
 //stores
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
+import { useChainStore } from '@/stores/modules/chain'
+const chainStore = useChainStore()
+import { useGuestStore } from '@/stores/modules/guest'
+const guestStore = useGuestStore()
+//router
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const isError = ref(false)
 const form = inject('form')
@@ -39,7 +47,18 @@ async function submit(){
     if(!response){
         isError.value = true;
     }else{
+        await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
         form.password = '';
+        if(localStorage.getItem('stayId')){
+            navigateTo('Home')
+        }else{
+            if(localStorage.getItem('subdomain')){
+                router.push({ name:'CreateStayFromChain' })
+            }else{
+                router.push({ name:'HotelsList' })
+            }
+            
+        }
     }
 }
 </script>
