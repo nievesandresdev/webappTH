@@ -43,7 +43,7 @@
                     <span class="text-[14px] font-normal lato text-[#333333]">Configura tu información personal</span>
                 </div>
             </div>
-            <img @click="handleChevronClick" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img @click="handlePersonalInfo" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Cerrar sesión -->
@@ -51,13 +51,6 @@
             <img src="/assets/icons/WA.logout.svg" class="w-4 h-4" alt="Logout Icon" />
             <span class="text-[14px] font-bold lato text-[#333333] underline">Cerrar sesión</span>
         </div>
-
-        <THInputText
-            :textLabel="'sss'"
-            :placeholder="'asdssd'"
-            v-model="form.name"
-            
-        />
 
         <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
             <div class="flex flex-col items-start">
@@ -103,7 +96,7 @@ import { ref, onMounted, computed,reactive } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import BottomModal from './Components/BottomModal.vue';
 import StayCard from './Components/StayCard.vue';
-import THInputText from '@/components/THInputText.vue';
+import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
 
 import { handleToast } from "@/composables/useToast"; 
@@ -144,14 +137,13 @@ const openModalShared = () => {
     isModalOpen.value = true;
 };
 
-const form = reactive({
-    name: '',
-    email: ''
-});
 
 const handleMyStays = () => {
-    console.log("Redirigiendo a la página de estancias...");
     router.push({ name: 'MyStays' });
+};
+
+const handlePersonalInfo = () => {
+    navigateTo('PersonalInfo')
 };
 
 onMounted(() => {

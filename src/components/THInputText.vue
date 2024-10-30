@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
-        <label v-if="textLabel" class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
-        <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
+        <label v-if="textLabel" class="text-sm font-bold mb-2 block lato leading-4">{{ textLabel }}</label>
+        <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
 
         <img v-if="iconLeft" class="w-5 h-5 absolute left-2 top-2.5" :src="iconLeft">
         <input
@@ -16,6 +16,7 @@
             @keyup="keyupInput"
             autocomplete="nope"
             :disabled="disabled"
+            class="lato text-sm font-medium"
         >
         <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
         <p 
@@ -30,7 +31,7 @@
             {{ textError }}
         </p>
         <button 
-            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-3 right-2"
+            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-9 right-2"
             :class="{'disabled-text':!modelValue || modelValue == '' || disabled}"
             v-if="type === 'password'"
             @click="showPass = !showPass"
