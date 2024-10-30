@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { getUrlParam } from '@/utils/utils.js'
 import {
     getHotelsListApi,
-    findBySubdomainApi
+    findBySubdomainApi,
+    getCustomatizacionApi
 } from '@/api/services/chain.services'
 
 export const useChainStore = defineStore('chain', () => {
@@ -62,6 +63,12 @@ export const useChainStore = defineStore('chain', () => {
         
     }
 
+    async function $getCustomatizacion() {
+        const response = await getCustomatizacionApi([])
+        console.log('test $getCustomatizacion',response)
+        return response.ok ? response.data : []; 
+        
+    }
     //
     return {
         chainSubdomain,
@@ -70,7 +77,8 @@ export const useChainStore = defineStore('chain', () => {
         $goRegisterOrLoginEmail,
         $getHotelsList,
         $loadChainData,
-        chainData
+        chainData,
+        $getCustomatizacion
     }
 
 })

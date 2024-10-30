@@ -1,5 +1,5 @@
 <template>
-     <BottomSheet :open-bottom-sheet="true">
+     <BottomSheet :open-bottom-sheet="open">
         <img class="absolute top-[-89px] w-full h-[189px] z-[-1]" src="/assets/icons/EllipseCHAINHOME.svg">
         <div class="px-4 pt-[36px]">
             <HeadInChain 
@@ -16,12 +16,22 @@
     </BottomSheet>
 </template>
 <script setup>
+import { toRefs } from 'vue'
 import BottomSheet from '@/components/Modal/BottomSheet.vue'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import CompleteRegistration from './Components/CompleteRegistration.vue';
 //router
 import { useRouter } from 'vue-router';
 const router = useRouter();
+
+const props = defineProps({
+    open:{
+        type: Boolean,
+        default: false
+    }
+})
+
+const { open } = toRefs(props)
 
 function goChainLanding(){
     router.push({ name: 'ChainLanding', query:{acform:'log'}});
