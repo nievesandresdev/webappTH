@@ -42,7 +42,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:isOpen']);
+const emit = defineEmits(['update:isOpen','handleClick']);
 
 // Función para cerrar el modal
 const closeModal = () => {
@@ -52,6 +52,7 @@ const closeModal = () => {
 // Función para manejar la acción del botón
 const handleSubmit = () => {
     console.log("Botón del modal clickeado");
+    emit('handleClick');
 };
 </script>
 

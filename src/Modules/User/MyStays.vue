@@ -87,11 +87,10 @@ const stayStore = useStayStore();
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 
-// Definición de datos reactivos
 const hotelData = ref({});
-const activeStay = ref(null); // Estancia activa
-const otherStays = ref([]); // Otras estancias
-const stayData = ref({}); // Variable para almacenar estancia local
+const activeStay = ref(null); 
+const otherStays = ref([]); 
+const stayData = ref({}); 
 const guestData = ref({});
 const chainData = ref({});
 const loading = ref(true);
@@ -113,7 +112,6 @@ const getStaysByHotel = async (id) => {
 
 
     if (response.ok) {
-        // Asigna la estancia activa y el resto de estancias desde la respuesta del backend
         activeStay.value = response.data.active_stay;
         otherStays.value = response.data.other_stays;
     } else {

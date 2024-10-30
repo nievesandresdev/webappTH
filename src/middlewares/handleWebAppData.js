@@ -16,21 +16,34 @@ export default async function handleWebAppData({ to, from, next }) {
     const chainStore = useChainStore();
     await chainStore.$loadChainSubdomain();
     const chainSubdomain = localStorage.getItem('chainSubdomain');//http://localhost:81/?chainsubdomain=nobusevillatex
+    let chainData;
     if (!chainSubdomain) {
         return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }else{
-        let chain = await chainStore.$loadChainData();
-        if(!chain) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
+        chainData = await chainStore.$loadChainData();
+        if(!chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }
-    // console.log('test chainSubdomain',chainStore.chainSubdomain)
+    // console.log('test chainData',chainData)
     ////////////////////////////////////////////////////////
     //
     //
     //cargar data del hotel
     const hotelStore = useHotelStore();
-    utils.saveHotelSlug(to.params.hotelSlug);
+    //se guarda el subdominio en localstorage en caso de existir
+    if(chainData?.type == 'INDEPENDENT'){
+        utils.saveHotelSlug(chainData?.independentSubdomain);    
+    }else{
+        utils.saveHotelSlug(to.params.hotelSlug);
+    }
     await hotelStore.$load();
     let hotel = hotelStore.hotelData;
+    console.log('test hotel',hotel)
+    // Añade la verificación de que no estás ya en 'Home'
+    // if (hotel && to.name !== 'Home') {
+    //     return next({ name: 'Home' });
+    // }
+
+    console.log('test 3')
     // console.log('test init load', hotel);
     ////////////////////////////////////////////////////////
     //

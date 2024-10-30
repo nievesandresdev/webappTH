@@ -9,7 +9,7 @@
         <h4 class="lato text-base font-bold leading-[20px]">{{hotels.length ?? 0}} alojamientos de la cadena</h4>
         <div class="mt-4">
             <div class="mb-6" v-for="hotel in hotels" >
-                <CardHotel :data="hotel"/>
+                <CardHotel :data="hotel" clickable/>
             </div>
         </div>
     </div>
