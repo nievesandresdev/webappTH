@@ -66,24 +66,24 @@ const inputActive = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
-    let params = { type, email: form.email}
+    let params = { type, email: form.email, subdomain : hotelData.subdomain}
     await authStore.$registerOrLogin(params);
 }
 
 async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
     let find = await guestStore.findByEmail(params);
-    console.log('test find',find)
     if(find && find.name){
         form.id = find.id;
         emit('enterPasswordToLogin')
     }else{
+        let save = await guestStore.saveOrUpdateByEmail(params);
+        if(!save) return
         if(hotelData){
             navigateTo('Home',{},{ g: save.id, acform : 'complete' })
         }else{
             //logica para cuando no se halla cargado un hotel
-            let save = await guestStore.saveOrUpdateByEmail(params);
-            if(save) router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+            router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
         }
     }
     

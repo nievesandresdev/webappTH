@@ -64,9 +64,10 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore()
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore
 
 const router = useRouter();
 
@@ -95,10 +96,12 @@ async function submit(){
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
     await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
-    if(localStorage.getItem('stayId')){
+    if(stayStore.stayData){
+            console.log('test se metio 2 1')
             navigateTo('Home')
     }else{
-        if(hotelData){
+        if(hotelStore.hotelData){
+            console.log('test se metio 2')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
             //logica para cuando no se halla cargado un hotel
