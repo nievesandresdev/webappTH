@@ -34,7 +34,7 @@
                 </div>
                 <div class="flex items-center text-[14px] font-bold text-[#333333] mb-2">
                     <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
-                    <span class="lato">{{ hotelName ? stay.hotel_zone : hotel.zone }}</span>
+                    <span class="lato">{{ hotelName ? stay.hotel_zone : hotel.zone ?? '-'}}</span>
                 </div>
                 <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2">
                     <div class="flex items-center">
@@ -110,9 +110,10 @@ const isModalOpen = () => {
 };
 
 function handleStayClick() {
+    console.log('propsmy', props);
     const data = {
         hotel_name: props.hotelName ? props.stay.hotel_name : props.hotel.name,
-        zone:  props.hotelName ? props.stay.hotel_zone : hotel.zone ,
+        zone:  props.hotelName ? props.stay.hotel_zone : props.hotel.zone ,
         check_in: props.stay.check_in,
         check_out: props.stay.check_out,
         rooms: props.stay.rooms ?? '-',
