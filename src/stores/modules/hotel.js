@@ -76,6 +76,7 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     function $deleteLocalHotel () {
+        console.log('test deleteLocalHotel')
         localStorage.removeItem('subdomain',subdomain)
         subdomain.value = null;
         hotelData.value = null;

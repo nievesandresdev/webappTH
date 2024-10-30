@@ -8,7 +8,7 @@ import profileRoutes from './userRoutes'
 // import facilityRoutes from './facilityRoutes'
 // import hotelRoutes from './hotelRoutes'
 // import queryRoutes from './queryRoutes'
-// import policiesRoutes from './policiesRoutes'
+import policiesRoutes from './policiesRoutes'
 
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
@@ -71,7 +71,7 @@ const routes = [
       // ...facilityRoutes,
       // ...hotelRoutes,
       // ...queryRoutes,
-      // ...policiesRoutes,
+      ...policiesRoutes,
     ]
   },
 

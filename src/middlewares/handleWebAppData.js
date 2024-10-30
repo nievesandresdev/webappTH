@@ -23,7 +23,6 @@ export default async function handleWebAppData({ to, from, next }) {
         chainData = await chainStore.$loadChainData();
         if(!chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }
-    // console.log('test chainData',chainData)
     ////////////////////////////////////////////////////////
     //
     //
@@ -37,14 +36,12 @@ export default async function handleWebAppData({ to, from, next }) {
     }
     await hotelStore.$load();
     let hotel = hotelStore.hotelData;
-    console.log('test hotel',hotel)
     // Añade la verificación de que no estás ya en 'Home'
-    // if (hotel && to.name !== 'Home') {
-    //     return next({ name: 'Home' });
-    // }
+    if (hotel && to.name == 'ChainLanding') {
+        console.log('test redirect home')
+        return next({ name: 'Home' });
+    }
 
-    console.log('test 3')
-    // console.log('test init load', hotel);
     ////////////////////////////////////////////////////////
     //
     //
@@ -53,7 +50,6 @@ export default async function handleWebAppData({ to, from, next }) {
     const guestId = utils.getUrlParam('g');
     if(guestId){
         await guestStore.findByIdInSetLocalGuest(guestId)
-        // console.log('test init guest',guestStore.guestData)
     }
     ////////////////////////////////////////////////////////
     //
@@ -63,7 +59,6 @@ export default async function handleWebAppData({ to, from, next }) {
     const stayId = utils.getUrlParam('e');
     if(stayId){
         await stayStore.findByIdInSetLocalStay(stayId)
-        // console.log('test init guest',stayStore.stayData)
     }
     ////////////////////////////////////////////////////////
     //

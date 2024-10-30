@@ -3,8 +3,8 @@
         new home page {{  String(formType == 'log') }} {{  String(!guestStore.guestData) }}
     </div>
     <RegisterOrLoginBottomSheet :open="formType == 'log' || !guestStore.guestData"/>
-    <CompleteRegisterBottomSheet :open="formType == 'complete'"/>
-    <CreateStayBottomSheet :open="formType == 'createstay' || guestStore.guestData && !stayStore.stayData && !formType"/>
+    <CompleteRegisterBottomSheet :open="formType == 'complete' || guestStore.guestData && !guestStore.guestData.name"/>
+    <CreateStayBottomSheet :open="formType == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType"/>
 </template>
 <script setup>
 import { onMounted, computed } from 'vue';

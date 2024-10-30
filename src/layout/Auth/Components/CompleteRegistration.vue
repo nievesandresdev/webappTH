@@ -29,7 +29,7 @@
         </div>
         <p 
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
-        >Al seleccionar Aceptar y continuar, acepto la <a href="javascript:void(0)" class="underline">Política de Privacidad.</a></p>
+        >Al seleccionar Aceptar y continuar, acepto la <router-link :to="{name:'PrivacyPolicies'}"  class="underline">Política de Privacidad.</router-link></p>
         <div class="mt-4">
             <button 
                 class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
@@ -84,8 +84,8 @@ onMounted(async () => {
     form.id = getUrlParam('g');
     method.value = getUrlParam('m');
     let guestData = await guestStore.findById(form.id);
-    form.name = guestData.name ?? '';
-    form.email = guestData.email ?? '';
+    form.name = guestData?.name ?? '';
+    form.email = guestData?.email ?? '';
     if(method.value == 'google'){
         form.password = '123456789';
     }

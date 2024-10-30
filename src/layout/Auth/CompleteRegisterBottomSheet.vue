@@ -32,6 +32,8 @@ const route = useRoute();
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
+import { useGuestStore } from '@/stores/modules/guest'
+const guestStore = useGuestStore()
 
 
 const props = defineProps({
@@ -43,7 +45,8 @@ const props = defineProps({
 
 const { open } = toRefs(props)
 
-function goBack(){
+async function goBack(){
+    await guestStore.deleteLocalGuest();
     if(hotelData){
         navigateTo('Home',{},{ acform : 'log' })
     }else{
