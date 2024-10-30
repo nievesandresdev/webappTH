@@ -14,3 +14,5 @@ export const sendMailToApi = (params) => apiHttp('POST', `${guestPath}/sendMailT
 
 export const authWithGoogle = (data) => apiHttp('POST', `${guestPath}/auth/google`,data)
 export const authWithGoogleCallback = () => apiHttp('GET', `${guestPath}/auth/google-callback`)
+
+export const updatePasswordToApi = (data) => apiHttp('POST', `${guestPath}/updatePasswordGuest`, data)
