@@ -8,7 +8,8 @@ import {
     sendMailToApi,
     updateLanguageApi,
     findByEmailApi,
-    findAndValidLastStayApi
+    findAndValidLastStayApi,
+    updatePasswordToApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -192,11 +193,18 @@ export const useGuestStore = defineStore('guest', () => {
         return guestData.value
     });
 
+    const $updatePassword  = async (data) => {
+        const response = await updatePasswordToApi(data)
+        
+        return response
+    }
+
     return {
         guestData:guestDataComputed,
         loadLocalGuest,
         saveOrUpdate,
         saveOrUpdateByEmail,
+        $updatePassword,
         updateLanguage,
         sendMailTo,
         getLocalGuest,

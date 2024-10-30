@@ -138,6 +138,7 @@ const getHotelbyId = async (id) => {
 }; */
 
 function handleMyStays(data) {
+    console.log("click estancia...",data);
     dataModalStay.value = data;
     isModalOpen.value = true;
 }

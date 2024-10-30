@@ -68,12 +68,14 @@
     </div>
 
     <!-- Modal para cambiar contraseña -->
-    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event"  @handleClick="handleChangePassword">
-        <div class="flex flex-col w-full gap-4 px-2">
+    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" >
+        <div class="flex flex-col w-full gap-4">
             <THInputText
                 :textLabel="'Contraseña actual'"
                 :placeholder="'Introduce tu contraseña actual'"
                 v-model="currentPassword"
+                :isError="currentPasswordError"
+                :textError="'La contraseña actual introducida es incorrecta'"
                 type="password"
             />
             <THInputText
@@ -84,9 +86,10 @@
             />
             <!-- Botón de Cambiar Contraseña con estado disabled según la condición -->
             <button
+                @click="handleChangePassword"
                 :disabled="!isModalFormValid"
                 :class="[
-                    'w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border text-sm font-bold hshadow-button mt-4',
+                    'w-full lato flex justify-center items-center h-10  gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
                     isModalFormValid ? 'bg-[#333333] text-white border-white' : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small'
                 ]"
             >
@@ -111,11 +114,15 @@ const stayStore = useStayStore();
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 
+import { handleToast } from "@/composables/useToast"; 
+const { toastSuccess } = handleToast();
+
 const stayData = ref({});
 const guestData = ref({});
 const chainData = ref({});
 
 const form = reactive({
+    id: null,
     name: '',
     lastname: '', // Campo para apellidos
     email: '',
@@ -168,7 +175,26 @@ const onFileSelected = (event) => {
     }
 };
 
-// Valida si el formulario de datos personales es válido
+// Inicializar el formulario con datos del store
+onMounted(() => {
+    guestData.value = guestStore.getLocalGuest();
+    stayData.value = stayStore.getLocalStay();
+    chainData.value = chainStore.chainData;
+
+    initForm(guestData.value);
+});
+
+const initForm = (data) => {
+    form.id = data.id;
+    form.name = data.name;
+    form.lastname = data.lastname; // Inicializa apellidos desde los datos
+    form.email = data.email;
+    form.phone = data.phone;
+    form.password = data.password;
+    form.avatar = data.avatar; // Inicializa avatar desde los datos
+};
+
+// Computed para validar el formulario
 const isFormValid = computed(() => {
     return (
         form.name &&
@@ -179,7 +205,7 @@ const isFormValid = computed(() => {
     );
 });
 
-// Valida si el formulario del modal es válido
+// Computed para validar el formulario del modal
 const isModalFormValid = computed(() => {
     return currentPassword.value && newPassword.value && !currentPasswordError.value;
 });
@@ -188,12 +214,27 @@ const openModalPassword = () => {
     isModalOpen.value = true;
 };
 
-const handleChangePassword = () => {
-    if (newPassword.value.length >= 8) {
+const handleChangePassword = async () => {
+    /* if (newPassword.value.length >= 8) {
         console.log("Contraseña cambiada exitosamente.");
     } else {
         console.log("La nueva contraseña debe tener al menos 8 caracteres.");
+    } */
+
+    const response = await guestStore.$updatePassword({
+        id: form.id,
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value,
+    });
+
+
+    if(response.ok) {
+        toastSuccess("Contraseña actualizada");
+        isModalOpen.value = false;
+    } else {
+        currentPasswordError.value = true;
     }
+
 };
 
 const handleSubmit = () => {
