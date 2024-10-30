@@ -1,5 +1,5 @@
 <template>
-     <BottomSheet :open-bottom-sheet="open">
+     <BottomSheet :open-bottom-sheet="open && !$utils.isMockup()">
         <img class="absolute top-[-89px] w-full h-[189px] z-[-1]" src="/assets/icons/EllipseCHAINHOME.svg">
         <div class="px-4 pt-[36px]">
             <HeadInChain 

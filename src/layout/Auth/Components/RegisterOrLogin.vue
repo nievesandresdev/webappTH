@@ -46,6 +46,7 @@
 <script setup>
 import { reactive, ref, computed, inject  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import { navigateTo } from '@/utils/navigation'
 //router
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -54,8 +55,9 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
-// import { useChainStore } from '@/stores/modules/chain'
-// const chainStore = useChainStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
 
 const emit = defineEmits(['enterPasswordToLogin'])
 
@@ -76,8 +78,13 @@ async function goRegisterOrLoginEmail(){
         form.id = find.id;
         emit('enterPasswordToLogin')
     }else{
-        let save = await guestStore.saveOrUpdateByEmail(params);
-        if(save) router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+        if(hotelData){
+            navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+        }else{
+            //logica para cuando no se halla cargado un hotel
+            let save = await guestStore.saveOrUpdateByEmail(params);
+            if(save) router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+        }
     }
     
     // console.log('test goRegisterOrLoginEmail',res)

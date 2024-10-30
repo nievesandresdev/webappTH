@@ -51,6 +51,7 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import { navigateTo } from '@/utils/navigation'
 import { getUrlParam } from '@/utils/utils'
 import { useRouter } from 'vue-router';
 import { handleToast } from "@/composables/useToast"; 
@@ -63,6 +64,9 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
 
 const router = useRouter();
 
@@ -94,10 +98,15 @@ async function submit(){
     if(localStorage.getItem('stayId')){
             navigateTo('Home')
     }else{
-        if(localStorage.getItem('subdomain')){
-            router.push({ name:'CreateStayFromChain' })
+        if(hotelData){
+            navigateTo('Home',{},{ acform : 'createstay' })
         }else{
-            router.push({ name:'HotelsList' })
+            //logica para cuando no se halla cargado un hotel
+            if(localStorage.getItem('subdomain')){
+                router.push({ name:'CreateStayFromChain' })
+            }else{
+                router.push({ name:'HotelsList' })
+            }
         }
     }
     toastSuccess("Registro completado"); 
