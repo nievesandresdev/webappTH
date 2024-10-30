@@ -53,13 +53,16 @@ import { reactive, ref, onMounted, computed } from 'vue';
 import THInputText from '@/components/THInputText.vue';
 import { getUrlParam } from '@/utils/utils'
 import { useRouter } from 'vue-router';
+import { handleToast } from "@/composables/useToast"; 
+const { toastSuccess } = handleToast();
+
 //stores
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
-import { useHotelStore } from '@/stores/modules/hotel'
-const hotelStore = useHotelStore()
+import { useChainStore } from '@/stores/modules/chain'
+const chainStore = useChainStore()
 
 const router = useRouter();
 
@@ -97,6 +100,7 @@ async function submit(){
             router.push({ name:'HotelsList' })
         }
     }
+    toastSuccess("Registro completado"); 
 }
 
 const passDisabled = computed(()=>{

@@ -32,10 +32,16 @@ import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 
 const props = defineProps({
-    data:Object
+    data:Object,
+    clickable:{
+        type:Boolean,
+        default:false
+    }
 })
 
-function selectHotel(){
+async function selectHotel(){
+    if(!props.clickable) return
+    await hotelStore.$setAndLoadLocalHotel(props.data.subdomain)
     router.push({ name:'CreateStayFromChain', params:{ hotelSlug : props.data.subdomain}})
 }
 

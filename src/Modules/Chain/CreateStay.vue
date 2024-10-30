@@ -1,7 +1,7 @@
 <template>
     <!-- head -->
     <div class="sticky top-0 left-0 bg-head w-full py-6 px-4">
-        <HeadInChain text="Crea tu estancia" goBack/>
+        <HeadInChain text="Crea tu estancia" go-back @go-back="goHotelList"/>
     </div>
     <!-- body -->
     <div class="py-6 px-4">
@@ -15,7 +15,10 @@
 import { onMounted } from 'vue'
 import HeadInChain from './Components/HeadInChain.vue'
 import CardHotel from './Components/CardHotel.vue'
-import FormCreateStay from '@/components/Dropdowns/FormCreateStay.vue'
+import FormCreateStay from '@/layout/Auth/Components/FormCreateStay.vue'
+//route
+import { useRouter } from 'vue-router';
+const router = useRouter();
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
@@ -23,9 +26,10 @@ const { hotelData } = hotelStore
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 
-onMounted(() => {
-    
-})
+async function goHotelList(){
+    hotelStore.$deleteLocalHotel();
+    router.push({ name:'HotelsList' })
+}
 
 </script>
 <style scoped> 

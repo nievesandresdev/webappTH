@@ -26,6 +26,14 @@ const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/Test
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
 
+function checkHotelSubdomain(to, from, next) {
+  const subdomain = localStorage.getItem('subdomain');
+  if (!subdomain) {
+      return next({ name: 'ChainLanding' });
+  }
+  next();
+}
+
 const routes = [
   //
   //
@@ -51,7 +59,8 @@ const routes = [
   //
   // Rutas dinámicas (con slug)
   {
-    path: '/:hotelSlug',
+    path: '/:hotelSlug?',
+    beforeEnter: checkHotelSubdomain,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       ...homeRoutes,
