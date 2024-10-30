@@ -35,6 +35,11 @@ import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
 //router
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -49,15 +54,22 @@ async function submit(){
     }else{
         await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
         form.password = '';
-        if(localStorage.getItem('stayId')){
+        if(stayStore.stayData){
+            console.log('redirect to home')
             navigateTo('Home')
         }else{
-            if(localStorage.getItem('subdomain')){
-                router.push({ name:'CreateStayFromChain' })
+            if(hotelData){
+                console.log('redirect to create stay')
+                navigateTo('Home',{},{ acform : 'createstay' })
             }else{
-                router.push({ name:'HotelsList' })
+                console.log('redirect to otros')
+                //logica para cuando no se halla cargado un hotel
+                if(localStorage.getItem('subdomain')){
+                    router.push({ name:'CreateStayFromChain' })
+                }else{
+                    router.push({ name:'HotelsList' })
+                }
             }
-            
         }
     }
 }

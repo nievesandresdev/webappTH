@@ -150,15 +150,12 @@
     ] 
 
 
-    onMounted(() => {
-        
-        // console.log(guestStore.guestData, 'onMounted staylog guestStore.guestData')
-    })
+    // onMounted(() => {
+    // })
 
     // Watcher
     watch(() => props.openModal, (newValue, oldValue) => {
         // Aquí puedes agregar cualquier lógica que necesites ejecutar cuando openModal cambie
-        // console.log(`openModal changed from ${oldValue} to ${newValue}`);
         form.language =  guestData?.lang_web ?? localStorage.getItem('locale') ?? hotelData?.language_default_webapp ?? 'es'
     });
 

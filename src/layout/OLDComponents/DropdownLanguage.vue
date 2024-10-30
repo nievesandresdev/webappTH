@@ -72,9 +72,8 @@
     function changeLocale (lg) {
         localeStore.$changeAndReload(lg)
     }
-    onMounted(() => {
-      // console.log(localeStore.availableLocation)
-    })
+    // onMounted(() => {
+    // })
 
 </script>
 
