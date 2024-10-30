@@ -71,12 +71,13 @@ async function goRegisterOrLogin(type){
 async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
     let find = await guestStore.findByEmail(params);
-    if(find){
+    console.log('test find',find)
+    if(find && find.name){
         form.id = find.id;
         emit('enterPasswordToLogin')
     }else{
         let save = await guestStore.saveOrUpdateByEmail(params);
-        if(save) router.push({ name : 'CompleteRegister', query:{ g: save.id }});
+        if(save) router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
     }
     
     // console.log('test goRegisterOrLoginEmail',res)
