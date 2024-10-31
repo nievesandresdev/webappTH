@@ -72,7 +72,7 @@ export default {
         computeClasses() {
             let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
             let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
-            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block ${paddingDefault}`;
+            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {

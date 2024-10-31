@@ -16,3 +16,4 @@ export const authWithGoogle = (data) => apiHttp('POST', `${guestPath}/auth/googl
 export const authWithGoogleCallback = () => apiHttp('GET', `${guestPath}/auth/google-callback`)
 
 export const updatePasswordToApi = (data) => apiHttp('POST', `${guestPath}/updatePasswordGuest`, data)
+export const updateDataGuest = (data) => apiHttp('POST', `${guestPath}/updateDataGuest`, data,{},'API_GENERAL',true)
