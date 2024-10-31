@@ -4,7 +4,7 @@
     <div class="px-3">
         <div class="flex flex-col items-center mt-6">
             <div class="w-10 h-10 rounded-full bg-cover bg-center bg-lightgray shadow-profile"
-                style="background-image: url('https://via.placeholder.com/40');">
+            :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
             </div>
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">¡Hola, {{guestData.name}}!</p>
         </div>
@@ -49,7 +49,7 @@
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
             <img src="/assets/icons/WA.logout.svg" class="w-4 h-4" alt="Logout Icon" />
-            <span class="text-[14px] font-bold lato text-[#333333] underline">Cerrar sesión</span>
+            <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">Cerrar sesión</span>
         </div>
 
         <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
@@ -163,8 +163,6 @@ onMounted(() => {
 });
 
 
-
-
 const getHotelbyId = async (id) => {
     const response = await hotelStore.$findByIdApi(id);
 
@@ -200,6 +198,37 @@ const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponen
 const mailtoShareUrl = computed(() => `mailto:?subject=Únete a nuestra estancia&body=${encodeURIComponent(shareMessage.value)}`);
 const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareMessage.value)}`);
 const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
+
+
+const handleLogoutGuest = () => {
+    guestStore.deleteLocalGuest();
+    stayStore.cleanStayData();
+    
+    setTimeout(() => {
+        navigateTo('Home');
+    }, 600);
+};
+
+const $formatImage = (payload) => {
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
+    let { url, type, urlDefault } = payload;
+
+    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
+    if (url && url.startsWith("blob:")) return url;
+
+    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
+
+    if (urlDefault) return url;
+
+    let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
+    type = type ?? type_d;
+
+    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+};
+
+const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avatar,type: 'STORAGE' }));
+
+
 
 
 </script>
