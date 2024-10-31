@@ -9,7 +9,8 @@ import {
     updateLanguageApi,
     findByEmailApi,
     findAndValidLastStayApi,
-    updatePasswordToApi
+    updatePasswordToApi,
+    updateDataGuest
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -199,12 +200,32 @@ export const useGuestStore = defineStore('guest', () => {
         return response
     }
 
+    const $updateDataGuest = async (data) => {
+        const response = await updateDataGuest(data)
+
+        return response
+    }
+
+    const $updateLocalGuestData = (responseData) => {
+        let guestData = JSON.parse(localStorage.getItem('guestData'));
+    
+        // Guarda el objeto actualizado en el localStorage
+        localStorage.setItem('guestData', JSON.stringify(responseData));
+        
+    };
+    
+ 
+    
+
+    
+
     return {
         guestData:guestDataComputed,
         loadLocalGuest,
         saveOrUpdate,
         saveOrUpdateByEmail,
         $updatePassword,
+        $updateDataGuest,
         updateLanguage,
         sendMailTo,
         getLocalGuest,
@@ -214,7 +235,8 @@ export const useGuestStore = defineStore('guest', () => {
         findByIdInSetLocalGuest,
         setLocalGuest,
         findAndValidLastStayAndLogHotel,
-        deleteLocalGuest
+        deleteLocalGuest,
+        $updateLocalGuestData
     }
 
 })

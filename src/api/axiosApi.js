@@ -40,7 +40,7 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL') => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
   let api_url_backend = URL_BASE_BACKEND_GENERAL;
   // console.log('test SLUG_API',SLUG_API)
   SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
@@ -60,6 +60,11 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
+
+    if (IS_FORM_DATA) {
+      defaultHeaders['Content-Type'] = 'multipart/form-data';
+    }
+
  // eslint-disable-next-line no-prototype-builtins
  if (!options.hasOwnProperty('headers')) options.headers = defaultHeaders
  let serviceResponse = {}

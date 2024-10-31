@@ -1,14 +1,14 @@
 <template>
     <SectionBar title="Información personal" />
     <div class="px-3 mt-6">
-        <!-- Contenedor para cambiar foto -->
+        <!-- foto -->
         <div class="flex items-center gap-2 mb-4">
-            <!-- Círculo para la imagen o el icono -->
-            <div class="flex justify-center items-center p-2 border border-black rounded-full overflow-hidden"
+            <!-- Círculo para la foto-->
+            <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
                  style="width: 40px; height: 40px;">
-                <img :src="form.avatar || '/assets/icons/WA.user.svg'" class="w-full h-full object-cover" alt="User Avatar">
+                <img :src="$formatImage({url: form.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !form.avatar}" alt="User Avatar">
+
             </div>
-            <!-- Texto para cambiar foto -->
             <span class="underline text-[14px] font-bold lato cursor-pointer" @click="selectImage">Cambiar foto</span>
             <!-- Input file oculto -->
             <input type="file" ref="fileInput" class="hidden" @change="onFileSelected" accept="image/*">
@@ -48,6 +48,7 @@
                 :placeholder="'Introduce tu contraseña'"
                 v-model="form.password"
                 type="password"
+                :disabled="true"
             />
         </div>
         <div class="flex justify-end mt-2 mb-2">
@@ -84,12 +85,11 @@
                 v-model="newPassword"
                 type="password"
             />
-            <!-- Botón de Cambiar Contraseña con estado disabled según la condición -->
             <button
                 @click="handleChangePassword"
                 :disabled="!isModalFormValid"
-                :class="[
-                    'w-full lato flex justify-center items-center h-10  gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
+                :class="[ 
+                    'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
                     isModalFormValid ? 'bg-[#333333] text-white border-white' : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small'
                 ]"
             >
@@ -108,35 +108,25 @@ import BottomModal from './Components/BottomModal.vue';
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
-import { useStayStore } from '@/stores/modules/stay';
-const stayStore = useStayStore();
-
-import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
-
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
-
-const stayData = ref({});
-const guestData = ref({});
-const chainData = ref({});
 
 const form = reactive({
     id: null,
     name: '',
-    lastname: '', // Campo para apellidos
+    lastname: '', 
     email: '',
     phone: '',
     password: '',
-    avatar: null, // Campo para la imagen de avatar
+    avatar: null, 
 });
 
 const isModalOpen = ref(false);
 const currentPassword = ref('');
 const newPassword = ref('');
-const currentPasswordError = ref(false); // Control de error para la contraseña actual
+const currentPasswordError = ref(false);
+let selectedFile = ref(null); 
 
-// Control de errores y mensajes de error
 const nameTouched = ref(false);
 const emailTouched = ref(false);
 
@@ -150,7 +140,6 @@ const isEmailValid = computed(() => {
     return emailRegex.test(form.email);
 });
 
-// Función para validar el email y gestionar el mensaje de error
 const validateEmail = () => {
     emailTouched.value = true;
     emailErrorText.value = form.email
@@ -167,31 +156,27 @@ const selectImage = () => {
     document.querySelector('input[type="file"]').click();
 };
 
-// Función para manejar la selección de archivo
 const onFileSelected = (event) => {
     const file = event.target.files[0];
     if (file) {
-        form.avatar = URL.createObjectURL(file); // Muestra la imagen seleccionada
+        selectedFile.value = file; 
+        form.avatar = URL.createObjectURL(file); 
     }
 };
 
-// Inicializar el formulario con datos del store
 onMounted(() => {
-    guestData.value = guestStore.getLocalGuest();
-    stayData.value = stayStore.getLocalStay();
-    chainData.value = chainStore.chainData;
-
-    initForm(guestData.value);
+    const guestData = guestStore.getLocalGuest();
+    initForm(guestData);
 });
 
 const initForm = (data) => {
     form.id = data.id;
     form.name = data.name;
-    form.lastname = data.lastname; // Inicializa apellidos desde los datos
+    form.lastname = data.lastname; 
     form.email = data.email;
     form.phone = data.phone;
-    form.password = data.password;
-    form.avatar = data.avatar; // Inicializa avatar desde los datos
+    form.password = '123456587';
+    form.avatar = data.avatar;
 };
 
 // Computed para validar el formulario
@@ -199,13 +184,11 @@ const isFormValid = computed(() => {
     return (
         form.name &&
         form.email &&
-        form.password &&
         isEmailValid.value &&
-        form.avatar // Verifica que la imagen esté presente
+        form.avatar 
     );
 });
 
-// Computed para validar el formulario del modal
 const isModalFormValid = computed(() => {
     return currentPassword.value && newPassword.value && !currentPasswordError.value;
 });
@@ -215,18 +198,11 @@ const openModalPassword = () => {
 };
 
 const handleChangePassword = async () => {
-    /* if (newPassword.value.length >= 8) {
-        console.log("Contraseña cambiada exitosamente.");
-    } else {
-        console.log("La nueva contraseña debe tener al menos 8 caracteres.");
-    } */
-
     const response = await guestStore.$updatePassword({
         id: form.id,
         currentPassword: currentPassword.value,
         newPassword: newPassword.value,
     });
-
 
     if(response.ok) {
         toastSuccess("Contraseña actualizada");
@@ -234,14 +210,53 @@ const handleChangePassword = async () => {
     } else {
         currentPasswordError.value = true;
     }
-
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
     if (isFormValid.value) {
-        console.log("Guardando datos...");
+        const formData = new FormData();
+        formData.append('id', form.id);
+        formData.append('name', form.name);
+        formData.append('lastname', form.lastname);
+        formData.append('email', form.email);
+        formData.append('phone', form.phone);
+        
+        if (selectedFile.value) {
+            formData.append('avatar', selectedFile.value);
+        }
+
+
+        const response = await guestStore.$updateDataGuest(formData);
+
+        console.log("response", response);
+
+        if (response.ok) {
+            toastSuccess("Datos guardados con éxito");
+            guestStore.$updateLocalGuestData(response.data);
+            initForm(response.data);
+        } else {
+            console.error("Error al guardar los datos");
+        }
     }
 };
+
+const $formatImage = (payload) => {
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
+    let { url, type, urlDefault } = payload;
+
+    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
+    if (url && url.startsWith("blob:")) return url;
+
+    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
+
+    if (urlDefault) return url;
+
+    let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
+    type = type ?? type_d;
+
+    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+};
+
 </script>
 
 <style scoped>
