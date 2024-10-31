@@ -69,14 +69,12 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $setAndLoadLocalHotel (subdomainString) {
-        console.log('setAndLoadLocalHotel',subdomainString)
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
         $load()
     }
 
     function $deleteLocalHotel () {
-        console.log('test deleteLocalHotel')
         localStorage.removeItem('subdomain',subdomain)
         subdomain.value = null;
         hotelData.value = null;

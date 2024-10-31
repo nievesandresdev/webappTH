@@ -4,11 +4,13 @@
     </div>
     <RegisterOrLoginBottomSheet :open="formType == 'log'"/>
     <CompleteRegisterBottomSheet :open="formType == 'complete'"/>
+    <ResetPasswordBottomSheet :open="formType == 'reset'"/>
 </template>
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
 import CompleteRegisterBottomSheet from '@/layout/Auth/CompleteRegisterBottomSheet.vue'
+import ResetPasswordBottomSheet from '@/layout/Auth/ResetPasswordBottomSheet.vue'
 import { getUrlParam } from '@/utils/utils';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';

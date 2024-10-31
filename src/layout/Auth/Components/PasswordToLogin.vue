@@ -18,7 +18,10 @@
             >
                 Continuar
             </button>
-            <button class="mt-4 lato text-sm font-bold leading-[16px] underline">
+            <button 
+                class="mt-4 lato text-sm font-bold leading-[16px] underline"
+                @click="sendLinkToReset"
+            >
                 ¿Has olvidado tu contraseña?
             </button>
         </div>
@@ -27,6 +30,9 @@
 <script setup>
 import { reactive, ref, inject } from 'vue'
 import { navigateTo } from '@/utils/navigation'
+import { handleToast } from "@/composables/useToast"; 
+const { toastSuccess } = handleToast();
+
 import THInputText from '@/components/THInputText.vue';
 //stores
 import { useAuthStore } from '@/stores/modules/auth'
@@ -73,4 +79,12 @@ async function submit(){
         }
     }
 }
+
+async function sendLinkToReset(){
+    let res = await authStore.$sendResetLinkEmail(form.email);
+    if(res){
+        toastSuccess("Correo enviado!"); 
+    }
+}
+
 </script>

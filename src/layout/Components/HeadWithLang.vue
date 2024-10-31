@@ -1,5 +1,5 @@
 <template>
-    <div :class="[paddingContainer,'bg-head']">
+    <div :class="[paddingContainer,'bg-head',{'sticky top-0 left-0 ':sticky}]">
         <div class="flex items-center justify-end relative gap-2">
             <img 
                 v-if="goBack" 
@@ -21,6 +21,10 @@ defineProps({
         type:Boolean,
         default: false
     },
+    sticky:{
+        type:Boolean,
+        default: false
+    },
     titleClasses:{
         type:Boolean,
         default: 'h-[28px] lato text-[20px] font-bold leading-[28px] w-[255px] text-center'
@@ -37,8 +41,9 @@ const goBackMethod = () =>{
 </script>
 <style scoped> 
 .bg-head{
-    background-color: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
+    background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
 }
+
 
 </style>
