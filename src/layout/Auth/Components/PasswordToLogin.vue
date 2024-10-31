@@ -18,9 +18,12 @@
             >
                 Continuar
             </button>
-            <button class="mt-4 lato text-sm font-bold leading-[16px] underline">
+            <router-link 
+                class="mt-4 lato text-sm font-bold leading-[16px] underline"
+                :to="{name : 'ResetPassword', query: { email : form.email}}"
+            >
                 ¿Has olvidado tu contraseña?
-            </button>
+            </router-link>
         </div>
     </div>
 </template>
