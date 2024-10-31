@@ -21,7 +21,7 @@ const chainStore = useChainStore();
 const props = defineProps({
     acform: {
         type:String,
-        default:'reset'
+        default:'log'
     }
 });
 

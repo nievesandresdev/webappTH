@@ -38,14 +38,23 @@
     </BottomSheet>
 </template>
 <script setup>
-import { ref, reactive, provide, toRefs } from 'vue'
+import { ref, reactive, onMounted, toRefs } from 'vue'
+import { getUrlParam } from '@/utils/utils'
 import BottomSheet from '@/components/Modal/BottomSheet.vue'
 import THInputText from '@/components/THInputText.vue';
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
-
-
-import { useRoute } from 'vue-router';
+import { handleToast } from "@/composables/useToast"; 
+const { toastSuccess } = handleToast();
+//store
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
+import { useAuthStore } from '@/stores/modules/auth'
+const authStore = useAuthStore()
+//router
+import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
+const router = useRouter();
 
 const props = defineProps({
     open:{
@@ -57,6 +66,7 @@ const props = defineProps({
 const { open } = toRefs(props)
 
 const isError = ref(false)
+const token = ref(null)
 
 const form = reactive({
     id:'',
@@ -64,6 +74,23 @@ const form = reactive({
     type: null,
     password: null
 })
+
+
+onMounted(async () => {
+    token.value = getUrlParam('token');
+    if(!token.value){
+        router.push({ name: hotelData ? 'Home' : 'ChainLanding'})
+    }
+})
+
+async function submit(){
+    let res = await authStore.$resetPassword(token.value, form.password)
+    if(res){
+        toastSuccess("Contraseña actualizada!"); 
+        router.push({ name: hotelData ? 'Home' : 'ChainLanding'})
+    }
+}
+
 
 
 </script>

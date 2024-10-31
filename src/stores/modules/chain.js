@@ -65,7 +65,7 @@ export const useChainStore = defineStore('chain', () => {
 
     async function $getCustomatizacion() {
         const response = await getCustomatizacionApi([])
-        console.log('test $getCustomatizacion',response)
+        // console.log('test $getCustomatizacion',response)
         return response.ok ? response.data : []; 
         
     }
