@@ -71,7 +71,7 @@ export const useChainStore = defineStore('chain', () => {
         let customization = response.ok ? response.data : null;
         if (customization) {
             customizationData.value = customization;
-        }        
+        }
     }
     //
     return {

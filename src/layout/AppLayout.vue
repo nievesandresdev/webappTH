@@ -1,6 +1,7 @@
 <template>
 
     <div class="relative flex flex-col wrapper xs:hcursor-mobile">
+        <AppHeader />
 
         <router-view></router-view>
 
@@ -11,6 +12,7 @@
 
 <script setup>
 
-import MenuMobile from './components/AppMenu.vue'
+import AppHeader from './Components/AppHeader.vue'
+import MenuMobile from './Components/AppMenu.vue'
 
 </script>

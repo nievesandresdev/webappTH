@@ -1,11 +1,11 @@
 <template>
     <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full">
-        {{ customizationData }}
+        
         <div class="menu rounded-[20px] bg-black-100 py-[10px] px-[16px] space-x-1 flex justify-around">
             <router-link
                 v-for="item in menuItems" class="menu__item py-[10px] w-[60px] h-[60px] space-y-1 text-center"
                 :to="item.to"
-                :class="item.routeNameIncludes.includes($route.name) ? 'menu__item-hover' : ''"
+                :class="item.routeNameIncludes.includes($route.name) ? `bg-[${customizationData?.colors?.[0]?.cod_hex}]` : ''"
 
             >
                 <img
@@ -100,7 +100,6 @@ const customizationData = computed(() => {
         border-radius: 8px;
     }
     .menu__item-hover {
-        background: #333;
         box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
     }
 </style>
