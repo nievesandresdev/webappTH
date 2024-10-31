@@ -3,7 +3,7 @@ import chainRoutes from './chainRoutes'
 import homeRoutes from './homeRoutes'
 import profileRoutes from './userRoutes'
 // import experienceRoutes from './experienceRoutes'
-// import placeRoutes from './placeRoutes'
+import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
 // import facilityRoutes from './facilityRoutes'
 // import hotelRoutes from './hotelRoutes'
@@ -59,14 +59,14 @@ const routes = [
   //
   // Rutas dinámicas (con slug)
   {
-    path: '/:hotelSlug?',
+    path: '/:hotelSlug',
     beforeEnter: checkHotelSubdomain,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
-      ...homeRoutes,
+      ...placeRoutes,
       ...profileRoutes,
+      ...homeRoutes,
       // ...experienceRoutes,
-      // ...placeRoutes,
       // ...chatRoutes,
       // ...facilityRoutes,
       // ...hotelRoutes,
