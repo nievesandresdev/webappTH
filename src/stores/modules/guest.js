@@ -182,6 +182,12 @@ export const useGuestStore = defineStore('guest', () => {
         localStorage.setItem('guestData', JSON.stringify(data))
         return guestData.value;
     }
+
+    async function deleteLocalGuest() {
+        guestData.value = null;
+        localStorage.removeItem('guestId')
+        localStorage.removeItem('guestData')
+    }
     //
 
     const guestDataComputed = computed(() => {
@@ -229,8 +235,8 @@ export const useGuestStore = defineStore('guest', () => {
         findByIdInSetLocalGuest,
         setLocalGuest,
         findAndValidLastStayAndLogHotel,
+        deleteLocalGuest,
         $updateLocalGuestData
-
     }
 
 })
