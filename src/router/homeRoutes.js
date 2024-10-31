@@ -10,7 +10,8 @@ const homeRoutes = [
       {
         name: 'Home',
         path: '',
-        component: HomePage
+        component: HomePage,
+        props: (route) => ({ acform: route.query.acform })
       },
     ],
   },

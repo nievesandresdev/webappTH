@@ -29,7 +29,7 @@
         </div>
         <p 
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
-        >Al seleccionar Aceptar y continuar, acepto la <a href="javascript:void(0)" class="underline">Política de Privacidad.</a></p>
+        >Al seleccionar Aceptar y continuar, acepto la <router-link :to="{name:'PrivacyPolicies'}"  class="underline">Política de Privacidad.</router-link></p>
         <div class="mt-4">
             <button 
                 class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
@@ -51,6 +51,7 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import { navigateTo } from '@/utils/navigation'
 import { getUrlParam } from '@/utils/utils'
 import { useRouter } from 'vue-router';
 import { handleToast } from "@/composables/useToast"; 
@@ -63,6 +64,10 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore()
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
 
 const router = useRouter();
 
@@ -79,8 +84,8 @@ onMounted(async () => {
     form.id = getUrlParam('g');
     method.value = getUrlParam('m');
     let guestData = await guestStore.findById(form.id);
-    form.name = guestData.name ?? '';
-    form.email = guestData.email ?? '';
+    form.name = guestData?.name ?? '';
+    form.email = guestData?.email ?? '';
     if(method.value == 'google'){
         form.password = '123456789';
     }
@@ -91,13 +96,20 @@ async function submit(){
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
     await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
-    if(localStorage.getItem('stayId')){
+    if(stayStore.stayData){
+            console.log('test se metio 2 1')
             navigateTo('Home')
     }else{
-        if(localStorage.getItem('subdomain')){
-            router.push({ name:'CreateStayFromChain' })
+        if(hotelStore.hotelData){
+            console.log('test se metio 2')
+            navigateTo('Home',{},{ acform : 'createstay' })
         }else{
-            router.push({ name:'HotelsList' })
+            //logica para cuando no se halla cargado un hotel
+            if(localStorage.getItem('subdomain')){
+                router.push({ name:'CreateStayFromChain' })
+            }else{
+                router.push({ name:'HotelsList' })
+            }
         }
     }
     toastSuccess("Registro completado"); 

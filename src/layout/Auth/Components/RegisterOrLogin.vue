@@ -46,6 +46,7 @@
 <script setup>
 import { reactive, ref, computed, inject  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import { navigateTo } from '@/utils/navigation'
 //router
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -54,8 +55,9 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
-// import { useChainStore } from '@/stores/modules/chain'
-// const chainStore = useChainStore()
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+const { hotelData } = hotelStore
 
 const emit = defineEmits(['enterPasswordToLogin'])
 
@@ -64,20 +66,25 @@ const inputActive = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
-    let params = { type, email: form.email}
+    let params = { type, email: form.email, subdomain : hotelData.subdomain}
     await authStore.$registerOrLogin(params);
 }
 
 async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
     let find = await guestStore.findByEmail(params);
-    console.log('test find',find)
     if(find && find.name){
         form.id = find.id;
         emit('enterPasswordToLogin')
     }else{
         let save = await guestStore.saveOrUpdateByEmail(params);
-        if(save) router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+        if(!save) return
+        if(hotelData){
+            navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+        }else{
+            //logica para cuando no se halla cargado un hotel
+            router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+        }
     }
     
     // console.log('test goRegisterOrLoginEmail',res)
