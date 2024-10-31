@@ -1,6 +1,6 @@
 <template>
     <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full">
-        {{itemMenuSelected}}
+        {{ customizationData }}
         <div class="menu rounded-[20px] bg-black-100 py-[10px] px-[16px] space-x-1 flex justify-around">
             <router-link
                 v-for="item in menuItems" class="menu__item py-[10px] w-[60px] h-[60px] space-y-1 text-center"
@@ -28,6 +28,11 @@
 import { onMounted, ref, onUnmounted, watch, provide, inject, reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const menuItems = reactive([
     {
@@ -75,6 +80,14 @@ const menuItems = reactive([
 // COMPUTED
 const itemMenuSelected = computed(() => {
     return router.name;
+});
+
+onMounted(() => {
+    chainStore.$getCustomatizacion(); 
+});
+
+const customizationData = computed(() => {
+    return chainStore.customizationData;
 });
 
 </script>
