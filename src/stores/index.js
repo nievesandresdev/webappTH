@@ -11,4 +11,4 @@ export const useMainStore = defineStore('main', () => {
     return {
         URL_STORAGE,
     }
-})
+});
