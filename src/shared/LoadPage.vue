@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-white flex justify-center items-center z-50">
+  <div class="fixed inset-0 bg-white flex justify-center items-center z-[30000]">
     <div class="dot-spinner">
       <div
         v-for="i in 12"
