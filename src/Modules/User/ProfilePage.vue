@@ -149,7 +149,7 @@ const handlePersonalInfo = () => {
     navigateTo('PersonalInfo')
 };
 
-onMounted(() => {
+onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
     //console.log('home guest', guestData.id);
 
@@ -161,19 +161,20 @@ onMounted(() => {
         guestData: guestData.value
     })
 
-    getHotelbyId(stayData.value.hotel_id);
-
+    await getHotelbyId(stayData.value.hotel_id);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
 });
 
 
 const getHotelbyId = async (id) => {
-    const response = await hotelStore.$findByIdApi(id);
+    hotelData.value = hotelStore.hotelData;
+    // const response = await hotelStore.$findByIdApi(id);
 
-    if(response.ok){
-        hotelData.value = response.data;
-    }else{
-        console.log('error', response);
-    }
+    // if(response.ok){
+    //     hotelData.value = response.data;
+    // }else{
+    //     console.log('error', response);
+    // }
 
     loading.value = false;
     
@@ -192,15 +193,15 @@ const formatDate = (dateString) => {
 }; */
 
 // URLs para compartir
-const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
+const shareUrl = ref(null);
 
 // Definimos shareMessage como un valor computed para que tome hotelData.name cuando esté disponible
-const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl}`);
+const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl.value}`);
 
 const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(shareMessage.value)}`);
 const mailtoShareUrl = computed(() => `mailto:?subject=Únete a nuestra estancia&body=${encodeURIComponent(shareMessage.value)}`);
 const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareMessage.value)}`);
-const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
+const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
 
 
 const handleLogoutGuest = () => {

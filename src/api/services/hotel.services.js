@@ -6,6 +6,7 @@ import {
 export const findByParamsApi = (params) => apiHttp('GET', `${hotelPath}/findByParams`, params)
 export const getCrossellingsApi = () => apiHttp('GET', `${hotelPath}/getAllCrossellings`)
 export const getChatHoursApi = () => apiHttp('GET', `${hotelPath}/getChatHours`)
+export const buildUrlWebAppApi = (params) => apiHttp('GET', `${hotelPath}/buildUrlWebApp`, params)
 //findById
 export const findByIdApi = (id) => apiHttp('GET', `${hotelPath}/findById/${id}`,[],{showPreloader:false})
 //staysByHotel
