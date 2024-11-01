@@ -6,7 +6,7 @@ import {
     getCrossellingsApi,
     getChatHoursApi,
     findByIdApi,
-    staysByHotel
+    buildUrlWebAppApi
 } from '@/api/services/hotel.services'
 
 // import { useMainStore } from '@/stores'
@@ -100,14 +100,13 @@ export const useHotelStore = defineStore('hotel', () => {
         subdomain.value = null;
         hotelData.value = null;
     }
-
-    async function $staysByHotel (id) { //aquir ecibo el chain_id = id
-        const response = await staysByHotel(id)
-        return response
-    }
     
-
-
+    async function $buildUrlWebApp (slugHotel, uri, paramsString) {
+        let params = {slugHotel, uri, paramsString}
+        const response = await buildUrlWebAppApi(params)
+        console.log('test buildUrlWebApp',response)
+        return response.ok ? response.data : null;
+    }
 
     //
     return {
@@ -115,14 +114,14 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelData,
         chatHours,
         subdomain,
-        $staysByHotel,
         $load,
         $getCrossellings,
         $loadImage,
         $loadChatHours,
         $findByIdApi,
         $setAndLoadLocalHotel,
-        $deleteLocalHotel
+        $deleteLocalHotel,
+        $buildUrlWebApp
     }
 
 })

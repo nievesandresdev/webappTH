@@ -105,6 +105,9 @@ const { toastSuccess } = handleToast();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore();
+
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
@@ -146,7 +149,7 @@ const handlePersonalInfo = () => {
     navigateTo('PersonalInfo')
 };
 
-onMounted(() => {
+onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
     //console.log('home guest', guestData.id);
 
@@ -158,62 +161,47 @@ onMounted(() => {
         guestData: guestData.value
     })
 
-    getHotelbyId(stayData.value.hotel_id);
-
+    await getHotelbyId(stayData.value.hotel_id);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
 });
 
 
 const getHotelbyId = async (id) => {
-    const response = await hotelStore.$findByIdApi(id);
+    hotelData.value = hotelStore.hotelData;
+    // const response = await hotelStore.$findByIdApi(id);
 
-    if(response.ok){
-        hotelData.value = response.data;
-    }else{
-        console.log('error', response);
-    }
+    // if(response.ok){
+    //     hotelData.value = response.data;
+    // }else{
+    //     console.log('error', response);
+    // }
 
     loading.value = false;
     
 };
 
-/* const formattedDates = computed(() => {
-    const checkInDate = formatDate(stayData.value.check_in);
-    const checkOutDate = formatDate(stayData.value.check_out);
-    return `${checkInDate} - ${checkOutDate}`;
-});
-
-const formatDate = (dateString) => {
-    const utcDate = new Date(dateString + 'T00:00:00Z');
-    const options = { day: '2-digit', month: 'short', timeZone: 'Europe/Madrid' };
-    return utcDate.toLocaleDateString('es-ES', options).replace(/\s+/g, ' ');
-}; */
 
 // URLs para compartir
-const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
+const shareUrl = ref(null);
 
 // Definimos shareMessage como un valor computed para que tome hotelData.name cuando esté disponible
-const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl}`);
+const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl.value}`);
 
 const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(shareMessage.value)}`);
 const mailtoShareUrl = computed(() => `mailto:?subject=Únete a nuestra estancia&body=${encodeURIComponent(shareMessage.value)}`);
 const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareMessage.value)}`);
-const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
+const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
 
 
 const handleLogoutGuest = () => {
-    guestStore.deleteLocalGuest();
-    stayStore.cleanStayData();
-    
-    setTimeout(() => {
-        navigateTo('Home');
-    }, 600);
+    authStore.$logout();
 };
 
 const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     let { url, type, urlDefault } = payload;
 
-    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
+    // Verifica si la URL es de tipo `blob:` (preview imagen)
     if (url && url.startsWith("blob:")) return url;
 
     if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 

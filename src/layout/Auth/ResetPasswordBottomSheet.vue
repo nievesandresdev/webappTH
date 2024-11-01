@@ -22,14 +22,13 @@
                             @keyupInput="isError = false"
                         />
                         <div class="mt-4">
-                            <button 
-                                class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                                :class="{'primary-disabled':!form.password}"
+                            <PrimaryButton 
+                                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
                                 :disabled="!form.password"
                                 @click="submit"
                             >
                                 Cambiar contraseña
-                            </button>
+                            </PrimaryButton> 
                         </div>
                     </div>
                 </div>

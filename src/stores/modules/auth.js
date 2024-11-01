@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+import { navigateTo } from '@/utils/navigation'
 import { 
     findByEmailApi
 } from '@/api/services/guest.services';
@@ -13,12 +13,14 @@ import {
 } from '@/api/services/auth.services'
 
 import { useGuestStore } from '@/stores/modules/guest';
+import { useStayStore } from '@/stores/modules/stay';
 
 
 
 export const useAuthStore = defineStore('auth', () => {
     
     const guestStore = useGuestStore()
+    const stayStore = useStayStore()
     // STATE
 
     // ACTIONS
@@ -39,7 +41,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $sendPasswordAndLogin (params) {
-        console.log('test sendPasswordAndLogin',params)
         const response = await confirmPasswordApi(params)
         if(response.ok && response.data){
             guestStore.setLocalGuest(response.data)
@@ -60,13 +61,20 @@ export const useAuthStore = defineStore('auth', () => {
         return response.ok ? response.data : null;
     }
 
+    async function $logout (token, newPassword) {
+        stayStore.deleteLocalStayData()
+        guestStore.deleteLocalGuest()
+        navigateTo('Home')
+    }
+
     //
     return {
         $registerOrLogin,
         $updateGuestById,
         $sendPasswordAndLogin,
         $sendResetLinkEmail,
-        $resetPassword
+        $resetPassword,
+        $logout
     }
 
 })

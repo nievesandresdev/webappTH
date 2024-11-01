@@ -31,14 +31,13 @@
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
         >Al seleccionar Aceptar y continuar, acepto la <router-link :to="{name:'PrivacyPolicies'}"  class="underline">Política de Privacidad.</router-link></p>
         <div class="mt-4">
-            <button 
-                class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :class="{'primary-disabled':!validSubmitButton}"
+            <PrimaryButton 
+                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
                 :disabled="!validSubmitButton"
                 @click="submit"
             >
                 Aceptar y continuar
-            </button>
+            </PrimaryButton> 
         </div>
         <div class="my-6 bg-border-secondary w-full h-[1px]"></div>
         <p class="lato text-[10px] font-bold leading-[12px]">Riu Hotels & Resorts te enviará comunicaciones comerciales y promociones personalizadas por correo electrónico, SMS u otros medios electrónicos sobre productos y servicios</p>
@@ -51,6 +50,7 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { navigateTo } from '@/utils/navigation'
 import { getUrlParam } from '@/utils/utils'
 import { useRouter } from 'vue-router';

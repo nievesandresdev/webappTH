@@ -8,19 +8,19 @@
             :minDate="null"
             mandatory
         />
-        <button 
-            @click="submit"
-            class="block mt-6 hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-            :class="{'primary-disabled':!form.checkDate}"
+        <PrimaryButton 
+            classes="block mt-6 text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
             :disabled="!form.checkDate"
+            @click="submit"
         >
             Crear y acceder a la estancia
-        </button>
+        </PrimaryButton> 
     </div>
 </template>
 <script setup>
 import { reactive } from 'vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 //stores
 import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore();
