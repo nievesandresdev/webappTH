@@ -39,7 +39,7 @@ export default async function handleWebAppData({ to, from, next }) {
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
         console.log('test redirect home')
-        return next({ name: 'Home' });
+        return next({ name: 'Home', query: to.query });
     }
 
     ////////////////////////////////////////////////////////

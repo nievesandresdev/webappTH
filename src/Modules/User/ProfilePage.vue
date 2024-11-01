@@ -105,6 +105,9 @@ const { toastSuccess } = handleToast();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore();
+
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
@@ -190,12 +193,7 @@ const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIC
 
 
 const handleLogoutGuest = () => {
-    guestStore.deleteLocalGuest();
-    stayStore.cleanStayData();
-    
-    setTimeout(() => {
-        navigateTo('Home');
-    }, 600);
+    authStore.$logout();
 };
 
 const $formatImage = (payload) => {

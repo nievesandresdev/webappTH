@@ -10,15 +10,17 @@
             @keyupInput="isError = false"
         />
         <div class="mt-4">
-            <button 
-                class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :class="{'primary-disabled':!form.password}"
+            <PrimaryButton 
+                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
                 :disabled="!form.password"
                 @click="submit"
             >
                 Continuar
-            </button>
-            <button class="mt-4 lato text-sm font-bold leading-[16px] underline">
+            </PrimaryButton> 
+            <button 
+                class="mt-4 lato text-sm font-bold leading-[16px] underline"
+                @click="sendLinkToReset"
+            >
                 ¿Has olvidado tu contraseña?
             </button>
         </div>
@@ -27,6 +29,10 @@
 <script setup>
 import { reactive, ref, inject } from 'vue'
 import { navigateTo } from '@/utils/navigation'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import { handleToast } from "@/composables/useToast"; 
+const { toastSuccess } = handleToast();
+
 import THInputText from '@/components/THInputText.vue';
 //stores
 import { useAuthStore } from '@/stores/modules/auth'
@@ -73,4 +79,12 @@ async function submit(){
         }
     }
 }
+
+async function sendLinkToReset(){
+    let res = await authStore.$sendResetLinkEmail(form.email);
+    if(res){
+        toastSuccess("Correo enviado!"); 
+    }
+}
+
 </script>

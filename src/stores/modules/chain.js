@@ -9,9 +9,11 @@ import {
 
 export const useChainStore = defineStore('chain', () => {
     
+    
      // STATE
-     const chainSubdomain = ref(localStorage.getItem('chainSubdomain') || '')
-     const chainData = ref(localStorage.getItem('chainData') || null)
+     const chainSubdomain = ref(localStorage.getItem('chainSubdomain') || '');
+     const chainData = ref(localStorage.getItem('chainData') || null);
+     const customizationData = ref(null);
     // ACTIONS
     async function $getHotelsList() {
         const response = await getHotelsListApi([])
@@ -64,10 +66,13 @@ export const useChainStore = defineStore('chain', () => {
     }
 
     async function $getCustomatizacion() {
-        const response = await getCustomatizacionApi([])
-        console.log('test $getCustomatizacion',response)
-        return response.ok ? response.data : []; 
-        
+        if (customizationData.value) return customizationData.value;
+        const response = await getCustomatizacionApi([]);
+        let customization = response.ok ? response.data : null;
+        if (customization) {
+            customizationData.value = customization;
+        }
+        return customizationData.value;
     }
     //
     return {
@@ -78,6 +83,7 @@ export const useChainStore = defineStore('chain', () => {
         $getHotelsList,
         $loadChainData,
         chainData,
+        customizationData,
         $getCustomatizacion
     }
 

@@ -4,7 +4,7 @@ import homeRoutes from './homeRoutes'
 import profileRoutes from './userRoutes'
 import alojamientoRoutes from './alojamientoRoutes'
 // import experienceRoutes from './experienceRoutes'
-// import placeRoutes from './placeRoutes'
+import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
 // import facilityRoutes from './facilityRoutes'
 // import hotelRoutes from './hotelRoutes'
@@ -23,6 +23,7 @@ const NotFoundPage = () => import(/* webpackChunkName: "home" */ '@/shared/NotFo
 const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/ScreenNotAllowed.vue')
 const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
 const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
+const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
 
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
@@ -30,7 +31,7 @@ import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importaci�
 function checkHotelSubdomain(to, from, next) {
   const subdomain = localStorage.getItem('subdomain');
   if (!subdomain) {
-      return next({ name: 'ChainLanding' });
+      return next({ name: 'ChainLanding', query: to.query });
   }
   next();
 }
@@ -56,19 +57,24 @@ const routes = [
     name: 'TestFacebook',
     component: TestFacebook
   },
+  {
+    name: 'ResetPassword',
+    path: '/restablecer-contrasena',
+    component: ResetPassword
+  },
   //
   //
   // Rutas dinámicas (con slug)
   {
-    path: '/:hotelSlug?',
+    path: '/:hotelSlug',
     beforeEnter: checkHotelSubdomain,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
-      ...homeRoutes,
+      ...placeRoutes,
       ...profileRoutes,
+      ...homeRoutes,
       ...alojamientoRoutes,
       // ...experienceRoutes,
-      // ...placeRoutes,
       // ...chatRoutes,
       // ...facilityRoutes,
       // ...hotelRoutes,

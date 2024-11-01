@@ -136,7 +136,7 @@ export const useStayStore = defineStore('stay', () => {
         return localData ? JSON.parse(localData) : null;
     }
 
-    function cleanStayData () {
+    function deleteLocalStayData () {
         stayData.value = null;
         localStorage.removeItem('stayId')
         localStorage.removeItem('stayData')
@@ -174,7 +174,7 @@ export const useStayStore = defineStore('stay', () => {
         deleteGuestOfStay,
         getLocalStay,
         existsAndValidate,
-        cleanStayData,
+        deleteLocalStayData,
         findByIdInSetLocalStay
     }
 

@@ -11,14 +11,14 @@
             textError="El formato de correo electrónico introducido no es correcto"
         />
         <!-- $t('guest.guestLog.email.error') -->
-        <button 
-            class="hbtn-primary text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block mt-4"
+        <PrimaryButton 
+            classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block mt-4"
             :disabled="!validSubmitButton"
-            :class="{'primary-disabled':!validSubmitButton}"
             @click="goRegisterOrLoginEmail()"
         >
-            Continuar 
-        </button>
+            Continuar
+        </PrimaryButton> 
+        <!-- :conditionClases="{'primary-disabled':!validSubmitButton}" -->
         <!-- separator -->
         <div class="mt-6 h-[17px] flex items-center">
             <div class="w-[143px] h-[1px] bg-[#E9E9E9]"></div>
@@ -46,6 +46,7 @@
 <script setup>
 import { reactive, ref, computed, inject  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { navigateTo } from '@/utils/navigation'
 //router
 import { useRouter } from 'vue-router';

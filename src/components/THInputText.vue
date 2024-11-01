@@ -31,7 +31,7 @@
             {{ textError }}
         </p>
         <button 
-            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-9 right-2"
+            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-2.5 right-2"
             :class="{'disabled-text':!modelValue || modelValue == '' || disabled}"
             v-if="type === 'password'"
             @click="showPass = !showPass"
