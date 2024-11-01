@@ -7,3 +7,4 @@ export const registerOrLoginWEmailApi = (params) => apiHttp('POST', `${chainPath
 export const getHotelsListApi = (params) => apiHttp('GET', `${chainPath}/getHotelsList`, params)
 export const findBySubdomainApi = () => apiHttp('GET', `${chainPath}/findBySubdomain/`)
 export const getCustomatizacionApi = () => apiHttp('GET', `${chainPath}/getCustomatizacion/`)
+export const getStaysGuestByChainApi = (params) => apiHttp('GET', `${chainPath}/getStaysGuest`, params)

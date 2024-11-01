@@ -6,7 +6,6 @@ import {
     getCrossellingsApi,
     getChatHoursApi,
     findByIdApi,
-    staysByHotel,
     buildUrlWebAppApi
 } from '@/api/services/hotel.services'
 
@@ -80,11 +79,6 @@ export const useHotelStore = defineStore('hotel', () => {
         subdomain.value = null;
         hotelData.value = null;
     }
-
-    async function $staysByHotel (id) { //aquir ecibo el chain_id = id
-        const response = await staysByHotel(id)
-        return response
-    }
     
     async function $buildUrlWebApp (slugHotel, uri, paramsString) {
         let params = {slugHotel, uri, paramsString}
@@ -98,7 +92,6 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelData,
         chatHours,
         subdomain,
-        $staysByHotel,
         $load,
         $getCrossellings,
         $loadImage,
