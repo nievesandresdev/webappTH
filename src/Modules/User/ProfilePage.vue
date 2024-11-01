@@ -176,17 +176,6 @@ const getHotelbyId = async (id) => {
     
 };
 
-/* const formattedDates = computed(() => {
-    const checkInDate = formatDate(stayData.value.check_in);
-    const checkOutDate = formatDate(stayData.value.check_out);
-    return `${checkInDate} - ${checkOutDate}`;
-});
-
-const formatDate = (dateString) => {
-    const utcDate = new Date(dateString + 'T00:00:00Z');
-    const options = { day: '2-digit', month: 'short', timeZone: 'Europe/Madrid' };
-    return utcDate.toLocaleDateString('es-ES', options).replace(/\s+/g, ' ');
-}; */
 
 // URLs para compartir
 const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
@@ -213,7 +202,7 @@ const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     let { url, type, urlDefault } = payload;
 
-    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
+    // Verifica si la URL es de tipo `blob:` (preview imagen)
     if (url && url.startsWith("blob:")) return url;
 
     if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import chainRoutes from './chainRoutes'
 import homeRoutes from './homeRoutes'
 import profileRoutes from './userRoutes'
+import alojamientoRoutes from './alojamientoRoutes'
 // import experienceRoutes from './experienceRoutes'
 // import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
@@ -65,6 +66,7 @@ const routes = [
       // aquí van todas las rutas que dependen del slug del hotel
       ...homeRoutes,
       ...profileRoutes,
+      ...alojamientoRoutes,
       // ...experienceRoutes,
       // ...placeRoutes,
       // ...chatRoutes,
