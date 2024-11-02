@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive  } from 'vue'
 import { i18n } from '@/i18n'
 
 import {

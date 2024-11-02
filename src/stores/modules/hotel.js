@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive  } from 'vue'
 
 import {
     findByParamsApi,
@@ -14,26 +14,7 @@ import {
 
 export const useHotelStore = defineStore('hotel', () => {
     
-    const tabsHeader = reactive([
-        {
-            title: 'Información',
-            exclude: false,
-            iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
-            iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-            to: '/',
-            routeNameIncludes: ['Home'],
-            onClick: () => router.push('/'),
-        },
-        {
-            title: 'Instalaciones',
-            exclude: false,
-            iconDefault: 'WA.MENU.DEFAULT.INSTALACIONES',
-            iconSelected: 'WA.MENU.SELECTED.INSTALACIONES',
-            to: '/',
-            routeNameIncludes: [],
-            onClick: () => router.push('/'),
-        },
-    ]);
+
 
     // STATE
     const hotelData = ref(null)
@@ -62,7 +43,6 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
-        console.log('test hotelData.value',hotelData.value)
         return response.data
     }
 
@@ -110,7 +90,6 @@ export const useHotelStore = defineStore('hotel', () => {
 
     //
     return {
-        tabsHeader,
         hotelData,
         chatHours,
         subdomain,

@@ -1,17 +1,17 @@
 <template>
     <header class="custom-header">
-        <div class="header-top flex pt-6 px-4 pb-[12px] justify-between">
+        <div class="header-top flex pt-6 px-2 pb-[12px] justify-between">
             <!-- Sección izquierda: Buscador o título -->
-            <div class="header-left">
+            <div class="header-left mt-2 flex-1">
                 <slot name="titleOrSearch">
-                <h1 class="text-[20px] font-bold mt-2">{{ title }}</h1>
+                    <h1 class="text-[20px] font-bold">{{ title }}</h1>
                 </slot>
             </div>
 
             <!-- Sección derecha: Avatar -->
             <div class="header-avatar">
                 <slot name="avatar">
-                    <IconCustomColor name="TH.WA.AVATAR.BUTTON" color="#FA0000" only-change-background />
+                    <IconCustomColor name="TH.WA.AVATAR.BUTTON" :color="chainStore.customizationData?.colors?.[0]?.cod_hex" only-change-background />
                 </slot>
             </div>
         </div>
@@ -32,7 +32,7 @@
                             </div>
                             <div
                                 class="flex justify-center"
-                                v-show="tab.routeNameIncludes.includes($route.name)"
+                                v-show="tab.isActive"
                             >
                                 <div class="tab-item__selected" />
                             </div>
@@ -46,6 +46,9 @@
 
 <script setup>
 import { onMounted, reactive, computed, defineProps } from 'vue';
+
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const props = defineProps({
     title: {
