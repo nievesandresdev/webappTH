@@ -26,43 +26,15 @@
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
-      <!-- Botones de acción -->
-      <div class="flex gap-4 justify-around" v-if="hotelData.buttons_home">
-        <!-- Botón de Wifi -->
-        <RoundedButton
-          v-if="hotelData.buttons_home.show_all || hotelData.buttons_home.show_wifi"
-          iconUrl="/assets/icons/WA.wifi.svg"
-          label="Wifi"
-          :showLabel="true"
-          @click="handleWifi()"
-        />
-
-        <!-- Botón de Llamar -->
-        <RoundedButton
-          v-if="hotelData.buttons_home.show_all || hotelData.buttons_home.show_call"
-          iconUrl="/assets/icons/WA.llamar.svg"
-          label="Llamar"
-          :showLabel="true"
-          @click="handleCall()"
-        />
-
-        <!-- Botón de Normas -->
-        <RoundedButton
-          v-if="hotelData.buttons_home.show_all || hotelData.buttons_home.show_legal_text || !hotelData.legal"
-          iconUrl="/assets/icons/WA.normas.svg"
-          label="Normas"
-          :showLabel="true"
-          @click="handleLegalText()"
-        />
-
-        <!-- Botón de Compartir Estancia -->
-        <RoundedButton
-          v-if="hotelData.buttons_home.show_all"
-          iconUrl="/assets/icons/arrow-up-from-bracket-small.svg"
-          label="Compartir Estancia"
-          :showLabel="true"
-        />
-      </div>
+      <!-- Componente de Botones de Acción -->
+      <HotelActionButtons
+        :hotelData="hotelData"
+        :buttonsHome="hotelData.buttons_home"
+        @wifi-click="handleWifi"
+        @call-click="handleCall"
+        @legal-click="handleLegalText"
+        @share-click="openModalShared"
+      />
     </div>
   </div>
 
@@ -75,14 +47,13 @@
       </div>
     </div>
     <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
-      <!-- Texto descriptivo centrado -->
-      <p class="text-[16px] text-[#333333]  font-semibold text-center">
+      <p class="text-[16px] text-[#333333]  font-semibold text-center lato">
         El alojamiento cuenta con servicio de internet WiFi gratuito
       </p>
     </div>
   </BottomModal>
 
-  <!-- Modal de Políticas y Normas -->
+  <!--Políticas y Normas -->
   <BottomModal :isOpen="modalLegal && !$utils.isMockup()" @update:isOpen="modalLegal = $event">
     <div class="flex flex-col items-start">
       <div class="flex items-center gap-1 mb-4 lato">
@@ -99,16 +70,72 @@
       </div>
     </div>
   </BottomModal>
+
+  <!--Compartir Estancia -->
+  <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
+    <div class="flex flex-col items-start">
+      <div class="flex items-center gap-2 mb-4 lato">
+        <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
+        <p class="text-[20px] font-bold text-[#333333] lato">Compartir estancia</p>
+      </div>
+      <a :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+        <img src="/assets/icons/WA.Whatsapp.svg" class="w-6 h-6" alt="Whatsapp Icon" />
+        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Whatsapp</p>
+      </a>
+      <a :href="mailtoShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+        <img src="/assets/icons/WA.mail.svg" class="w-6 h-6" alt="Email Icon" />
+        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Email</p>
+      </a>
+      <a :href="smsShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+        <img src="/assets/icons/WA.SMS.svg" class="w-6 h-6" alt="SMS Icon" />
+        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía SMS</p>
+      </a>
+      <a :href="telegramShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+        <img src="/assets/icons/WA.Telegram.svg" class="w-6 h-6" alt="Telegram Icon" />
+        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Telegram</p>
+      </a>
+      <p class="text-[14px] font-bold lato text-[#333333]">Link para compartir la estancia</p>
+      <div class="relative mt-1 w-full">
+        <input
+          ref="shareLinkInput"
+          type="text"
+          disabled
+          :value="shareUrl"
+          class="w-full py-2 pl-4 pr-10 text-[14px] font-medium lato text-[rgba(51,51,51,0.25)] rounded-[10px] border border-[rgba(51, 51, 51, 0.25)] bg-[rgba(250, 250, 250, 0.50)] truncate"
+        />
+        <button @click="copyToClipboard" class="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <img src="/assets/icons/WA.copy.svg" class="w-5 h-5" alt="Copy Icon" />
+        </button>
+      </div>
+    </div>
+  </BottomModal>
 </template>
 
 <script setup>
 import ImageSlider from '@/components/ImageSlider.vue'
 import StarRating from './Components/StarRating.vue'
 import RoundedButton from '@/components/Buttons/RoundedButton.vue'
+import HotelActionButtons from './Components/HotelActionsButtons.vue'
 import { useHotelStore } from '@/stores/modules/hotel'
 import BottomModal from '@/Modules/User/Components/BottomModal.vue'
 
 import { computed, ref, onMounted } from 'vue'
+
+import { useShareStay } from '@/composables/useShareStay';
+
+const hotelName = 'Hotel Example';
+const shareUrl = "https://ejemplo.com/estancia/larga-url-que-se-trunca";
+
+const {
+    isModalOpen, 
+    shareLinkInput, 
+    whatsappShareUrl, 
+    mailtoShareUrl, 
+    smsShareUrl, 
+    telegramShareUrl, 
+    openModalShared, 
+    copyToClipboard 
+} = useShareStay(hotelName, shareUrl);
 
 const hotelStore = useHotelStore()
 const hotelData = computed(() => hotelStore.hotelData)
