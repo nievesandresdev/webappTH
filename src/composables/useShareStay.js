@@ -1,4 +1,3 @@
-// src/composables/useShareStay.js
 import { ref, computed } from 'vue';
 import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();

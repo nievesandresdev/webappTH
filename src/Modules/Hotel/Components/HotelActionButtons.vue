@@ -1,6 +1,6 @@
 <template>
     <div v-if="showAll" class="flex gap-4 justify-around">
-      <!-- Botón de Wifi -->
+      <!--  Wifi -->
       <RoundedButton
         v-if="buttonsHome.show_wifi"
         iconUrl="/assets/icons/WA.wifi.svg"
@@ -10,7 +10,7 @@
       />
 
   
-      <!-- Botón de Llamar -->
+      <!--  Llamar -->
       <RoundedButton
         v-if="buttonsHome.show_call && props.hotelData.phone"
         iconUrl="/assets/icons/WA.llamar.svg"
@@ -19,7 +19,7 @@
         @click="onCallClick"
       />
   
-      <!-- Botón de Normas -->
+      <!--  Normas -->
       <RoundedButton
         v-if="!hotelData.legal && buttonsHome.show_legal_text"
         iconUrl="/assets/icons/WA.normas.svg"
@@ -28,7 +28,6 @@
         @click="onLegalClick"
       />
   
-      <!-- Botón de Compartir Estancia (versión RoundedButton cuando showAll es true) -->
       <RoundedButton
         iconUrl="/assets/icons/arrow-up-from-bracket-small.svg"
         label="Compartir Estancia"
@@ -37,7 +36,6 @@
       />
     </div>
   
-    <!-- Botón de Compartir Estancia (versión PrimaryButton cuando showAll es false) -->
     <PrimaryButton
       v-else
       classes="text-center py-2.5 rounded-[10px] text-sm font-bold leading-[20px] w-full shadow-guest bg-[#333333] text-[#FFF] lato"
@@ -65,7 +63,6 @@
   
   const emit = defineEmits(['wifi-click', 'call-click', 'legal-click', 'share-click']);
   
-  // Variable computed para simplificar el acceso a `show_all`
   const showAll = computed(() => props.buttonsHome?.show_all ?? false);
   
   const onWifiClick = () => emit('wifi-click');

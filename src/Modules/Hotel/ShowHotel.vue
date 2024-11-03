@@ -36,6 +36,11 @@
         @legal-click="handleLegalText"
         @share-click="openModalShared"
       />
+
+      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+
+      <HotelInfoGeneral :hotelData="hotelData" />
+      
     </div>
   </div>
 
@@ -116,7 +121,8 @@
 import ImageSlider from '@/components/ImageSlider.vue'
 import StarRating from './Components/StarRating.vue'
 import RoundedButton from '@/components/Buttons/RoundedButton.vue'
-import HotelActionButtons from './Components/HotelActionsButtons.vue'
+import HotelActionButtons from './Components/HotelActionButtons.vue'
+import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
 import { useHotelStore } from '@/stores/modules/hotel'
 import BottomModal from '@/Modules/User/Components/BottomModal.vue'
 
