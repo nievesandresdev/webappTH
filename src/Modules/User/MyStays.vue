@@ -1,6 +1,6 @@
 <template>
     <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" />
-    <div class="px-3">
+    <div class="px-3 pb-10">
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -103,12 +103,12 @@ onMounted(() => {
     stayData.value = stayStore.getLocalStay(); // Obtiene la estancia local
     chainData.value = chainStore.chainData;
 
-    getStaysByHotel(chainData.value.id);
+    getStaysGuestByChain(guestData.value.id, stayData.value.id);
     getHotelbyId(stayData.value.hotel_id);
 });
 
-const getStaysByHotel = async (id) => {
-    const response = await hotelStore.$staysByHotel(id);
+const getStaysGuestByChain = async (guestId, stayId) => {
+    const response = await chainStore.$getStaysGuestByChain(guestId, stayId);
 
 
     if (response.ok) {

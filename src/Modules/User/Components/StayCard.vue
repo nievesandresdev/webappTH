@@ -26,7 +26,7 @@
             <div>
                 <div class="flex justify-between">
                     <!-- Nombre del hotel -->
-                    <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
+                    <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelName ? stay.hotel_name : hotel.name }} {{ stay.stayId}}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
                         <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">Activo</span>

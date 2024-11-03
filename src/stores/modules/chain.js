@@ -4,7 +4,8 @@ import { getUrlParam } from '@/utils/utils.js'
 import {
     getHotelsListApi,
     findBySubdomainApi,
-    getCustomatizacionApi
+    getCustomatizacionApi,
+    getStaysGuestByChainApi
 } from '@/api/services/chain.services'
 
 export const useChainStore = defineStore('chain', () => {
@@ -74,6 +75,16 @@ export const useChainStore = defineStore('chain', () => {
         }
         return customizationData.value;
     }
+
+    async function $getStaysGuestByChain (guestId, stayId) { 
+        let params = {
+            chainId : chainData.value.id,
+            guestId,
+            stayId
+        }
+        const response = await getStaysGuestByChainApi(params)
+        return response
+    }
     //
     return {
         chainSubdomain,
@@ -84,7 +95,8 @@ export const useChainStore = defineStore('chain', () => {
         $loadChainData,
         chainData,
         customizationData,
-        $getCustomatizacion
+        $getCustomatizacion,
+        $getStaysGuestByChain
     }
 
 })
