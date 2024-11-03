@@ -16,6 +16,7 @@
       >
         {{ hotelData.description }}
       </p>
+      
 
       <p
         @click="isExpanded = !isExpanded"
