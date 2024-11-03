@@ -255,3 +255,8 @@ button:focus {
 .lato{
   font-family: "Lato", sans-serif !important;
 }
+
+.bg-gradient-h {
+  background: linear-gradient(105deg, #F3F3F3, #FAFAFA);
+}
+

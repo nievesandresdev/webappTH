@@ -6,18 +6,22 @@
         ></div>
 
         <div 
-            class="relative w-full py-3 px-4 rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA]" 
+            class="relative w-full max-h-[80vh] overflow-y-auto py-3 px-4 rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6" 
             :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
             @click.stop
-            @touchstart="startTouch" 
-            @touchmove="moveTouch"  
         >
-            <div class="flex justify-center mb-3">
+            <!-- Área de cierre por deslizamiento (barra de agarre) -->
+            <div 
+                class="flex justify-center mb-3"
+                @touchstart="startTouch" 
+                @touchmove="moveTouch"
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="49" height="4" viewBox="0 0 49 4" fill="none">
                     <rect x="0.5" width="48" height="4" rx="2" fill="#777777"/>
                 </svg>
             </div>
             
+            <!-- Contenido del modal -->
             <slot></slot>
 
             <button
@@ -64,12 +68,12 @@ const closeModal = () => {
     }, 500);
 };
 
-// Detecta la posición Y cuando el usuario inicia el toque
+// Detecta la posición Y cuando el usuario inicia el toque en el área de cierre
 const startTouch = (event) => {
     touchStartY.value = event.touches[0].clientY;
 };
 
-// Detecta el deslizamiento hacia abajo y cierra el modal si supera el umbral
+// Detecta el deslizamiento hacia abajo en el área de cierre y cierra el modal si supera el umbral
 const moveTouch = (event) => {
     touchCurrentY.value = event.touches[0].clientY;
     const touchDifference = touchCurrentY.value - touchStartY.value;
