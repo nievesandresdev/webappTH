@@ -113,7 +113,11 @@ function handleStayClick() {
     console.log('propsmy', props);
     const data = {
         hotel_name: props.hotelName ? props.stay.hotel_name : props.hotel.name,
+        hotel_name: props.hotelName ? props.stay.hotel_name : props.hotel.name,
+        hotelSubdomain: props.stay.hotel_subdomain,
+        hotelId: props.stay.hotel_id,
         zone:  props.hotelName ? props.stay.hotel_zone : props.hotel.zone ,
+        stayId: props.stay.stayId,
         check_in: props.stay.check_in,
         check_out: props.stay.check_out,
         rooms: props.stay.rooms ?? '-',

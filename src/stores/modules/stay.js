@@ -143,8 +143,8 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function findByIdInSetLocalStay (stayId) {    
+        if(stayData.value?.id == stayId) return;
         const response = await findbyIdApi(stayId)
-        console.log('response fys s',response)
         const { ok } = response   
         stayData.value = ok ? response.data : null;
         if(stayData){

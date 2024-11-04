@@ -31,7 +31,13 @@
         </div>
     </div>
 
-    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" :showButton="true" :buttonText="'Acceder a la estancia'">
+    <BottomModal 
+        :isOpen="isModalOpen" 
+        @update:isOpen="isModalOpen = $event" 
+        :showButton="true" 
+        :buttonText="'Acceder a la estancia'"
+        @handleClick="AccessToStay"
+    >
         <div>
             <div class="flex justify-between">
                 <p class="text-[20px] font-bold lato text-[#333333] mb-3">{{ dataModalStay.hotel_name }}</p>
@@ -74,6 +80,7 @@ import { ref, onMounted } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import StayCard from './Components/StayCard.vue';
 import BottomModal from './Components/BottomModal.vue';
+import { navigateTo } from '@/utils/navigation'
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -145,5 +152,12 @@ function handleMyStays(data) {
 
 const handleEditStay = () => {
     console.log("Redirigiendo a la página de edición de estancia...");
+};
+
+const AccessToStay = async () => {
+    // console.log('test stayId',dataModalStay.value.stayId)
+    await hotelStore.$changeCurrentHotelData(dataModalStay.value.hotelId, dataModalStay.value.hotelSubdomain);
+    await stayStore.findByIdInSetLocalStay(dataModalStay.value.stayId)
+    navigateTo('Home')
 };
 </script>

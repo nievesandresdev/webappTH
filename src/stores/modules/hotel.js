@@ -74,16 +74,24 @@ export const useHotelStore = defineStore('hotel', () => {
         $load()
     }
 
-    function $deleteLocalHotel () {
-        localStorage.removeItem('subdomain',subdomain)
+    async function $deleteLocalHotel () {
+        localStorage.removeItem('subdomain')
         subdomain.value = null;
         hotelData.value = null;
+    }
+
+
+    async function $changeCurrentHotelData (newHotelId, newsubdomain) {
+        console.log('test changeCurrentHotelData 1')
+        if(newHotelId == hotelData.value.id) return;
+        await $deleteLocalHotel();
+        $setAndLoadLocalHotel(newsubdomain)
+        console.log('test changeCurrentHotelData 2',hotelData.value)
     }
     
     async function $buildUrlWebApp (slugHotel, uri, paramsString) {
         let params = {slugHotel, uri, paramsString}
         const response = await buildUrlWebAppApi(params)
-        console.log('test buildUrlWebApp',response)
         return response.ok ? response.data : null;
     }
 
@@ -99,7 +107,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $findByIdApi,
         $setAndLoadLocalHotel,
         $deleteLocalHotel,
-        $buildUrlWebApp
+        $buildUrlWebApp,
+        $changeCurrentHotelData
     }
 
 })
