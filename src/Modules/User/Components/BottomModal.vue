@@ -82,6 +82,12 @@ const moveTouch = (event) => {
         closeModal();
     }
 };
+
+// Función para manejar la acción del botón
+const handleSubmit = () => {
+    console.log("Botón del modal clickeado");
+    emit('handleClick');
+};
 </script>
 
 <style scoped>
