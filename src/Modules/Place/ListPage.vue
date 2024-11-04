@@ -2,25 +2,31 @@
     <AppHeader
         title="Hotel"
         :tabs="tabsHeader"
+        fixed
     >
         <template v-slot:titleOrSearch>
             <InputSearchPlace />
         </template>
     </AppHeader>
-    <div>
-        {{tabsHeader}}
+    <div class="mt-[148px] flex-1">
+        <ListPageMapClusterPlace />
+        <ListPageBottomSheet />
+
     </div>
 </template>
 
 <script setup>
 
-import { onMounted, ref, provide, reactive, toRefs } from 'vue';
+import { onMounted, ref, provide, reactive, toRefs, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getUrlParam } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
+import BaseMap from '@/components/Maps/BaseMap.vue';
 import InputSearchPlace from './components/InputSearchPlace.vue';
+import ListPageMapClusterPlace from './ListPageMapClusterPlace.vue';
+import ListPageBottomSheet from './ListPageBottomSheet.vue';
 
 // STORE
 import { usePlaceStore } from '@/stores/modules/place';
@@ -32,7 +38,7 @@ const { localeCurrent } = localeStore
 
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore
+const { hotelData } = hotelStore;
 
     // PROPS
 const props = defineProps({
@@ -67,26 +73,22 @@ const paginateData = reactive({
 });
 const tabsHeader = ref([]);
 
-// const  = computed(()=> {
-//     return typeplaces.value.map(item => {
-//         let slug_type = slufy(item.name)
-//         let categori_places = item.categori_places.map(item_cat => {
-//             let slug_cat = slufy(item_cat.name)
-//             return {
-//                 id: item_cat.id,
-//                 type_places_id: item_cat.type_places_id,
-//                 icon: iconsCategoriplaces[slug_cat],
-//                 name: translate.categoriplace?.[slug_cat]?.[localeCurrent],
-//                 show: item_cat.show,
-//             }
-//         })
-//         return {
-//             id: item.id,
-//             name: translate.typeplace?.[slug_type]?.[localeCurrent],
-//             categori_places,
-//         }
-//     })
-// });
+// COMPUTED
+
+const typePlaceSelected = computed(() => {
+    let typeplace = typeplaces.value.find(item => formFilter.typeplace);
+    if (typeplace) {
+        delete typeplace.categori_places;
+    }
+    return typeplace;
+});
+const categoriPlaceSelected = computed(() => {
+    let categoriplace = categoriplaces.value.find(item => formFilter.categoriplace);
+    return categoriplace;
+});
+
+// PROVIDE
+provide('hotelData', hotelData);
 
 // ONMOUNTED
 onMounted(async () => {
@@ -102,21 +104,22 @@ async function loadTypePlaces () {
     if (response.ok) {
         loadQueryInFormFilter();
         typeplaces.value = response.data;
-        loadTabsHeader();
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
         if (!formFilter.categoriplace) {
             formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id;
         }
+        loadTabsHeader();
     }
 }
 
 async function loadCategoriPlaces () {
-    const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true});
-    if (response.ok) {
-        categoriplaces.value = response.data;
-    }
+    // const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true});
+    // if (response.ok) {
+    //     categoriplaces.value = response.data;
+    // }
+    categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
 }
 
 function loadTabsHeader () {
@@ -126,39 +129,53 @@ function loadTabsHeader () {
             exclude: false,
             iconDefault: `${item.icon}`,
             iconSelected: `${item.icon}.DEFAULT`,
-            isActive: item.name === 'Qué visitar',
-            onClick: () => changeCategory(),
+            isActive: item.id == formFilter.typeplace,
+            onClick: () => changeCategory(null, item.id),
         };
     });
 }
 
 function changeCategory (idCategory = null, idTypePlace = null) {
-    formFilter.categoriplace = idCategory
-    formFilter.typeplace = idTypePlace
-    if(!formFilter.categoriplace) getFirstCategoryOfType()
-    emit('click:changeCategory')
+    formFilter.categoriplace = idCategory;
+    formFilter.typeplace = idTypePlace;
+    if(!formFilter.categoriplace) getFirstCategoryOfType();
+    loadTabsHeader();
+    submitFilter();
 }
 
-// const tabsHeader = reactive([
-//     {
-//         title: 'Información',
-//         exclude: false,
-//         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
-//         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-//         to: '/',
-//         routeNameIncludes: ['Home'],
-//         onClick: () => router.push('/'),
-//     },
-//     {
-//         title: 'Instalaciones',
-//         exclude: false,
-//         iconDefault: 'WA.MENU.DEFAULT.INSTALACIONES',
-//         iconSelected: 'WA.MENU.SELECTED.INSTALACIONES',
-//         to: '/',
-//         routeNameIncludes: ['PlaceList'],
-//         onClick: () => router.push('/'),
-//     },
-// ]);
+const getFirstCategoryOfType = ()=> {
+    if(formFilter.typeplace){
+        let first = categoriplaces.value?.[0] ?? null;
+        formFilter.categoriplace = first?.id;
+    }
+}
+
+function loadPlaces () {
+
+}
+
+function submitFilter (){
+    // page.value = 1;
+    // placesData.value = [];
+    // loadPlaces();
+    route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} })
+}
+
+function filterNonNullAndNonEmpty(obj) {
+    const filteredObject = {}
+    Object.keys(obj).forEach(key => {
+
+        if (obj[key] !== null && obj[key] !== '') {
+            if (Array.isArray(obj[key]) && obj[key].length > 0) {
+                filteredObject[key] = obj[key]
+            }
+            else if (!Array.isArray(obj[key])) {
+                filteredObject[key] = obj[key]
+            }
+        }
+    })
+    return filteredObject
+}
 
 function loadQueryInFormFilter () {
     for (const [key, value] of Object.entries(queryRouter.value || {})) {
@@ -174,6 +191,14 @@ function loadQueryInFormFilter () {
             }
         }
     }
+}
+
+function validValueQuery (field, value) {
+
+    if (value === 'false') return false;
+    if (value === 'true') return true;
+
+    return value;
 }
 
 

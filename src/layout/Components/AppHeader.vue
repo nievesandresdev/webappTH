@@ -1,5 +1,8 @@
 <template>
-    <header class="custom-header">
+    <header
+        class="custom-header"
+        :class="{'fixed top-0 left-0 w-full': fixed}"
+    >
         <div class="header-top flex pt-6 px-2 pb-[12px] justify-between">
             <!-- Sección izquierda: Buscador o título -->
             <div class="header-left mt-2 flex-1">
@@ -54,6 +57,10 @@ const props = defineProps({
     title: {
       type: String,
       default: '',
+    },
+    fixed: {
+      type: Boolean,
+      default: false,
     },
     // avatarSrc: {
     //   type: String,
