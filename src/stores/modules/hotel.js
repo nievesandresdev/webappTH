@@ -83,11 +83,9 @@ export const useHotelStore = defineStore('hotel', () => {
 
 
     async function $changeCurrentHotelData (newHotelId, newsubdomain) {
-        console.log('test changeCurrentHotelData 1')
         if(newHotelId == hotelData.value.id) return;
         await $deleteLocalHotel();
         $setAndLoadLocalHotel(newsubdomain)
-        console.log('test changeCurrentHotelData 2',hotelData.value)
     }
     
     async function $buildUrlWebApp (slugHotel, uri, paramsString) {
