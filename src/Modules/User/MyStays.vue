@@ -63,12 +63,12 @@
             </div>
         </div>
         <div class="flex w-full mb-6 mt-2">
-            <button
-                @click="handleEditStay"
+            <router-link 
+                :to="{ name:'EditStay', params:{ stayId: dataModalStay.stayId}}"
                 class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] text-sm font-bold hshadow-button mt-4"
             >
                 Editar estancia
-            </button>
+            </router-link>
         </div>
     </BottomModal>
 
@@ -145,14 +145,9 @@ const getHotelbyId = async (id) => {
 }; */
 
 function handleMyStays(data) {
-    console.log("click estancia...",data);
     dataModalStay.value = data;
     isModalOpen.value = true;
 }
-
-const handleEditStay = () => {
-    console.log("Redirigiendo a la página de edición de estancia...");
-};
 
 const AccessToStay = async () => {
     // console.log('test stayId',dataModalStay.value.stayId)

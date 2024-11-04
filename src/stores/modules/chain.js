@@ -56,6 +56,7 @@ export const useChainStore = defineStore('chain', () => {
 
     async function $loadChainData(){
         const response = await findBySubdomainApi()
+        await $getCustomatizacion();
         if(response.ok){
             chainData.value = response.data;
             localStorage.setItem('chainData', JSON.stringify(chainData.value))
@@ -67,8 +68,10 @@ export const useChainStore = defineStore('chain', () => {
     }
 
     async function $getCustomatizacion() {
+        
         if (customizationData.value) return customizationData.value;
         const response = await getCustomatizacionApi([]);
+        
         let customization = response.ok ? response.data : null;
         if (customization) {
             customizationData.value = customization;

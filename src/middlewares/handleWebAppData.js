@@ -8,6 +8,7 @@ import utils from '@/utils/utils.js';
 
 export default async function handleWebAppData({ to, from, next }) {
     //evitar multiples redirecciones
+    
     if (to.name === 'NotFound') return next();
     
     ////////////////////////////////////////////////////////
@@ -38,8 +39,8 @@ export default async function handleWebAppData({ to, from, next }) {
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
-        console.log('test redirect home')
-        return next({ name: 'Home', query: to.query });
+        // console.log('test redirect home')
+        return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 
     ////////////////////////////////////////////////////////

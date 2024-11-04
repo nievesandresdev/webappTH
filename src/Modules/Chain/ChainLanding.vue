@@ -31,8 +31,6 @@ const props = defineProps({
 const customData = ref(null)
 onMounted(async () => {
     hotelStore.$deleteLocalHotel();    
-    customData.value = await chainStore.$getCustomatizacion();
-    console.log('test customData', customData.value)
 })
 
 const formType = computed(() => props.acform);
