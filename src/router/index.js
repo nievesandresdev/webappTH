@@ -2,12 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import chainRoutes from './chainRoutes'
 import homeRoutes from './homeRoutes'
 import profileRoutes from './userRoutes'
-import alojamientoRoutes from './alojamientoRoutes'
 // import experienceRoutes from './experienceRoutes'
 import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
 // import facilityRoutes from './facilityRoutes'
-// import hotelRoutes from './hotelRoutes'
+ import hotelRoutes from './hotelRoutes'
 // import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
 
@@ -73,11 +72,10 @@ const routes = [
       ...placeRoutes,
       ...profileRoutes,
       ...homeRoutes,
-      ...alojamientoRoutes,
       // ...experienceRoutes,
       // ...chatRoutes,
       // ...facilityRoutes,
-      // ...hotelRoutes,
+       ...hotelRoutes,
       // ...queryRoutes,
       ...policiesRoutes,
     ]

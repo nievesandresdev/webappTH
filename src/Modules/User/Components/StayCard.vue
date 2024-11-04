@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <button v-if="showButtonShared" @click.stop="isModalOpen()" class="absolute bottom-4 right-4 flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] shadow-md hshadow-button">
+            <button v-if="showButtonShared" @click.stop="isModalOpen()" class="absolute bottom-4 right-4 flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-h shadow-md hshadow-button">
                 <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6 p-0.5" alt="Arrow Icon" />
             </button>
         </template>

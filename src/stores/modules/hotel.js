@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive  } from 'vue'
 
 import {
     findByParamsApi,
@@ -14,6 +14,8 @@ import {
 
 export const useHotelStore = defineStore('hotel', () => {
     
+
+
     // STATE
     const hotelData = ref(null)
     const chatHours = ref(null)
@@ -41,7 +43,6 @@ export const useHotelStore = defineStore('hotel', () => {
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
-        console.log('test hotelData.value',hotelData.value)
         return response.data
     }
 
