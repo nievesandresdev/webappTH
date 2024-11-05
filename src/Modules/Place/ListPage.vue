@@ -10,8 +10,7 @@
     </AppHeader>
     <div class="mt-[148px] flex-1">
         <ListPageMapClusterPlace />
-        <ListPageBottomSheet />
-
+        <ListPageBottomSheet @changeCategory="changeCategoryHandle($event)"/>
     </div>
 </template>
 
@@ -87,9 +86,6 @@ const categoriPlaceSelected = computed(() => {
     return categoriplace;
 });
 
-// PROVIDE
-provide('hotelData', hotelData);
-
 // ONMOUNTED
 onMounted(async () => {
     await loadTypePlaces();
@@ -135,9 +131,14 @@ function loadTabsHeader () {
     });
 }
 
+function changeCategoryHandle ({idCategory, idTypePlace}) {
+    changeCategory(idCategory, idTypePlace);
+}
+
 function changeCategory (idCategory = null, idTypePlace = null) {
     formFilter.categoriplace = idCategory;
     formFilter.typeplace = idTypePlace;
+    loadCategoriPlaces();
     if(!formFilter.categoriplace) getFirstCategoryOfType();
     loadTabsHeader();
     submitFilter();
@@ -200,6 +201,11 @@ function validValueQuery (field, value) {
 
     return value;
 }
+
+// PROVIDE
+provide('hotelData', hotelData);
+provide('categoriplaces', categoriplaces);
+provide('formFilter', formFilter);
 
 
 </script>

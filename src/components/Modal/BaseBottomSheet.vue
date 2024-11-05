@@ -1,45 +1,56 @@
 <template>
-    <div v-if="open" class="relative">
-        <!-- Full-screen container to center the panel -->
-        <div 
-            class="fixed left-0 bottom-0 flex w-screen items-center justify-center z-[2500]" 
-            :class="openBottomSheet ? 'dialog-enter-active' : 'dialog-leave-active'"
-        >
-            <!-- The actual dialog panel -->
-            <div class="w-full  rounded-t-[20px] relative pb-14 bg-black">
-                <slot></slot>
+    <transition name="slide-fade">
+        <div v-if="open" class="relative" :class="classContainer">
+            <!-- Full-screen container to center the panel -->
+            <div 
+                class="fixed left-0 flex w-screen items-center justify-center z-[2500]" 
+                :style="{ bottom: positionBottom }"
+            >
+                <!-- The actual dialog panel -->
+                <div class="w-full  rounded-t-[20px] relative h-full bg-white">
+                    <slot></slot>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script setup>
 import { toRefs } from 'vue';
 const props = defineProps({
-    open: Boolean
+    open: Boolean,
+    positionBottom: {
+        type: String,
+        default: '0px',
+    },
+    classContainer: String,
 })
 
 const { open } = toRefs(props)
 
 </script>   
 <style scoped>
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+
+/* Transición para suavizar el cambio de bottom */
+.transition-bottom {
+    transition: bottom 0.3s ease-in-out;
 }
 
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+.slide-fade-enter-from, .slide-fade-leave-active {
+    transform: translateY(100%);
+    visibility: hidden;
 }
 
-.dialog-enter-active {
-    animation: fadeIn 0.5s ease;
+.slide-fade-enter-to, .slide-fade-leave-from {
+    transform: translateY(0);
+    visibility: visible;
 }
 
-.dialog-leave-active {
-    animation: fadeOut 0.5s ease;
+.slide-fade-enter-active, .slide-fade-leave-active {
+    transition: transform 0.3s ease, visibility 0.3s ease;
 }
+
+
 </style>
 
 

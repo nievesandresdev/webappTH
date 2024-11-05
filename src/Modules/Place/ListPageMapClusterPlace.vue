@@ -18,6 +18,7 @@
                     'icon-image': ['get', 'category'], // Usa la propiedad 'category' como id del icono
                     'icon-size': 1.5
                 }"
+                :unclustered-point-paint="null"
                 @mb-feature-click="clickPlace"
             />
         </template>
@@ -62,6 +63,42 @@ const dataMarkets = {
                 "category": "museos"
             }
         },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.992551, 37.386208] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Torre La Giralda",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "museos"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.97069, 37.384064] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Estadio Ramón Sánchez-Pizjuán",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "museos"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.98929, 37.394798] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Palacio de las Dueñas",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "monumentos"
+            }
+        },
     ]
 }
 
@@ -70,8 +107,8 @@ const coordCenter = computed(() => {
     return [Number(hotelData.longitude), Number(hotelData.latitude)];
 });
 
-function clickPlace () {
-    
+function clickPlace ($event) {
+    console.log($event);
 }
 
 </script>
