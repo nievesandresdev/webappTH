@@ -19,7 +19,7 @@
             </div>
             <div class="space-y-4 h-full flex flex-col">
                 <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
-                <p class="text-sm font-bold">{{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }}</p>
+                <p class="text-sm font-bold">{{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }} </p>
                 <ListPageBottomSheeList @loadMore="loadMoreHandle" />
             </div>
         </div>

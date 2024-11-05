@@ -25,6 +25,9 @@ const formFilter = inject('formFilter');
 // FUNCTION
 
 function changeCategory (idCategory = null, idTypePlace = null) {
+    if (formFilter.categoriplace) {
+        idCategory = null;
+    }
     emits('changeCategory', {idCategory, idTypePlace});
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full z-[3000] bg-white">
+    <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full z-[3000]">
         
         <div class="menu rounded-[20px] bg-white py-[10px] px-[16px] space-x-1 flex justify-around">
             <router-link
@@ -83,7 +83,7 @@ const itemMenuSelected = computed(() => {
 });
 
 onMounted(() => {
-    // chainStore.$getCustomatizacion(); 
+    chainStore.$getCustomatizacion(); 
 });
 
 const customizationData = computed(() => {

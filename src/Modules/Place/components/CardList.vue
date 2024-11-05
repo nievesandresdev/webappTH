@@ -1,9 +1,9 @@
 <template>
-    <div class="card-list flex w-full">
-        <div class="w-[111px] h-[96px] rounded-[10px] relative">
+    <div class="card-list flex w-full h-[96px]">
+        <div class="w-[111px] h-[96px] rounded-[10px] relative overflow-hidden">
             <img
                 v-if="data.place_images?.[0]?.url"
-                class="object-cover w-full h-full overflow-hidden rounded-t-lg"
+                class="object-cover w-full h-full"
                 :src="placeStore.$loadImage(data.place_images?.[0])"
                 alt="img_act"
                 loading="lazy"
@@ -14,7 +14,7 @@
             >
                 <div class="rounded-full px-[4px] py-[2px] flex space-x-1 bg-white flex items-center">
                     <img
-                        src="/assets/icons/WA.star.svg"
+                        src="/assets/icons/WA.STAR.BLACK.svg"
                         class="w-[12px] h-[12px]"
                     >
                     <span class="text-[10px] font-bold htext-black-100 leading-none">{{ $utils.capitalize($t('home.card-product.recommended')) }}</span>
@@ -25,7 +25,7 @@
             <div class="flex-1 truncate-2">
                 <div class="flex items-center space-x-2 mb-2">
                     <img
-                        src="/assets/icons/WA.star.svg"
+                        src="/assets/icons/WA.STAR.BLACK.svg"
                         class="w-[16px] h-[16px]"
                     >
                     <span class="text-base font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>

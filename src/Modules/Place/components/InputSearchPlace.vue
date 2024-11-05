@@ -13,8 +13,10 @@
             class="absolute left-3 top-[7.5px] w-6 h-6 z-10"
         >
         <input
+            v-model="search"
             type="text"
-            class="border hborder-black-100 rounded-[100px] h-[40px] w-full pl-11 text-sm font-medium"
+            class="hborder-black-100 rounded-[100px] h-[40px] w-full pl-11 text-sm font-medium"
+            :class="search ? 'border-[20px]' : 'border'"
         >
         <div class="absolute right-[16px] top-[7.5px] z-10 flex space-x-2">
             <button class="w-6 h-6">
@@ -38,6 +40,6 @@
 <script setup>
     import { ref } from 'vue';
 
-    const search = ref('d');
+    const search = ref('');
 
 </script>

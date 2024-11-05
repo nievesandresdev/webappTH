@@ -1,16 +1,19 @@
 <template>
-    <template v-if="!firstLoad && !placesData.length">
-    </template>
+
     <div
         id="list-place"
         class="w-full space-y-4 h-[327px] overflow-y-auto"
-        v-else
     >
-        <template v-for="item in placesData">
-            <CardList :data="item" />
+        <template v-if="!firstLoad && !placesData.length">
+
         </template>
-        <template v-for="card in numberCardsToLoad">
-            <SkeletonCard />
+        <template v-else>
+            <template v-for="item in placesData">
+                <CardList :data="item" />
+            </template>
+            <template v-for="card in numberCardsToLoad">
+                <SkeletonCard />
+            </template>
         </template>
     </div>
 </template>
