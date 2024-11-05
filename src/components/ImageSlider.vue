@@ -50,7 +50,6 @@ const $formatImage = (payload) => {
   return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
 }
 
-// Usamos computed para procesar las imágenes con $formatImage
 const formattedImages = computed(() => {
   return props.images.map(image => ({
     ...image,

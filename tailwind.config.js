@@ -12,6 +12,7 @@ module.exports = {
         // },
         colors: {
             black: '#333333',
+            inactive: '#777777',
         },
     },
     theme: {
