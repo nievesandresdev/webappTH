@@ -53,7 +53,7 @@
         gradients
     */
     .bg-gradient-100{
-        background-color: var(--surface-bg-gradient);
+        background: var(--surface-bg-gradient, linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%));
     }   
         
     /*

@@ -19,17 +19,13 @@
         />
 
         <!-- Sección "Mis estancias" -->
-        <div class="flex p-4 gap-[1px] w-full mt-4 rounded-[10px] border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] hshadow-button relative">
-            <div class="flex flex-col justify-start w-full">
-                <div class="flex items-center">
-                    <img src="/assets/icons/WA.stay.svg" class="w-6 h-6 mr-1" alt="Stay Icon" />
-                    <p class="text-[18px] font-bold lato text-[#333333]">Mis estancias</p>
-                </div>
-                <p class="text-[14px] font-medium lato text-[#333333]">Gestiona tus estancias</p>
-            </div>
-            <div class="flex">
-                <img @click="handleMyStays" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
-            </div>
+        <div class="mt-4">
+            <WACardBanner 
+                @click="handleMyStays"
+                title="Mis estancias"
+                :subtitle="isCheckoutPast ? 'Crea tu próxima estancia' : 'Gestiona tus estancias'"
+                :active-custom="isCheckoutPast"
+            />
         </div>
 
         <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
@@ -45,7 +41,7 @@
             </div>
             <img @click="handlePersonalInfo" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
-
+    
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
             <img src="/assets/icons/WA.logout.svg" class="w-4 h-4" alt="Logout Icon" />
@@ -94,25 +90,24 @@
 <script setup>
 import { ref, onMounted, computed,reactive } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
+import WACardBanner from '@/components/WACardBanner.vue';
 import BottomModal from './Components/BottomModal.vue';
 import StayCard from './Components/StayCard.vue';
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
+import { DateTime } from 'luxon';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
-
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
-
 import { useAuthStore } from '@/stores/modules/auth';
 const authStore = useAuthStore();
-
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
-
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+
 
 const isModalOpen = ref(false);
 
@@ -142,7 +137,11 @@ const openModalShared = () => {
 
 
 const handleMyStays = () => {
-    router.push({ name: 'MyStays' });
+    if(isCheckoutPast.value){
+        // router.push({ name: 'MyStays' });
+    }else{
+        router.push({ name: 'MyStays' });
+    }
 };
 
 const handlePersonalInfo = () => {
@@ -179,6 +178,12 @@ const getHotelbyId = async (id) => {
     loading.value = false;
     
 };
+
+const isCheckoutPast = computed(() => {
+  const inputDate = DateTime.fromFormat(stayStore.stayData.check_out, 'yyyy-MM-dd');
+  const now = DateTime.now();
+  return inputDate < now; // Retorna true si la fecha ya pasó
+});
 
 
 // URLs para compartir
