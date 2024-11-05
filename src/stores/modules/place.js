@@ -44,7 +44,6 @@ export const usePlaceStore = defineStore('place', () => {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
-        console.log(newParams, 'newParams');
         const response = await getAllApi(newParams)
         return response
     }

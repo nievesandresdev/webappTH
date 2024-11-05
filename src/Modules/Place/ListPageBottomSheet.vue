@@ -19,21 +19,23 @@
             </div>
             <div class="space-y-4 h-full flex flex-col">
                 <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
-                <p class="text-sm font-bold">0000 lugares encontrados</p>
-                <ListPageBottomSheeList />
+                <p class="text-sm font-bold">{{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }}</p>
+                <ListPageBottomSheeList @loadMore="loadMoreHandle" />
             </div>
         </div>
     </BaseBottomSheet>
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    import { ref, inject } from 'vue';
 
     import BaseBottomSheet from '@/components/Modal/BaseBottomSheet.vue';
     import ListPageBottomSheetCategory from './ListPageBottomSheetCategory.vue';
     import ListPageBottomSheeList from './ListPageBottomSheeList.vue';
 
     const emits = defineEmits(['changeCategory']);
+
+    const paginateData = inject('paginateData');
 
     const classControlsSheet = ref('0px');
 
@@ -43,5 +45,9 @@
 
     function minBottomSheet () {
         classControlsSheet.value = classControlsSheet.value == '0px' ? '-275px' : '0px';
+    }
+
+    function loadMoreHandle () {
+        emits('loadMore');
     }
 </script>

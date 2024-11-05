@@ -10,7 +10,10 @@
     </AppHeader>
     <div class="mt-[148px] flex-1">
         <ListPageMapClusterPlace />
-        <ListPageBottomSheet @changeCategory="changeCategoryHandle($event)"/>
+        <ListPageBottomSheet
+            @changeCategory="changeCategoryHandle($event)"
+            @loadMore="loadMore"
+        />
     </div>
 </template>
 
@@ -59,6 +62,11 @@ const dataFilter = {
     search:null,
     city: null,
 }
+
+const isloadingForm = ref(false);
+const page = ref(1);
+const placesData = ref([]);
+const countOtherCities = ref(null);
 const categoriplaces = ref([]);
 const typeplaces = ref([]);
 const formFilter = reactive(JSON.parse(JSON.stringify(dataFilter)));
@@ -90,7 +98,7 @@ const categoriPlaceSelected = computed(() => {
 onMounted(async () => {
     await loadTypePlaces();
     loadCategoriPlaces();
-    // loadPlaces();
+    loadPlaces();
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
@@ -103,9 +111,9 @@ async function loadTypePlaces () {
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
-        if (!formFilter.categoriplace) {
-            formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id;
-        }
+        // if (!formFilter.categoriplace) {
+        //     formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id;
+        // }
         loadTabsHeader();
     }
 }
@@ -139,7 +147,7 @@ function changeCategory (idCategory = null, idTypePlace = null) {
     formFilter.categoriplace = idCategory;
     formFilter.typeplace = idTypePlace;
     loadCategoriPlaces();
-    if(!formFilter.categoriplace) getFirstCategoryOfType();
+    // if(!formFilter.categoriplace) getFirstCategoryOfType();
     loadTabsHeader();
     submitFilter();
 }
@@ -151,15 +159,35 @@ const getFirstCategoryOfType = ()=> {
     }
 }
 
-function loadPlaces () {
-
+async function loadPlaces () {
+    isloadingForm.value = true;
+    let query = {...filterNonNullAndNonEmpty(formFilter)}
+    const response = await placeStore.$apiGetAll({page: page.value,...query});
+    if (response.ok) {
+        Object.assign(paginateData, response.data.places.paginate);
+        page.value = paginateData.current_page;
+        placesData.value = [...placesData.value, ...response.data.places.data];
+        countOtherCities.value = response.data.countOtherCities;
+    }
+    firstLoad.value = false;
+    isloadingForm.value = false;
+    // const cities = await cityStore.$getNearCitiesData()
+    // if(cities.ok){
+    //     nearCitiesData.value = cities.data;
+    // }
 }
 
+function loadMore () {
+    page.value += 1;
+    loadPlaces();
+}
+
+
 function submitFilter (){
-    // page.value = 1;
-    // placesData.value = [];
-    // loadPlaces();
-    route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} })
+    page.value = 1;
+    placesData.value = [];
+    loadPlaces();
+    route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
 }
 
 function filterNonNullAndNonEmpty(obj) {
@@ -202,10 +230,21 @@ function validValueQuery (field, value) {
     return value;
 }
 
+
+
 // PROVIDE
 provide('hotelData', hotelData);
 provide('categoriplaces', categoriplaces);
 provide('formFilter', formFilter);
+provide('paginateData', paginateData);
+provide('placesData', placesData);
+provide('isloadingForm', isloadingForm);
+
+
+// SKELETON
+const firstLoad = ref(true);
+
+provide('firstLoad', firstLoad);
 
 
 </script>

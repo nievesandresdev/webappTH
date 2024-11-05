@@ -255,3 +255,8 @@ button:focus {
 .lato{
   font-family: "Lato", sans-serif !important;
 }
+
+.item-skeletom {
+  background: #E6E6E6;
+  border-radius: 10px;
+}
