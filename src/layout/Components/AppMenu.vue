@@ -83,7 +83,7 @@ const itemMenuSelected = computed(() => {
 });
 
 onMounted(() => {
-    chainStore.$getCustomatizacion(); 
+    // chainStore.$getCustomatizacion(); 
 });
 
 const customizationData = computed(() => {

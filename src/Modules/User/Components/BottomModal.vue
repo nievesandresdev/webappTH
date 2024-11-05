@@ -1,18 +1,29 @@
 <template>
-    <!-- Fondo oscuro detrás del modal -->
-    <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end" @click.self="closeModal">
-        <!-- Contenedor del modal que aparece desde abajo -->
-        <div class="w-full py-3 px-4 rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA]" @click.stop>
-            <!-- Línea SVG centrada arriba del modal -->
-            <div class="flex justify-center mb-3">
+    <div v-if="isOpen || isClosing" class="fixed inset-0 flex items-end z-[2500]">
+        <div 
+            class="absolute inset-0 bg-black bg-opacity-50" 
+            @click.self="closeModal"
+        ></div>
+
+        <div 
+            class="relative w-full max-h-[80vh] overflow-y-auto py-3 px-4 rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6" 
+            :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
+            @click.stop
+        >
+            <!-- Área de cierre por deslizamiento (barra de agarre) -->
+            <div 
+                class="flex justify-center mb-3"
+                @touchstart="startTouch" 
+                @touchmove="moveTouch"
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="49" height="4" viewBox="0 0 49 4" fill="none">
                     <rect x="0.5" width="48" height="4" rx="2" fill="#777777"/>
                 </svg>
             </div>
-            <!-- Contenido dinámico del modal -->
+            
+            <!-- Contenido del modal -->
             <slot></slot>
 
-            <!-- Botón opcional al final del modal -->
             <button
                 v-if="showButton"
                 @click="handleSubmit"
@@ -25,6 +36,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
@@ -42,11 +54,33 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['update:isOpen','handleClick']);
+const emit = defineEmits(['update:isOpen', 'handleClick']);
 
-// Función para cerrar el modal
+const isClosing = ref(false);
+const touchStartY = ref(0); // Posición inicial del toque en el eje Y
+const touchCurrentY = ref(0); // Posición actual del toque en el eje Y
+
 const closeModal = () => {
-    emit('update:isOpen', false);
+    isClosing.value = true;
+    setTimeout(() => {
+        isClosing.value = false;
+        emit('update:isOpen', false);
+    }, 500);
+};
+
+// Detecta la posición Y cuando el usuario inicia el toque en el área de cierre
+const startTouch = (event) => {
+    touchStartY.value = event.touches[0].clientY;
+};
+
+// Detecta el deslizamiento hacia abajo en el área de cierre y cierra el modal si supera el umbral
+const moveTouch = (event) => {
+    touchCurrentY.value = event.touches[0].clientY;
+    const touchDifference = touchCurrentY.value - touchStartY.value;
+
+    if (touchDifference > 50) {
+        closeModal();
+    }
 };
 
 // Función para manejar la acción del botón
@@ -59,5 +93,26 @@ const handleSubmit = () => {
 <style scoped>
 .shadow-modal {
     box-shadow: 0px -4px 6px 0px rgba(0, 0, 0, 0.13);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(100%); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación de salida */
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(100%); }
+}
+
+.dialog-enter-active {
+    animation: fadeIn 0.5s ease;
+}
+
+.dialog-leave-active {
+    animation: fadeOut 0.5s ease;
+    animation-fill-mode: forwards; /* Mantiene el último estado de la animación */
 }
 </style>

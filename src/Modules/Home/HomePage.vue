@@ -1,6 +1,7 @@
 <template>
     <div class="h-screen bg-gray-600 w-full">
         new home page {{  String(formType == 'log') }} {{  String(!guestStore.guestData) }}
+        <!-- <pre>{{ hotelStore.hotelData }}</pre> -->
     </div>
     <ResetPasswordBottomSheet :open="formType == 'reset'"/>
     <RegisterOrLoginBottomSheet :open="formType == 'log' || !guestStore.guestData && formType !== 'reset'"/>
@@ -18,6 +19,8 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore();
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore();
 
 const props = defineProps({
     acform: {
