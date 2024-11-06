@@ -65,9 +65,31 @@
                 Compartir estancia
             </button>
             <!-- guests list  -->
-            <div class="mt-4 rounded-[20px] border border-color-secondary bg-gradient-100 p-4">
+            <div 
+                class="mt-4 rounded-[20px] border border-color-secondary bg-gradient-100 p-4"
+                v-for="(guest, index) in guestsList" :key="guest"
+            >
                 <div>
-                    <h5 class="lato text-base font-bold leading-[20px]">Huésped 1</h5>
+                    <div class="flex items-center">
+                        <h5 class="lato text-base font-bold leading-[20px] mr-auto">Huésped {{ index+1 }}</h5>
+                        <WATag title="check-in" />
+                        <img class="w-5 h-5 ml-2" src="/assets/icons/WA.kebab.svg">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex items-center gap-1">
+                            <img class="w-4 h-4" src="/assets/icons/WA.user.svg" alt="">
+                            <p class="lato text-sm font-bold">{{guest.name}}</p>
+                        </div>
+                        <div class="flex items-center gap-1 mt-2">
+                            <img class="w-4 h-4" src="/assets/icons/WA.mail.svg" alt="">
+                            <p class="lato text-sm font-bold">{{guest.email}}</p>
+                        </div>
+                    </div>
+                    <PrimaryButton 
+                        classes="block mt-6 h-10 text-center py-3 rounded-[10px] text-sm font-bold leading-[16px] w-full shadow-guest"
+                    >
+                        Completar check in
+                    </PrimaryButton> 
                 </div>
             </div>
         </div>
@@ -82,11 +104,14 @@ import THInputField from '@/components/THInputField.vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import SectionBar from '@/components/SectionBar.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import WATag from '@/components/WATag.vue';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
@@ -99,6 +124,7 @@ const props = defineProps({
 const { paramsRouter } = toRefs(props)
 
 const hotelNameAddress = ref(null)
+const guestsList = ref([])
 
 const form = reactive({
     checkDate: null,
@@ -107,10 +133,11 @@ const form = reactive({
     stayId: null
 })
 
-onMounted(() => {
+onMounted(async() => {
     hotelNameAddress.value =  `${hotelStore.hotelData.name} - ${hotelStore.hotelData.address}`
     fillForm()
-    console.log('test stayStore.stayData',stayStore.stayData)
+    guestsList.value = await stayStore.getGuestsAndSortByCurrentguestId(stayStore.stayData?.id,guestStore.guestData?.id)
+    console.log('test guestsList',guestsList.value)
 })
 
 const fillForm = () =>{

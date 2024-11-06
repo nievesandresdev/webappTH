@@ -12,12 +12,11 @@
         <!-- Contenedor de hotel y estancia boton compartir -->
         <StayCard 
             :hotel="hotelData" 
-            :stay="stayData" 
+            :stay="stayStore.stayData" 
             :showButtonShared="true"
             @sharedStay="openModalShared"
             :isLoading="loading"
         />
-
         <!-- Sección "Mis estancias" -->
         <div class="mt-4">
             <WACardBanner 
@@ -50,23 +49,23 @@
 
         <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
             <div class="flex flex-col items-start">
-                <div class="flex items-center gap-2 mb-4 lato">
+                <div @click="addNumberGuest" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
                     <p class="text-[20px] font-bold text-[#333333] lato">Compartir estancia</p>
                 </div>
-                <a :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+                <a @click="addNumberGuest" :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/WA.Whatsapp.svg" class="w-6 h-6" alt="Whatsapp Icon" />
                     <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Whatsapp</p>
                 </a>
-                <a :href="mailtoShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+                <a @click="addNumberGuest" :href="mailtoShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/WA.mail.svg" class="w-6 h-6" alt="Email Icon" />
                     <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Email</p>
                 </a>
-                <a :href="smsShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+                <a @click="addNumberGuest" :href="smsShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/WA.SMS.svg" class="w-6 h-6" alt="SMS Icon" />
                     <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía SMS</p>
                 </a>
-                <a :href="telegramShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
+                <a @click="addNumberGuest" :href="telegramShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
                     <img src="/assets/icons/WA.Telegram.svg" class="w-6 h-6" alt="Telegram Icon" />
                     <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Telegram</p>
                 </a>
@@ -152,7 +151,7 @@ onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
     //console.log('home guest', guestData.id);
 
-    stayData.value = stayStore.getLocalStay();
+    stayData.value = stayStore.stayData;
     //console.log('home stay', stay);
 
     console.log({
@@ -176,11 +175,18 @@ const getHotelbyId = async (id) => {
     // }
 
     loading.value = false;
-    
+  
+};
+
+const addNumberGuest = async (id) => {
+    let num = Number(stayStore.stayData.number_guests) + 1;
+    let params = { stayId: stayStore.stayData.id, numberGuests: num}
+    let response = await stayStore.updateStayAndGuests(params)
 };
 
 const isCheckoutPast = computed(() => {
-  const inputDate = DateTime.fromFormat(stayStore.stayData.check_out, 'yyyy-MM-dd');
+if(!stayStore.stayData?.check_out) return
+  const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
   const now = DateTime.now();
   return inputDate < now; // Retorna true si la fecha ya pasó
 });
