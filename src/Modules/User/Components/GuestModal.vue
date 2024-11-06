@@ -19,7 +19,10 @@
                     Compartir estancia nuevamente
                 </PrimaryButton> 
                 
-                <button class="flex items-center mt-6 justify-end w-full underline lato text-sm font-bold">
+                <button 
+                    class="flex items-center mt-6 justify-end w-full underline lato text-sm font-bold"
+                    v-if="stayStore.stayData.guestIdCreator == guestStore.guestData.id"
+                >
                     <img class="w-4 h-4 mr-2" src="/assets/icons/WA.delete.svg">
                     Eliminar huésped de la estancia
                 </button>
@@ -37,6 +40,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
