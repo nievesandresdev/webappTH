@@ -16,7 +16,7 @@
 <script setup>
 import { toRefs } from 'vue';
 const props = defineProps({
-    openBottomSheet: Boolean
+    openBottomSheet: Boolean,
 })
 
 const { openBottomSheet } = toRefs(props)

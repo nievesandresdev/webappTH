@@ -7,28 +7,18 @@ import isMobile from '@/middlewares/isMobile'
 
 const homeRoutes = [
   {
-    path: '/sobre-nosotros',
+    path: 'alojamiento',
     component: AppLayout,
-    meta: {
-      verifyHotel: true,
-      middleware: [
-        isMobile
-     ]
-    },
     children: [
       {
-        name: 'HotelAbout',
         path: '',
-        component: window.innerWidth < 767 ? MobilePage : DesktopPage,
-        props: (route) => ({ paramsRouter: {...route.params} })
+        name: 'ShowHotel',
+        component: ShowHotel,
       },
     ],
   },
-  {
-    path: 'alojamiento',
-    name: 'ShowHotel',
-    component: ShowHotel,
-  },
+  
+  
 
 ];
 

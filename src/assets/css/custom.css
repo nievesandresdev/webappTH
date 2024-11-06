@@ -256,6 +256,10 @@ button:focus {
   font-family: "Lato", sans-serif !important;
 }
 
+.item-skeletom {
+  background: #E6E6E6;
+  border-radius: 10px;
+}
 .bg-gradient-h {
   background: linear-gradient(105deg, #F3F3F3, #FAFAFA);
 }

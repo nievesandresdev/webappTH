@@ -106,7 +106,7 @@
   
     
   
-    <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+    <!-- <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div> -->
   
   </template>
   
@@ -127,7 +127,7 @@
   
   const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-      alert("Texto copiado");
+      console.log("Texto copiado");
     }).catch(err => {
       console.error("Error al copiar el texto: ", err);
     });

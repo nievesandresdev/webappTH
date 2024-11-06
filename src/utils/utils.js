@@ -113,6 +113,38 @@ const formatTypeLodging = (valueType) => {
     return typeLodging?.[valueType] ?? null;
   }
 
+  function $throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function() {
+        const context = this;
+        const args = arguments;
+        if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+        } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function() {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, limit - (Date.now() - lastRan));
+        }
+    }
+  }
+  
+  function $isElementVisible(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
 module.exports = {
     slufy,
     formatPrice,
@@ -124,5 +156,7 @@ module.exports = {
     transformDuration,
     saveHotelSlug,
     getUrlParam,
-    formatTypeLodging
+    formatTypeLodging,
+    $throttle,
+    $isElementVisible,
 }

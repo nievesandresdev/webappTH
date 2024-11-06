@@ -1,7 +1,7 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full">
+    <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full z-[3000]">
         
-        <div class="menu rounded-[20px] bg-black-100 py-[10px] px-[16px] space-x-1 flex justify-around">
+        <div class="menu rounded-[20px] bg-white py-[10px] px-[16px] space-x-1 flex justify-around">
             <router-link
                 v-for="item in menuItems" class="menu__item py-[10px] w-[60px] h-[60px] space-y-1 text-center"
                 :to="item.to"
@@ -49,7 +49,7 @@ const menuItems = reactive([
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: '/',
-        routeNameIncludes: [],
+        routeNameIncludes: ['ShowHotel'],
     },
     {
         title: 'Destino',
@@ -83,7 +83,7 @@ const itemMenuSelected = computed(() => {
 });
 
 onMounted(() => {
-    // chainStore.$getCustomatizacion(); 
+    chainStore.$getCustomatizacion(); 
 });
 
 const customizationData = computed(() => {
