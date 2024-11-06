@@ -1,10 +1,18 @@
 <template>
-    <div :class="classContainer">
+    <div :class="[classContainer]">
         <button 
-            :class="[classes, bgButton, conditionClases]"
+            :class="[classes, bgButton, conditionClases,{'flex items-center gap-2 justify-center': nameIconLeft}]"
             :disabled="isDisabled"
             @click="handleClick"
         >
+            <IconCustomColor 
+                width="20"
+                height="20"
+                v-if="nameIconLeft"
+                :name="nameIconLeft" 
+                :color="chainStore.customizationData?.colors[0].contrast_color" 
+                only-change-background 
+            />
             <slot></slot>
         </button>
     </div>
@@ -13,6 +21,9 @@
 <script setup>
 import { computed, toRefs } from 'vue'
 import { defineProps, defineEmits } from 'vue'
+//
+import IconCustomColor from '..//IconCustomColor.vue';
+//
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 
@@ -32,6 +43,10 @@ const props = defineProps({
     disabled: {
         type: Boolean,
         default: false
+    },
+    nameIconLeft: {
+        type: String,
+        default: null
     },
 });
 

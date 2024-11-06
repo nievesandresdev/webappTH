@@ -14,7 +14,7 @@
             :hotel="hotelData" 
             :stay="stayStore.stayData" 
             :showButtonShared="true"
-            @sharedStay="openModalShared"
+            @sharedStay="isModalOpen = true"
             :isLoading="loading"
         />
         <!-- Sección "Mis estancias" -->
@@ -47,57 +47,19 @@
             <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">Cerrar sesión</span>
         </div>
 
-        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
-            <div class="flex flex-col items-start">
-                <div @click="addNumberGuest" class="flex items-center gap-2 mb-4 lato">
-                    <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
-                    <p class="text-[20px] font-bold text-[#333333] lato">Compartir estancia</p>
-                </div>
-                <a @click="addNumberGuest" :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-                    <img src="/assets/icons/WA.Whatsapp.svg" class="w-6 h-6" alt="Whatsapp Icon" />
-                    <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Whatsapp</p>
-                </a>
-                <a @click="addNumberGuest" :href="mailtoShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-                    <img src="/assets/icons/WA.mail.svg" class="w-6 h-6" alt="Email Icon" />
-                    <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Email</p>
-                </a>
-                <a @click="addNumberGuest" :href="smsShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-                    <img src="/assets/icons/WA.SMS.svg" class="w-6 h-6" alt="SMS Icon" />
-                    <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía SMS</p>
-                </a>
-                <a @click="addNumberGuest" :href="telegramShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-                    <img src="/assets/icons/WA.Telegram.svg" class="w-6 h-6" alt="Telegram Icon" />
-                    <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Telegram</p>
-                </a>
-                <p class="text-[14px] font-bold lato text-[#333333]">Link para compartir la estancia</p>
-                <div class="relative mt-1 w-full">
-                    <input
-                        ref="shareLinkInput"
-                        type="text"
-                        disabled
-                        :value="shareUrl"
-                        class="w-full py-2 pl-4 pr-10 text-[14px] font-medium lato text-[rgba(51,51,51,0.25)] rounded-[10px] border border-[rgba(51, 51, 51, 0.25)] bg-[rgba(250, 250, 250, 0.50)] truncate"
-                    />
-                    <button @click="copyToClipboard" class="absolute right-2 top-1/2 transform -translate-y-1/2">
-                        <img src="/assets/icons/WA.copy.svg" class="w-5 h-5" alt="Copy Icon" />
-                    </button>
-                </div>
-            </div>
-        </BottomModal>
+        <ShareStayModal />
     </div>
 </template>
 <script setup>
-import { ref, onMounted, computed,reactive } from 'vue';
+import { ref, onMounted, computed, provide } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import WACardBanner from '@/components/WACardBanner.vue';
-import BottomModal from './Components/BottomModal.vue';
+import ShareStayModal from './Components/ShareStayModal.vue'
 import StayCard from './Components/StayCard.vue';
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
 import { DateTime } from 'luxon';
 
-import { handleToast } from "@/composables/useToast"; 
-const { toastSuccess } = handleToast();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useAuthStore } from '@/stores/modules/auth';
@@ -116,23 +78,6 @@ const hotelData = ref({});
 const stayData = ref({});
 const loading = ref(true);
 
-// Referencia al input para copiar el link
-const shareLinkInput = ref(null);
-
-// Función para copiar el link 
-const copyToClipboard = () => {
-    if (shareLinkInput.value) {
-        navigator.clipboard.writeText(shareLinkInput.value.value).then(() => {
-            toastSuccess("Enlace copiado");
-        }, 2000);
-
-        //isModalOpen.value = false;
-    }
-};
-
-const openModalShared = () => {
-    isModalOpen.value = true;
-};
 
 
 const handleMyStays = () => {
@@ -154,13 +99,12 @@ onMounted(async() => {
     stayData.value = stayStore.stayData;
     //console.log('home stay', stay);
 
-    console.log({
-        stayData: stayData.value,
-        guestData: guestData.value
-    })
+    // console.log({
+    //     stayData: stayData.value,
+    //     guestData: guestData.value
+    // })
 
     await getHotelbyId(stayData.value.hotel_id);
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
 });
 
 
@@ -178,11 +122,7 @@ const getHotelbyId = async (id) => {
   
 };
 
-const addNumberGuest = async (id) => {
-    let num = Number(stayStore.stayData.number_guests) + 1;
-    let params = { stayId: stayStore.stayData.id, numberGuests: num}
-    let response = await stayStore.updateStayAndGuests(params)
-};
+
 
 const isCheckoutPast = computed(() => {
 if(!stayStore.stayData?.check_out) return
@@ -190,18 +130,6 @@ if(!stayStore.stayData?.check_out) return
   const now = DateTime.now();
   return inputDate < now; // Retorna true si la fecha ya pasó
 });
-
-
-// URLs para compartir
-const shareUrl = ref(null);
-
-// Definimos shareMessage como un valor computed para que tome hotelData.name cuando esté disponible
-const shareMessage = computed(() => `¡Únete a nuestra estancia en ${hotelData.value.name}!\n\n${shareUrl.value}`);
-
-const whatsappShareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(shareMessage.value)}`);
-const mailtoShareUrl = computed(() => `mailto:?subject=Únete a nuestra estancia&body=${encodeURIComponent(shareMessage.value)}`);
-const smsShareUrl = computed(() => `sms:?&body=${encodeURIComponent(shareMessage.value)}`);
-const telegramShareUrl = computed(() => `https://t.me/share/url?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(`¡Únete a nuestra estancia en ${hotelData.value.name}!`)}`);
 
 
 const handleLogoutGuest = () => {
@@ -229,7 +157,7 @@ const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avata
 
 
 
-
+provide('isModalOpen',isModalOpen)
 </script>
 
 <style scoped>
