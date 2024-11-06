@@ -49,7 +49,7 @@ const menuItems = reactive([
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: '/',
-        routeNameIncludes: [],
+        routeNameIncludes: ['ShowHotel'],
     },
     {
         title: 'Destino',

@@ -5,7 +5,7 @@ import profileRoutes from './userRoutes'
 // import experienceRoutes from './experienceRoutes'
 import placeRoutes from './placeRoutes'
 // import chatRoutes from './chatRoutes'
-// import facilityRoutes from './facilityRoutes'
+import facilityRoutes from './facilityRoutes'
  import hotelRoutes from './hotelRoutes'
 // import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
@@ -74,7 +74,7 @@ const routes = [
       ...homeRoutes,
       // ...experienceRoutes,
       // ...chatRoutes,
-      // ...facilityRoutes,
+       ...facilityRoutes,
        ...hotelRoutes,
       // ...queryRoutes,
       ...policiesRoutes,

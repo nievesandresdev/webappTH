@@ -3,7 +3,7 @@
     title="Hotel" 
     :tabs="[
       { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
-      { name: 'Instalaciones', routeName: 'HotelFacilities', icon: '/assets/icons/WA.Instalaciones.svg' }
+      { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
   />
   <div class="bg-[#FAFAFA] mt-[140px]">
