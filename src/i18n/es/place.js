@@ -5,6 +5,8 @@ export default {
     "list-page": {
         "title": "Explora en",
         "text-count-list": "{count} lugares encontradas",
+        "text-count-list-search": "0 lugares encontrados para",
+        "text-search-not-found": "Ajusta tu búsqueda o intenta en otra categoría",
         "btn-load-more": "Cargar más"
         // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
     },

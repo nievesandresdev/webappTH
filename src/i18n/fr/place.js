@@ -5,6 +5,8 @@ export default {
     "list-page": {
         "title": "Explorer dans",
         "text-count-list": "{count} lieux trouvés",
+        "text-count-list-search": "0 lieux trouvés pour",
+        "text-search-not-found": "Affinez votre recherche ou essayez une autre catégorie",
         "btn-load-more": "Charger plus"
     },
     "results":'Sans résultats...',

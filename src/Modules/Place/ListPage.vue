@@ -5,7 +5,9 @@
         fixed
     >
         <template v-slot:titleOrSearch>
-            <InputSearchPlace />
+            <InputSearchPlace
+                @search="searchHandle"
+            />
         </template>
     </AppHeader>
     <div class="mt-[148px] flex-1">
@@ -182,6 +184,12 @@ function loadMore () {
     loadPlaces();
 }
 
+function searchHandle ($event) {
+    formFilter.search = $event?.target?.value;
+    page.value = 1;
+    placesData.value = [];
+    loadPlaces();
+}
 
 function submitFilter (){
     page.value = 1;

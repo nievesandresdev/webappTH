@@ -19,7 +19,21 @@
             </div>
             <div class="space-y-4 h-full flex flex-col">
                 <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
-                <p class="text-sm font-bold">{{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }} </p>
+                <p
+                    v-if="!isloadingForm"
+                    class="text-sm font-bold"
+                >
+                    <template v-if="formFilter.search">
+                        {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }}
+                    </template>
+                    <template v-else>
+                        {{ $t('place.list-page.text-count-list-search') }}
+                    </template>
+                </p>
+                <p
+                    v-else
+                    class="item-skeletom animate-pulse h-[14px] w-[120px]"
+                />
                 <ListPageBottomSheeList @loadMore="loadMoreHandle" />
             </div>
         </div>
@@ -35,6 +49,8 @@
 
     const emits = defineEmits(['changeCategory']);
 
+    const formFilter = inject('formFilter');
+    const isloadingForm = inject('isloadingForm');
     const paginateData = inject('paginateData');
 
     const classControlsSheet = ref('0px');
