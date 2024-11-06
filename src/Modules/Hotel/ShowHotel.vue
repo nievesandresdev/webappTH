@@ -53,7 +53,7 @@
       <div class="flex items-center gap-4 mb-4">
         <p class="text-[16px] font-bold text-[#333333] lato">Instalaciones</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-        <span class="underline lato text-sm font-bold">Ver todo</span>
+        <span @click="goToFacilities()" class="underline lato text-sm font-bold">Ver todo</span>
       </div>
 
       <!-- Carrusel de Cards -->
@@ -158,6 +158,7 @@ import { useHotelStore } from '@/stores/modules/hotel'
 import { computed, ref, onMounted } from 'vue'
 import { useShareStay } from '@/composables/useShareStay'
 import SectionBarTab from '@/components/SectionBarTab.vue';
+import router from '@/router'
 
 const hotelStore = useHotelStore()
 const hotelData = computed(() => hotelStore.hotelData)
@@ -199,6 +200,10 @@ onMounted(async() => {
 
   facilities.value =  r.crosselling_facilities;
 })
+
+const goToFacilities = () => {
+  router.push({ name: 'FacilityList' })
+}
 </script>
 
 <style scoped>

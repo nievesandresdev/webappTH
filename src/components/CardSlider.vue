@@ -49,7 +49,6 @@ const restoreScrollPosition = () => {
 
 onMounted(() => {
   restoreScrollPosition();
-  console.log(props.data);
 });
 
 const $formatImage = (payload) => {
