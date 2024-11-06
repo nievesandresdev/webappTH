@@ -23,11 +23,28 @@
                     v-if="!isloadingForm"
                     class="text-sm font-bold"
                 >
-                    <template v-if="formFilter.search">
-                        {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }) }}
+                    <template v-if="!searchingActive">
+                        <template v-if="!formFilter.search && paginateData.total">
+                            {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }  ) }}
+                        </template>
+                        <template v-else-if="formFilter.search">
+                            {{ `${$t('place.list-page.text-count-list-search',  { count: paginateData.total  })}: "${formFilter.search}"` }}
+                        </template>
                     </template>
                     <template v-else>
-                        {{ $t('place.list-page.text-count-list-search') }}
+                        <button
+                            class="flex items-center space-x-2"
+                            @click="closeSearch"
+                        >
+                            <img
+                                src="/assets/icons/WA.search.svg"
+                                class="size-[16px]"
+                                alt=""
+                            >
+                            <p class="text-sm font-bold border border-b-black">
+                                {{ `${$t('place.list-page.text-count-list-search-active')}: "${formFilter.search}"` }}
+                            </p>
+                        </button>
                     </template>
                 </p>
                 <p
@@ -47,11 +64,12 @@
     import ListPageBottomSheetCategory from './ListPageBottomSheetCategory.vue';
     import ListPageBottomSheeList from './ListPageBottomSheeList.vue';
 
-    const emits = defineEmits(['changeCategory']);
+    const emits = defineEmits(['changeCategory', 'closeSearch']);
 
     const formFilter = inject('formFilter');
     const isloadingForm = inject('isloadingForm');
     const paginateData = inject('paginateData');
+    const searchingActive = inject('searchingActive');
 
     const classControlsSheet = ref('0px');
 
@@ -65,5 +83,9 @@
 
     function loadMoreHandle () {
         emits('loadMore');
+    }
+    
+    function closeSearch () {
+        emits('closeSearch');
     }
 </script>

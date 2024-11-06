@@ -4,8 +4,8 @@
         id="list-place"
         class="w-full space-y-4 h-[327px] overflow-y-auto"
     >
-        <template v-if="!firstLoad && !placesData.length">
-
+        <template v-if="!isloadingForm && !placesData.length">
+            <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>
             <template v-for="item in placesData">
@@ -23,6 +23,7 @@
 
     import CardList from './components/CardList.vue';
     import SkeletonCard from './components/SkeletonCard.vue';
+    import ListPageBottomSheeListNotFound from './ListPageBottomSheeListNotFound.vue';
 
     const emits = defineEmits(['loadMore']);
     

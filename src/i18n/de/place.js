@@ -5,7 +5,8 @@ export default {
     "list-page": {
         "title": "Erkunden in",
         "text-count-list": "{count} Orte gefunden",
-        "text-count-list-search": "0 Orte gefunden für",
+        "text-count-list-search-active": "Alle Orte durchsuchen nach",
+        "text-count-list-search": "{count} Orte gefunden für",
         "text-search-not-found": "Verfeinern Sie Ihre Suche oder versuchen Sie es mit einer anderen Kategorie",
         "btn-load-more": "Mehr laden"
     },
