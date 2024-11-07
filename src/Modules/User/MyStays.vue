@@ -1,5 +1,5 @@
 <template>
-    <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" />
+    <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" @onClickButton="createStay"/>
     <div class="px-3 pb-10">
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
@@ -91,6 +91,9 @@ const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
 
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore();
+
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 
@@ -147,6 +150,10 @@ const getHotelbyId = async (id) => {
 function handleMyStays(data) {
     dataModalStay.value = data;
     isModalOpen.value = true;
+}
+
+function createStay() {
+    authStore.$logoutAndCreateStay();
 }
 
 const AccessToStay = async () => {

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { navigateTo } from '@/utils/navigation'
+import router from '@/router'
 import { 
     findByEmailApi
 } from '@/api/services/guest.services';
@@ -14,6 +15,7 @@ import {
 
 import { useGuestStore } from '@/stores/modules/guest';
 import { useStayStore } from '@/stores/modules/stay';
+import { useChainStore } from '@/stores/modules/chain';
 
 
 
@@ -21,6 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
     
     const guestStore = useGuestStore()
     const stayStore = useStayStore()
+    const chainStore = useChainStore()
     // STATE
 
     // ACTIONS
@@ -61,7 +64,20 @@ export const useAuthStore = defineStore('auth', () => {
         return response.ok ? response.data : null;
     }
 
-    async function $logout (token, newPassword) {
+    async function $logoutAndCreateStay () {
+
+        stayStore.deleteLocalStayData()
+        const chainType = chainStore?.chainData?.type;
+        // Determinar la ruta de redirección basada en el tipo de cadena
+        if(chainType === 'INDEPENDENT'){
+            navigateTo('Home',{},{ acform : 'createstay' })
+        }else{
+            router.push({ name:'HotelsList' })
+        }
+        
+    }
+
+    async function $logout () {
         stayStore.deleteLocalStayData()
         guestStore.deleteLocalGuest()
         navigateTo('Home')
@@ -74,7 +90,8 @@ export const useAuthStore = defineStore('auth', () => {
         $sendPasswordAndLogin,
         $sendResetLinkEmail,
         $resetPassword,
-        $logout
+        $logout,
+        $logoutAndCreateStay
     }
 
 })
