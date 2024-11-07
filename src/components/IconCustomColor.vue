@@ -24,6 +24,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    width: {
+      type: [String, Number],
+      default: '',
+    },
+    height: {
+      type: [String, Number],
+      default: '',
+    },
   },
   data() {
     return {
@@ -33,12 +41,21 @@ export default {
   async mounted() {
     try {
       const response = await axios.get(`/assets/icons/${this.name}.svg`);
+      let svgContent = response.data;
+
+      // Reemplazar los atributos de tamaño
+      svgContent = svgContent
+        .replace(/width="[^"]*"/g, `width="${this.width}"`)
+        .replace(/height="[^"]*"/g, `height="${this.height}"`);
+
+      // Reemplazar el color
       if (this.onlyChangeBackground) {
-        this.svgContent = response.data.replace(/fill="#333333"/g, `fill="${this.color}"`);
-        // this.svgContent = response.data.replace(/fill="#333333"/g, `fill="${this.color}"`);
+        svgContent = svgContent.replace(/fill="#333333"/g, `fill="${this.color}"`);
       } else {
-        this.svgContent = response.data.replace(/fill="[^"]*"/g, `fill="${this.color}"`);
+        svgContent = svgContent.replace(/fill="[^"]*"/g, `fill="${this.color}"`);
       }
+
+      this.svgContent = svgContent;
     } catch (error) {
       console.error(`Error loading SVG icon: ${error}`);
     }
@@ -48,8 +65,10 @@ export default {
 
 <style scoped>
 .svg-icon svg {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   fill: currentColor;
 }
 </style>

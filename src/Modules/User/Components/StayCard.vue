@@ -26,7 +26,7 @@
             <div>
                 <div class="flex justify-between">
                     <!-- Nombre del hotel -->
-                    <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelName ? stay.hotel_name : hotel.name }} {{ stay.stayId}}</p>
+                    <p class="text-[16px] font-bold lato text-[#333333] mb-3">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
                         <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">Activo</span>
@@ -43,11 +43,11 @@
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                        <span class="lato">{{ stay.rooms ?? '-' }}</span>
+                        <span class="lato">{{ stay?.rooms ?? '-' }}</span>
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
-                        <span class="lato">{{ stay.number_guests }}</span>
+                        <span class="lato">{{ stay?.number_guests }}</span>
                     </div>
                 </div>
             </div>
@@ -94,8 +94,8 @@ const props = defineProps({
 });
 
 const formattedDates = computed(() => {
-    const checkInDate = formatDate(props.stay.check_in);
-    const checkOutDate = formatDate(props.stay.check_out);
+    const checkInDate = formatDate(props.stay?.check_in);
+    const checkOutDate = formatDate(props.stay?.check_out);
     return `${checkInDate} - ${checkOutDate}`;
 });
 
@@ -112,16 +112,16 @@ const isModalOpen = () => {
 function handleStayClick() {
     console.log('propsmy', props);
     const data = {
-        hotel_name: props.hotelName ? props.stay.hotel_name : props.hotel.name,
-        hotel_name: props.hotelName ? props.stay.hotel_name : props.hotel.name,
-        hotelSubdomain: props.stay.hotel_subdomain,
-        hotelId: props.stay.hotel_id,
-        zone:  props.hotelName ? props.stay.hotel_zone : props.hotel.zone ,
-        stayId: props.stay.stayId,
-        check_in: props.stay.check_in,
-        check_out: props.stay.check_out,
-        rooms: props.stay.rooms ?? '-',
-        guests: props.stay.number_guests ?? '-',
+        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,
+        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,
+        hotelSubdomain: props.stay?.hotel_subdomain,
+        hotelId: props.stay?.hotel_id,
+        zone:  props.hotelName ? props.stay?.hotel_zone : props.hotel.zone ,
+        stayId: props.stay?.stayId,
+        check_in: props.stay?.check_in,
+        check_out: props.stay?.check_out,
+        rooms: props.stay?.rooms ?? '-',
+        guests: props.stay?.number_guests ?? '-',
         formatted_dates: formattedDates.value,
     };
     emit('stayClick', data);
