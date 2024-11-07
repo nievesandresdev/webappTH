@@ -44,13 +44,11 @@ export const usePlaceStore = defineStore('place', () => {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
-        console.log(newParams, 'newParams');
         const response = await getAllApi(newParams)
         return response
     }
     async function $apiGetCategoriesByType (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
-        console.log(hotelStore?.hotelData, 'apiGetCategoriesByType');
         let newParams = {
             hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
             hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],

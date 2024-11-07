@@ -164,7 +164,6 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
-        console.log('dddd');
         // console.log('mobileList',mobileList.value)
     })
 
@@ -210,7 +209,6 @@
 
     async function loadCategoriPlaces () {
         const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true})
-        console.log(response, 'loadCategoriPlaces')
         if (response.ok) {
             categoriplaces.value = response.data
         }
