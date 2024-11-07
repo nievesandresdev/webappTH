@@ -22,6 +22,7 @@
                 <button 
                     class="flex items-center mt-6 justify-end w-full underline lato text-sm font-bold"
                     v-if="stayStore.stayData.guestIdCreator == guestStore.guestData.id"
+                    @click="deleteGuestOfStay"
                 >
                     <img class="w-4 h-4 mr-2" src="/assets/icons/WA.delete.svg">
                     Eliminar huésped de la estancia
@@ -45,7 +46,7 @@ const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
-const emit = defineEmits(['ShareModalOpen'])
+const emit = defineEmits(['ShareModalOpen','reloadGuestsList'])
 
 const isGuestModalOpen = inject('isGuestModalOpen');
 const guestSelected = inject('guestSelected');
@@ -61,9 +62,21 @@ onMounted(async() => {
 })
 
 
+const deleteGuestOfStay = async () => {
+    let response = await guestStore.deleteGuestOfStay(guestSelected.value.id);
+    if(response){
+        closeModal();
+        emit('reloadGuestsList')
+        setTimeout(() => {
+            toastSuccess("Huesped eliminado");
+        }, 500);
+    }
+};
+
 const closeModal = (e) => {
     isGuestModalOpen.value = false;
 };
+
 
 const closeAndShare = (e) => {
     console.log('test closeAndShare')

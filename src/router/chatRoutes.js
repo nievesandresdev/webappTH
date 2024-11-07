@@ -6,7 +6,7 @@ import isMobile from '@/middlewares/isMobile'
 
 const chatRoutes = [
   {
-    path: '/mobile-chat',
+    path: 'mobile-chat',
     // component: AppLayout,
     meta: {
       verifyHotel: true,

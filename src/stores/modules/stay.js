@@ -154,6 +154,17 @@ export const useStayStore = defineStore('stay', () => {
         }
     }
 
+    async function reloadLocalStay () {    
+        
+        const response = await findbyIdApi(stayData.value.id)
+        const { ok } = response   
+        stayData.value = ok ? response.data : null;
+        if(stayData){
+            localStorage.setItem('stayId', stayData.value.id)
+            localStorage.setItem('stayData', JSON.stringify(stayData.value))
+        }
+    }
+
     // GETTERS
     const stayDataComputed = computed(() => {
         if(stayData.value){
@@ -176,7 +187,8 @@ export const useStayStore = defineStore('stay', () => {
         getLocalStay,
         existsAndValidate,
         deleteLocalStayData,
-        findByIdInSetLocalStay
+        findByIdInSetLocalStay,
+        reloadLocalStay
     }
 
 })

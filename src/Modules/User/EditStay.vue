@@ -112,7 +112,7 @@
         <ShareStayModal />
 
     </div>
-    <GuestModal @ShareModalOpen="isModalOpen= true"/>
+    <GuestModal @ShareModalOpen="isModalOpen= true" @reloadGuestsList="reloadGuestsList"/>
 </template>
 <script setup>
 import { toRefs, ref, reactive, onMounted, computed, provide } from 'vue'
@@ -159,8 +159,7 @@ const form = reactive({
 onMounted(async() => {
     hotelNameAddress.value =  `${hotelStore.hotelData.name} - ${hotelStore.hotelData.address}`
     fillForm()
-    guestsList.value = await stayStore.getGuestsAndSortByCurrentguestId(paramsRouter.value.stayId,guestStore.guestData?.id)
-    console.log('test guestsList',guestsList.value)
+    await reloadGuestsList()
 })
 
 provide('isModalOpen',isModalOpen)
@@ -177,6 +176,13 @@ const fillForm = () =>{
     form.middle_reservation = stayStore.stayData?.middle_reservation;
     form.room = stayStore.stayData?.room;
 }
+
+const reloadGuestsList = async () =>{
+    guestsList.value = await stayStore.getGuestsAndSortByCurrentguestId(paramsRouter.value.stayId,guestStore.guestData?.id)
+    console.log('test guestsList',guestsList.value)
+}
+
+
 
 const openGuestModal = (guest, index)=>{
     isGuestModalOpen.value = true
