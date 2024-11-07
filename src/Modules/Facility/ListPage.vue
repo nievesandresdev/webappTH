@@ -1,10 +1,11 @@
 <template>
   <SectionBarTab 
-    title="Hotel" 
+    title="Instalaciones" 
     :tabs="[ 
       { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
+    :hotel="hotelData"
   />
   <div class="bg-[#FAFAFA] mb-[100px]">
     <div class="px-4 space-y-4 mt-[168px] ">
@@ -28,12 +29,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,computed } from 'vue';
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
 
 const hotelStore = useHotelStore();
 const facilities = ref([]);
+
+const hotelData = computed(() => hotelStore.hotelData)
 
 const $formatImage = (payload) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
