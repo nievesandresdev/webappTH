@@ -51,6 +51,8 @@ export const usePlaceStore = defineStore('place', () => {
     async function $apiGetCategoriesByType (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
@@ -60,6 +62,8 @@ export const usePlaceStore = defineStore('place', () => {
     async function $apiGetTypePlaces (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
