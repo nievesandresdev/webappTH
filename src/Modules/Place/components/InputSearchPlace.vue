@@ -19,9 +19,11 @@
         <input
             v-model="valueSearch"
             type="text"
-            class="hborder-black-100 rounded-[100px] h-[40px] w-full pl-11 text-sm font-medium"
-            :style="valueSearch ? 'border-width: 2px !important;' : ''"
+            :placeholder="$t('place.placeholder-search')"
+            class="border-[#333] rounded-[100px] h-[40px] w-full pl-11 text-sm font-medium"
+            :style="valueSearch ? 'border-width: 2px !important;' : 'border-width: 1px;'"
             @input="searchHnadle"
+            @click="activateSearch('top')"
         >
         <div class="absolute right-[16px] top-[7.5px] z-10 flex space-x-2">
             <button
@@ -51,7 +53,7 @@
 <script setup>
 import { ref, defineEmits, computed } from 'vue';
 
-const emits = defineEmits(['search', 'cleanSearch']);
+const emits = defineEmits(['search', 'cleanSearch', 'activateSearch']);
 
 const valueSearch = ref('');
 const debounce = ref(null);
@@ -63,6 +65,7 @@ const searchingActive = computed(() => {
 // FUNCTIONS
 function closeSearch () {
     cleanSearch();
+    activateSearch('medium');
 }
 function cleanSearch () {
     valueSearch.value = '';
@@ -75,6 +78,10 @@ function searchHnadle ($event) {
     debounce.value = setTimeout(async() => {
         emits('search', $event);
     }, 500);
+}
+
+function activateSearch (position) {
+    emits('activateSearch', position);
 }
 
 </script>

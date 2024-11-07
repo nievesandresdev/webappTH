@@ -12,9 +12,9 @@ export default {
     },
     "results":'Without results...',
     "seaching":'Searching...',
+    "placeholder-search":"Search destination",
     "categorySearch":'found',
     "city":"City",
-    "cityPlaceholder":"Destinations...",
     "types":{
         "que-visitar":"What to visit",
         "donde-comer":"Where to eat",

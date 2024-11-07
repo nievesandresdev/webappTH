@@ -7,12 +7,14 @@
         <template v-slot:titleOrSearch>
             <InputSearchPlace
                 @search="searchHandle"
+                @activateSearch="activateSearchHandle"
             />
         </template>
     </AppHeader>
     <div class="mt-[148px] flex-1">
         <ListPageMapClusterPlace />
         <ListPageBottomSheet
+            :position-bottom-sheet="positionBottomSheet"
             @changeCategory="changeCategoryHandle($event)"
             @loadMore="loadMore"
             @closeSearch="closeSearchHandle"
@@ -66,6 +68,7 @@ const dataFilter = {
     city: null,
 }
 
+const positionBottomSheet = ref('medium');
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
 const page = ref(1);
@@ -198,6 +201,17 @@ function searchHandle ($event) {
     page.value = 1;
     placesData.value = [];
     loadPlaces();
+}
+
+function activateSearchHandle ($event) {
+    positionBottomSheet.value = $event;
+    console.log($event, 'activateSearchHandle');
+    if ($event == 'medium') {
+        console.log('entro');
+        searchingActive.value = false;
+        formFilter.search = null;
+        submitFilter();
+    }
 }
 
 function submitFilter (){

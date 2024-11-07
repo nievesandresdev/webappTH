@@ -2,8 +2,9 @@
 
     <div
         id="list-place"
-        class="w-full space-y-4 h-[327px] overflow-y-auto"
+        class="w-full space-y-4 h-[502px] overflow-y-auto"
     >
+    <!-- 327 -->
         <template v-if="!isloadingForm && !placesData.length">
             <ListPageBottomSheeListNotFound />
         </template>

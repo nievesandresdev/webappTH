@@ -14,7 +14,7 @@ export default {
     "seaching": "Ricerca in corso...",
     "categorySearch": "trovato",
     "city": "Città",
-    "cityPlaceholder": "Destinazioni...",
+    "placeholder-search":"Cerca destinazione",
     "types": {
         "que-visitar": "Cosa visitare",
         "donde-comer": "Dove mangiare",

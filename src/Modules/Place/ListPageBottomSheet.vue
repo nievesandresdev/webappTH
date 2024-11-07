@@ -1,30 +1,18 @@
 <template>
     <BaseBottomSheet
-        :open="true"
-        class-container="h-[58px]"
-        :position-bottom="classControlsSheet"
-    >
-    <!-- 28 -->
-    <!-- h-[58%] -->
+        :position="positionBottomSheet"
+        @changeCurrentHeight="changePositionHandle"
+    >   
+        {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }}
         <div class="px-4 pt-[12px] h-full">
-            <div
-                class="w-full flex justify-center mb-6"
-                @click="minBottomSheet"
-            >
-                <img
-                    src="/assets/icons/WA.ITEM.BOTTOM.SHEET.HANDLER.svg"
-                    class="w-[48px] h-[4px]"
-                    alt=""
-                >
-            </div>
-            <div class="space-y-4 h-full flex flex-col">
+            <div class=" h-full flex flex-col">
                 <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                 <p
                     v-if="!isloadingForm"
-                    class="text-sm font-bold"
+                    class="text-sm font-bold my-4"
                 >
                     <template v-if="!searchingActive">
-                        <template v-if="!formFilter.search && paginateData.total">
+                        <template v-if="!formFilter.search && placesData.length">
                             {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }  ) }}
                         </template>
                         <template v-else-if="formFilter.search">
@@ -49,16 +37,24 @@
                 </p>
                 <p
                     v-else
-                    class="item-skeletom animate-pulse h-[14px] w-[120px]"
+                    class="item-skeletom animate-pulse h-[14px] w-[120px] my-4"
                 />
                 <ListPageBottomSheeList @loadMore="loadMoreHandle" />
             </div>
         </div>
     </BaseBottomSheet>
+    <!-- <BaseBottomSheet>
+    </BaseBottomSheet> -->
 </template>
 
 <script setup>
-    import { ref, inject } from 'vue';
+    import { ref, inject, toRefs } from 'vue';
+
+    const props = defineProps({
+        positionBottomSheet: String,
+    });
+
+    const { positionBottomSheet } = toRefs(props);
 
     import BaseBottomSheet from '@/components/Modal/BaseBottomSheet.vue';
     import ListPageBottomSheetCategory from './ListPageBottomSheetCategory.vue';
@@ -70,15 +66,12 @@
     const isloadingForm = inject('isloadingForm');
     const paginateData = inject('paginateData');
     const searchingActive = inject('searchingActive');
+    const placesData = inject('placesData');
 
     const classControlsSheet = ref('0px');
 
     function changeCategoryHandle (payload) {
          emits('changeCategory', payload);
-    }
-
-    function minBottomSheet () {
-        classControlsSheet.value = classControlsSheet.value == '0px' ? '-275px' : '0px';
     }
 
     function loadMoreHandle () {
@@ -87,5 +80,17 @@
     
     function closeSearch () {
         emits('closeSearch');
+    }
+    function changePositionHandle ($event) {
+        if ($event === 2) {
+            positionBottomSheet.value = 'top';
+        }
+        if ($event === 1) {
+            positionBottomSheet.value = 'medium';
+            searchingActive.value = false;
+        }
+        if ($event === 0) {
+            positionBottomSheet.value = 'bottom';
+        }
     }
 </script>
