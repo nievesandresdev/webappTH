@@ -1,6 +1,6 @@
 <template>
   <SectionBarTab 
-    :title="hotelData.show_facilities == 1 ? 'Instalaciones' : 'Hotel'" 
+    title="Hotel" 
     :tabs="[
       { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
