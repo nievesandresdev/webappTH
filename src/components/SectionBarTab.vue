@@ -1,8 +1,15 @@
 <template>
-    <div class="w-full flex flex-col items-start gap-3 pt-6 px-4 pb-0 rounded-b-xl border border-white bg-gradient shadow-custom fixed top-0 left-0 z-[30001]">
+    <div 
+        class="w-full flex flex-col items-start gap-3 pt-6 px-4  rounded-b-xl border border-white bg-gradient shadow-custom fixed top-0 left-0 z-[30001]"
+        :class="{
+            'pb-0': hotel.show_facilities == 1 && hotel.show_profile == 1,
+            'pb-4': hotel.show_facilities == 0 && hotel.show_profile == 0
+        }"
+    >
         <!-- Navbar -->
         <div class="w-full flex items-center justify-between">
             <span class="text-[20px] font-bold lato">{{ title }}</span>
+            
 
             <div 
                 @click="goToProfile"
@@ -13,7 +20,7 @@
         </div>
 
         <!-- Tabs Section -->
-        <div class="w-full flex justify-around bg-transparent mt-3" v-show="showTabs">
+        <div class="w-full flex justify-around bg-transparent mt-3" v-show=" hotel.show_facilities == 1 || hotel.show_profile == 1">
             <div 
                 v-for="(tab, index) in tabs" 
                 :key="index"
@@ -60,6 +67,9 @@ const props = defineProps({
     showTabs: {
         type: Boolean,
         default: true
+    },
+    hotel: {
+        type: Object,
     }
 });
 

@@ -1,10 +1,10 @@
 <template>
     <div
         v-if="center?.[0] && center?.[1]"
-        class="relative h-[400px]"
+        :class="['relative', `h-[${heightMap}]`]"
     >
           <MapboxMap
-            style="height: 400px"
+            :style="{ height: heightMap }"
             :access-token="TOKEN"
             ref="mapboxMap"
             map-style="mapbox://styles/mapbox/streets-v11"
@@ -33,6 +33,11 @@ const props = defineProps({
     type: Number,
     default: 15, // Zoom predeterminado
   },
+  heightMap: {
+    type: String,
+    default: '400px', // Altura predeterminada del mapa
+  },
+  
 });
 
 

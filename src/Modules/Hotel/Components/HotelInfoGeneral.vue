@@ -39,10 +39,18 @@
       </div>
     </div>
 
-    
-    <div>
-      Mapa
+    <div class="my-6">
+      <BaseMap :center="coordCenter" :zoom="15" :heightMap="'168px'">
+        <template v-slot:controls>
+          <!-- Marcador en la Ubicación del Hotel -->
+          <MapboxMarker :lng-lat="coordCenter">
+            <img src="/assets/icons/WA.MAP.POINTER.svg" class="h-12 w-12 " alt="Hotel Location Marker" />
+          </MapboxMarker>
+        </template>
+      </BaseMap>
     </div>
+    
+
   
     <div class="border-t mt-6 mb-6 border-[#E9E9E9]" v-show="hotelData.email"></div>
   
@@ -112,6 +120,8 @@
   
   <script setup>
   import { defineProps, computed } from 'vue';
+  import { MapboxMap, MapboxMarker, MapboxCluster, MapboxImage } from '@studiometa/vue-mapbox-gl';
+  import BaseMap from '@/components/Maps/BaseMap.vue';
   
   const props = defineProps({
     hotelData: {
@@ -119,6 +129,12 @@
       required: true,
     },
   });
+
+  // Coordenadas Centrales para el Mapa
+  const coordCenter = computed(() => [
+    parseFloat(props.hotelData.longitude), 
+    parseFloat(props.hotelData.latitude)
+  ]);
   
   const formattedWebsite = computed(() => {
     const url = props.hotelData.website_google;

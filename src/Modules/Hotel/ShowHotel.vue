@@ -1,12 +1,18 @@
 <template>
   <SectionBarTab 
-    title="Hotel" 
+    :title="hotelData.show_facilities == 1 ? 'Instalaciones' : 'Hotel'" 
     :tabs="[
       { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
+    :hotel="hotelData"
   />
-  <div class="bg-[#FAFAFA] mt-[140px]">
+  <div 
+      class="bg-[#FAFAFA]"
+      :class="{
+        'mt-[140px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+        'mt-[60px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+      }">
     <!-- Slider de imágenes -->
     <ImageSlider :images="hotelData.images" />
 
@@ -44,8 +50,10 @@
       />
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
-
+        
       <HotelInfoGeneral :hotelData="hotelData" />
+
+      
 
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
@@ -160,6 +168,10 @@ import { useShareStay } from '@/composables/useShareStay'
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import router from '@/router'
 
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
+
+
 const hotelStore = useHotelStore()
 const hotelData = computed(() => hotelStore.hotelData)
 
@@ -167,6 +179,9 @@ const isExpanded = ref(false)
 const modalWifi = ref(false)
 const modalLegal = ref(false)
 const facilities = ref([]);
+
+const stayData = ref({})
+const shareUrl = ref('')
 
 const { 
   isModalOpen, 
@@ -195,10 +210,17 @@ const handleLegalText = () => {
   modalLegal.value = true
 }
 
+
+
 onMounted(async() => {
   const r = await hotelStore.$getCrossellings()
+  
 
   facilities.value =  r.crosselling_facilities;
+
+  stayData.value = stayStore.getLocalStay();
+  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
+
 })
 
 const goToFacilities = () => {
