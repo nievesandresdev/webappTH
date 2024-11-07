@@ -1,6 +1,6 @@
 <template>
   <SectionBarTab 
-    title="Hotel" 
+    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'" 
     :tabs="[
       { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
@@ -12,7 +12,8 @@
       :class="{
         'mt-[140px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
         'mt-[60px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
-      }">
+      }"
+    >
     <!-- Slider de imágenes -->
     <ImageSlider :images="hotelData.images" />
 
@@ -221,11 +222,17 @@ onMounted(async() => {
   stayData.value = stayStore.getLocalStay();
   shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
 
+  if (hotelStore.hotelData.show_profile !== 1) {
+    // Redirigir a FacilityList si show_profile es 0
+    router.push({ name: 'FacilityList' })
+  }
+
 })
 
 const goToFacilities = () => {
   router.push({ name: 'FacilityList' })
 }
+
 </script>
 
 <style scoped>

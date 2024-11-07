@@ -39,8 +39,8 @@
       </div>
     </div>
 
-    <div class="my-6">
-      <BaseMap :center="coordCenter" :zoom="15" :heightMap="'168px'">
+    <div class="mt-6">
+      <BaseMap :center="coordCenter" :zoom="15" :heightMap="'168px'" :showExpand="true">
         <template v-slot:controls>
           <!-- Marcador en la Ubicación del Hotel -->
           <MapboxMarker :lng-lat="coordCenter">

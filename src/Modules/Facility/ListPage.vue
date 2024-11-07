@@ -8,7 +8,14 @@
     :hotel="hotelData"
   />
   <div class="bg-[#FAFAFA] mb-[100px]">
-    <div class="px-4 space-y-4 mt-[168px] ">
+    <div 
+     class="px-4 space-y-4  "
+      :class="{
+        'mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+        'mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+      }"
+    >
+      
       <div
         v-for="facility in facilities"
         :key="facility.id"
