@@ -58,7 +58,18 @@ async function submit(){
     if(!response){
         isError.value = true;
     }else{
-        await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
+        if(!stayStore?.stayData){
+            //aqui entra solo si no hay una estancia cargada antes de culminar registro
+            await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
+        }else{
+            //aqui entra si ya hay una estancia cargada (viene por url)
+            if(Boolean(sessionStorage.getItem('guestPerStay'))){
+                await guestStore.createAccessInStay()
+            }else{
+                //sino elimina la estancia actual para que el huesped tenga que crear una
+                await stayStore.deleteLocalStayData()
+            }
+        }
         form.password = '';
         if(stayStore.stayData){
             console.log('redirect to home')

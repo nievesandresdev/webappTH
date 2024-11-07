@@ -56,7 +56,7 @@ const shareUrl = ref(null);
 
 
 onMounted(async() => {
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}`);  
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);  
 })
 
 // Definimos shareMessage como un valor computed para que tome hotelData.name cuando esté disponible

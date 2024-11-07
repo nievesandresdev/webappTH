@@ -137,7 +137,7 @@ export const useStayStore = defineStore('stay', () => {
         return localData ? JSON.parse(localData) : null;
     }
 
-    function deleteLocalStayData () {
+    async function deleteLocalStayData () {
         stayData.value = null;
         localStorage.removeItem('stayId')
         localStorage.removeItem('stayData')

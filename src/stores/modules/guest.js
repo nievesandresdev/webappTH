@@ -10,13 +10,15 @@ import {
     findByEmailApi,
     findAndValidLastStayApi,
     updatePasswordToApi,
-    updateDataGuest
+    updateDataGuest,
+    createAccessInStayApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useQueryStore } from '@/stores/modules/query';
+import { useChainStore } from '@/stores/modules/chain';
 import router from '@/router';
 
 export const useGuestStore = defineStore('guest', () => {
@@ -29,6 +31,7 @@ export const useGuestStore = defineStore('guest', () => {
     const queryStore = useQueryStore()
     const hotelStore = useHotelStore()
     const stayStore = useStayStore()
+    const chainStore = useChainStore()
     const { stayData } = stayStore
     // LOCALE
     const localeStore = useLocaleStore()
@@ -142,6 +145,7 @@ export const useGuestStore = defineStore('guest', () => {
 
     async function findAndValidLastStayAndLogHotel (params) {
         const response = await findAndValidLastStayApi(params)
+        console.log('test findAndValidLastStayApi', response)
         const { ok } = response
         if(ok){
             await stayStore.setStayData(response.data,false)
@@ -188,7 +192,24 @@ export const useGuestStore = defineStore('guest', () => {
         localStorage.removeItem('guestId')
         localStorage.removeItem('guestData')
     }
+
+    
     //
+    async function createAccessInStay () {
+        let params ={
+            stayId: stayStore?.stayData?.id,
+            guestId: guestData.value?.id,
+            chainId: chainStore.chainData.id
+        }
+        console.log('test createAccessInStay',params)
+        const response = await createAccessInStayApi(params)
+        console.log('test response',response)
+        const { ok } = response   
+        if(ok){
+            return response.data
+        }
+        return null
+    }
 
     const guestDataComputed = computed(() => {
         return guestData.value
@@ -236,7 +257,8 @@ export const useGuestStore = defineStore('guest', () => {
         setLocalGuest,
         findAndValidLastStayAndLogHotel,
         deleteLocalGuest,
-        $updateLocalGuestData
+        $updateLocalGuestData,
+        createAccessInStay
     }
 
 })
