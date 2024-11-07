@@ -5,13 +5,16 @@ export default {
     "list-page": {
         "title": "Esplora a",
         "text-count-list": "{count} luoghi trovati",
+        "text-count-list-search": "{count} posti trovati per",
+        "text-count-list-search-active": "Cerca in tutti i luoghi",
+        "text-search-not-found": "Perfeziona la ricerca o prova un'altra categoria",
         "btn-load-more": "Carica altri"
     },
     "results": "Nessun risultato...",
     "seaching": "Ricerca in corso...",
     "categorySearch": "trovato",
     "city": "Città",
-    "cityPlaceholder": "Destinazioni...",
+    "placeholder-search":"Cerca destinazione",
     "types": {
         "que-visitar": "Cosa visitare",
         "donde-comer": "Dove mangiare",

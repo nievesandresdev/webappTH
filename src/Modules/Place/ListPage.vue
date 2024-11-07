@@ -5,14 +5,19 @@
         fixed
     >
         <template v-slot:titleOrSearch>
-            <InputSearchPlace />
+            <InputSearchPlace
+                @search="searchHandle"
+                @activateSearch="activateSearchHandle"
+            />
         </template>
     </AppHeader>
     <div class="mt-[148px] flex-1">
         <ListPageMapClusterPlace />
         <ListPageBottomSheet
+            :position-bottom-sheet="positionBottomSheet"
             @changeCategory="changeCategoryHandle($event)"
             @loadMore="loadMore"
+            @closeSearch="closeSearchHandle"
         />
     </div>
 </template>
@@ -63,11 +68,14 @@ const dataFilter = {
     city: null,
 }
 
+const positionBottomSheet = ref('medium');
+const searchingActive = ref(false);
 const isloadingForm = ref(false);
 const page = ref(1);
 const placesData = ref([]);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);
+const categoriplacesWithNumbers = ref(null);
 const typeplaces = ref([]);
 const formFilter = reactive(JSON.parse(JSON.stringify(dataFilter)));
 const paginateData = reactive({
@@ -119,10 +127,10 @@ async function loadTypePlaces () {
 }
 
 async function loadCategoriPlaces () {
-    // const response = await placeStore.$apiGetCategoriesByType({city: formFilter.city, all: true, withNumbersPlaces: true});
-    // if (response.ok) {
-    //     categoriplaces.value = response.data;
-    // }
+    const response = await placeStore.$apiGetCategoriesByType({...formFilter, allCategories: true, withNumbersPlaces: true});
+    if (response.ok) {
+        categoriplacesWithNumbers.value = response.data;
+    }
     categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
 }
 
@@ -168,6 +176,7 @@ async function loadPlaces () {
         page.value = paginateData.current_page;
         placesData.value = [...placesData.value, ...response.data.places.data];
         countOtherCities.value = response.data.countOtherCities;
+        loadCategoriPlaces();
     }
     firstLoad.value = false;
     isloadingForm.value = false;
@@ -182,6 +191,28 @@ function loadMore () {
     loadPlaces();
 }
 
+function closeSearchHandle () {
+    searchingActive.value = false;
+}
+
+function searchHandle ($event) {
+    searchingActive.value = true;
+    formFilter.search = $event?.target?.value;
+    page.value = 1;
+    placesData.value = [];
+    loadPlaces();
+}
+
+function activateSearchHandle ($event) {
+    positionBottomSheet.value = $event;
+    console.log($event, 'activateSearchHandle');
+    if ($event == 'medium') {
+        console.log('entro');
+        searchingActive.value = false;
+        formFilter.search = null;
+        submitFilter();
+    }
+}
 
 function submitFilter (){
     page.value = 1;
@@ -239,6 +270,8 @@ provide('formFilter', formFilter);
 provide('paginateData', paginateData);
 provide('placesData', placesData);
 provide('isloadingForm', isloadingForm);
+provide('searchingActive', searchingActive);
+provide('categoriplacesWithNumbers', categoriplacesWithNumbers);
 
 
 // SKELETON

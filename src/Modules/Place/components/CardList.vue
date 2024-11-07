@@ -28,10 +28,10 @@
                         src="/assets/icons/WA.STAR.BLACK.svg"
                         class="w-[16px] h-[16px]"
                     >
-                    <span class="text-base font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
-                    <span class="text-[10px] font-bold">({{ data.num_reviews }} reseñas)</span>
+                    <span class="text-base leading-none font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
+                    <span class="text-[10px] leading-none font-bold">({{ data.num_reviews }} reseñas)</span>
                 </div>
-                <p class="text-sm font-bold leading-none truncate-2 h-[28px]" v-html="data.title" />
+                <p class="text-sm font-bold leading-none truncate-2 h-[32px]" v-html="data.title" />
             </div>
             <div
                 class="flex items-center justify-between"

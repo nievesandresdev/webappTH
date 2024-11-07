@@ -5,6 +5,9 @@ export default {
     "list-page": {
         "title": "Explora en",
         "text-count-list": "{count} lugares encontradas",
+        "text-count-list-search": "{count} lugares encontrados para",
+        "text-count-list-search-active": "Buscar todos los lugares para",
+        "text-search-not-found": "Ajusta tu búsqueda o intenta en otra categoría",
         "btn-load-more": "Cargar más"
         // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
     },
@@ -12,7 +15,7 @@ export default {
     "seaching":'Buscando...',
     "categorySearch":'encontrados',
     "city":"Ciudad",
-    "cityPlaceholder":"Destinos...",
+    "placeholder-search":"Buscar destino",
     "types":{
         "que-visitar":"Qué visitar",
         "donde-comer":"Dónde comer",
