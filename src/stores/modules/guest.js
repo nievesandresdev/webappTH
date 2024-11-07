@@ -201,9 +201,7 @@ export const useGuestStore = defineStore('guest', () => {
             guestId: guestData.value?.id,
             chainId: chainStore.chainData.id
         }
-        console.log('test createAccessInStay',params)
         const response = await createAccessInStayApi(params)
-        console.log('test response',response)
         const { ok } = response   
         if(ok){
             return response.data

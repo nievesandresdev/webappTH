@@ -32,6 +32,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //cargar data del hotel
     const hotelStore = useHotelStore();
     //se guarda el subdominio en localstorage en caso de existir
+    localStorage.removeItem('subdomain');
     if(chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainData?.independentSubdomain);    
     }else{
@@ -41,7 +42,7 @@ export default async function handleWebAppData({ to, from, next }) {
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
-        // console.log('test redirect home')
+        // console.log('test redirect 1')
         return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 

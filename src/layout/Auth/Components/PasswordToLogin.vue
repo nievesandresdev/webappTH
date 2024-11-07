@@ -64,7 +64,12 @@ async function submit(){
         }else{
             //aqui entra si ya hay una estancia cargada (viene por url)
             if(Boolean(sessionStorage.getItem('guestPerStay'))){
-                await guestStore.createAccessInStay()
+                let response = await guestStore.createAccessInStay()
+                console.log('test createAccessInStay',response)
+                if(response?.stay){
+                    //actualizar estancia
+                    await stayStore.setStayData(response.stay)
+                }
             }else{
                 //sino elimina la estancia actual para que el huesped tenga que crear una
                 await stayStore.deleteLocalStayData()
