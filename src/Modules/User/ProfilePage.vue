@@ -82,7 +82,7 @@ const loading = ref(true);
 
 const handleMyStays = () => {
     if(isCheckoutPast.value){
-        // router.push({ name: 'MyStays' });
+        authStore.$logoutAndCreateStay();
     }else{
         router.push({ name: 'MyStays' });
     }
