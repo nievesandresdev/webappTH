@@ -72,7 +72,6 @@ const { activeCustom } = toRefs(props)
 
 
 const containerDesignClass = computed(() => {
-    console.log('test customizationData', chainStore.customizationData)
     let customizationData = chainStore.customizationData;
     if(!activeCustom.value){
         return "border-white bg-gradient-100";

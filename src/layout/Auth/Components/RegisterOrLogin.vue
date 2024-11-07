@@ -74,7 +74,7 @@ async function goRegisterOrLogin(type){
 async function goRegisterOrLoginEmail(){
     let params = { email: form.email}
     let find = await guestStore.findByEmail(params);
-    if(find && find.name){
+    if(find && find.name && find.hasPassword){
         form.id = find.id;
         emit('enterPasswordToLogin')
     }else{

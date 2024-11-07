@@ -10,7 +10,7 @@ export const updateLanguageApi = (data) => apiHttp('POST', `${guestPath}/updateL
 export const findLastStayApi = (id) => apiHttp('GET', `${guestPath}/findLastStayApi/${id}`)
 export const findAndValidLastStayApi = (params) => apiHttp('GET', `${guestPath}/findAndValidLastStay`, params)
 export const sendMailToApi = (params) => apiHttp('POST', `${guestPath}/sendMailTo/`, params)
-
+export const createAccessInStayApi = (params) => apiHttp('POST', `${guestPath}/createAccessInStay/`, params)
 
 export const authWithGoogle = (data) => apiHttp('POST', `${guestPath}/auth/google`,data)
 export const authWithGoogleCallback = () => apiHttp('GET', `${guestPath}/auth/google-callback`)

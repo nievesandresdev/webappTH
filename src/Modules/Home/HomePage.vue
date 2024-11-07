@@ -2,6 +2,11 @@
     <div class="h-screen bg-gray-600 w-full">
         new home page {{  String(formType == 'log') }} {{  String(!guestStore.guestData) }}
         <!-- <pre>{{ hotelStore.hotelData }}</pre> -->
+        <div class="mt-10">
+            <router-link class="bg-white p-4 rounded-lg" :to="{ name: 'Profile' }">
+            go perfil
+        </router-link>
+        </div>
     </div>
     <ResetPasswordBottomSheet :open="formType == 'reset'"/>
     <RegisterOrLoginBottomSheet :open="formType == 'log' || !guestStore.guestData && formType !== 'reset'"/>

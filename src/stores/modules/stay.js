@@ -103,11 +103,12 @@ export const useStayStore = defineStore('stay', () => {
 
     async function updateStayAndGuests (params) {
         let response = await updateStayAndGuestsApi(params);
+        console.log('test updateStayAndGuests',response)
         if(response.ok && response.data){
             await setStayData(response.data)
-            return true;
+            return response.data;
         }
-        return false;
+        return null;
     }
     
     async function deleteGuestOfStay (stayId,guestId) {
@@ -136,7 +137,7 @@ export const useStayStore = defineStore('stay', () => {
         return localData ? JSON.parse(localData) : null;
     }
 
-    function deleteLocalStayData () {
+    async function deleteLocalStayData () {
         stayData.value = null;
         localStorage.removeItem('stayId')
         localStorage.removeItem('stayData')

@@ -9,7 +9,7 @@
         
         <button
             v-if="showButton"
-            @click="navigateToRoute"
+            @click="onClickButton"
             class="lato flex items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
         >
             {{ buttonText }}
@@ -21,6 +21,7 @@
 // import { useRouter } from 'vue-router';
 import { defineProps } from 'vue';
 
+const emit = defineEmits(['onClickButton'])
 const props = defineProps({
     title: {
         type: String,
@@ -44,13 +45,14 @@ const goBack = () => {
     window.history.back();
 };
 
-const navigateToRoute = () => {
-    if (props.routeName) {
-        console.log(`Navigating to route: ${props.routeName}`);
-        // router.push({ name: props.routeName });
-    } else {
-        console.log("Route not specified");
-    }
+const onClickButton = () => {
+    emit('onClickButton')
+    // if (props.routeName) {
+    //     console.log(`Navigating to route: ${props.routeName}`);
+    //     // router.push({ name: props.routeName });
+    // } else {
+    //     console.log("Route not specified");
+    // }
 };
 </script>
 <style scoped>

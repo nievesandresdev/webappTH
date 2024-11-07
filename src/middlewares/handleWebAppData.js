@@ -7,6 +7,8 @@ import { useChainStore } from '@/stores/modules/chain'
 import utils from '@/utils/utils.js';
 
 export default async function handleWebAppData({ to, from, next }) {
+
+    sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
     //evitar multiples redirecciones
     
     if (to.name === 'NotFound') return next();
