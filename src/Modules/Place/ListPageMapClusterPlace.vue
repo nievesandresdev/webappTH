@@ -1,6 +1,7 @@
 <template>
     <BaseMap
         :center="coordCenter"
+        height-map="650px"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
@@ -108,7 +109,6 @@ const coordCenter = computed(() => {
 });
 
 function clickPlace ($event) {
-    console.log($event);
 }
 
 </script>

@@ -3,7 +3,7 @@
         :position="positionBottomSheet"
         @changeCurrentHeight="changePositionHandle"
     >   
-        {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }}
+        <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
         <div class="px-4 pt-[12px] h-full">
             <div class=" h-full flex flex-col">
                 <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />

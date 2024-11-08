@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full">
         <button
-            v-if="searchingActive"
+            v-if="searchFull"
             class="w-6 h-6 absolute left-3 top-[7.5px] z-10"
             @click="closeSearch"
         >
@@ -27,7 +27,7 @@
         >
         <div class="absolute right-[16px] top-[7.5px] z-10 flex space-x-2">
             <button
-                v-if="searchingActive"
+                v-if="searchFull"
                 class="w-6 h-6"
                 @click="cleanSearch"
             >
@@ -51,14 +51,16 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed } from 'vue';
+import { ref, defineEmits, computed, inject } from 'vue';
 
 const emits = defineEmits(['search', 'cleanSearch', 'activateSearch']);
 
 const valueSearch = ref('');
 const debounce = ref(null);
 
-const searchingActive = computed(() => {
+const searchingActive = inject('searchingActive');
+
+const searchFull = computed(() => {
     return !!valueSearch.value;
 });
 
@@ -70,10 +72,15 @@ function closeSearch () {
 function cleanSearch () {
     valueSearch.value = '';
     emits('cleanSearch');
-    searchHnadle(null);
+    resetSearch(null);
 }
 
+function resetSearch ($event) {
+    searchingActive.value = false;
+    emits('search', null);
+}
 function searchHnadle ($event) {
+    searchingActive.value = true;
     clearTimeout(debounce.value);
     debounce.value = setTimeout(async() => {
         emits('search', $event);

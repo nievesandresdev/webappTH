@@ -4,6 +4,7 @@ import {
 } from '../config/apiRoute'
 
 export const getAllApi = (params) => apiHttp('POST', `${placePath}/getAll`, params, { showPreloader: false }, 'API_HELPER');
+export const getPointerApi = (params) => apiHttp('POST', `${placePath}/getPointers`, params, { showPreloader: false }, 'API_HELPER');
 export const getCategoriesByTypeApi = (params) => apiHttp('POST', `${placePath}/getCategoriesByType`, params, { showPreloader: false }, 'API_HELPER')
 export const getTypePlacesApi = (params) => apiHttp('GET', `${placePath}/getTypePlaces`, params, { showPreloader: false }, 'API_HELPER')
 export const getRatingCountsPlacesApi = (params) => apiHttp('GET', `${placePath}/getRatingCountsPlaces`, params, {}, 'API_HELPER')

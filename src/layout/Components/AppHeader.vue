@@ -14,7 +14,9 @@
             <!-- Sección derecha: Avatar -->
             <div class="header-avatar">
                 <slot name="avatar">
-                    <IconCustomColor name="TH.WA.AVATAR.BUTTON" :color="chainStore.customizationData?.colors?.[0]?.cod_hex" only-change-background />
+                    <div class="w-[40px] h-[40px]">
+                        <IconCustomColor width="40" class="w-[40px] h-[40px]" height="40" name="TH.WA.AVATAR.BUTTON" :color="chainStore.customizationData?.colors?.[0]?.cod_hex" only-change-background />
+                    </div>
                 </slot>
             </div>
         </div>
@@ -82,6 +84,7 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
         border: 1px solid var(--Border-invert, #FFF);
         background: var(--surface-bg-gradient, linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%));
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        z-index: 2000;
     }
     .tab-item__selected {
         width: 48px;

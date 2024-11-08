@@ -11,6 +11,7 @@ import {
     getDataReviewsApi,
     getReviewsByRatingApi,
     getCrossellingApi,
+    getPointerApi,
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
@@ -45,6 +46,15 @@ export const usePlaceStore = defineStore('place', () => {
             ...params
         }
         const response = await getAllApi(newParams)
+        return response
+    }
+    async function $apiGetPointer (params) {
+        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            ...params
+        }
+        const response = await getPointerApi(newParams)
         return response
     }
     async function $apiGetCategoriesByType (params) {
@@ -117,6 +127,7 @@ export const usePlaceStore = defineStore('place', () => {
     //
     return {
         $loadImage,
+        $apiGetPointer,
         $apiGetAll,
         $apiGetCategoriesByType,
         $apiGetTypePlaces,

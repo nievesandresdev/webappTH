@@ -11,7 +11,7 @@
             />
         </template>
     </AppHeader>
-    <div class="mt-[148px] flex-1">
+    <div class="flex-1">
         <ListPageMapClusterPlace />
         <ListPageBottomSheet
             :position-bottom-sheet="positionBottomSheet"
@@ -106,7 +106,7 @@ const categoriPlaceSelected = computed(() => {
 onMounted(async () => {
     await loadTypePlaces();
     loadCategoriPlaces();
-    loadPlaces();
+    Promise[loadPlaces()];
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
@@ -196,7 +196,6 @@ function closeSearchHandle () {
 }
 
 function searchHandle ($event) {
-    searchingActive.value = true;
     formFilter.search = $event?.target?.value;
     page.value = 1;
     placesData.value = [];
@@ -205,9 +204,7 @@ function searchHandle ($event) {
 
 function activateSearchHandle ($event) {
     positionBottomSheet.value = $event;
-    console.log($event, 'activateSearchHandle');
     if ($event == 'medium') {
-        console.log('entro');
         searchingActive.value = false;
         formFilter.search = null;
         submitFilter();
