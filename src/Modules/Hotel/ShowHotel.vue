@@ -54,9 +54,6 @@
         
       <HotelInfoGeneral :hotelData="hotelData" />
 
-      
-
-
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
       <div class="flex items-center gap-4 mb-4">

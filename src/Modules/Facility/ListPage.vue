@@ -9,7 +9,7 @@
   />
   <div class="bg-[#FAFAFA] mb-[100px]">
     <div 
-     class="px-4 space-y-4  "
+     class="px-4 space-y-4"
       :class="{
         'mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
         'mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
@@ -21,12 +21,17 @@
         :key="facility.id"
         class="flex flex-col rounded-lg border border-white shadow-md bg-gradient-to-r bg-gradient-100"
       >
-        <img
-          v-if="facility.image"
-          :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
-          alt="Facility Image"
-          class="w-full h-[226px] object-cover rounded-t-lg"
-        />
+        <div class="relative w-full h-[226px] rounded-t-lg overflow-hidden">
+          <img
+            v-if="facility.image"
+            :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
+            alt="Facility Image"
+            class="w-full h-full object-cover"
+          />
+          <div v-if="facility.ad_tag" class="absolute bottom-2 left-2 flex items-center justify-center gap-1 px-2 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
+            <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
+          </div>
+        </div>
         <div class="p-4">
           <h3 class="text-[18px] font-bold lato">{{ facility.title }}</h3>
         </div>
