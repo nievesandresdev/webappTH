@@ -19,7 +19,8 @@
       <div
         v-for="facility in facilities"
         :key="facility.id"
-        class="flex flex-col rounded-lg border border-white shadow-md bg-gradient-to-r bg-gradient-100"
+        @click="goToFacilityShow(facility.id)"
+        class="flex flex-col rounded-lg border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
       >
         <div class="relative w-full h-[226px] rounded-t-lg overflow-hidden">
           <img
@@ -41,34 +42,36 @@
 </template>
 
 <script setup>
-import { ref, onMounted,computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import router from '@/router';
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
 
 const hotelStore = useHotelStore();
 const facilities = ref([]);
 
-const hotelData = computed(() => hotelStore.hotelData)
+const hotelData = computed(() => hotelStore.hotelData);
 
 const $formatImage = (payload) => {
-  const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
-  let { url, type, urlDefault } = payload
+  const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
+  let { url, type, urlDefault } = payload;
 
-  if (url && url.startsWith("blob:")) return url
-  if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'
-  if (urlDefault) return url
+  if (url && url.startsWith("blob:")) return url;
+  if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg';
+  if (urlDefault) return url;
 
-  let type_d = url.includes('https://') ? 'CDN' : 'STORAGE'
-  type = type ?? type_d
+  let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
+  type = type ?? type_d;
 
-  return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
-}
+  return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+};
 
-
+const goToFacilityShow = (id) => {
+  router.push({ name: 'ShowFacility', params: { id } });
+};
 
 onMounted(async () => {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
 });
 </script>
-

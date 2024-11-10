@@ -6,6 +6,7 @@
         :key="d.id"
         class="flex flex-col items-center w-[232px] h-[212px] rounded-[20px] border border-white shadow-lg bg-gradient-h"
         style="box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);"
+        @click="handleClick(d)"
       >
         <div class="relative w-full h-32 rounded-t-[20px] overflow-hidden">
           <img 
@@ -27,9 +28,17 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import router from '@/router';
+
+const emit = defineEmits(['itemClick']);
 
 const props = defineProps({
-  data : Object
+  data: Array,
+  onClick: Function, // Pasar la función de redirección como prop
+  clickParams: {
+    type: Object,
+    default: () => ({}) // Parámetros adicionales para la redirección
+  }
 });
 
 const carousel = ref(null);
@@ -64,6 +73,16 @@ const $formatImage = (payload) => {
 
   return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
 }
+
+
+const handleClick = (item) => {
+  // Emitir el evento con el id del item
+  emit('itemClick', item.id);
+  // Ejecutar función onClick si está definida
+  if (props.onClick) {
+    props.onClick(item, props.clickParams);
+  }
+};
 </script>
 
 <style scoped>
