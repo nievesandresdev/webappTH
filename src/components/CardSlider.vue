@@ -34,10 +34,10 @@ const emit = defineEmits(['itemClick']);
 
 const props = defineProps({
   data: Array,
-  onClick: Function, // Pasar la función de redirección como prop
+  onClick: Function, 
   clickParams: {
     type: Object,
-    default: () => ({}) // Parámetros adicionales para la redirección
+    default: () => ({}) 
   }
 });
 
@@ -76,9 +76,7 @@ const $formatImage = (payload) => {
 
 
 const handleClick = (item) => {
-  // Emitir el evento con el id del item
   emit('itemClick', item.id);
-  // Ejecutar función onClick si está definida
   if (props.onClick) {
     props.onClick(item, props.clickParams);
   }

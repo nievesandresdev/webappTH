@@ -1,6 +1,5 @@
 <template>
   <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden" @touchstart="touchStart" @touchend="touchEnd">
-    <!-- Botón de regresar -->
     <button
       v-show="showButtonBack"
       class="inline-flex items-center gap-2 p-1 absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"
@@ -33,7 +32,6 @@
 <script setup>
 import { ref, defineProps, computed } from 'vue'
 
-// Recibir la lista de imágenes como una prop
 const props = defineProps({
   images: {
     type: Array,
@@ -49,7 +47,6 @@ const props = defineProps({
   }
 })
 
-// Función para formatear las URLs de las imágenes
 const $formatImage = (payload) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
   let { url, type, urlDefault } = payload

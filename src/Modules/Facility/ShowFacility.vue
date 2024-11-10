@@ -21,7 +21,7 @@
                 <p v-if="facility.always_open" class="lato text-sm font-bold">Abierto todos los días las 24hs</p>
                 
                 <template v-else-if="activeWeekdays.length">
-                    <!-- Tabla de horarios -->
+                    <!-- horarios -->
                     <div class="flex flex-col">
                         <div v-for="(day, index) in activeWeekdays" :key="index">
                             <div class="flex justify-between items-center text-sm text-[#333] py-2">
@@ -32,7 +32,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <!-- Separador entre cada día -->
                             <hr v-if="index < activeWeekdays.length - 1" class="border-t border-[#E9E9E9] mt-3 mb-3" />
                         </div>
                     </div>

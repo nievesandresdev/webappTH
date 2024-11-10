@@ -174,7 +174,6 @@ onMounted(async() => {
   
 
   if (hotelStore.hotelData.show_profile !== 1) {
-    // Redirigir a FacilityList si show_profile es 0
     router.push({ name: 'FacilityList' })
   }
 
@@ -196,8 +195,8 @@ provide('isModalOpen',isModalOpen)
 <style scoped>
 
 .card-text {
-  height: 4em; /* Limita a dos líneas */
-  line-height: 1.5em; /* Altura de cada línea */
+  height: 4em; 
+  line-height: 1.5em; 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
