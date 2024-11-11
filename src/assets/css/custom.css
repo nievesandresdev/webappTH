@@ -264,3 +264,11 @@ button:focus {
   background: linear-gradient(105deg, #F3F3F3, #FAFAFA);
 }
 
+.truncate-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -55,12 +55,21 @@ export default {
         "titleAllReviews": "Avis sur l'information touristique",
         "exploreIn":"Explorez dans",
         "filters":{
-            "title": "Plus de filtres",
+            "title": "Filtrer par",
             "ratings": "Notes",
+            "distanceLogding": "Distance d'hébergement",
+            "recommended": "Recommandé",
+            "score": "Score",
             "star": "étoile",
             "stars": "étoiles",
-            "remove": "Supprimer",
+            "remove": "Rimuovi tutto",
             "apply": "Appliquer",
+            "distante": {
+                "oneKm": "Entre 1 km et 3 km",
+                "threeKm": "Entre 3 km et 5 km",
+                "fiveKm": "Entre 5 km et 10 km",
+                "tenKm": "10 km+"
+            }
         }
     },
 }

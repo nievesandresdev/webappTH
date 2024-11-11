@@ -110,7 +110,6 @@ const isModalOpen = () => {
 };
 
 function handleStayClick() {
-    console.log('propsmy', props);
     const data = {
         hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,
         hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,

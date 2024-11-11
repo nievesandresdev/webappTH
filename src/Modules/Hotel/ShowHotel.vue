@@ -18,7 +18,6 @@
     <ImageSlider :images="hotelData.images" />
 
     <div class="flex flex-col mt-2 px-4">
-      <!-- Nombre del hotel -->
       <h1 class="lato text-[18px] font-bold text-[#333] mb-[7px]">
         {{ hotelData.name }}
       </h1>
@@ -26,7 +25,7 @@
       <StarRating v-if="hotelData.category !== null" :category="hotelData.category" />
 
       <p
-        :class="isExpanded ? 'text-sm font-normal lato text-[#333]' : 'text-sm font-normal lato text-[#333] truncate-description mt-[12px]'"
+        :class="isExpanded ? 'text-sm font-normal lato text-[#333] mt-3' : 'text-sm font-normal lato text-[#333] truncate-description mt-3'"
       >
         {{ hotelData.description }}
       </p>
@@ -40,22 +39,18 @@
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
-      <!-- Componente de Botones de Acción -->
       <HotelActionButtons
         :hotelData="hotelData"
         :buttonsHome="hotelData.buttons_home"
         @wifi-click="handleWifi"
         @call-click="handleCall"
         @legal-click="handleLegalText"
-        @share-click="openModalShared"
+        @share-click="isModalOpen = true"
       />
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
         
       <HotelInfoGeneral :hotelData="hotelData" />
-
-      
-
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
@@ -65,14 +60,13 @@
         <span @click="goToFacilities()" class="underline lato text-sm font-bold">Ver todo</span>
       </div>
 
-      <!-- Carrusel de Cards -->
-      <CardSlider :data="facilities" />
-
+      <CardSlider :data="facilities" @itemClick="handleGoFacility"  />
 
       <div class="flex items-center gap-4 mb-4">
         <p class="text-[16px] font-bold text-[#333333] lato">Nuestras redes</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
       </div>
+      
 
       <HotelRRSS :hotelData="hotelData" />
 
@@ -116,43 +110,7 @@
   </BottomModal>
 
   <!-- Compartir Estancia -->
-  <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
-    <div class="flex flex-col items-start">
-      <div class="flex items-center gap-2 mb-4 lato">
-        <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6" alt="Arrow Icon" />
-        <p class="text-[20px] font-bold text-[#333333] lato">Compartir estancia</p>
-      </div>
-      <a :href="whatsappShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-        <img src="/assets/icons/WA.Whatsapp.svg" class="w-6 h-6" alt="Whatsapp Icon" />
-        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Whatsapp</p>
-      </a>
-      <a :href="mailtoShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-        <img src="/assets/icons/WA.mail.svg" class="w-6 h-6" alt="Email Icon" />
-        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Email</p>
-      </a>
-      <a :href="smsShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-        <img src="/assets/icons/WA.SMS.svg" class="w-6 h-6" alt="SMS Icon" />
-        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía SMS</p>
-      </a>
-      <a :href="telegramShareUrl" target="_blank" class="flex items-center gap-2 mb-4 lato">
-        <img src="/assets/icons/WA.Telegram.svg" class="w-6 h-6" alt="Telegram Icon" />
-        <p class="text-[14px] font-medium text-[#333333] lato">Compartir vía Telegram</p>
-      </a>
-      <p class="text-[14px] font-bold lato text-[#333333]">Link para compartir la estancia</p>
-      <div class="relative mt-1 w-full">
-        <input
-          ref="shareLinkInput"
-          type="text"
-          disabled
-          :value="shareUrl"
-          class="w-full py-2 pl-4 pr-10 text-[14px] font-medium lato text-[rgba(51,51,51,0.25)] rounded-[10px] border border-[rgba(51, 51, 51, 0.25)] bg-[rgba(250, 250, 250, 0.50)] truncate"
-        />
-        <button @click="copyToClipboard" class="absolute right-2 top-1/2 transform -translate-y-1/2">
-          <img src="/assets/icons/WA.copy.svg" class="w-5 h-5" alt="Copy Icon" />
-        </button>
-      </div>
-    </div>
-  </BottomModal>
+  <ShareStayModal />
 </template>
 
 <script setup>
@@ -164,13 +122,15 @@ import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
 import CardSlider from '@/components/CardSlider.vue'
 import BottomModal from '@/Modules/User/Components/BottomModal.vue'
 import { useHotelStore } from '@/stores/modules/hotel'
-import { computed, ref, onMounted } from 'vue'
-import { useShareStay } from '@/composables/useShareStay'
+import { computed, ref, onMounted,provide } from 'vue'
 import SectionBarTab from '@/components/SectionBarTab.vue';
+import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
 
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+
+const isModalOpen = ref(false);
 
 
 const hotelStore = useHotelStore()
@@ -184,16 +144,7 @@ const facilities = ref([]);
 const stayData = ref({})
 const shareUrl = ref('')
 
-const { 
-  isModalOpen, 
-  shareLinkInput, 
-  whatsappShareUrl, 
-  mailtoShareUrl, 
-  smsShareUrl, 
-  telegramShareUrl, 
-  openModalShared, 
-  copyToClipboard 
-} = useShareStay('Hotel Example', 'https://ejemplo.com/estancia/larga-url-que-se-trunca')
+
 
 const handleCall = () => {
   if (hotelData.value.phone) {
@@ -216,38 +167,36 @@ const handleLegalText = () => {
 onMounted(async() => {
   const r = await hotelStore.$getCrossellings()
   
-
   facilities.value =  r.crosselling_facilities;
 
   stayData.value = stayStore.getLocalStay();
   shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
+  
 
   if (hotelStore.hotelData.show_profile !== 1) {
-    // Redirigir a FacilityList si show_profile es 0
     router.push({ name: 'FacilityList' })
   }
 
 })
 
+const handleGoFacility = (id) => {
+  router.push({ name: 'ShowFacility', params: { id } });
+};
+
+
 const goToFacilities = () => {
   router.push({ name: 'FacilityList' })
 }
 
+provide('isModalOpen',isModalOpen)
+
 </script>
 
 <style scoped>
-/* Truncar la descripción a tres líneas */
-.truncate-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .card-text {
-  height: 4em; /* Limita a dos líneas */
-  line-height: 1.5em; /* Altura de cada línea */
+  height: 4em; 
+  line-height: 1.5em; 
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

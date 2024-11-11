@@ -1,17 +1,27 @@
 <template>
-  <div
-    ref="sheet"
-    class="bottom-sheet"
-    :style="{ height: sheetHeight }"
-    @mousedown="startDrag"
-    @touchstart="startDrag"
-  >
-    <div class="handlebar"></div>
-
-    <div class="content">
-      <slot />
+  <transition name="slide-fade">
+    <div
+      ref="sheet"
+      v-if="open"
+      class="bottom-sheet relative pt-[12px]"
+      :style="{ height: sheetHeight }"
+      @mousedown="startDrag"
+      @touchstart="startDrag"
+    >
+      <div class="flex justify-center py-[12px] w-full absolute top-0 left-0">
+        <div class="handlebar"></div>
+      </div>
+      <!-- {{ sheetHeight }} {{ isStepThree }} -->
+      <div class="flex flex-col h-full">
+        <div class="content flex-1 pt-[28px]">
+          <slot name="content" />
+        </div>
+        <div class="footer">
+          <slot name="footer" />
+        </div>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script setup>
@@ -20,38 +30,58 @@ import { ref, toRefs, watch, defineEmits } from 'vue';
 const emits = defineEmits(['changeCurrentHeight']);
 
 const props = defineProps({
+  isStepThree: {
+    type: Boolean,
+    default: false,
+  },
+  open: {
+    type: Boolean,
+    default: true,
+  },
   position: {
     type: String,
     default: 'top',
-  }
+  },
 });
 
-const { position } = toRefs(props);
+const { position, open, isStepThree } = toRefs(props);
 
-// Define las tres alturas en porcentajes
-const heights = ['25%', '58%', '79%'];
-const currentHeightIndex = ref(1);
-const sheetHeight = ref(heights[currentHeightIndex.value]); // Altura actual del bottom sheet
+// Alturas definidas para cada caso
+const heights = {
+  dragTwoStep: ['0%', '73%'],       // Solo permite desplazamiento entre 73% y 0% cuando isStepThree es false
+  dragThreeStep: ['25%', '58%', '79%'], // Permite top, medium y bottom cuando isStepThree es true
+};
+
+// Inicia en la posición central
+const currentHeightIndex = ref(isStepThree.value ? 1 : 1);
+const sheetHeight = ref(isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : heights.dragTwoStep[currentHeightIndex.value]);
 
 let startY = 0;
 let isDragging = false;
 
-watch(position, (value) => {
-
-  if (position.value === 'top') {
-    currentHeightIndex.value = 2;
+// Actualiza la altura del bottom sheet en función de `position`
+watch(position, () => {
+  console.log(position, 'position');
+  if (!isStepThree.value) {
+    currentHeightIndex.value = 1; // Inicia en 73% cuando isStepThree es false
+  } else {
+    // Cambia posición inicial solo si `dragThreeStep`
+    if (position.value === 'top') {
+      currentHeightIndex.value = 2;
+    } else if (position.value === 'medium') {
+      currentHeightIndex.value = 1;
+    } else if (position.value === 'bottom') {
+      currentHeightIndex.value = 0;
+    }
   }
-  if (position.value === 'medium') {
-    currentHeightIndex.value = 1;
-  }
-  if (position.value === 'bottom') {
-    currentHeightIndex.value = 0;
-  }
-  // Actualiza la altura del bottom sheet
-  sheetHeight.value = heights[currentHeightIndex.value];
+  sheetHeight.value = isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : heights.dragTwoStep[currentHeightIndex.value];
 });
-watch(currentHeightIndex, (value) => {
+
+watch(currentHeightIndex, () => {
   emits('changeCurrentHeight', currentHeightIndex.value);
+});
+watch(open, () => {
+  console.log(open, 'open');
 });
 
 // Inicia el arrastre del bottom sheet
@@ -66,24 +96,37 @@ function startDrag(event) {
   document.addEventListener('touchend', endDrag);
 }
 
-// Mueve el bottom sheet a la nueva altura
+// Mueve el bottom sheet en función de `isStepThree`
 function onDrag(event) {
-  if (!isDragging) return;
-
   const currentY = event.touches ? event.touches[0].clientY : event.clientY;
   const deltaY = currentY - startY;
 
-  // Cambia a la siguiente altura si el delta es suficiente
-  if (deltaY < -50 && currentHeightIndex.value < heights.length - 1) {
-    // Desliza hacia arriba (incrementa la altura)
-    currentHeightIndex.value += 1;
-    sheetHeight.value = heights[currentHeightIndex.value];
-    isDragging = false;
-  } else if (deltaY > 50 && currentHeightIndex.value > 0) {
-    // Desliza hacia abajo (reduce la altura)
-    currentHeightIndex.value -= 1;
-    sheetHeight.value = heights[currentHeightIndex.value];
-    isDragging = false;
+  if (isStepThree.value) {
+    // Caso `isStepThree` true: permite top, medium y bottom (25%, 58%, 79%)
+    if (deltaY < -50 && currentHeightIndex.value < heights.dragThreeStep.length - 1) {
+      currentHeightIndex.value += 1;
+      sheetHeight.value = heights.dragThreeStep[currentHeightIndex.value];
+      startY = currentY; // Reinicia el punto de inicio para evitar saltos
+    } else if (deltaY > 50 && currentHeightIndex.value > 0) {
+      currentHeightIndex.value -= 1;
+      sheetHeight.value = heights.dragThreeStep[currentHeightIndex.value];
+      startY = currentY; // Reinicia el punto de inicio para evitar saltos
+    }
+  } else {
+    // Si `isStepThree` es false: permite solo desplazamiento entre 73% y 0%
+    if (deltaY < -50 && currentHeightIndex.value < heights.dragTwoStep.length - 1) {
+      currentHeightIndex.value += 1;
+      sheetHeight.value = heights.dragTwoStep[currentHeightIndex.value];
+      startY = currentY; // Reinicia el punto de inicio para evitar saltos
+    } else if (deltaY > 50 && currentHeightIndex.value > 0) {
+      currentHeightIndex.value -= 1;
+      sheetHeight.value = heights.dragTwoStep[currentHeightIndex.value];
+      startY = currentY; // Reinicia el punto de inicio para evitar saltos
+    }
+    // Cierra el bottom sheet solo cuando esté en `0%`
+    if (currentHeightIndex.value === 0) {
+      emitClose();
+    }
   }
 }
 
@@ -95,6 +138,12 @@ function endDrag() {
   document.removeEventListener('mouseup', endDrag);
   document.removeEventListener('touchend', endDrag);
 }
+
+// Cierra el bottom sheet
+function emitClose() {
+  sheetHeight.value = '0%';
+  emits('changeCurrentHeight', 0);
+}
 </script>
 
 <style scoped>
@@ -104,23 +153,32 @@ function endDrag() {
   left: 0;
   width: 100%;
   transition: height 0.3s ease-in-out;
-  background: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  z-index: 1000;
+  background: linear-gradient(93deg, #F3F3F3 0%, #FAFAFA 100%);
+  border: 1px solid #FFF;
+  z-index: 4000;
 }
 
 .handlebar {
-  width: 40px;
-  height: 5px;
-  background-color: #ccc;
+  width: 48px;
+  height: 4px;
+  background-color: #777777;
   border-radius: 10px;
-  margin: 10px auto;
   cursor: grab;
 }
 
-.content {
-  /* padding: 16px; */
-  /* overflow-y: auto; */
+.slide-fade-enter-from, .slide-fade-leave-active {
+  transform: translateY(100%);
+  visibility: hidden;
+}
+
+.slide-fade-enter-to, .slide-fade-leave-from {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: transform 0.3s ease, visibility 0.3s ease;
 }
 </style>

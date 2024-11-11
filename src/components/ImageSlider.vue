@@ -1,20 +1,28 @@
 <template>
-  <div class="slider-container" @touchstart="touchStart" @touchend="touchEnd">
+  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden" @touchstart="touchStart" @touchend="touchEnd">
+    <button
+      v-show="showButtonBack"
+      class="inline-flex items-center gap-2 p-1 absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"
+      @click="goBack"
+    >
+      <img src="/assets/icons/WA.chevron.svg" alt="Back Icon" />
+    </button>
+
     <div
       v-for="(image, index) in formattedImages"
       :key="image.id"
-      class="slide"
+      class="w-full h-full bg-cover bg-center absolute top-0 left-0 transition-opacity duration-500 ease-in-out"
       :style="{ backgroundImage: `url(${image.url})` }"
       v-show="currentSlide === index"
     >
-      <!-- Imagen de fondo completa en cada slide -->
     </div>
-    <div class="controls">
+
+    <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
       <button
         v-for="(image, index) in images"
         :key="index"
-        class="control-btn"
-        :class="{ active: currentSlide === index }"
+        class="w-2.5 h-2.5 bg-transparent border-2 border-white rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
+        :class="{ 'bg-white': currentSlide === index }"
         @click="setSlide(index)"
       ></button>
     </div>
@@ -24,20 +32,25 @@
 <script setup>
 import { ref, defineProps, computed } from 'vue'
 
-// Recibir la lista de imágenes como una prop
 const props = defineProps({
   images: {
     type: Array,
     required: true
+  },
+  facility: {
+    type: Object,
+    required: true
+  },
+  showButtonBack: {
+    type: Boolean,
+    default: false
   }
 })
 
-// Función para formatear las URLs de las imágenes
 const $formatImage = (payload) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
   let { url, type, urlDefault } = payload
 
-  // Verifica si la URL es de tipo `blob:` (preview imagen)
   if (url && url.startsWith("blob:")) return url
 
   if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'
@@ -51,7 +64,7 @@ const $formatImage = (payload) => {
 }
 
 const formattedImages = computed(() => {
-  return props.images.map(image => ({
+  return props.images?.map(image => ({
     ...image,
     url: $formatImage(image)
   }))
@@ -88,19 +101,13 @@ function touchEnd(event) {
     }
   }
 }
+
+function goBack() {
+  window.history.back()
+}
 </script>
 
 <style scoped>
-.slider-container {
-  width: 100%;
-  height: 337px;
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-  position: relative;
-  border-bottom: 1px solid #FFF;
-}
-
 .slide {
   width: 100%;
   height: 100%;
@@ -110,32 +117,5 @@ function touchEnd(event) {
   top: 0;
   left: 0;
   transition: opacity 0.5s ease;
-}
-
-.controls {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-}
-
-.control-btn {
-  width: 10px;
-  height: 10px;
-  background-color: transparent;
-  border: 2px solid #FFF;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-}
-
-.control-btn.active {
-  background-color: #FFF;
-}
-
-.control-btn:hover {
-  opacity: 1;
 }
 </style>

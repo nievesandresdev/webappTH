@@ -19,16 +19,17 @@
               class="w-6 h-6"
             />
           </button>
-          <MapboxMap
+          <!-- <MapboxMap
             class="h-full"
             :access-token="TOKEN"
             ref="mapboxMap"
             map-style="mapbox://styles/mapbox/streets-v11"
             :center="center"
             :zoom="zoom"
+            @map-click="handleMapClick"
         >
             <slot name="controls"></slot>
-        </MapboxMap>
+        </MapboxMap> -->
     </div>
 </template>
 
@@ -64,6 +65,7 @@ const props = defineProps({
 // DATA
 const mapContainer = ref(null);
 const mapboxMap = ref();
+const mapboxRef = ref();
 
 // COMPUTED
 const map = computed(() => mapboxMap.value.map);

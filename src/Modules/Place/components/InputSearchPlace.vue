@@ -39,6 +39,7 @@
             </button>
             <button
                class="w-6 h-6"
+               @click="handleOpenFilter"
             >
                 <img
                     src="/assets/icons/WA.Filtros.svg"
@@ -53,7 +54,7 @@
 <script setup>
 import { ref, defineEmits, computed, inject } from 'vue';
 
-const emits = defineEmits(['search', 'cleanSearch', 'activateSearch']);
+const emits = defineEmits(['search', 'cleanSearch', 'activateSearch', 'openFilter']);
 
 const valueSearch = ref('');
 const debounce = ref(null);
@@ -89,6 +90,10 @@ function searchHnadle ($event) {
 
 function activateSearch (position) {
     emits('activateSearch', position);
+}
+
+function handleOpenFilter () {
+    emits('openFilter');
 }
 
 </script>

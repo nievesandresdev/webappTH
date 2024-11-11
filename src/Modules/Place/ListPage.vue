@@ -8,23 +8,31 @@
             <InputSearchPlace
                 @search="searchHandle"
                 @activateSearch="activateSearchHandle"
+                @openFilter="openFilter"
             />
         </template>
     </AppHeader>
     <div class="flex-1">
-        <ListPageMapClusterPlace />
+        <!-- <template v-if="pointersData?.features?.length">
+            <ListPageMapClusterPlace
+                @clickMapCluster="handleMapCluster"
+            />
+        </template> -->
         <ListPageBottomSheet
             :position-bottom-sheet="positionBottomSheet"
             @changeCategory="changeCategoryHandle($event)"
             @loadMore="loadMore"
             @closeSearch="closeSearchHandle"
         />
+        <ListPagebottomSheetFilter
+            @reloadPlaces="submitFilter()"
+        />
     </div>
 </template>
 
 <script setup>
 
-import { onMounted, ref, provide, reactive, toRefs, computed } from 'vue';
+import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getUrlParam } from '@/utils/utils.js';
 const route = useRouter();
@@ -34,6 +42,7 @@ import BaseMap from '@/components/Maps/BaseMap.vue';
 import InputSearchPlace from './components/InputSearchPlace.vue';
 import ListPageMapClusterPlace from './ListPageMapClusterPlace.vue';
 import ListPageBottomSheet from './ListPageBottomSheet.vue';
+import ListPagebottomSheetFilter from './ListPagebottomSheetFilter.vue';
 
 // STORE
 import { usePlaceStore } from '@/stores/modules/place';
@@ -66,13 +75,18 @@ const dataFilter = {
     all_cities: false,
     search:null,
     city: null,
+    featured: false,
 }
 
 const positionBottomSheet = ref('medium');
+const isOpenBottomSheetList = ref(true);
+const isOpenBottomSheetFilter = ref(false);
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
 const page = ref(1);
 const placesData = ref([]);
+const pointersData = ref([]);
+const placeSelected = ref(null);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);
 const categoriplacesWithNumbers = ref(null);
@@ -102,15 +116,36 @@ const categoriPlaceSelected = computed(() => {
     return categoriplace;
 });
 
+watch(positionBottomSheet, function(val) {
+    if (val == '0%') {
+        isOpenBottomSheetList.value = true;
+        setTimeout(() => {
+            isOpenBottomSheetFilter.value = false;
+        }, 400);
+    }
+});
+
 // ONMOUNTED
 onMounted(async () => {
     await loadTypePlaces();
-    loadCategoriPlaces();
-    Promise[loadPlaces()];
+    const materialicePromice = await Promise.all([loadPlaces(), loadPointers(), loadCategoriPlaces()]);
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTIONS
+
+async function getPlaceById (placeId) {
+    let response = await placeStore.$findById({id: placeId});
+    placeSelected.value = null;
+    if(response.ok) placeSelected.value = response.data;
+
+}
+
+function handleMapCluster (item) {
+    positionBottomSheet.value = 'bottom';
+    getPlaceById(item.properties.id);
+}
+
 async function loadTypePlaces () {
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
@@ -186,6 +221,38 @@ async function loadPlaces () {
     // }
 }
 
+async function loadPointers () {
+    let query = {...filterNonNullAndNonEmpty(formFilter)}
+    const response = await placeStore.$apiGetPointer(query);
+    if (response.ok) {
+        pointersData.value = transformDataPointer(response.data?.places);
+    }
+}
+
+function transformDataPointer (data) {
+    return  {
+        type: "FeatureCollection",
+        features: data.map(item => transformFeaturesPointerData(item)),
+    }
+}
+
+function transformFeaturesPointerData (item) {
+    return {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [Number(item.metting_point_longitude), Number(item.metting_point_latitude)]
+        },
+        properties: {
+            id: item.id,
+            name: item.title,
+            description: item.description,
+            category: item.categori_place.name.toLowerCase(),
+            categoryIcon:  item.categori_place.icon,
+        }
+    }
+}
+
 function loadMore () {
     page.value += 1;
     loadPlaces();
@@ -203,6 +270,7 @@ function searchHandle ($event) {
 }
 
 function activateSearchHandle ($event) {
+    placeSelected.value = null;
     positionBottomSheet.value = $event;
     if ($event == 'medium') {
         searchingActive.value = false;
@@ -212,6 +280,7 @@ function activateSearchHandle ($event) {
 }
 
 function submitFilter (){
+    isOpenBottomSheetList.value = true;
     page.value = 1;
     placesData.value = [];
     loadPlaces();
@@ -258,7 +327,18 @@ function validValueQuery (field, value) {
     return value;
 }
 
+async function openFilter () {
+    console.log(isOpenBottomSheetList.value, isOpenBottomSheetFilter.value, positionBottomSheet.value);
 
+    isOpenBottomSheetList.value = false;
+    // await nextTick();
+    setTimeout(() => {
+        positionBottomSheet.value = 'medium';
+        searchingActive.value = false;
+        formFilter.search = null;
+        isOpenBottomSheetFilter.value = true;
+    }, 400);
+}
 
 // PROVIDE
 provide('hotelData', hotelData);
@@ -266,6 +346,10 @@ provide('categoriplaces', categoriplaces);
 provide('formFilter', formFilter);
 provide('paginateData', paginateData);
 provide('placesData', placesData);
+provide('pointersData', pointersData);
+provide('placeSelected', placeSelected);
+provide('isOpenBottomSheetList', isOpenBottomSheetList);
+provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
 provide('isloadingForm', isloadingForm);
 provide('searchingActive', searchingActive);
 provide('categoriplacesWithNumbers', categoriplacesWithNumbers);

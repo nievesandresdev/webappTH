@@ -26,11 +26,11 @@ export default {
     },
     width: {
       type: [String, Number],
-      default: '',
+      default: null,
     },
     height: {
       type: [String, Number],
-      default: '',
+      default: null,
     },
   },
   data() {
@@ -44,9 +44,11 @@ export default {
       let svgContent = response.data;
 
       // Reemplazar los atributos de tamaño
-      svgContent = svgContent
-        .replace(/width="[^"]*"/g, `width="${this.width}"`)
-        .replace(/height="[^"]*"/g, `height="${this.height}"`);
+      if(this.width && this.height){
+        svgContent = svgContent
+        .replace(/(<svg[^>]*?)width="[^"]*"/, `$1width="${this.width}"`)
+        .replace(/(<svg[^>]*?)height="[^"]*"/, `$1height="${this.height}"`);
+      }
 
       // Reemplazar el color
       if (this.onlyChangeBackground) {
@@ -65,10 +67,8 @@ export default {
 
 <style scoped>
 .svg-icon svg {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   fill: currentColor;
 }
 </style>

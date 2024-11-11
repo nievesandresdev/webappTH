@@ -10,31 +10,35 @@
                 >
             </MapboxMarker>
             <!-- Agregar iconos personalizados por categoría -->
-            <MapboxImage id="monumentos" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
-            <MapboxImage id="museos" src="/assets/icons/WA.MAP.POINTER.MUSEOS.png" />
+            <MapboxImage id="monumento" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
+            <MapboxImage id="museo" src="/assets/icons/WA.MAP.POINTER.MUSEOS.png" />
+            <MapboxImage id="naturaleza" src="/assets/icons/WA.MAP.POINTER.NATURALEZA.png" />
             <MapboxCluster
-                :data="dataMarkets"
+                :data="transformedPointersData"
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
                     'icon-image': ['get', 'category'], // Usa la propiedad 'category' como id del icono
                     'icon-size': 1.5
                 }"
                 :unclustered-point-paint="null"
-                @mb-feature-click="clickPlace"
+                @mb-feature-click="handleMapClick"
             />
         </template>
     </BaseMap>
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, toRaw, onMounted, defineEmits } from 'vue';
   import { MapboxMap, MapboxMarker, MapboxCluster, MapboxImage } from '@studiometa/vue-mapbox-gl';
 //   import 'mapbox-gl/dist/mapbox-gl.css';
   
 import BaseMap from '@/components/Maps/BaseMap.vue';
 
+const emits = defineEmits(['clickMapCluster']);
+
 // INJECT
 const hotelData = inject('hotelData');
+const pointersData = inject('pointersData');
 
 // DATA STATIC
 const dataMarkets = {
@@ -49,7 +53,7 @@ const dataMarkets = {
             "properties": {
                 "name": "La Giralda",
                 "description": "Antiguo alminar convertido en campanario de la Catedral de Sevilla.",
-                "category": "monumentos"
+                "category": "monumento"
             }
         },
         {
@@ -61,7 +65,7 @@ const dataMarkets = {
             "properties": {
                 "name": "Catedral de Sevilla",
                 "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museos"
+                "category": "museo"
             }
         },
         {
@@ -73,7 +77,7 @@ const dataMarkets = {
             "properties": {
                 "name": "Torre La Giralda",
                 "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museos"
+                "category": "museo"
             }
         },
         {
@@ -85,7 +89,7 @@ const dataMarkets = {
             "properties": {
                 "name": "Estadio Ramón Sánchez-Pizjuán",
                 "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museos"
+                "category": "museo"
             }
         },
         {
@@ -97,18 +101,23 @@ const dataMarkets = {
             "properties": {
                 "name": "Palacio de las Dueñas",
                 "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "monumentos"
+                "category": "monumento"
             }
         },
     ]
 }
+
+const transformedPointersData = computed(() => {
+    return JSON.parse(JSON.stringify(pointersData.value)); // Crear una copia inmutable
+});
 
 
 const coordCenter = computed(() => {
     return [Number(hotelData.longitude), Number(hotelData.latitude)];
 });
 
-function clickPlace ($event) {
+function handleMapClick ($event) {
+    emits('clickMapCluster', $event)
 }
 
 </script>
