@@ -3,19 +3,27 @@
         class="custom-header"
         :class="{'fixed top-0 left-0 w-full': fixed}"
     >
-        <div class="header-top flex pt-6 px-2 pb-[12px] justify-between">
-            <!-- Sección izquierda: Buscador o título -->
-            <div class="header-left mt-2 flex-1">
-                <slot name="titleOrSearch">
-                    <h1 class="text-[20px] font-bold">{{ title }}</h1>
-                </slot>
-            </div>
+        <div class="header-top pt-6 px-2 pb-3">
+            <div class="flex justify-between w-full h-10">
+                <!-- Sección izquierda: Buscador o título -->
+                <div class="header-left flex-1">
+                    <slot name="titleOrSearch">
+                        <h1 class="text-[20px] font-bold">{{ title }}</h1>
+                    </slot>
+                </div>
 
-            <!-- Sección derecha: Avatar -->
-            <div class="header-avatar">
-                <slot name="avatar">
-                    <IconCustomColor name="TH.WA.AVATAR.BUTTON" :color="chainStore.customizationData?.colors?.[0]?.cod_hex" only-change-background />
-                </slot>
+                <!-- Sección derecha: Avatar -->
+                <div class="header-avatar">
+                    <slot name="avatar">
+                        <IconCustomColor 
+                            name="TH.WA.AVATAR.BUTTON" 
+                            :color="chainStore.customizationData?.colors?.[0]?.cod_hex" 
+                            only-change-background 
+                            height="40"
+                            width="40"
+                        />
+                    </slot>
+                </div>
             </div>
         </div>
 
@@ -30,8 +38,14 @@
                             :class="{ active: tab.isActive }" @click="tab.onClick"
                         >
                             <div class="flex flex-col items-center">
-                                <IconCustomColor class="w-[24px] h-[24px]" :name="tab.iconDefault" />
-                                <span class="text-base font-bold leading-none lato">{{ tab.title }}</span>
+                                <IconCustomColor 
+                                    class="w-[24px] h-[24px]" :name="tab.iconDefault" 
+                                    :color="!tab.isActive ? '#777777' : null"
+                                />
+                                <span 
+                                    class="text-base font-bold leading-none lato"
+                                    :class="{'text-[#777]':!tab.isActive}"
+                                >{{ tab.title }}</span>
                             </div>
                             <div
                                 class="flex justify-center"

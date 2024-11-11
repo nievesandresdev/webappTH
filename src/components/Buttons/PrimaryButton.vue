@@ -3,6 +3,7 @@
         <button 
             :class="[classes, bgButton, conditionClases,{'flex items-center gap-2 justify-center': nameIconLeft}]"
             :disabled="isDisabled"
+            :style="{color:textColorButton}"
             @click="handleClick"
         >
             <IconCustomColor 
@@ -59,6 +60,11 @@ const bgButton = computed(() => {
     let primaryClasses = `bg-[${chainStore.customizationData?.colors[0].cod_hex}] text-[${chainStore.customizationData?.colors[0].contrast_color}]`;
     classbgButton = disabled.value ? 'primary-disabled' : primaryClasses;
     return classbgButton;
+});
+
+const textColorButton = computed(() => {
+    let textButton = disabled.value ? '' : chainStore.customizationData?.colors[0].contrast_color;
+    return textButton;
 });
 
 const isDisabled = computed(() => disabled.value);
