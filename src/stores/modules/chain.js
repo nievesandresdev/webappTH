@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { getUrlParam } from '@/utils/utils.js'
 import {
     getHotelsListApi,
@@ -71,6 +71,7 @@ export const useChainStore = defineStore('chain', () => {
         
         if (customizationData.value) return customizationData.value;
         const response = await getCustomatizacionApi([]);
+        console.log('test $getCustomatizacion',response)
         let customization = response.ok ? response.data : null;
         if (customization) {
             customizationData.value = customization;
@@ -88,6 +89,23 @@ export const useChainStore = defineStore('chain', () => {
         return response
     }
     //
+
+    const $bgColor0 = computed(() => {
+        return customizationData.value?.colors[0].cod_hex;
+    });
+
+    const $colorContrast0 = computed(() => {
+        return customizationData.value?.colors[0].contrast_color;
+    });
+
+    const $bgColor1 = computed(() => {
+        return customizationData.value?.colors[1].cod_hex;
+    });
+
+    const $colorContrast1 = computed(() => {
+        return customizationData.value?.colors[1].contrast_color;
+    });
+
     return {
         chainSubdomain,
         $setChainSubdomain,
@@ -98,7 +116,11 @@ export const useChainStore = defineStore('chain', () => {
         chainData,
         customizationData,
         $getCustomatizacion,
-        $getStaysGuestByChain
+        $getStaysGuestByChain,
+        $bgColor0,
+        $colorContrast0,
+        $bgColor1,
+        $colorContrast1
     }
 
 })

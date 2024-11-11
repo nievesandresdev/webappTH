@@ -5,17 +5,25 @@
             <router-link
                 v-for="item in menuItems" class="menu__item py-[10px] w-[60px] h-[60px] space-y-1 text-center"
                 :to="item.to"
-                :class="item.routeNameIncludes.includes($route.name) ? `bg-[${customizationData?.colors?.[0]?.cod_hex}]` : ''"
-
+                :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
             >
-                <img
-                    class="mx-auto  w-6 h-6 sp:w-6 sp:h-6"
-                    :src="item.routeNameIncludes.includes($route.name) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
+                <!-- <img   
+                    :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                     :alt="item.title"
-                >
+                > -->
+                
+                <IconCustomColor 
+                    class="mx-auto w-6 h-6"
+                    :name="item.iconDefault" 
+                    :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
+                    only-change-background 
+                />
                 <span
                     class="text-[10px] font-bold leading-none lato"
-                    :class="item.routeNameIncludes.includes($route.name) ? `text-white` : `htext-black-100`"
+                    :class="validRoute(item) ? `text-white` : `htext-black-100`"
+                    :style="{
+                        color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
+                    }"
                 >
                     {{ item.title }}
                 </span>
@@ -26,8 +34,10 @@
 
 <script setup>
 import { onMounted, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import IconCustomColor from '@/components/IconCustomColor.vue';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
@@ -73,7 +83,7 @@ const menuItems = reactive([
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
         to: '/',
-        routeNameIncludes: [],
+        routeNameIncludes: ['Chat'],
     },
 ]);
 
@@ -86,9 +96,10 @@ onMounted(() => {
     chainStore.$getCustomatizacion(); 
 });
 
-const customizationData = computed(() => {
-    return chainStore.customizationData;
-});
+const validRoute = (item)=> {
+    return item.routeNameIncludes.includes(route.name)
+}
+
 
 </script>
 
