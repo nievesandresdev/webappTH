@@ -72,6 +72,9 @@ import { ref, onMounted } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
+import { DateTime, Interval, Settings } from 'luxon';
+// Configurar la localización global a español
+Settings.defaultLocale = 'es';
 //stores
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
@@ -150,23 +153,21 @@ const watchAvailability = async () => {
     try {
         // Cargar los horarios de chat desde el store
         let loadChatHours = await hotelStore.$loadChatHours(); 
-
         // Obtener la fecha y hora actual
         const currentDateTime = DateTime.now();
         const currentDay = currentDateTime.toFormat('cccc'); // Nombre completo del día, e.g., 'Monday'
         const currentTime = currentDateTime.toFormat('HH:mm'); // Formato 24 horas, e.g., '14:30'
-
         // Encontrar la disponibilidad de hoy
         const todaysAvailability = loadChatHours.find(item => item.day.toUpperCase() === currentDay.toUpperCase());
-
+        
         // Si no hay disponibilidad o no está activa, retornar false
         if (!todaysAvailability || !todaysAvailability.active) {
             isAvailable.value = false;
             return false;
         }
-
         // Verificar si la hora actual está dentro de alguno de los intervalos disponibles
         isAvailable.value = todaysAvailability.horary.some(timeSlot => {
+            
             // Crear DateTime para el inicio y fin del intervalo
             const startDateTime = DateTime.fromFormat(timeSlot.start, 'HH:mm').set({
                 year: currentDateTime.year,
@@ -189,7 +190,7 @@ const watchAvailability = async () => {
 
             // Crear un intervalo de tiempo
             const interval = Interval.fromDateTimes(startDateTime, endDateTime);
-
+            // console.log('test currentDateTimeParsed',currentDateTimeParsed)
             // Verificar si la hora actual está dentro del intervalo (inclusive)
             return interval.contains(currentDateTimeParsed);
         });
