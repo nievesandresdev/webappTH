@@ -120,7 +120,7 @@ import HotelActionButtons from './Components/HotelActionButtons.vue'
 import HotelRRSS from './Components/HotelRRSS.vue'
 import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
 import CardSlider from '@/components/CardSlider.vue'
-import BottomModal from '@/Modules/User/Components/BottomModal.vue'
+import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { useHotelStore } from '@/stores/modules/hotel'
 import { computed, ref, onMounted,provide } from 'vue'
 import SectionBarTab from '@/components/SectionBarTab.vue';

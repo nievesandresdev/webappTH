@@ -21,7 +21,7 @@
 <script setup>
 import { toRefs } from 'vue'
 import { navigateTo } from '@/utils/navigation'
-import BottomSheet from '@/components/Modal/BottomSheet.vue'
+import BottomSheet from './Components/BottomSheet.vue'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import CompleteRegistration from './Components/CompleteRegistration.vue';
 //router

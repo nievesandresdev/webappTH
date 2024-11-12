@@ -1,21 +1,22 @@
 <template>
 
-    <div class="relative flex flex-col wrapper xs:hcursor-mobile">
+    <!-- <div class="xs:hcursor-mobile"> -->
 
         <router-view></router-view>
 
-        <MenuMobile />
-    </div>
+        <MenuMobile v-if="!hideAppMenu" />
+    <!-- </div> -->
 
 </template>
 
 <script setup>
 
-import { onMounted, reactive, computed } from 'vue';
+import { onMounted, ref, provide } from 'vue';
+import MenuMobile from './Components/AppMenu.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-
-import MenuMobile from './Components/AppMenu.vue';
+const hideAppMenu = ref(false);
+provide('hideAppMenu',hideAppMenu)
 
 </script>

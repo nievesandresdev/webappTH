@@ -103,7 +103,7 @@
 import { ref, onMounted, reactive, computed } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
-import BottomModal from './Components/BottomModal.vue';
+import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();

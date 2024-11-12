@@ -39,7 +39,7 @@
 <script setup>
 import { ref, reactive, onMounted, toRefs } from 'vue'
 import { getUrlParam } from '@/utils/utils'
-import BottomSheet from '@/components/Modal/BottomSheet.vue'
+import BottomSheet from './Components/BottomSheet.vue'
 import THInputText from '@/components/THInputText.vue';
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import { handleToast } from "@/composables/useToast"; 
