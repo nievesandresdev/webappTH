@@ -4,7 +4,7 @@ const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/Hom
 const homeRoutes = [
   {
     path: '',
-    component: AppLayout, // Agrega el AppLayout aquí
+    component: AppLayout,
     children: [
       {
         name: 'Home',
