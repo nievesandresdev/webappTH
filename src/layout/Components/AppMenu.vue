@@ -25,7 +25,7 @@
                         color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
                     }"
                 >
-                    {{ item.title }}
+                    {{ dynamicTitle(item) }}
                 </span>
             </router-link>
         </div>
@@ -58,7 +58,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: '/',
+        to: `/${route.params.hotelSlug}/alojamiento`, // Incluye el prefijo dinámico
         routeNameIncludes: ['ShowHotel'],
     },
     {
@@ -99,6 +99,13 @@ onMounted(() => {
 const validRoute = (item)=> {
     return item.routeNameIncludes.includes(route.name)
 }
+
+const dynamicTitle = (item) => {
+    if (item.title === 'Hotel' && route.name === 'FacilityList') {
+        return 'Instalaciones';
+    }
+    return item.title;
+};
 
 
 </script>

@@ -1,11 +1,10 @@
-// const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
-const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/HomePageRed.vue')
-
+const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout');
+const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/HomePageRed.vue');
 
 const homeRoutes = [
   {
     path: '',
-    // component: AppLayout,
+    component: AppLayout, // Agrega el AppLayout aquí
     children: [
       {
         name: 'Home',
