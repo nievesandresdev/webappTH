@@ -30,7 +30,7 @@
 </template>
 <script setup>
 import { ref, reactive, provide, toRefs } from 'vue'
-import BottomSheet from '@/components/Modal/BottomSheet.vue'
+import BottomSheet from './Components/BottomSheet.vue'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import WelcomeMsg from '@/Modules/Chain/Components/WelcomeMsg.vue';
 import RegisterOrLogin from './Components/RegisterOrLogin.vue';

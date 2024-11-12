@@ -1,13 +1,26 @@
 <template>
-    <div :class="[classContainer, containerDesignClass]">
+    <div 
+        :class="[classContainer, containerDesignClass]"
+        :style="{
+            backgroundColor: activeCustom ?  chainStore.$bgColor0 : ''
+        }"
+    >
         <!-- left container  -->
         <div class="">
             <div class="flex items-center">
                 <!-- <img :src="iconLeft"  alt="Stay Icon" /> -->
                 <IconCustomColor :class="classIconLeft" :name="nameIconLeft" :color="iconDesignClass" only-change-background />
-                <p  :class="[classTitle, textDesignClass]">{{title}}</p>
+                <p  
+                    :class="[classTitle]"
+                    :style="{color: textDesignStyle}"
+                >
+                    {{title}}
+                </p>
             </div>
-            <p  :class="[classSubtitle, textDesignClass]">{{subtitle}}</p>
+            <p  
+                :class="[classSubtitle]"
+                :style="{color: textDesignStyle}"
+            >{{subtitle}}</p>
         </div>
         <!-- icon right  -->
         <IconCustomColor 
@@ -76,16 +89,15 @@ const containerDesignClass = computed(() => {
     if(!activeCustom.value){
         return "border-white bg-gradient-100";
     }
-    let bg = customizationData?.colors[1]?.cod_hex;
-    let contrast = customizationData?.colors[1]?.contrast_color;
-    return `bg-[${bg.toUpperCase()}] border-[${contrast}]`
+    return '';
+    // let bg = customizationData?.colors[1]?.cod_hex;
+    // let contrast = customizationData?.colors[1]?.contrast_color;
+    // return `bg-[${bg.toUpperCase()}] border-[${contrast}]`
 });
 
-const textDesignClass = computed(() => {
-    if(!activeCustom.value) return
-    let customizationData = chainStore.customizationData;
-    let contrast = customizationData?.colors[1]?.contrast_color;
-    return `text-[${contrast}]`
+const textDesignStyle = computed(() => {
+    if(!activeCustom.value) return ''
+    return chainStore.$colorContrast0
 });
 
 const iconDesignClass = computed(() => {
