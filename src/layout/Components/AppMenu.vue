@@ -58,7 +58,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: `/${route.params.hotelSlug}/alojamiento`, // Incluye el prefijo dinámico
+        to: `/${route.params.hotelSlug}/alojamiento`, 
         routeNameIncludes: ['ShowHotel'],
     },
     {
