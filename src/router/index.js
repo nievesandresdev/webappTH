@@ -7,7 +7,7 @@ import placeRoutes from './placeRoutes'
 import chatRoutes from './chatRoutes'
 import facilityRoutes from './facilityRoutes'
  import hotelRoutes from './hotelRoutes'
-// import queryRoutes from './queryRoutes'
+import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
 
 import middlewarePipeline from '@/middlewares'
@@ -76,7 +76,7 @@ const routes = [
       ...chatRoutes,
       ...facilityRoutes,
       ...hotelRoutes,
-      // ...queryRoutes,
+      ...queryRoutes,
       ...policiesRoutes,
     ]
   },

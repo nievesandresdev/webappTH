@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, computed } from 'vue';
+import { onMounted, reactive, computed, ref  } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -50,7 +50,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.HOME',
         iconSelected: 'WA.MENU.SELECTED.HOME',
-        to: '/',
+        to: `/${route.params.hotelSlug}`,
         routeNameIncludes: ['Home'],
     },
     {
@@ -66,7 +66,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
-        to: '/lugares',
+        to: `/${route.params.hotelSlug}/lugares`,
         routeNameIncludes: ['PlaceList'],
     },
     {
@@ -82,19 +82,34 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
-        to: '/',
-        routeNameIncludes: ['Chat'],
+        to: `/${route.params.hotelSlug}/chat`,
+        routeNameIncludes: ['Chat','Inbox'],
     },
 ]);
 
+const showChatToGuest = ref(true)
 // COMPUTED
 const itemMenuSelected = computed(() => {
     return router.name;
 });
 
 onMounted(() => {
-    chainStore.$getCustomatizacion(); 
+    // chainStore.$getCustomatizacion(); 
+    showChatToGuest.value = hotelStore.hotelData?.chatSettings?.show_guest;
+    console.log('test sdata', hotelStore.hotelData?.chatSettings);
+    console.log('test showChatToGuest', showChatToGuest.value);
+    if (!showChatToGuest.value) {
+        const msgLink = menuItems.find(item => item.title === 'Mensajes');
+        console.log('test msgLink', msgLink);
+        if (msgLink) {
+            msgLink.title = 'Inbox';
+            msgLink.to =  `/${route.params.hotelSlug}/inbox`;
+        }
+        console.log('test msgLink', msgLink);
+    }
+    
 });
+
 
 const validRoute = (item)=> {
     return item.routeNameIncludes.includes(route.name)

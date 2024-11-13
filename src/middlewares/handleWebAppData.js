@@ -8,6 +8,8 @@ import utils from '@/utils/utils.js';
 
 export default async function handleWebAppData({ to, from, next }) {
 
+    const stayId = utils.getUrlParam('e');
+    const guestId = utils.getUrlParam('g');
     sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
     //evitar multiples redirecciones
     
@@ -32,7 +34,9 @@ export default async function handleWebAppData({ to, from, next }) {
     //cargar data del hotel
     const hotelStore = useHotelStore();
     //se guarda el subdominio en localstorage en caso de existir
-    localStorage.removeItem('subdomain');
+    // if(!stayId || !guestId){
+    //     localStorage.removeItem('subdomain');
+    // }
     if(chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainData?.independentSubdomain);    
     }else{
@@ -51,7 +55,6 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data huesped
     const guestStore = useGuestStore();
-    const guestId = utils.getUrlParam('g');
     if(guestId){
         await guestStore.findByIdInSetLocalGuest(guestId)
     }
@@ -60,7 +63,6 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data stay
     const stayStore = useStayStore();
-    const stayId = utils.getUrlParam('e');
     if(stayId){
         await stayStore.findByIdInSetLocalStay(stayId)
     }

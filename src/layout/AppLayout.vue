@@ -1,11 +1,11 @@
 <template>
 
-    <!-- <div class="xs:hcursor-mobile"> -->
+    <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
 
         <MenuMobile v-if="!hideAppMenu" />
-    <!-- </div> -->
+    </div>
 
 </template>
 

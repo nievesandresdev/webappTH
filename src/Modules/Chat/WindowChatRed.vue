@@ -1,8 +1,10 @@
 <template>
-    <div class="fixed top-0 left-0 w-full z-[2500]">
+    <!-- <div class="fixed top-0 left-0 w-full z-[2500]"> -->
         <div ref="myDiv" 
-            class="flex flex-col hbg-gray-200 h-[92.3vh] w-full"
-            
+            :class="[
+                'flex flex-col hbg-gray-200 w-full',
+                isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]'
+            ]"
         >
             <!-- <div class="sticky top-0 left-0"> -->
             <AppHeader title="Chat" :tabs="tabsMenu"/>
@@ -93,7 +95,7 @@
             </div>
         </div>
 
-    </div>
+    <!-- </div> -->
     <ScheduleModal />
 </template>
 <script setup>
@@ -104,6 +106,8 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
 import { DateTime, Interval, Settings } from 'luxon';
 import { formatTimestampDate } from '@/utils/dateHelpers'
+import { useRouter } from 'vue-router';
+const router = useRouter();
 // Configurar la localización global a español
 Settings.defaultLocale = 'es';
 //stores
@@ -125,15 +129,19 @@ const isSubscribed = ref(false);
 const channel_chat = ref(null);
 const pusher = ref(null);   
 const screenOff = ref(null);   
-const hideAppMenu = inject('hideAppMenu');   
+const hideAppMenu = inject('hideAppMenu'); 
+const isIphone = ref(false);
+
 //mounted
 onMounted( async () => {
     messages.value =  await chatStore.loadMessages();
-    console.log('test messages',messages.value)
     setTimeout(scrollToBottom, 50);
     clearTimeouts();
     watchAvailability();
     connectPusher();
+    isIphone.value = /iPhone/i.test(navigator.userAgent);
+
+    console.log('test isIphone.value',isIphone.value)
 });
 
 let originalBodyOverflow;
@@ -236,7 +244,6 @@ const watchAvailability = async () => {
 
             // Crear un intervalo de tiempo
             const interval = Interval.fromDateTimes(startDateTime, endDateTime);
-            // console.log('test currentDateTimeParsed',currentDateTimeParsed)
             // Verificar si la hora actual está dentro del intervalo (inclusive)
             return interval.contains(currentDateTimeParsed);
         });
@@ -301,7 +308,7 @@ const tabsMenu = [
         iconDefault: `WA.Chat`,
         iconSelected: `WA.Chat`,
         isActive: true,
-        onClick: () => {},
+        onClick: () => router.push({ name:'Chat' }),
     },
     {    
         title: 'Inbox',
@@ -309,7 +316,7 @@ const tabsMenu = [
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,
         isActive: false,
-        onClick: () => {},
+        onClick: () => router.push({ name:'Inbox' }),
     }
 ];
 </script>

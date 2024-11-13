@@ -10,11 +10,11 @@ export default {
   props: {
     class: {
       type: String,
-      required: '',
+      default: '',
     },
     name: {
       type: String,
-      required: '',
+      required: true,
     },
     color: {
       type: String,
@@ -36,31 +36,63 @@ export default {
   data() {
     return {
       svgContent: '',
+      baseSvgContent: '',
     };
   },
+  watch: {
+    color() {
+      this.updateSvgContent();
+    },
+    width() {
+      this.updateSvgContent();
+    },
+    height() {
+      this.updateSvgContent();
+    },
+    onlyChangeBackground() {
+      this.updateSvgContent();
+    },
+    name(newName, oldName) {
+      if (newName !== oldName) {
+        this.fetchSvg();
+      }
+    },
+  },
   async mounted() {
-    try {
-      const response = await axios.get(`/assets/icons/${this.name}.svg`);
-      let svgContent = response.data;
+    await this.fetchSvg();
+  },
+  methods: {
+    async fetchSvg() {
+      try {
+        const response = await axios.get(`/assets/icons/${this.name}.svg`);
+        this.baseSvgContent = response.data;
+        this.updateSvgContent();
+      } catch (error) {
+        console.error(`Error loading SVG icon: ${error}`);
+      }
+    },
+    updateSvgContent() {
+      if (!this.baseSvgContent) return;
+
+      let svg = this.baseSvgContent;
 
       // Reemplazar los atributos de tamaño
-      if(this.width && this.height){
-        svgContent = svgContent
-        .replace(/(<svg[^>]*?)width="[^"]*"/, `$1width="${this.width}"`)
-        .replace(/(<svg[^>]*?)height="[^"]*"/, `$1height="${this.height}"`);
+      if (this.width && this.height) {
+        svg = svg
+          .replace(/(<svg[^>]*?)width="[^"]*"/, `$1width="${this.width}"`)
+          .replace(/(<svg[^>]*?)height="[^"]*"/, `$1height="${this.height}"`);
       }
 
       // Reemplazar el color
       if (this.onlyChangeBackground) {
-        svgContent = svgContent.replace(/fill="#333333"/g, `fill="${this.color}"`);
+        svg = svg.replace(/fill="#333333"/g, `fill="${this.color}"`);
       } else {
-        svgContent = svgContent.replace(/fill="[^"]*"/g, `fill="${this.color}"`);
+        // Reemplaza todos los atributos de fill, puedes ajustar esto según tus necesidades
+        svg = svg.replace(/fill="[^"]*"/g, `fill="${this.color}"`);
       }
 
-      this.svgContent = svgContent;
-    } catch (error) {
-      console.error(`Error loading SVG icon: ${error}`);
-    }
+      this.svgContent = svg;
+    },
   },
 };
 </script>
