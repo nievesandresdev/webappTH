@@ -96,16 +96,12 @@ const itemMenuSelected = computed(() => {
 onMounted(() => {
     // chainStore.$getCustomatizacion(); 
     showChatToGuest.value = hotelStore.hotelData?.chatSettings?.show_guest;
-    console.log('test sdata', hotelStore.hotelData?.chatSettings);
-    console.log('test showChatToGuest', showChatToGuest.value);
     if (!showChatToGuest.value) {
         const msgLink = menuItems.find(item => item.title === 'Mensajes');
-        console.log('test msgLink', msgLink);
         if (msgLink) {
             msgLink.title = 'Inbox';
             msgLink.to =  `/${route.params.hotelSlug}/inbox`;
         }
-        console.log('test msgLink', msgLink);
     }
     
 });

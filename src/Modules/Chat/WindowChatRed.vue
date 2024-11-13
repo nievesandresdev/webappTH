@@ -42,7 +42,7 @@
                 </div>
                 <!-- msgs -->
                 <div 
-                    v-for="msg in messages" 
+                    v-for="msg in chatStore.messages" 
                     :key="msg" 
                     class="min-w-[156px] max-w-[246px] mb-5" 
                     :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}"
@@ -118,7 +118,6 @@ const chatStore = useChatStore();
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore();
 //DATA
-const messages = ref(null)
 const settings = ref(hotelStore?.hotelData?.chatSettings ?? {});
 const msg = ref(null);
 const isAvailable = ref(false);
@@ -134,14 +133,12 @@ const isIphone = ref(false);
 
 //mounted
 onMounted( async () => {
-    messages.value =  await chatStore.loadMessages();
+    await chatStore.loadMessages();
     setTimeout(scrollToBottom, 50);
     clearTimeouts();
     watchAvailability();
     connectPusher();
     isIphone.value = /iPhone/i.test(navigator.userAgent);
-
-    console.log('test isIphone.value',isIphone.value)
 });
 
 let originalBodyOverflow;
@@ -174,7 +171,7 @@ const  enableScroll = () => {
     window.removeEventListener('touchmove', preventScroll);
 }
 
-const sendMsg = (e)=>{
+const sendMsg = async (e)=>{
     if (!e.shiftKey && msg.value) {
         //servicio para enviar mensaje
         let text = msg.value;
@@ -186,6 +183,7 @@ const sendMsg = (e)=>{
             langWeb : localStorage.getItem('locale') || 'es',
             isAvailable : isAvailable.value
         };
+        console.log('--- SEND MESAGGE')
         chatStore.sendMsgToHoster(params);
         // Desenfocar el campo de entrada para cerrar el teclado
         const inputElement = document.getElementById('text-auto');
@@ -193,6 +191,16 @@ const sendMsg = (e)=>{
         inputElement.blur();
         }
         document.getElementById('text-auto').style.height = '40px';
+        
+        const ahora = new Date();
+        const isoConMicrosegundos = ahora.toISOString().replace('Z', '000Z');
+        await chatStore.addMessage({
+            automatic:false,
+            by: "Guest",   
+            created_at: isoConMicrosegundos,
+            text
+        });
+        setTimeout(scrollToBottom, 50);
     }
 }
 
@@ -284,7 +292,11 @@ const connectPusher = () => {
                 if(!screenOff.value){
                     await chatStore.markMsgsAsRead('lleno');
                 }
-                chatStore.addMessage(data.message);
+                if(data.message.by == 'Hoster'){    
+                    await chatStore.addMessage(data.message);
+                    setTimeout(scrollToBottom, 50);
+                }
+                
             });
         isSubscribed.value = true; // Marcar como suscrito
         }

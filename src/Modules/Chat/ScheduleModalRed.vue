@@ -44,9 +44,9 @@ const isScheduleModalOpen = inject('isScheduleModalOpen');
 
 
 
-onMounted(async() => {
-    console.log('horary',hotelStore.chatHours)
-})
+// onMounted(async() => {
+//     console.log('horary',hotelStore.chatHours)
+// })
 
 
 const closeModal = (e) => {

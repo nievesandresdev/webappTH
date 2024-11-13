@@ -64,7 +64,7 @@ export default {
   methods: {
     async fetchSvg() {
       try {
-        const response = await axios.get(`/assets/icons/${this.name}.svg`);
+        const response = await axios.get(`/assets/icons/${this.name}.svg`, { showPreloader: false });
         this.baseSvgContent = response.data;
         this.updateSvgContent();
       } catch (error) {

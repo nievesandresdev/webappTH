@@ -19,7 +19,7 @@ export const useChatStore = defineStore('chat', () => {
         return response
     }
 
-    function addMessage(dataMsg) {
+    async function addMessage(dataMsg) {
         messages.value.push(dataMsg);
     }
 
@@ -85,7 +85,8 @@ export const useChatStore = defineStore('chat', () => {
         unreadMsgs,
         unreadMsgsRef,
         countUnreadMessages,
-        setUnreadMsgsCount
+        setUnreadMsgsCount,
+        messages
     }
 
 })
