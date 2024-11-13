@@ -67,7 +67,7 @@
             </div>
             <!-- input chat -->
             <div class="bg-white rounded-t-[10px] shadow-guest-2">
-                <div class="px-6 pt-3 pb-4 flex items-center gap-3 h-[68px]">
+                <div class="px-6 pt-3 pb-4 flex items-center gap-3">
                     <textarea 
                         id="text-auto" 
                         class="flex-grow border border-color-secondary rounded-[8px] hbg-gray-100 h-full px-3 py-2 text-sm lato font-medium" :placeholder="$t('chat.inputChat')"
