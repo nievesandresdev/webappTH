@@ -1,19 +1,24 @@
 <template>
+  <div
+    v-if="!isStepThree && open"
+    class="w-screen h-screen fixed top-0 left-0 z-[2000]" style="background: rgba(0, 0, 0, 0.32);"
+    @click="emitClose"
+  />
   <transition name="slide-fade">
     <div
       ref="sheet"
       v-if="open"
-      class="bottom-sheet relative pt-[12px]"
+      class="bottom-sheet relative pt-[6px] sp:pt-[12px] z-[4000]"
       :style="{ height: sheetHeight }"
       @mousedown="startDrag"
       @touchstart="startDrag"
     >
-      <div class="flex justify-center py-[12px] w-full absolute top-0 left-0">
+      <div class="flex justify-center py-[6px] sp:py-[12px] w-full absolute top-0 left-0">
         <div class="handlebar"></div>
       </div>
       <!-- {{ sheetHeight }} {{ isStepThree }} -->
       <div class="flex flex-col h-full">
-        <div class="content flex-1 pt-[28px]">
+        <div class="content flex-1 pt-[14px] sp:pt-[28px]">
           <slot name="content" />
         </div>
         <div class="footer">
@@ -25,7 +30,8 @@
 </template>
 
 <script setup>
-import { ref, toRefs, watch, defineEmits } from 'vue';
+import { ref, toRefs, watch, defineEmits, onUpdated } from 'vue';
+import { updateGuestByIdApi } from '../../api/services/auth.services';
 
 const emits = defineEmits(['changeCurrentHeight']);
 
@@ -61,7 +67,6 @@ let isDragging = false;
 
 // Actualiza la altura del bottom sheet en función de `position`
 watch(position, () => {
-  console.log(position, 'position');
   if (!isStepThree.value) {
     currentHeightIndex.value = 1; // Inicia en 73% cuando isStepThree es false
   } else {
@@ -80,15 +85,24 @@ watch(position, () => {
 watch(currentHeightIndex, () => {
   emits('changeCurrentHeight', currentHeightIndex.value);
 });
-watch(open, () => {
-  console.log(open, 'open');
+watch(position, (valueNew, valueOld) => {
+  // console.log(valueNew, valueOld, 'open watch');
+});
+onUpdated(() => {
+  // console.log(sheetHeight.value, 'sheetHeight');
+  // console.log(position.value, 'position');
+  // console.log(open.value, 'open');
+  // console.log(isStepThree.value, 'isStepThree');
+  if (sheetHeight.value == '0%' && position.value == 'min-top' && open.value) {
+    currentHeightIndex.value = 1;
+    sheetHeight.value = '73%';
+  }
 });
 
 // Inicia el arrastre del bottom sheet
 function startDrag(event) {
   isDragging = true;
   startY = event.touches ? event.touches[0].clientY : event.clientY;
-
   // Agrega listeners para movimiento y fin del arrastre
   document.addEventListener('mousemove', onDrag);
   document.addEventListener('touchmove', onDrag);
@@ -128,6 +142,7 @@ function onDrag(event) {
       emitClose();
     }
   }
+  
 }
 
 // Finaliza el arrastre y limpia los listeners
@@ -161,8 +176,8 @@ function emitClose() {
 }
 
 .handlebar {
-  width: 48px;
-  height: 4px;
+  width: 24px;
+  height: 2px;
   background-color: #777777;
   border-radius: 10px;
   cursor: grab;
@@ -181,4 +196,12 @@ function emitClose() {
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: transform 0.3s ease, visibility 0.3s ease;
 }
+
+@media (min-width:300) {
+  .handlebar {
+    width: 48px;
+    height: 4px;
+  }
+}
+
 </style>

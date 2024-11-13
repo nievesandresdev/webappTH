@@ -2,18 +2,16 @@
 
     <div
         id="list-place"
-        class="w-full space-y-4 h-[502px] overflow-y-auto"
-    >
-    <!-- 327 -->
-        
-        <template v-if="!isloadingForm && !placesData.length">
+        class="w-full space-y-[8px] sp:space-y-4 h-[257px] h-[502px] overflow-y-auto"
+    >   
+        <template v-if="!isloadingForm && !placesData?.length">
             <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>
-            <template v-for="item in placesData">
+            <template v-for="item in (placesData ?? [])">
                 <CardList :data="item" />
             </template>
-            <template v-for="card in numberCardsToLoad">
+            <template v-for="card in (numberCardsToLoad ?? 0)">
                 <SkeletonCard />
             </template>
         </template>
@@ -31,7 +29,7 @@
     
     import { $throttle, $isElementVisible } from '@/utils/utils';
 
-    const defNumberCardsToLoad = ref(20);
+    const numberCardsToLoadDefault = ref(20);
 
     const placesData = inject('placesData');
     const paginateData = inject('paginateData');
@@ -43,13 +41,14 @@
     });
 
     const numberCardsToLoad = computed(() => {
-        if(firstLoad.value) return defNumberCardsToLoad.value;
+        if(firstLoad.value) return numberCardsToLoadDefault.value;
         if(!firstLoad.value && paginateData.total == 0) return 0;
         let remaining = paginateData.total - placesData.value.length;
-        if(remaining < defNumberCardsToLoad.value && paginateData.total > 0){
-            return remaining;
-        } 
-        return defNumberCardsToLoad.value;
+        remaining = remaining < 0 ? 0 : remaining;
+        if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
+            return remaining ;
+        }
+        return numberCardsToLoadDefault.value;
     });
 
     // FUNCTIONS

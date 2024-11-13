@@ -6,6 +6,7 @@
     >
         <template v-slot:titleOrSearch>
             <InputSearchPlace
+                :empty-filters="emptyFilters"
                 @search="searchHandle"
                 @activateSearch="activateSearchHandle"
                 @openFilter="openFilter"
@@ -13,20 +14,24 @@
         </template>
     </AppHeader>
     <div class="flex-1">
-        <!-- <template v-if="pointersData?.features?.length">
+        <template v-if="pointersData?.features?.length">
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
-        </template> -->
-        <ListPageBottomSheet
-            :position-bottom-sheet="positionBottomSheet"
-            @changeCategory="changeCategoryHandle($event)"
-            @loadMore="loadMore"
-            @closeSearch="closeSearchHandle"
-        />
-        <ListPagebottomSheetFilter
-            @reloadPlaces="submitFilter()"
-        />
+        </template>
+        <!-- <template v-if="isOpenBottomSheetList"> -->
+            <ListPageBottomSheet
+                :position-bottom-sheet="positionBottomSheet"
+                @changeCategory="changeCategoryHandle($event)"
+                @loadMore="loadMore"
+                @closeSearch="closeSearchHandle"
+            />
+        <!-- </template>
+        <template v-if="isOpenBottomSheetFilter"> -->
+            <ListPagebottomSheetFilter
+                @reloadPlaces="submitFilter()"
+            />
+        <!-- </template> -->
     </div>
 </template>
 
@@ -34,7 +39,7 @@
 
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam } from '@/utils/utils.js';
+import { getUrlParam, slufy } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -79,6 +84,7 @@ const dataFilter = {
 }
 
 const positionBottomSheet = ref('medium');
+const loadingSearch = ref(false);
 const isOpenBottomSheetList = ref(true);
 const isOpenBottomSheetFilter = ref(false);
 const searchingActive = ref(false);
@@ -116,7 +122,19 @@ const categoriPlaceSelected = computed(() => {
     return categoriplace;
 });
 
+const numbersFiltersApplied = computed(() => {
+    let filters = [];
+    formFilter.featured ? filters.push('featured') : '';
+    formFilter.distances?.length ? filters.push('distances') : '';
+    formFilter.scores?.length ? filters.push('scores') : '';
+    return filters;
+});
+const emptyFilters = computed(() => {
+    return numbersFiltersApplied.value.length == 0;
+});
+
 watch(positionBottomSheet, function(val) {
+    placeSelected.value = null;
     if (val == '0%') {
         isOpenBottomSheetList.value = true;
         setTimeout(() => {
@@ -128,7 +146,7 @@ watch(positionBottomSheet, function(val) {
 // ONMOUNTED
 onMounted(async () => {
     await loadTypePlaces();
-    const materialicePromice = await Promise.all([loadPlaces(), loadPointers(), loadCategoriPlaces()]);
+    loadAll();
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
@@ -186,13 +204,11 @@ function changeCategoryHandle ({idCategory, idTypePlace}) {
     changeCategory(idCategory, idTypePlace);
 }
 
-function changeCategory (idCategory = null, idTypePlace = null) {
+async function changeCategory (idCategory = null, idTypePlace = null) {
     formFilter.categoriplace = idCategory;
     formFilter.typeplace = idTypePlace;
-    loadCategoriPlaces();
-    // if(!formFilter.categoriplace) getFirstCategoryOfType();
     loadTabsHeader();
-    submitFilter();
+    loadAll();
 }
 
 const getFirstCategoryOfType = ()=> {
@@ -226,6 +242,7 @@ async function loadPointers () {
     const response = await placeStore.$apiGetPointer(query);
     if (response.ok) {
         pointersData.value = transformDataPointer(response.data?.places);
+        console.log(pointersData.value, 'pointersData.value');
     }
 }
 
@@ -247,7 +264,7 @@ function transformFeaturesPointerData (item) {
             id: item.id,
             name: item.title,
             description: item.description,
-            category: item.categori_place.name.toLowerCase(),
+            category: slufy(item.categori_place.name),
             categoryIcon:  item.categori_place.icon,
         }
     }
@@ -262,11 +279,13 @@ function closeSearchHandle () {
     searchingActive.value = false;
 }
 
-function searchHandle ($event) {
-    formFilter.search = $event?.target?.value;
+async function searchHandle ($event) {
+    loadingSearch.value = true;
+    formFilter.search = $event?.target?.value ?? null;
     page.value = 1;
     placesData.value = [];
-    loadPlaces();
+    await loadAll();
+    loadingSearch.value = false;
 }
 
 function activateSearchHandle ($event) {
@@ -275,11 +294,16 @@ function activateSearchHandle ($event) {
     if ($event == 'medium') {
         searchingActive.value = false;
         formFilter.search = null;
-        submitFilter();
+        loadAll();
     }
 }
 
+async function loadAll() {
+     const materialicePromice = await Promise.all([loadCategoriPlaces(), loadCategoriPlaces(), submitFilter(), loadPointers()]);
+}
+
 function submitFilter (){
+    placeSelected.value = null;
     isOpenBottomSheetList.value = true;
     page.value = 1;
     placesData.value = [];
@@ -320,16 +344,12 @@ function loadQueryInFormFilter () {
 }
 
 function validValueQuery (field, value) {
-
     if (value === 'false') return false;
     if (value === 'true') return true;
-
     return value;
 }
 
 async function openFilter () {
-    console.log(isOpenBottomSheetList.value, isOpenBottomSheetFilter.value, positionBottomSheet.value);
-
     isOpenBottomSheetList.value = false;
     // await nextTick();
     setTimeout(() => {
@@ -348,6 +368,7 @@ provide('paginateData', paginateData);
 provide('placesData', placesData);
 provide('pointersData', pointersData);
 provide('placeSelected', placeSelected);
+provide('loadingSearch', loadingSearch);
 provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
 provide('isloadingForm', isloadingForm);

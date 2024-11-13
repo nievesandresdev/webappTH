@@ -1,20 +1,20 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-4 pb-2 w-full z-[3000]">
+    <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
         
-        <div class="menu rounded-[20px] bg-white py-[10px] px-[16px] space-x-1 flex justify-around">
+        <div class="menu rounded-[10px] sp:rounded-[20px] bg-white py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 flex justify-around">
             <router-link
-                v-for="item in menuItems" class="menu__item py-[10px] w-[60px] h-[60px] space-y-1 text-center"
+                v-for="item in menuItems" class="menu__item py-[4px] sp:py-[10px] w-[27px] sp:w-[60px] h-[27px] sp:h-[60px] space-y-[1px] sp:space-y-1 text-center flex flex-col justify-center"
                 :to="item.to"
                 :class="item.routeNameIncludes.includes($route.name) ? `bg-[${customizationData?.colors?.[0]?.cod_hex}]` : ''"
 
             >
                 <img
-                    class="mx-auto  w-6 h-6 sp:w-6 sp:h-6"
+                    class="mx-auto  size-[12px] sp:size-6"
                     :src="item.routeNameIncludes.includes($route.name) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                     :alt="item.title"
                 >
                 <span
-                    class="text-[10px] font-bold leading-none lato"
+                    class="text-[4px] sp:text-[10px] font-bold leading-none lato"
                     :class="item.routeNameIncludes.includes($route.name) ? `text-white` : `htext-black-100`"
                 >
                     {{ item.title }}

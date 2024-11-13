@@ -9,12 +9,12 @@
             <!-- {{positionBottomSheet}} -->
             <PlaceSelected :place-selected="placeSelectedData"  />
             <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
-            <div class="px-4 pt-[12px] h-full">
+            <div class="px-[8px] sp:px-4 py-[6px] sp:pt-[12px] h-full">
                 <div class=" h-full flex flex-col">
                     <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                     <p
                         v-if="!isloadingForm"
-                        class="text-sm font-bold my-4"
+                        class="text-[1px] sp:text-sm font-bold my-[8px] sp:my-4"
                     >
                         <template v-if="!searchingActive">
                             <template v-if="!formFilter.search && placesData.length">
@@ -26,15 +26,15 @@
                         </template>
                         <template v-else>
                             <button
-                                class="flex items-center space-x-2"
+                                class="flex items-center space-x-1 sp:space-x-2"
                                 @click="closeSearch"
                             >
                                 <img
                                     src="/assets/icons/WA.search.svg"
-                                    class="size-[16px]"
+                                    class="size-[8px] sp:size-[16px]"
                                     alt=""
                                 >
-                                <p class="text-sm font-bold border border-b-black">
+                                <p class="text-[1px] sp:text-sm font-bold border border-b-black">
                                     {{ `${$t('place.list-page.text-count-list-search-active')}: "${formFilter.search}"` }}
                                 </p>
                             </button>
@@ -42,15 +42,13 @@
                     </p>
                     <p
                         v-else
-                        class="item-skeletom animate-pulse h-[14px] w-[120px] my-4"
+                        class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px] my-[8px] sp:my-4"
                     />
                     <ListPageBottomSheeList @loadMore="loadMoreHandle" />
                 </div>
             </div>
         </template>
     </BaseBottomSheet>
-    <!-- <BaseBottomSheet>
-    </BaseBottomSheet> -->
 </template>
 
 <script setup>
@@ -78,6 +76,7 @@
     const placesData = inject('placesData');
     const placeSelectedData = inject('placeSelected');
     const isOpenBottomSheetList = inject('isOpenBottomSheetList');
+    const placeSelected = inject('placeSelected');
 
     const classControlsSheet = ref('0px');
 
@@ -93,6 +92,7 @@
         emits('closeSearch');
     }
     function changePositionHandle ($event) {
+        placeSelected.value = null;
         if ($event === 3) {
             positionBottomSheet.value = 'min-top';
         }

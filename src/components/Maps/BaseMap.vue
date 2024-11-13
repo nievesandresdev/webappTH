@@ -19,7 +19,7 @@
               class="w-6 h-6"
             />
           </button>
-          <!-- <MapboxMap
+          <MapboxMap
             class="h-full"
             :access-token="TOKEN"
             ref="mapboxMap"
@@ -29,7 +29,7 @@
             @map-click="handleMapClick"
         >
             <slot name="controls"></slot>
-        </MapboxMap> -->
+        </MapboxMap>
     </div>
 </template>
 

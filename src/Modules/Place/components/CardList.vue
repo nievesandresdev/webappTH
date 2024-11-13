@@ -1,6 +1,6 @@
 <template>
-    <div class="card-list flex w-full h-[96px]">
-        <div class="w-[111px] h-[96px] rounded-[10px] relative overflow-hidden">
+    <div class="card-list flex w-full h-[48px] sp:h-[96px]">
+        <div class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] rounded-[10px] relative overflow-hidden">
             <img
                 v-if="data.place_images?.[0]?.url"
                 class="object-cover w-full h-full"
@@ -10,28 +10,28 @@
             >
             <div
                 v-if="data.recommended || data.place_featured"
-                class="absolute bottom-0 left-0 px-[4px] pb-[8px] z-20 w-full"
+                class="absolute bottom-0 left-0 px-[2px] sp:px-[4px] pb-[4px] sp:pb-[8px] z-20 w-full"
             >
-                <div class="rounded-full px-[4px] py-[2px] flex space-x-1 bg-white flex items-center">
+                <div class="rounded-full px-[2px] sp:px-[4px] py-[1px] sp:py-[2px] flex space-x-[1px] sp:space-x-1 bg-white flex items-center">
                     <img
                         src="/assets/icons/WA.STAR.BLACK.svg"
-                        class="w-[12px] h-[12px]"
+                        class="size-[6px] sp:size-[12px]"
                     >
-                    <span class="text-[10px] font-bold htext-black-100 leading-none">{{ $utils.capitalize($t('home.card-product.recommended')) }}</span>
+                    <span class="text-[4px] sp:text-[10px] font-bold htext-black-100 leading-none">{{ $utils.capitalize($t('home.card-product.recommended')) }}</span>
                 </div>
             </div>
         </div>
-        <div class="p-[8px] flex flex-col flex-1">
+        <div class="p-[4px] sp:p-[8px] flex flex-col flex-1">
             <div class="flex-1 truncate-2">
-                <div class="flex items-center space-x-2 mb-2">
+                <div class="flex items-center space-x-[4px] space-x-2 mb-[4px] sp:mb-2">
                     <img
                         src="/assets/icons/WA.STAR.BLACK.svg"
-                        class="w-[16px] h-[16px]"
+                        class="size-[8px] sp:size-4"
                     >
-                    <span class="text-base leading-none font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
-                    <span class="text-[10px] leading-none font-bold">({{ data.num_reviews }} reseñas)</span>
+                    <span class="text-[8px] sp:text-base leading-none font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
+                    <span class="text-[4px] sp:text-[10px] leading-none font-bold">({{ data.num_reviews }} reseñas)</span>
                 </div>
-                <p class="text-sm font-bold leading-none truncate-2 h-[32px]" v-html="data.title" />
+                <p class="text-[6px] sp:text-sm font-bold leading-none truncate-2 h-[16px] sp:h-[32px]" v-html="data.title" />
             </div>
             <div
                 class="flex items-center justify-between"
@@ -39,17 +39,17 @@
             >
                 <div
                     v-if="distance"
-                    class="flex items-center space-x-[2px]"
+                    class="flex items-center space-x-[1px] sp:space-x-[2px]"
                 >
                     <img
                         src="/assets/icons/WA.pointer.svg"
-                        class="w-[12px] h-[12px]"
+                        class="size-[6px] sp:size-[12px]"
                     >
-                    <span class="text-[10px] font-bold leading-none">{{ distance }}km</span>
+                    <span class="text-[4px] sp:text-[10px] font-bold leading-none">{{ distance }}km</span>
                 </div>
                 <img
                     :src="`/assets/icons/${data.categori_place.icon}.svg`"
-                    class="w-6 h-6"
+                    class="size-3 sp:size-6"
                 >
             </div>
         </div>

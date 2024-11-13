@@ -55,6 +55,7 @@
             <div class="flex justify-between border-t-[2px] border-[#fff] p-4">
                 <button
                     class="underline hbtn-tertiary text-sm font-bold px-4 py-[10px]"
+                    @click="resetFormFilter"
                     
                 >
                     {{ $t('place.detail.filters.remove') }}
@@ -131,12 +132,13 @@
         featured: false,
     }
     const formFilterSheeBottom = reactive(JSON.parse(JSON.stringify(dataFilter)));
+    const formFilterSheeBottomDefault = reactive(JSON.parse(JSON.stringify(dataFilter)));
 
     watch(isOpenBottomSheetFilter, (valNew, valOld) => {
-        console.log(valNew, 'isOpenBottomSheetFilter', 'List');
         if (!!valNew && !valOld) {
             let { featured, distances, points } = formFilter;
             Object.assign(formFilterSheeBottom, { featured, distances, points });
+            // Object.assign(formFilterSheeBottomDefault, { featured, distances, points });
         }
     });
 
@@ -160,8 +162,16 @@
     function selectRecommended () {
         formFilterSheeBottom.featured = !formFilterSheeBottom.featured; 
     }
+
+    function resetFormFilter () {
+        console.log(formFilterSheeBottomDefault, 'formFilterSheeBottomDefault');
+        Object.assign(formFilterSheeBottom, formFilterSheeBottomDefault);
+        Object.assign(formFilter, formFilterSheeBottomDefault);
+        emits('reloadPlaces');
+        closeModalFilter();
+    }
+
     function applyFilter () {
-        // Object.assign(filtersSelected, formFilterSheeBottom);
         Object.assign(formFilter, formFilterSheeBottom);
         emits('reloadPlaces');
         closeModalFilter();
