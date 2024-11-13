@@ -58,7 +58,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: `/${route.params.hotelSlug}/alojamiento`, // Incluye el prefijo dinámico
+        to: `/${route.params.hotelSlug}/alojamiento`, 
         routeNameIncludes: ['ShowHotel'],
     },
     {
@@ -66,7 +66,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
-        to: '/lugares',
+        to: `/${route.params.hotelSlug}/lugares`, 
         routeNameIncludes: ['PlaceList'],
     },
     {
@@ -82,7 +82,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
-        to: '/',
+        to: `/${route.params.hotelSlug}/chat`, 
         routeNameIncludes: ['Chat'],
     },
 ]);
