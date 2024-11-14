@@ -1,7 +1,7 @@
 <template>
     <!-- head -->
     <div class="sticky top-0 left-0 bg-head w-full py-6 px-4">
-        <HeadInChain text="Crea tu estancia" go-back @go-back="goHotelList"/>
+        <HeadInChain :text="$t('stay.create.title')" go-back @go-back="goHotelList"/>
     </div>
     <!-- body -->
     <div class="py-6 px-4">
