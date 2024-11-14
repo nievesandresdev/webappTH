@@ -3,9 +3,9 @@
         <THInputText
             type="password"
             :iconLeft="`/assets/icons/WA.lock.svg`"
-            placeholder="Introduce una contraseña"
+            :placeholder="$t('auth.log.input-password')"
             v-model="form.password"
-            text-error="La contraseña introducida es incorrecta"
+            :text-error="$t('auth.log.password-text-error')"
             :is-error="isError"
             @keyupInput="isError = false"
         />
@@ -15,13 +15,13 @@
                 :disabled="!form.password"
                 @click="submit"
             >
-                Continuar
+                {{ $t('auth.log.continue-button') }}
             </PrimaryButton> 
             <button 
                 class="mt-4 lato text-sm font-bold leading-[16px] underline"
                 @click="sendLinkToReset"
             >
-                ¿Has olvidado tu contraseña?
+                {{ $t('auth.log.forgot-question') }}
             </button>
         </div>
     </div>

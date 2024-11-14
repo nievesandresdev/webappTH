@@ -3,18 +3,18 @@
         <div class="mt-4">
             <THInputText
                 iconLeft="/assets/icons/WA.user.svg"
-                placeholder="Introduce tu nombre"
+                :placeholder="$t('auth.register.input-name')"
                 v-model="form.name"
             />
         </div>
         <div class="mt-4">
             <THInputText
                 :iconLeft="`/assets/icons/WA.mail${emailDisabled ? 'DISABLED' : ''}.svg`"
-                :placeholder="$t('guest.guestLog.email.placeholder')"
+                :placeholder="$t('auth.register.input-email')"
                 :type="'email'"
                 v-model="form.email"
                 @handleError="emailError = $event"
-                :textError="$t('guest.guestLog.email.error')"
+                :textError="$t('auth.register.input-email-error')"
                 :disabled="emailDisabled"
             />
         </div>
@@ -22,28 +22,34 @@
             <THInputText
                 type="password"
                 :iconLeft="`/assets/icons/WA.lock${passDisabled ? 'DISABLED' : ''}.svg`"
-                placeholder="Introduce una contraseña"
+                :placeholder="$t('auth.register.input-password')"
                 v-model="form.password"
                 :disabled="passDisabled"
             />
         </div>
         <p 
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
-        >Al seleccionar Aceptar y continuar, acepto la <router-link :to="{name:'PrivacyPolicies'}"  class="underline">Política de Privacidad.</router-link></p>
+        >
+        {{$t('auth.register.policies-text')}}    
+        <router-link :to="{name:'PrivacyPolicies'}"  class="underline">{{$t('auth.register.policies-title')}}</router-link>
+        </p>
         <div class="mt-4">
             <PrimaryButton 
                 classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
                 :disabled="!validSubmitButton"
                 @click="submit"
             >
-                Aceptar y continuar
+                {{$t('auth.register.continue-button')}}
             </PrimaryButton> 
         </div>
         <div class="my-6 bg-border-secondary w-full h-[1px]"></div>
-        <p class="lato text-[10px] font-bold leading-[12px]">Riu Hotels & Resorts te enviará comunicaciones comerciales y promociones personalizadas por correo electrónico, SMS u otros medios electrónicos sobre productos y servicios</p>
+        <p class="lato text-[10px] font-bold leading-[12px]">
+            {{hotelStore.hotelData ? hotelStore.hotelData.name : (chainStore.$name ?? $t('auth.register.the-chain'))}}
+            {{$t('auth.register.text-info-1')}}
+        </p>
         <div class="mt-4 flex items-center">
             <input type="checkbox" class="hborder-black-100 w-4 h-4">
-            <p class="lato text-[10px] font-bold leading-[12px] ml-1">No quiero recibir mensajes promocionales.</p>
+            <p class="lato text-[10px] font-bold leading-[12px] ml-1">{{$t('auth.register.text-info-2')}}</p>
         </div>
     </div>
 </template>

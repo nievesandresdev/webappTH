@@ -1,8 +1,8 @@
 <template>
     <div>
-        <label class="mb-1 lato text-sm font-bold leading-[16px] block" >Check-in/Check-out</label>
+        <label class="mb-1 lato text-sm font-bold leading-[16px] block">Check-in/Check-out</label>
         <THInputCalendar
-            :textLabel="$t('stay.stayLog.checkDate.placeholder')"
+            :textLabel="$t('stay.create.check-date.placeholder')"
             v-model="form.checkDate"
             :show_error_msg="false"
             :minDate="null"
@@ -13,7 +13,7 @@
             :disabled="!form.checkDate"
             @click="submit"
         >
-            Crear y acceder a la estancia
+        {{ $t('stay.create.continue-button') }}
         </PrimaryButton> 
     </div>
 </template>

@@ -8,7 +8,7 @@
             <HeadInChain 
                 go-back
                 @go-back="goBack"
-                text="Termina de registrarte"
+                :text="$t('auth.register.title')"
                 title-classes="h-[31px] lato text-[20px] font-bold leading-[30px] w-[243px] text-center"
             />
             <div class="mt-4">

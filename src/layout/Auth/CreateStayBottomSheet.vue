@@ -2,7 +2,7 @@
     <BottomSheet :open-bottom-sheet="open && !$utils.isMockup()">
        <div class="px-4 pt-6">
            <HeadInChain 
-               text="Crea tu estancia"
+               :text="$t('stay.create.title')"
                title-classes="h-[31px] lato text-[20px] font-bold leading-[30px] w-[243px] text-center"
            />
            <div class="mt-10">
