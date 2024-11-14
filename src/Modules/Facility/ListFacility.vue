@@ -1,9 +1,9 @@
 <template>
   <SectionBarTab 
-    title="Instalaciones" 
+    :title="$t('hotel.facilities')" 
     :tabs="[ 
-      { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
-      { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
+       { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
+       { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
     :hotel="hotelData"
   />
