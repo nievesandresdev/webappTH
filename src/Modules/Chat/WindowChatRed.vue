@@ -7,7 +7,7 @@
             ]"
         >
             <!-- <div class="sticky top-0 left-0"> -->
-            <AppHeader title="Chat" :tabs="tabsMenu"/>
+            <AppHeader :title="settings.name" :tabs="tabsMenu"/>
             <!-- </div> -->
             <!-- body chat -->
             <div class="body-chat flex-grow flex flex-col overflow-y-auto px-4">
@@ -18,7 +18,7 @@
                 >
                     <div class="flex items-center gap-2">
                         <p class="lato text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
-                            {{ isAvailable ? 'Disponible' : 'No disponible' }}
+                            {{ isAvailable ? $t('chat.availabilty') : $t('chat.not-availabilty') }}
                         </p>
                         <IconCustomColor 
                             name="WA.Clock" 
@@ -31,10 +31,7 @@
                 </div>
                 <!-- info chat -->
                 <div class="bg-gradient-100 border border-color-secondary rounded-[10px] p-4 mb-4 mt-[64px]">
-                    <p class="lato text-sm font-medium leading-[16px] text-center">
-                        <!-- {{$utils.capitalize($t('chat.languages'))}} -->
-                        Te damos la bienvenida al chat!<br>
-                        Puedes comunicarte con nuestro personal en estos idiomas:
+                    <p class="lato text-sm font-medium leading-[16px] text-center" v-html="$t('chat.languages-text')">
                     </p>
                     <div class="flex flex-wrap justify-center mt-4 gap-4">
                         <img class="w-5 h-5" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
@@ -51,7 +48,7 @@
                         v-if="msg.automatic"
                         class="lato text-[10px] font-bold leading-[12px] mb-1"
                     >
-                        Respuesta automática
+                        {{$t('chat.automatic-response')}}
                     </p>
                     <p 
                         class="break-words lato text-sm font-medium leading-[16px] p-4" 
@@ -72,7 +69,8 @@
                 <div class="px-6 pt-3 pb-4 flex items-center gap-3">
                     <textarea 
                         id="text-auto" 
-                        class="flex-grow border border-color-secondary rounded-[8px] hbg-gray-100 h-full px-3 py-2 text-sm lato font-medium" :placeholder="$t('chat.inputChat')"
+                        class="flex-grow border border-color-secondary rounded-[8px] hbg-gray-100 h-full px-3 py-2 text-sm lato font-medium" 
+                        :placeholder="$t('chat.input')"
                         @input="autoGrow"
                         v-model="msg"
                         @focus="focusTextarea"
