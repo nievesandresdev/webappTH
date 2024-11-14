@@ -35,7 +35,7 @@
       <!-- copiar la dirección -->
       <div class="flex gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.address)">
         <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
-        <span class="text-[14px] font-bold underline text-[#333333] lato">Copiar</span>
+        <span class="text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
       </div>
     </div>
 
@@ -64,7 +64,7 @@
       <!-- copiar el email -->
       <div class="flex gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.email)">
         <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
-        <span class="text-[14px] font-bold underline text-[#333333] lato">Copiar</span>
+        <span class="text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
       </div>
     </div>
 
@@ -92,7 +92,7 @@
       <!-- copiar el teléfono principal -->
       <div class="flex gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.phone)">
         <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
-        <span class="text-[14px] font-bold underline text-[#333333] lato">Copiar</span>
+        <span class="text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
       </div>
     </div>
   
@@ -108,7 +108,7 @@
       <!-- copiar el teléfono opcional -->
       <div class="flex gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.phone_optional)">
         <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
-        <span class="text-[14px] font-bold underline text-[#333333] lato">Copiar</span>
+        <span class="text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
       </div>
     </div>
   

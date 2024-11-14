@@ -4,7 +4,7 @@
       <RoundedButton
         v-if="buttonsHome.show_wifi"
         iconUrl="/assets/icons/WA.wifi.svg"
-        label="Wifi"
+        :label="$t('hotel.buttons_home.wifi')"
         :showLabel="true"
         @click="onWifiClick"
       />
@@ -14,7 +14,7 @@
       <RoundedButton
         v-if="buttonsHome.show_call && props.hotelData.phone"
         iconUrl="/assets/icons/WA.llamar.svg"
-        label="Llamar"
+        :label="$t('hotel.buttons_home.call')"
         :showLabel="true"
         @click="onCallClick"
       />
@@ -23,14 +23,14 @@
       <RoundedButton
         v-if="!hotelData.legal && buttonsHome.show_legal_text"
         iconUrl="/assets/icons/WA.normas.svg"
-        label="Normas"
+        :label="$t('hotel.buttons_home.standards')"
         :showLabel="true"
         @click="onLegalClick"
       />
   
       <RoundedButton
         iconUrl="/assets/icons/arrow-up-from-bracket-small.svg"
-        label="Compartir Estancia"
+        :label="$t('hotel.buttons_home.share_stay')"
         :showLabel="true"
         @click="onShareClick"
       />

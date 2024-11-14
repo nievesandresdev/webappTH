@@ -2,8 +2,8 @@
   <SectionBarTab 
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'" 
     :tabs="[
-      { name: 'Información', routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
-      { name: 'Instalaciones', routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
+      { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
+      { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
     :hotel="hotelData"
   />
@@ -34,7 +34,7 @@
         @click="isExpanded = !isExpanded"
         class="text-[14px] font-bold lato underline text-[#333] mt-3 text-right cursor-pointer"
       >
-        {{ isExpanded ? 'Ver menos' : 'Ver más' }}
+        {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
@@ -55,15 +55,15 @@
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
       <div class="flex items-center gap-4 mb-4">
-        <p class="text-[16px] font-bold text-[#333333] lato">Instalaciones</p>
+        <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-        <span @click="goToFacilities()" class="underline lato text-sm font-bold">Ver todo</span>
+        <span @click="goToFacilities()" class="underline lato text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
       </div>
 
       <CardSlider :data="facilities" @itemClick="handleGoFacility"  />
 
       <div class="flex items-center gap-4 mb-4">
-        <p class="text-[16px] font-bold text-[#333333] lato">Nuestras redes</p>
+        <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
       </div>
       
