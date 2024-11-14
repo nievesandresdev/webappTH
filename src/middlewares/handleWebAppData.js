@@ -48,8 +48,7 @@ export default async function handleWebAppData({ to, from, next }) {
     await hotelStore.$load();
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
-    if (hotel && to.name == 'ChainLanding' && stayStore.stayData?.hotel_id == hotel.id) {
-        console.log('test middle hotel')
+    if (hotel && to.name == 'ChainLanding') {
         return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 
