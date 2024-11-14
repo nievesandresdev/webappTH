@@ -26,6 +26,7 @@
             map-style="mapbox://styles/mapbox/streets-v11"
             :center="center"
             :zoom="zoom"
+            @map-click="handleMapClick"
         >
             <slot name="controls"></slot>
         </MapboxMap>
@@ -64,6 +65,7 @@ const props = defineProps({
 // DATA
 const mapContainer = ref(null);
 const mapboxMap = ref();
+const mapboxRef = ref();
 
 // COMPUTED
 const map = computed(() => mapboxMap.value.map);

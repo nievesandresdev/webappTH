@@ -4,12 +4,12 @@
     >
         <div
             v-for="(item, index) in categoriplaces" :key="index"
-            class="flex items-center  px-4 py-[6px] rounded-[100px]"
+            class="flex items-center  px-[8px] sp:px-4 py-[3px] sp:py-[6px] rounded-[100px]"
             :class="{'item-menu-cat-active': item.id != formFilter.categoriplace,'hbg-gray-100 hborder-black-100':(item.id == formFilter.categoriplace)}"
             @click="changeCategory(item.id, formFilter.typeplace)"
         >
-                <img :src="`/assets/icons/${item.icon}.svg`" class=" w-[20px] sp:w-auto mr-[4px] sp:mr-2 inline" />
-                <span class="text-sm font-bold">{{ item.name }}</span>
+                <img :src="`/assets/icons/${item.icon}.svg`" class=" w-[10px] sp:w-[20px] sp:w-auto mr-[4px] sp:mr-2 inline" />
+                <span class="text-[8px] sp:text-sm font-bold">{{ item.name }}</span>
         </div>
     </div>
 </template>

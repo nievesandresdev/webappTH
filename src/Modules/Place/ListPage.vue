@@ -6,27 +6,40 @@
     >
         <template v-slot:titleOrSearch>
             <InputSearchPlace
+                :empty-filters="emptyFilters"
                 @search="searchHandle"
                 @activateSearch="activateSearchHandle"
+                @openFilter="openFilter"
             />
         </template>
     </AppHeader>
-    <div class="mt-[148px] flex-1">
-        <ListPageMapClusterPlace />
-        <ListPageBottomSheet
-            :position-bottom-sheet="positionBottomSheet"
-            @changeCategory="changeCategoryHandle($event)"
-            @loadMore="loadMore"
-            @closeSearch="closeSearchHandle"
-        />
+    <div class="flex-1">
+        <template v-if="pointersData?.features?.length">
+            <ListPageMapClusterPlace
+                @clickMapCluster="handleMapCluster"
+            />
+        </template>
+        <!-- <template v-if="isOpenBottomSheetList"> -->
+            <ListPageBottomSheet
+                :position-bottom-sheet="positionBottomSheet"
+                @changeCategory="changeCategoryHandle($event)"
+                @loadMore="loadMore"
+                @closeSearch="closeSearchHandle"
+            />
+        <!-- </template>
+        <template v-if="isOpenBottomSheetFilter"> -->
+            <ListPagebottomSheetFilter
+                @reloadPlaces="submitFilter()"
+            />
+        <!-- </template> -->
     </div>
 </template>
 
 <script setup>
 
-import { onMounted, ref, provide, reactive, toRefs, computed } from 'vue';
+import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam } from '@/utils/utils.js';
+import { getUrlParam, slufy } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -34,6 +47,7 @@ import BaseMap from '@/components/Maps/BaseMap.vue';
 import InputSearchPlace from './components/InputSearchPlace.vue';
 import ListPageMapClusterPlace from './ListPageMapClusterPlace.vue';
 import ListPageBottomSheet from './ListPageBottomSheet.vue';
+import ListPagebottomSheetFilter from './ListPagebottomSheetFilter.vue';
 
 // STORE
 import { usePlaceStore } from '@/stores/modules/place';
@@ -66,13 +80,19 @@ const dataFilter = {
     all_cities: false,
     search:null,
     city: null,
+    featured: false,
 }
 
 const positionBottomSheet = ref('medium');
+const loadingSearch = ref(false);
+const isOpenBottomSheetList = ref(true);
+const isOpenBottomSheetFilter = ref(false);
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
 const page = ref(1);
 const placesData = ref([]);
+const pointersData = ref([]);
+const placeSelected = ref(null);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);
 const categoriplacesWithNumbers = ref(null);
@@ -102,15 +122,48 @@ const categoriPlaceSelected = computed(() => {
     return categoriplace;
 });
 
+const numbersFiltersApplied = computed(() => {
+    let filters = [];
+    formFilter.featured ? filters.push('featured') : '';
+    formFilter.distances?.length ? filters.push('distances') : '';
+    formFilter.scores?.length ? filters.push('scores') : '';
+    return filters;
+});
+const emptyFilters = computed(() => {
+    return numbersFiltersApplied.value.length == 0;
+});
+
+watch(positionBottomSheet, function(val) {
+    placeSelected.value = null;
+    if (val == '0%') {
+        isOpenBottomSheetList.value = true;
+        setTimeout(() => {
+            isOpenBottomSheetFilter.value = false;
+        }, 400);
+    }
+});
+
 // ONMOUNTED
 onMounted(async () => {
     await loadTypePlaces();
-    loadCategoriPlaces();
-    loadPlaces();
+    loadAll();
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTIONS
+
+async function getPlaceById (placeId) {
+    let response = await placeStore.$findById({id: placeId});
+    placeSelected.value = null;
+    if(response.ok) placeSelected.value = response.data;
+
+}
+
+function handleMapCluster (item) {
+    positionBottomSheet.value = 'bottom';
+    getPlaceById(item.properties.id);
+}
+
 async function loadTypePlaces () {
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
@@ -151,13 +204,11 @@ function changeCategoryHandle ({idCategory, idTypePlace}) {
     changeCategory(idCategory, idTypePlace);
 }
 
-function changeCategory (idCategory = null, idTypePlace = null) {
+async function changeCategory (idCategory = null, idTypePlace = null) {
     formFilter.categoriplace = idCategory;
     formFilter.typeplace = idTypePlace;
-    loadCategoriPlaces();
-    // if(!formFilter.categoriplace) getFirstCategoryOfType();
     loadTabsHeader();
-    submitFilter();
+    loadAll();
 }
 
 const getFirstCategoryOfType = ()=> {
@@ -186,6 +237,39 @@ async function loadPlaces () {
     // }
 }
 
+async function loadPointers () {
+    let query = {...filterNonNullAndNonEmpty(formFilter)}
+    const response = await placeStore.$apiGetPointer(query);
+    if (response.ok) {
+        pointersData.value = transformDataPointer(response.data?.places);
+        console.log(pointersData.value, 'pointersData.value');
+    }
+}
+
+function transformDataPointer (data) {
+    return  {
+        type: "FeatureCollection",
+        features: data.map(item => transformFeaturesPointerData(item)),
+    }
+}
+
+function transformFeaturesPointerData (item) {
+    return {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [Number(item.metting_point_longitude), Number(item.metting_point_latitude)]
+        },
+        properties: {
+            id: item.id,
+            name: item.title,
+            description: item.description,
+            category: slufy(item.categori_place.name),
+            categoryIcon:  item.categori_place.icon,
+        }
+    }
+}
+
 function loadMore () {
     page.value += 1;
     loadPlaces();
@@ -195,26 +279,32 @@ function closeSearchHandle () {
     searchingActive.value = false;
 }
 
-function searchHandle ($event) {
-    searchingActive.value = true;
-    formFilter.search = $event?.target?.value;
+async function searchHandle ($event) {
+    loadingSearch.value = true;
+    formFilter.search = $event?.target?.value ?? null;
     page.value = 1;
     placesData.value = [];
-    loadPlaces();
+    await loadAll();
+    loadingSearch.value = false;
 }
 
 function activateSearchHandle ($event) {
+    placeSelected.value = null;
     positionBottomSheet.value = $event;
-    console.log($event, 'activateSearchHandle');
     if ($event == 'medium') {
-        console.log('entro');
         searchingActive.value = false;
         formFilter.search = null;
-        submitFilter();
+        loadAll();
     }
 }
 
+async function loadAll() {
+     const materialicePromice = await Promise.all([loadCategoriPlaces(), loadCategoriPlaces(), submitFilter(), loadPointers()]);
+}
+
 function submitFilter (){
+    placeSelected.value = null;
+    isOpenBottomSheetList.value = true;
     page.value = 1;
     placesData.value = [];
     loadPlaces();
@@ -254,14 +344,21 @@ function loadQueryInFormFilter () {
 }
 
 function validValueQuery (field, value) {
-
     if (value === 'false') return false;
     if (value === 'true') return true;
-
     return value;
 }
 
-
+async function openFilter () {
+    isOpenBottomSheetList.value = false;
+    // await nextTick();
+    setTimeout(() => {
+        positionBottomSheet.value = 'medium';
+        searchingActive.value = false;
+        formFilter.search = null;
+        isOpenBottomSheetFilter.value = true;
+    }, 400);
+}
 
 // PROVIDE
 provide('hotelData', hotelData);
@@ -269,6 +366,11 @@ provide('categoriplaces', categoriplaces);
 provide('formFilter', formFilter);
 provide('paginateData', paginateData);
 provide('placesData', placesData);
+provide('pointersData', pointersData);
+provide('placeSelected', placeSelected);
+provide('loadingSearch', loadingSearch);
+provide('isOpenBottomSheetList', isOpenBottomSheetList);
+provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
 provide('isloadingForm', isloadingForm);
 provide('searchingActive', searchingActive);
 provide('categoriplacesWithNumbers', categoriplacesWithNumbers);
