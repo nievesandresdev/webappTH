@@ -67,7 +67,7 @@ const inputActive = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
-    let params = { type, email: form.email, subdomain : hotelData.subdomain}
+    let params = { type, email: form.email, subdomain : hotelData?.subdomain ?? null}
     await authStore.$registerOrLogin(params);
 }
 

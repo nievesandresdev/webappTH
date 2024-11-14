@@ -5,19 +5,27 @@
             <router-link
                 v-for="item in menuItems" class="menu__item py-[4px] sp:py-[10px] w-[27px] sp:w-[60px] h-[27px] sp:h-[60px] space-y-[1px] sp:space-y-1 text-center flex flex-col justify-center"
                 :to="item.to"
-                :class="item.routeNameIncludes.includes($route.name) ? `bg-[${customizationData?.colors?.[0]?.cod_hex}]` : ''"
-
+                :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
             >
-                <img
-                    class="mx-auto  size-[12px] sp:size-6"
-                    :src="item.routeNameIncludes.includes($route.name) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
+                <!-- <img   
+                    :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                     :alt="item.title"
-                >
+                > -->
+                
+                <IconCustomColor 
+                    class="mx-auto  size-[12px] sp:size-6"
+                    :name="item.iconDefault" 
+                    :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
+                    only-change-background 
+                />
                 <span
                     class="text-[4px] sp:text-[10px] font-bold leading-none lato"
-                    :class="item.routeNameIncludes.includes($route.name) ? `text-white` : `htext-black-100`"
+                    :class="validRoute(item) ? `text-white` : `htext-black-100`"
+                    :style="{
+                        color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
+                    }"
                 >
-                    {{ item.title }}
+                    {{ dynamicTitle(item) }}
                 </span>
             </router-link>
         </div>
@@ -25,9 +33,11 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive, computed, ref  } from 'vue';
+import IconCustomColor from '@/components/IconCustomColor.vue';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
@@ -40,7 +50,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.HOME',
         iconSelected: 'WA.MENU.SELECTED.HOME',
-        to: '/',
+        to: `/${route.params.hotelSlug}`,
         routeNameIncludes: ['Home'],
     },
     {
@@ -48,7 +58,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: '/',
+        to: `/${route.params.hotelSlug}/alojamiento`, 
         routeNameIncludes: ['ShowHotel'],
     },
     {
@@ -56,7 +66,7 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
-        to: '/lugares',
+        to: `/${route.params.hotelSlug}/lugares`,
         routeNameIncludes: ['PlaceList'],
     },
     {
@@ -72,23 +82,42 @@ const menuItems = reactive([
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
-        to: '/',
-        routeNameIncludes: [],
+        to: `/${route.params.hotelSlug}/chat`,
+        routeNameIncludes: ['Chat','Inbox'],
     },
 ]);
 
+const showChatToGuest = ref(true)
 // COMPUTED
 const itemMenuSelected = computed(() => {
     return router.name;
 });
 
 onMounted(() => {
-    chainStore.$getCustomatizacion(); 
+    // chainStore.$getCustomatizacion(); 
+    showChatToGuest.value = hotelStore.hotelData?.chatSettings?.show_guest;
+    if (!showChatToGuest.value) {
+        const msgLink = menuItems.find(item => item.title === 'Mensajes');
+        if (msgLink) {
+            msgLink.title = 'Inbox';
+            msgLink.to =  `/${route.params.hotelSlug}/inbox`;
+        }
+    }
+    
 });
 
-const customizationData = computed(() => {
-    return chainStore.customizationData;
-});
+
+const validRoute = (item)=> {
+    return item.routeNameIncludes.includes(route.name)
+}
+
+const dynamicTitle = (item) => {
+    if (item.title === 'Hotel' && route.name === 'FacilityList') {
+        return 'Instalaciones';
+    }
+    return item.title;
+};
+
 
 </script>
 

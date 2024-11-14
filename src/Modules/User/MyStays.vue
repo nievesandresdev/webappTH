@@ -79,7 +79,7 @@
 import { ref, onMounted } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import StayCard from './Components/StayCard.vue';
-import BottomModal from './Components/BottomModal.vue';
+import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { navigateTo } from '@/utils/navigation'
 
 import { useGuestStore } from '@/stores/modules/guest';

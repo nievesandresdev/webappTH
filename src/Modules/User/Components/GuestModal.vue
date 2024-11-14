@@ -34,7 +34,7 @@
 </template>
 <script setup>
 import { computed, ref, onMounted, toRefs, inject } from 'vue'
-import BottomModal from './BottomModal.vue';
+import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';

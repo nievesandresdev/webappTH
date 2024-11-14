@@ -16,7 +16,8 @@ function getPreloaderStore() {// función auxiliar que devuelve el store de prel
 }
 
 axios.interceptors.request.use(config => {
-  if (config.showPreloader !== false) {
+  let showPreloader = config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestStarted();
   }
@@ -26,7 +27,8 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
-  if (response.config.showPreloader !== false) {
+  let showPreloader = response.config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestFinished();
   }

@@ -1,9 +1,9 @@
 <template>
     <div :class="[classContainer]">
         <button 
-            :class="[classes, bgButton, conditionClases,{'flex items-center gap-2 justify-center': nameIconLeft}]"
+            :class="[classes, classButton, conditionClases,{'flex items-center gap-2 justify-center': nameIconLeft}]"
             :disabled="isDisabled"
-            :style="{color:textColorButton}"
+            :style="{color:textColorButton, backgroundColor:bgButton}"
             @click="handleClick"
         >
             <IconCustomColor 
@@ -55,11 +55,12 @@ const emit = defineEmits(['click']);
 
 const { disabled } = toRefs(props);
 
+const classButton = computed(() => {
+    return disabled.value ? 'primary-disabled' : '';
+});
+
 const bgButton = computed(() => {
-    let classbgButton;
-    let primaryClasses = `bg-[${chainStore.customizationData?.colors[0].cod_hex}] text-[${chainStore.customizationData?.colors[0].contrast_color}]`;
-    classbgButton = disabled.value ? 'primary-disabled' : primaryClasses;
-    return classbgButton;
+    return disabled.value ? '' : chainStore.customizationData?.colors[0].cod_hex;
 });
 
 const textColorButton = computed(() => {
