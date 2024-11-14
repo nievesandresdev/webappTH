@@ -18,8 +18,8 @@ import { getUrlParam } from '@/utils/utils';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
-import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
 
 const props = defineProps({
     acform: {
@@ -31,6 +31,7 @@ const props = defineProps({
 const customData = ref(null)
 onMounted(async () => {
     hotelStore.$deleteLocalHotel();    
+    stayStore.deleteLocalStayData();
 })
 
 const formType = computed(() => props.acform);

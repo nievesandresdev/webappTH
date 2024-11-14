@@ -42,6 +42,7 @@ import { getUrlParam } from '@/utils/utils'
 import BottomSheet from './Components/BottomSheet.vue'
 import THInputText from '@/components/THInputText.vue';
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
+import { navigateTo } from '@/utils/navigation'
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 //store
@@ -77,8 +78,12 @@ const form = reactive({
 
 onMounted(async () => {
     token.value = getUrlParam('token');
-    if(!token.value){
-        router.push({ name: hotelData ? 'Home' : 'ChainLanding'})
+    if(!token.value && open.value){
+        if(hotelData){
+            navigateTo('Home')
+        }else{
+            router.push({ name: 'ChainLanding'})
+        }   
     }
 })
 
