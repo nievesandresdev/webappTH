@@ -7,7 +7,7 @@
           <span class="font-medium text-sm lato">{{ hotelData.checkin }}hs</span>
         </div>
         <div class="flex justify-end gap-2" v-show="hotelData.checkin_until">
-          <p class="text-[12px] font-medium text-[#333333] lato">Hasta</p>
+          <p class="text-[12px] font-medium text-[#333333] lato">{{ $t('hotel.utils.to') }}</p>
           <span class="font-medium text-[12px] lato">{{ hotelData.checkin_until }}hs</span>
         </div>
       </div>
@@ -18,7 +18,7 @@
           <span class="font-medium text-sm lato">{{ hotelData.checkout }}hs</span>
         </div>
         <div class="flex justify-end gap-2" v-show="hotelData.checkout_until">
-          <p class="text-[12px] font-medium text-[#333333] lato">Hasta</p>
+          <p class="text-[12px] font-medium text-[#333333] lato">{{ $t('hotel.utils.to') }}</p>
           <span class="font-medium text-[12px] lato">{{ hotelData.checkout_until }}hs</span>
         </div>
       </div>
