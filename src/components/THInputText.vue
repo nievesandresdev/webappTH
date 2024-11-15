@@ -36,7 +36,7 @@
             v-if="type === 'password'"
             @click="showPass = !showPass"
             :disabled="!modelValue || modelValue == '' || disabled"
-        > {{ showPass ? 'Ocultar' :'Mostrar'}}</button>
+        > {{ showPass ? $t('auth.log.input-hide-pass') :$t('auth.log.input-show-pass')}}</button>
     </div>
 </template>
 

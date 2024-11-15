@@ -2,13 +2,13 @@
     <div>
         <THInputText
             iconLeft="/assets/icons/WA.mail.svg"
-            :placeholder="$t('guest.guestLog.email.placeholder')"
+            :placeholder="$t('auth.log-or-register.input')"
             :type="'email'"
             v-model="form.email"
             @handleError="emailError = $event"
             @blur="inputActive = false"
             @keyupInput="inputActive = true"
-            textError="El formato de correo electrónico introducido no es correcto"
+            :textError="$t('auth.log-or-register.text-error')"
         />
         <!-- $t('guest.guestLog.email.error') -->
         <PrimaryButton 
@@ -16,7 +16,7 @@
             :disabled="!validSubmitButton"
             @click="goRegisterOrLoginEmail()"
         >
-            Continuar
+            {{$t('auth.log-or-register.continue-button')}}
         </PrimaryButton> 
         <!-- :conditionClases="{'primary-disabled':!validSubmitButton}" -->
         <!-- separator -->
@@ -31,14 +31,14 @@
             @click="goRegisterOrLogin('google')"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/1.TH.GOOGLE.svg" alt="icon google">
-            <p class="text-sm font-bold leading-[16px]">Continuar con Google</p>
+            <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-google')}}</p>
         </button>
         <!-- @click="goRegisterOrLogin('facebook')" -->
         <button 
             class="mt-4 bg-white hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/WA.facebook.svg" alt="icon google">
-            <p class="text-sm font-bold leading-[16px]">Continuar con Facebook</p>
+            <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-fb')}}</p>
         </button>
         
     </div>

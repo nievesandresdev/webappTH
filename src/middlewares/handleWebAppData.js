@@ -8,6 +8,9 @@ import utils from '@/utils/utils.js';
 
 export default async function handleWebAppData({ to, from, next }) {
 
+    const stayStore = useStayStore();
+    const guestStore = useGuestStore();
+    //
     const stayId = utils.getUrlParam('e');
     const guestId = utils.getUrlParam('g');
     sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
@@ -46,7 +49,6 @@ export default async function handleWebAppData({ to, from, next }) {
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
-        // console.log('test redirect 1')
         return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 
@@ -54,16 +56,16 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //
     //cargar data huesped
-    const guestStore = useGuestStore();
     if(guestId){
+        console.log('test middle guestId',guestId)
         await guestStore.findByIdInSetLocalGuest(guestId)
     }
     ////////////////////////////////////////////////////////
     //
     //
     //cargar data stay
-    const stayStore = useStayStore();
     if(stayId){
+        console.log('test middle stayId',stayId)
         await stayStore.findByIdInSetLocalStay(stayId)
     }
     ////////////////////////////////////////////////////////

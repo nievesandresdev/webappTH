@@ -57,6 +57,7 @@ export const useChainStore = defineStore('chain', () => {
     async function $loadChainData(){
         const response = await findBySubdomainApi()
         await $getCustomatizacion();
+        // console.log('test customizationData.value',customizationData.value)
         if(response.ok){
             chainData.value = response.data;
             localStorage.setItem('chainData', JSON.stringify(chainData.value))
@@ -69,7 +70,7 @@ export const useChainStore = defineStore('chain', () => {
 
     async function $getCustomatizacion() {
         
-        if (customizationData.value) return customizationData.value;
+        // if (customizationData.value) return customizationData.value;
         const response = await getCustomatizacionApi([]);
         // console.log('test $getCustomatizacion',response)
         let customization = response.ok ? response.data : null;
@@ -106,6 +107,10 @@ export const useChainStore = defineStore('chain', () => {
         return customizationData.value?.colors[1].contrast_color;
     });
 
+    const $name = computed(() => {
+        return customizationData.value?.name;
+    });
+
     return {
         chainSubdomain,
         $setChainSubdomain,
@@ -120,7 +125,8 @@ export const useChainStore = defineStore('chain', () => {
         $bgColor0,
         $colorContrast0,
         $bgColor1,
-        $colorContrast1
+        $colorContrast1,
+        $name
     }
 
 })

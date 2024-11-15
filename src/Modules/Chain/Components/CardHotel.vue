@@ -11,7 +11,15 @@
             <h2 class="lato text-lg font-bold leading-[28px]">{{data.name}}</h2>
             <div v-if="data.category" class="flex items-center gap-1 mt-3">
                 <img class="w-4 h-4" src="/assets/icons/WA.star.svg" alt="">
-                <p  class="lato text-sm font-bold leading-[16px]">{{data.category}} estrellas</p>
+                <p  class="lato text-sm font-bold leading-[16px]">
+                    {{data.category}}
+                    <template v-if="Number(data.category) > 1">
+                        {{$t('auth.hotel-list.stars-text')}}
+                    </template>
+                    <template v-else>
+                        {{$t('auth.hotel-list.star-text')}}
+                    </template>
+                </p>
             </div>
             <div v-if="data.address" class="flex items-center gap-1 mt-2">
                 <img class="w-4 h-4" src="/assets/icons/WA.map.svg" alt="">

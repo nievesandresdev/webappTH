@@ -1,12 +1,14 @@
 <template>
-    <SectionBar title="Mi cuenta" />
+    <SectionBar :title="$t('profile.account')" />
 
     <div class="px-3">
         <div class="flex flex-col items-center mt-6">
             <div class="w-10 h-10 rounded-full bg-cover bg-center bg-lightgray shadow-profile"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
             </div>
-            <p class="text-[#333333] text-[20px] font-bold lato mt-2">¡Hola, {{guestData.name}}!</p>
+            <p class="text-[#333333] text-[20px] font-bold lato mt-2">
+                {{ $t('profile.greeting', { name: guestData.name }) }}
+            </p>
         </div>
 
         <!-- Contenedor de hotel y estancia boton compartir -->
@@ -21,8 +23,8 @@
         <div class="mt-4">
             <WACardBanner 
                 @click="handleMyStays"
-                title="Mis estancias"
-                :subtitle="isCheckoutPast ? 'Crea tu próxima estancia' : 'Gestiona tus estancias'"
+                :title="$t('profile.my_stays.title')"
+                :subtitle="isCheckoutPast ? $t('profile.my_stays.subtitle_active') : $t('profile.my_stays.subtitle_inactive')"
                 :active-custom="isCheckoutPast"
             />
         </div>
@@ -34,8 +36,8 @@
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.id.svg" class="w-8 h-8" alt="ID Icon" />
                 <div class="flex flex-col">
-                    <span class="text-[16px] font-medium lato text-[#333333]">Información personal</span>
-                    <span class="text-[14px] font-normal lato text-[#333333]">Configura tu información personal</span>
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.personal_info.title') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.personal_info.description') }}</span>
                 </div>
             </div>
             <img @click="handlePersonalInfo" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
@@ -44,7 +46,7 @@
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
             <img src="/assets/icons/WA.logout.svg" class="w-4 h-4" alt="Logout Icon" />
-            <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">Cerrar sesión</span>
+            <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
 
         <ShareStayModal />

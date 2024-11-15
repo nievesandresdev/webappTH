@@ -7,7 +7,7 @@
         <div class="px-4 pt-6">
             <div :class="{'mt-2':route.name == 'Home'}">
                 <HeadInChain 
-                    text="Cambiar contraseña"
+                    :text="$t('auth.reset-pass.title')"
                     title-classes="h-[31px] lato text-[20px] font-bold leading-[30px] w-[243px] text-center"
                 />
                 <div class="mt-10">
@@ -15,9 +15,9 @@
                         <THInputText
                             type="password"
                             :iconLeft="`/assets/icons/WA.lock.svg`"
-                            placeholder="Introduce tu nueva contraseña"
+                            :placeholder="$t('auth.reset-pass.input-placeholder')"
                             v-model="form.password"
-                            text-error="La contraseña introducida es incorrecta"
+                            :text-error="$t('auth.reset-pass.input-error')"
                             :is-error="isError"
                             @keyupInput="isError = false"
                         />
@@ -27,7 +27,7 @@
                                 :disabled="!form.password"
                                 @click="submit"
                             >
-                                Cambiar contraseña
+                                {{ $t('auth.reset-pass.continue-button') }}
                             </PrimaryButton> 
                         </div>
                     </div>
@@ -40,8 +40,10 @@
 import { ref, reactive, onMounted, toRefs } from 'vue'
 import { getUrlParam } from '@/utils/utils'
 import BottomSheet from './Components/BottomSheet.vue'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import THInputText from '@/components/THInputText.vue';
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
+import { navigateTo } from '@/utils/navigation'
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 //store
@@ -77,8 +79,12 @@ const form = reactive({
 
 onMounted(async () => {
     token.value = getUrlParam('token');
-    if(!token.value){
-        router.push({ name: hotelData ? 'Home' : 'ChainLanding'})
+    if(!token.value && open.value){
+        if(hotelData){
+            navigateTo('Home')
+        }else{
+            router.push({ name: 'ChainLanding'})
+        }   
     }
 })
 

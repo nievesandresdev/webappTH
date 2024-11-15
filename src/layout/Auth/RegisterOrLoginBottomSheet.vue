@@ -6,10 +6,9 @@
         >
         <div class="px-4 pt-4">
             <WelcomeMsg v-if="!showEnterPassword && route.name !== 'Home'"/>
-            <!-- {{ $utils.capitalize($t('guest.guestLog.title')) }} -->
             <div :class="{'mt-[96px]':!showEnterPassword && route.name !== 'Home','mt-2':route.name == 'Home'}">
                 <HeadInChain 
-                    :text="showEnterPassword ? 'Inicia sesión':'Inicia sesión o regístrate'"
+                    :text="showEnterPassword ? $t('auth.log.title'): $t('auth.log-or-register.title')"
                     title-classes="h-[31px] lato text-[20px] font-bold leading-[30px] w-[243px] text-center"
                     :go-back="showEnterPassword"
                     @go-back="showEnterPassword = false"

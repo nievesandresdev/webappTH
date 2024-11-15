@@ -1,12 +1,12 @@
 <template>
     <!-- head -->
     <div class="sticky top-0 left-0 bg-head w-full py-6 px-4">
-        <HeadInChain text="Selecciona tu alojamiento"/>
+        <HeadInChain :text="$t('auth.hotel-list.title')"/>
     </div>
 
     <!-- body -->
     <div class="py-6 px-4">
-        <h4 class="lato text-base font-bold leading-[20px]">{{hotels.length ?? 0}} alojamientos de la cadena</h4>
+        <h4 class="lato text-base font-bold leading-[20px]">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
         <div class="mt-4">
             <div class="mb-6" v-for="hotel in hotels" >
                 <CardHotel :data="hotel" clickable/>
