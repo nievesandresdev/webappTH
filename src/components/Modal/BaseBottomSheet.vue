@@ -17,7 +17,7 @@
         <div class="handlebar"></div>
       </div>
       <!-- {{ sheetHeight }} {{ isStepThree }} -->
-      <div class="flex flex-col h-full">
+      <div class="flex flex-col">
         <div class="content flex-1 pt-[12px] sp:pt-[24px]">
           <slot name="content" />
         </div>
@@ -54,7 +54,7 @@ const { position, open, isStepThree } = toRefs(props);
 
 // Alturas definidas para cada caso
 const heights = {
-  dragTwoStep: ['0%', '73%'],       // Solo permite desplazamiento entre 73% y 0% cuando isStepThree es false
+  dragTwoStep: ['0%', '75%'],       // Solo permite desplazamiento entre 73% y 0% cuando isStepThree es false
   dragThreeStep: ['25%', '58%', '79%'], // Permite top, medium y bottom cuando isStepThree es true
 };
 
@@ -197,7 +197,7 @@ function emitClose() {
   transition: transform 0.3s ease, visibility 0.3s ease;
 }
 
-@media (min-width:300) {
+@media (min-width:300px) {
   .handlebar {
     width: 48px;
     height: 4px;
