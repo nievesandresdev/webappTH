@@ -18,7 +18,7 @@
       </div>
       <!-- {{ sheetHeight }} {{ isStepThree }} -->
       <div class="flex flex-col h-full">
-        <div class="content flex-1 pt-[14px] sp:pt-[28px]">
+        <div class="content flex-1 pt-[12px] sp:pt-[24px]">
           <slot name="content" />
         </div>
         <div class="footer">

@@ -2,16 +2,21 @@
 
     <div
         id="list-place"
-        class="w-full space-y-[8px] sp:space-y-4 h-[257px] h-[502px] overflow-y-auto"
-    >   
+        class="w-full overflow-y-auto"
+        :class="classHeightDinamic"
+    >
+    <!-- h-[257px] sp:h-[450px] -->
         <template v-if="!isloadingForm && !placesData?.length">
             <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>
-            <template v-for="item in (placesData ?? [])">
-                <CardList :data="item" />
+            <template v-for="(item, index) in (placesData ?? [])">
+                <CardList
+                    :data="item" 
+                    :class="index === placesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                />
             </template>
-            <template v-for="card in (numberCardsToLoad ?? 0)">
+            <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
                 <SkeletonCard />
             </template>
         </template>
@@ -35,9 +40,22 @@
     const paginateData = inject('paginateData');
     const firstLoad = inject('firstLoad');
     const isloadingForm = inject('isloadingForm');
+    const positionBottomSheet = inject('positionBottomSheet');
 
     onMounted(() => {
         initScrollListener();  
+    });
+
+     const windowWidth = window.innerWidth;
+
+    const classHeightDinamic = computed(() => {
+        if (positionBottomSheet.value == 'top') {
+            return 'h-[522px]';
+        }
+        if (positionBottomSheet.value == 'medium') {
+            return 'h-[343px]';
+        }
+        return 'h-[450px]';
     });
 
     const numberCardsToLoad = computed(() => {

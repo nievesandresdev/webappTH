@@ -26,17 +26,21 @@
             map-style="mapbox://styles/mapbox/streets-v11"
             :center="center"
             :zoom="zoom"
-            @map-click="handleMapClick"
+            @mb-created="(mapInstance) => map = mapInstance"
+            @mb-click="handleMapClick"
         >
+            <!-- @map-click="handleMapClick"/ -->
             <slot name="controls"></slot>
         </MapboxMap>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed,onUnmounted } from 'vue';
+import { onMounted, ref, reactive, computed,onUnmounted, defineEmits } from 'vue';
   import { MapboxMap } from '@studiometa/vue-mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
+
+  const emits = defineEmits(['mb-click']);
 
 const TOKEN = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -64,11 +68,7 @@ const props = defineProps({
 
 // DATA
 const mapContainer = ref(null);
-const mapboxMap = ref();
-const mapboxRef = ref();
-
-// COMPUTED
-const map = computed(() => mapboxMap.value.map);
+const map = ref(null);
 
 // ESTADO
 const isFullScreen = ref(false);
@@ -99,6 +99,17 @@ onUnmounted(() => {
   document.removeEventListener('fullscreenchange', onFullScreenChange);
 });
 
+
+  const handleMapClick = (event) => {
+      // console.log(event, 'evnet');
+      // if (!map.value) return;
+
+      // const features = map.value.queryRenderedFeatures(event.point, {
+      //   layers: ['clusters', 'markers'], // Cambia esto por los nombres de tus capas de clusters o marcadores
+      // });
+
+    emits('mb-click', event);
+  };
 
 </script>
 

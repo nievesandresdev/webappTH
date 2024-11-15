@@ -15,13 +15,12 @@
     </AppHeader>
     <div class="flex-1">
         <template v-if="pointersData?.features?.length">
-            <ListPageMapClusterPlace
+            <!-- <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            />
+            /> -->
         </template>
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <ListPageBottomSheet
-                :position-bottom-sheet="positionBottomSheet"
                 @changeCategory="changeCategoryHandle($event)"
                 @loadMore="loadMore"
                 @closeSearch="closeSearchHandle"
@@ -156,12 +155,17 @@ async function getPlaceById (placeId) {
     let response = await placeStore.$findById({id: placeId});
     placeSelected.value = null;
     if(response.ok) placeSelected.value = response.data;
-
 }
 
-function handleMapCluster (item) {
-    positionBottomSheet.value = 'bottom';
-    getPlaceById(item.properties.id);
+function handleMapCluster (payload) {
+    placeSelected.value = null;
+    let { event, type } = payload;
+    if (type == 'cluster') {
+        getPlaceById(event.properties.id);
+        positionBottomSheet.value = 'bottom';
+    } else {
+        positionBottomSheet.value = 'medium';
+    }
 }
 
 async function loadTypePlaces () {
@@ -242,7 +246,7 @@ async function loadPointers () {
     const response = await placeStore.$apiGetPointer(query);
     if (response.ok) {
         pointersData.value = transformDataPointer(response.data?.places);
-        console.log(pointersData.value, 'pointersData.value');
+        // console.log(pointersData.value, 'pointersData.value');
     }
 }
 
@@ -360,6 +364,10 @@ async function openFilter () {
     }, 400);
 }
 
+function handleMapClick (event) {
+
+}
+
 // PROVIDE
 provide('hotelData', hotelData);
 provide('categoriplaces', categoriplaces);
@@ -371,6 +379,7 @@ provide('placeSelected', placeSelected);
 provide('loadingSearch', loadingSearch);
 provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
+provide('positionBottomSheet', positionBottomSheet);
 provide('isloadingForm', isloadingForm);
 provide('searchingActive', searchingActive);
 provide('categoriplacesWithNumbers', categoriplacesWithNumbers);

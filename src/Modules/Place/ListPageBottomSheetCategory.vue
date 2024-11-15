@@ -1,6 +1,6 @@
 <template>
     <div
-        class="grid grid-flow-col auto-cols-max py-[8px] sp:py-4 z-40 overflow-x-auto space-x-[8px] sp:space-x-4 bg-white w-full"
+        class="grid grid-flow-col auto-cols-max pb-[8px] sp:pb-4 z-40 overflow-x-auto space-x-[8px] sp:space-x-4 bg-white w-full"
     >
         <div
             v-for="(item, index) in categoriplaces" :key="index"

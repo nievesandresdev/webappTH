@@ -42,10 +42,11 @@
                 @click="handleOpenFilter"
             >
                      <!-- v-if="!emptyFilters" -->
-                <img
-                    src="/assets/icons/WA.FILTER.DOT.svg"
+                <IconCustomColor 
                     class="w-[7px] sp:w-[14px] h-[7px] sp:h-[14px] z-[2000] absolute top-[4px] sp:top-[-1px] right-[-1px] sp:right-[-2px]"
-                >
+                    name="WA.FILTER.DOT" 
+                    :color="chainStore.$colorContrast1" 
+                />
                 <button
                     v-if="!loadingSearch"
                     class="w-[12px] sp:w-6 h-[12px] sp:h-6"
@@ -63,6 +64,7 @@
 
 <script setup>
 import { ref, defineEmits, computed, inject } from 'vue';
+import IconCustomColor from '@/components/IconCustomColor.vue';
 
 const emits = defineEmits(['search', 'cleanSearch', 'activateSearch', 'openFilter']);
 
@@ -72,6 +74,9 @@ const props = defineProps({
         default: 0,
     }
 });
+
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const valueSearch = ref('');
 const debounce = ref(null);

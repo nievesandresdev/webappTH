@@ -1,5 +1,5 @@
 <template>
-    <div class="card-list flex w-full h-[48px] sp:h-[96px]">
+    <div class="card-list flex w-full h-[48px] sp:h-[96px]" :class="class">
         <div class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] rounded-[10px] relative overflow-hidden">
             <img
                 v-if="data.place_images?.[0]?.url"
@@ -59,6 +59,7 @@
 <script setup>
 import { ref, inject, computed } from 'vue';
 const props = defineProps({
+    class: String,
     data: {
         type: Object,
         default: () => null,

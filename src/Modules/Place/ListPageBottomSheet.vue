@@ -9,7 +9,8 @@
             <!-- {{positionBottomSheet}} -->
             <PlaceSelected :place-selected="placeSelectedData"  />
             <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
-            <div class="px-[8px] sp:px-4 py-[6px] sp:pt-[12px] h-full">
+            <!-- py-[6px] sp:pt-[12px] -->
+            <div class="px-[8px] sp:px-4  h-full">
                 <div class=" h-full flex flex-col">
                     <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                     <p
@@ -57,11 +58,6 @@
     import CardList from './components/CardList.vue';
     import PlaceSelected from './components/PlaceSelected.vue';
 
-    const props = defineProps({
-        positionBottomSheet: String,
-    });
-
-    const { positionBottomSheet } = toRefs(props);
 
     import BaseBottomSheet from '@/components/Modal/BaseBottomSheet.vue';
     import ListPageBottomSheetCategory from './ListPageBottomSheetCategory.vue';
@@ -77,6 +73,7 @@
     const placeSelectedData = inject('placeSelected');
     const isOpenBottomSheetList = inject('isOpenBottomSheetList');
     const placeSelected = inject('placeSelected');
+    const positionBottomSheet = inject('positionBottomSheet');
 
     const classControlsSheet = ref('0px');
 

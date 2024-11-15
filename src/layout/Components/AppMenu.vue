@@ -1,5 +1,5 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
+    <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000] bg-transparent">
         
         <div class="menu rounded-[10px] sp:rounded-[20px] bg-white py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 flex justify-around">
             <router-link

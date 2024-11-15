@@ -2,6 +2,7 @@
     <BaseMap
         :center="coordCenter"
         :height-map="windowWidth >= 250 ? '650px' : '325px'"
+        @mb-click="handleMapClick($event, 'map')"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
@@ -29,7 +30,7 @@
                     'icon-size':windowWidth >= 250 ? 1.5 : 0.6
                 }"
                 :unclustered-point-paint="null"
-                @mb-feature-click="handleMapClick"
+                @mb-feature-click="handleMapClick($event, 'cluster')"
             />
         </template>
     </BaseMap>
@@ -126,8 +127,8 @@ const coordCenter = computed(() => {
     return [Number(hotelData.longitude), Number(hotelData.latitude)];
 });
 
-function handleMapClick ($event) {
-    emits('clickMapCluster', $event)
+function handleMapClick ($event, typCap) {
+    emits('clickMapCluster', {event: $event, type: typCap });
 }
 
 </script>
