@@ -6,7 +6,7 @@
         :class="classHeightDinamic"
     >
     <!-- h-[257px] sp:h-[450px] -->
-        <template v-if="!isloadingForm && !placesData?.length">
+        <template v-if="!isloadingForm && !placesData?.length && !firstLoad">
             <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>

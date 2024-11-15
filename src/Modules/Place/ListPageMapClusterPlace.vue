@@ -16,18 +16,19 @@
             <MapboxImage id="museos" src="/assets/icons/WA.MAP.POINTER.MUSEOS.png" />
             <MapboxImage id="naturaleza" src="/assets/icons/WA.MAP.POINTER.NATURALEZA.png" />
 
-            <!-- <MapboxImage id="cafeterías-y-postres" src="/assets/WA.MAP.POINTER.MONUMENTOS.png" />
-            <MapboxImage id="restaurantes" src="/assets/WA.MAP.POINTER.MONUMENTOS.png" />
+            <MapboxImage id="restaurantes" src="/assets/icons/WA.MAP.POINTER.RESTAURANTES.png" />
+            <MapboxImage id="cafeterias-y-postres" src="/assets/icons/WA.MAP.POINTER.CAFETERIASYPOSTRES.png" />
 
-            <MapboxImage id="vida-nocturna" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
-            <MapboxImage id="compras" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
-            <MapboxImage id="0tros" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" /> -->
+            <MapboxImage id="compras" src="/assets/icons/WA.MAP.POINTER.COMPRAS.png" />
+            <MapboxImage id="otros" src="/assets/icons/WA.MAP.POINTER.OTROS.png" />
+            <MapboxImage id="vida-nocturna" src="/assets/icons/WA.MAP.POINTER.VIDANOCTURNA.png" />
+
             <MapboxCluster
-                :data="transformedPointersData"
+                :data="dataMarkets"
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
                     'icon-image': ['get', 'category'], 
-                    'icon-size':windowWidth >= 250 ? 1.5 : 0.6
+                    'icon-size':windowWidth >= 250 ? 0.09 : 0.04
                 }"
                 :unclustered-point-paint="null"
                 @mb-feature-click="handleMapClick($event, 'cluster')"
