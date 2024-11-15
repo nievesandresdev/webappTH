@@ -24,7 +24,7 @@
             <MapboxImage id="vida-nocturna" src="/assets/icons/WA.MAP.POINTER.VIDANOCTURNA.png" />
 
             <MapboxCluster
-                :data="dataMarkets"
+                :data="transformedPointersData"
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
                     'icon-image': ['get', 'category'], 
