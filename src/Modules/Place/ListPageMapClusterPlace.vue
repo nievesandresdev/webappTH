@@ -33,6 +33,7 @@
                 :unclustered-point-paint="null"
                 @mb-feature-click="handleMapClick($event, 'cluster')"
             />
+            <!--  -->
         </template>
     </BaseMap>
 </template>
