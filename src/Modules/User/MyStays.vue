@@ -1,6 +1,6 @@
 <template>
     <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" @onClickButton="createStay"/>
-    <div class="px-3 pb-10">
+    <div class="px-3 pb-10 pt-6">
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -16,7 +16,7 @@
         />
 
         <!-- Renderiza las demás estancias -->
-        <div v-for="stay in otherStays" :key="stay.id">
+        <div v-for="stay in otherStays" :key="stay.id" class="mt-6">
             <StayCard 
                 :hotel="hotelData" 
                 :stay="stay" 

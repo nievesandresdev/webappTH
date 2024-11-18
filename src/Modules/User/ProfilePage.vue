@@ -12,13 +12,15 @@
         </div>
 
         <!-- Contenedor de hotel y estancia boton compartir -->
-        <StayCard 
-            :hotel="hotelData" 
-            :stay="stayStore.stayData" 
-            :showButtonShared="true"
-            @sharedStay="isModalOpen = true"
-            :isLoading="loading"
-        />
+        <div class="mt-6">
+            <StayCard 
+                :hotel="hotelData" 
+                :stay="stayStore.stayData" 
+                :showButtonShared="true"
+                @sharedStay="isModalOpen = true"
+                :isLoading="loading"
+            />
+        </div>
         <!-- Sección "Mis estancias" -->
         <div class="mt-4">
             <WACardBanner 

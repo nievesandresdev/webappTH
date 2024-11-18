@@ -43,7 +43,6 @@ const customData = ref(null)
 
 onMounted(() => {
     customData.value = chainStore.customizationData;
-    console.log('test customizationData',customData.value)
 })
 
 const showLogo = computed(() => {
