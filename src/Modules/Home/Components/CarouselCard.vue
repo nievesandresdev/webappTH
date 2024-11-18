@@ -8,11 +8,19 @@
             >
 
             <div    
-                v-if="data.ad_tag"
-                class="absolute bottom-2 left-2 h-5 px-2 py-1 rounded-full hbg-gray-100"
+                v-if="data.ad_tag || data.recommended || data.place_featured"
+                class="absolute bottom-2 left-2 px-2 rounded-full hbg-gray-100 h-[20px]"
             >
-                <div class="flex items-center roboto text-xs font-bold leading-[120%] uppercase">
-                    {{ data.ad_tag }}
+                <div class="flex items-center h-full">
+                    <img 
+                        v-if="data.recommended || data.place_featured"
+                        class="w-3 h-3 mr-1" 
+                        src="/assets/icons/WA.STAR.BLACK.svg"
+                    >
+                    <p  class="roboto text-xs font-bold leading-[10px] uppercase">
+                        {{ data.ad_tag ?? ''}}
+                        {{ data.recommended || data.place_featured ? $utils.capitalize($t('home.card-product.recommended')) : ''}}
+                    </p>
                 </div>
             </div>
         </div>
