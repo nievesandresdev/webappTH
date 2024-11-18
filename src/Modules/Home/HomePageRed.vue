@@ -1,13 +1,7 @@
 <template>
-    <div class="h-screen bg-gray-600 w-full">
-        new home page {{  String(formType == 'log') }} {{  String(!guestStore.guestData) }}
-        <!-- <pre>{{ hotelStore.hotelData }}</pre> -->
-        <div class="mt-10">
-            <router-link class="bg-white p-4 rounded-lg" :to="{ name: 'Profile' }">
-            go perfil
-        </router-link>
-        </div>
-    </div>
+    <HeaderHomeRed />
+    <HeroSectionRed />
+
     <ResetPasswordBottomSheet :open="formType == 'reset'"/>
     <RegisterOrLoginBottomSheet :open="formType == 'log' || !guestStore.guestData && formType !== 'reset'"/>
     <CompleteRegisterBottomSheet :open="formType == 'complete' || guestStore.guestData && !guestStore.guestData.name"/>
@@ -15,10 +9,14 @@
 </template>
 <script setup>
 import { onMounted, computed } from 'vue';
+//forms
 import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
 import CompleteRegisterBottomSheet from '@/layout/Auth/CompleteRegisterBottomSheet.vue'
 import CreateStayBottomSheet from '@/layout/Auth/CreateStayBottomSheet.vue'
 import ResetPasswordBottomSheet from '@/layout/Auth/ResetPasswordBottomSheet.vue'
+//sections
+import HeaderHomeRed from './Components/HeaderHomeRed.vue'
+import HeroSectionRed from './Components/HeroSectionRed.vue'
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -35,11 +33,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
-    // let guest = guestStore.getLocalGuest();
-    // console.log('home guest', guest)  
-
-    // let stay = stayStore.getLocalStay();
-    // console.log('home stay', stay)  
+    //
 })
 
 const formType = computed(() => props.acform);
