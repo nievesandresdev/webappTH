@@ -10,8 +10,8 @@
             <PlaceSelected :place-selected="placeSelectedData"  />
             <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
             <!-- py-[6px] sp:pt-[12px] -->
-            <div class="px-[8px] sp:px-4  h-full">
-                <div class=" h-full flex flex-col">
+            <div class="px-[8px] sp:px-4 h-full">
+                <div class="flex flex-col h-full">
                     <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                     <p
                         v-if="!isloadingForm"

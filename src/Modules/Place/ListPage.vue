@@ -15,9 +15,9 @@
     </AppHeader>
     <div class="flex-1">
         <template v-if="pointersData?.features?.length">
-            <ListPageMapClusterPlace
+            <!-- <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            />
+            /> -->
         </template>
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <ListPageBottomSheet
