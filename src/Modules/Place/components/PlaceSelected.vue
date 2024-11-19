@@ -1,20 +1,28 @@
 <template>
-    <div v-if="placeComputed" class="w-screen absolute px-[16px] top-[-113px] lef-0 z-[3000]">
+    <div v-if="!laoding && placeComputed"  class="w-screen absolute px-[16px] top-[-113px] lef-0 z-[3000]">
         <CardList :data="placeComputed" />
+    </div>
+    <div v-else-if="loading" class="w-screen absolute px-[16px] top-[-113px] lef-0 z-[3000]">
+        <SkeletonCard />
     </div>
     
 </template>
 
 <script setup>
-    import { computed } from 'vue';
+    import { computed, inject } from 'vue';
 
       import CardList from './CardList.vue';
+    import SkeletonCard from './SkeletonCard.vue';
 
       const props = defineProps({
           placeSelected: {
               type: Object,
               default: () => ({}),
           },
+          loading: {
+              type: Boolean,
+              default: false,
+          }
       });
 
     const placeComputed = computed(() => {
@@ -31,5 +39,6 @@
             distance: props.placeSelected.cityName,
         }
     });
+    
 
 </script>

@@ -15,11 +15,12 @@
     </AppHeader>
     <div class="flex-1">
         <template v-if="pointersData?.features?.length">
-            <!-- <ListPageMapClusterPlace
+            <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            /> -->
+            />
         </template>
         <!-- <template v-if="isOpenBottomSheetList"> -->
+            <!-- {{loadingPlaceSeleced}} -->
             <ListPageBottomSheet
                 @changeCategory="changeCategoryHandle($event)"
                 @loadMore="loadMore"
@@ -28,7 +29,7 @@
         <!-- </template>
         <template v-if="isOpenBottomSheetFilter"> -->
             <ListPagebottomSheetFilter
-                @reloadPlaces="submitFilter()"
+                @reloadPlaces="loadAll({ showPreloader: true })"
             />
         <!-- </template> -->
     </div>
@@ -88,6 +89,7 @@ const isOpenBottomSheetList = ref(true);
 const isOpenBottomSheetFilter = ref(false);
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
+const loadingPlaceSeleced = ref(false);
 const page = ref(1);
 const placesData = ref([]);
 const pointersData = ref([]);
@@ -145,16 +147,18 @@ watch(positionBottomSheet, function(val) {
 // ONMOUNTED
 onMounted(async () => {
     await loadTypePlaces();
-    loadAll();
+    loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTIONS
 
 async function getPlaceById (placeId) {
-    let response = await placeStore.$findById({id: placeId});
     placeSelected.value = null;
+    loadingPlaceSeleced.value = true;
+    let response = await placeStore.$findById({id: placeId});
     if(response.ok) placeSelected.value = response.data;
+    loadingPlaceSeleced.value = false;
 }
 
 function handleMapCluster (payload) {
@@ -184,7 +188,8 @@ async function loadTypePlaces () {
 }
 
 async function loadCategoriPlaces () {
-    const response = await placeStore.$apiGetCategoriesByType({...formFilter, allCategories: true, withNumbersPlaces: true});
+    
+    const response = await placeStore.$apiGetCategoriesByType({...formFilter, allCategories: true, all: true, withNumbersPlaces: true});
     if (response.ok) {
         categoriplacesWithNumbers.value = response.data;
     }
@@ -212,7 +217,7 @@ async function changeCategory (idCategory = null, idTypePlace = null) {
     formFilter.categoriplace = idCategory;
     formFilter.typeplace = idTypePlace;
     loadTabsHeader();
-    loadAll();
+    loadAll({showPreloader: true});
 }
 
 const getFirstCategoryOfType = ()=> {
@@ -284,11 +289,12 @@ function closeSearchHandle () {
 }
 
 async function searchHandle ($event) {
+    searchingActive.value = true;
     loadingSearch.value = true;
     formFilter.search = $event?.target?.value ?? null;
     page.value = 1;
     placesData.value = [];
-    await loadAll();
+    await loadAll({showPreloader: false});
     loadingSearch.value = false;
 }
 
@@ -298,21 +304,24 @@ function activateSearchHandle ($event) {
     if ($event == 'medium') {
         searchingActive.value = false;
         formFilter.search = null;
-        loadAll();
+        loadAll({showPreloader: false});
     }
 }
 
-async function loadAll() {
-     const materialicePromice = await Promise.all([loadCategoriPlaces(), loadCategoriPlaces(), submitFilter(), loadPointers()]);
+async function loadAll(payload) {
+     const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
 }
 
-function submitFilter (){
+function submitFilter (payload){
     placeSelected.value = null;
     isOpenBottomSheetList.value = true;
     page.value = 1;
     placesData.value = [];
     loadPlaces();
-    route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+    let { showPreloader } = payload ?? {};
+    if (showPreloader) {
+        route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+    }
 }
 
 function filterNonNullAndNonEmpty(obj) {
@@ -377,6 +386,7 @@ provide('placesData', placesData);
 provide('pointersData', pointersData);
 provide('placeSelected', placeSelected);
 provide('loadingSearch', loadingSearch);
+provide('loadingPlaceSeleced', loadingPlaceSeleced);
 provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
 provide('positionBottomSheet', positionBottomSheet);

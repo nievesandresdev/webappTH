@@ -30,7 +30,8 @@
                     'icon-image': ['get', 'category'], 
                     'icon-size':windowWidth >= 250 ? 0.09 : 0.04
                 }"
-                :unclustered-point-paint="null"
+                :clusterMinPoints="2"
+                :clusters-paint="{ 'circle-color': 'rgba(0, 123, 255, 0.5)', 'circle-radius': 40 }"
                 @mb-feature-click="handleMapClick($event, 'cluster')"
             />
             <!--  -->

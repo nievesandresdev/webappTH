@@ -18,7 +18,7 @@
         id="handlebar-content"
         @mousedown="startDrag"
         @touchstart="startDrag"
-        @click="isStepThree ? emitClose() : ''"
+        @click="!isStepThree ? emitClose() : ''"
       >
         <div
           class="handlebar"
