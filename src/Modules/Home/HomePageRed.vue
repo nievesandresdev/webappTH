@@ -88,6 +88,24 @@
                 <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
             </div>
         </section>
+
+        <!-- experiences carousel -->
+        <section 
+            v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
+            class="pl-4 mt-2"
+        >
+            <div class="flex items-center justify-between pr-4 h-[28px]">
+                <h2 class="lato text-[20px] font-bold leading-[18px]">
+                    {{ $utils.capitalize($t('home.section-experience.title')) }}
+                </h2>
+                <router-link :to="{name:'ExperienceList'}" class="lato text-sm font-bold leading-[16px] underline hover:underline">
+                    {{ $utils.capitalize($t('home.btn-see-all')) }}
+                </router-link>
+            </div>
+            <div class="">
+                <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
+            </div>
+        </section>
     </div>
 
     <!-- forms -->
@@ -110,6 +128,7 @@ import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
+import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -145,7 +164,7 @@ onMounted(() => {
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
-    // console.log('test crossellingsData',crossellingsData.value.crosselling_facilities)
+    console.log('test crossellingsData',crossellingsData.value)
 }
 
 const goFacilities = () => {
