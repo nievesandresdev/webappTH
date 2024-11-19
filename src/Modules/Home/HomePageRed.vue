@@ -2,6 +2,18 @@
     <HeaderHomeRed />
     <HeroSectionRed />
 
+    <div 
+        class="px-4 mt-6"
+        v-if="isCheckoutPast"
+    >
+        <WACardBanner 
+            @click="handleMyStays"
+            :title="$t('profile.my_stays.title')"
+            :subtitle="$t('profile.my_stays.subtitle_inactive')"
+            :active-custom="true"
+        />
+    </div>
+
     <!-- carousel's -->
     <div class="mt-6 pb-[104px]">
         <!-- facilities carousel -->
@@ -105,6 +117,8 @@
                 <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
             </div>
         </section>
+
+        <SocialNetworks />
     </div>
 
     <!-- forms -->
@@ -115,6 +129,7 @@
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue';
+import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 //forms
@@ -128,6 +143,8 @@ import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
+import SocialNetworks from './Components/SocialNetworksRed.vue'
+import WACardBanner from '@/components/WACardBanner.vue';
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -138,6 +155,8 @@ const hotelStore = useHotelStore();
 const { hotelData } = hotelStore
 import { usePlaceStore } from '@/stores/modules/place'
 const placeStore = usePlaceStore()
+import { useAuthStore } from '@/stores/modules/auth'
+const authStore = useAuthStore()
 
 
 const props = defineProps({
@@ -159,7 +178,6 @@ onMounted(() => {
     loadCrossellings();
     loadCrossellingsPlaces();
     getPlaceCategories();
-    console.log('test data',hotelStore.hotelData.hidden_type_places)
 })
 
 async function loadCrossellings () {
@@ -173,7 +191,7 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
 }
 
 async function getPlaceCategories(){
@@ -200,6 +218,10 @@ const goPlaces = (type, cat) => {
     router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
 }
 
+const handleMyStays = () => {
+    authStore.$logoutAndCreateStay();
+};
+
 const formType = computed(() => props.acform);
 
 const showWhatvisitSection = computed(() => {
@@ -218,5 +240,12 @@ const showLeisureSection = computed(() => {
     if(!crossellingPlacesData.value?.crosselling_places_leisure?.length) return false;
     let idSection = crossellingPlacesData.value?.crosselling_places_leisure[0].type_place.id;
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const isCheckoutPast = computed(() => {
+if(!stayStore.stayData?.check_out) return
+  const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
+  const now = DateTime.now();
+  return inputDate < now; // Retorna true si la fecha ya pasó
 });
 </script>
