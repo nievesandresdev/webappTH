@@ -7,11 +7,11 @@
     >
         <template v-slot:content>
             <!-- {{positionBottomSheet}} -->
-            <PlaceSelected :place-selected="placeSelectedData"  />
+            <PlaceSelected :place-selected="placeSelectedData" :loading="loadingPlaceSeleced"  />
             <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
             <!-- py-[6px] sp:pt-[12px] -->
-            <div class="px-[8px] sp:px-4  h-full">
-                <div class=" h-full flex flex-col">
+            <div class="px-[8px] sp:px-4 h-full">
+                <div class="flex flex-col h-full">
                     <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                     <p
                         v-if="!isloadingForm"
@@ -74,6 +74,7 @@
     const isOpenBottomSheetList = inject('isOpenBottomSheetList');
     const placeSelected = inject('placeSelected');
     const positionBottomSheet = inject('positionBottomSheet');
+    const loadingPlaceSeleced = inject('loadingPlaceSeleced');
 
     const classControlsSheet = ref('0px');
 

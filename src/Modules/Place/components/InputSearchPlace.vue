@@ -41,8 +41,8 @@
                 class="relative"
                 @click="handleOpenFilter"
             >
-                     <!-- v-if="!emptyFilters" -->
                 <IconCustomColor 
+                    v-if="!emptyFilters"
                     class="w-[7px] sp:w-[14px] h-[7px] sp:h-[14px] z-[2000] absolute top-[4px] sp:top-[-1px] right-[-1px] sp:right-[-2px]"
                     name="WA.FILTER.DOT" 
                     :color="chainStore.$colorContrast1" 

@@ -6,31 +6,39 @@
   />
   <transition name="slide-fade">
     <div
+      
       ref="sheet"
       v-if="open"
-      class="bottom-sheet relative pt-[6px] sp:pt-[12px] z-[4000]"
-      :style="{ height: sheetHeight }"
-      @mousedown="startDrag"
-      @touchstart="startDrag"
+      class="bottom-sheet relative pt-[6px] sp:pt-[12px]"
+      :style="{ height: sheetHeight, zIndex: isFullFront ? '100000' : '2000' }"
     >
-      <div class="flex justify-center py-[6px] sp:py-[12px] w-full absolute top-0 left-0">
-        <div class="handlebar"></div>
+      
+      <div
+        class="flex justify-center py-[6px] sp:py-[12px] w-full absolute top-0 left-0"
+        id="handlebar-content"
+        @mousedown="startDrag"
+        @touchstart="startDrag"
+        @click="!isStepThree ? emitClose() : ''"
+      >
+        <div
+          class="handlebar"
+        />
       </div>
       <!-- {{ sheetHeight }} {{ isStepThree }} -->
-      <div class="flex flex-col">
-        <div class="content flex-1 pt-[12px] sp:pt-[24px]">
+      <div class="h-full">
+        <div class="content pt-[12px] sp:pt-[24px] h-full">
           <slot name="content" />
         </div>
-        <div class="footer">
+        <!-- <div class="footer">
           <slot name="footer" />
-        </div>
+        </div> -->
       </div>
     </div>
   </transition>
 </template>
 
 <script setup>
-import { ref, toRefs, watch, defineEmits, onUpdated } from 'vue';
+import { ref, toRefs, watch, defineEmits, onUpdated, onMounted } from 'vue';
 import { updateGuestByIdApi } from '../../api/services/auth.services';
 
 const emits = defineEmits(['changeCurrentHeight']);
@@ -48,6 +56,10 @@ const props = defineProps({
     type: String,
     default: 'top',
   },
+  isFullFront: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const { position, open, isStepThree } = toRefs(props);
@@ -84,6 +96,7 @@ watch(position, () => {
 
 watch(currentHeightIndex, () => {
   emits('changeCurrentHeight', currentHeightIndex.value);
+  deleteReloadPageWithTouch();
 });
 watch(position, (valueNew, valueOld) => {
   // console.log(valueNew, valueOld, 'open watch');
@@ -99,8 +112,23 @@ onUpdated(() => {
   }
 });
 
+onMounted(() => {
+  deleteReloadPageWithTouch();
+});
+function deleteReloadPageWithTouch () {
+  const bottomSheet = document.getElementById("handlebar-content");
+  if (bottomSheet){
+    bottomSheet.addEventListener("touchmove", (event) => {
+      if (bottomSheet.scrollTop === 0 && event.touches[0].clientY > 0) {
+        event.preventDefault();
+      }
+    });
+  }
+}
+
 // Inicia el arrastre del bottom sheet
 function startDrag(event) {
+  if (!isStepThree.value) return;
   isDragging = true;
   startY = event.touches ? event.touches[0].clientY : event.clientY;
   // Agrega listeners para movimiento y fin del arrastre
@@ -112,6 +140,7 @@ function startDrag(event) {
 
 // Mueve el bottom sheet en función de `isStepThree`
 function onDrag(event) {
+
   const currentY = event.touches ? event.touches[0].clientY : event.clientY;
   const deltaY = currentY - startY;
 
@@ -172,7 +201,6 @@ function emitClose() {
   border-top-right-radius: 20px;
   background: linear-gradient(93deg, #F3F3F3 0%, #FAFAFA 100%);
   border: 1px solid #FFF;
-  z-index: 4000;
 }
 
 .handlebar {
@@ -203,5 +231,9 @@ function emitClose() {
     height: 4px;
   }
 }
+
+/* body, #bottom-sheet {
+  overscroll-behavior: contain;
+} */
 
 </style>

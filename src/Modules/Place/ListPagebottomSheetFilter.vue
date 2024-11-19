@@ -2,11 +2,17 @@
     <BaseBottomSheet
         :open="isOpenBottomSheetFilter"
         :position="positionBottomSheet"
+        is-full-front
          @changeCurrentHeight="changePositionHandle"
     >
         <template v-slot:content>
-            <div class="overflow-y-auto h-full">
-                <div class="pl-4 pr-[7px]">
+            <div class=" h-full flex flex-col h-full">
+                <div
+                    id="content-filter"
+                     @scroll="handleScroll"
+                     ref="contentFilter"
+                    class="pl-4 pr-[7px]  overflow-y-scroll flex-1"
+                >
                     <h2 class="text-[20px] font-bold mb-[36px]">{{ $t('place.detail.filters.title') }}</h2>
                     <div class="space-y-6">
                         <div class="space-y-4 border-b border-[--Border-secondary] pb-6">
@@ -51,11 +57,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-between border-t-[2px] border-[#fff] p-4">
+                <div
+                    id="footer-filter"
+                    :class="{ 'shadow-footer': isScrolling }"
+                    class="flex justify-between border-t-[2px] border-[#fff] p-4 z-[6000]"
+                >
                     <button
                         class="underline hbtn-tertiary text-sm font-bold px-4 py-[10px]"
                         @click="resetFormFilter"
-                        
                     >
                         {{ $t('place.detail.filters.remove') }}
                     </button>
@@ -73,7 +82,7 @@
 
 <script setup>
 
-    import { ref, inject, reactive,watch } from 'vue';
+    import { ref, inject, reactive, watch, onMounted } from 'vue';
 
     import BaseBottomSheet from '@/components/Modal/BaseBottomSheet.vue';
     import BaseButtonChipFilter from '@/components/Buttons/BaseButtonChipFilter.vue';
@@ -134,6 +143,8 @@
     const formFilterSheeBottom = reactive(JSON.parse(JSON.stringify(dataFilter)));
     const formFilterSheeBottomDefault = reactive(JSON.parse(JSON.stringify(dataFilter)));
 
+    const isScrolling = ref(false);
+
     watch(isOpenBottomSheetFilter, (valNew, valOld) => {
         if (!!valNew && !valOld) {
             let { featured, distances, points } = formFilter;
@@ -141,6 +152,21 @@
             // Object.assign(formFilterSheeBottomDefault, { featured, distances, points });
         }
     });
+
+    onMounted(() => {
+        const contentFilter = document.querySelector('#content-filter');
+        if (contentFilter) {
+            contentFilter.addEventListener('scroll', handleScroll);
+        }
+    });
+
+    function handleScroll() {
+        const contentFilter = document.querySelector('#content-filter');
+        if (contentFilter) {
+            const maxScroll = contentFilter.scrollHeight - contentFilter.clientHeight;
+            isScrolling.value = contentFilter.scrollTop < maxScroll;
+        }
+    }
 
     function closeModalFilter () {
         isOpenBottomSheetFilter.value = false;
@@ -164,9 +190,8 @@
     }
 
     function resetFormFilter () {
-        console.log(formFilterSheeBottomDefault, 'formFilterSheeBottomDefault');
-        Object.assign(formFilterSheeBottom, formFilterSheeBottomDefault);
-        Object.assign(formFilter, formFilterSheeBottomDefault);
+        Object.assign(formFilterSheeBottom, JSON.parse(JSON.stringify(formFilterSheeBottomDefault)));
+        Object.assign(formFilter, JSON.parse(JSON.stringify(formFilterSheeBottomDefault)));
         emits('reloadPlaces');
         closeModalFilter();
     }
@@ -185,3 +210,12 @@
     }
 
 </script>   
+
+<style lang="scss" scoped>
+    .footer-filter {
+    transition: box-shadow 0.3s ease;
+    }
+    .shadow-footer{
+       box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.25);
+    }    
+</style>

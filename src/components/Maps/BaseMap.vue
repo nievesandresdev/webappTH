@@ -62,6 +62,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  fullFront: {
+    type: Boolean,
+    default: false,
+  },
   
 });
 

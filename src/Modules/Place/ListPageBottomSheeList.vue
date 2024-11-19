@@ -1,11 +1,12 @@
 <template>
-
+    <!-- <div class="bg-black flex-1">
+        di
+    </div> -->
+        <!-- :class="classHeightDinamic" -->
     <div
         id="list-place"
-        class="w-full overflow-y-auto"
-        :class="classHeightDinamic"
+        class="w-full overflow-y-auto flex-1"
     >
-    <!-- h-[257px] sp:h-[450px] -->
         <template v-if="!isloadingForm && !placesData?.length && !firstLoad">
             <ListPageBottomSheeListNotFound />
         </template>
@@ -17,7 +18,9 @@
                 />
             </template>
             <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
-                <SkeletonCard />
+                <SkeletonCard
+                    :class="index === placesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                />
             </template>
         </template>
     </div>
@@ -48,12 +51,15 @@
 
      const windowWidth = window.innerWidth;
 
+// h-[589px]
+// h-[395px
+// h-[450px]
     const classHeightDinamic = computed(() => {
         if (positionBottomSheet.value == 'top') {
-            return 'h-[522px]';
+            return 'h-[589px]';
         }
         if (positionBottomSheet.value == 'medium') {
-            return 'h-[343px]';
+            return 'h-[395px]';
         }
         return 'h-[450px]';
     });
@@ -71,8 +77,10 @@
 
     // FUNCTIONS
     function initScrollListener() {
-        const container = document.querySelector('#list-place');
-        container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
+        const container = document?.querySelector('#list-place');
+        if (container) {
+            container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
+        }
     }
 
     function checkLoadMore () {
