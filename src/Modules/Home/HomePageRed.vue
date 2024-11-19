@@ -3,8 +3,7 @@
     <HeroSectionRed />
 
     <!-- carousel's -->
-    <div class="mt-6 pb-[120px]">
-        
+    <div class="mt-6 pb-[104px]">
         <!-- facilities carousel -->
         <section 
             v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
@@ -28,7 +27,7 @@
 
         <!-- what visit carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_whatvisit?.length > 0"
+            v-if="showWhatvisitSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -49,7 +48,7 @@
 
         <!-- where eat carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_whereeat?.length > 0"
+        v-if="showWhereeatSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -70,7 +69,7 @@
 
         <!-- leisure carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_leisure?.length > 0"
+            v-if="showLeisureSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -160,11 +159,12 @@ onMounted(() => {
     loadCrossellings();
     loadCrossellingsPlaces();
     getPlaceCategories();
+    console.log('test data',hotelStore.hotelData.hidden_type_places)
 })
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
-    console.log('test crossellingsData',crossellingsData.value)
+    // console.log('test crossellingsData',crossellingsData.value)
 }
 
 const goFacilities = () => {
@@ -201,4 +201,22 @@ const goPlaces = (type, cat) => {
 }
 
 const formType = computed(() => props.acform);
+
+const showWhatvisitSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_whatvisit?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_whatvisit[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const showWhereeatSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_whereeat?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_whereeat[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const showLeisureSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_leisure?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_leisure[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
 </script>

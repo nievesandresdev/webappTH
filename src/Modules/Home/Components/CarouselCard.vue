@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gradient-h rounded-[20px] overflow-hidden min-w-[253px] shadow-guest z-[150]">
+    <div class="bg-gradient-h rounded-[20px] overflow-hidden w-[253px] flex-shrink-0 shadow-guest z-[150]">
         <!-- img section -->
         <div class="relative">
             <img 
