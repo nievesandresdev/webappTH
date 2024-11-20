@@ -4,7 +4,9 @@
         :class="{'p-2' : !data?.avatar}"
         @click="goProfile"
         :style="{
-            backgroundColor: chainStore.$bgColor0
+            backgroundColor: chainStore.$bgColor0,
+            width: size,
+            height: size,
         }"
     >
         <img 
@@ -34,6 +36,12 @@ const stayStore = useStayStore();
 import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore();
 
+const props = defineProps({
+    size:{
+        type:String,
+        default:'48px'
+    }
+})
 
 const goProfile = () =>{
     if(stayStore.stayData && guestStore.guestData){

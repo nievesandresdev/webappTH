@@ -6,7 +6,7 @@
                 v-for="item in menuItems"
             >
                 <router-link
-                    class="menu__item py-[4px] sp:py-[10px] w-[27px] sp:w-[60px] h-[27px] sp:h-[60px] space-y-[1px] sp:space-y-1 text-center flex flex-col justify-center"
+                    class="menu__item py-[4px] sp:py-[10px] w-[27px] sp:w-[60px] h-[27px] sp:h-[60px] space-y-[1px] sp:space-y-1 text-center flex flex-col justify-center relative"
                     :to="item.to"
                     :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
                     v-if="!item.exclude"
@@ -15,7 +15,6 @@
                         :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                         :alt="item.title"
                     > -->
-                    
                     <IconCustomColor 
                         class="mx-auto  size-[12px] sp:size-6"
                         :name="item.iconDefault" 
@@ -31,6 +30,11 @@
                     >
                         {{ dynamicTitle(item) }}
                     </span>
+                    <img 
+                        v-if="chatStore.countUnreadMessages && item.iconDefault == 'WA.MENU.DEFAULT.MENSAJES'"
+                        class="absolute top-[6px] right-[18px] w-[12px] h-[12px] z-10"
+                        src="/assets/icons/item-dot.svg"
+                    >
                 </router-link>
             </template>
         </div>
@@ -48,6 +52,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
+import { useChatStore } from '@/stores/modules/chat';
+const chatStore = useChatStore()
 
 const menuItems = reactive([
     {
