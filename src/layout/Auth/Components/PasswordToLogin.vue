@@ -60,37 +60,30 @@ async function submit(){
     }else{
         if(!stayStore?.stayData){
             //aqui entra solo si no hay una estancia cargada antes de culminar registro
-            await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
+            await guestStore.findAndValidLastStayAndLogHotel({guestEmail : form.email, chainId : chainStore.chainData.id, hotelId : hotelStore.hotelData?.id})
         }else{
+            console.log('test 2')
             //aqui entra si ya hay una estancia cargada (viene por url)
             if(Boolean(sessionStorage.getItem('guestPerStay'))){
                 let response = await guestStore.createAccessInStay()
-                console.log('test createAccessInStay',response)
                 if(response?.stay){
                     //actualizar estancia
                     await stayStore.setStayData(response.stay)
+                    await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
                 }
             }else{
-                //sino elimina la estancia actual para que el huesped tenga que crear una
+                console.log('test intento entrar con estancia x',stayStore?.stayData)
                 await stayStore.deleteLocalStayData()
             }
         }
         form.password = '';
         if(stayStore.stayData){
-            console.log('redirect to home')
             navigateTo('Home')
         }else{
             if(hotelData){
-                console.log('redirect to create stay')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
-                console.log('redirect to otros')
-                //logica para cuando no se halla cargado un hotel
-                if(localStorage.getItem('subdomain')){
-                    router.push({ name:'CreateStayFromChain' })
-                }else{
-                    router.push({ name:'HotelsList' })
-                }
+                router.push({ name:'HotelsList' })
             }
         }
     }

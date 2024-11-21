@@ -52,10 +52,14 @@ import { navigateTo } from '@/utils/navigation'
 import { useRouter } from 'vue-router';
 const router = useRouter();
 //stores
+import { useChainStore } from '@/stores/modules/chain'
+const chainStore = useChainStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
@@ -67,26 +71,48 @@ const inputActive = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
-    let params = { type, email: form.email, subdomain : hotelData?.subdomain ?? null}
+    let params = { 
+        type, 
+        email: form.email, 
+        subdomain : hotelStore.hotelData?.subdomain ?? null,
+        hotelId : hotelStore.hotelData?.id ?? null,
+        stayId : stayStore.stayData?.id,
+    }
     await authStore.$registerOrLogin(params);
 }
 
 async function goRegisterOrLoginEmail(){
-    let params = { email: form.email}
-    let find = await guestStore.findByEmail(params);
-    if(find && find.name && find.hasPassword){
-        form.id = find.id;
+    let params = { 
+        guestEmail: form.email,
+        chainId : chainStore.chainData?.id,
+        hotelId : hotelStore.hotelData?.id,
+    }
+    let hasData = await guestStore.saveAndFindValidLastStay(params)
+    if(hasData?.stay && hasData.guest?.hasPassword){
+        form.id = hasData.guest.id;
         emit('enterPasswordToLogin')
     }else{
-        let save = await guestStore.saveOrUpdateByEmail(params);
-        if(!save) return
-        if(hotelData){
-            navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+        if(hotelData && hasData.guest?.id){
+            navigateTo('Home',{},{ g: hasData.guest?.id, acform : 'complete' })
         }else{
             //logica para cuando no se halla cargado un hotel
-            router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
-        }
+            router.push({ name : 'ChainLanding', query:{ g: hasData.guest.id, acform : 'complete' }});
+        }    
     }
+    // let find = await guestStore.findByEmail(params);
+    // if(find && find.name && find.hasPassword){
+    //     form.id = find.id;
+    //     emit('enterPasswordToLogin')
+    // }else{
+    //     let save = await guestStore.saveOrUpdateByEmail(params);
+    //     if(!save) return
+    //     if(hotelData){
+    //         navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+    //     }else{
+    //         //logica para cuando no se halla cargado un hotel
+    //         router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+    //     }
+    // }
     
     // console.log('test goRegisterOrLoginEmail',res)
 }
