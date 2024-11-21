@@ -1,12 +1,12 @@
 <template>
     <div 
-        class="h-[48px] w-[48px] border border-white rounded-full z-50 bg-red-100"
-        :class="{'p-2' : !data?.avatar}"
+        class="h-[24px] sp:h-[48px] w-[24px] sp:w-[48px] border border-white rounded-full z-50"
+        :class="{'p-1 sp:p-2' : !data?.avatar}"
         @click="goProfile"
         :style="{
             backgroundColor: chainStore.$bgColor0,
-            width: size,
-            height: size,
+            width: $utils.isMockup() ? '15' : size,
+            height: $utils.isMockup() ? '15' : size,
         }"
     >
         <img 
@@ -19,8 +19,8 @@
             class="w-full h-full"
             name="WA.user"
             color="#fff"
-            width="30"
-            height="30"
+            :width="$utils.isMockup() ? '15' : '30'"
+            :height="$utils.isMockup() ? '15' : '30'"
         />
     </div>
 </template>

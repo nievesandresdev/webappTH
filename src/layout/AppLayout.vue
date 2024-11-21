@@ -78,6 +78,7 @@ watch(() => stayStore.stayData, async (newStayData) => {
 }, { immediate: true });
 
 const showMenu = computed(() => {
+    if(isMockup()) return true;
     return !getUrlParam('acform') && !hideAppMenu.value && stayStore.stayData && guestStore.guestData && !route?.meta?.hiddenMenu;
 });
 </script>
