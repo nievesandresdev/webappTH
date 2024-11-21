@@ -2,12 +2,12 @@
     <div>
     <BaseMap
         :center="coordCenter"
-        :height-map="windowWidth >= 250 ? '168px' : '168px'"
+        :height-map="windowWidth >= 250 ? '168px' : '90px'"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
-                    class="w-[65px]"
+                    class="w-[40px] sp:w-[65px]"
                     :src="`${iconsMaps[categorySlug]}`"
                 >
             </MapboxMarker>

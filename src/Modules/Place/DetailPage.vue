@@ -6,18 +6,18 @@
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
     />
-    <div class="py-[24px]">
-        <div class="pb-[24px] border-b  border-[#E9E9E9] mx-4">
+    <div class="py-[12px] sp:py-[24px]">
+        <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2">
             <div class="flex justify-between">
-                <h2 class="text-[18px] font-bold w-[246px] lato">
+                <h2 class="text-[14px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
                     {{ placeData?.title }}
                 </h2>
                 <div class="flex flex-col items-center">
-                <div class="flex items-center mb-1">
-                    <img src="/assets/icons/WA.STAR.svg" class="size-[8px] sp:size-[16px] mr-1" />
-                    <p class="text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
+                <div class="flex items-center mb-0.5 sp:mb-1">
+                    <img src="/assets/icons/WA.STAR.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                    <p class="text-[11px] sp:text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
                 </div>
-                <p class="text-[10px] font-medium lato leading-none">
+                <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
                     {{ placeData?.num_reviews }}
                     {{ $t('place.detail.opinionsWord') }}
                 </p>
@@ -25,10 +25,13 @@
             </div>
 
             <!-- Descripción con control de expansión -->
-            <div class="mt-[16px]">
+            <div
+                v-if="description"
+                class="mt-[8px] sp:mt-[16px]"
+            >
                 <p
                     ref="descriptionRef"
-                    class="description mt-4 text-sm font-medium lato"
+                    class="description mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
                     :class="{ expanded: isExpanded }"
                 >
                     {{ description }}
@@ -36,112 +39,118 @@
                 <!-- Botón para Mostrar Más/Menos -->
                 <button
                     v-if="isLongDescription"
-                    class="mt-[12] underline hbtn-tertiary text-sm font-bold lato"
+                    class="mt-[6px] sp:mt-[12px] underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
                     @click="toggleDescription"
                 >
                     {{ isExpanded ? $t('place.detail.showLess') : $t('place.detail.showMore') }}
                 </button>
             </div>
-            <p class="mt-4 text-sm font-light lato">{{ placeData?.type_cuisine }}</p>
+            <p v-if="placeData?.type_cuisine" class="mt-2 sp:mt-4 text-[9px] sp:text-sm font-light lato">{{ placeData?.type_cuisine }}</p>
         </div>
         <div
             v-if="placeData?.recomendations"
-            class="card-recommendation p-4 relative mt-[24px] mx-4"
+            class="card-recommendation p-2.5 sp:p-4 relative mt-[12px] sp:mt-[24px] mx-2 sp:mx-4"
         >
-            <div class="absolute top-[-18px] left-[8px] card-recommendation__tag flex items-center space-x-1 py-1 px-2">
-                <img src="/assets/icons/WA.STAR.BLACK.svg" class="size-4" />
-                <span class="text-sm font-bold">RECOMENDADO</span>
+            <div class="absolute sp:top-[-18px] top-[-9px] left-[4px] sp:left-[8px] card-recommendation__tag flex items-center space-x-0.5 sp:space-x-1 py-0.5 sp:py-1 px-1 sp:px-2">
+                <img src="/assets/icons/WA.STAR.BLACK.svg" class="size-2 sp:size-4" />
+                <span class="text-[9px] sp:text-sm font-bold">{{ $t('place.detail.recommended')?.toUpperCase() }}</span>
             </div>
             <p
-                class="text-sm font-medium"
+                class="text-[9px] sp:text-sm font-medium"
                 style="font-family: 'Lato', sans-serif !important; font-style: italic;"
             >
                 {{ `“${placeData?.recomendation_language_current}”` }}
             </p>
         </div>
-        <div class="mt-[24px]">
-            <div class="flex items-center justify-between mx-4">
-                <div class="flex items-center space-x-[8px]">
+        <div class="mt-[12px] sp:mt-[24px]">
+            <div class="flex items-center justify-between mx-2 sp:mx-4">
+                <div class="flex items-center space-x-[4px] sp:space-x-[8px]">
                     <img
                         src="/assets/icons/WA.pointer.svg"
-                        class="size-[20px]"
+                        class="size-[10px] sp:size-[20px]"
                     >
-                    <span class="text-sm font-bold lato">{{ placeData?.address }}</span>
+                    <span class="text-[9px] sp:text-sm font-bold lato">{{ placeData?.address }}</span>
                 </div>
                 <button
-                    class="hbtn-tertiary underline text-sm font-bold flex items-center"
+                    class="hbtn-tertiary underline text-[9px] sp:text-sm font-bold flex items-center"
                     @click="copyText(placeData?.address)"
                 >
                     <img
-                        class="size-4 inline-block mr-2"
+                        class="size-2 sp:size-4 inline-block mr-1 sp:mr-2"
                         src="/assets/icons/WA.COPY.svg"
                         alt="1.TH.COPY"
                     >
-                    Copiar
+                    {{ $utils.titleCase($t('place.detail.copy')) }}
                 </button>
             </div>
-            <div class="py-[24px] border-b  border-[#E9E9E9]">
+            <div class="py-[12px] sp:py-[24px] border-b  border-[#E9E9E9]">
                 <DetailPageMap />
             </div>
-            <div class="my-[24px] rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-4 space-y-4 mx-4">
-                <h2 class="text-base font-bold lato">Horarios</h2>
+            <div
+                v-if="formatHours?.length > 0"
+                class="my-[12px] sp:my-[24px] rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-2 sp:p-4 space-y-2 sp:space-y-4 mx-2 sp:mx-4"
+            >
+                <h2 class="text-[10px] sp:text-base font-bold lato">{{ $utils.titleCase($t('place.detail.hours.title')) }}</h2>
                 <div
                     v-for="item in formatHours"
-                    class="flex space-x-4"
+                    class="flex space-x-2 sp:space-x-4"
                 >
-                    <p class="text-sm font-bold w-[93px]">{{ item.day }}</p>
-                    <p class="text-sm font-medium w-[93px]">{{ item.hour?.[0] }}</p>
-                    <p class="text-sm font-medium w-[93px]">{{ item.hour?.[1] }}</p>
+                    <p class="text-[9px] sp:text-sm font-bold w-[50px] sp:w-[93px]">{{ $utils.titleCase($t(`place.detail.hours.${item.day}`)) }}</p>
+                    <p class="text-[9px] sp:text-sm font-medium w-[50px] w-[93px]">{{ item.hour?.[0] }}</p>
+                    <p class="text-[9px] sp:text-sm font-medium w-[50px] w-[93px]">{{ item.hour?.[1] }}</p>
                 </div>
             </div>
             <div  
-                class="flex justify-around mx-4 mb-[24px]"
+                class="flex justify-around mx-2 sp:mx-4 mb-[12px] sp:mb-[24px]"
             >
                 <div
                     v-if="placeData?.web_link"
-                    class="flex flex-col space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
                 >
                     <button
-                        class="button-utils p-2"
+                        class="button-utils p-1 sp:p-2"
                         @click="openWebsite"
                     >
                         <img
                             src="/assets/icons/WA.website.svg"
+                            class="size-[16px] sp:size-[32px]"
                         >
                     </button>
-                    <span class="text-sm font-bold">Web</span>
+                    <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.web')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.phone_wheretoeat"
-                    class="flex flex-col space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
                 >
                     <button
-                        class="button-utils p-2"
+                        class="button-utils p-1 sp:p-2"
                         @click="openCall"
                     >
                         <img
                             src="/assets/icons/WA.llamar.svg"
+                            class="size-[16px] sp:size-[32px]"
                         >
                     </button>
-                    <span class="text-sm font-bold">Llamar</span>
+                    <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.call')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.url_menu"
-                    class="flex flex-col space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
                 >
                     <button
-                        class="button-utils p-2"
+                        class="button-utils p-1 sp:p-2"
                         @click="openLinkMenu"
                     >
                         <img
                             src="/assets/icons/WA.MenuRestaurant.svg"
+                            class="size-[16px] sp:size-[32px]"
                         >
                     </button>
-                    <span class="text-sm font-bold">Menu</span>
+                    <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.menu')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.email_wheretoeat"
-                    class="flex flex-col space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
                 >
                     <button
                         class="button-utils p-2"
@@ -149,22 +158,26 @@
                     >
                         <img
                             src="/assets/icons/WA.mail.svg"
+                            class="size-[16px] sp:size-[32px]"
                         >
                     </button>
-                    <span class="text-sm font-bold">E-mail</span>
+                    <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.email')) }}</span>
                 </div>
             </div>
             <div
                 v-if="placeData?.diet_specifications != '' && placeData?.diet_specifications"
-                class="pt-[24px] border-t  border-[#E9E9E9] mx-4"
+                class="pt-[12px] sp:pt-[24px] border-t  border-[#E9E9E9] mx-2 sp:mx-4"
             >
                 <div
-                    class="pb-[24px]"
+                    class="pb-[12px] sp:pb-[24px]"
                 >
-                    <div class="rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-4 space-y-[12px]">
-                        <h2 class="text-base font-bold lato">Regímenes especiales</h2>
-                        <ul class="space-y-2 list-disc pl-[24px]">
-                            <li v-for="text in placeData?.diet_specifications?.split(',')">
+                    <div class="rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-2 sp:p-4 space-y-[6px] space-y-[12px]">
+                        <h2 class="text-[10px] sp:text-base font-bold lato">{{ $utils.titleCase($t('place.detail.specialRegimes')) }}</h2>
+                        <ul class="space-y-1 sp:space-y-2 list-disc pl-[12px] sp:pl-[24px]">
+                            <li
+                                v-for="text in placeData?.diet_specifications?.split(',')"
+                                class="text-[9px] sp:text-sm font-medium lato"
+                            >
                                 {{ text?.trim() }}
                             </li>
                         </ul>
@@ -173,14 +186,17 @@
             </div>
             <div
                 v-if="placeData?.datos_interes != '' && placeData?.datos_interes"
-                class="border-t  border-[#E9E9E9] pt-[24px]  mx-4"
+                class="border-t  border-[#E9E9E9] pt-[12px] sp:pt-[24px] mx-2 sp:mx-4"
             >
                 <div
-                    class="rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-4 space-y-[12px]"
+                    class="rounded-[10px] border border-[--Border-secondary] bg-gradient-100 p-2 sp:p-4 space-y-[6px] sp:space-y-[12px]"
                 >
-                    <h2 class="text-base font-bold lato">Información adicional</h2>
-                    <ul class="space-y-2 list-disc pl-[24px]">
-                        <li v-for="text in placeData?.datos_interes.split(',')">
+                    <h2 class="text-[10px] sp:text-base font-bold lato">{{ $utils.titleCase($t('place.detail.additionalInformation')) }}</h2>
+                    <ul class="space-y-1 sp:space-y-2 list-disc pl-[12px] sp:pl-[24px]">
+                        <li
+                            v-for="text in placeData?.datos_interes.split(',')"
+                            class="text-[9px] sp:text-sm font-medium lato"
+                        >
                             {{ text?.trim() }}
                         </li>
                     </ul>
@@ -196,6 +212,8 @@
 import { onMounted, ref, nextTick, provide, computed } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
+
+import $utils from '@/utils/utils';
 
 import { usePlaceStore } from '@/stores/modules/place';
 
