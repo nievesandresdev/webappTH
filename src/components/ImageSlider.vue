@@ -9,10 +9,10 @@
     </button>
 
     <div
-      v-for="(image, index) in formattedImages"
+      v-for="(image, index) in images"
       :key="image.id"
       class="w-full h-full bg-cover bg-center absolute top-0 left-0 transition-opacity duration-500 ease-in-out"
-      :style="{ backgroundImage: `url(${image.url})` }"
+      :style="{ backgroundImage: `url(${image})` }"
       v-show="currentSlide === index"
     >
     </div>

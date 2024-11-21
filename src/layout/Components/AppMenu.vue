@@ -78,7 +78,7 @@ const menuItems = reactive([
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
         to: `/${route.params.hotelSlug}/lugares`,
-        routeNameIncludes: ['PlaceList'],
+        routeNameIncludes: ['PlaceList', 'PlaceDetail'],
     },
     {
         title: 'Experiencias',

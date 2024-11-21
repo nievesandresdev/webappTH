@@ -1,5 +1,8 @@
 <template>
-    <div class="card-list flex w-full h-[48px] sp:h-[96px]" :class="class">
+    <div
+        class="card-list flex w-full h-[48px] sp:h-[96px]" :class="class"
+        @click="$router.push({ name: 'PlaceDetail', params: { id: data.id } })"
+    >
         <div class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] rounded-[10px] relative overflow-hidden">
             <img
                 v-if="data.place_images?.[0]?.url"
@@ -31,7 +34,8 @@
                     <span class="text-[8px] sp:text-base leading-none font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
                     <span class="text-[4px] sp:text-[10px] leading-none font-bold">({{ data.num_reviews }} reseñas)</span>
                 </div>
-                <p class="text-[6px] sp:text-sm font-bold leading-none truncate-2 h-[16px] sp:h-[32px]" v-html="data.title" />
+                <!-- <p class="text-[6px] sp:text-sm font-bold leading-none truncate-2 h-[16px] sp:h-[32px]" v-html="data.title" /> -->
+                {{data.id}}
             </div>
             <div
                 class="flex items-center justify-between"

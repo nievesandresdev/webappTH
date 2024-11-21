@@ -3,7 +3,7 @@
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
-        <MenuMobile v-show="!hideAppMenu && stayStore.stayData && guestStore.guestData" />
+        <MenuMobile v-show="!hideAppMenu && stayStore.stayData && guestStore.guestData && !$route?.meta?.hiddenMenu" />
     </div>
 
 </template>
