@@ -2,9 +2,20 @@
     <HeaderHomeRed />
     <HeroSectionRed />
 
+    <div 
+        class="px-4 mt-6"
+        v-if="isCheckoutPast"
+    >
+        <WACardBanner 
+            @click="handleMyStays"
+            :title="$t('profile.my_stays.title')"
+            :subtitle="$t('profile.my_stays.subtitle_inactive')"
+            :active-custom="true"
+        />
+    </div>
+
     <!-- carousel's -->
-    <div class="mt-6 pb-[120px]">
-        
+    <div class="mt-6 pb-[104px]">
         <!-- facilities carousel -->
         <section 
             v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
@@ -28,7 +39,7 @@
 
         <!-- what visit carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_whatvisit?.length > 0"
+            v-if="showWhatvisitSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -49,7 +60,7 @@
 
         <!-- where eat carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_whereeat?.length > 0"
+        v-if="showWhereeatSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -70,7 +81,7 @@
 
         <!-- leisure carousel -->
         <section 
-            v-if="crossellingPlacesData?.crosselling_places_leisure?.length > 0"
+            v-if="showLeisureSection"
             class="pl-4 mt-2"
         >
             <div class="flex items-center justify-between pr-4 h-[28px]">
@@ -88,6 +99,26 @@
                 <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
             </div>
         </section>
+
+        <!-- experiences carousel -->
+        <section 
+            v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
+            class="pl-4 mt-2"
+        >
+            <div class="flex items-center justify-between pr-4 h-[28px]">
+                <h2 class="lato text-[20px] font-bold leading-[18px]">
+                    {{ $utils.capitalize($t('home.section-experience.title')) }}
+                </h2>
+                <router-link :to="{name:'ExperienceList'}" class="lato text-sm font-bold leading-[16px] underline hover:underline">
+                    {{ $utils.capitalize($t('home.btn-see-all')) }}
+                </router-link>
+            </div>
+            <div class="">
+                <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
+            </div>
+        </section>
+
+        <SocialNetworks />
     </div>
 
     <!-- forms -->
@@ -98,6 +129,7 @@
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue';
+import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 //forms
@@ -110,6 +142,9 @@ import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
+import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
+import SocialNetworks from './Components/SocialNetworksRed.vue'
+import WACardBanner from '@/components/WACardBanner.vue';
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -120,6 +155,8 @@ const hotelStore = useHotelStore();
 const { hotelData } = hotelStore
 import { usePlaceStore } from '@/stores/modules/place'
 const placeStore = usePlaceStore()
+import { useAuthStore } from '@/stores/modules/auth'
+const authStore = useAuthStore()
 
 
 const props = defineProps({
@@ -145,7 +182,7 @@ onMounted(() => {
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
-    // console.log('test crossellingsData',crossellingsData.value.crosselling_facilities)
+    // console.log('test crossellingsData',crossellingsData.value)
 }
 
 const goFacilities = () => {
@@ -154,7 +191,7 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
 }
 
 async function getPlaceCategories(){
@@ -181,5 +218,34 @@ const goPlaces = (type, cat) => {
     router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
 }
 
+const handleMyStays = () => {
+    authStore.$logoutAndCreateStay();
+};
+
 const formType = computed(() => props.acform);
+
+const showWhatvisitSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_whatvisit?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_whatvisit[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const showWhereeatSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_whereeat?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_whereeat[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const showLeisureSection = computed(() => {
+    if(!crossellingPlacesData.value?.crosselling_places_leisure?.length) return false;
+    let idSection = crossellingPlacesData.value?.crosselling_places_leisure[0].type_place.id;
+    return !hotelStore.hotelData.hidden_type_places.includes(idSection)
+});
+
+const isCheckoutPast = computed(() => {
+if(!stayStore.stayData?.check_out) return
+  const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
+  const now = DateTime.now();
+  return inputDate < now; // Retorna true si la fecha ya pasó
+});
 </script>

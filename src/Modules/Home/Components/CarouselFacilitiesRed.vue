@@ -3,6 +3,7 @@
         v-if="items.length > 0"  
         id="facility-cross-mobile" 
         class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4"
+        :class="{'justify-center': items.length == 1}"
     >
         <CarouselCard
             v-for="(item, index) in items"

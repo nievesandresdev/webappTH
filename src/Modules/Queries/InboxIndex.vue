@@ -1,7 +1,9 @@
 <template>
-    <AppHeader title="Inbox"/>
+    <InboxHead />
 </template>
 <script setup>
-import { ref, onMounted, provide, inject } from 'vue'
-import AppHeader from '@/layout/Components/AppHeader.vue';
+import { ref, onMounted } from 'vue'
+import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+
+
 </script>

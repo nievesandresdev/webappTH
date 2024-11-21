@@ -79,6 +79,7 @@ export const useStayStore = defineStore('stay', () => {
         }
         let lang = otherFomattedLangs[stayData.value.language] ?? formattedLangs[stayData.value.language]
         // console.log(lang, 'setStayData')
+        chatStore.unreadMsgs();
         localeStore.$load(lang)
     }
 

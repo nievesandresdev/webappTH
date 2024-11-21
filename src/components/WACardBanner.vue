@@ -2,7 +2,7 @@
     <div 
         :class="[classContainer, containerDesignClass]"
         :style="{
-            backgroundColor: activeCustom ?  chainStore.$bgColor0 : ''
+            backgroundColor: activeCustom ?  chainStore.$bgColor1 : ''
         }"
     >
         <!-- left container  -->

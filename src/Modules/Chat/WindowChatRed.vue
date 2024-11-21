@@ -6,9 +6,7 @@
                 isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]'
             ]"
         >
-            <!-- <div class="sticky top-0 left-0"> -->
-            <AppHeader :title="settings.name" :tabs="tabsMenu"/>
-            <!-- </div> -->
+            <InboxHead/>
             <!-- body chat -->
             <div class="body-chat flex-grow flex flex-col overflow-y-auto px-4">
                 <!-- availabilty tag-->
@@ -97,11 +95,11 @@
     <ScheduleModal />
 </template>
 <script setup>
-import { ref, onMounted, provide, inject } from 'vue'
+import { ref, onMounted, onUnmounted, provide, inject } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
-import AppHeader from '@/layout/Components/AppHeader.vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
+import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
 import { DateTime, Interval, Settings } from 'luxon';
 import { formatTimestampDate } from '@/utils/dateHelpers'
 import { useRouter } from 'vue-router';
@@ -137,10 +135,29 @@ onMounted( async () => {
     watchAvailability();
     connectPusher();
     isIphone.value = /iPhone/i.test(navigator.userAgent);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    chatStore.markMsgsAsRead();
 });
+
+onUnmounted(() => {
+    unsubscribeChatEvent()
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+});
+    
 
 let originalBodyOverflow;
 provide('isScheduleModalOpen',isScheduleModalOpen)
+
+const handleVisibilityChange = () => {
+    if (document.hidden) {
+        console.log('test handleVisibilityChange si')
+        screenOff.value = true;
+    } else {
+        console.log('test handleVisibilityChange no')
+        chatStore.markMsgsAsRead();
+        screenOff.value = false;
+    }
+}
 
 const autoGrow = (event) => {
     event.target.style.height = '40px';
@@ -262,6 +279,12 @@ const watchAvailability = async () => {
     }
 };
 
+function unsubscribeChatEvent() {
+    if (channel_chat.value) {
+        channel_chat.value.unbind('App\\Events\\UpdateChatEvent');
+        pusher.value.unsubscribe(channel_chat.value);
+    }
+}
 
 const clearTimeouts = () => {
     if(timeouts.value.length > 0){
@@ -311,24 +334,6 @@ function preventScroll(e) {
     e.preventDefault();
 }
 
-const tabsMenu = [
-    {    
-        title: 'Chat',
-        exclude: false,
-        iconDefault: `WA.Chat`,
-        iconSelected: `WA.Chat`,
-        isActive: true,
-        onClick: () => router.push({ name:'Chat' }),
-    },
-    {    
-        title: 'Inbox',
-        exclude: false,
-        iconDefault: `WA.inbox.DISABLED`,
-        iconSelected: `WA.inbox`,
-        isActive: false,
-        onClick: () => router.push({ name:'Inbox' }),
-    }
-];
 </script>
 <style scoped>
 .height-chat-normal {

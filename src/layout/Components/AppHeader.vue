@@ -3,25 +3,19 @@
         class="custom-header"
         :class="{'fixed top-0 left-0 w-full': fixed}"
     >
-        <div class="header-top pt-[10px] sp:pt-6 px-[1] sp:px-2 pb-1.5 sp:pb-3">
-            <div class="flex justify-between items-center w-full h-6 sp:h-10">
+        <div class="header-top pt-[10px] sp:pt-6 px-1 sp:px-4 pb-1.5 sp:pb-3">
+            <div class="flex justify-between items-start w-full h-6 sp:h-10">
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="text-[12px] sp:text-[20px] font-bold">{{ title }}</h1>
+                        <h1 class="lato text-[12px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
                     </slot>
                 </div>
 
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <IconCustomColor 
-                            name="TH.WA.AVATAR.BUTTON" 
-                            :color="chainStore.customizationData?.colors?.[0]?.cod_hex" 
-                            only-change-background 
-                            :height="windowWidth >= 250 ? '40' : '20'"
-                            :width="windowWidth >= 250 ? '40' : '20'"
-                        />
+                        <AvatarButton size="40px"/>
                     </slot>
                 </div>
             </div>
@@ -34,12 +28,12 @@
                     <div class="flex justify-around">
                         <div
                             v-for="(tab, index) in tabs"
-                            :key="index" class="tab space-y-[2px] sp:space-y-1"
+                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative"
                             :class="{ active: tab.isActive }" @click="tab.onClick"
                         >
                             <div class="flex flex-col items-center">
                                 <IconCustomColor 
-                                    class="h-[12px] sp:w-[24px] h-[12px] sp:h-[24px]" :name="tab.iconDefault" 
+                                    class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
                                     :height="windowWidth >= 250 ? '24' : '12'"
                                     :width="windowWidth >= 250 ? '24' : '12'"
@@ -55,6 +49,11 @@
                             >
                                 <div class="tab-item__selected" />
                             </div>
+                            <img 
+                                v-if="tab.notify"
+                                class="absolute top-[-6px] right-[8px] w-[14px] h-[14px] z-10"
+                                src="/assets/icons/item-dot.svg"
+                            >
                         </div>
                     </div>
                 </div>
@@ -65,10 +64,7 @@
 
 <script setup>
 import { onMounted, reactive, computed, defineProps } from 'vue';
-
-import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
-
+import AvatarButton from '@/components/Buttons/AvatarButton.vue'
 const props = defineProps({
     title: {
       type: String,
@@ -110,7 +106,7 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
         border-radius: 5px 5px 0px 0px;
         background: #333333;
     }
-    @media (min-width:300) {
+    @media (min-width:300px) {
         .tab-item__selected {
             width: 48px;
             height: 4px;
