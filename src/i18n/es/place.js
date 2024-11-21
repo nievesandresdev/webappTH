@@ -35,7 +35,7 @@ export default {
     "detail":{
         'titleList': "Explora",
         "opinionsTitle":"Opiniones de la info. turística",
-        "opinionsWord":"Opiniones",
+        "opinionsWord":"Reseñas",
         "recommended": "Recomendado",
         "recommendationWord": "Recomendación",
         "featured": "Destacado",
@@ -51,7 +51,7 @@ export default {
         "starsWord": "Estrellas",
         "ratingTitle": "Puntuación",
         "noComment": "No se escribio comentario",
-        "seeMoreComment": "Ver mas",
+        "seeMoreComment": "Ver más",
         "seeAllComments": "Ver todas las opiniones",
         "titleAllReviews": "Opiniones de la info. turística",
         "exploreIn":"Explora en",

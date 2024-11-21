@@ -153,7 +153,7 @@
                 {{ $t('place.detail.dataInterest.title') }}
             </h1>
             <div class="lg:flex lg:justify-between" v-if="placeData?.range_numeric_prices || placeData?.diet_specifications">
-                <div class="w-[253px]" v-if="placeData?.range_numeric_prices">
+                <div class="w-[253px]" v-if="placeData?.range_numeric_prices"> 
                     <p class="text-[10px] sp:text-sm lg:text-base lg:font-medium mt-[8px] sp:mt-4">
                         {{ $t('place.detail.dataInterest.priceRange') }}
                     </p>

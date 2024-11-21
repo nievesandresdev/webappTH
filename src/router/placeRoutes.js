@@ -21,12 +21,13 @@ const placeRoutes = [
         component: ListPage,
         props: (route) => ({ queryRouter: {...route.query} }),
       },
-      // {
-      //   name: 'PlaceDetail',
-      //   path: ':id',
-      //   component: DetailPage,
-      //   props: (route) => ({ paramsRouter: {...route.params} })
-      // },
+      {
+        name: 'PlaceDetail',
+        path: ':id',
+        component: DetailPage,
+        props: (route) => ({ paramsRouter: {...route.params} }),
+        meta: { hiddenMenu: true },
+      },
     ],
   },
 ];
