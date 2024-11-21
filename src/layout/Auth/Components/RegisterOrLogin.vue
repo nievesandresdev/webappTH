@@ -58,6 +58,8 @@ import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
+import { useStayStore } from '@/stores/modules/stay'
+const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
@@ -69,7 +71,13 @@ const inputActive = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
-    let params = { type, email: form.email, subdomain : hotelData?.subdomain ?? null}
+    let params = { 
+        type, 
+        email: form.email, 
+        subdomain : hotelStore.hotelData?.subdomain ?? null,
+        hotelId : hotelStore.hotelData?.id ?? null,
+        stayId : stayStore.stayData?.id,
+    }
     await authStore.$registerOrLogin(params);
 }
 
@@ -78,7 +86,6 @@ async function goRegisterOrLoginEmail(){
         guestEmail: form.email,
         chainId : chainStore.chainData?.id,
         hotelId : hotelStore.hotelData?.id,
-
     }
     let hasData = await guestStore.saveAndFindValidLastStay(params)
     if(hasData?.stay && hasData.guest?.hasPassword){

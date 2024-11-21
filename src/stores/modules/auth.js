@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
     async function $registerOrLogin (params) {
         const currentUrl = window.location.href
         let chainSubdomain = localStorage.getItem('chainSubdomain')
-        window.location.href = `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/guest/auth/google?redirect=${encodeURIComponent(currentUrl)}&chainSubdomain=${chainSubdomain}&subdomain=${params.subdomain}`
+        window.location.href = `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/guest/auth/google?redirect=${encodeURIComponent(currentUrl)}&chainSubdomain=${chainSubdomain}&subdomain=${params.subdomain}&hotelId=${params.hotelId}`
     }
 
     async function $goRegisterOrLoginEmail (params) {
