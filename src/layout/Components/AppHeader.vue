@@ -35,10 +35,10 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="windowWidth >= 250 ? '24' : '12'"
-                                    :width="windowWidth >= 250 ? '24' : '12'"
+                                    :height="!$utils.isMockup() ? '24' : '12'"
+                                    :width="!$utils.isMockup() ? '24' : '12'"
                                 />
-                                <span 
+                                <span
                                     class="text-[10px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
                                 >{{ tab.title }}</span>
@@ -64,7 +64,10 @@
 
 <script setup>
 import { onMounted, reactive, computed, defineProps } from 'vue';
-import AvatarButton from '@/components/Buttons/AvatarButton.vue'
+import AvatarButton from '@/components/Buttons/AvatarButton.vue';
+
+import $utils from '@/utils/utils';
+
 const props = defineProps({
     title: {
       type: String,

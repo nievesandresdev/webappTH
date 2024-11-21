@@ -157,7 +157,7 @@ async function getPlaceById (placeId) {
     placeSelected.value = null;
     loadingPlaceSeleced.value = true;
     let response = await placeStore.$findById({id: placeId});
-    if(response.ok) placeSelected.value = response.data;
+    if(response.ok) placeSelected.value = response.data.place;
     loadingPlaceSeleced.value = false;
 }
 
