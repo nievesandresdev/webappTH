@@ -1,5 +1,5 @@
 <template>
-    <div v-if="openBottomSheet" class="relative">
+    <div v-if="openBottomSheet" class="relative shadow-guest-2">
         <!-- Full-screen container to center the panel -->
         <div 
             class="fixed left-0 bottom-0 flex w-screen items-center justify-center z-[2500]" 

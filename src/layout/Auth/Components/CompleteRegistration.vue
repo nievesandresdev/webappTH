@@ -90,29 +90,29 @@ onMounted(async () => {
     form.id = getUrlParam('g');
     method.value = getUrlParam('m');
     let guestData = await guestStore.findById(form.id);
-    form.name = guestData?.name ?? '';
     form.email = guestData?.email ?? '';
     if(method.value == 'google'){
+        form.name = guestData?.name ?? '';
         form.password = '123456789';
     }
 })
 
 async function submit(){
-    if(method.value == 'google' && method.value == 'tripadvisor') form.password = null;
+    if(method.value == 'google' && method.value == 'facebook') form.password = null;
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
 
     if(!stayStore?.stayData){
         //aqui entra solo si no hay una estancia cargada antes de culminar registro
-        await guestStore.findAndValidLastStayAndLogHotel({guestId : form.id, chainId : chainStore.chainData.id})
+        await guestStore.findAndValidLastStayAndLogHotel({guestEmail : guestData.email, chainId : chainStore.chainData?.id, hotelId : hotelStore.hotelData?.id})
     }else{
         //aqui entra si ya hay una estancia cargada (viene por url)
         if(Boolean(sessionStorage.getItem('guestPerStay'))){
             let response = await guestStore.createAccessInStay()
-                console.log('test createAccessInStay',response)
                 if(response?.stay){
                     //actualizar estancia
                     await stayStore.setStayData(response.stay)
+                    await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
                 }
         }else{
             //sino elimina la estancia actual para que el huesped tenga que crear una
@@ -123,19 +123,13 @@ async function submit(){
     //limpiar
     sessionStorage.removeItem('guestPerStay')
     if(stayStore.stayData){
-            console.log('test se metio 2 1')
             navigateTo('Home')
     }else{
         if(hotelStore.hotelData){
-            console.log('test se metio 2')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
             //logica para cuando no se halla cargado un hotel
-            if(localStorage.getItem('subdomain')){
-                router.push({ name:'CreateStayFromChain' })
-            }else{
-                router.push({ name:'HotelsList' })
-            }
+            router.push({ name:'HotelsList' })
         }
     }
     toastSuccess("Registro completado"); 

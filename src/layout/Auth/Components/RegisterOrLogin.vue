@@ -52,6 +52,8 @@ import { navigateTo } from '@/utils/navigation'
 import { useRouter } from 'vue-router';
 const router = useRouter();
 //stores
+import { useChainStore } from '@/stores/modules/chain'
+const chainStore = useChainStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
 import { useGuestStore } from '@/stores/modules/guest'
@@ -72,21 +74,38 @@ async function goRegisterOrLogin(type){
 }
 
 async function goRegisterOrLoginEmail(){
-    let params = { email: form.email}
-    let find = await guestStore.findByEmail(params);
-    if(find && find.name && find.hasPassword){
-        form.id = find.id;
+    let params = { 
+        guestEmail: form.email,
+        chainId : chainStore.chainData?.id,
+        hotelId : hotelStore.hotelData?.id,
+
+    }
+    let hasData = await guestStore.saveAndFindValidLastStay(params)
+    if(hasData?.stay && hasData.guest?.hasPassword){
+        form.id = hasData.guest.id;
         emit('enterPasswordToLogin')
     }else{
-        let save = await guestStore.saveOrUpdateByEmail(params);
-        if(!save) return
-        if(hotelData){
-            navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+        if(hotelData && hasData.guest?.id){
+            navigateTo('Home',{},{ g: hasData.guest?.id, acform : 'complete' })
         }else{
             //logica para cuando no se halla cargado un hotel
-            router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
-        }
+            router.push({ name : 'ChainLanding', query:{ g: hasData.guest.id, acform : 'complete' }});
+        }    
     }
+    // let find = await guestStore.findByEmail(params);
+    // if(find && find.name && find.hasPassword){
+    //     form.id = find.id;
+    //     emit('enterPasswordToLogin')
+    // }else{
+    //     let save = await guestStore.saveOrUpdateByEmail(params);
+    //     if(!save) return
+    //     if(hotelData){
+    //         navigateTo('Home',{},{ g: save.id, acform : 'complete' })
+    //     }else{
+    //         //logica para cuando no se halla cargado un hotel
+    //         router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
+    //     }
+    // }
     
     // console.log('test goRegisterOrLoginEmail',res)
 }

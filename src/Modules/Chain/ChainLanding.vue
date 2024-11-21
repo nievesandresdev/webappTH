@@ -1,8 +1,13 @@
 <template>
-    <div class="h-screen pt-8" :class="`bg-[${customData?.colors[0].cod_hex}]`">
+    <div 
+        class="h-screen pt-8"
+        :style="{
+            backgroundColor:chainStore.$bgColor0
+        }"
+    >
         <img 
-            v-if="customData?.logo"
-            class="w-[133px] h-[80px] mx-auto" :src="hotelStore.$loadImage(customData?.logo)" alt="icon google"
+            v-if="chainStore.chainData?.logo"
+            class="w-[133px] h-[80px] mx-auto" :src="hotelStore.$loadImage(chainStore.chainData?.logo)" alt="icon google"
         >
     </div>
     <RegisterOrLoginBottomSheet :open="formType == 'log'"/>
@@ -20,6 +25,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const props = defineProps({
     acform: {
@@ -31,7 +38,7 @@ const props = defineProps({
 const customData = ref(null)
 onMounted(async () => {
     hotelStore.$deleteLocalHotel();    
-    stayStore.deleteLocalStayData();
+    // stayStore.deleteLocalStayData();
 })
 
 const formType = computed(() => props.acform);

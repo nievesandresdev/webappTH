@@ -122,10 +122,22 @@
     </div>
 
     <!-- forms -->
-    <ResetPasswordBottomSheet :open="formType == 'reset'"/>
-    <RegisterOrLoginBottomSheet :open="formType == 'log' || !guestStore.guestData && formType !== 'reset'"/>
-    <CompleteRegisterBottomSheet :open="formType == 'complete' || guestStore.guestData && !guestStore.guestData.name"/>
-    <CreateStayBottomSheet :open="formType == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType"/>
+    <ResetPasswordBottomSheet 
+        v-if="formType == 'reset'"
+        :open="true"
+    />
+    <RegisterOrLoginBottomSheet 
+        v-if="formType == 'log' || !guestStore.guestData && formType !== 'reset'"
+        :open="true"
+    />
+    <CompleteRegisterBottomSheet 
+        v-if="formType == 'complete' || guestStore.guestData && !guestStore.guestData.name"
+        :open="true"
+    />
+    <CreateStayBottomSheet 
+        v-if="formType == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType"
+        :open="true"
+    />
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue';

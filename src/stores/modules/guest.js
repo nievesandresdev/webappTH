@@ -4,7 +4,6 @@ import { ref, computed } from 'vue'
 import { 
     findByIdApi,
     saveOrUpdateApi,
-    findLastStayApi,
     sendMailToApi,
     updateLanguageApi,
     findByEmailApi,
@@ -12,7 +11,8 @@ import {
     updatePasswordToApi,
     updateDataGuest,
     createAccessInStayApi,
-    deleteGuestOfStayApi
+    deleteGuestOfStayApi,
+    saveAndFindValidLastStayApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -133,26 +133,33 @@ export const useGuestStore = defineStore('guest', () => {
         }
     }
 
-    async function findLastStay (guestId) {
-        // if(localStorage.getItem('stayData')) return;
-        const response = await findLastStayApi(guestId)
+    async function findAndValidLastStay (params) {
+        const response = await findAndValidLastStayApi(params)
         const { ok } = response
         if(ok){
-            stayStore.setStayData(response.data,false)
-            return response.data
+            return response.data;
+        }
+        return null
+    }
+
+    async function saveAndFindValidLastStay (params) {
+        const response = await saveAndFindValidLastStayApi(params)
+        console.log('test response',response)
+        const { ok } = response
+        if(ok){
+            return response.data;
         }
         return null
     }
 
     async function findAndValidLastStayAndLogHotel (params) {
+        console.log('test findAndValidLastStayAndLogHotel',params)
         const response = await findAndValidLastStayApi(params)
-        console.log('test findAndValidLastStayApi', response)
+        console.log('test response',response)
         const { ok } = response
-        if(ok){
-            await stayStore.setStayData(response.data,false)
-            if(!localStorage.getItem('subdomain')){
-                await hotelStore.$setAndLoadLocalHotel(response.data.hotelSubdomain)
-            }
+        if(ok && response.data.stay){
+            await stayStore.setStayData(response.data.stay,false)
+            await hotelStore.$setAndLoadLocalHotel(response.data.stay.hotelSubdomain)
             return response.data
         }
         return null
@@ -267,11 +274,13 @@ export const useGuestStore = defineStore('guest', () => {
         findByEmail,
         findByIdInSetLocalGuest,
         setLocalGuest,
-        findAndValidLastStayAndLogHotel,
+        findAndValidLastStay,
         deleteLocalGuest,
         $updateLocalGuestData,
         createAccessInStay,
-        deleteGuestOfStay
+        deleteGuestOfStay,
+        saveAndFindValidLastStay,
+        findAndValidLastStayAndLogHotel
     }
 
 })

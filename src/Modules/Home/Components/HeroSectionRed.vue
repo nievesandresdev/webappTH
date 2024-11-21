@@ -7,6 +7,7 @@
         ></div>
         <div class="w-[343px] mx-auto mt-[-24px]">
             <StayCard 
+                v-if="stayStore.stayData" 
                 :hotel="hotelStore.hotelData" 
                 :stay="stayStore.stayData" 
                 :showButtonShared="true"
