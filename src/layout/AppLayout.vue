@@ -3,19 +3,20 @@
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
-        <MenuMobile v-show="!hideAppMenu && stayStore.stayData && guestStore.guestData && !$route?.meta?.hiddenMenu" />
+        <MenuMobile v-show="showMenu" />
     </div>
 
 </template>
 
 <script setup>
 
-import { onMounted, ref, provide, watch } from 'vue';
+import { onMounted, ref, provide, watch, computed } from 'vue';
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
 import MenuMobile from './Components/AppMenu.vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useRoute } from 'vue-router';
+const route = useRoute();
+import { getUrlParam } from '@/utils/utils.js'
 //stores
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
@@ -75,4 +76,8 @@ watch(() => stayStore.stayData, async (newStayData) => {
         }
     }
 }, { immediate: true });
+
+const showMenu = computed(() => {
+    return !getUrlParam('acform') && !hideAppMenu.value && stayStore.stayData && guestStore.guestData && !route?.meta?.hiddenMenu;
+});
 </script>
