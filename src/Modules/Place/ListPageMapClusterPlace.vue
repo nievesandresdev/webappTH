@@ -1,7 +1,7 @@
 <template>
     <BaseMap
         :center="coordCenter"
-        :height-map="windowWidth >= 250 ? '70vh' : '70vh'"
+        :height-map="windowWidth >= 250 ? '78vh' : '78vh'"
         @mb-click="handleMapClick($event, 'map')"
     >
         <template v-slot:controls>

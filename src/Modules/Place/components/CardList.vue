@@ -20,22 +20,24 @@
                         src="/assets/icons/WA.STAR.BLACK.svg"
                         class="size-[6px] sp:size-[12px]"
                     >
-                    <span class="text-[4px] sp:text-[10px] font-bold htext-black-100 leading-none">{{ $utils.capitalize($t('home.card-product.recommended')) }}</span>
+                    <span class="text-[4px] sp:text-[10px] font-bold htext-black-100 leading-none lato">{{ $utils.capitalize($t('home.card-product.recommended')) }}</span>
                 </div>
             </div>
         </div>
         <div class="p-[4px] sp:p-[8px] flex flex-col flex-1">
-            <div class="flex-1 truncate-2">
+            <div class="flex-1">
                 <div class="flex items-center space-x-[4px] space-x-2 mb-[4px] sp:mb-2">
                     <img
                         src="/assets/icons/WA.STAR.BLACK.svg"
                         class="size-[8px] sp:size-4"
                     >
-                    <span class="text-[8px] sp:text-base leading-none font-bold">{{ converStar(data.num_stars).toFixed(1) }}</span>
-                    <span class="text-[4px] sp:text-[10px] leading-none font-bold">({{ data.num_reviews }} reseñas)</span>
+                    <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ converStar(data.num_stars).toFixed(1) }}</span>
+                    <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.num_reviews }} reseñas)</span>
                 </div>
-                <!-- <p class="text-[6px] sp:text-sm font-bold leading-none truncate-2 h-[16px] sp:h-[32px]" v-html="data.title" /> -->
-                {{data.id}}
+                <div class="truncate-2  h-[16px] sp:h-[32px]">
+                    <p class="text-[6px] sp:text-[14px] font-bold truncate-2 lato leading-4" v-html="data.title" />
+                </div>
+                <!-- {{data.id}} -->
             </div>
             <div
                 class="flex items-center justify-between"
@@ -43,13 +45,15 @@
             >
                 <div
                     v-if="distance"
-                    class="flex items-center space-x-[1px] sp:space-x-[2px]"
+                    class="flex items-center h-full aspace-x-[1px] sp:space-x-[2px]"
                 >
-                    <img
-                        src="/assets/icons/WA.pointer.svg"
-                        class="size-[6px] sp:size-[12px]"
-                    >
-                    <span class="text-[4px] sp:text-[10px] font-bold leading-none">{{ distance }}km</span>
+                    <div class="flex items-center justify-center">
+                        <img
+                            src="/assets/icons/WA.pointer.svg"
+                            class="size-[6px] sp:size-[12px]"
+                        >
+                        <span class="text-[4px] sp:text-[10px] font-bold leading-[10px] lato">{{ distance }}km</span>
+                    </div>
                 </div>
                 <img
                     :src="`/assets/icons/${data.categori_place.icon}.svg`"

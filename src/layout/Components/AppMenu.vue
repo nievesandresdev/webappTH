@@ -11,21 +11,34 @@
                     :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
                     v-if="!item.exclude"
                 >
-                    <!-- <img   
+                    <img
+                        v-if="!validRoute(item)"
                         :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                         :alt="item.title"
-                    > -->
+                        class="mx-auto size-[12px] sp:size-6"
+                    >
                     <IconCustomColor 
+                        v-else
                         class="mx-auto  size-[12px] sp:size-6"
                         :name="item.iconDefault" 
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
                     />
-                    <span
+                    <!-- <span
                         class="text-[4px] sp:text-[10px] font-bold leading-none lato"
                         :class="validRoute(item) ? `text-white` : `htext-black-100`"
                         :style="{
                             color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
+                        }"
+                    >
+                        {{ dynamicTitle(item) }}
+                    </span>
+                    <img  -->
+                    <span
+                        class="text-[4px] sp:text-[10px] font-bold leading-none lato"
+                        :class="validRoute(item) ? `text-white` : `htext-black-100`"
+                        :style="{
+                            color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
                         {{ dynamicTitle(item) }}
