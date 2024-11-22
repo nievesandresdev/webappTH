@@ -3,7 +3,7 @@
       <div
         :disabled="disabled"
         @click="toggleDropdown"
-        class="flex items-center h-10 w-full rounded-[10px] py-3 px-2 bg-white text-left border-[#333]"
+        class="flex items-center h-10 w-full rounded-[10px] px-2 bg-white text-left border-[#333]"
         :class="{
           'border ': !error && !modelValue && !showOptions,
           'border-2 hborder-alert-negative': error,
@@ -12,7 +12,7 @@
       >
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">
         <span
-          class="flex-grow truncate text-label lato text-sm font-medium leading-[12px] mr-2"
+          class="flex-grow truncate text-label lato text-sm font-medium leading-[12px] mr-2 py-3"
           :class="{
             'htext-black-100': !error && !modelValue,
             'htext-alert-negative': error,

@@ -1,5 +1,10 @@
 <template>
-    <SectionBar title="Editar estancia"/>
+    <div class="sticky top-0 left-0 z-10">
+        <SectionBar 
+            title="Editar estancia"
+        />
+        <!-- view-name-back="MyStays" -->
+    </div>
     <div class="py-6 px-4">
 
         <!-- form -->
@@ -148,6 +153,7 @@ const isModalOpen = ref(false);
 const guestSelected = ref(null);
 const guestIndexSelected = ref(null);
 const isGuestModalOpen = ref(false);
+const currentStay = ref(null);
 
 const form = reactive({
     checkDate: null,
@@ -158,7 +164,8 @@ const form = reactive({
 
 onMounted(async() => {
     hotelNameAddress.value =  `${hotelStore.hotelData.name} - ${hotelStore.hotelData.address}`
-    fillForm()
+    currentStay.value = await stayStore.findById(paramsRouter.value.stayId)
+    fillForm(currentStay.value)
     await reloadGuestsList()
 })
 
@@ -167,19 +174,18 @@ provide('isGuestModalOpen',isGuestModalOpen)
 provide('guestSelected',guestSelected)
 provide('guestIndexSelected',guestIndexSelected)
 
-const fillForm = () =>{
+const fillForm = (stay) =>{
     form.checkDate = {
-        start : stayStore.stayData?.check_in,
-        end : stayStore.stayData?.check_out
+        start : stay?.check_in,
+        end : stay?.check_out
     };
 
-    form.middle_reservation = stayStore.stayData?.middle_reservation;
-    form.room = stayStore.stayData?.room;
+    form.middle_reservation = stay?.middle_reservation;
+    form.room = stay?.room;
 }
 
 const reloadGuestsList = async () =>{
     guestsList.value = await stayStore.getGuestsAndSortByCurrentguestId(paramsRouter.value.stayId,guestStore.guestData?.id)
-    console.log('test guestsList',guestsList.value)
 }
 
 
@@ -192,19 +198,22 @@ const openGuestModal = (guest, index)=>{
 
 
 const submitForm = async () => {
-    form.stayId = stayStore.stayData.id;
-    let response = await stayStore.updateStayAndGuests(form)
-    if(response){
+    form.stayId = paramsRouter.value.stayId;
+    console.log('test stayId',paramsRouter.value.stayId)
+    currentStay.value = await stayStore.updateStayAndGuests(form)
+    fillForm(currentStay.value)
+    console.log('test currentStay.value',currentStay.value)
+    if(currentStay.value){
         toastSuccess("Cambios guardados");
     }
 }
 
 const valid = computed(()=>{
-    let checkDateCompare = {start : stayStore.stayData?.check_in,end : stayStore.stayData?.check_out};
+    let checkDateCompare = {start : currentStay.value?.check_in,end : currentStay.value?.check_out};
     let checkDateReal = {start : form.checkDate?.start,end : form.checkDate?.end};
     //changes
     let validate = JSON.stringify(checkDateCompare) !== JSON.stringify(checkDateReal) ||
-    form.room !== stayStore.stayData?.room || form.middle_reservation !== stayStore.stayData?.middle_reservation;
+    form.room !== currentStay.value?.room || form.middle_reservation !== currentStay.value?.middle_reservation;
     // console.log('test validate',validate)
     return validate
 

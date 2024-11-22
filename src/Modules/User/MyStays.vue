@@ -54,7 +54,7 @@
                 </div>
                 <div class="flex items-center">
                     <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                    <span class="lato text-sm">{{ dataModalStay.rooms }}</span>
+                    <span class="lato text-sm">{{ dataModalStay.room }}</span>
                 </div>
                 <div class="flex items-center">
                     <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
@@ -64,6 +64,7 @@
         </div>
         <div class="flex w-full mb-6 mt-2">
             <router-link 
+                @click="isModalOpen = false" 
                 :to="{ name:'EditStay', params:{ stayId: dataModalStay.stayId}}"
                 class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] text-sm font-bold hshadow-button mt-4"
             >
@@ -109,8 +110,8 @@ const isModalOpen = ref(false);
 const dataModalStay = ref({});  
 
 onMounted(() => {
-    guestData.value = guestStore.getLocalGuest();
-    stayData.value = stayStore.getLocalStay(); // Obtiene la estancia local
+    guestData.value = guestStore.guestData;
+    stayData.value = stayStore.stayData; 
     chainData.value = chainStore.chainData;
 
     getStaysGuestByChain(guestData.value.id, stayData.value.id);
@@ -124,6 +125,7 @@ const getStaysGuestByChain = async (guestId, stayId) => {
     if (response.ok) {
         activeStay.value = response.data.active_stay;
         otherStays.value = response.data.other_stays;
+        // console.log('test otherStays',otherStays.value)
     } else {
         console.log('error', response);
     }

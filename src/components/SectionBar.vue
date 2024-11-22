@@ -18,8 +18,10 @@
 </template>
 
 <script setup>
-// import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { defineProps } from 'vue';
+
+const router = useRouter();
 
 const emit = defineEmits(['onClickButton'])
 const props = defineProps({
@@ -38,11 +40,19 @@ const props = defineProps({
     routeName: {
         type: String,
         default: null
+    },
+    viewNameBack: {
+        type: String,
+        default: null
     }
 });
 
 const goBack = () => {
-    window.history.back();
+    if(props.viewNameBack){
+        router.push({ name:props.viewNameBack })
+    }else{
+        window.history.back();
+    }
 };
 
 const onClickButton = () => {
