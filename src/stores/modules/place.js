@@ -22,6 +22,22 @@ const hotelStore = useHotelStore()
 export const usePlaceStore = defineStore('place', () => {
     
     // STATE
+    const dataFilter = {
+        categoriplace: null,
+        typeplace: null,
+        points: [],
+        distances: [],
+        all_cities: false,
+        search:null,
+        city: null,
+        featured: false,
+    }
+    const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
+
+    // MUTATIONS
+    function setDataFilterList (dataFormFilterInList) {
+        Object.assign(dataFilterGlobal, dataFormFilterInList);
+    }
 
     // ACTIONS
     function $loadImage (item) {
@@ -131,6 +147,8 @@ export const usePlaceStore = defineStore('place', () => {
 
     //
     return {
+        dataFilterGlobal,
+        setDataFilterList,
         $loadImage,
         $apiGetPointer,
         $apiGetAll,

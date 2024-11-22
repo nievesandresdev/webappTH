@@ -99,6 +99,7 @@ const categoriplaces = ref([]);
 const categoriplacesWithNumbers = ref(null);
 const typeplaces = ref([]);
 const formFilter = reactive(JSON.parse(JSON.stringify(dataFilter)));
+
 const paginateData = reactive({
     total: 0,
     current_page: 1,
@@ -108,6 +109,8 @@ const paginateData = reactive({
     to: 0,
 });
 const tabsHeader = ref([]);
+
+
 
 // COMPUTED
 
@@ -134,6 +137,12 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+
+// WATCH
+watch(formFilter, function(value) {
+    placeStore.setDataFilterList(formFilter);
+});
+
 watch(positionBottomSheet, function(val) {
     placeSelected.value = null;
     if (val == '0%') {
@@ -146,13 +155,16 @@ watch(positionBottomSheet, function(val) {
 
 // ONMOUNTED
 onMounted(async () => {
+    loadForFilterGlobal();
     await loadTypePlaces();
     loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTIONS
-
+function loadForFilterGlobal () {
+    Object.assign(formFilter, placeStore.dataFilterGlobal);
+}
 async function getPlaceById (placeId) {
     placeSelected.value = null;
     loadingPlaceSeleced.value = true;
