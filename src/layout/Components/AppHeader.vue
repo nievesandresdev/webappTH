@@ -15,7 +15,7 @@
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <AvatarButton size="40px"/>
+                        <AvatarButton size="40"/>
                     </slot>
                 </div>
             </div>

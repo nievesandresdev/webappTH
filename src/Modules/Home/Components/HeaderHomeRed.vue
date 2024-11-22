@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="h-[72px] pt-6 px-4 text-white"
+        class="h-[36px] sp:h-[72px] pt-3 sp:pt-6 px-2 sp:px-4 text-white"
         :style="{
             backgroundColor: customData?.tonality_header ? '#fff' :'#333'
         }"
@@ -13,11 +13,11 @@
             <img 
                 v-if="showLogo && customData?.logo"
                 :src="hotelStore.$loadImage(customData?.logo)"
-                class="max-w-[279px] max-h-[48px]"
+                class="max-w-[132px] sp:max-w-[279px] max-h-[24px] sp:max-h-[48px]"
             >
             <h1 v-else 
                 :class="[
-                    'max-w-[279px] font-medium roboto',
+                    'max-w-[140px] sp:max-w-[279px] font-medium roboto',
                     classesName
                 ]"
             >{{ chainNameToShow }}</h1>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div
-        class="absolute left-0 top-[70px] h-[46px] w-full z-10"
+        class="absolute left-0 top-[36px] sp:top-[70px] h-[23px] sp:h-[46px] w-full z-10"
         :style="`background: linear-gradient(180deg, ${ customData?.tonality_header ? '#fff' :'#333'} 16%, rgba(51, 51, 51, 0.00) 100%)`"
     ></div>
 </template>

@@ -1,12 +1,12 @@
 <template>
     <div 
-        class="h-[48px] w-[48px] border border-white rounded-full z-50 bg-red-100"
-        :class="{'p-2' : !data?.avatar}"
+        class="border border-white rounded-full z-50"
+        :class="{'p-1 sp:p-2' : !data?.avatar}"
         @click="goProfile"
         :style="{
             backgroundColor: chainStore.$bgColor0,
-            width: size,
-            height: size,
+            width: $utils.isMockup() ? '24px' : size+'px',
+            height: $utils.isMockup() ? '24px' : size+'px',
         }"
     >
         <img 
@@ -19,16 +19,17 @@
             class="w-full h-full"
             name="WA.user"
             color="#fff"
-            width="30"
-            height="30"
+            :width="$utils.isMockup() ? '16' : sizeIcon"
+            :height="$utils.isMockup() ? '16' : sizeIcon"
         />
     </div>
 </template>
 <script setup>
 import { computed } from 'vue'
 import IconCustomColor from '@/components/IconCustomColor.vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'
@@ -39,7 +40,7 @@ const chainStore = useChainStore();
 const props = defineProps({
     size:{
         type:String,
-        default:'48px'
+        default:'48'
     }
 })
 
@@ -51,5 +52,13 @@ const goProfile = () =>{
 
 const data = computed(()=>{
     return guestStore.guestData
+})
+
+const sizeIcon = computed(()=>{
+    let sizeDefault = '24';
+    if(route.name == 'Home'){
+        sizeDefault = '32';
+    }
+    return sizeDefault
 })
 </script>

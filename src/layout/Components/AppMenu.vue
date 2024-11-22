@@ -19,7 +19,9 @@
                     >
                     <IconCustomColor 
                         v-else
-                        class="mx-auto  size-[12px] sp:size-6"
+                        class="mx-auto"
+                        :width="$utils.isMockup() ? '16' : '24'"
+                        :height="$utils.isMockup() ? '16' : '24'"
                         :name="item.iconDefault" 
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
