@@ -1,19 +1,19 @@
 <template>
     <div class="w-full">
-        <p class="text-sm mb-[37px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
-        <div class="flex flex-col space-y-[56px]">
+        <p class="text-[6px] sp:text-sm mb-[17px] sp:mb-[37px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
+        <div class="flex flex-col space-y-[26px] sp:space-y-[56px]">
             <div v-for="item in typePlacesWithNumbers">
                 <template v-if="item.numbers">
-                    <div class="space-y-4 flex flex-col items-center">
-                        <div class="flex space-x-2">
+                    <div class="space-y-2  sp:space-y-4 flex flex-col items-center">
+                        <div class="flex space-x-1 sp:space-x-2">
                             <img
                                 :src="`/assets/icons/${item.icon_type_place}.svg`"
-                                class="size-[16px]"
+                                class="size-[8px] sp:size-[16px]"
                                 alt=""
                             >
-                            <span class="text-sm">{{ item.name_type_place }}</span>
+                            <span class="text-[6px] sp:text-sm">{{ item.name_type_place }}</span>
                         </div>
-                        <p class="text-sm font-bold"> {{ $t('place.list-page.text-count-list',  { count: item.numbers  }  ) }}</p>
+                        <p class="text-[6px] sp:text-sm font-bold"> {{ $t('place.list-page.text-count-list',  { count: item.numbers  }  ) }}</p>
                     </div>
                 </template>
             </div>

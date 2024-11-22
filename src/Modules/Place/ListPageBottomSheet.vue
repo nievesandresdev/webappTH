@@ -15,7 +15,7 @@
                     <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                     <p
                         v-if="!isloadingForm"
-                        class="text-[1px] sp:text-sm font-bold my-[8px] sp:my-4"
+                        class="text-[6px] sp:text-sm font-bold my-[8px] sp:my-4"
                     >
                         <template v-if="!searchingActive">
                             <template v-if="!formFilter.search && placesData.length">
@@ -35,7 +35,7 @@
                                     class="size-[8px] sp:size-[16px]"
                                     alt=""
                                 >
-                                <p class="text-[1px] sp:text-sm font-bold border border-b-black">
+                                <p class="text-[6px] sp:text-sm font-bold border border-b-black">
                                     {{ `${$t('place.list-page.text-count-list-search-active')}: "${formFilter.search}"` }}
                                 </p>
                             </button>
