@@ -67,5 +67,4 @@ const classesName = computed(() => {
 const chainNameToShow = computed(() => {
     return customData.value?.name ?? hotelStore.hotelData?.name;
 });
-
 </script>
