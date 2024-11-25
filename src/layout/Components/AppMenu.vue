@@ -1,7 +1,10 @@
 <template>
     <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
         
-        <div class="menu rounded-[10px] sp:rounded-[20px] bg-white py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 flex justify-around">
+        <div class="
+            menu rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 
+            flex justify-around border border-white bg-gradient-h
+        ">
             <template
                 v-for="item in menuItems"
             >
@@ -43,7 +46,7 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{ dynamicTitle(item) }}
+                        {{ item.title }}
                     </span>
                     <img 
                         v-if="chatStore.countUnreadMessages && item.iconDefault == 'WA.MENU.DEFAULT.MENSAJES'"
@@ -81,12 +84,20 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: hotelStore.hotelData.show_profile ? 'Hotel' : 'Instalaciones',
-        exclude: false,
+        title: 'Hotel',
+        exclude: !hotelStore.hotelData.show_profile,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
-        routeNameIncludes: ['ShowHotel', 'FacilityList'],
+        routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
+    },
+    {
+        title: 'Instalaciones',
+        exclude: hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
+        iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
+        iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
+        to: `/${route.params.hotelSlug}/alojamiento`, 
+        routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
     },
     {
         title: 'Destino',

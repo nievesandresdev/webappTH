@@ -19,8 +19,8 @@
             class="w-full h-full"
             name="WA.user"
             color="#fff"
-            :width="$utils.isMockup() ? '16' : sizeIcon"
-            :height="$utils.isMockup() ? '16' : sizeIcon"
+            :width="$utils.isMockup() ? '15' : sizeIcon"
+            :height="$utils.isMockup() ? '15' : sizeIcon"
         />
     </div>
 </template>

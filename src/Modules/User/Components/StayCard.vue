@@ -43,7 +43,7 @@
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                        <span class="lato text-sm font-bold leading-[16px]">{{ stay?.rooms ?? '-' }}</span>
+                        <span class="lato text-sm font-bold leading-[16px]">{{ stay?.room ?? '-' }}</span>
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
@@ -119,7 +119,7 @@ function handleStayClick() {
         stayId: props.stay?.stayId,
         check_in: props.stay?.check_in,
         check_out: props.stay?.check_out,
-        rooms: props.stay?.rooms ?? '-',
+        room: props.stay?.room ?? '-',
         guests: props.stay?.number_guests ?? '-',
         formatted_dates: formattedDates.value,
     };
