@@ -11,12 +11,18 @@
             <span class="text-[20px] font-bold lato">{{ title }}</span>
             
 
-            <div 
+            <!-- <div 
                 @click="goToProfile"
                 class="flex items-center gap-2 p-2 rounded-full border border-white bg-gray-800 shadow-icon cursor-pointer"
             >
                 <img src="/assets/icons/WA.user-white.svg" alt="User Icon" class="h-6 w-6 text-white" />
+            </div> -->
+            <div class="header-avatar">
+                <slot name="avatar">
+                    <AvatarButton size="40"/>
+                </slot>
             </div>
+            
         </div>
 
         <!-- Tabs Section -->
@@ -50,6 +56,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import AvatarButton from '@/components/Buttons/AvatarButton.vue';
 
 const router = useRouter();
 const route = useRoute();

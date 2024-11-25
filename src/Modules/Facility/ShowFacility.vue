@@ -1,9 +1,10 @@
 <template>
-    <div class="bg-[#FAFAFA] ">
-        <ImageSlider :images="facility.images" showButtonBack />
+    <div class="bg-[#FAFAFA] mb-[48px]">
+        <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item)) ?? []"  showButtonBack />
         <div v-if="facility.ad_tag"  class="absolute top-[325px] right-4 flex items-center justify-center gap-1 px-2 py-1 bg-[#FAFAFA] border border-white shadow-lg rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
             <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
         </div>
+        
         <div class="flex flex-col mt-4 px-4">
             <h1 class="lato text-[18px] font-bold text-[#333]">
                 {{ facility.title }}
@@ -72,6 +73,8 @@
     const getFacility = async () => {
         let response = await facilityStore.$findById(props.id);
         facility.value = response;
+
+        console.log(facility.value);
 
         const schedules = facility.value.schedules ? JSON.parse(facility.value.schedules) : [];
 

@@ -70,6 +70,7 @@ const chainStore = useChainStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
 
+
 const menuItems = reactive([
     {
         title: 'Home',
@@ -80,12 +81,12 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: 'Hotel',
+        title: hotelStore.hotelData.show_profile ? 'Hotel' : 'Instalaciones',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
-        routeNameIncludes: ['ShowHotel'],
+        routeNameIncludes: ['ShowHotel', 'FacilityList'],
     },
     {
         title: 'Destino',
