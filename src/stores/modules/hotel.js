@@ -9,8 +9,8 @@ import {
     buildUrlWebAppApi
 } from '@/api/services/hotel.services'
 
-// import { useMainStore } from '@/stores'
-// const mainStore = useMainStore()
+ import { useMainStore } from '@/stores'
+ 
 
 export const useHotelStore = defineStore('hotel', () => {
     
@@ -21,15 +21,22 @@ export const useHotelStore = defineStore('hotel', () => {
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
+    const mainStore = useMainStore()
     // ACTIONS
 
-    function $loadImage (url) {
-        if (!url) return;
-        let type = url.includes('https://') ? 'CDN' : 'STORAGE';
-        // console.log(process.env.VUE_APP_STORAGE_URL, 'process.env.VUE_APP_STORAGE_URL')
-        url = type != 'CDN' ? `${URL_STORAGE}${url}` : url;
-        // console.log(url, 'url')
-        return url;
+    function $loadImage (item) {
+        let { image: path, type, url } = item ?? {};
+        let { URL_STORAGE } = mainStore;
+        
+        // let model = 'places';
+        // if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
+
+        // let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
+        // return urlFull
+
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${path}`;
+
     }
 
     async function $load () {

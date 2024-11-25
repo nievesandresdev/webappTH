@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden" @touchstart="touchStart" @touchend="touchEnd">
+  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden mockup:w-mockup mockup:h-mockup" @touchstart="touchStart" @touchend="touchEnd">
     <!-- Botón de Regreso -->
     <button
       v-show="showButtonBack"
@@ -24,7 +24,7 @@
       <button
         v-for="(imageIndex, position) in positionMap"
         :key="position"
-        class="w-2.5 h-2.5 border-2 border-white rounded-full transition-colors duration-300 ease-in-out"
+        class="w-2.5 h-2.5 border border-white rounded-full transition-colors duration-300 ease-in-out"
         :class="{
           'bg-white': imageIndex !== null && Math.round(currentSlide) === imageIndex,
           'bg-transparent cursor-pointer': imageIndex !== null,
@@ -156,3 +156,5 @@ function goBack() {
   window.history.back();
 }
 </script>
+
+analiza ese componente llamado ImageSlider.vue

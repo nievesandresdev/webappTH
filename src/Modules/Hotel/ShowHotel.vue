@@ -15,7 +15,8 @@
       }"
     >
     <!-- Slider de imágenes -->
-    <ImageSlider :images="hotelData.images" />
+    <!-- <ImageSlider :images="hotelData.images" /> -->
+    <ImageSlider :images="hotelData?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
 
     <div class="flex flex-col mt-2 px-4">
       <h1 class="lato text-[18px] font-bold text-[#333] mb-[7px]">
@@ -33,6 +34,7 @@
       <p
         @click="isExpanded = !isExpanded"
         class="text-[14px] font-bold lato underline text-[#333] mt-3 text-right cursor-pointer"
+        v-show="hotelData.description.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
@@ -131,6 +133,8 @@ import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
 
 const isModalOpen = ref(false);
+
+const CHARACTER_LIMIT = 185;
 
 
 const hotelStore = useHotelStore()
