@@ -17,13 +17,16 @@
     >
     </div>
 
-    <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
+    <div
+      v-if="images.length > 1"
+      class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2"
+    >
       <button
-        v-for="(image, index) in images"
+        v-for="(dot, index) in visibleDots"
         :key="index"
-        class="w-2.5 h-2.5 bg-transparent border-2 border-white rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
-        :class="{ 'bg-white': currentSlide === index }"
-        @click="setSlide(index)"
+        class="w-2.5 h-2.5 bg-transparent border border-white rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
+        :class="{ 'bg-white': currentDotIndex === index }"
+        @click="setSlide(dot.realIndex)"
       ></button>
     </div>
   </div>
@@ -71,6 +74,32 @@ const formattedImages = computed(() => {
 })
 
 const currentSlide = ref(0)
+const maxDots = 4 // Maximum number of dots to display
+
+const currentDotIndex = computed(() => {
+  if (props.images.length <= maxDots || currentSlide.value < 2) {
+    return currentSlide.value
+  } else if (currentSlide.value >= props.images.length - 1) {
+    return maxDots - 1
+  } else {
+    return 2
+  }
+})
+
+const visibleDots = computed(() => {
+  if (props.images.length > maxDots) {
+    const start = Math.max(0, Math.min(currentSlide.value - 2, props.images.length - maxDots))
+    return props.images.slice(start, start + maxDots).map((image, index) => ({
+      ...image,
+      realIndex: start + index
+    }))
+  }
+  return props.images.map((image, index) => ({
+    ...image,
+    realIndex: index
+  }))
+})
+
 let startX = 0
 
 function nextSlide() {

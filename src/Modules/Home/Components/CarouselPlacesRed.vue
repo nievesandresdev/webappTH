@@ -1,7 +1,7 @@
 <template>
     <div 
         v-if="items.length > 0"   
-        class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4"
+        class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 no-scrollbar"
         :class="{'justify-center': items.length == 1}"
     >
         <CarouselCard

@@ -104,12 +104,10 @@ export const useStayStore = defineStore('stay', () => {
 
     async function updateStayAndGuests (params) {
         let response = await updateStayAndGuestsApi(params);
-        console.log('test updateStayAndGuests',response)
-        if(response.ok && response.data){
-            await setStayData(response.data)
-            return response.data;
+        if(response.ok && response.data && response.data.id == stayData.value.id){
+            await reloadLocalStay()
         }
-        return null;
+        return response.ok ? response.data : null;
     }
     
     async function deleteGuestOfStay (stayId,guestId) {
@@ -156,7 +154,7 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function reloadLocalStay () {    
-        
+        console.log('test reloadLocalStay')
         const response = await findbyIdApi(stayData.value.id)
         const { ok } = response   
         stayData.value = ok ? response.data : null;
@@ -166,6 +164,11 @@ export const useStayStore = defineStore('stay', () => {
         }
     }
 
+    async function findById (stayId) {    
+        const response = await findbyIdApi(stayId)
+        const { ok } = response   
+        return  ok ? response.data : null;
+    }
     // GETTERS
     const stayDataComputed = computed(() => {
         if(stayData.value){
@@ -189,7 +192,8 @@ export const useStayStore = defineStore('stay', () => {
         existsAndValidate,
         deleteLocalStayData,
         findByIdInSetLocalStay,
-        reloadLocalStay
+        reloadLocalStay,
+        findById
     }
 
 })

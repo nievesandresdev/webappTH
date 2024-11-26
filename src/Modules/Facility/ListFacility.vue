@@ -20,7 +20,7 @@
         v-for="facility in facilities"
         :key="facility.id"
         @click="goToFacilityShow(facility.id)"
-        class="flex flex-col rounded-lg border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
+        class="flex flex-col rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
       >
         <div class="relative w-full h-[226px] rounded-t-lg overflow-hidden">
           <img

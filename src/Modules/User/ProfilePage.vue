@@ -3,8 +3,13 @@
 
     <div class="px-3">
         <div class="flex flex-col items-center mt-6">
-            <div class="w-10 h-10 rounded-full bg-cover bg-center bg-lightgray shadow-profile"
+            <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
+            </div> -->
+            <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
+                 style="width: 40px; height: 40px;">
+                <img :src="$formatImage({url: guestData.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
+
             </div>
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">
                 {{ $t('profile.greeting', { name: guestData.name }) }}
@@ -34,7 +39,7 @@
         <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
 
         <!-- Sección "Información personal" -->
-        <div class="flex items-center justify-between mt-4 gap-2">
+        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.id.svg" class="w-8 h-8" alt="ID Icon" />
                 <div class="flex flex-col">
@@ -42,7 +47,7 @@
                     <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.personal_info.description') }}</span>
                 </div>
             </div>
-            <img @click="handlePersonalInfo" src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
     
         <!-- Cerrar sesión -->

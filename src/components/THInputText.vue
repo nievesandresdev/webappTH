@@ -31,8 +31,11 @@
             {{ textError }}
         </p>
         <button 
-            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute top-2.5 right-2"
-            :class="{'disabled-text':!modelValue || modelValue == '' || disabled}"
+            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute right-2"
+            :class="[
+                {'disabled-text': !modelValue || modelValue == '' || disabled},
+                `top-${topCustom}`
+            ]"
             v-if="type === 'password'"
             @click="showPass = !showPass"
             :disabled="!modelValue || modelValue == '' || disabled"
@@ -157,6 +160,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        topCustom: {
+            type: Number,
+            default: '2'
+        }
     },
     created(){
         if (this.isError) {
