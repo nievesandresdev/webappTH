@@ -54,9 +54,11 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import AvatarButton from '@/components/Buttons/AvatarButton.vue';
+import { useGuestStore } from '@/stores/modules/guest'
+const guestStore = useGuestStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -79,6 +81,7 @@ const props = defineProps({
         type: Object,
     }
 });
+
 
 const navigateTo = (routeName) => {
     router.push({ name: routeName });

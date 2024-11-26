@@ -1,7 +1,7 @@
 <template>
     <div 
-        class="border border-white rounded-full z-50"
-        :class="{'p-1 sp:p-2' : !data?.avatar}"
+        class="border border-white rounded-full z-50 flex items-center justify-center"
+        :class="{'p-1 sp:p-[7px]' : !data?.avatar}"
         @click="goProfile"
         :style="{
             backgroundColor: chainStore.$bgColor0,
@@ -12,7 +12,7 @@
         <img 
             v-if="data?.avatar"
             class="w-full h-full rounded-full"
-            :src="data?.avatar"
+            :src="$formatImage({ url : data?.avatar,type : 'STORAGE'})"
         >
         <IconCustomColor
             v-else
@@ -24,8 +24,9 @@
         />
     </div>
 </template>
+
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -61,4 +62,24 @@ const sizeIcon = computed(()=>{
     }
     return sizeDefault
 })
+
+onMounted(()=>{
+    guestStore.loadLocalGuest()
+})
+
+const $formatImage = (payload) => {
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
+    let { url, type, urlDefault } = payload;
+
+    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
+    if (url && url.startsWith("blob:")) return url;
+
+
+    if (urlDefault) return url;
+
+    let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
+    type = type ?? type_d;
+
+    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+};
 </script>

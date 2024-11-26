@@ -47,7 +47,7 @@
                 :textLabel="'Contraseña*'"
                 :placeholder="'Introduce tu contraseña'"
                 v-model="form.password"
-                :topCustom="'35px'"
+                topCustom="9"
                 type="password"
                 :disabled="true"
             />
