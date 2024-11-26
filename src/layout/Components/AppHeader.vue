@@ -22,7 +22,7 @@
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <AvatarButton size="40"/>
+                        <AvatarButton :size="innerWidth <= 300 ? 20 : 40"/>
                     </slot>
                 </div>
             </div>
@@ -42,8 +42,8 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="!$utils.isMockup() ? '24' : '12'"
-                                    :width="!$utils.isMockup() ? '24' : '12'"
+                                    :height="innerWidth <= 300 ? '12' : '24'"
+                                    :width="innerWidth <= 300 ? '12' : '24'"
                                 />
                                 <span
                                     class="text-[10px] sp:text-base font-bold leading-none lato"
@@ -98,7 +98,7 @@ const props = defineProps({
     },
 });
 
-    const windowWidth = window.innerWidth;
+    const innerWidth = window.innerWidth;
 
 import IconCustomColor from '@/components/IconCustomColor.vue';
 
