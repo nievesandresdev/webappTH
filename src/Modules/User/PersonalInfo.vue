@@ -47,6 +47,7 @@
                 :textLabel="'Contraseña*'"
                 :placeholder="'Introduce tu contraseña'"
                 v-model="form.password"
+                :topCustom="'35px'"
                 type="password"
                 :disabled="true"
             />
@@ -78,12 +79,14 @@
                 :isError="currentPasswordError"
                 :textError="'La contraseña actual introducida es incorrecta'"
                 type="password"
+                :topCustom="'35px'"
             />
             <THInputText
                 :textLabel="'Nueva contraseña'"
                 :placeholder="'Introduce tu nueva contraseña'"
                 v-model="newPassword"
                 type="password"
+                :topCustom="'35px'"
             />
             <button
                 @click="handleChangePassword"
@@ -121,6 +124,15 @@ const form = reactive({
     avatar: null, 
 });
 
+const originalForm = reactive({
+    id: null,
+    name: '',
+    lastname: '', 
+    email: '',
+    phone: '',
+    avatar: null, 
+});
+
 const isModalOpen = ref(false);
 const currentPassword = ref('');
 const newPassword = ref('');
@@ -129,6 +141,8 @@ let selectedFile = ref(null);
 
 const nameTouched = ref(false);
 const emailTouched = ref(false);
+
+const emailErrorText = ref('');
 
 // Placeholders personalizados
 const namePlaceholder = computed(() => (!form.name && nameTouched.value) ? 'Debes rellenar este campo' : 'Introduce tu nombre');
@@ -172,22 +186,40 @@ onMounted(() => {
 const initForm = (data) => {
     form.id = data.id;
     form.name = data.name;
-    form.lastname = data.lastname; 
+    form.lastname = data.lastname ?? ''; 
     form.email = data.email;
-    form.phone = data.phone;
+    form.phone = data.phone ?? '';
     form.password = '123456587';
     form.avatar = data.avatar;
+
+    Object.assign(originalForm, {
+        id: data.id,
+        name: data.name,
+        lastname: data.lastname ?? '', 
+        email: data.email,
+        phone: data.phone ?? '',
+        avatar: data.avatar,
+    });
 };
 
 // Computed para validar el formulario
 const isFormValid = computed(() => {
+    const isUnchanged = 
+        form.name === originalForm.name &&
+        form.lastname === originalForm.lastname &&
+        form.email === originalForm.email &&
+        form.phone === originalForm.phone &&
+        form.avatar === originalForm.avatar;
+
     return (
+        !isUnchanged && // Asegura que haya cambios
         form.name &&
         form.email &&
         isEmailValid.value &&
-        form.avatar 
+        form.avatar
     );
 });
+
 
 const isModalFormValid = computed(() => {
     return currentPassword.value && newPassword.value && !currentPasswordError.value;
