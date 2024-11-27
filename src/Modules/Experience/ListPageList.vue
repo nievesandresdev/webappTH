@@ -2,7 +2,7 @@
 
     <div
         id="list-experience"
-        class="w-full overflow-y-auto h-screen px-2 sp:px-4"
+        class="w-full overflow-y-scroll px-2 sp:px-4"
     >
 
         <p
@@ -119,3 +119,17 @@ function checkLoadMore () {
 
 
 </script>
+
+<style lang="scss">
+
+#list-experience {
+    height: calc(100vh - 68px);
+}
+
+@media (min-width: 300px){
+    #list-experience {
+        height: calc(100vh - 124px);
+    }
+}
+
+</style>
