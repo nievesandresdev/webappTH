@@ -1,13 +1,12 @@
 <template>
     <SectionBar title="Información personal" />
-    <div class="px-3 mt-6">
+    <div class="px-3 mt-6" ref="formContainer">
         <!-- foto -->
         <div class="flex items-center gap-2 mb-4">
             <!-- Círculo para la foto-->
             <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
                  style="width: 40px; height: 40px;">
                 <img :src="$formatImage({url: form.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !form.avatar}" alt="User Avatar">
-
             </div>
             <span class="underline text-[14px] font-bold lato cursor-pointer" @click="selectImage">Cambiar foto</span>
             <!-- Input file oculto -->
@@ -103,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed } from 'vue';
+import { ref, onMounted, reactive, computed, onBeforeUnmount } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
@@ -154,6 +153,28 @@ const isEmailValid = computed(() => {
     return emailRegex.test(form.email);
 });
 
+// Scroll Lock para teclado en móviles
+const disableScroll = () => {
+    document.body.style.overflow = 'hidden';
+};
+
+const enableScroll = () => {
+    document.body.style.overflow = '';
+};
+
+onMounted(() => {
+    const guestData = guestStore.getLocalGuest();
+    initForm(guestData);
+
+    window.addEventListener('focusin', disableScroll); // Detectar teclado abierto
+    window.addEventListener('focusout', enableScroll); // Detectar teclado cerrado
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('focusin', disableScroll);
+    window.removeEventListener('focusout', enableScroll);
+});
+
 const validateEmail = () => {
     emailTouched.value = true;
     emailErrorText.value = form.email
@@ -165,7 +186,6 @@ const handleNameBlur = () => {
     nameTouched.value = true;
 };
 
-// Función para abrir el input de archivo
 const selectImage = () => {
     document.querySelector('input[type="file"]').click();
 };
@@ -177,11 +197,6 @@ const onFileSelected = (event) => {
         form.avatar = URL.createObjectURL(file); 
     }
 };
-
-onMounted(() => {
-    const guestData = guestStore.getLocalGuest();
-    initForm(guestData);
-});
 
 const initForm = (data) => {
     form.id = data.id;
@@ -202,7 +217,6 @@ const initForm = (data) => {
     });
 };
 
-// Computed para validar el formulario
 const isFormValid = computed(() => {
     const isUnchanged = 
         form.name === originalForm.name &&
@@ -212,7 +226,7 @@ const isFormValid = computed(() => {
         form.avatar === originalForm.avatar;
 
     return (
-        !isUnchanged && // Asegura que haya cambios
+        !isUnchanged && 
         form.name &&
         form.email &&
         isEmailValid.value &&
@@ -257,10 +271,7 @@ const handleSubmit = async () => {
             formData.append('avatar', selectedFile.value);
         }
 
-
         const response = await guestStore.$updateDataGuest(formData);
-
-        console.log("response", response);
 
         if (response.ok) {
             toastSuccess("Datos guardados con éxito");
@@ -276,7 +287,6 @@ const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     let { url, type, urlDefault } = payload;
 
-    // Verifica si la URL es de tipo `blob:`, lo cual indica una URL de vista previa
     if (url && url.startsWith("blob:")) return url;
 
     if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
@@ -288,7 +298,6 @@ const $formatImage = (payload) => {
 
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
-
 </script>
 
 <style scoped>
