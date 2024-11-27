@@ -1,7 +1,12 @@
 <template>
     <div :class="[classContainer]">
         <button 
-            :class="[classes, classButton, conditionClases,{'flex items-center gap-2 justify-center': nameIconLeft}]"
+            :class="[
+                classes, classButton, conditionClases,
+                {'border':true},
+                {'flex items-center gap-2 justify-center': nameIconLeft},
+                {'hborder-color-disabled':isDisabled,'border-white':!isDisabled}
+            ]"
             :disabled="isDisabled"
             :style="{color:textColorButton, backgroundColor:bgButton}"
             @click="handleClick"
