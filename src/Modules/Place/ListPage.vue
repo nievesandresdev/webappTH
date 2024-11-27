@@ -1,6 +1,6 @@
 <template>
     <AppHeader
-        title="Hotel"
+        title="Lugares"
         :tabs="tabsHeader"
         fixed
     >

@@ -1,10 +1,17 @@
 <template>
     <header
+        id="header"
         class="custom-header"
         :class="{'fixed top-0 left-0 w-full': fixed}"
     >
         <div class="header-top pt-[10px] sp:pt-6 px-1 sp:px-4 pb-1.5 sp:pb-3">
-            <div class="flex justify-between items-start w-full h-6 sp:h-10">
+            <h1
+                v-if="withTitleRoute"
+                class="text-[12px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
+            >
+                {{ $t($route.meta.title) }}
+            </h1>
+            <div class="flex justify-between items-start w-full h-6 sp:h-10 space-x-1 sp:space-x-2">
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
@@ -15,7 +22,7 @@
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <AvatarButton size="40"/>
+                        <AvatarButton :size="innerWidth <= 300 ? 20 : 40"/>
                     </slot>
                 </div>
             </div>
@@ -35,8 +42,8 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="!$utils.isMockup() ? '24' : '12'"
-                                    :width="!$utils.isMockup() ? '24' : '12'"
+                                    :height="innerWidth <= 300 ? '12' : '24'"
+                                    :width="innerWidth <= 300 ? '12' : '24'"
                                 />
                                 <span
                                     class="text-[10px] sp:text-base font-bold leading-none lato"
@@ -73,6 +80,10 @@ const props = defineProps({
       type: String,
       default: '',
     },
+    withTitleRoute: {
+      type: Boolean,
+      default: false,
+    },
     fixed: {
       type: Boolean,
       default: false,
@@ -87,7 +98,7 @@ const props = defineProps({
     },
 });
 
-    const windowWidth = window.innerWidth;
+    const innerWidth = window.innerWidth;
 
 import IconCustomColor from '@/components/IconCustomColor.vue';
 
@@ -96,11 +107,12 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
 <style lang="scss">
     .custom-header {
         border-radius: 0px 0px 10px 10px;
-        border: 1px solid var(--Border-invert, #FFF);
-        background: var(--surface-bg-gradient, linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%));
+        border: 1px solid #FFF;
+        background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
         z-index: 2000;
     }
+
 
     .tab-item__selected {
         width: 24px;

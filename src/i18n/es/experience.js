@@ -3,6 +3,7 @@ export default {
         "experiences": "Experiencias",
     },
     "card-experience": {
+        "hour": "horas",
         "aprox": "aproximadamente",
         "min-aprox": "minutos aproximadamente",
         "and": "y",
@@ -13,7 +14,7 @@ export default {
         "from":"Desde",
     },
     "list-page": {
-        "title": "Experiencias en",
+        "title": "Experiencias",
         "section-filter": {
             "label-search": "Filtrar por",
             "placeholder-input-search": "Introduce una palabra clave",
@@ -23,6 +24,28 @@ export default {
             "label-price-max": "Precio máx.",
             "placeholder-price-max": "Máximo..",
             "label-duration": "Duración",
+            "cancellation-policy": {
+                "title": "Política de cancelación",
+                "free-cancellation":"Cancelación gratuita"
+            },
+            "duration": {
+                "title": "Duración",
+                "one-hour": "Hasta 1 hora",
+                "one-four-hour": "Entre 1 y 4 horas",
+                "noon": "Medio día",
+                "whole-day": "Dia entero"
+            },
+            "score": {
+                "title":"Puntaje",
+                "star": "Estrellas"
+            },
+            "price": {
+                "title": "Precio",
+                "0-100": "Entre 0 € y 100 €",
+                "100-250": "Entre 100 € y 250 €",
+                "250-500": "Entre 250 € y 500 €",
+                "500": "+500 €"
+            }
         },
         "section-filter-history": {
             "btn-price": "Hasta {price_max}",
@@ -32,6 +55,9 @@ export default {
         "btn-submit-filter": "Aplicar flitros",
         "text-count-list": "Experiencias encontradas",
         "text-count-list-mobile": "Se han encontrado {count} experiencias.",
+        "placeholder-search": "Buscar una experiencia",
+        "text-count-list-search-active": "Buscar todas las Experiencas para",
+        "text-count-list-search": "{count} Experiencias encontrados para",
         "without-results": {
             "title": "No se han encontrado experiencias",
             "text": "No se han encontrado experiencias en esta ciudad. Te invitamos a explorar en otras ciudades, en ellas descubrirás diversas experiencias y actividades."

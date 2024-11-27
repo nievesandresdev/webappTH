@@ -2,7 +2,7 @@
     <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
         
         <div class="
-            menu rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 
+            menu rounded-[10px] sp:rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 
             flex justify-around border border-white bg-gradient-h
         ">
             <template
@@ -23,8 +23,8 @@
                     <IconCustomColor 
                         v-else
                         class="mx-auto"
-                        :width="$utils.isMockup() ? '16' : '24'"
-                        :height="$utils.isMockup() ? '16' : '24'"
+                        :width="innerWidth <= 300 ? '12' : '24'"
+                        :height="innerWidth <= 300 ? '12' : '24'"
                         :name="item.iconDefault" 
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
@@ -46,7 +46,7 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{ item.title }}
+                        {{ $utils.isMockup() }}
                     </span>
                     <img 
                         v-if="chatStore.countUnreadMessages && item.iconDefault == 'WA.MENU.DEFAULT.MENSAJES'"
@@ -72,7 +72,7 @@ import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
-
+const innerWidth = window.innerWidth
 
 const menuItems = reactive([
     {
@@ -112,8 +112,8 @@ const menuItems = reactive([
         exclude: !hotelStore.hotelData.show_experiences,
         iconDefault: 'WA.MENU.DEFAULT.EXPERIENCIAS',
         iconSelected: 'WA.MENU.SELECTED.EXPERIENCIAS',
-        to: '/',
-        routeNameIncludes: [],
+        to: `/${route.params.hotelSlug}/experiencias`,
+        routeNameIncludes: ['ExperienceList', 'ExperienceDetail'],
     },
     {
         title: 'Mensajes',
