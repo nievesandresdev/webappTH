@@ -19,6 +19,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
 
 //DATA
 
@@ -39,7 +41,7 @@ const tabsMenu = computed(() => [
         iconSelected: `WA.inbox`,
         isActive: route.name === 'Inbox',
         onClick: () => router.push({ name: 'Inbox' }),
-        notify: 0
+        notify: queryStore.hasPendingQuery
     }
 ]);
 

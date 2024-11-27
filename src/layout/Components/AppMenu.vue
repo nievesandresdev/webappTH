@@ -49,7 +49,10 @@
                         {{ item.title }}
                     </span>
                     <img 
-                        v-if="chatStore.countUnreadMessages && item.iconDefault == 'WA.MENU.DEFAULT.MENSAJES'"
+                        v-if="
+                            (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
+                            (item.title == 'Inbox' || item.title == 'Mensajes')
+                        "
                         class="absolute top-[6px] right-[18px] w-[12px] h-[12px] z-10"
                         src="/assets/icons/item-dot.svg"
                     >
@@ -72,7 +75,8 @@ import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
-
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore()
 
 const menuItems = reactive([
     {
@@ -141,7 +145,7 @@ onMounted(() => {
             msgLink.to =  `/${route.params.hotelSlug}/inbox`;
         }
     }
-    
+    queryStore.$existingPendingQuery()
 });
 
 
