@@ -8,7 +8,7 @@
             </div> -->
             <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
                  style="width: 40px; height: 40px;">
-                <img :src="$formatImage({url: guestData.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
+                <img :src="$formatImage({url: guestData.avatar, type: guestData.google})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
 
             </div>
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">
@@ -160,8 +160,13 @@ const $formatImage = (payload) => {
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
+    if(type) {
+        return url;
+    }
+
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
+
 
 const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avatar,type: 'STORAGE' }));
 

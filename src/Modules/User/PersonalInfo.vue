@@ -9,7 +9,7 @@
                 style="width: 40px; height: 40px;"
             >
                 <img
-                    :src="$formatImage({ url: form.avatar, type: 'STORAGE' })"
+                    :src="$formatImage({ url: form.avatar, type: form.google })"
                     class="object-cover"
                     :class="{ 'w-6 h-6': !form.avatar }"
                     alt="User Avatar"
@@ -234,6 +234,7 @@ const initForm = (data) => {
     form.phone = data.phone ?? '';
     form.password = '123456587';
     form.avatar = data.avatar;
+    form.googleId = data.google;
 
     Object.assign(originalForm, {
         id: data.id,
@@ -314,18 +315,22 @@ const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     let { url, type, urlDefault } = payload;
 
-    if (url && url.startsWith('blob:')) return url;
+    // Verifica si la URL es de tipo `blob:` (preview imagen)
+    if (url && url.startsWith("blob:")) return url;
 
-    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg';
+    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
 
     if (urlDefault) return url;
 
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
-    return type === 'CDN' || type === 'image-hotel-scraper'
-        ? url
-        : URL_STORAGE + url;
+    
+    if (type) {
+        return url;
+    }
+
+    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
 </script>
 
