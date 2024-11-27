@@ -1,16 +1,33 @@
 <template>
     <SectionBar title="Información personal" />
-    <div class="px-3 mt-6" ref="formContainer">
+    <div class="px-3 mt-6 full-height" ref="formContainer">
         <!-- foto -->
         <div class="flex items-center gap-2 mb-4">
             <!-- Círculo para la foto-->
-            <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
-                 style="width: 40px; height: 40px;">
-                <img :src="$formatImage({url: form.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !form.avatar}" alt="User Avatar">
+            <div
+                class="flex justify-center items-center border border-black rounded-full overflow-hidden"
+                style="width: 40px; height: 40px;"
+            >
+                <img
+                    :src="$formatImage({ url: form.avatar, type: 'STORAGE' })"
+                    class="object-cover"
+                    :class="{ 'w-6 h-6': !form.avatar }"
+                    alt="User Avatar"
+                />
             </div>
-            <span class="underline text-[14px] font-bold lato cursor-pointer" @click="selectImage">Cambiar foto</span>
+            <span
+                class="underline text-[14px] font-bold lato cursor-pointer"
+                @click="selectImage"
+                >Cambiar foto</span
+            >
             <!-- Input file oculto -->
-            <input type="file" ref="fileInput" class="hidden" @change="onFileSelected" accept="image/*">
+            <input
+                type="file"
+                ref="fileInput"
+                class="hidden"
+                @change="onFileSelected"
+                accept="image/*"
+            />
         </div>
 
         <div class="flex flex-col w-full gap-4">
@@ -52,15 +69,21 @@
             />
         </div>
         <div class="flex justify-end mt-2 mb-2">
-            <span class="underline lato text-sm font-bold" @click="openModalPassword">Cambiar contraseña</span>
+            <span
+                class="underline lato text-sm font-bold"
+                @click="openModalPassword"
+                >Cambiar contraseña</span
+            >
         </div>
         <div class="flex w-full">
             <button
                 @click="handleSubmit"
                 :disabled="!isFormValid"
-                :class="[ 
+                :class="[
                     'w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border text-sm font-bold hshadow-button mt-4',
-                    isFormValid ? 'bg-[#333333] text-white border-white' : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small'
+                    isFormValid
+                        ? 'bg-[#333333] text-white border-white'
+                        : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
                 ]"
             >
                 Guardar
@@ -69,7 +92,7 @@
     </div>
 
     <!-- Modal para cambiar contraseña -->
-    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" >
+    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
         <div class="flex flex-col w-full gap-4">
             <THInputText
                 :textLabel="'Contraseña actual'"
@@ -90,9 +113,11 @@
             <button
                 @click="handleChangePassword"
                 :disabled="!isModalFormValid"
-                :class="[ 
+                :class="[
                     'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
-                    isModalFormValid ? 'bg-[#333333] text-white border-white' : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small'
+                    isModalFormValid
+                        ? 'bg-[#333333] text-white border-white'
+                        : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
                 ]"
             >
                 Cambiar contraseña
@@ -102,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed, onBeforeUnmount } from 'vue';
+import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
@@ -110,69 +135,72 @@ import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
-import { handleToast } from "@/composables/useToast"; 
+import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
 
-const form = reactive({
-    id: null,
-    name: '',
-    lastname: '', 
-    email: '',
-    phone: '',
-    password: '',
-    avatar: null, 
-});
+const formContainer = ref(null);
 
-const originalForm = reactive({
-    id: null,
-    name: '',
-    lastname: '', 
-    email: '',
-    phone: '',
-    avatar: null, 
-});
-
-const isModalOpen = ref(false);
-const currentPassword = ref('');
-const newPassword = ref('');
-const currentPasswordError = ref(false);
-let selectedFile = ref(null); 
-
-const nameTouched = ref(false);
-const emailTouched = ref(false);
-
-const emailErrorText = ref('');
-
-// Placeholders personalizados
-const namePlaceholder = computed(() => (!form.name && nameTouched.value) ? 'Debes rellenar este campo' : 'Introduce tu nombre');
-const emailPlaceholder = computed(() => (!form.email && emailTouched.value) ? 'Debes rellenar este campo' : 'Introduce tu correo electrónico');
-
-// Validación del email
-const isEmailValid = computed(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(form.email);
-});
-
-// Scroll Lock para teclado en móviles
-const disableScroll = () => {
-    document.body.style.overflow = 'hidden';
-};
-
-const enableScroll = () => {
-    document.body.style.overflow = '';
+// Ajustar altura del contenedor al tamaño del viewport
+const updateViewportHeight = () => {
+    const vh = window.innerHeight * 0.01; // Calcula el tamaño real del viewport
+    formContainer.value.style.setProperty('--vh', `${vh}px`);
 };
 
 onMounted(() => {
     const guestData = guestStore.getLocalGuest();
     initForm(guestData);
 
-    window.addEventListener('focusin', disableScroll); // Detectar teclado abierto
-    window.addEventListener('focusout', enableScroll); // Detectar teclado cerrado
+    // Establecer y actualizar altura dinámica
+    updateViewportHeight();
+    window.addEventListener('resize', updateViewportHeight);
 });
 
 onBeforeUnmount(() => {
-    window.removeEventListener('focusin', disableScroll);
-    window.removeEventListener('focusout', enableScroll);
+    window.removeEventListener('resize', updateViewportHeight);
+});
+
+// Resto de tu lógica del formulario...
+const form = reactive({
+    id: null,
+    name: '',
+    lastname: '',
+    email: '',
+    phone: '',
+    password: '',
+    avatar: null,
+});
+const originalForm = reactive({
+    id: null,
+    name: '',
+    lastname: '',
+    email: '',
+    phone: '',
+    avatar: null,
+});
+
+const isModalOpen = ref(false);
+const currentPassword = ref('');
+const newPassword = ref('');
+const currentPasswordError = ref(false);
+let selectedFile = ref(null);
+
+const nameTouched = ref(false);
+const emailTouched = ref(false);
+
+const emailErrorText = ref('');
+
+const namePlaceholder = computed(() =>
+    !form.name && nameTouched.value ? 'Debes rellenar este campo' : 'Introduce tu nombre'
+);
+const emailPlaceholder = computed(() =>
+    !form.email && emailTouched.value
+        ? 'Debes rellenar este campo'
+        : 'Introduce tu correo electrónico'
+);
+
+const isEmailValid = computed(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(form.email);
 });
 
 const validateEmail = () => {
@@ -193,15 +221,15 @@ const selectImage = () => {
 const onFileSelected = (event) => {
     const file = event.target.files[0];
     if (file) {
-        selectedFile.value = file; 
-        form.avatar = URL.createObjectURL(file); 
+        selectedFile.value = file;
+        form.avatar = URL.createObjectURL(file);
     }
 };
 
 const initForm = (data) => {
     form.id = data.id;
     form.name = data.name;
-    form.lastname = data.lastname ?? ''; 
+    form.lastname = data.lastname ?? '';
     form.email = data.email;
     form.phone = data.phone ?? '';
     form.password = '123456587';
@@ -210,7 +238,7 @@ const initForm = (data) => {
     Object.assign(originalForm, {
         id: data.id,
         name: data.name,
-        lastname: data.lastname ?? '', 
+        lastname: data.lastname ?? '',
         email: data.email,
         phone: data.phone ?? '',
         avatar: data.avatar,
@@ -218,7 +246,7 @@ const initForm = (data) => {
 };
 
 const isFormValid = computed(() => {
-    const isUnchanged = 
+    const isUnchanged =
         form.name === originalForm.name &&
         form.lastname === originalForm.lastname &&
         form.email === originalForm.email &&
@@ -226,14 +254,13 @@ const isFormValid = computed(() => {
         form.avatar === originalForm.avatar;
 
     return (
-        !isUnchanged && 
+        !isUnchanged &&
         form.name &&
         form.email &&
         isEmailValid.value &&
         form.avatar
     );
 });
-
 
 const isModalFormValid = computed(() => {
     return currentPassword.value && newPassword.value && !currentPasswordError.value;
@@ -250,8 +277,8 @@ const handleChangePassword = async () => {
         newPassword: newPassword.value,
     });
 
-    if(response.ok) {
-        toastSuccess("Contraseña actualizada");
+    if (response.ok) {
+        toastSuccess('Contraseña actualizada');
         isModalOpen.value = false;
     } else {
         currentPasswordError.value = true;
@@ -266,7 +293,7 @@ const handleSubmit = async () => {
         formData.append('lastname', form.lastname);
         formData.append('email', form.email);
         formData.append('phone', form.phone);
-        
+
         if (selectedFile.value) {
             formData.append('avatar', selectedFile.value);
         }
@@ -274,11 +301,11 @@ const handleSubmit = async () => {
         const response = await guestStore.$updateDataGuest(formData);
 
         if (response.ok) {
-            toastSuccess("Datos guardados con éxito");
+            toastSuccess('Datos guardados con éxito');
             guestStore.$updateLocalGuestData(response.data);
             initForm(response.data);
         } else {
-            console.error("Error al guardar los datos");
+            console.error('Error al guardar los datos');
         }
     }
 };
@@ -287,21 +314,28 @@ const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     let { url, type, urlDefault } = payload;
 
-    if (url && url.startsWith("blob:")) return url;
+    if (url && url.startsWith('blob:')) return url;
 
-    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
+    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg';
 
     if (urlDefault) return url;
 
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
-    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+    return type === 'CDN' || type === 'image-hotel-scraper'
+        ? url
+        : URL_STORAGE + url;
 };
 </script>
 
 <style scoped>
+.full-height {
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+}
 .shadow-small {
-    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12),
+        0px 3px 1px 0px rgba(0, 0, 0, 0.04);
 }
 </style>
