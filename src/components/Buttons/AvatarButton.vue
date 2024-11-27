@@ -13,7 +13,7 @@
         <img 
             v-if="data?.avatar"
             class="w-full h-full rounded-full"
-            :src="$formatImage({ url : data?.avatar,type : data.google})"
+            :src="$formatImage({ url : data?.avatar,type : data.avatar_type})"
         >
         <IconCustomColor
             v-else
@@ -81,7 +81,7 @@ const $formatImage = (payload) => {
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
-    if(type) {
+    if(type == 'GOOGLE') {
         return url;
     }
 

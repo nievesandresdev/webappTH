@@ -9,7 +9,7 @@
                 style="width: 40px; height: 40px;"
             >
                 <img
-                    :src="$formatImage({ url: form.avatar, type: form.google })"
+                    :src="$formatImage({ url: form.avatar, type: form.avatar_type })"
                     class="object-cover"
                     :class="{ 'w-6 h-6': !form.avatar }"
                     alt="User Avatar"
@@ -234,7 +234,7 @@ const initForm = (data) => {
     form.phone = data.phone ?? '';
     form.password = '123456587';
     form.avatar = data.avatar;
-    form.googleId = data.google;
+    form.avatar_type = data.avatar_type;
 
     Object.assign(originalForm, {
         id: data.id,
@@ -326,7 +326,7 @@ const $formatImage = (payload) => {
     type = type ?? type_d;
 
     
-    if (type) {
+    if(type == 'GOOGLE') {
         return url;
     }
 

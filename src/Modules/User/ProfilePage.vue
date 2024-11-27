@@ -11,7 +11,6 @@
                 <img :src="$formatImage({url: guestData.avatar, type: guestData.avatar_type})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
 
             </div>
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocLxcOSMhGAT4VrdY5uvlDoQ4IGUApcj1A-QXug9OEXJ5LBEzRBR=s96-c" class=" mt-2"  alt="Edit Icon" />
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">
                 {{ $t('profile.greeting', { name: guestData.name }) }}
             </p>
