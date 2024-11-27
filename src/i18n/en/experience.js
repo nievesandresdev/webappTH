@@ -3,6 +3,7 @@ export default {
         "experiences": "Experiences",
     },
     "card-experience": {
+        "hour": "hours",
         "aprox": "aproximately",
         "min-aprox": "aproximately minutes",
         "and": "and",
@@ -13,7 +14,7 @@ export default {
         "from":"From",
     },
     "list-page": {
-        "title": "Experiences in",
+        "title": "Experiences",
         "section-filter": {
             "label-search": "Filter by",
             "placeholder-input-search": "Enter a keyword",
@@ -22,7 +23,29 @@ export default {
             "placeholder-price-max": "Minimum..",
             "label-price-max": "Max. Price",
             "placeholder-price-max": "Maximum..",
-            "label-duration": "Duration"
+            "label-duration": "Duration",
+            "cancellation-policy": {
+                "title": "Cancellation Policy",
+                "free-cancellation": "Free Cancellation"
+              },
+              "duration": {
+                "title": "Duration",
+                "one-hour": "Up to 1 hour",
+                "one-four-hour": "Between 1 and 4 hours",
+                "noon": "Half day",
+                "whole-day": "Whole day"
+              },
+              "score": {
+                "title": "Score",
+                "star": "Stars"
+              },
+              "price": {
+                "title": "Price",
+                "0-100": "Between 0 € and 100 €",
+                "100-250": "Between 100 € and 250 €",
+                "250-500": "Between 250 € and 500 €",
+                "500": "+500 €"
+              }
         },
         "section-filter-history": {
             "btn-price": "Up to {price_max}",
@@ -32,6 +55,11 @@ export default {
         "btn-submit-filter": "Apply filters",
         "text-count-list": "Mixed experiences",
         "text-count-list-mobile": "{count} Experiences have been found.",
+        "text-count-list-search-active": "Search all Experiences for",
+        "text-count-list-search": "{count} Experiencias encontrados para",
+        "experience.placeholder-search": "Search for an experience",
+        "text-count-list-search": "{count} Experiences found for",
+        "text-search-not-found": "Adjust your search or try removing filters.",
         "without-results": {
             "title": "No experiences found",
             "text": "No experiences found in this city. We invite you to explore other cities, where you will discover various experiences and activities."
