@@ -10,6 +10,10 @@ export default {
         "title": "Informazioni personali",
         "description": "Configura le tue informazioni personali"
     },
+    "language" : {
+        "title": "Lingua",
+        "description": "Seleziona la lingua predefinita"
+    },
     "logout": "Disconnettersi",
     "share_stay": "Condividi Soggiorno"
 };

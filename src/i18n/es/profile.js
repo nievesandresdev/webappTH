@@ -1,3 +1,6 @@
+import { lang } from "moment";
+import language from "./language";
+
 export default {
     "account": "Mi cuenta",
     "greeting": "¡Hola, {name}!",
@@ -9,6 +12,10 @@ export default {
     "personal_info": {
         "title": "Información personal",
         "description": "Configura tu información personal"
+    },
+    "language" : {
+        "title": "Preferencia de idioma",
+        "description": "Selecciona tu idioma predeterminado"
     },
     "logout": "Cerrar sesión",
     "share_stay": "Compartir Estancia"

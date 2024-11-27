@@ -10,6 +10,10 @@ export default {
         "title": "Personal information",
         "description": "Set up your personal information"
     },
+    "language" : {
+        "title": "Language",
+        "description": "Select your default language"
+    },
     "logout": "Log out",
     "share_stay": "Share Stay"
 };

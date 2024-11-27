@@ -49,6 +49,18 @@
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
+
+        <!-- Sección "Idioma" -->
+        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
+            <div class="flex items-center gap-2">
+                <img src="/assets/icons/WA.PreferenciaIdioma.svg" class="w-8 h-8" alt="ID Icon" />
+                <div class="flex flex-col">
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.language.title') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.language.description') }}</span>
+                </div>
+            </div>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
     
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
