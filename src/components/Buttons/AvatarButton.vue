@@ -13,7 +13,7 @@
         <img 
             v-if="data?.avatar"
             class="w-full h-full rounded-full"
-            :src="$formatImage({ url : data?.avatar,type : data.avatar_type})"
+            :src="$formatImage({ url : data?.avatar,type : data?.avatar_type})"
         >
         <IconCustomColor
             v-else
@@ -53,7 +53,7 @@ const goProfile = () =>{
 }
 
 const data = computed(()=>{
-    return guestStore.guestData
+    return guestStore.getLocalGuest()
 })
 
 const sizeIcon = computed(()=>{

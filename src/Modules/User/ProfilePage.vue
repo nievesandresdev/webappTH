@@ -104,15 +104,9 @@ const handlePersonalInfo = () => {
 
 onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
-    //console.log('home guest', guestData.id);
 
     stayData.value = stayStore.stayData;
-    //console.log('home stay', stay);
-
-    // console.log({
-    //     stayData: stayData.value,
-    //     guestData: guestData.value
-    // })
+   
 
     await getHotelbyId(stayData.value.hotel_id);
 });
