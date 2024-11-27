@@ -107,6 +107,12 @@ function closeSearchHandle () {
     searchingActive.value = false;
 }
 
+function activateSearchHandle ($event) {
+    searchingActive.value = false;
+    formFilter.search = null;
+    loadAll({showPreloader: false});
+}
+
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;

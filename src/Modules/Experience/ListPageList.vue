@@ -13,7 +13,7 @@
                 <template v-if="!formFilter.search && experiencesData.length">
                 {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
                 </template>
-                <template v-else-if="formFilter.search">
+                <template v-else-if="formFilter.search && !experiencesData.length">
                     {{ `${$t('place.list-page.text-count-list-search',  { count: paginateData.total  })}: "${formFilter.search}"` }}
                 </template>
             </template>
@@ -37,7 +37,6 @@
             v-else
             class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px] my-[8px] sp:my-6"
         />
-
         <!-- <p class="mt-3 sp:mt-6 mb-3 sp:mb-6 text-[8px] sp:text-sm font-bold px-2 sp:px-4">{{ paginateData.total }} {{ $t('experience') }}</p> -->
         <template v-if="!isloadingForm && !experiencesData?.length && !firstLoad">
             <ListPageListNotFound />
@@ -63,6 +62,7 @@ import { inject, onMounted, ref, computed } from 'vue';
 
 import CardList from './components/CardList.vue';
 import SkeletonCard from './components/SkeletonCard.vue';
+import ListPageListNotFound from './ListPageListNotFound.vue';
 
 import { $throttle, $isElementVisible } from '@/utils/utils';
 

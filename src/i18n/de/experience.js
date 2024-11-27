@@ -58,6 +58,7 @@ export default {
         "experience.placeholder-search": "Nach einer Erfahrung suchen",
         "text-count-list-search-active": "Alle Erlebnisse suchen für",
         "text-count-list-search": "{count} Erlebnisse gefunden für",
+        "text-search-not-found": "Passen Sie Ihre Suche an oder versuchen Sie, Filter zu entfernen.",
         "without-results": {
             "title": "Keine Erfahrungen gefunden",
             "text": "In dieser Stadt wurden keine Erfahrungen gefunden. Wir laden Sie ein, andere Städte zu erkunden, wo Sie verschiedene Erfahrungen und Aktivitäten entdecken können."
