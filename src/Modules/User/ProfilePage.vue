@@ -89,6 +89,7 @@ const loading = ref(true);
 
 
 
+
 const handleMyStays = () => {
     if(isCheckoutPast.value){
         authStore.$logoutAndCreateStay();
