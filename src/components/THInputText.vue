@@ -162,7 +162,7 @@ export default {
         },
         topCustom: {
             type: String,
-            default: 'top-2'
+            default: 'top-3'
         }
     },
     created(){
