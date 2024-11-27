@@ -1,6 +1,7 @@
 const ProfilePage = () => import('@/Modules/User/ProfilePage.vue')
 const MyStays = () => import('@/Modules/User/MyStays.vue')
 const PersonalInfo = () => import('@/Modules/User/PersonalInfo.vue')
+const SelectLanguage = () => import('@/Modules/User/SelectLanguage.vue') 
 const EditStay = () => import('@/Modules/User/EditStay.vue')
 
 const profileRoutes = [
@@ -21,6 +22,11 @@ const profileRoutes = [
         name: 'PersonalInfo',
         path: 'informacion-personal',
         component: PersonalInfo
+      },
+      {
+        name: 'SelectLanguage',
+        path: 'seleccionar-idioma',
+        component: SelectLanguage
       },
       {
         name: 'EditStay',

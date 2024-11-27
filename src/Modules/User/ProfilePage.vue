@@ -51,7 +51,7 @@
         </div>
 
         <!-- Sección "Idioma" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
+        <div class="flex items-center justify-between mt-4 gap-2" @click="selectLanguage">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.PreferenciaIdioma.svg" class="w-8 h-8" alt="ID Icon" />
                 <div class="flex flex-col">
@@ -112,6 +112,10 @@ const handleMyStays = () => {
 
 const handlePersonalInfo = () => {
     navigateTo('PersonalInfo')
+};
+
+const selectLanguage = () => {
+    navigateTo('SelectLanguage')
 };
 
 onMounted(async() => {
