@@ -4,16 +4,30 @@ import { i18n } from '@/i18n'
 
 import {
     getAllApi,
+    getForItemApi
 } from '@/api/services/language.services'
 
 export const useLocaleStore = defineStore('locale', () => {
     
     // STATE
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
-    const availableLocation = ref(['es', 'en', 'fr'])
+    const availableLocation = ref(['es', 'en', 'fr','it','de','pt'])
 
     async function $apiGetAll () {
         const response = await getAllApi()
+        const { ok, data } = response
+        if (ok) {
+            return availableLocation.value = data
+        }
+        return [];     
+    }
+
+    async function $apiGetAllForItem () {
+        let params = { 
+            languages: availableLocation.value,
+            selected : localeCurrent.value
+        }
+        const response = await getForItemApi(params)
         const { ok, data } = response
         if (ok) {
             return availableLocation.value = data
@@ -46,6 +60,7 @@ export const useLocaleStore = defineStore('locale', () => {
     return {
         $apiGetAll,
         localeCurrent,
+        $apiGetAllForItem,
         $change,
         $load,
         $changeAndReload,

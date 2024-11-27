@@ -1,10 +1,11 @@
 <template>
     <SectionBar :title="$t('language.title')" />
     <div class="px-3 mt-6 full-height" ref="formContainer">
-        <div class="flex items-center justify-between">
+        <!-- <pre>{{ localeStore.availableLocation }}</pre> -->
+        <div class="flex items-center justify-between" v-for="(lg, index) in localeStore.availableLocation" :key="index">
             <div class="flex gap-2">
-                <img src="/assets/icons/languages/es.svg" class="h-6 w-6">
-                <span class="lato text-base font-medium">Espa;ol</span>
+                <img :src="`/assets/icons/languages/${lg.abbreviation}.svg`" class="h-6 w-6">
+                <span class="lato text-base font-medium">  {{ $utils.capitalize($t(`language.${lg.abbreviation}`)) }}</span>
             </div>
             <input type="checkbox" class="hborder-black-100 w-4 h-4">
         </div>
@@ -14,211 +15,47 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
-import THInputText from '@/components/THInputText.vue';
-import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
+import {
+    getForItemApi,
+} from '@/api/services/language.services'
+
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
+
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 
-import { handleToast } from '@/composables/useToast';
-const { toastSuccess } = handleToast();
+const languages = ref({})
+const guestData = ref({})
 
-const formContainer = ref(null);
+const getLanguages = async () => {
 
-// Ajustar altura del contenedor al tamaño del viewport
-const updateViewportHeight = () => {
-    const vh = window.innerHeight * 0.01; // Calcula el tamaño real del viewport
-    formContainer.value.style.setProperty('--vh', `${vh}px`);
-};
+    let languages = ['es', 'it', 'en', 'fr', 'de'];
+    const params = {
+        languages: languages,
+        selected: guestData.value.lang_web // Asegúrate de que guestData.lang_web esté disponible
+    };
+    const response = await getForItemApi(params);
+    languages.value = response.data
 
-onMounted(() => {
-    const guestData = guestStore.getLocalGuest();
-    initForm(guestData);
+    console.log('sssdsd',languages.value)
+}
 
-    // Establecer y actualizar altura dinámica
-    updateViewportHeight();
-    window.addEventListener('resize', updateViewportHeight);
-});
-
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', updateViewportHeight);
-});
-
-// Resto de tu lógica del formulario...
-const form = reactive({
-    id: null,
-    name: '',
-    lastname: '',
-    email: '',
-    phone: '',
-    password: '',
-    avatar: null,
-});
-const originalForm = reactive({
-    id: null,
-    name: '',
-    lastname: '',
-    email: '',
-    phone: '',
-    avatar: null,
-});
-
-const isModalOpen = ref(false);
-const currentPassword = ref('');
-const newPassword = ref('');
-const currentPasswordError = ref(false);
-let selectedFile = ref(null);
-
-const nameTouched = ref(false);
-const emailTouched = ref(false);
-
-const emailErrorText = ref('');
-
-const namePlaceholder = computed(() =>
-    !form.name && nameTouched.value ? 'Debes rellenar este campo' : 'Introduce tu nombre'
-);
-const emailPlaceholder = computed(() =>
-    !form.email && emailTouched.value
-        ? 'Debes rellenar este campo'
-        : 'Introduce tu correo electrónico'
-);
-
-const isEmailValid = computed(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(form.email);
-});
-
-const validateEmail = () => {
-    emailTouched.value = true;
-    emailErrorText.value = form.email
-        ? 'Formato de correo inválido'
-        : 'Este campo es requerido';
-};
-
-const handleNameBlur = () => {
-    nameTouched.value = true;
-};
-
-const selectImage = () => {
-    document.querySelector('input[type="file"]').click();
-};
-
-const onFileSelected = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        selectedFile.value = file;
-        form.avatar = URL.createObjectURL(file);
-    }
-};
-
-const initForm = (data) => {
-    form.id = data.id;
-    form.name = data.name;
-    form.lastname = data.lastname ?? '';
-    form.email = data.email;
-    form.phone = data.phone ?? '';
-    form.password = '123456587';
-    form.avatar = data.avatar;
-    form.avatar_type = data.avatar_type;
-
-    Object.assign(originalForm, {
-        id: data.id,
-        name: data.name,
-        lastname: data.lastname ?? '',
-        email: data.email,
-        phone: data.phone ?? '',
-        avatar: data.avatar,
-    });
-};
-
-const isFormValid = computed(() => {
-    const isUnchanged =
-        form.name === originalForm.name &&
-        form.lastname === originalForm.lastname &&
-        form.email === originalForm.email &&
-        form.phone === originalForm.phone &&
-        form.avatar === originalForm.avatar;
-
-    return (
-        !isUnchanged &&
-        form.name &&
-        form.email &&
-        isEmailValid.value &&
-        form.avatar
-    );
-});
-
-const isModalFormValid = computed(() => {
-    return currentPassword.value && newPassword.value && !currentPasswordError.value;
-});
-
-const openModalPassword = () => {
-    isModalOpen.value = true;
-};
-
-const handleChangePassword = async () => {
-    const response = await guestStore.$updatePassword({
-        id: form.id,
-        currentPassword: currentPassword.value,
-        newPassword: newPassword.value,
-    });
-
-    if (response.ok) {
-        toastSuccess('Contraseña actualizada');
-        isModalOpen.value = false;
-    } else {
-        currentPasswordError.value = true;
-    }
-};
-
-const handleSubmit = async () => {
-    if (isFormValid.value) {
-        const formData = new FormData();
-        formData.append('id', form.id);
-        formData.append('name', form.name);
-        formData.append('lastname', form.lastname);
-        formData.append('email', form.email);
-        formData.append('phone', form.phone);
-
-        if (selectedFile.value) {
-            formData.append('avatar', selectedFile.value);
-        }
-
-        const response = await guestStore.$updateDataGuest(formData);
-
-        if (response.ok) {
-            toastSuccess('Datos guardados con éxito');
-            guestStore.$updateLocalGuestData(response.data);
-            initForm(response.data);
-        } else {
-            console.error('Error al guardar los datos');
-        }
-    }
-};
-
-const $formatImage = (payload) => {
-    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
-    let { url, type, urlDefault } = payload;
-
-    // Verifica si la URL es de tipo `blob:` (preview imagen)
-    if (url && url.startsWith("blob:")) return url;
-
-    if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'; 
-
-    if (urlDefault) return url;
-
-    let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
-    type = type ?? type_d;
+onMounted(async() => {
+    guestData.value = guestStore.getLocalGuest();
 
     
-    if(type == 'GOOGLE') {
-        return url;
-    }
+    const response = await localeStore.$apiGetAllForItem();
+    languages.value = response.data
+    
 
-    return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
-};
+
+    //getLanguages()
+})
+
 </script>
 
 <style scoped>
