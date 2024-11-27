@@ -58,6 +58,7 @@ export default {
         "placeholder-search": "Buscar una experiencia",
         "text-count-list-search-active": "Buscar todas las Experiencas para",
         "text-count-list-search": "{count} Experiencias encontrados para",
+        "text-search-not-found": "Ajusta tu búsqueda o intenta quitando filtros.",
         "without-results": {
             "title": "No se han encontrado experiencias",
             "text": "No se han encontrado experiencias en esta ciudad. Te invitamos a explorar en otras ciudades, en ellas descubrirás diversas experiencias y actividades."

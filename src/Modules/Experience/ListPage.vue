@@ -13,7 +13,10 @@
             />
         </template>
     </AppHeader>
-    <div class="mt-[68px] sp:mt-[124px]">
+    <div class="flex flex-col">
+        <div class="h-[68px]  sp:h-[124px] w-full">
+            d
+        </div>
         <ListPageList @loadMore="loadMore" />
     </div>
     <ListPageBottomSheetFilter
@@ -105,6 +108,12 @@ function loadMore () {
 
 function closeSearchHandle () {
     searchingActive.value = false;
+}
+
+function activateSearchHandle ($event) {
+    searchingActive.value = false;
+    formFilter.search = null;
+    loadAll({showPreloader: false});
 }
 
 async function searchHandle ($event) {
