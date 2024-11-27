@@ -63,7 +63,7 @@
                 :textLabel="'Contraseña*'"
                 :placeholder="'Introduce tu contraseña'"
                 v-model="form.password"
-                topCustom="9"
+                topCustom="top-9"
                 type="password"
                 :disabled="true"
             />
@@ -101,14 +101,14 @@
                 :isError="currentPasswordError"
                 :textError="'La contraseña actual introducida es incorrecta'"
                 type="password"
-                topCustom="9"
+                topCustom="top-9"
             />
             <THInputText
                 :textLabel="'Nueva contraseña'"
                 :placeholder="'Introduce tu nueva contraseña'"
                 v-model="newPassword"
                 type="password"
-                topCustom="9"
+                topCustom="top-9"
             />
             <button
                 @click="handleChangePassword"
