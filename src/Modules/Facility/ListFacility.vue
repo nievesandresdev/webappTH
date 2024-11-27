@@ -22,13 +22,14 @@
         @click="goToFacilityShow(facility.id)"
         class="flex flex-col rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
       >
+      
         <div class="relative w-full h-[226px] rounded-t-lg overflow-hidden">
           <img
-            v-if="facility.image"
             :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
             alt="Facility Image"
             class="w-full h-full object-cover"
           />
+          
           <div v-if="facility.ad_tag" class="absolute bottom-2 left-2 flex items-center justify-center gap-1 px-2 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
             <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
           </div>
@@ -52,19 +53,29 @@ const facilities = ref([]);
 
 const hotelData = computed(() => hotelStore.hotelData);
 
-const $formatImage = (payload) => {
+const $formatImage = ({ url, type, urlDefault }) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
-  let { url, type, urlDefault } = payload;
 
-  if (url && url.startsWith("blob:")) return url;
-  if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg';
-  if (urlDefault) return url;
 
-  let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
-  type = type ?? type_d;
+  // Si no hay URL, intenta usar la imagen del hotel o una predeterminada
+  if (!url) {
+    const hotelImage = hotelData.value.image
+      ? `${URL_STORAGE}${hotelData.value.image}`
+      : `${URL_STORAGE}/storage/gallery/general-1.jpg`;
+    return hotelImage;
+  }
 
-  return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
+  // Si la URL comienza con "blob:", la retornamos directamente
+  if (url.startsWith('blob:')) return url;
+
+  // Si es de tipo CDN o tiene HTTPS, retornamos la URL directamente
+  if (type === 'CDN' || url.includes('https://')) return url;
+
+  // Si es de almacenamiento local, construimos la URL completa
+  return `${URL_STORAGE}${url}`;
 };
+
+
 
 const goToFacilityShow = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
