@@ -52,7 +52,7 @@ import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
 
-const emit = defineEmits(['showFeedback','reloadList']);
+const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
 

@@ -24,7 +24,7 @@
     </div>
     <p 
         v-if="showWordLimit" 
-        class="text-right text-[8px] sp:text-xs font-bold sp:leading-[16px]"
+        class="lato text-right text-[8px] sp:text-xs font-bold sp:leading-[16px]"
         :class="{'htext-alert-negative': isOverLimit}"
     >{{ wordCount }}/{{ wordLimit }}</p>
 </template>

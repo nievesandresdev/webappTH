@@ -6,7 +6,7 @@
         </div>
         <div class="mt-4 flex">
             <img class="w-6 h-6 mr-2" src="/assets/icons/WA.Answer-revier.svg" alt="AnswerReview icon">
-            <p class="lato text-sm leading-[16px]"> 
+            <p class="lato text-sm"> 
                 {{ period !== 'pre-stay'  ? $t(qualificationTranslate(qualification, period))+'.' : ''}} 
                 {{ response }}
             </p>

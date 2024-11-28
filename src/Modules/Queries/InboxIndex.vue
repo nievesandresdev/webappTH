@@ -1,22 +1,23 @@
 <template>
     <InboxHead />
     <!-- pre-stay -->
-    <div class="mt-6 px-4">
+    <div class="mt-6 px-4 pb-10">
         <TextQuery 
             v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
             :settings="settings"
             :data="currentQuery"
+            @reloadList="reloadList"
         />
         <!-- in-stay & post-stay -->
         <div class="md:mt-12" v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
             <IconsQuery 
                 :settings="settings"
                 :data="currentQuery"
-                @showFeedback="showFeedback"
+                @reloadList="reloadList"
             />
         </div>
 
-        <LinksReview v-if="showLinks" />
+        <!-- <LinksReview v-if="showLinks" /> -->
         
         <template v-for="res in responses" :key="res?.id">
             <ResponseCard 
@@ -39,7 +40,7 @@
                     <IconsQuery 
                         :settings="settings"
                         :data="res"
-                        @showFeedback="showFeedback"
+                        @reloadList="reloadList"
                     />
                 </div>      
             </template>
@@ -91,6 +92,7 @@ onMounted(async() => {
 
 async function getQuerySettings(){
     settings.value = await querySettingsStore.$getAll();
+    // console.log('test settings.value',settings.value)
 }
 
 async function getCurrentPeriod(){
