@@ -27,8 +27,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import router from '@/router';
+import { ref, onMounted,computed } from 'vue';
+import { useHotelStore } from '@/stores/modules/hotel'
 
 const emit = defineEmits(['itemClick']);
 
@@ -40,6 +40,9 @@ const props = defineProps({
     default: () => ({}) 
   }
 });
+
+const hotelStore = useHotelStore()
+const hotelData = computed(() => hotelStore.hotelData)
 
 const carousel = ref(null);
 
@@ -65,7 +68,7 @@ const $formatImage = (payload) => {
   let { url, type, urlDefault } = payload
 
   if (url && url.startsWith("blob:")) return url
-  if (!url || !URL_STORAGE) return '/assets/icons/WA.user.svg'
+  if (!url || !URL_STORAGE) return URL_STORAGE+hotelData.value.image
   if (urlDefault) return url
 
   let type_d = url.includes('https://') ? 'CDN' : 'STORAGE'
