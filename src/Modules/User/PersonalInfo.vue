@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, reactive, computed, onMounted, onBeforeUnmount,watch } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
@@ -158,6 +158,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('resize', updateViewportHeight);
 });
+
+
+
 
 // Resto de tu lógica del formulario...
 const form = reactive({
@@ -332,6 +335,10 @@ const $formatImage = (payload) => {
 
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
+
+watch([currentPassword, newPassword], () => {
+    currentPasswordError.value = false;
+});
 </script>
 
 <style scoped>
