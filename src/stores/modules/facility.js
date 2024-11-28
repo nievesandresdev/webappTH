@@ -13,7 +13,7 @@ export const useFacilityStore = defineStore('facility', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (item) {
+    function $loadImage (item,custom = null) {
         let { image: path, type, url } = item ?? {};
         let { URL_STORAGE } = mainStore;
         

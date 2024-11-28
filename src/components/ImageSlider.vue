@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden" @touchstart="touchStart" @touchend="touchEnd">
+  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden mockup:h-[190px]" @touchstart="touchStart" @touchend="touchEnd">
     <button
       v-show="showButtonBack"
       class="inline-flex items-center gap-2 p-1 absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"
@@ -9,7 +9,7 @@
     </button>
 
     <div
-      v-for="(image, index) in images"
+      v-for="(image, index) in imagesComplete"
       :key="image.id"
       class="w-full h-full bg-cover bg-center absolute top-0 left-0 transition-opacity duration-500 ease-in-out"
       :style="{ backgroundImage: `url(${image})` }"
@@ -34,11 +34,12 @@
 
 <script setup>
 import { ref, defineProps, computed } from 'vue'
-
+const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
 const props = defineProps({
   images: {
     type: Array,
-    required: true
+    required: true,
+    default: ['/storage/gallery/general-1.jpg']
   },
   facility: {
     type: Object,
@@ -47,11 +48,17 @@ const props = defineProps({
   showButtonBack: {
     type: Boolean,
     default: false
+  },
+  imgDefault: {
+    type: String,
+    default: '/storage/gallery/general-1.jpg'
   }
 })
 
+
+
 const $formatImage = (payload) => {
-  const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
+  
   let { url, type, urlDefault } = payload
 
   if (url && url.startsWith("blob:")) return url
@@ -65,6 +72,11 @@ const $formatImage = (payload) => {
 
   return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
 }
+
+const imagesComplete = computed(() => {
+  //return props.images.map(image => $formatImage(image))
+  return props.images.length === 0 ? [URL_STORAGE+props.imgDefault] : props.images;
+})
 
 const formattedImages = computed(() => {
   return props.images?.map(image => ({
