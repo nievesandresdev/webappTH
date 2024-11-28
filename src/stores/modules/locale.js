@@ -12,6 +12,7 @@ export const useLocaleStore = defineStore('locale', () => {
     // STATE
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
     const availableLocation = ref(['es', 'en', 'fr','it','de','pt'])
+    const availableLocationNotSelected = ref(availableLocation.value.filter(item => item !== localeCurrent.value))
 
     async function $apiGetAll () {
         const response = await getAllApi()
@@ -23,8 +24,9 @@ export const useLocaleStore = defineStore('locale', () => {
     }
 
     async function $apiGetAllForItem () {
+        console.log('availableLocationNotSelected.value',availableLocationNotSelected.value)
         let params = { 
-            languages: availableLocation.value,
+            languages: availableLocationNotSelected.value,
             selected : localeCurrent.value
         }
         const response = await getForItemApi(params)
@@ -38,9 +40,15 @@ export const useLocaleStore = defineStore('locale', () => {
     // ACTIONS
     function $change (lg) {
         localStorage.setItem('locale', lg)
+        let guestData = JSON.parse(localStorage.getItem('guestData')) || {};
+        guestData.lang_web = lg; 
+        localStorage.setItem('guestData', JSON.stringify(guestData));
         // console.log('changeAndReload',localStorage.getItem('locale'))
         i18n.global.locale.value = lg
         localeCurrent.value = lg
+        localeCurrent.value = lg
+        $apiGetAllForItem()
+
     }
 
     function $load (languageParam = null) {

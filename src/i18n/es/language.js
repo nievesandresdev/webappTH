@@ -50,5 +50,5 @@ export default {
     "he": "hebreo",
     "da": "danés",
     "zh_CN": "chino simplificado",
-    "title": "Preferencia de idioma"
+    "title": "Preferencia de idioma",
 }

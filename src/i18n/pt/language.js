@@ -49,5 +49,6 @@ export default {
     "no": "norueguês",
     "he": "hebraico",
     "da": "dinamarquês",
-    "zh_CN": "chinês simplificado"
+    "zh_CN": "chinês simplificado",
+    "title": "Preferência de idioma",
 }
