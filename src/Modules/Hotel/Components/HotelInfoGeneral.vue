@@ -68,9 +68,8 @@
       </div>
     </div>
 
-    <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+    <!-- <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
   
-    <!-- Sección de Website -->
     <div class="flex justify-between gap-2">
       <div class="flex gap-2 items-center w-1/2">
         <img src="/assets/icons/WA.website.svg" class="w-5 h-5" alt="Website Icon" />
@@ -78,7 +77,7 @@
           {{ formattedWebsite }}
         </p>
       </div>
-    </div>
+    </div> -->
   
     <div class="border-t mt-6 mb-6 border-[#E9E9E9]" v-show="hotelData.phone"></div>
   
@@ -122,6 +121,9 @@
   import { defineProps, computed } from 'vue';
   import { MapboxMap, MapboxMarker, MapboxCluster, MapboxImage } from '@studiometa/vue-mapbox-gl';
   import BaseMap from '@/components/Maps/BaseMap.vue';
+
+  import { handleToast } from '@/composables/useToast';
+  const { toastSuccess } = handleToast();
   
   const props = defineProps({
     hotelData: {
@@ -143,7 +145,7 @@
   
   const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-      console.log("Texto copiado");
+      toastSuccess('Copiado al portapapeles');
     }).catch(err => {
       console.error("Error al copiar el texto: ", err);
     });
