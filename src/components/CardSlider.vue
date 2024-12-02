@@ -4,11 +4,11 @@
       <div
         v-for="d in data"
         :key="d.id"
-        class="flex flex-col items-center w-[232px] h-[212px] rounded-[20px] border border-white shadow-lg bg-gradient-h"
+        class="flex flex-col justify-center w-[253px] h-[232px] rounded-[20px] border border-white shadow-lg bg-gradient-h"
         style="box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);"
         @click="handleClick(d)"
       >
-        <div class="relative w-full h-32 rounded-t-[20px] overflow-hidden">
+        <div class="relative w-full h-full rounded-t-[20px] overflow-hidden">
           <img 
             :src="$formatImage({ url: d.image?.url || '', type: d.image?.type })" 
             alt="Image" 
@@ -18,8 +18,8 @@
             <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ d.ad_tag }}</p>
           </div>
         </div>
-        <p class="text-[14px] font-bold text-[#333] lato px-4 pt-4 mb-4 card-text">
-          {{ d.description }}
+        <p class="text-[14px] font-bold text-[#333] lato px-4 pt-4 mb-4 card-text flex justify-start">
+          {{ truncateText(d.description ?? d.title) }}
         </p>
       </div>
     </div>
@@ -84,6 +84,9 @@ const handleClick = (item) => {
     props.onClick(item, props.clickParams);
   }
 };
+
+
+const truncateText = (text) => { return text.length > 60 ? text.substring(0, 60)  : text; };
 </script>
 
 <style scoped>
@@ -97,12 +100,12 @@ const handleClick = (item) => {
 }
 
 .card-text {
-  height: 4em;
+  height: 70px;
   line-height: 1.5em;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  display: block;
+  width: 100%;
+  word-wrap: break-word;
 }
+
 </style>

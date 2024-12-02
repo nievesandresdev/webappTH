@@ -46,7 +46,7 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{ $utils.isMockup() }}
+                        {{item.title}}
                     </span>
                     <img 
                         v-if="
