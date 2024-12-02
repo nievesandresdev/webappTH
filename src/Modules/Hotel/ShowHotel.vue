@@ -34,7 +34,7 @@
       <p
         @click="isExpanded = !isExpanded"
         class="text-[14px] font-bold lato underline text-[#333] mt-3 text-right cursor-pointer"
-        v-show="hotelData.description.length > CHARACTER_LIMIT"
+        v-show="hotelData.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
