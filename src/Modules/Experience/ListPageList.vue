@@ -101,7 +101,6 @@ function closeSearch () {
 }
 function initScrollListener () {
     const container = document?.querySelector('#list-experience');
-    console.log(container, 'initScrollListener');
     if (container) {
         container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
     }

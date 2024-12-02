@@ -97,5 +97,11 @@ export default {
         "availability-label":"Voir disponibilité",
         "free-cancellation-label":"Annulation gratuite",
         "non-refundable-cancellation-label":"Non remboursable",
+
+        "check-the-availability-of-this-experience": "Consultez la disponibilité de cette expérience",
+        "btn-see-availability-on-viator": "Voir la disponibilité sur Viator",
+        "title-general-information": "Informations générales",
+        "tag-paper-ticket": "Billet papier",
+        "offered-in": "Proposé en"
     }
 }
