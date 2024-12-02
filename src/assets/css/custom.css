@@ -21,12 +21,12 @@ select:focus,
 button:focus {
   outline: none;
   border-width: 1px;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
 }
 
-button:focus {
+/* button:focus {
   border-width: 0;
-}
+} */
 
 
 /* @import './hoster-colors'; */

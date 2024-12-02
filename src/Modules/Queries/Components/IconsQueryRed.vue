@@ -1,6 +1,13 @@
 <template>
-    <div class="hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary">
-        <h1 class="lato text-xs sp:text-base md:text-[21px] font-medium md:font-normal leading-[20px]">
+    <div 
+        :class="{
+            'hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
+        }"
+    >
+        <h1 
+            class="lato text-xs sp:text-base md:text-[21px] font-medium md:font-normal leading-[20px]"
+            v-if="!inModal"
+        >
             <template v-if="data?.period == 'post-stay'">
                 {{ $t('query.form.thanksAll') }} 
                 {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
@@ -10,7 +17,10 @@
                 {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
             </template>
         </h1>
-        <p class="mt-1.5 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[36px] font-medium md:font-semibold leading-[16px] md:leading-10">
+        <p 
+            v-if="!inModal"
+            class="mt-1.5 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[36px] font-medium md:font-semibold leading-[16px] md:leading-10"
+        >
             {{ $t('query.settings.question'+data?.period)}}
         </p>
         <div class="mt-4 md:mt-10">
@@ -28,7 +38,7 @@
                 :id="'textarea1'"
                 v-model="textarea" 
                 :wordLimit="300"
-                :placeholder="settings[commentHoster].es"
+                :placeholder="assessmentComment"
                 showWordLimit
                 customClasses="min-h-[72px] md:text-[21px] md:min-h-[250px]"
             />
@@ -36,7 +46,10 @@
         <!-- <pre>
             {{ settings }}
         </pre> -->
-        <div class="flex items-center mt-3 sp:mt-6 md:mt-8">
+        <div 
+            class="flex items-center mt-3 sp:mt-6 md:mt-8"
+            v-if="!inModal"
+        >
             <button 
                 v-if="EditPeriod == data?.period"
                 class="text-xs font-semibold leading-[130%] underline"
@@ -54,10 +67,19 @@
                 </PrimaryButton> 
             </div>
         </div>
+        <div v-else class="mt-6">
+            <PrimaryButton 
+                    classes="text-center py-2.5 rounded-[10px] lato text-base font-bold leading-[20px] w-full shadow-guest"
+                :disabled="!changes"
+                @click="submit"
+            >
+                {{ $t('query.form.send') }} 
+            </PrimaryButton> 
+        </div>
     </div>
 </template>
 <script setup>
-import { reactive, provide, computed, ref, inject } from 'vue';
+import { reactive, provide, computed, ref, inject, watch  } from 'vue';
 import FormTabEmojisRed from './FormTabEmojisRed'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
@@ -87,6 +109,10 @@ const props = defineProps({
         type: Object,
         default:{}
     },
+    inModal:{
+        type: Boolean,
+        default:false
+    },
 })
 const guestStore = useGuestStore();
 const textarea = ref(EditComment.value);
@@ -94,6 +120,15 @@ const form = reactive({
     type:EditQualification.value
 })
 provide('form',form)
+
+watch(
+  () => EditComment.value, 
+  (newValue, oldValue) => {
+    textarea.value = newValue;
+    form.type = EditQualification.value;
+  },
+  { immediate: true } 
+);
 
 async function submit(){
     let params = {
@@ -142,15 +177,19 @@ const thanksHoster = computed(() => {
     return modifiedPeriod.value+thanks;
 })
 
-const commentHoster = computed(() => {
-    // return modifiedPeriod.value+'_comment';
+const assessmentComment = computed(() => {
+    
     let assessment =  '_assessment_good';
+    let assessmentShow = '_assessment_good_activate';
+    
+    console.log('')
     if(['WRONG','VERYWRONG','NORMAL'].includes(form.type)){
         assessment = '_assessment_normal';
+        assessmentShow = '_assessment_normal_activate';
     }
-    // console.log('test form.type',form.type)
-    // console.log('test assessment',assessment)
-    return modifiedPeriod.value+assessment;
+    console.log('test assessmentShow',assessmentShow)
+    if(!props.settings[modifiedPeriod.value+assessmentShow]) return ''
+    return props.settings[modifiedPeriod.value+assessment][localStorage.getItem('locale')];
 })
 
 const modifiedPeriod = computed(() => {

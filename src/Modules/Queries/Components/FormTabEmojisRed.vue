@@ -4,7 +4,7 @@
         id="emoji-tab-form"
     >
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
-        <button 
+        <div 
           class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
           id="emoji-VERYWRONG-button"
           @click="selectEmoji('VERYWRONG')"
@@ -15,14 +15,14 @@
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.VERYWRONG?.face}.${state_emojis?.VERYWRONG?.mode}.svg`"
             alt="1.TH.EMOJI.VERYWRONG"
           />
-        </button>
+        </div>
         <p
           class="lato text-[6px] sp:text-[10px] md:text-xs font-bold mt-2 leading-[12px]"
           :class="textEmojiClasess('VERYWRONG')"
         >{{ $t(btnVeryWrongText) }}</p>
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
-        <button 
+        <div 
           class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
           id="emoji-WRONG-button"
           @click="selectEmoji('WRONG')"
@@ -33,14 +33,14 @@
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.svg`"
             alt="1.TH.EMOJI.WRONG"
           />
-        </button>
+        </div>
         <p
           class="lato text-[6px] sp:text-[10px] md:text-xs font-bold mt-2 leading-[12px]"
           :class="textEmojiClasess('WRONG')"
         >{{ $t(btnWrongText) }}</p>
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
-        <button 
+        <div 
           class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
           id="emoji-NORMAL-button"
           @click="selectEmoji('NORMAL')"
@@ -51,14 +51,14 @@
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.svg`"
             alt="1.TH.EMOJI.NORMAL"
           />
-        </button>
+        </div>
         <p
           class="lato text-[6px] sp:text-[10px] md:text-xs font-bold mt-2 leading-[12px]"
           :class="textEmojiClasess('NORMAL')"
         >{{ $t(btnNormalText) }}</p>
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
-        <button 
+        <div 
           class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
           id="emoji-GOOD-button"
           @click="selectEmoji('GOOD')"
@@ -69,14 +69,14 @@
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.svg`"
             alt="1.TH.EMOJI.GOOD"
           />
-        </button>
+        </div>
         <p
           class="lato text-[6px] sp:text-[10px] md:text-xs font-bold mt-2 leading-[12px]"
           :class="textEmojiClasess('GOOD')"
         >{{ $t(btnGoodText) }}</p>
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
-        <button 
+        <div 
           class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
           id="emoji-VERYGOOD-button"
           @click="selectEmoji('VERYGOOD')"
@@ -87,7 +87,7 @@
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.VERYGOOD?.face}.${state_emojis?.VERYGOOD?.mode}.svg`"
             alt="1.TH.EMOJI.VERYGOOD"
           />
-        </button>
+        </div>
         <p
           class="lato text-[6px] sp:text-[10px] md:text-xs font-bold mt-2 leading-[12px]"
           :class="textEmojiClasess('VERYGOOD')"
