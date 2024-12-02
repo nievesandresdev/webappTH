@@ -26,40 +26,69 @@
             <div>
                 <div class="flex justify-between">
                     <!-- Nombre del hotel -->
-                    <p class="text-base font-bold lato leading-[20px] text-[#333333] mb-3">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
+                    <p class="text-base font-bold lato leading-[20px] text-[#333333]">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
                         <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">Activo</span>
                     </span>
                 </div>
-                <div class="flex items-center text-[14px] font-bold text-[#333333] mb-2">
-                    <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
-                    <span class="lato text-sm font-bold leading-[16px]">{{ hotelName ? stay.hotel_zone : hotel.zone ?? '-'}}</span>
+                <div class="flex mt-3">
+                    <div>
+                        <div class="flex items-center text-[14px] font-bold text-[#333333]">
+                            <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
+                            <span class="lato text-sm font-bold leading-[16px]">{{ hotelName ? stay.hotel_zone : hotel.zone ?? '-'}}</span>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <img src="/assets/icons/WA.calendar.svg" class="w-4 h-4 mr-1" alt="Calendar Icon" />
+                            <span class="lato text-sm font-bold leading-[16px]">{{ formattedDates }}</span>
+                        </div>
+                        <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2 mt-2">
+                            <div class="flex items-center">
+                                <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
+                                <span class="lato text-sm font-bold leading-[16px]">{{ stay?.room ?? '-' }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
+                                <span class="lato text-sm font-bold leading-[16px]">{{ stay?.number_guests }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-auto flex gap-4 ml-auto">
+                    <RoundedButton
+                        id="open-query-modal"
+                        v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
+                        @click="queryModalisOpen = true"
+                        iconUrl="/assets/icons/WA.feedback.svg"
+                        sizeIcons="w-6 h-6"
+                        @closeModal="queryModalisOpen = false"
+                    />
+                    <RoundedButton
+                        v-if="showButtonShared" @click.stop="isModalOpen()"
+                        id="open-shared-stay-modal"
+                        iconUrl="/assets/icons/arrow-up-from-bracket.svg"
+                        sizeIcons="w-6 h-6"
+                    />
                 </div>
-                <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2">
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.calendar.svg" class="w-4 h-4 mr-1" alt="Calendar Icon" />
-                        <span class="lato text-sm font-bold leading-[16px]">{{ formattedDates }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.bed.svg" class="w-4 h-4 mr-1" alt="Bed Icon" />
-                        <span class="lato text-sm font-bold leading-[16px]">{{ stay?.room ?? '-' }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <img src="/assets/icons/WA.huespedes.svg" class="w-4 h-4 mr-1" alt="Guests Icon" />
-                        <span class="lato text-sm font-bold leading-[16px]">{{ stay?.number_guests }}</span>
-                    </div>
                 </div>
             </div>
-            <button v-if="showButtonShared" @click.stop="isModalOpen()" class="absolute bottom-4 right-4 flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-h shadow-md hshadow-button">
-                <img src="/assets/icons/arrow-up-from-bracket.svg" class="w-6 h-6 p-0.5" alt="Arrow Icon" />
-            </button>
         </template>
     </div>
+    <QueryModal 
+        v-if="period"
+        :period="period"
+        :settings="settings"
+    />
 </template>
 
 <script setup>
-import { computed, defineEmits } from 'vue';
+import { computed, defineEmits, onMounted, ref, provide  } from 'vue';
+import RoundedButton from '@/components/Buttons/RoundedButton.vue';
+import QueryModal from './QueryModal.vue';
+//
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
+import { useQuerySettingsStore } from '@/stores/modules/querySettings';
+const querySettingsStore = useQuerySettingsStore();
 
 const emit = defineEmits(['sharedStay', 'stayClick']);
 
@@ -90,8 +119,63 @@ const props = defineProps({
     hotelName  : {
         type: Boolean,
         default: false
+    },
+    showQueryButton  : {
+        type: Boolean,
+        default: false
     }
 });
+
+const period = ref(null);
+const settings = ref([]);
+const currentQuery = ref(null);
+const queryModalisOpen = ref(false);
+//
+const EditId = ref(null);
+const EditPeriod = ref(null);
+const EditComment = ref(null);
+const EditQualification = ref(null);
+
+provide('EditId',EditId);
+provide('EditPeriod',EditPeriod);
+provide('EditComment',EditComment);
+provide('EditQualification',EditQualification);
+provide('queryModalisOpen',queryModalisOpen);
+
+onMounted(async () => {
+    // solo se carga cuando se vaya a mostrar la query en modal
+    if(props.showQueryButton){
+        let params = {
+            stayId : localStorage.getItem('stayId')
+        }
+        period.value = await queryStore.$getCurrentPeriod(params);
+        await getQuerySettings();
+        if(period.value){
+            await getCurrentQuery();
+            if(currentQuery.value.answered){
+                EditPeriod.value = currentQuery.value.period;
+                EditComment.value = currentQuery.value.comment ? currentQuery.value.comment[currentQuery.value.response_lang] : '';
+                EditQualification.value = currentQuery.value.qualification;
+                EditId.value = currentQuery.value.id;
+            }
+        }
+    }
+})
+
+async function getQuerySettings(){
+    settings.value = await querySettingsStore.$getAll();
+    // console.log('test settings.value',settings.value)
+}
+
+async function getCurrentQuery(){
+    let params = {
+        stayId : localStorage.getItem('stayId'),
+        guestId : localStorage.getItem('guestId'),
+        period : period.value,
+    }
+    currentQuery.value = await queryStore.$visited(params);
+    // console.log('test currentQuery',currentQuery.value)
+}
 
 const formattedDates = computed(() => {
     const checkInDate = formatDate(props.stay?.check_in);
@@ -125,7 +209,8 @@ function handleStayClick() {
     };
     emit('stayClick', data);
 }
-
+provide('period',period)
+provide('currentQuery',currentQuery)
 </script>
 
 <style scoped>

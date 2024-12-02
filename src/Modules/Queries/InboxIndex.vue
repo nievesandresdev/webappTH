@@ -1,7 +1,7 @@
 <template>
     <InboxHead />
     <!-- pre-stay -->
-    <div class="mt-6 px-4 pb-10">
+    <div class="mt-6 px-4 pb-[132px]">
         <TextQuery 
             v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
             :settings="settings"
@@ -17,7 +17,7 @@
             />
         </div>
 
-        <!-- <LinksReview v-if="showLinks" /> -->
+        <LinksReview v-if="showRequestReview" />
         
         <template v-for="res in responses" :key="res?.id">
             <ResponseCard 
@@ -48,12 +48,12 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, computed } from 'vue'
 import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
 import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
 import ResponseCard from './Components/ResponseCardRed.vue';
-import LinksReview from './Components/LinksReview.vue'
+import LinksReview from './Components/LinksReviewRed.vue'
 //store
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 const querySettingsStore = useQuerySettingsStore();
@@ -71,6 +71,7 @@ const settings = ref([]);
 const responses = ref([]);
 const period = ref(null);
 const currentQuery = ref(null);
+const requestTexts = ref(null);
 const requestTo = ref(null);
 //
 const EditId = ref(null);
@@ -86,8 +87,8 @@ onMounted(async() => {
         await getCurrentQuery();
     }
     await getResponses();
-    let response = await requestSettingsStore.$getPostStayRequestData();
-    requestTo.value = response.request_to;
+    requestTexts.value = await requestSettingsStore.$getRequestData();
+    requestTo.value = requestTexts.value.request_to;
 })
 
 async function getQuerySettings(){
@@ -130,9 +131,26 @@ function reloadList(){
     getResponses();
 }
 
+const showRequestReview = computed(()=>{
+    if(!period.value || !requestTexts.value) return false;
+    let requestTo = JSON.parse(requestTexts.value?.request_to)
+    
+    if(period.value == 'in-stay'){
+        return currentQuery.value?.answered && requestTexts.value.in_stay_activate
+    }
+
+    if(period.value == 'post-stay'){
+        return currentQuery.value?.answered && requestTo.includes(currentQuery.value.qualification) 
+        // requestTo.includes('NOTANSWERED')
+    }
+    
+    return false
+})
 
 provide('EditId',EditId);
 provide('EditPeriod',EditPeriod);
 provide('EditComment',EditComment);
 provide('EditQualification',EditQualification);
+provide('period',period)
+provide('requestTexts',requestTexts)
 </script>

@@ -21,9 +21,10 @@
             <StayCard 
                 :hotel="hotelData" 
                 :stay="stayStore.stayData" 
-                :showButtonShared="true"
                 @sharedStay="isModalOpen = true"
                 :isLoading="loading"
+                showQueryButton
+                showButtonShared
             />
         </div>
         <!-- Sección "Mis estancias" -->

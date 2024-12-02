@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 import {
     getAllApi,
-    getPostStayRequestDataApi
+    getRequestDataApi
 } from '@/api/services/requestSettings.services'
 
 export const useRequestSettingStore = defineStore('requestSettings', () => {
@@ -20,9 +20,9 @@ export const useRequestSettingStore = defineStore('requestSettings', () => {
         }
     }
 
-    async function $getPostStayRequestData () {
-
-        const response = await getPostStayRequestDataApi()
+    async function $getRequestData (period) {
+        let data = { period };
+        const response = await getRequestDataApi(data)
         const { ok } = response   
         if(ok){
             return response.data
@@ -32,7 +32,7 @@ export const useRequestSettingStore = defineStore('requestSettings', () => {
     //
     return {
         $getAll,
-        $getPostStayRequestData
+        $getRequestData
     }
 
 })

@@ -7,9 +7,8 @@
             @touchmove.capture.prevent="moveTouch"
             @touchend="endTouch"
         ></div>
-
         <div 
-            class="relative w-full max-h-[80vh] overflow-y-auto py-3 px-4 rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
+            class="relative w-full max-h-[80vh] py-3 px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
             :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
             @click.stop
             ref="modalContainer"
@@ -17,9 +16,9 @@
             @touchmove.capture.prevent="moveTouch"
             @touchend="endTouch"
         >
+            <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
             <!-- Contenido del modal -->
             <slot></slot>
-
             <button
                 v-if="showButton"
                 @click="handleSubmit"
