@@ -56,13 +56,13 @@
 
       <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
 
-      <div class="flex items-center gap-4 mb-4">
+      <div class="flex items-center gap-4 mb-4" v-show="hotelData.show_facilities === 1" >
         <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
         <span @click="goToFacilities()" class="underline lato text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
       </div>
 
-      <CardSlider :data="facilities" @itemClick="handleGoFacility"  />
+      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1"  />
 
       <div class="flex items-center gap-4 mb-4">
         <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
