@@ -63,7 +63,7 @@
         </div>
     
         <!-- Cerrar sesión -->
-        <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
+        <div class="flex items-center justify-center mt-[40px] gap-2 cursor-pointer">
             <!-- <img src="/assets/icons/Wa.logout.svg" class="w-4 h-4" alt="Logout Icon" /> -->
             <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
