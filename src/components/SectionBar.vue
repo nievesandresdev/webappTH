@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-[76px] px-4 py-6 flex items-center justify-between bg-head bg-gradient-100">
+    <div class="w-full h-[76px] fixed top-0 left-0 px-4 py-6 flex items-center justify-between bg-head bg-gradient-100">
         <div class="flex items-center justify-center">
             <button @click="goBack" class="w-6 h-6 text-[#333333] mr-2">
                 <img src="/assets/icons/WA.chevron.svg" alt="Chevron Icon" />
