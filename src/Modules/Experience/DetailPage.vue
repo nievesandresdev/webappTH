@@ -24,12 +24,12 @@
                 </div>
                 <div class="flex justify-between items-end">
                     <div class="flex flex-col">
-                        <p  class="text-[5px] sp:text-[10px] lato leading-0 font-bold">{{ $t('experience.card-experience.from') }}</p>
-                        <p class="text-[10px] sp:text-[20px] font-bold lato leading-0">{{ experienceData?.from_price?.toFixed(2) }} €</p>
+                        <p  class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
+                        <p class="text-[10px] sp:text-[20px] font-bold lato leading-none">{{ experienceData?.from_price?.toFixed(2) }} €</p>
                     </div>
                     <div class="flex items-center">
                         <img src="/assets/icons/WA.pointer.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
-                        <p class="text-[8px] sp:text-[14px] font-medium lato leading-0">{{ experienceData?.city_experince }}, España</p>
+                        <p class="text-[8px] sp:text-[14px] font-medium lato leading-none">{{ experienceData?.city_experince }}, España</p>
                     </div>
                 </div>
             </div>
@@ -39,10 +39,10 @@
             >
                 <div class="absolute sp:top-[-18px] top-[-9px] left-[4px] sp:left-[8px] card-recommendation__tag flex items-center space-x-0.5 sp:space-x-1 py-0.5 sp:py-1 px-1 sp:px-2">
                     <img src="/assets/icons/WA.STAR.BLACK.svg" class="size-2 sp:size-4" />
-                    <span class="text-[7px] sp:text-[12px] font-bold leading-0 lato">{{ $t('place.detail.recommended')?.toUpperCase() }}</span>
+                    <span class="text-[7px] sp:text-[12px] font-bold leading-none lato">{{ $t('place.detail.recommended')?.toUpperCase() }}</span>
                 </div>
                 <p
-                    class="text-[9px] sp:text-sm font-medium"
+                    class="text-[9px] sp:text-sm font-medium lato"
                     style="font-family: 'Lato', sans-serif !important; font-style: italic;"
                 >
                     {{ `“${experienceData?.recomendation_language_current}”` }}
@@ -52,7 +52,7 @@
                 v-if="description"
                 class="pb-[8px] sp:pb-[16px] border-b  border-[#E9E9E9]"
             >
-                <h2 class="text-[10px] sp:text-[18px] lato leading-0 mb-1 sp:mb-2 font-bold">Descripción</h2>
+                <h2 class="text-[10px] sp:text-[18px] lato leading-none mb-1 sp:mb-2 font-bold">Descripción</h2>
                 <p
                     ref="descriptionRef"
                     class="description mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
@@ -74,34 +74,41 @@
                 </div>
             </div>
             <div class="space-y-[8px] sp:space-y-[16px] pb-[14px] sp:pb-[24px] border-b  border-[#E9E9E9]">
-                <h3 class="lato  text-[8px] sp:text-[16px] font-medium leading-0">{{ $t('experience.detail-page.check-the-availability-of-this-experience') }}</h3>
+                <h3 class="lato  text-[8px] sp:text-[16px] font-medium leading-none">{{ $t('experience.detail-page.check-the-availability-of-this-experience') }}</h3>
                 <PrimaryButton 
-                    classes="block text-center py-1.5 sp:py-2.5 rounded-[10px] text-[9px] sp:text-[14px] font-bold leading-0 w-full shadow-guest"
+                    classes="block text-center py-1.5 sp:py-2.5 rounded-[10px] text-[9px] sp:text-[14px] font-bold leading-none w-full shadow-guest lato"
+                    @click="goInViator"
                 >
                     {{ $t('experience.detail-page.btn-see-availability-on-viator') }}
                 </PrimaryButton>
             </div>
             <div class="p-3 sp:p-6 space-y-[12px] border border-color-secondary bg-gradient-100 rounded-[10px]">
-                <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-0">{{ $t('experience.detail-page.title-general-information') }}</h3>
-                <div class="flex items-center space-x-1 sp:space-x-2">
+                <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('experience.detail-page.title-general-information') }}</h3>
+                <div
+                    v-if="experienceViatorData?.cancellationPolicy?.type == 'STANDARD'"
+                    class="flex items-center space-x-1 sp:space-x-2"
+                >
                     <img src="/assets/icons/WA.Cancelacion.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px]">{{ $t('experience.detail-page.free-cancellation-label') }}</p>
+                    <p class="text-[7px] sp:text-[14px] leading-none">{{ $t('experience.detail-page.free-cancellation-label') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
                     <img src="/assets/icons/WA.clock.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium"> {{ duration }} </p>
+                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none"> {{ duration }} </p>
                 </div>
-                <div class="flex items-center space-x-1 sp:space-x-2">
+                <div
+                    v-if="experienceViatorData?.ticketInfo?.ticketTypes?.includes('MOBILE_ONLY')"
+                    class="flex items-center space-x-1 sp:space-x-2"
+                >
                     <img src="/assets/icons/WA.mobile.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium">{{ $t('experience.detail-page.tag-ticket-mobile') }}</p>
+                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-ticket-mobile') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
                     <img src="/assets/icons/WA.PaperTicket.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium">{{ $t('experience.detail-page.tag-paper-ticket') }}</p>
+                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-paper-ticket') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
                     <img src="/assets/icons/WA.Idiomas.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium">{{ $t('experience.detail-page.offered-in') }}: {{ availablelanguages?.languages?.map(lg => $t(`language.${lg}`)).join(', ') }} </p>
+                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.offered-in') }}: {{ availablelanguages?.languages?.map(lg => $t(`language.${lg}`)).join(', ') }} </p>
                 </div>
             </div>
             <DetailPageSectionInclude />
@@ -224,6 +231,10 @@ function checkDescriptionLength() {
 
 const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
+}
+
+function goInViator () {
+    window.open(experienceViatorData?.value.productUrl, '_blank')
 }
 
 provide('experienceViatorData', experienceViatorData);

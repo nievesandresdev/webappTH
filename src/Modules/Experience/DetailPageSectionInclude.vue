@@ -1,6 +1,6 @@
 <template>
      <div class="p-3 sp:p-6 space-y-[12px] border border-color-secondary bg-gradient-100 rounded-[10px]">
-        <h3 class="text-[9px] sp:text-[16px] leading-0 font-bold mb-[12px] sp:mb-[24px]">{{ $t('experience.detail-page.title-include') }}</h3>
+        <h3 class="text-[9px] sp:text-[16px] leading-0 font-bold mb-[12px] sp:mb-[24px] lato">{{ $t('experience.detail-page.title-include') }}</h3>
         <div class="space-y-1 sp:space-y-2 flex flex-col w-full">
             <div
                 v-for="(item, index) in inclusionsAndExcludeData"
