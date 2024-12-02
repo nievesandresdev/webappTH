@@ -10,6 +10,10 @@ export default {
         "title": "Informations personnelles",
         "description": "Configurez vos informations personnelles"
     },
+    "language" : {
+        "title": "Langue",
+        "description": "Sélectionnez votre langue par défaut"
+    },
     "logout": "Se déconnecter",
     "share_stay": "Partager le Séjour"
 };

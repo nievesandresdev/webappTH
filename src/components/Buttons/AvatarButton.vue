@@ -9,10 +9,11 @@
             height: $utils.isMockup() ? '24px' : size+'px',
         }"
     >
+    
         <img 
             v-if="data?.avatar"
             class="w-full h-full rounded-full"
-            :src="$formatImage({ url : data?.avatar,type : 'STORAGE'})"
+            :src="$formatImage({ url : data?.avatar,type : data?.avatar_type})"
         >
         <IconCustomColor
             v-else
@@ -52,7 +53,7 @@ const goProfile = () =>{
 }
 
 const data = computed(()=>{
-    return guestStore.guestData
+    return guestStore.getLocalGuest()
 })
 
 const sizeIcon = computed(()=>{
@@ -79,6 +80,10 @@ const $formatImage = (payload) => {
 
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
+
+    if(type == 'GOOGLE') {
+        return url;
+    }
 
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };

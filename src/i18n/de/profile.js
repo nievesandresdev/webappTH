@@ -10,6 +10,10 @@ export default {
         "title": "Persönliche Informationen",
         "description": "Richten Sie Ihre persönlichen Informationen ein"
     },
+    "language" : {
+        "title": "Sprache",
+        "description": "Wählen Sie Ihre Standardsprache aus"
+    },
     "logout": "Abmelden",
     "share_stay": "Aufenthalt Teilen"
 };

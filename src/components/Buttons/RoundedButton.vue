@@ -1,7 +1,10 @@
 <template>
     <div class="flex flex-col items-center">
       <!-- Botón con icono -->
-      <button class="flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-h shadow-md">
+      <button 
+        :id="id"
+        class="flex items-center p-2 gap-2 rounded-full border border-white bg-gradient-h shadow-md"
+      >
         <img :src="iconUrl" :class="sizeIcons" alt="Icon" />
       </button>
       <p v-if="showLabel" class="mt-2 text-[12px] font-bold text-[#333] lato text-center max-w-[80px]">{{ label }}</p>
@@ -12,6 +15,10 @@
   import { defineProps } from 'vue'
   
   const props = defineProps({
+    id: {
+      type: String,
+      required: 'button-id'
+    },
     iconUrl: {
       type: String,
       required: true

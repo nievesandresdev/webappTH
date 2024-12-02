@@ -10,6 +10,10 @@ export default {
         "title": "Informações pessoais",
         "description": "Configure suas informações pessoais"
     },
+    "language" : {
+        "title": "Preferência de idioma",
+        "description": "Selecione seu idioma padrão"
+    },
     "logout": "Sair",
     "share_stay": "Compartilhar Estadia"
 };

@@ -8,7 +8,7 @@
             </div> -->
             <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
                  style="width: 40px; height: 40px;">
-                <img :src="$formatImage({url: guestData.avatar, type: 'STORAGE'})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
+                <img :src="$formatImage({url: guestData.avatar, type: guestData.avatar_type})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
 
             </div>
             <p class="text-[#333333] text-[20px] font-bold lato mt-2">
@@ -21,9 +21,10 @@
             <StayCard 
                 :hotel="hotelData" 
                 :stay="stayStore.stayData" 
-                :showButtonShared="true"
                 @sharedStay="isModalOpen = true"
                 :isLoading="loading"
+                showQueryButton
+                showButtonShared
             />
         </div>
         <!-- Sección "Mis estancias" -->
@@ -49,10 +50,22 @@
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
+
+        <!-- Sección "Idioma" -->
+        <div class="flex items-center justify-between mt-4 gap-2" @click="selectLanguage">
+            <div class="flex items-center gap-2">
+                <img src="/assets/icons/WA.PreferenciaIdioma.svg" class="w-8 h-8" alt="ID Icon" />
+                <div class="flex flex-col">
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.language.title') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.language.description') }}</span>
+                </div>
+            </div>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
     
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-6 gap-2 cursor-pointer">
-            <img src="/assets/icons/WA.logout.svg" class="w-4 h-4" alt="Logout Icon" />
+            <!-- <img src="/assets/icons/Wa.logout.svg" class="w-4 h-4" alt="Logout Icon" /> -->
             <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
 
@@ -89,6 +102,7 @@ const loading = ref(true);
 
 
 
+
 const handleMyStays = () => {
     if(isCheckoutPast.value){
         authStore.$logoutAndCreateStay();
@@ -101,17 +115,15 @@ const handlePersonalInfo = () => {
     navigateTo('PersonalInfo')
 };
 
+const selectLanguage = () => {
+    navigateTo('SelectLanguage')
+};
+
 onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
-    //console.log('home guest', guestData.id);
 
     stayData.value = stayStore.stayData;
-    //console.log('home stay', stay);
-
-    // console.log({
-    //     stayData: stayData.value,
-    //     guestData: guestData.value
-    // })
+   
 
     await getHotelbyId(stayData.value.hotel_id);
 });
@@ -159,8 +171,13 @@ const $formatImage = (payload) => {
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
+    if(type == 'GOOGLE') {
+        return url;
+    }
+
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
+
 
 const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avatar,type: 'STORAGE' }));
 

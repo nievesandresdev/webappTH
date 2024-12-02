@@ -28,6 +28,7 @@ export const useQueryStore = defineStore('query', () => {
 
     async function $getRecentlySortedResponses (data) {
         const response = await getRecentlySortedResponsesApi(data)
+        // console.log('test response',response)
         const { ok } = response   
         if(ok){
             return response.data
@@ -44,9 +45,9 @@ export const useQueryStore = defineStore('query', () => {
     }
 
     async function $saveResponse (params) {
-        console.log('params',params)
+        // console.log('params',params)
         const response = await saveResponseApi(params)
-        console.log('response',response)
+        // console.log('response',response)
         const { ok } = response   
         if(ok){
             return response.data
@@ -63,14 +64,12 @@ export const useQueryStore = defineStore('query', () => {
     }
 
     async function $existingPendingQuery () {
-
         let params = {
             stayId :localStorage.getItem('stayId'),
             guestId :localStorage.getItem('guestId'),
         };
         if(params.stayId && params.guestId){
             const response = await existingPendingQueryApi(params)
-            // console.log('existingPendingQuery',response.data)
             const { ok } = response   
             if(ok){
                 pendingQuery.value = response.data;

@@ -153,9 +153,7 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function findAndValidLastStayAndLogHotel (params) {
-        console.log('test findAndValidLastStayAndLogHotel',params)
         const response = await findAndValidLastStayApi(params)
-        console.log('test response',response)
         const { ok } = response
         if(ok && response.data.stay){
             await stayStore.setStayData(response.data.stay,false)

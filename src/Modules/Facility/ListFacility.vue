@@ -59,9 +59,8 @@ const $formatImage = ({ url, type, urlDefault }) => {
 
   // Si no hay URL, intenta usar la imagen del hotel o una predeterminada
   if (!url) {
-    const hotelImage = hotelData.value.image
-      ? `${URL_STORAGE}${hotelData.value.image}`
-      : `${URL_STORAGE}/storage/gallery/general-1.jpg`;
+    const hotelImage = `${URL_STORAGE}${hotelData.value.image}`;
+     
     return hotelImage;
   }
 

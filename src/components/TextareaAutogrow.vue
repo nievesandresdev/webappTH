@@ -1,16 +1,16 @@
 <template>
     <div
-        class="textarea-border rounded-[6px] w-full" 
+        class="textarea-border rounded-[10px] w-full border-[2px]" 
         :class="{
             'hborder-alert-negative': isOverLimit,
             'hborder-black-100': modelValue,
             'hborder-gray-400': !modelValue
         }"
     >
-        <div class="cursor-pointer relative flex h-full w-full">
+        <div class="cursor-pointer srelative flex h-full w-full">
             <textarea
                 :id="id" 
-                class="auto-height p-1.5 sp:p-3 rounded-[6px] flex-grow text-sm w-full border-0"
+                class="auto-height px-1 py-1.5 sp:py-3 sp:px-2 rounded-[10px] flex-grow lato text-[10px] sp:text-sm font-medium leading-[16px] w-full border-0 focus:border-[0px]"
                 :class="`
                     ${isOverLimit ? 'placeholder-negative htext-alert-negative':''}
                     ${customClasses}
@@ -24,7 +24,7 @@
     </div>
     <p 
         v-if="showWordLimit" 
-        class="text-right text-[8px] sp:text-xs htext-gray-500 mt-0.5 sp:mt-2"
+        class="lato text-right text-[8px] sp:text-xs font-bold sp:leading-[16px]"
         :class="{'htext-alert-negative': isOverLimit}"
     >{{ wordCount }}/{{ wordLimit }}</p>
 </template>
@@ -94,9 +94,9 @@ watch(() => props.modelValue, async () => {
 
 </script>
 <style scoped>
-textarea:focus {
+/* textarea:focus {
     border: none;
-}
+} */
 .auto-height {
     overflow-y: hidden;
     resize: none; 
@@ -105,17 +105,18 @@ textarea:focus {
 textarea::placeholder {
     color: #A0A0A0;
     font-size: 14px;
-    font-weight: 400;
-    line-height: 150%; 
+    font-weight: 500;
+    line-height: 16px; 
+    font-family: Lato;
 }
 
 @media (max-width:300px){
     textarea::placeholder {
-        font-size: 8px;
+        font-size: 10px;
     }
 }
 
-.textarea-border:hover{
+/* .textarea-border:hover{
     color: var(--h-green-600);
     border: 1px solid var(--h-green-600) !important;
 }
@@ -127,5 +128,5 @@ textarea::placeholder {
 .textarea-border:hover textarea::placeholder {
     color: var(--h-green-600);
     opacity: 1;
-  }
+  } */
 </style>

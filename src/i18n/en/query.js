@@ -1,6 +1,6 @@
 export default {
     "textToast": {
-        "sendQueryText": "Response sent",
+        "sendQueryText": "We sincerely appreciate your feedback. Your experience matters to us, and we strive to meet your expectations.",
         "updateQueryText" : "Amendment submitted"
     },
     "form": {
