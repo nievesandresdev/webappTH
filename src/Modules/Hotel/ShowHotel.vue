@@ -62,7 +62,7 @@
         <span @click="goToFacilities()" class="underline lato text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
       </div>
 
-      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1"  />
+      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  />
 
       <div class="flex items-center gap-4 mb-4">
         <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
@@ -193,6 +193,13 @@ const goToFacilities = () => {
 }
 
 provide('isModalOpen',isModalOpen)
+
+const rrss = computed(() => {
+   return hotelData.value.instagram_url ||
+          hotelData.value.facebook_url ||
+          hotelData.value.pinterest_url ||
+          hotelData.value.x_url;
+  });
 
 </script>
 

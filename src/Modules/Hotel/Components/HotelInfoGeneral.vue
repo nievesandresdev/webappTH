@@ -96,9 +96,10 @@
     </div>
   
     <div class="border-t mt-6 mb-6 border-[#E9E9E9]" v-show="hotelData.phone_optional"></div>
+   
   
     <!-- Sección de Teléfono Opcional -->
-    <div class="flex justify-between gap-2" v-show="hotelData.phone_optional">
+    <div class="flex justify-between gap-2" :class="{'mb-10' : hotelData.show_facilities === 0}" v-show="hotelData.phone_optional">
       <div class="flex gap-2 items-center w-1/2">
         <img src="/assets/icons/WA.llamar.svg" class="w-5 h-5" alt="Phone Icon" />
         <p class="text-[14px] font-bold text-[#333333] lato">{{ hotelData.phone_optional }}</p>
@@ -150,6 +151,8 @@
       console.error("Error al copiar el texto: ", err);
     });
   };
+
+  
   </script>
 
   
