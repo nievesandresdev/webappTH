@@ -1,7 +1,7 @@
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 const HomePage = () => import(/* webpackChunkName: "home" */ '@/Modules/Home/HomePage.vue')
 
-import isMobile from '@/middlewares/isMobile'
+// import isMobile from '@/middlewares/isMobile'
 
 const homeRoutes = [
   {
@@ -9,9 +9,9 @@ const homeRoutes = [
     component: AppLayout,
     meta: {
       verifyHotel: true,
-      middleware: [
-        isMobile
-     ]
+    //   middleware: [
+    //     isMobile
+    //  ]
     },
     children: [
       {

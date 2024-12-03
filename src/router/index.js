@@ -12,6 +12,7 @@ import policiesRoutes from './policiesRoutes'
 
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
+import isMobile from '@/middlewares/isMobile'
 import handleWebAppData from '@/middlewares/handleWebAppData';
 
 
@@ -44,7 +45,7 @@ const routes = [
     path: '/compartir',
     name: 'ScreenNotAllowed',
     component: ScreenNotAllowed,
-    beforeEnter: [isDesktop]
+    // beforeEnter: [isDesktop]
   },
   {
     path: '/test',
@@ -66,7 +67,7 @@ const routes = [
   // Rutas dinámicas (con slug)
   {
     path: '/:hotelSlug',
-    beforeEnter: checkHotelSubdomain,
+    beforeEnter: [checkHotelSubdomain],
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       ...placeRoutes,
