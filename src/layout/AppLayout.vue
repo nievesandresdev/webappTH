@@ -3,7 +3,10 @@
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
-        <MenuMobile v-show="showMenu" />
+        <MenuMobile 
+            v-if="!isDesktop"
+            v-show="showMenu" 
+        />
     </div>
 
 </template>
@@ -13,6 +16,10 @@
 import { onMounted, ref, provide, watch, computed } from 'vue';
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
+import { useMediaQuery } from '@/composables/useMediaQuery.js'
+const { isDesktop } = useMediaQuery()
+
+
 import MenuMobile from './Components/AppMenu.vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();

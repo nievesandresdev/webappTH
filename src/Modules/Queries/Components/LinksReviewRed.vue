@@ -1,12 +1,17 @@
 <template>
-    <div :class="{'hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal}">
+    <div 
+        id="container-otas-links"
+        :class="{
+            'hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
+        }"
+    >
         <!-- <img 
             class="w-6 h-6 hidden md:inline-block invisible" src="/assets/icons/1.TH.BACK.svg" alt="BACK icon"
         > -->
         <h1 
             id="title-container-request"
             :class="{
-                'lato text-[10px] sp:text-base md:text-[36px] font-medium md:font-semibold md:mt-6 leading-3 sp:leading-5 md:leading-[110%]':!inModal,
+                'lato text-[10px] sp:text-base md:text-[24px] font-medium md:mt-0 leading-3 sp:leading-5 md:leading-[116%]':!inModal,
                 'lato text-[20px] font-bold leading-[28px]':inModal,
                 }" 
             v-html="requestTexts?.title"
@@ -16,7 +21,7 @@
             class="description-container1 mt-3 md:mt-6" 
             v-html="requestTexts?.text1"
         ></div>
-        <div class="buttons flex flex-col gap-4">
+        <div class="buttons flex flex-col gap-4 md:max-w-[310px] md:mx-auto">
             <div v-if="requestTexts?.otas_enabled?.booking && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="booking" textButton="Continuar en Booking"/>
             </div>
@@ -77,16 +82,24 @@ const props = defineProps({
 }
 
 @media (min-width: 768px) {
+    #container-otas-links{
+        border: none !important;
+        background: #fff !important;
+    }
+
     .description-container1 > p{
-        font-size: 24px;
-        line-height: 130%;
+        font-weight: 500 !important;
+        font-size: 16px;
+        line-height: 125%;
     }
     .description-container2 > p{
-        font-size: 21px;
+        font-size: 20px;
+        line-height: 116%;
     }
     .description-container2 > strong{
-        font-size: 27px;
-        font-weight: 600;
+        font-size: 24px;
+        font-weight: 500 !important;
+        line-height: 116%;
     }
 }
 

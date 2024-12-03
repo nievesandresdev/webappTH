@@ -5,13 +5,13 @@
     >
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
         <div 
-          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
+          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 md:w-[64px] md:h-[64px]"
           id="emoji-VERYWRONG-button"
           @click="selectEmoji('VERYWRONG')"
         >
           <img
-            class="mx-auto mt-auto"
-            :class="form.type && form.type !== 'VERYWRONG' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14 opacity-50' : 'w-full h-full'"
+            class="mx-auto mt-auto cursor-pointer"
+            :class="form.type && form.type !== 'VERYWRONG' ? 'sp:w-8 sp:h-8 md:w-[52px] md:h-[52px] opacity-50' : 'w-full h-full'"
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.VERYWRONG?.face}.${state_emojis?.VERYWRONG?.mode}.svg`"
             alt="1.TH.EMOJI.VERYWRONG"
           />
@@ -23,13 +23,13 @@
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
         <div 
-          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
+          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 md:w-[64px] md:h-[64px]"
           id="emoji-WRONG-button"
           @click="selectEmoji('WRONG')"
         >
           <img
-            class="mx-auto mt-auto"
-            :class="form.type && form.type !== 'WRONG' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14 opacity-50' : 'w-full h-full'"
+            class="mx-auto mt-auto cursor-pointer"
+            :class="form.type && form.type !== 'WRONG' ? 'sp:w-8 sp:h-8 md:w-[52px] md:h-[52px] opacity-50' : 'w-full h-full'"
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.WRONG?.face}.${state_emojis?.WRONG?.mode}.svg`"
             alt="1.TH.EMOJI.WRONG"
           />
@@ -41,13 +41,13 @@
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
         <div 
-          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
+          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 md:w-[64px] md:h-[64px]"
           id="emoji-NORMAL-button"
           @click="selectEmoji('NORMAL')"
         >
           <img
-            class="mx-auto mt-auto"
-            :class="form.type && form.type !== 'NORMAL' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14 opacity-50' : 'w-full h-full'"
+            class="mx-auto mt-auto cursor-pointer"
+            :class="form.type && form.type !== 'NORMAL' ? 'sp:w-8 sp:h-8 md:w-[52px] md:h-[52px] opacity-50' : 'w-full h-full'"
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.NORMAL?.face}.${state_emojis?.NORMAL?.mode}.svg`"
             alt="1.TH.EMOJI.NORMAL"
           />
@@ -59,13 +59,13 @@
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
         <div 
-          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
+          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 md:w-[64px] md:h-[64px]"
           id="emoji-GOOD-button"
           @click="selectEmoji('GOOD')"
         >
           <img
-            class="mx-auto mt-auto"
-            :class="form.type && form.type !== 'GOOD' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14 opacity-50' : 'w-full h-full'"
+            class="mx-auto mt-auto cursor-pointer"
+            :class="form.type && form.type !== 'GOOD' ? 'sp:w-8 sp:h-8 md:w-[52px] md:h-[52px] opacity-50' : 'w-full h-full'"
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.GOOD?.face}.${state_emojis?.GOOD?.mode}.svg`"
             alt="1.TH.EMOJI.GOOD"
           />
@@ -77,13 +77,13 @@
       </div>
       <div class="text-center px-0.5 sp:px-2.5 md:px-4">
         <div 
-          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 lg:w-16 lg:h-16"
+          class="flex w-8 h-8 mx-auto sp:w-10 sp:h-10 md:w-[64px] md:h-[64px]"
           id="emoji-VERYGOOD-button"
           @click="selectEmoji('VERYGOOD')"
         >
           <img
-            class="mx-auto mt-auto"
-            :class="form.type && form.type !== 'VERYGOOD' ? 'sp:w-8 sp:h-8 lg:w-14 lg:h-14 opacity-50' : 'w-full h-full'"
+            class="mx-auto mt-auto cursor-pointer"
+            :class="form.type && form.type !== 'VERYGOOD' ? 'sp:w-8 sp:h-8 md:w-[52px] md:h-[52px] opacity-50' : 'w-full h-full'"
             :src="`/assets/icons/emojis/1.TH.EMOJI.${state_emojis?.VERYGOOD?.face}.${state_emojis?.VERYGOOD?.mode}.svg`"
             alt="1.TH.EMOJI.VERYGOOD"
           />

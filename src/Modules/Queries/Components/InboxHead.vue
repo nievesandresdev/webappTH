@@ -1,20 +1,35 @@
 <template>
-    <AppHeader 
-        :title="titleHead" 
-        :tabs="tabsMenu"
-        v-if="hotelStore?.hotelData?.chatSettings?.show_guest"
-    />
-    <AppHeader 
-        v-else
-        title="Inbox"
-    />
+    <template v-if="!isDesktop">
+        <AppHeader 
+            :title="titleHead" 
+            :tabs="tabsMenu"
+            v-if="hotelStore?.hotelData?.chatSettings?.show_guest"
+        />
+        <AppHeader 
+            v-else
+            title="Inbox"
+        />
+    </template>
+    <template v-else>
+        <div class="bg-white shadow-guest py-5">
+            <p class="w-[650px] mx-auto roboto text-[30px] font-medium leading-[106%]">
+                {{hotelStore.hotelData.type}} {{hotelStore.hotelData.name}}
+            </p>  
+        </div>
+    </template>
 </template>
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import AppHeader from '@/layout/Components/AppHeader.vue';
+
+import { useMediaQuery } from '@/composables/useMediaQuery.js'
+const { isDesktop } = useMediaQuery()
+
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
-import AppHeader from '@/layout/Components/AppHeader.vue';
+
+
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
 import { useChatStore } from '@/stores/modules/chat';

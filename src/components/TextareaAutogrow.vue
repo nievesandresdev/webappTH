@@ -3,7 +3,7 @@
         class="textarea-border rounded-[10px] w-full border-[2px]" 
         :class="{
             'hborder-alert-negative': isOverLimit,
-            'hborder-black-100': modelValue,
+            'hborder-black-100': isFocused,
             'hborder-gray-400': !modelValue
         }"
     >
@@ -15,6 +15,8 @@
                     ${isOverLimit ? 'placeholder-negative htext-alert-negative':''}
                     ${customClasses}
                 `"
+                @focus="isFocused = true"
+                @blur="isFocused = false"
                 :value="modelValue"
                 @input="handleInput"
                 ref="autoHeightTextarea"
@@ -62,6 +64,7 @@ const props = defineProps({
 });
 
 const autoHeightTextarea = ref(null);
+const isFocused = ref(false);
 
 const handleInput = (event) => {
     const inputValue = event.target.value;
