@@ -31,13 +31,14 @@
             >
             <h2 class="text-center text-sm font-medium">{{ $utils.capitalize($t('layout.dropdownLanguage.title')) }}</h2>
         </div>
+
          
         <ul class="bg-white mt-4">
             <li     
                 v-for="(lg, index) in localeStore.availableLocation"
                 :key="index"
                 class="p-4 relative hover-gray-100"
-                @click.prevent="changeLocale(lg)"
+                @click.prevent="changeLocale(lg.abbreviation)"
             >
                 <div class="absolute w-full bottom-0 left-0 px-4">
                     <div class="hbg-gray-400 h-[1px] rounded-full"></div>
@@ -46,10 +47,10 @@
                     <span class="text-sm font-medium flex items-center">
                         <img
                             class="mr-2 w-6 h-6"
-                            :src="`/assets/icons/languages/${lg}.svg`"
+                            :src="`/assets/icons/languages/${lg.abbreviation}.svg`"
                             :alt="lg"
                         >
-                        {{ $utils.capitalize($t(`language.${lg}`)) }}
+                        {{ $utils.capitalize($t(`language.${lg.abbreviation}`)) }}
                     </span>
                     <img v-if="localeStore.localeCurrent == lg" class="w-6 h-6" src="/assets/icons/Checkcircle.svg" alt="Checkcircle icon">
                 </a>
