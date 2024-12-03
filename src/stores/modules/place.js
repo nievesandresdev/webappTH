@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive  } from 'vue'
 import { i18n } from '@/i18n'
 
 import {
@@ -11,6 +11,7 @@ import {
     getDataReviewsApi,
     getReviewsByRatingApi,
     getCrossellingApi,
+    getPointerApi,
 } from '@/api/services/place.services'
 
 import { useMainStore } from '@/stores'
@@ -21,6 +22,22 @@ const hotelStore = useHotelStore()
 export const usePlaceStore = defineStore('place', () => {
     
     // STATE
+    const dataFilter = {
+        categoriplace: null,
+        typeplace: null,
+        points: [],
+        distances: [],
+        all_cities: false,
+        search:null,
+        city: null,
+        featured: false,
+    }
+    const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
+
+    // MUTATIONS
+    function setDataFilterList (dataFormFilterInList) {
+        Object.assign(dataFilterGlobal, dataFormFilterInList);
+    }
 
     // ACTIONS
     function $loadImage (item) {
@@ -44,13 +61,23 @@ export const usePlaceStore = defineStore('place', () => {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
-        console.log(newParams, 'newParams');
         const response = await getAllApi(newParams)
+        return response
+    }
+    async function $apiGetPointer (params) {
+        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let newParams = {
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            ...params
+        }
+        const response = await getPointerApi(newParams)
         return response
     }
     async function $apiGetCategoriesByType (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
@@ -59,7 +86,10 @@ export const usePlaceStore = defineStore('place', () => {
     }
     async function $apiGetTypePlaces (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
@@ -117,7 +147,10 @@ export const usePlaceStore = defineStore('place', () => {
 
     //
     return {
+        dataFilterGlobal,
+        setDataFilterList,
         $loadImage,
+        $apiGetPointer,
         $apiGetAll,
         $apiGetCategoriesByType,
         $apiGetTypePlaces,

@@ -1,25 +1,25 @@
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
-const ListPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ListPage.vue')
-const DetailPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPage.vue')
+const ListFacility = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ListFacility.vue')
+const ShowFacility = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ShowFacility.vue')
 const DetailPageFake = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/DetailPageFake.vue')
 
 import isMobile from '@/middlewares/isMobile'
 
 const homeRoutes = [
   {
-    path: '/instalaciones',
+    path: 'instalaciones',
     component: AppLayout,
-    meta: {
+    /* meta: {
       verifyHotel: true,
       middleware: [
         isMobile
      ]
-    },
+    }, */
     children: [
-      {
+      /* {
         name: 'FacilityList',
         path: '',
-        component: ListPage,
+        component: ListFacility,
         props: (route) => ({ queryRouter: {...route.query} })
       },
       {
@@ -32,9 +32,22 @@ const homeRoutes = [
         name: 'FacilityDetailFake',
         path: 'fakedetail',
         component: DetailPageFake
+      }, */
+      {
+        name: 'FacilityList',
+        path: '',
+        component: ListFacility,
       },
+      
     ],
   },
+  {
+    name: 'ShowFacility',
+    path: 'ver-instalacion/:id', 
+    component: ShowFacility,
+    props: true, 
+  },
+  
 ];
 
 export default homeRoutes;

@@ -4,13 +4,15 @@ import { i18n } from '@/i18n'
 
 import {
     getAllApi,
+    getForItemApi
 } from '@/api/services/language.services'
 
 export const useLocaleStore = defineStore('locale', () => {
     
     // STATE
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
-    const availableLocation = ref(['es', 'en', 'fr'])
+    const availableLocation = ref(['es', 'en', 'fr','it','de','pt'])
+    const availableLocationNotSelected = ref(availableLocation.value.filter(item => item !== localeCurrent.value))
 
     async function $apiGetAll () {
         const response = await getAllApi()
@@ -21,12 +23,31 @@ export const useLocaleStore = defineStore('locale', () => {
         return [];     
     }
 
+    async function $apiGetAllForItem () {
+        let params = { 
+            languages: availableLocation.value,
+            selected : localeCurrent.value
+        }
+        const response = await getForItemApi(params)
+        const { ok, data } = response
+        if (ok) {
+            return availableLocation.value = data
+        }
+        return [];     
+    }
+
     // ACTIONS
     function $change (lg) {
         localStorage.setItem('locale', lg)
+        let guestData = JSON.parse(localStorage.getItem('guestData')) || {};
+        guestData.lang_web = lg; 
+        localStorage.setItem('guestData', JSON.stringify(guestData));
         // console.log('changeAndReload',localStorage.getItem('locale'))
         i18n.global.locale.value = lg
         localeCurrent.value = lg
+        localeCurrent.value = lg
+        $apiGetAllForItem()
+
     }
 
     function $load (languageParam = null) {
@@ -46,6 +67,7 @@ export const useLocaleStore = defineStore('locale', () => {
     return {
         $apiGetAll,
         localeCurrent,
+        $apiGetAllForItem,
         $change,
         $load,
         $changeAndReload,

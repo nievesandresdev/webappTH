@@ -1,35 +1,47 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive  } from 'vue'
 
 import {
     findByParamsApi,
     getCrossellingsApi,
-    getChatHoursApi
+    getChatHoursApi,
+    findByIdApi,
+    buildUrlWebAppApi
 } from '@/api/services/hotel.services'
 
-// import { useMainStore } from '@/stores'
-// const mainStore = useMainStore()
+ import { useMainStore } from '@/stores'
+ 
 
 export const useHotelStore = defineStore('hotel', () => {
     
+
+
     // STATE
     const hotelData = ref(null)
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
+    const mainStore = useMainStore()
     // ACTIONS
 
-    function $loadImage (url) {
-        if (!url) return;
-        let type = url.includes('https://') ? 'CDN' : 'STORAGE';
-        // console.log(process.env.VUE_APP_STORAGE_URL, 'process.env.VUE_APP_STORAGE_URL')
-        url = type != 'CDN' ? `${URL_STORAGE}${url}` : url;
-        // console.log(url, 'url')
-        return url;
+    function $loadImage (item) {
+        let { image: path, type, url } = item ?? {};
+        let { URL_STORAGE } = mainStore;
+        
+        // let model = 'places';
+        // if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
+
+        // let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
+        // return urlFull
+
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${path}`;
+
     }
 
     async function $load () {
-        if (hotelData.value) return
+        // if (hotelData.value || !localStorage.getItem('subdomain')) return
+        if (!localStorage.getItem('subdomain')) return
         
         let params = {
             subdomain: localStorage.getItem('subdomain'),
@@ -60,9 +72,35 @@ export const useHotelStore = defineStore('hotel', () => {
         return response.data
     }
 
+    async function $findByIdApi (id) {
+        const response = await findByIdApi(id)
+        return response
+    }
+
+    async function $setAndLoadLocalHotel (subdomainString) {
+        localStorage.setItem('subdomain',subdomainString)
+        subdomain.value = subdomainString;
+        $load()
+    }
+
+    async function $deleteLocalHotel () {
+        localStorage.removeItem('subdomain')
+        subdomain.value = null;
+        hotelData.value = null;
+    }
+
+
+    async function $changeCurrentHotelData (newHotelId, newsubdomain) {
+        if(newHotelId == hotelData.value.id) return;
+        await $deleteLocalHotel();
+        $setAndLoadLocalHotel(newsubdomain)
+    }
     
-
-
+    async function $buildUrlWebApp (slugHotel, uri, paramsString) {
+        let params = {slugHotel, uri, paramsString}
+        const response = await buildUrlWebAppApi(params)
+        return response.ok ? response.data : null;
+    }
 
     //
     return {
@@ -72,7 +110,12 @@ export const useHotelStore = defineStore('hotel', () => {
         $load,
         $getCrossellings,
         $loadImage,
-        $loadChatHours
+        $loadChatHours,
+        $findByIdApi,
+        $setAndLoadLocalHotel,
+        $deleteLocalHotel,
+        $buildUrlWebApp,
+        $changeCurrentHotelData
     }
 
 })

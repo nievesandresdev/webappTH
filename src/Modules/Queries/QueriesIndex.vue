@@ -105,7 +105,7 @@ onBeforeMount(async ()=>{
         await getCurrentQuery();
     }
     await getResponses();
-    let response = await requestSettingsStore.$getPostStayRequestData();
+    let response = await requestSettingsStore.$getRequestData();
     requestTo.value = response.request_to;
     // console.log('requestTo.value',requestTo.value)
 })

@@ -32,7 +32,7 @@ export const useExperienceStore = defineStore('experience', () => {
 
     function $loadImage (path) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/places/${path}`
+        let url = `${URL_STORAGE}/storage/experiences/${path}`
         return url
     }
 

@@ -23,6 +23,9 @@
     import { useHotelOtaStore } from '@/stores/modules/hotelOta'
     const hotelOtaStore = useHotelOtaStore()
 
+    import { useReviewStore } from '@/stores/modules/review'
+    const reviewStore = useReviewStore()
+
     const { ota } = defineProps({
         ota:{
             type: String,
@@ -51,16 +54,18 @@
         loadOtaUrl();
     })
 
-    function loadOtaUrl () {
-        let searchOta = hotelOtasData.value.find(item => item.enum_ota == ota)
-        if(ota == "google" && searchOta){
-            let placeid = hotelData.google_maps_place_id
+    async function loadOtaUrl () {
+        let dataOta = await reviewStore.$getDataOTAS({ googleMapCid : hotelData?.code })
+        let detailHotel = await reviewStore.$getHotelDetail({ ota: 'GOOGLE', googleMapCid : hotelData?.code })
+        let searchTripadvisorData = dataOta.otas.find(item => item.ota == "TRIPADVISOR")
+        
+        if(ota == "google" && detailHotel.hotel){
+            let placeid = detailHotel.hotel.placeId;
             urlReview.value = placeid ? `https://search.google.com/local/writereview?placeid=${placeid}` : ''
         }
-        if(ota == "tripadvisor" && searchOta){
-            urlReview.value = searchOta?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchOta?.url)}` : ''
+        if(ota == "tripadvisor" && searchTripadvisorData){
+            urlReview.value = searchTripadvisorData?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchTripadvisorData?.url)}` : ''
         }
-
     }
 
     function goOta () {

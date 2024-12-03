@@ -5,13 +5,16 @@ export default {
     "list-page": {
         "title": "Explore in",
         "text-count-list": "{count} places found",
+        "text-count-list-search": "{count} places found for",
+        "text-count-list-search-active": "Search all places for",
+        "text-search-not-found": "Refine your search or try another category",
         "btn-load-more": "Load more"
     },
     "results":'Without results...',
     "seaching":'Searching...',
+    "placeholder-search":"Search destination",
     "categorySearch":'found',
     "city":"City",
-    "cityPlaceholder":"Destinations...",
     "types":{
         "que-visitar":"What to visit",
         "donde-comer":"Where to eat",
@@ -32,7 +35,6 @@ export default {
         'titleList': "Explore",
         "opinionsTitle":"Opinions on tourist information",
         "opinionsWord":"Opinions",
-        "recommended": "Recommended",
         "recommendationWord": "Recommendation",
         "featured": "Featured",
         "callWord": "Call",
@@ -41,6 +43,28 @@ export default {
             "priceRange":'Price ranges',
             "diet":"Special diets",
             "others":"Others",
+        },
+        "specialRegimes": "Special regimes",
+        "additionalInformation": "Additional information",
+        "copy": "Copy",
+        "showLess": "Show less",
+        "showMore": "Show more",
+        "recommended": "Recommended",
+        "buttoms": {
+            "web": "Web",
+            "call": "Call",
+            "menu": "Menu",
+            "email": "E-mail",
+        },
+        "hours": {
+            "title": "Schedules",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
         },
         "locationWord": "Location",
         "starWord": "Star", 
@@ -52,12 +76,21 @@ export default {
         "titleAllReviews": "Opinions on tourist information",
         "exploreIn":"Explore in",
         "filters":{
-            "title":"More filters",
+            "title":"Filter by",
             "ratings":"Ratings",
+            "distanceLogding":"Distance from accommodation",
+            "recommended": "Recommended",
+            "score": "Score",
             "star":"star",
             "stars":"stars",
-            "remove":"Remove filters",
+            "remove":"Remove all",
             "apply":"Apply filters",
+            "distante": {
+                "oneKm": "Between 1 km and 3 km",
+                "threeKm": "Between 3 km and 5 km",
+                "fiveKm": "Between 5 km and 10 km",
+                "tenKm": "10 km+"
+            }
         }
     },
 }

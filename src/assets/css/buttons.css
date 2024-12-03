@@ -3,12 +3,9 @@
 *****  PRIMARY
 **********
 */
-.hbtn-primary, .hbtn-primary:focus{
-    background-color: var(--h-white-100);
-    border: 1px solid var(--h-black-100);
-    border-radius: 6px;
-    color: var(--h-black-100);
-    align-items: center;
+.hbtn-primary{
+    background-color: var(--h-black-100);
+    color: var(--h-gray-100);
 }
 .hbtn-primary > .primary-icon{
     filter:invert(11%) sepia(11%) saturate(40%) hue-rotate(335deg) brightness(55%) contrast(118%)
@@ -16,7 +13,7 @@
 .hbtn-primary span{
     color: var(--h-black-100);
 }
-
+/* 
 @media (hover: hover) and (pointer: fine) {
     .primary-active, .hbtn-primary:hover {
         background-color: var(--h-white-100);
@@ -34,7 +31,7 @@
     border: 1px solid var(--h-green-700);
     color: var(--h-green-700);
     text-decoration: none;
-}
+} */
 
 .primary-active > span,
 .hbtn-primary:hover > span{
@@ -42,16 +39,13 @@
 }
 
 .primary-disabled,
-.hbtn-primary:disabled,
-.primary-disabled:hover{
-    background-color: var(--h-white-100);
-    border: 1px solid var(--h-gray-300);
-    color: var(--h-gray-500);
+.hbtn-primary:disabled{
+    background-color: var(--Surface-color-1-disabled);
+    color: var(--Text-on-color-1-disabled);
 }
-.primary-disabled > span,
-.primary-disabled:hover > span{
+/* .primary-disabled > span{
     color: var(--h-gray-500);
-}
+} */
 
 .hbtn-blur:hover {
     background: var(--th-bg-blur-hovered, rgba(255, 255, 255, 0.20));

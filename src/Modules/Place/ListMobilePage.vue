@@ -164,15 +164,14 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
-        console.log('dddd');
         // console.log('mobileList',mobileList.value)
     })
 
     // PROVIDER
-    provide('categoriplaces', categoriplaces)
-    provide('typeplaces', typeplaces)
-    provide('formFilter', formFilter)
-    provide('paginateData', paginateData)
+    provide('categoriplaces', categoriplaces);
+    provide('typeplaces', typeplaces);
+    provide('formFilter', formFilter);
+    provide('paginateData', paginateData);
 
     // FUNCTION
     async function loadPlaces () {

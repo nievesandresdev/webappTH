@@ -104,7 +104,7 @@
             <div v-if="facility?.schedules" class="row">
                 <div class="col-12">
                     <p v-for="(schedule, index) in activeWeekdays" :key="index" class="text-[10px] sp:text-sm">
-                        Horario : {{ schedule.name }} {{ schedule.times[0].start }} - {{ schedule.times[0].end }}
+                        {{ schedule.name }} {{ schedule.times[0].start }} - {{ schedule.times[0].end }}
                     </p>
                 </div>
             </div>

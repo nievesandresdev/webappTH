@@ -1,39 +1,39 @@
 const AppLayout = () => import('@/layout/AppLayout')
-const QueriesIndex = () => import('@/Modules/Queries/QueriesIndex.vue')
-const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
-const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtas.vue')
+const InboxIndex = () => import('@/Modules/Queries/InboxIndex.vue')
+// const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
+// const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtas.vue')
 
-import isMobile from '@/middlewares/isMobile'
+// import isMobile from '@/middlewares/isMobile'
 
 const chatRoutes = [
   {
-    path: '/consultas',
+    path: 'inbox',
     component: AppLayout,
     meta: {
       verifyHotel: true,
-      middleware: [
-        isMobile
-     ]
+    //   middleware: [
+    //     isMobile
+    //  ]
     },
     children: [
       {
-        name: 'QueriesIndex',
+        name: 'Inbox',
         path: '',
-        component: QueriesIndex,
-        meta: { skipMobileCheck: true }
+        component: InboxIndex,
+        // meta: { skipMobileCheck: true }
       },
-      {
-        name: 'FakeQueriesIndex',
-        path: 'fake',
-        component: FakeQueriesIndex,
-        props: (route) => ({ paramsRouter: {...route.query} })
-      },
-      {
-        name: 'FakeLinksOtas',
-        path: 'fakeLinkOtas',
-        component: FakeLinksOtas,
-        props: (route) => ({ paramsRouter: {...route.query} })
-      },
+      // {
+      //   name: 'FakeQueriesIndex',
+      //   path: 'fake',
+      //   component: FakeQueriesIndex,
+      //   props: (route) => ({ paramsRouter: {...route.query} })
+      // },
+      // {
+      //   name: 'FakeLinksOtas',
+      //   path: 'fakeLinkOtas',
+      //   component: FakeLinksOtas,
+      //   props: (route) => ({ paramsRouter: {...route.query} })
+      // },
     ],
   },
 ];
