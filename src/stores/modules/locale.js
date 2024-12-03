@@ -25,7 +25,7 @@ export const useLocaleStore = defineStore('locale', () => {
 
     async function $apiGetAllForItem () {
         let params = { 
-            languages: availableLocationNotSelected.value,
+            languages: availableLocation.value,
             selected : localeCurrent.value
         }
         const response = await getForItemApi(params)

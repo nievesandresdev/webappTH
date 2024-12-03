@@ -1,5 +1,5 @@
 <template>
-  <div ref="carousel" class="carousel-container overflow-x-auto pb-4" @scroll="saveScrollPosition">
+  <div ref="carousel" class="carousel-container overflow-x-auto pb-4" :class="{'mb-[55px]' : !marginBotton}" @scroll="saveScrollPosition">
     <div class="flex gap-4 w-max">
       <div
         v-for="d in data"
@@ -38,7 +38,8 @@ const props = defineProps({
   clickParams: {
     type: Object,
     default: () => ({}) 
-  }
+  },
+  marginBotton: Boolean
 });
 
 const hotelStore = useHotelStore()
@@ -93,6 +94,7 @@ const truncateText = (text) => { return text.length > 60 ? text.substring(0, 60)
 .carousel-container {
   overflow-x: auto;
   scrollbar-width: none; 
+ 
 }
 
 .carousel-container::-webkit-scrollbar {
