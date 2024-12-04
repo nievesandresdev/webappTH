@@ -1,5 +1,6 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const InboxIndex = () => import('@/Modules/Queries/InboxIndex.vue')
+const FakeInboxIndex = () => import('@/Modules/Queries/FakeInboxIndex.vue')
 // const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
 // const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtas.vue')
 
@@ -21,6 +22,12 @@ const chatRoutes = [
         path: '',
         component: InboxIndex,
         // meta: { skipMobileCheck: true }
+      },
+      {
+        name: 'FakeInboxIndex',
+        path: 'fake',
+        component: FakeInboxIndex,
+        props: (route) => ({ paramsRouter: {...route.query} })
       },
       // {
       //   name: 'FakeQueriesIndex',
