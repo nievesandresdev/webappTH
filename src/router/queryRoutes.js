@@ -1,8 +1,7 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const InboxIndex = () => import('@/Modules/Queries/InboxIndex.vue')
 const FakeInboxIndex = () => import('@/Modules/Queries/FakeInboxIndex.vue')
-// const FakeQueriesIndex = () => import('@/Modules/Queries/FakeQueriesIndex.vue')
-// const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtas.vue')
+const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtasRed.vue')
 
 // import isMobile from '@/middlewares/isMobile'
 
@@ -27,6 +26,12 @@ const chatRoutes = [
         name: 'FakeInboxIndex',
         path: 'fake',
         component: FakeInboxIndex,
+        props: (route) => ({ paramsRouter: {...route.query} })
+      },
+      {
+        name: 'FakeLinksOtas',
+        path: 'fakeLinkOtas',
+        component: FakeLinksOtas,
         props: (route) => ({ paramsRouter: {...route.query} })
       },
       // {
