@@ -159,6 +159,32 @@ onBeforeUnmount(() => {
     window.removeEventListener('resize', updateViewportHeight);
 });
 
+const lockScroll = () => {
+  if (formContainer.value) {
+    formContainer.value.style.overflow = 'hidden';
+  }
+};
+
+const unlockScroll = () => {
+  if (formContainer.value) {
+    formContainer.value.style.overflow = '';
+  }
+};
+
+// Watch for changes in isModalOpen
+watch(isModalOpen, (newValue) => {
+  if (newValue) {
+    lockScroll();
+  } else {
+    unlockScroll();
+  }
+});
+
+// Ensuring scroll is unlocked when the component is destroyed
+onBeforeUnmount(() => {
+  unlockScroll();
+});
+
 
 
 
