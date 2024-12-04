@@ -171,14 +171,7 @@ const unlockScroll = () => {
   }
 };
 
-// Watch for changes in isModalOpen
-watch(isModalOpen, (newValue) => {
-  if (newValue) {
-    lockScroll();
-  } else {
-    unlockScroll();
-  }
-});
+
 
 // Ensuring scroll is unlocked when the component is destroyed
 onBeforeUnmount(() => {
@@ -230,6 +223,16 @@ const emailPlaceholder = computed(() =>
 const isEmailValid = computed(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(form.email);
+});
+
+
+// Watch for changes in isModalOpen
+watch(isModalOpen.value, (newValue) => {
+  if (newValue) {
+    lockScroll();
+  } else {
+    unlockScroll();
+  }
 });
 
 const validateEmail = () => {
