@@ -11,7 +11,7 @@
     >
     
         <img 
-            v-if="data?.avatar"
+            v-if="data?.avatar && !$utils.isMockup()"
             class="w-full h-full rounded-full"
             :src="$formatImage({ url : data?.avatar,type : data?.avatar_type})"
         >
@@ -81,7 +81,7 @@ const $formatImage = (payload) => {
     let type_d = url.includes('https://') ? 'CDN' : 'STORAGE';
     type = type ?? type_d;
 
-    if(type == 'GOOGLE') {
+    if(type == 'GOOGLE' || type == 'FACEBOOK') {
         return url;
     }
 

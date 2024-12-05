@@ -11,8 +11,8 @@
         >
             <!-- name or logo -->
             <img 
-                v-if="showLogo && customData?.logo"
-                :src="hotelStore.$loadImage(customData?.logo)"
+                v-if="showLogo && imgData"
+                :src="hotelStore.$loadImage(imgData)"
                 class="max-w-[132px] sp:max-w-[279px] max-h-[24px] sp:max-h-[48px] z-30"
             >
             <h1 v-else 
@@ -40,9 +40,15 @@ import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore();
 
 const customData = ref(null)
+const imgData = ref(null)
 
 onMounted(() => {
     customData.value = chainStore.customizationData;
+    imgData.value = {
+        type : 'gallery',
+        url : customData.value?.logo
+    }
+    console.log('test customData.value',customData.value)
 })
 
 const showLogo = computed(() => {
