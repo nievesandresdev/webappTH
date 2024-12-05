@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="border border-white rounded-full z-50 flex items-center justify-center"
+        class="border border-white rounded-full z-50 flex items-center justify-center hshadow-button"
         :class="{'p-1 sp:p-[7px]' : !data?.avatar}"
         @click="goProfile"
         :style="{

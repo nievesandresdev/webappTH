@@ -48,7 +48,7 @@ onMounted(() => {
         type : 'gallery',
         url : customData.value?.logo
     }
-    console.log('test customData.value',customData.value)
+    // console.log('test customData.value',customData.value)
 })
 
 const showLogo = computed(() => {

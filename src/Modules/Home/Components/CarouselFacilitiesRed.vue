@@ -13,7 +13,8 @@
         >
             <div class="flex items-center max-h-[32px]">
                 <p 
-                class="lato text-sm font-bold leading-[16px] truncate-2"
+                    v-if="item.title"
+                    class="lato text-sm font-bold leading-[16px] truncate-2"
                     v-html="item.title[0].toUpperCase() + item.title.substring(1)"
                 ></p>
             </div>  
