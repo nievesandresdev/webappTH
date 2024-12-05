@@ -2,7 +2,7 @@
     <div 
         v-if="items.length > 0"  
         id="facility-cross-mobile" 
-        class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 no-scrollbar"
+        class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
         :class="{'justify-center': items.length == 1}"
     >
         <CarouselCard

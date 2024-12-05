@@ -19,9 +19,8 @@
         <!-- facilities carousel -->
         <section 
             v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-            class="pl-4"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
+            <div class="flex items-center justify-between px-4 h-[28px]">
                 <h2 class="lato text-[20px] font-bold leading-[18px]">
                     {{ $utils.capitalize($t('home.section-facility.title')) }}
                 </h2>
@@ -40,9 +39,9 @@
         <!-- what visit carousel -->
         <section 
             v-if="showWhatvisitSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
+            <div class="flex items-center justify-between px-4 h-[28px]">
                 <h2 class="lato text-[20px] font-bold leading-[18px]">
                     {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                 </h2>
@@ -61,9 +60,9 @@
         <!-- where eat carousel -->
         <section 
         v-if="showWhereeatSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
+            <div class="flex items-center justify-between px-4 h-[28px]">
                 <h2 class="lato text-[20px] font-bold leading-[18px]">
                     {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                 </h2>
@@ -82,9 +81,9 @@
         <!-- leisure carousel -->
         <section 
             v-if="showLeisureSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
+            <div class="flex items-center justify-between px-4 h-[28px]">
                 <h2 class="lato text-[20px] font-bold leading-[18px]">
                     {{ $utils.capitalize($t('home.section-leisure.title')) }}
                 </h2>
@@ -103,9 +102,9 @@
         <!-- experiences carousel -->
         <section 
             v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
+            <div class="flex items-center justify-between px-4 h-[28px]">
                 <h2 class="lato text-[20px] font-bold leading-[18px]">
                     {{ $utils.capitalize($t('home.section-experience.title')) }}
                 </h2>
