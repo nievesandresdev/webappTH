@@ -39,10 +39,12 @@ export const useLocaleStore = defineStore('locale', () => {
     // ACTIONS
     function $change (lg) {
         localStorage.setItem('locale', lg)
-        let guestData = JSON.parse(localStorage.getItem('guestData')) || {};
-        guestData.lang_web = lg; 
-        localStorage.setItem('guestData', JSON.stringify(guestData));
-        // console.log('changeAndReload',localStorage.getItem('locale'))
+        let guestData = JSON.parse(localStorage.getItem('guestData'));
+        //solo se actualiza la data en caso de que existe la sesison
+        if(guestData){
+            guestData.lang_web = lg; 
+            localStorage.setItem('guestData', JSON.stringify(guestData));
+        }
         i18n.global.locale.value = lg
         localeCurrent.value = lg
         localeCurrent.value = lg

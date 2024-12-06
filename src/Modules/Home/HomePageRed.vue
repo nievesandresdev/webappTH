@@ -189,11 +189,13 @@ onMounted(() => {
     loadCrossellings();
     loadCrossellingsPlaces();
     getPlaceCategories();
+    // console.log('test guestData',guestStore.guestData)
+    
 })
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
-    console.log('test crossellingsData',crossellingsData.value)
+    // console.log('test crossellingsData',crossellingsData.value)
 }
 
 const goFacilities = () => {
