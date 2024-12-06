@@ -1,6 +1,7 @@
 <template>
     <div 
         class="border border-white rounded-full z-50 flex items-center justify-center hshadow-button"
+        id="avatar-container"
         :class="{'p-1 sp:p-[7px]' : !data?.avatar}"
         @click="goProfile"
         :style="{
@@ -65,7 +66,7 @@ const sizeIcon = computed(()=>{
 })
 
 onMounted(()=>{
-    guestStore.loadLocalGuest()
+    // guestStore.loadLocalGuest()
 })
 
 const $formatImage = (payload) => {
@@ -88,3 +89,9 @@ const $formatImage = (payload) => {
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
 </script>
+<style>
+#avatar-container svg{
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>

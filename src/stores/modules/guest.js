@@ -259,7 +259,7 @@ export const useGuestStore = defineStore('guest', () => {
 
     return {
         guestData:guestDataComputed,
-        loadLocalGuest,
+        // loadLocalGuest,
         saveOrUpdate,
         saveOrUpdateByEmail,
         $updatePassword,

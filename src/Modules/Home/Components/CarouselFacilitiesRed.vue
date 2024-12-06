@@ -2,7 +2,7 @@
     <div 
         v-if="items.length > 0"  
         id="facility-cross-mobile" 
-        class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
+        class="flex gap-3 sp:gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
         :class="{'justify-center': items.length == 1}"
     >
         <CarouselCard
@@ -11,10 +11,10 @@
             :data="item"
             @click="goFacility(item.id, $utils.isMockup())"
         >
-            <div class="flex items-center max-h-[32px]">
+            <div class="flex items-center max-h-[22px] sp:max-h-[32px]">
                 <p 
                     v-if="item.title"
-                    class="lato text-sm font-bold leading-[16px] truncate-2"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] truncate-2"
                     v-html="item.title[0].toUpperCase() + item.title.substring(1)"
                 ></p>
             </div>  
