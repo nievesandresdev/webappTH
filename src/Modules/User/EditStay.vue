@@ -199,10 +199,10 @@ const openGuestModal = (guest, index)=>{
 
 const submitForm = async () => {
     form.stayId = paramsRouter.value.stayId;
-    console.log('test stayId',paramsRouter.value.stayId)
+    // console.log('test stayId',paramsRouter.value.stayId)
     currentStay.value = await stayStore.updateStayAndGuests(form)
     fillForm(currentStay.value)
-    console.log('test currentStay.value',currentStay.value)
+    // console.log('test currentStay.value',currentStay.value)
     if(currentStay.value){
         toastSuccess("Cambios guardados");
     }

@@ -144,7 +144,7 @@ export const useGuestStore = defineStore('guest', () => {
 
     async function saveAndFindValidLastStay (params) {
         const response = await saveAndFindValidLastStayApi(params)
-        console.log('test response',response)
+        // console.log('test response',response)
         const { ok } = response
         if(ok){
             return response.data;
@@ -223,6 +223,7 @@ export const useGuestStore = defineStore('guest', () => {
             hotelId: hotelStore.hotelData.id,
         }
         const response = await deleteGuestOfStayApi(params)
+        console.log('test deleteGuestOfStay',response)
         const { ok } = response   
         if(ok){
             await stayStore.reloadLocalStay()
