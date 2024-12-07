@@ -60,7 +60,7 @@ const { period, settings } = toRefs(props);
 
 onMounted(async () => {
     requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
-    console.log('test requestTexts',requestTexts.value)  
+    // console.log('test requestTexts',requestTexts.value)  
 
 })
 

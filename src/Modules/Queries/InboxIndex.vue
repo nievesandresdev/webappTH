@@ -109,9 +109,9 @@ async function getQuerySettings(){
 }
 
 async function getCurrentPeriod(){
-    if(!stayStore?.stayData?.id){
-        await guestStore.loadLocalGuest();
-    }
+    // if(!stayStore?.stayData?.id){
+    //     await guestStore.loadLocalGuest();
+    // }
     let params = {
         stayId : stayStore?.stayData?.id
     }
