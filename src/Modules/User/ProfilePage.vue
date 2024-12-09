@@ -123,7 +123,6 @@ onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
     stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
-   
 
     await getHotelbyId(stayData.value.hotel_id);
 });
