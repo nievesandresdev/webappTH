@@ -60,6 +60,7 @@
 </template>
 <script setup>
 import { ref, onMounted, provide, computed } from 'vue'
+import utils from '@/utils/utils.js';
 import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
 import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
@@ -88,8 +89,7 @@ const requestTo = ref(null);
 const EditId = ref(null);
 const EditPeriod = ref(null);
 const EditComment = ref(null);
-const EditQualification = ref(null);
-
+const EditQualification = ref(utils.getUrlParam('fill') ?? null);
 onMounted(async() => {
     // queryStore.$setPendingQuery(false);
     await getQuerySettings();
