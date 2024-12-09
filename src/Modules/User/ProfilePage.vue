@@ -121,7 +121,7 @@ const selectLanguage = () => {
 
 onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
-
+    stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
    
 
