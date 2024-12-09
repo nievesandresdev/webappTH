@@ -108,6 +108,12 @@ watch(() => stayStore.stayData, async (newStayData) => {
 
 const showMenu = computed(() => {
     if(isMockup()) return true;
-    return !getUrlParam('acform') && !hideAppMenu.value && stayStore.stayData && guestStore.guestData && !route?.meta?.hiddenMenu;
+    let guestId = guestStore.guestData ? guestStore.guestData?.id : false;
+    let stayId = stayStore.stayData ? stayStore.stayData?.id : false;
+    let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
+    let hiddenMenuByRef = !hideAppMenu.value;
+    let existsUrlParam = !getUrlParam('acform');
+
+    return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
 });
 </script>
