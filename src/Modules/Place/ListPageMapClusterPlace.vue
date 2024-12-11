@@ -1,13 +1,14 @@
 <template>
     <BaseMap
         :center="coordCenter"
-        :height-map="windowWidth >= 250 ? '78vh' : '78vh'"
+        :height-map="windowWidth >= 250 ? heightDinamic : heightDinamic"
         @mb-click="handleMapClick($event, 'map')"
     >
+    <!-- 78 -->
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
-                    class="size-[38px] sp:size-[80px]"
+                    class="size-[50px] sp:size-[85px]"
                     src="/assets/icons/WA.MAP.POINTER.svg"
                 >
             </MapboxMarker>
@@ -28,9 +29,9 @@
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
                     'icon-image': ['get', 'category'], 
-                    'icon-size':windowWidth >= 250 ? 0.09 : 0.04
+                    'icon-size':windowWidth >= 250 ? 0.063 : 0.02
                 }"
-                :clusterMinPoints="2"
+                :clusterMinPoints="5"
                 :clusters-paint="{ 'circle-color': 'rgba(0, 123, 255, 0.5)', 'circle-radius': 40 }"
                 @mb-feature-click="handleMapClick($event, 'cluster')"
             />
@@ -45,12 +46,13 @@ import { computed, inject, toRaw, onMounted, defineEmits } from 'vue';
 //   import 'mapbox-gl/dist/mapbox-gl.css';
   
 import BaseMap from '@/components/Maps/BaseMap.vue';
-
+// positionBottomSheet
 const emits = defineEmits(['clickMapCluster']);
 
 // INJECT
 const hotelData = inject('hotelData');
 const pointersData = inject('pointersData');
+const positionBottomSheet = inject('positionBottomSheet');
 
 
  const windowWidth = window.innerWidth;
@@ -120,6 +122,13 @@ const dataMarkets = {
         },
     ]
 }
+
+const heightDinamic = computed(() => {
+    if (positionBottomSheet.value == 'bottom')
+        return '78vh';
+    else
+        return '60vh';
+});
 
 const transformedPointersData = computed(() => {
     return JSON.parse(JSON.stringify(pointersData.value)); // Crear una copia inmutable

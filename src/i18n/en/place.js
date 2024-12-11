@@ -12,7 +12,7 @@ export default {
     },
     "results":'Without results...',
     "seaching":'Searching...',
-    "placeholder-search":"Search destination",
+    "placeholder-search":"Write something",
     "categorySearch":'found',
     "city":"City",
     "types":{

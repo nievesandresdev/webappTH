@@ -1,7 +1,7 @@
 <template>
     <div
         class="card-list flex w-full" :class="class"
-        @click="$router.push({ name: 'ExperienceDetail', params: { id: data.id } })"
+        @click="$router.push({ name: 'ExperienceDetail', params: { slug: data.slug } })"
     >
     
         <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden">
@@ -34,7 +34,7 @@
                 <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ data.reviews?.combined_average_rating.toFixed(1) }}</span>
                 <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.reviews?.total_reviews }} reseñas)</span>
             </div>
-            <p class="text-[6px] sp:text-[14px] font-bold lato leading-0" v-html="data.title" />
+            <p class="text-[6px] sp:text-[14px] font-bold lato leading-0" v-html="data.slug" />
             <!-- {{data.id}} -->
             <div
                 class="flex items-center justify-between pb-[4px] sp:pb-[8px] mt-[8px] sp:mt-[16px]"
