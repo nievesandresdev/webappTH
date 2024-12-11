@@ -205,7 +205,6 @@ function loadLanguagesAvailables () {
         length: nameslanguages?.length,
         languages: nameslanguages,
     }
-    console.log(languagesAvailablesData, 'languagesAvailablesData')
     Object.assign(availablelanguages.value, languagesAvailablesData);
 }
 

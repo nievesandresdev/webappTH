@@ -15,9 +15,9 @@
     </AppHeader>
     <div class="flex-1">
         <template v-if="pointersData?.features?.length">
-            <ListPageMapClusterPlace
+            <!-- <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            />
+            /> -->
         </template>
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <!-- {{loadingPlaceSeleced}} -->
@@ -60,6 +60,10 @@ const { localeCurrent } = localeStore
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore;
+
+// COMPOSABLES
+import { useEventBus } from '@/composables/eventBus';
+const { onEvent } = useEventBus();   
 
     // PROPS
 const props = defineProps({
@@ -161,6 +165,8 @@ onMounted(async () => {
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
+onEvent('change-category', changeCategoryHandle);
+
 // FUNCTIONS
 function loadForFilterGlobal () {
     Object.assign(formFilter, placeStore.dataFilterGlobal);
@@ -206,6 +212,11 @@ async function loadCategoriPlaces () {
         categoriplacesWithNumbers.value = response.data;
     }
     categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+    // if (!formFilter.categoriplace) {
+    //     formFilter.categoriplace = categoriplaces.value[0]?.id;
+    // }
+    const { hidden_categories } = hotelData;
+    categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
 }
 
 function loadTabsHeader () {
@@ -221,7 +232,8 @@ function loadTabsHeader () {
     });
 }
 
-function changeCategoryHandle ({idCategory, idTypePlace}) {
+function changeCategoryHandle (payload) {
+    const { idCategory, idTypePlace } = payload;
     changeCategory(idCategory, idTypePlace);
 }
 
@@ -398,6 +410,7 @@ provide('placesData', placesData);
 provide('pointersData', pointersData);
 provide('placeSelected', placeSelected);
 provide('loadingSearch', loadingSearch);
+provide('emptyFilters', emptyFilters);
 provide('loadingPlaceSeleced', loadingPlaceSeleced);
 provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);

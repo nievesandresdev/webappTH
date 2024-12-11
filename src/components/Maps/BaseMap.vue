@@ -1,42 +1,48 @@
 <template>
-    <div
-        v-if="center?.[0] && center?.[1]"
-        class="relative"
-        :class="{ 'h-screen': isFullScreen }"
-        :style="{ height: isFullScreen ? '100vh' : heightMap }"
-        ref="mapContainer"
-      >
-
-          <!-- Botón para Pantalla Completa -->
-          <button
-            v-if="showExpand"
-            @click="toggleFullScreen"
-            class="absolute top-2 right-2 z-10 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
-          >
-            <img
-              :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
-              :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
-              class="w-6 h-6"
-            />
-          </button>
-          <MapboxMap
-            class="h-full"
-            :access-token="TOKEN"
-            ref="mapboxMap"
-            map-style="mapbox://styles/mapbox/streets-v11"
-            :center="center"
-            :zoom="zoom"
-            @mb-created="(mapInstance) => map = mapInstance"
-            @mb-click="handleMapClick"
+    <transition name="slide-fade">
+      <div
+          v-if="center?.[0] && center?.[1]"
+          class="relative transition-height duration-500 ease-in-out"
+          :class="{ 'h-screen': isFullScreen }"
+          :style="{ height: heightMap }"
+          ref="mapContainer"
         >
-            <!-- @map-click="handleMapClick"/ -->
-            <slot name="controls"></slot>
-        </MapboxMap>
-    </div>
+
+            <!-- Botón para Pantalla Completa -->
+            <button
+              v-if="showExpand"
+              @click="toggleFullScreen"
+              class="absolute top-2 right-2 z-10 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
+            >
+              <img
+                :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
+                :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
+                class="w-6 h-6"
+              />
+            </button>
+
+              <MapboxMap
+                class="h-full"
+                :access-token="TOKEN"
+                ref="mapboxMap"
+                map-style="mapbox://styles/mapbox/streets-v11"
+                :center="center"
+                :zoom="zoom"
+                @mb-created="handleMapLoad"
+                @mb-click="handleMapClick"
+              >
+                <!-- @mb-created="(mapInstance) => map = mapInstance" -->
+
+                <!-- @map-click="handleMapClick"/ -->
+                <slot name="controls"></slot>
+              </MapboxMap>
+
+      </div>
+    </transition>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed,onUnmounted, defineEmits } from 'vue';
+import { onMounted, ref, reactive, computed,onUnmounted, defineEmits, watch, nextTick } from 'vue';
   import { MapboxMap } from '@studiometa/vue-mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -90,6 +96,15 @@ function toggleFullScreen() {
   }
 }
 
+watch(() => props.heightMap, (newHeight) => {
+  if (map.value) {
+    nextTick(() => {
+      map.value.resize(); 
+    });
+  }
+});
+
+
 // EVENTOS PARA DETECTAR CAMBIOS EN PANTALLA COMPLETA
 function onFullScreenChange() {
   isFullScreen.value = !!document.fullscreenElement;
@@ -104,16 +119,56 @@ onUnmounted(() => {
 });
 
 
-  const handleMapClick = (event) => {
-      // console.log(event, 'evnet');
-      // if (!map.value) return;
+const handleMapClick = (event) => {
 
-      // const features = map.value.queryRenderedFeatures(event.point, {
-      //   layers: ['clusters', 'markers'], // Cambia esto por los nombres de tus capas de clusters o marcadores
-      // });
+    focusOnPoint(event.lngLat.lng, event.lngLat.lat); // Llama a focusOnPoint con las coordenadas
 
-    emits('mb-click', event);
-  };
+  emits('mb-click', event);
+};
+
+const handleMapLoad = (mapInstance) => {
+  map.value = mapInstance;
+
+  mapInstance.on('style.load', () => {
+    const layers = mapInstance.getStyle().layers;
+
+    if (!layers || !Array.isArray(layers)) {
+      // console.error('No se encontraron capas en el estilo del mapa.');
+      return;
+    }
+
+    // console.log('Capas disponibles en el mapa:', layers.map(layer => layer.id)); // Inspeccionar capas
+
+    layers.forEach((layer) => {
+      if (
+        layer.id.includes('place') || // Ocultar etiquetas de lugares
+        layer.id.includes('poi') || // Ocultar puntos de interés
+        layer.id.includes('transit') || // Ocultar transporte público
+        layer.id.includes('rail') // Ocultar etiquetas de estaciones de tren
+      ) {
+        try {
+          mapInstance.removeLayer(layer.id); // Eliminar la capa del mapa
+          // console.log(`Capa eliminada: ${layer.id}`);
+        } catch (err) {
+          console.warn(`No se pudo eliminar la capa ${layer.id}:`, err.message);
+        }
+      }
+    });
+  });
+};
+
+function focusOnPoint(lng, lat, zoom = 15) {
+  if (!lng || !lat || !map.value) {
+    return;
+  }
+  if (map.value) {
+    map.value.flyTo({
+      center: [lng, lat],
+      zoom, // Usa el nivel de zoom especificado en las props
+      essential: true, // Para una animación más fluida
+    });
+  }
+}
 
 </script>
 
@@ -130,6 +185,10 @@ onUnmounted(() => {
   box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12),
               0px 3px 1px 0px rgba(0, 0, 0, 0.04);
   border-radius: 6px;
+}
+
+.transition-height {
+  transition: height 0.5s ease-in-out;
 }
 
 </style>

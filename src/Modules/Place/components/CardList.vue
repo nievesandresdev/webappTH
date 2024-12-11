@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card-list flex w-full h-[48px] sp:h-[96px]" :class="class"
+        class="card-list flex h-[48px] sp:h-[96px]" :class="class"
         @click="$router.push({ name: 'PlaceDetail', params: { id: data.id } })"
     >
         <div class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] rounded-[10px] relative overflow-hidden">
@@ -91,7 +91,7 @@ const distance = computed(() => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     
     .card-list {
         border-radius: 10px;
