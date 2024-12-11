@@ -3,7 +3,7 @@
         <img 
             class="h-[226px] w-full" 
             v-if="data.image"
-            :src="hotelStore.$loadImage(data.image)" 
+            :src="hotelStore.$loadImage({url:data.image, type:'gallery'})" 
             alt="image hotel"
         >
         <div v-else class="h-[226px] w-full hbg-gray-400" ></div>

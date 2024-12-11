@@ -1,6 +1,6 @@
 <template>
     <SectionBar title="Información personal" />
-    <div class="px-3 mt-6 full-height" ref="formContainer">
+    <div class="px-3 mt-[100px] h-auto full-height" ref="formContainer">
         <!-- foto -->
         <div class="flex items-center gap-2 mb-4">
             <!-- Círculo para la foto-->
@@ -159,6 +159,25 @@ onBeforeUnmount(() => {
     window.removeEventListener('resize', updateViewportHeight);
 });
 
+const lockScroll = () => {
+  if (formContainer.value) {
+    formContainer.value.style.overflow = 'hidden';
+  }
+};
+
+const unlockScroll = () => {
+  if (formContainer.value) {
+    formContainer.value.style.overflow = '';
+  }
+};
+
+
+
+// Ensuring scroll is unlocked when the component is destroyed
+onBeforeUnmount(() => {
+  unlockScroll();
+});
+
 
 
 
@@ -204,6 +223,16 @@ const emailPlaceholder = computed(() =>
 const isEmailValid = computed(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(form.email);
+});
+
+
+// Watch for changes in isModalOpen
+watch(isModalOpen.value, (newValue) => {
+  if (newValue) {
+    lockScroll();
+  } else {
+    unlockScroll();
+  }
 });
 
 const validateEmail = () => {

@@ -1,21 +1,7 @@
 <template>
     <SectionBar :title="$t('language.title')" />
-    <div class="px-3 mt-6 full-height" ref="formContainer">
-        <!-- <pre>{{ localeStore.availableLocation }}</pre> -->
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex gap-2">
-                <img :src="`/assets/icons/languages/${localeStore.localeCurrent}.svg`" class="h-6 w-6">
-                <span 
-                class="lato text-base" 
-                :class="{'font-bold' :localeStore.localeCurrent === selectedLanguage}"
-                >  
-                    {{ $utils.capitalize($t(`language.${localeStore.localeCurrent}`)) }}
-                </span>
-               
-            </div>
-            <input type="radio" name="language" :id="localeStore.localeCurrent" class="hborder-black-100 w-4 h-4" v-model="selectedLanguage" :checked="localeStore.localeCurrent == selectedLanguage">
-        </div>
-        <div class="flex items-center mb-4 justify-between" v-for="(lg, index) in localeStore.availableLocation" :key="index">
+    <div class="px-3 full-height mt-[100px]" ref="formContainer">
+        <div class="flex items-center mb-4 justify-between" v-for="(lg, index) in sortedLanguages" :key="index">
             <div class="flex gap-2">
                 <img :src="`/assets/icons/languages/${lg.abbreviation}.svg`" class="h-6 w-6">
                 <span 
@@ -25,7 +11,7 @@
                         'font-medium' : lg.abbreviation != selectedLanguage
                     }"
                  >  
-                    {{ $utils.capitalize($t(`language.${lg.abbreviation}`)) }}
+                    {{ lg.translatedName }}
                 </span>
             </div>
             <input type="radio" class="hborder-black-100 w-4 h-4" name="language" :id="lg.abbreviation" :value="lg.abbreviation"  v-model="selectedLanguage" @change="handleChangeLanguage(lg.abbreviation)" :checked="lg.abbreviation === selectedLanguage">
@@ -36,8 +22,15 @@
 </template>
 
 <script setup>
-import {  onMounted, ref } from 'vue';
+import {  onMounted, ref,computed } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
+import $utils from '@/utils/utils';
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+import { useI18n } from 'vue-i18n'; 
+ const { t } = useI18n();
 
 
 import { useLocaleStore } from '@/stores/modules/locale'
@@ -61,13 +54,22 @@ onMounted(() => {
     getLanguages()
 })
 
+ const sortedLanguages = computed(() => { 
+    return localeStore.availableLocation.map(lg => { 
+        return { 
+            ...lg, 
+            translatedName: $utils.capitalize(t(`language.${lg.abbreviation}`)) 
+        }; 
+    }).sort((a, b) => a.translatedName.localeCompare(b.translatedName)); 
+});
+
 const handleChangeLanguage = async (lg) => {
-    console.log('lang', lg)
     selectedLanguage.value = lg
     await guestStore.updateLanguage(lg)
     setTimeout(() => {
-        localeStore.$changeAndReload(lg)
-    }, 600)
+        localeStore.$change(lg)
+        window.location.href = './perfil'
+    }, 500)
 }
 
 </script>

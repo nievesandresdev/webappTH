@@ -60,7 +60,7 @@ const { period, settings } = toRefs(props);
 
 onMounted(async () => {
     requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
-    console.log('test requestTexts',requestTexts.value)  
+    // console.log('test requestTexts',requestTexts.value)  
 
 })
 
@@ -94,7 +94,7 @@ const showRequestReview = computed(()=>{
     let requestTo = JSON.parse(requestTexts.value?.request_to)
     
     if(period.value == 'in-stay'){
-        return currentQuery.value?.answered && requestTexts.value.in_stay_activate
+        return currentQuery.value?.answered && requestTexts.value.in_stay_activate && ['GOOD','VERYGOOD'].includes(currentQuery.value.qualification)
     }
 
     if(period.value == 'post-stay'){

@@ -1,18 +1,19 @@
 <template>
     <section 
-        class="mt-6 px-4"
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
         v-if="hotelData.instagram_url || hotelData.facebook_url || hotelData.pinterest_url || hotelData.x_url"
     >
-        <div class="flex items-center gap-4">
-            <h3 class="lato text-base font-bold leading-[20px]">Nuestras redes</h3>
+        <div class="flex items-center gap-3 sp:gap-4">
+            <h3 class="lato tex-xs sp:text-base font-bold leading-[16px] sp:leading-[20px]">Nuestras redes</h3>
             <div class="flex-grow border-t border-color-secondary"></div>
         </div>
         
-        <div class="mt-4 flex justify-around">
+        <div class="mt-3 sp:mt-4 flex justify-around">
             <!-- Instagram -->
             <RoundedButton
                 v-if="hotelData.instagram_url"
                 iconUrl="/assets/icons/WA.instagram.svg"
+                sizeIcons="w-[22px] sp:w-[32px] h-[22px] sp:h-[32px]"
                 @click="onInstagramClick"
             />
         
@@ -20,6 +21,7 @@
             <RoundedButton
                 v-if="hotelData.facebook_url"
                 iconUrl="/assets/icons/WA.facebook.svg"
+                sizeIcons="w-[22px] sp:w-[32px] h-[22px] sp:h-[32px]"
                 @click="onFacebookClick"
             />
         
@@ -27,6 +29,7 @@
             <RoundedButton
                 v-if="hotelData.pinterest_url"
                 iconUrl="/assets/icons/WA.pinterest.svg"
+                sizeIcons="w-[22px] sp:w-[32px] h-[22px] sp:h-[32px]"
                 @click="onPinterestClick"
             />
         
@@ -34,6 +37,7 @@
             <RoundedButton
                 v-if="hotelData.x_url"
                 iconUrl="/assets/icons/WA.twitter.svg"
+                sizeIcons="w-[22px] sp:w-[32px] h-[22px] sp:h-[32px]"
                 @click="onTwitterClick"
             />
         </div>

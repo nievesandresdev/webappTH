@@ -63,9 +63,9 @@ onMounted(async() => {
 
 
 const deleteGuestOfStay = async () => {
+    closeModal();
     let response = await guestStore.deleteGuestOfStay(guestSelected.value.id);
     if(response){
-        closeModal();
         emit('reloadGuestsList')
         setTimeout(() => {
             toastSuccess("Huesped eliminado");

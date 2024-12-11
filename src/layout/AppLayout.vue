@@ -3,7 +3,10 @@
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
-        <MenuMobile v-show="showMenu" />
+        <MenuMobile 
+            v-if="!isDesktop"
+            v-show="showMenu" 
+        />
     </div>
 
 </template>
@@ -13,6 +16,10 @@
 import { onMounted, ref, provide, watch, computed } from 'vue';
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
+import { useMediaQuery } from '@/composables/useMediaQuery.js'
+const { isDesktop } = useMediaQuery()
+
+
 import MenuMobile from './Components/AppMenu.vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
@@ -24,9 +31,12 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore()
 
 const hideAppMenu = ref(false);
 const channelChat = ref(null);
+const channelLogOutGuest = ref(null);
 const pusher = ref(null);   
 const isSubscribed = ref(false);
 provide('hideAppMenu',hideAppMenu)
@@ -38,6 +48,7 @@ onMounted(() => {
 const connectPusher = () => {
     const guestData = guestStore.guestData;
     if (stayStore.stayData && !isSubscribed.value) {
+        //
         const channelName = 'private-notify-unread-msg-guest.' + guestData?.id;
         if (!isChannelSubscribed(channelName)) {
             channelChat.value = channelName;
@@ -48,6 +59,18 @@ const connectPusher = () => {
                 chatStore.setUnreadMsgsCount(data.countUnreadMsgsByGuest);
             });
         isSubscribed.value = true; // Marcar como suscrito
+        }
+        //channelLogOutGuest
+        const channelName2 = 'private-logout-webapp-guest.' + guestData?.id;
+        if (!isChannelSubscribed(channelName2)) {
+            channelLogOutGuest.value = channelName2;
+            channelLogOutGuest.value = pusher.value.subscribe(channelLogOutGuest.value);
+            channelLogOutGuest.value.bind('App\\Events\\LogoutWebappGuest', async (data) => {
+                // console.log('test LogoutWebappGuest',data);
+                if(data.guestId == guestData?.id){
+                    authStore.$logout();
+                }
+            });
         }
     } else if (!stayStore.stayData && isSubscribed.value) {
         // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
@@ -63,6 +86,12 @@ const unSubscribePusher = () =>{
         channelChat.value.unbind('App\\Events\\NotifyUnreadMsgGuest');
         pusher.value.unsubscribe(channelChat.value);
     }
+
+    if (channelLogOutGuest.value && !isMockup()) {
+        channelLogOutGuest.value.unbind('App\\Events\\LogoutWebappGuest');
+        pusher.value.unsubscribe(channelLogOutGuest.value);
+    }
+    
 }
 
 watch(() => stayStore.stayData, async (newStayData) => {
@@ -79,6 +108,12 @@ watch(() => stayStore.stayData, async (newStayData) => {
 
 const showMenu = computed(() => {
     if(isMockup()) return true;
-    return !getUrlParam('acform') && !hideAppMenu.value && stayStore.stayData && guestStore.guestData && !route?.meta?.hiddenMenu;
+    let guestId = guestStore.guestData ? guestStore.guestData?.id : false;
+    let stayId = stayStore.stayData ? stayStore.stayData?.id : false;
+    let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
+    let hiddenMenuByRef = !hideAppMenu.value;
+    let existsUrlParam = !getUrlParam('acform');
+
+    return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
 });
 </script>

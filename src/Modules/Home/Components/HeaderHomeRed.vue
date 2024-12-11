@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="h-[36px] sp:h-[72px] pt-3 sp:pt-6 px-2 sp:px-4 text-white"
+        class="h-[48px] sp:h-[72px] pt-4 sp:pt-6 px-2.5 sp:px-4 text-white"
         :style="{
             backgroundColor: customData?.tonality_header ? '#fff' :'#333'
         }"
@@ -11,8 +11,8 @@
         >
             <!-- name or logo -->
             <img 
-                v-if="showLogo && customData?.logo"
-                :src="hotelStore.$loadImage(customData?.logo)"
+                v-if="showLogo && imgData"
+                :src="hotelStore.$loadImage(imgData)"
                 class="max-w-[132px] sp:max-w-[279px] max-h-[24px] sp:max-h-[48px] z-30"
             >
             <h1 v-else 
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div
-        class="absolute left-0 top-[36px] sp:top-[70px] h-[23px] sp:h-[46px] w-full z-10"
+        class="absolute left-0 top-[48px] sp:top-[70px] h-[23px] sp:h-[46px] w-full z-10"
         :style="`background: linear-gradient(180deg, ${ customData?.tonality_header ? '#fff' :'#333'} 16%, rgba(51, 51, 51, 0.00) 100%)`"
     ></div>
 </template>
@@ -40,9 +40,15 @@ import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore();
 
 const customData = ref(null)
+const imgData = ref(null)
 
 onMounted(() => {
     customData.value = chainStore.customizationData;
+    imgData.value = {
+        type : 'gallery',
+        url : customData.value?.logo
+    }
+    // console.log('test customData.value',customData.value)
 })
 
 const showLogo = computed(() => {
@@ -51,11 +57,11 @@ const showLogo = computed(() => {
 
 const classesName = computed(() => {
     
-    let size = 'text-[30px] leading-[32px]';
+    let size = 'text-[20px] sp:text-[30px] leading-[20px] sp:leading-[32px]';
     let color = 'text-white';
 
     if(chainNameToShow.value && chainNameToShow.value.length > 15){
-        size = 'text-[24px] leading-[28px]';
+        size = 'text-[16px] sp:text-[24px] leading-[16px] sp:leading-[28px]';
     }
 
     if(Boolean(customData.value?.tonality_header)){

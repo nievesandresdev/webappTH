@@ -1,7 +1,7 @@
 <template>
     <InboxHead />
     <!-- pre-stay -->
-    <div class="mt-6 px-4 pb-[132px]">
+    <div class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
         <TextQuery 
             v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
             :settings="settings"
@@ -9,7 +9,7 @@
             @reloadList="reloadList"
         />
         <!-- in-stay & post-stay -->
-        <div class="md:mt-12" v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
+        <div v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
             <IconsQuery 
                 :settings="settings"
                 :data="currentQuery"
@@ -18,8 +18,19 @@
         </div>
 
         <LinksReview v-if="showRequestReview" />
+        <div 
+            v-else-if="currentQuery && currentQuery?.answered"
+            class="hidden md:block"
+        >
+            <img class="w-[64px] h-[64px] mx-auto" src="/assets/icons/WA.circle-check.BLACK.svg" alt="">
+            <p class="mt-8 roboto text-[24px] font-medium leading-[116%] text-center">{{ $t('query.form.poststay-bad-thanks-title') }} </p>
+            <p class="mt-4 roboto text-base font-medium leading-[125%] text-center">{{ $t('query.form.poststay-bad-thanks-subtitle') }}</p>
+        </div>
         
-        <template v-for="res in responses" :key="res?.id">
+        <div 
+            v-for="res in responses" :key="res?.id"
+            class="md:hidden"
+        >
             <ResponseCard 
                 :response="res.comment ? res.comment[res.response_lang] : null"
                 :qualification="res.qualification"
@@ -44,11 +55,12 @@
                     />
                 </div>      
             </template>
-        </template>
+        </div>
     </div>
 </template>
 <script setup>
 import { ref, onMounted, provide, computed } from 'vue'
+import utils from '@/utils/utils.js';
 import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
 import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
@@ -77,8 +89,7 @@ const requestTo = ref(null);
 const EditId = ref(null);
 const EditPeriod = ref(null);
 const EditComment = ref(null);
-const EditQualification = ref(null);
-
+const EditQualification = ref(utils.getUrlParam('fill') ?? null);
 onMounted(async() => {
     // queryStore.$setPendingQuery(false);
     await getQuerySettings();
@@ -87,7 +98,8 @@ onMounted(async() => {
         await getCurrentQuery();
     }
     await getResponses();
-    requestTexts.value = await requestSettingsStore.$getRequestData();
+    requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
+    // console.log('test requestTexts.value',requestTexts.value)
     requestTo.value = requestTexts.value.request_to;
 })
 
@@ -97,9 +109,9 @@ async function getQuerySettings(){
 }
 
 async function getCurrentPeriod(){
-    if(!stayStore?.stayData?.id){
-        await guestStore.loadLocalGuest();
-    }
+    // if(!stayStore?.stayData?.id){
+    //     await guestStore.loadLocalGuest();
+    // }
     let params = {
         stayId : stayStore?.stayData?.id
     }
@@ -136,7 +148,7 @@ const showRequestReview = computed(()=>{
     let requestTo = JSON.parse(requestTexts.value?.request_to)
     
     if(period.value == 'in-stay'){
-        return currentQuery.value?.answered && requestTexts.value.in_stay_activate
+        return currentQuery.value?.answered && requestTexts.value.in_stay_activate && ['GOOD','VERYGOOD'].includes(currentQuery.value.qualification)
     }
 
     if(period.value == 'post-stay'){
