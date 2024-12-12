@@ -1,7 +1,7 @@
 <template>
     <div class="relative w-full">
         <button
-            v-if="searchFull"
+            v-if="searchFull || isFocused"
             class="w-3 sp:w-6 h-3 sp:h-6 absolute left-1.5 sp:left-3 top-[4px] sp:top-[7.5px] z-10"
             @click="closeSearch"
         >
@@ -19,10 +19,12 @@
         <input
             v-model="valueSearch"
             type="text"
-            :placeholder="$t('experience.list-page.placeholder-search')"
-            class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium"
-            :style="valueSearch ? 'border-width: 2px !important;' : 'border-width: 1px;'"
+            :placeholder="$t('place.placeholder-search')"
+            class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium border-[1px] focus:border-[2px]"
+            :class="valueSearch ? 'border-[2px' : ''"
             @input="searchHnadle"
+            @focus="isFocused = true"
+            @blur="isFocused = false"
             @click="activateSearch('top')"
         >
         <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7.5px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
@@ -80,6 +82,7 @@ const chainStore = useChainStore();
 
 const valueSearch = ref('');
 const debounce = ref(null);
+const isFocused = ref(false);
 
 const searchingActive = inject('searchingActive');
 const loadingSearch = inject('loadingSearch');
