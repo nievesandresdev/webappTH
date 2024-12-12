@@ -14,9 +14,11 @@
         </template>
     </AppHeader>
     <div class="flex-1">
+        <!-- <template v-if="pointersData?.features?.length"> -->
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
+        <!-- </template> -->
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <!-- {{loadingPlaceSeleced}} -->
             <ListPageBottomSheet
@@ -94,7 +96,10 @@ const isloadingForm = ref(false);
 const loadingPlaceSeleced = ref(false);
 const page = ref(1);
 const placesData = ref([]);
-const pointersData = ref([]);
+const pointersData = ref({
+        type: "FeatureCollection",
+        features: []
+});
 const placeSelected = ref(null);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);

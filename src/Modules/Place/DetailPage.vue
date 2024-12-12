@@ -77,7 +77,7 @@
                 >
                     <img
                         class="size-2 sp:size-4 inline-block mr-1 sp:mr-2"
-                        src="/assets/icons/WA.COPY.svg"
+                        src="/assets/icons/WA.copy.svg"
                         alt="1.TH.COPY"
                     >
                     {{ $utils.titleCase($t('place.detail.copy')) }}

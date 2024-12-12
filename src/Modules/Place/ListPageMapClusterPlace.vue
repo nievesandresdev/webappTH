@@ -1,10 +1,10 @@
 <template>
     <BaseMap
+        ref="baseMapRef"
         :center="coordCenter"
         :height-map="windowWidth >= 250 ? heightDinamic : heightDinamic"
         @mb-click="handleMapClick($event, 'map')"
     >
-    <!-- 78 -->
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
@@ -33,15 +33,14 @@
                 }"
                 :clusterMinPoints="5"
                 :clusters-paint="{ 'circle-color': 'rgba(0, 123, 255, 0.5)', 'circle-radius': 40 }"
-                @mb-feature-click="handleMapClick($event, 'cluster')"
+                @mb-feature-click="handleMapClickCluster($event, 'cluster')"
             />
-            <!--  -->
         </template>
     </BaseMap>
 </template>
 
 <script setup>
-import { computed, inject, toRaw, onMounted, defineEmits } from 'vue';
+import { computed, inject, toRaw, onMounted, defineEmits, ref, watch } from 'vue';
   import { MapboxMap, MapboxMarker, MapboxCluster, MapboxImage } from '@studiometa/vue-mapbox-gl';
 //   import 'mapbox-gl/dist/mapbox-gl.css';
   
@@ -53,6 +52,7 @@ const emits = defineEmits(['clickMapCluster']);
 const hotelData = inject('hotelData');
 const pointersData = inject('pointersData');
 const positionBottomSheet = inject('positionBottomSheet');
+const searchingActive = inject('searchingActive');
 
 
  const windowWidth = window.innerWidth;
@@ -72,62 +72,72 @@ const dataMarkets = {
                 "category": "monumento"
             }
         },
-        // {
-        //     "type": "Feature",
-        //     "geometry": {
-        //         "type": "Point",
-        //         "coordinates": [-5.993382, 37.382641] // Catedral de Sevilla
-        //     },
-        //     "properties": {
-        //         "name": "Catedral de Sevilla",
-        //         "description": "Una de las catedrales góticas más grandes del mundo.",
-        //         "category": "museo"
-        //     }
-        // },
-        // {
-        //     "type": "Feature",
-        //     "geometry": {
-        //         "type": "Point",
-        //         "coordinates": [-5.992551, 37.386208] // Catedral de Sevilla
-        //     },
-        //     "properties": {
-        //         "name": "Torre La Giralda",
-        //         "description": "Una de las catedrales góticas más grandes del mundo.",
-        //         "category": "museo"
-        //     }
-        // },
-        // {
-        //     "type": "Feature",
-        //     "geometry": {
-        //         "type": "Point",
-        //         "coordinates": [-5.97069, 37.384064] // Catedral de Sevilla
-        //     },
-        //     "properties": {
-        //         "name": "Estadio Ramón Sánchez-Pizjuán",
-        //         "description": "Una de las catedrales góticas más grandes del mundo.",
-        //         "category": "museo"
-        //     }
-        // },
-        // {
-        //     "type": "Feature",
-        //     "geometry": {
-        //         "type": "Point",
-        //         "coordinates": [-5.98929, 37.394798] // Catedral de Sevilla
-        //     },
-        //     "properties": {
-        //         "name": "Palacio de las Dueñas",
-        //         "description": "Una de las catedrales góticas más grandes del mundo.",
-        //         "category": "monumento"
-        //     }
-        // },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.993382, 37.382641] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Catedral de Sevilla",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "museo"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.992551, 37.386208] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Torre La Giralda",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "museo"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.97069, 37.384064] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Estadio Ramón Sánchez-Pizjuán",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "museo"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-5.98929, 37.394798] // Catedral de Sevilla
+            },
+            "properties": {
+                "name": "Palacio de las Dueñas",
+                "description": "Una de las catedrales góticas más grandes del mundo.",
+                "category": "monumento"
+            }
+        },
     ]
 }
+
+const baseMapRef = ref(null);
+
+watch(searchingActive, function(valNew, valOld) {
+    if (valOld && !valNew ) {
+        baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    }
+});
 
 const heightDinamic = computed(() => {
     if (positionBottomSheet.value == 'bottom')
         return '78vh';
     else
         return '60vh';
+
+
 });
 
 const transformedPointersData = computed(() => {
@@ -140,7 +150,18 @@ const coordCenter = computed(() => {
 });
 
 function handleMapClick ($event, typCap) {
+    
+    // if ($event.type === 'click') {
+    //     baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    //     return;
+    // }
+    // if ($event.type === 'click') {
+    //     baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    // }
+    // console.log($event, 'handleMapClick');
     emits('clickMapCluster', {event: $event, type: typCap });
 }
-
+function handleMapClickCluster ($event, typCap) {
+    emits('handleMapClickCluster', {event: $event, type: typCap });
+}
 </script>

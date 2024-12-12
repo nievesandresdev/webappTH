@@ -1,48 +1,54 @@
 <template>
-    <transition name="slide-fade">
-      <div
-          v-if="center?.[0] && center?.[1]"
-          class="relative transition-height duration-500 ease-in-out"
-          :class="{ 'h-screen': isFullScreen }"
-          :style="{ height: heightMap }"
-          ref="mapContainer"
+
+  <!-- <div
+      v-if="center?.[0] && center?.[1]"
+      class="relative transition-height duration-500 ease-in-out"
+      :class="{ 'h-screen': isFullScreen }"
+      :style="{ height: heightMap }"
+      ref="mapContainer"
+    > -->
+  <div
+      v-if="center?.[0] && center?.[1]"
+      class="relative"
+      :class="isFullScreen ? 'fullscreen' : `transition-height duration-500 ease-in-out`"
+      :style="!isFullScreen ? `height: ${heightMap};` : ''"
+      ref="mapContainer"
+    >
+
+        <!-- Botón para Pantalla Completa -->
+        <button
+          v-if="showExpand"
+          @click="toggleFullScreen"
+          class="absolute top-2 right-2 z-10 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
         >
+          <img
+            :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
+            :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
+            class="w-6 h-6"
+          />
+        </button>
 
-            <!-- Botón para Pantalla Completa -->
-            <button
-              v-if="showExpand"
-              @click="toggleFullScreen"
-              class="absolute top-2 right-2 z-10 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
-            >
-              <img
-                :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
-                :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
-                class="w-6 h-6"
-              />
-            </button>
+          <MapboxMap
+            class="h-full"
+            :access-token="TOKEN"
+            ref="mapboxMap"
+            map-style="mapbox://styles/mapbox/streets-v11"
+            :center="center"
+            :zoom="zoom"
+            @mb-created="handleMapLoad"
+            @mb-click="handleMapClick"
+          >
+            <!-- @mb-created="(mapInstance) => map = mapInstance" -->
 
-              <MapboxMap
-                class="h-full"
-                :access-token="TOKEN"
-                ref="mapboxMap"
-                map-style="mapbox://styles/mapbox/streets-v11"
-                :center="center"
-                :zoom="zoom"
-                @mb-created="handleMapLoad"
-                @mb-click="handleMapClick"
-              >
-                <!-- @mb-created="(mapInstance) => map = mapInstance" -->
+            <!-- @map-click="handleMapClick"/ -->
+            <slot name="controls"></slot>
+          </MapboxMap>
 
-                <!-- @map-click="handleMapClick"/ -->
-                <slot name="controls"></slot>
-              </MapboxMap>
-
-      </div>
-    </transition>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed,onUnmounted, defineEmits, watch, nextTick } from 'vue';
+import { onMounted, ref, reactive, computed,onUnmounted, defineEmits, watch, nextTick, defineExpose } from 'vue';
   import { MapboxMap } from '@studiometa/vue-mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -87,12 +93,14 @@ const isFullScreen = ref(false);
 function toggleFullScreen() {
   const elem = mapContainer.value;
 
-  if (!document.fullscreenElement) {
-    elem.requestFullscreen().catch((err) => {
-      console.error(`Error al intentar habilitar el modo de pantalla completa: ${err.message}`);
-    });
+  if (!isFullScreen.value) {
+    // Agregar clase para simular pantalla completa
+    elem.classList.add('fullscreen');
+    isFullScreen.value = true;
   } else {
-    document.exitFullscreen();
+    // Quitar clase de pantalla completa
+    elem.classList.remove('fullscreen');
+    isFullScreen.value = false;
   }
 }
 
@@ -120,9 +128,7 @@ onUnmounted(() => {
 
 
 const handleMapClick = (event) => {
-
-    focusOnPoint(event.lngLat.lng, event.lngLat.lat); // Llama a focusOnPoint con las coordenadas
-
+  focusOnPoint(event.lngLat.lng, event.lngLat.lat); // Llama a focusOnPoint con las coordenadas
   emits('mb-click', event);
 };
 
@@ -170,6 +176,8 @@ function focusOnPoint(lng, lat, zoom = 15) {
   }
 }
 
+defineExpose({ focusOnPoint });
+
 </script>
 
 <style lang="scss" scoped>
@@ -189,6 +197,15 @@ function focusOnPoint(lng, lat, zoom = 15) {
 
 .transition-height {
   transition: height 0.5s ease-in-out;
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
 }
 
 </style>
