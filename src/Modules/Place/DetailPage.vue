@@ -7,19 +7,19 @@
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
     />
     <div class="py-[12px] sp:py-[24px]">
-        <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2">
+        <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2 sp:mx-4">
             <div class="flex justify-between">
                 <h2 class="text-[14px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
                     {{ placeData?.title }}
                 </h2>
                 <div class="flex flex-col items-center">
                 <div class="flex items-center mb-0.5 sp:mb-1">
-                    <img src="/assets/icons/WA.STAR.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                    <img src="/assets/icons/WA.star.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
                     <p class="text-[11px] sp:text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
                 </div>
                 <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
-                    {{ placeData?.num_reviews }}
-                    {{ $t('place.detail.opinionsWord') }}
+                    ({{ placeData?.num_reviews }}
+                    {{ $t('place.detail.opinionsWord') }})
                 </p>
                 </div>
             </div>
@@ -101,13 +101,13 @@
                 </div>
             </div>
             <div  
-                class="flex justify-around mx-2 sp:mx-4 mb-[12px] sp:mb-[24px]"
+                class="flex justify-around mx-2 sp:mx-4 my-[12px] sp:my-[24px]"
             >
                 <div
                     v-if="placeData?.web_link"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openWebsite"
                     >
@@ -115,14 +115,14 @@
                             src="/assets/icons/WA.website.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.web')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.phone_wheretoeat"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openCall"
                     >
@@ -130,14 +130,14 @@
                             src="/assets/icons/WA.llamar.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.call')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.url_menu"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openLinkMenu"
                     >
@@ -145,14 +145,14 @@
                             src="/assets/icons/WA.MenuRestaurant.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.menu')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.email_wheretoeat"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-2"
                         @click="openEmail"
                     >
@@ -160,7 +160,7 @@
                             src="/assets/icons/WA.mail.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.email')) }}</span>
                 </div>
             </div>
@@ -359,7 +359,7 @@ const getDataPlace = async () => {
 // Convierte las estrellas
 const converStar = (value) => {
   if (!value) return 0;
-  return parseFloat(value.replace(',', '.'));
+  return parseFloat(value.replace(',', '.'))?.toFixed(1);
 };
 
 function openWebsite () {
@@ -412,7 +412,7 @@ provide('placeData', placeData);
 .button-utils{
     border-radius: 360px;
     border: 1px solid #FFF;
-    background: var(--surface-bg-gradient, linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%));
+    background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
     box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
 }
 

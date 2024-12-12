@@ -14,11 +14,9 @@
         </template>
     </AppHeader>
     <div class="flex-1">
-        <template v-if="pointersData?.features?.length">
-            <!-- <ListPageMapClusterPlace
+            <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            /> -->
-        </template>
+            />
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <!-- {{loadingPlaceSeleced}} -->
             <ListPageBottomSheet
@@ -77,7 +75,7 @@ const { queryRouter } = toRefs(props);
 
 // DATA
 const dataFilter = {
-    categoriplace: null,
+    categoriplace: [],
     typeplace: null,
     points: [],
     distances: [],
@@ -227,7 +225,7 @@ function loadTabsHeader () {
             iconDefault: `${item.icon}`,
             iconSelected: `${item.icon}.DEFAULT`,
             isActive: item.id == formFilter.typeplace,
-            onClick: () => changeCategory(null, item.id),
+            onClick: () => changeCategory([], item.id),
         };
     });
 }
@@ -237,8 +235,21 @@ function changeCategoryHandle (payload) {
     changeCategory(idCategory, idTypePlace);
 }
 
-async function changeCategory (idCategory = null, idTypePlace = null) {
-    formFilter.categoriplace = idCategory;
+async function changeCategory (idCategory = [], idTypePlace = null) {
+    if (idCategory) {
+        if (formFilter.categoriplace.includes(idCategory)) {
+            let index = formFilter.categoriplace.indexOf(idCategory);
+            if (index !== -1) {
+                formFilter.categoriplace.splice(index, 1);
+            }
+        } else {
+             formFilter.categoriplace.push(String(idCategory));
+        }
+        if (formFilter.categoriplace.length >= categoriplaces.value.length) {
+            formFilter.categoriplace = [];
+        }
+    }
+
     formFilter.typeplace = idTypePlace;
     loadTabsHeader();
     loadAll({showPreloader: true});
@@ -367,7 +378,7 @@ function filterNonNullAndNonEmpty(obj) {
 function loadQueryInFormFilter () {
     for (const [key, value] of Object.entries(queryRouter.value || {})) {
         if (formFilter.hasOwnProperty(key)) {
-            if (['duration', 'distances'].includes(key)) {
+            if (['duration', 'distances', 'categoriplace'].includes(key)) {
                 if (typeof value === 'string') {
                     formFilter[key].push(value);
                 } else {

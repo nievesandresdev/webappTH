@@ -72,54 +72,54 @@ const dataMarkets = {
                 "category": "monumento"
             }
         },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-5.993382, 37.382641] // Catedral de Sevilla
-            },
-            "properties": {
-                "name": "Catedral de Sevilla",
-                "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museo"
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-5.992551, 37.386208] // Catedral de Sevilla
-            },
-            "properties": {
-                "name": "Torre La Giralda",
-                "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museo"
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-5.97069, 37.384064] // Catedral de Sevilla
-            },
-            "properties": {
-                "name": "Estadio Ramón Sánchez-Pizjuán",
-                "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "museo"
-            }
-        },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-5.98929, 37.394798] // Catedral de Sevilla
-            },
-            "properties": {
-                "name": "Palacio de las Dueñas",
-                "description": "Una de las catedrales góticas más grandes del mundo.",
-                "category": "monumento"
-            }
-        },
+        // {
+        //     "type": "Feature",
+        //     "geometry": {
+        //         "type": "Point",
+        //         "coordinates": [-5.993382, 37.382641] // Catedral de Sevilla
+        //     },
+        //     "properties": {
+        //         "name": "Catedral de Sevilla",
+        //         "description": "Una de las catedrales góticas más grandes del mundo.",
+        //         "category": "museo"
+        //     }
+        // },
+        // {
+        //     "type": "Feature",
+        //     "geometry": {
+        //         "type": "Point",
+        //         "coordinates": [-5.992551, 37.386208] // Catedral de Sevilla
+        //     },
+        //     "properties": {
+        //         "name": "Torre La Giralda",
+        //         "description": "Una de las catedrales góticas más grandes del mundo.",
+        //         "category": "museo"
+        //     }
+        // },
+        // {
+        //     "type": "Feature",
+        //     "geometry": {
+        //         "type": "Point",
+        //         "coordinates": [-5.97069, 37.384064] // Catedral de Sevilla
+        //     },
+        //     "properties": {
+        //         "name": "Estadio Ramón Sánchez-Pizjuán",
+        //         "description": "Una de las catedrales góticas más grandes del mundo.",
+        //         "category": "museo"
+        //     }
+        // },
+        // {
+        //     "type": "Feature",
+        //     "geometry": {
+        //         "type": "Point",
+        //         "coordinates": [-5.98929, 37.394798] // Catedral de Sevilla
+        //     },
+        //     "properties": {
+        //         "name": "Palacio de las Dueñas",
+        //         "description": "Una de las catedrales góticas más grandes del mundo.",
+        //         "category": "monumento"
+        //     }
+        // },
     ]
 }
 

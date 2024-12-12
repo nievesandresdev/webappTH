@@ -23,7 +23,7 @@ export const usePlaceStore = defineStore('place', () => {
     
     // STATE
     const dataFilter = {
-        categoriplace: null,
+        categoriplace: [],
         typeplace: null,
         points: [],
         distances: [],

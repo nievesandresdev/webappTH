@@ -40,7 +40,6 @@
                 >
             </button>
             <div
-                v-if="!loadingSearch"
                 class="relative"
                 @click="handleOpenFilter"
             >
