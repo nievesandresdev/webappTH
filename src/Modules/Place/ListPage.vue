@@ -242,7 +242,7 @@ function changeCategoryHandle (payload) {
 }
 
 async function changeCategory (idCategory = [], idTypePlace = null) {
-    if (idCategory) {
+    if (idCategory.length  > 0) {
         if (formFilter.categoriplace.includes(idCategory)) {
             let index = formFilter.categoriplace.indexOf(idCategory);
             if (index !== -1) {
@@ -254,6 +254,8 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
         if (formFilter.categoriplace.length >= categoriplaces.value.length) {
             formFilter.categoriplace = [];
         }
+    } else {
+        formFilter.categoriplace = [];
     }
 
     formFilter.typeplace = idTypePlace;

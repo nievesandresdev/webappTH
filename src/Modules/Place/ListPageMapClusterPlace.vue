@@ -162,6 +162,6 @@ function handleMapClick ($event, typCap) {
     emits('clickMapCluster', {event: $event, type: typCap });
 }
 function handleMapClickCluster ($event, typCap) {
-    emits('handleMapClickCluster', {event: $event, type: typCap });
+    emits('clickMapCluster', {event: $event, type: typCap });
 }
 </script>
