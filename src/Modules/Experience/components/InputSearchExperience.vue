@@ -43,22 +43,22 @@
                 class="relative"
                 @click="handleOpenFilter"
             >
-                <IconCustomColor 
-                    v-if="!emptyFilters"
-                    class="w-[7px] sp:w-[14px] h-[7px] sp:h-[14px] z-[2000] absolute top-[4px] sp:top-[-1px] right-[-1px] sp:right-[-2px]"
-                    name="WA.FILTER.DOT" 
-                    :color="chainStore.$colorContrast1" 
-                />
-                <button
-                    v-if="!loadingSearch"
-                    class="w-[12px] sp:w-6 h-[12px] sp:h-6"
+                <BaseBadge
+                    :showBadge="!emptyFilters"
+                    size="medium"
+                    :bg-color="chainStore.$bgColor1"
+                    :border-color="chainStore.$colorContrast1"
                 >
-                    <img
-                        src="/assets/icons/WA.Filtros.svg"
-                        alt="prepend inner icon"
-                        class="w-full z-10"
+                    <button
+                        class="size-[12px] sp:size-6"
                     >
-                </button>
+                        <img
+                            src="/assets/icons/WA.Filtros.svg"
+                            alt="prepend inner icon"
+                            class="w-full z-10"
+                        >
+                    </button>
+                </BaseBadge>
             </div>
         </div>
     </div>
@@ -67,6 +67,7 @@
 <script setup>
 import { ref, defineEmits, computed, inject } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
+import BaseBadge from '@/components/BaseBadge.vue';
 
 const emits = defineEmits(['search', 'cleanSearch', 'activateSearch', 'openFilter']);
 
