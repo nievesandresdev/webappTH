@@ -1,6 +1,6 @@
 <template>
     <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" @onClickButton="createStay"/>
-    <div class="px-3 pb-10 pt-6">
+    <div class="px-3 pb-10 pt-[100px]">
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -34,7 +34,7 @@
     <BottomModal 
         :isOpen="isModalOpen" 
         @update:isOpen="isModalOpen = $event" 
-        :showButton="true" 
+        :showButton="dataModalStay.stayId !== stayStore.stayData?.id" 
         :buttonText="'Acceder a la estancia'"
         @handleClick="AccessToStay"
     >
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex w-full mb-6 mt-2">
+        <div class="flex flex-col gap-6 w-full mt-2">
             <router-link 
                 @click="isModalOpen = false" 
                 :to="{ name:'EditStay', params:{ stayId: dataModalStay.stayId}}"
