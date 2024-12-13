@@ -5,10 +5,14 @@
                 classes, classButton, conditionClases,
                 {'border':true},
                 {'flex items-center gap-2 justify-center': nameIconLeft},
-                {'hborder-color-disabled':isDisabled,'border-white':!isDisabled}
+                {'opacity-50':isDisabled}
             ]"
             :disabled="isDisabled"
-            :style="{color:textColorButton, backgroundColor:bgButton}"
+            :style="{
+                color:chainStore.$colorContrast0, 
+                backgroundColor: chainStore.$bgColor0,
+                borderColor: chainStore.$colorContrast0
+            }"
             @click="handleClick"
         >
             <IconCustomColor 
@@ -64,14 +68,6 @@ const classButton = computed(() => {
     return disabled.value ? 'primary-disabled' : '';
 });
 
-const bgButton = computed(() => {
-    return disabled.value ? '' : chainStore.customizationData?.colors[0].cod_hex;
-});
-
-const textColorButton = computed(() => {
-    let textButton = disabled.value ? '' : chainStore.customizationData?.colors[0].contrast_color;
-    return textButton;
-});
 
 const isDisabled = computed(() => disabled.value);
 

@@ -2,7 +2,7 @@
     <div 
         class="h-[48px] sp:h-[72px] pt-4 sp:pt-6 px-2.5 sp:px-4 text-white"
         :style="{
-            backgroundColor: customData?.tonality_header ? '#fff' :'#333'
+            backgroundColor: Number(customData?.tonality_header) ? '#fff' :'#333'
         }"
     >
         <div 
@@ -20,6 +20,7 @@
                     'max-w-[140px] sp:max-w-[279px] font-medium roboto',
                     classesName
                 ]"
+                :style="{color: Number(customData?.tonality_header) ? '#333' :'#fff'}"
             >{{ chainNameToShow }}</h1>
             <!-- avatar -->
             <AvatarButton />
@@ -27,7 +28,7 @@
     </div>
     <div
         class="absolute left-0 top-[48px] sp:top-[70px] h-[23px] sp:h-[46px] w-full z-10"
-        :style="`background: linear-gradient(180deg, ${ customData?.tonality_header ? '#fff' :'#333'} 16%, rgba(51, 51, 51, 0.00) 100%)`"
+        :style="`background: linear-gradient(180deg, ${ Number(customData?.tonality_header) ? '#fff' :'#333'} 16%, rgba(51, 51, 51, 0.00) 100%)`"
     ></div>
 </template>
 <script setup>
@@ -58,16 +59,12 @@ const showLogo = computed(() => {
 const classesName = computed(() => {
     
     let size = 'text-[20px] sp:text-[30px] leading-[20px] sp:leading-[32px]';
-    let color = 'text-white';
 
     if(chainNameToShow.value && chainNameToShow.value.length > 15){
         size = 'text-[16px] sp:text-[24px] leading-[16px] sp:leading-[28px]';
     }
 
-    if(Boolean(customData.value?.tonality_header)){
-        color = 'text-[#333]';
-    }
-    return `${size} ${color} z-[150]`;
+    return `${size} z-[150]`;
 });
 
 const chainNameToShow = computed(() => {

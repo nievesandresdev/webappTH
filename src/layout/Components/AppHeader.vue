@@ -38,6 +38,11 @@
                             :key="index" class="tab space-y-[2px] sp:space-y-1 relative"
                             :class="{ active: tab.isActive }" @click="tab.onClick"
                         >
+                            <BaseBadge
+                                size="medium"
+                                :showBadge="!$utils.isMockup() && tab.notify"
+                                classes="absolute top-[3px] right-1.5 border-[1.2px] rounded-full" 
+                            />
                             <div class="flex flex-col items-center">
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
@@ -56,11 +61,6 @@
                             >
                                 <div class="tab-item__selected" />
                             </div>
-                            <img 
-                                v-if="tab.notify"
-                                class="absolute top-[-6px] right-[8px] w-[14px] h-[14px] z-10"
-                                src="/assets/icons/item-dot.svg"
-                            >
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
 <script setup>
 import { onMounted, reactive, computed, defineProps } from 'vue';
 import AvatarButton from '@/components/Buttons/AvatarButton.vue';
-
+import BaseBadge from '@/components/BaseBadge.vue';
 import $utils from '@/utils/utils';
 
 const props = defineProps({

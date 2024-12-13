@@ -14,6 +14,15 @@
                     :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
                     v-if="!item.exclude"
                 >
+                    <BaseBadge
+                        size="medium"
+                        :showBadge="
+                            !$utils.isMockup() &&
+                            (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
+                            (item.title == 'Inbox' || item.title == 'Mensajes')
+                        "
+                        classes="absolute top-[1px] right-4 border-[1.2px] rounded-full" 
+                    />
                     <img
                         v-if="!validRoute(item)"
                         :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
@@ -48,14 +57,6 @@
                     >
                         {{item.title}}
                     </span>
-                    <img 
-                        v-if="
-                            (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
-                            (item.title == 'Inbox' || item.title == 'Mensajes')
-                        "
-                        class="absolute top-[6px] right-[18px] w-[12px] h-[12px] z-10"
-                        src="/assets/icons/item-dot.svg"
-                    >
                 </router-link>
             </template>
         </div>
@@ -65,6 +66,7 @@
 <script setup>
 import { onMounted, reactive, computed, ref  } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
+import BaseBadge from '@/components/BaseBadge.vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
