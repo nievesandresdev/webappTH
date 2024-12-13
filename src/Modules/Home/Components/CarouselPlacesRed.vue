@@ -8,6 +8,7 @@
             v-for="(item, index) in items"
             :img-url="placeStore.$loadImage(item.place_images?.[0])"    
             :data="item"
+            @click="goPlace(item.id, $utils.isMockup())"
         >
             <h1 class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] truncate" v-html="item.title"></h1>
             <div class="mt-1 sp:mt-3 flex items-center gap-[3px] sp:gap-1">
@@ -44,9 +45,9 @@ const props =  defineProps({
     }
 })
 
-function goFacility (facility,isMockup) {
+function goPlace (place, isMockup) {
     if(!isMockup){
-        router.push({name:'ShowFacility',params:{id:facility}})
+        router.push({name:'PlaceDetail',params:{id:place}})
     }
 }
 </script>
