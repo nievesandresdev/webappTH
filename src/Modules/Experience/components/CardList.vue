@@ -42,7 +42,7 @@
                 <div class="flex flex-col space-y-1 sp:space-y-2">
                     <div class="flex items-center space-x-0.5 sp:space-x-1">
                         <img
-                            src="/assets/icons/WA.CLOCK.svg"
+                            src="/assets/icons/WA.Clock.svg"
                             class="size-[6px] sp:size-[12px]"
                         >
                         <span v-if="duration" class="text-[5px] sp:text-[10px] font-bold lato leading-non">

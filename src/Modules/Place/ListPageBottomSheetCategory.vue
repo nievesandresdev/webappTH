@@ -1,10 +1,10 @@
 <template>
     <div
-        class="grid grid-flow-col auto-cols-max pb-[8px] sp:pb-4 z-40 overflow-x-scroll space-x-[8px] sp:space-x-4 w-full no-scrollbar"
+        class="grid grid-flow-col auto-cols-max pb-[8px] sp:pb-4 z-40 overflow-x-scroll gap-[8px] sp:gap-4 w-full no-scrollbar"
     >
         <div
             v-for="(item, index) in categoriplaces" :key="index"
-            class="flex items-center  px-[8px] sp:px-4 py-[3px] sp:py-[6px] rounded-[100px]"
+            class="flex items-center  px-[8px] sp:px-4 py-[3px] sp:py-[6px] rounded-[100px] first:ml-4 last:mr-4"
             :class="{ 'item-menu-cat-active': !formFilter.categoriplace?.includes(String(item.id)), 'hbg-gray-100 hborder-black-100': formFilter.categoriplace?.includes(String(item.id)) }"
             @click="changeCategory(item.id, formFilter.typeplace)"
         >

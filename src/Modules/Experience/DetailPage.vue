@@ -92,7 +92,7 @@
                     <p class="text-[7px] sp:text-[14px] leading-none">{{ $t('experience.detail-page.free-cancellation-label') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
-                    <img src="/assets/icons/WA.clock.svg" class="size-2 sp:size-4" />
+                    <img src="/assets/icons/WA.Clock.svg" class="size-2 sp:size-4" />
                     <p class="text-[7px] sp:text-[14px] lato font-medium leading-none"> {{ duration }} </p>
                 </div>
                 <div
