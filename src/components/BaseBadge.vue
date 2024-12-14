@@ -6,15 +6,19 @@
     <!-- El badge (círculo) en la esquina -->
     <div
       v-if="showBadge"
-      class="absolute top-[-1px] right-[-2px] border-[1.2px] rounded-full"
-      :class="`bg-[${bgColor}] border-[${borderColor}]`"
-      :style="badgeSize"
+      :class="classes"
+      :style="[{
+            backgroundColor: bgColor ?? chainStore.$bgColor1,
+            borderColor: borderColor ?? chainStore.$colorContrast1,
+      },badgeSize]"
     />
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const props = defineProps({
     showBadge: {
@@ -27,11 +31,15 @@ const props = defineProps({
     },
     bgColor: {
       type: String,
-      default: '#FFD700',
+      default: null,
     },
     borderColor: {
       type: String,
-      default: '#333',
+      default: null,
+    },
+    classes: {
+      type: String,
+      default: 'absolute top-[-1px] right-[-2px] border-[1.2px] rounded-full',
     },
 });
 

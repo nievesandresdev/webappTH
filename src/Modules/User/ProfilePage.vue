@@ -32,7 +32,7 @@
             <WACardBanner 
                 @click="handleMyStays"
                 :title="$t('profile.my_stays.title')"
-                :subtitle="isCheckoutPast ? $t('profile.my_stays.subtitle_active') : $t('profile.my_stays.subtitle_inactive')"
+                :subtitle="isCheckoutPast ?  $t('profile.my_stays.subtitle_inactive') : $t('profile.my_stays.subtitle_active')"
                 :active-custom="isCheckoutPast"
             />
         </div>

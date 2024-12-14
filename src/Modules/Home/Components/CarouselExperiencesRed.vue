@@ -8,6 +8,7 @@
             v-for="(item, index) in items"
             :img-url="item.image?.url"    
             :data="item"
+            @click="goExperience(item.slug, $utils.isMockup())"
         >
             <p 
             class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] max-h-[28px] sp:max-h-[40px] truncate-2"
@@ -74,6 +75,12 @@ function getDuration (data) {
         minutes,
     }
     return m
+}
+
+function goExperience (exp, isMockup) {
+    if(!isMockup){
+        router.push({name:'ExperienceDetail',params:{slug:exp}})
+    }
 }
 
 </script>
