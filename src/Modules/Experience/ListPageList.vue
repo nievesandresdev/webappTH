@@ -27,7 +27,7 @@
                         class="size-[8px] sp:size-[16px]"
                         alt=""
                     >
-                    <p class="text-[6px] sp:text-sm font-bold border border-b-black">
+                    <p class="text-[6px] sp:text-sm font-bold border-b border-b-black">
                         {{ `${$t('experience.list-page.text-count-list-search-active')}: "${formFilter.search}"` }}
                     </p>
                 </button>

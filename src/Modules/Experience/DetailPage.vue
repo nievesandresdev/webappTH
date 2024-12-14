@@ -14,7 +14,7 @@
                     />
                     <div class="flex flex-col items-center">
                         <div class="flex items-center mb-0.5 sp:mb-1">
-                            <img src="/assets/icons/WA.STAR.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                            <img src="/assets/icons/WA.star.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
                             <p class="text-[11px] sp:text-[20px] font-semibold leading-none lato">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</p>
                         </div>
                         <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
@@ -62,7 +62,7 @@
                 </p>
                 <div
                     v-if="isLongDescription"
-                    class="mt-[6px] sp:mt-[12px]"
+                    class="mt-[6px] sp:mt-[12px] flex justify-end"
                 >
 
                     <button

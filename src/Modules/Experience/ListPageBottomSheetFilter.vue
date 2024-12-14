@@ -37,7 +37,7 @@
                                 <template  v-for="item in filterButtons.duration">
                                     <BaseButtonChipFilter
                                         :active="formFilterSheeBottom.duration.includes(item.value)"
-                                        icon="WA.CLOCK"
+                                        icon="WA.Clock"
                                         :name="$t(item.name)"
                                         @click="selectFilter(item.value, 'duration')"
                                     />
