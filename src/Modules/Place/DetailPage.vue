@@ -36,14 +36,18 @@
                 >
                     {{ description }}
                 </p>
-                <!-- Botón para Mostrar Más/Menos -->
-                <button
+                <div
                     v-if="isLongDescription"
-                    class="mt-[6px] sp:mt-[12px] underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
-                    @click="toggleDescription"
+                    class="mt-[6px] sp:mt-[12px] flex justify-end"
                 >
-                    {{ isExpanded ? $t('place.detail.showLess') : $t('place.detail.showMore') }}
-                </button>
+                    <button
+                        class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
+                        @click="toggleDescription"
+                    >
+                        {{ isExpanded ? $t('experience.detail-page.open-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
+                    </button>
+
+                </div>
             </div>
             <p v-if="placeData?.type_cuisine" class="mt-2 sp:mt-4 text-[9px] sp:text-sm font-light lato">{{ placeData?.type_cuisine }}</p>
         </div>
@@ -234,7 +238,7 @@ const hourData = ref(null);
 const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
-const description = ref('');
+const description = ref('Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, eveniet! Laboriosam ullam placeat dolore optio voluptatem similique voluptatibus non ipsum, quibusdam corrupti nisi dolor, inventore maiores error nobis dignissimos possimus fugiat facere delectus nihil, iure ratione quas! Quisquam, quae. Laboriosam inventore ex sequi ab assumenda, est officiis labore tempora quae.');
 
 // const hoursStatic = {
 //     weekRanges: [
@@ -293,7 +297,7 @@ const description = ref('');
 
 onMounted(async () => {
   await getDataPlace();
-  description.value = placeData.value?.description;
+//   description.value = placeData.value?.description;
   nextTick(() => {
     checkDescriptionLength();
   });
