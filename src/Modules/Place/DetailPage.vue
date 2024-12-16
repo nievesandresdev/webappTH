@@ -238,7 +238,7 @@ const hourData = ref(null);
 const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
-const description = ref('Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, eveniet! Laboriosam ullam placeat dolore optio voluptatem similique voluptatibus non ipsum, quibusdam corrupti nisi dolor, inventore maiores error nobis dignissimos possimus fugiat facere delectus nihil, iure ratione quas! Quisquam, quae. Laboriosam inventore ex sequi ab assumenda, est officiis labore tempora quae.');
+const description = ref('');
 
 // const hoursStatic = {
 //     weekRanges: [
@@ -297,7 +297,7 @@ const description = ref('Lorem ipsum dolor sit amet consectetur adipisicing elit
 
 onMounted(async () => {
   await getDataPlace();
-//   description.value = placeData.value?.description;
+  description.value = placeData.value?.description;
   nextTick(() => {
     checkDescriptionLength();
   });
