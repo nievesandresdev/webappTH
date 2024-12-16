@@ -237,6 +237,7 @@ function loadTabsHeader () {
 }
 
 function changeCategoryHandle (payload) {
+    console.log(payload, 'payload');
     const { idCategory, idTypePlace } = payload;
     changeCategory(idCategory, idTypePlace);
 }

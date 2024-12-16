@@ -2,9 +2,8 @@
     <div class="w-full">
         <p class="text-[6px] sp:text-sm mb-[17px] sp:mb-[37px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
         <div class="mx-[28px] relative">
-            <img src="/assets/img/NOT.FOND.PLACES.png" class="w-full h-full absolute left-0" alt="NOT.FOND.PLACES">
-            <div class="flex flex-col space-y-[26px] sp:space-y-[56px] pt-[27px]">
-                <div v-for="item in typePlacesWithNumbers">
+            <div class="flex flex-col space-y-[26px] sp:space-y-[56px] pt-[27px] z-[4000]">
+                <template v-for="item in typePlacesWithNumbers">
                     <template v-if="item.numbers">
                         <div class="space-y-2  sp:space-y-4 flex flex-col items-center">
                             <div class="flex space-x-1 sp:space-x-2">
@@ -23,8 +22,9 @@
                             </button>
                         </div>
                     </template>
-                </div>
+                </template>
             </div>
+             <img src="/assets/img/NOT.FOND.PLACES.png" class="w-full h-full absolute left-0 z-10" alt="NOT.FOND.PLACES">
         </div>
     </div>
 </template>
@@ -70,6 +70,7 @@
     }
 
     function changeCategoryHandle (payload) {
+        console.log(payload, 'change-category');
         emitEvent('change-category', payload);
     }
 
