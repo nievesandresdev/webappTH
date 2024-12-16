@@ -18,10 +18,11 @@
         >
         <input
             v-model="valueSearch"
+            id="input-search-place"
             type="text"
             :placeholder="$t('place.placeholder-search')"
-            class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium border-[1px] focus:border-[2px]"
-            :class="valueSearch ? 'border-[2px' : ''"
+            class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium focus:border-[2px]"
+            :class="valueSearch ? 'border-[2px]' : 'border-[1px]'"
             @input="searchHnadle"
             @focus="isFocused = true"
             @blur="isFocused = false"
@@ -71,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed, inject } from 'vue';
+import { ref, defineEmits, computed, inject, watch } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import BaseBadge from '@/components/BaseBadge.vue';
 
@@ -81,6 +82,9 @@ const props = defineProps({
     emptyFilters: {
         type: Number,
         default: 0,
+    },
+    value: {
+        type: String, 
     }
 });
 
@@ -93,9 +97,15 @@ const isFocused = ref(false);
 
 const searchingActive = inject('searchingActive');
 const loadingSearch = inject('loadingSearch');
+const formFilter = inject('formFilter');
 
 const searchFull = computed(() => {
     return !!valueSearch.value;
+});
+
+watch(() => formFilter.search, function(valNew, valOld) {
+    if (!valNew || valOld) return;
+    valueSearch.value = valNew;
 });
 
 // FUNCTIONS
@@ -106,8 +116,17 @@ function closeSearch () {
 function cleanSearch () {
     valueSearch.value = '';
     emits('cleanSearch');
-    resetSearch(null);
+    resetSearch('');
+    focusInputSearch();
 }
+
+function focusInputSearch () {
+    const input = document.getElementById("input-search-place");
+    if (input) {
+        input.focus();
+    }
+}
+
 
 function resetSearch ($event) {
     searchingActive.value = false;

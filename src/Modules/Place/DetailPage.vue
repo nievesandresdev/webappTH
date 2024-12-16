@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="no-scrollbar">
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
     <ImageSlider
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
     />
-    <div class="py-[12px] sp:py-[24px]">
+    <div class="py-[12px] sp:py-[24px] no-scrollbar">
         <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2 sp:mx-4">
             <div class="flex justify-between">
                 <h2 class="text-[14px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
@@ -36,14 +36,18 @@
                 >
                     {{ description }}
                 </p>
-                <!-- Botón para Mostrar Más/Menos -->
-                <button
+                <div
                     v-if="isLongDescription"
-                    class="mt-[6px] sp:mt-[12px] underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
-                    @click="toggleDescription"
+                    class="mt-[6px] sp:mt-[12px] flex justify-end"
                 >
-                    {{ isExpanded ? $t('place.detail.showLess') : $t('place.detail.showMore') }}
-                </button>
+                    <button
+                        class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
+                        @click="toggleDescription"
+                    >
+                        {{ isExpanded ? $t('experience.detail-page.open-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
+                    </button>
+
+                </div>
             </div>
             <p v-if="placeData?.type_cuisine" class="mt-2 sp:mt-4 text-[9px] sp:text-sm font-light lato">{{ placeData?.type_cuisine }}</p>
         </div>
@@ -63,8 +67,8 @@
             </p>
         </div>
         <div class="mt-[12px] sp:mt-[24px]">
-            <div class="flex items-center justify-between mx-2 sp:mx-4">
-                <div class="flex items-center space-x-[4px] sp:space-x-[8px]">
+            <div class="flex items-center justify-between pl-2 sp:pl-4 pr-[8px] sp:pr-[16px]">
+                <div class="flex items-center space-x-[4px] sp:space-x-[8px] w-[160px] sp:w-[250px]">
                     <img
                         src="/assets/icons/WA.pointer.svg"
                         class="size-[10px] sp:size-[20px]"

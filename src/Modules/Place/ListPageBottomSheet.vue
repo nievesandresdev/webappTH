@@ -15,8 +15,8 @@
                         class="header-list-place z-[400000]"
                         :class="{ 'shadow-header': isScrollingList }"
                     >
+                        <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                         <div class="px-[8px] sp:px-4 pb-[8px] sp:pb-4" :class="{ 'shadow-header': isScrollingList }">
-                            <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
                             <p
                                 v-if="!isloadingForm"
                                 class="text-[6px] sp:text-sm font-bold mt-[8px] sp:mt-4"
@@ -30,7 +30,11 @@
                                     </template>
                                 </template>
                                 <template v-else>
+                                    <template v-if="!formFilter.search">
+                                        {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }  ) }}
+                                    </template>
                                     <button
+                                    v-else
                                         class="flex items-center space-x-1 sp:space-x-2"
                                         @click="closeSearch"
                                     >

@@ -113,14 +113,14 @@ function closeSearchHandle () {
 
 function activateSearchHandle ($event) {
     searchingActive.value = false;
-    formFilter.search = null;
+    formFilter.search = '';
     loadAll({showPreloader: false});
 }
 
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
-    formFilter.search = $event?.target?.value ?? null;
+    formFilter.search = $event?.target?.value ?? '';
     page.value = 1;
     experiencesData.value = [];
     await loadAll({showPreloader: false});
