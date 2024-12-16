@@ -1,6 +1,6 @@
 <template>
   <SectionBarTab 
-    :title="hotelData.show_profile == 1 ? hotelData.type : 'InstalacionesXXX'" 
+    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'" 
     :tabs="[
       { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
