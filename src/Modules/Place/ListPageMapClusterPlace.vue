@@ -8,8 +8,8 @@
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
-                    class="size-[50px] sp:size-[85px]"
-                    src="/assets/icons/WA.MAP.POINTER.svg"
+                    class="size-[40px] sp:size-[50px] object-cover"
+                    src="/assets/icons/WA.map-pointer.png"
                 >
             </MapboxMarker>
             <!-- Agregar iconos personalizados por categoría -->

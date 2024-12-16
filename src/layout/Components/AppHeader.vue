@@ -35,7 +35,7 @@
                     <div class="flex justify-around">
                         <div
                             v-for="(tab, index) in tabs"
-                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative"
+                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative  w-[80px] sp:w-[100px]"
                             :class="{ active: tab.isActive }" @click="tab.onClick"
                         >
                             <BaseBadge
