@@ -19,7 +19,8 @@
           </div>
         </div>
         <p class="text-[14px] font-bold text-[#333] lato px-4 pt-4 mb-4 card-text flex justify-start">
-          {{ truncateText(d.description ?? d.title) }}
+          {{ truncateText(d.title) }}
+
         </p>
       </div>
     </div>

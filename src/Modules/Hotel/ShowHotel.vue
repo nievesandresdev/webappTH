@@ -64,13 +64,16 @@
 
       <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  />
 
-      <div class="flex items-center gap-4 mb-4">
-        <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
-        <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-      </div>
-      
+      <template  v-if="rrss">
+        <div class="flex items-center gap-4 mb-4">
+          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+          <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
+        </div >
 
-      <HotelRRSS :hotelData="hotelData" />
+        <HotelRRSS :hotelData="hotelData" />
+      </template>
+
+      
 
     </div>
   </div>
