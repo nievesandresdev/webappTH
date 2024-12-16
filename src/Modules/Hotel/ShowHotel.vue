@@ -10,7 +10,7 @@
   <div 
       class="bg-[#FAFAFA]"
       :class="{
-        'mt-[140px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+        'mt-[130px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
         'mt-[60px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
       }"
     >
