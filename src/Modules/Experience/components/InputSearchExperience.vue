@@ -17,6 +17,7 @@
             class="absolute left-1.5 sp:left-3 top-[9px] sp:top-[7.5px] w-2.5 sp:w-6 h-3 sp:h-6 z-10"
         >
         <input
+            id="input-search-experience"
             v-model="valueSearch"
             type="text"
             :placeholder="$t('place.placeholder-search')"
@@ -27,10 +28,10 @@
             @blur="isFocused = false"
             @click="activateSearch('top')"
         >
-        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7.5px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
+        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
             <button
                 v-if="searchFull"
-                class="w-[12px] sp:w-6 h-[12px] sp:h-6"
+                class="size-[12px] sp:size-6 mb-[1px] sp:mb-[2px]"
                 @click="cleanSearch"
             >
                 <img
@@ -87,12 +88,19 @@ const isFocused = ref(false);
 
 const searchingActive = inject('searchingActive');
 const loadingSearch = inject('loadingSearch');
+const formFilter = inject('formFilter');
 
 const searchFull = computed(() => {
     return !!valueSearch.value;
 });
 
+// watch(() => formFilter.search, function(valNew, valOld) {
+//     if (!valNew || valOld) return;
+//     valueSearch.value = valNew;
+// });
+
 // FUNCTIONS
+
 function closeSearch () {
     cleanSearch();
     activateSearch('medium');
@@ -100,12 +108,20 @@ function closeSearch () {
 function cleanSearch () {
     valueSearch.value = '';
     emits('cleanSearch');
-    resetSearch(null);
+    resetSearch('');
+    focusInputSearch();
+}
+
+function focusInputSearch () {
+    const input = document.getElementById("input-search-experience");
+    if (input) {
+        input.focus();
+    }
 }
 
 function resetSearch ($event) {
     searchingActive.value = false;
-    emits('search', null);
+    emits('search', '');
 }
 function searchHnadle ($event) {
     clearTimeout(debounce.value);

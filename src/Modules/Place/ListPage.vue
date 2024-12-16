@@ -334,7 +334,7 @@ function closeSearchHandle () {
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
-    formFilter.search = $event?.target?.value ?? null;
+    formFilter.search = $event?.target?.value ?? '';
     page.value = 1;
     placesData.value = [];
     await loadAll({showPreloader: false});
@@ -346,7 +346,7 @@ function activateSearchHandle ($event) {
     positionBottomSheet.value = $event;
     if ($event == 'medium') {
         searchingActive.value = false;
-        formFilter.search = null;
+        formFilter.search = '';
         loadAll({showPreloader: false});
     }
 }
@@ -411,7 +411,7 @@ async function openFilter () {
     setTimeout(() => {
         positionBottomSheet.value = 'medium';
         searchingActive.value = false;
-        formFilter.search = null;
+        formFilter.search = '';
         isOpenBottomSheetFilter.value = true;
     }, 400);
 }

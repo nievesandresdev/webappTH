@@ -11,14 +11,18 @@
         >
             <template v-if="!searchingActive">
                 <template v-if="!formFilter.search && experiencesData.length">
-                {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
+                    {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
                 </template>
-                <template v-else-if="formFilter.search && !experiencesData.length">
+                <template v-else-     ="formFilter.search && !experiencesData.length">
                     {{ `${$t('place.list-page.text-count-list-search',  { count: paginateData.total  })}: "${formFilter.search}"` }}
                 </template>
             </template>
             <template v-else>
+                <template v-if="!formFilter.search">
+                    {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
+                </template>
                 <button
+                    v-else
                     class="flex items-center space-x-1 sp:space-x-2"
                     @click="closeSearch"
                 >

@@ -30,7 +30,11 @@
                                     </template>
                                 </template>
                                 <template v-else>
+                                    <template v-if="!formFilter.search">
+                                        {{ $t('place.list-page.text-count-list',  { count: paginateData.total  }  ) }}
+                                    </template>
                                     <button
+                                    v-else
                                         class="flex items-center space-x-1 sp:space-x-2"
                                         @click="closeSearch"
                                     >

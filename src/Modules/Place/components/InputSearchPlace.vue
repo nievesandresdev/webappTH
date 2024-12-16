@@ -18,6 +18,7 @@
         >
         <input
             v-model="valueSearch"
+            id="input-search-place"
             type="text"
             :placeholder="$t('place.placeholder-search')"
             class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium focus:border-[2px]"
@@ -104,7 +105,6 @@ const searchFull = computed(() => {
 
 watch(() => formFilter.search, function(valNew, valOld) {
     if (!valNew || valOld) return;
-    console.log('entro')
     valueSearch.value = valNew;
 });
 
@@ -116,8 +116,17 @@ function closeSearch () {
 function cleanSearch () {
     valueSearch.value = '';
     emits('cleanSearch');
-    resetSearch(null);
+    resetSearch('');
+    focusInputSearch();
 }
+
+function focusInputSearch () {
+    const input = document.getElementById("input-search-place");
+    if (input) {
+        input.focus();
+    }
+}
+
 
 function resetSearch ($event) {
     searchingActive.value = false;
