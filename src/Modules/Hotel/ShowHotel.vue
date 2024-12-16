@@ -62,7 +62,7 @@
         <span @click="goToFacilities()" class="underline lato text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
       </div>
 
-      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  />
+      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  :cover="false"/>
 
       <template  v-if="rrss">
         <div class="flex items-center gap-4 mb-4">
