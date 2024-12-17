@@ -1,25 +1,25 @@
 <template>
-  <div ref="carousel" class="carousel-container overflow-x-auto pb-4" :class="{'mb-[55px]' : !marginBotton}" @scroll="saveScrollPosition">
-    <div class="flex gap-4 w-max">
+  <div ref="carousel" class="carousel-container overflow-x-auto pb-2 sp:pb-4" :class="{'mb-[60px] sp:mb-[55px]' : !marginBotton}" @scroll="saveScrollPosition">
+    <div class="flex gap-2 sp:gap-4 w-max">
       <div
         v-for="d in data"
         :key="d.id"
-        class="flex flex-col justify-center w-[253px] h-[232px] rounded-[20px] border border-white shadow-lg bg-gradient-h"
+        class="flex flex-col justify-center w-[160px] sp:w-[253px] h-[140px] sp:h-[232px] rounded-[10px] sp:rounded-[20px] border border-white shadow-lg bg-gradient-h"
         style="box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);"
         @click="handleClick(d)"
       >
-        <div class="relative w-full h-full rounded-t-[20px] overflow-hidden">
+        <div class="relative w-full h-full rounded-[10px] sp:rounded-t-[20px] overflow-hidden">
           <img 
             :src="$formatImage({ url: d.image?.url || '', type: d.image?.type })" 
             alt="Image" 
             class="w-full h-full object-cover" 
           />
-          <div v-if="d.ad_tag" class="absolute bottom-2 left-2 flex items-center justify-center gap-1 px-2 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
-            <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ d.ad_tag }}</p>
+          <div v-if="d.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[10px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
+            <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ d.ad_tag }}</p>
           </div>
         </div>
-        <p class="text-[14px] font-bold text-[#333] lato px-4 pt-4 mb-4 card-text flex justify-start">
-          {{ truncateText(d.description ?? d.title) }}
+        <p class="text-[8px] sp:text-[14px] font-bold text-[#333] lato px-2 sp:px-4 pt-2 sp:pt-4 pb-2 sp:pb-4 card-text flex justify-start">
+          {{ truncateText(d.title) }}
         </p>
       </div>
     </div>
@@ -102,12 +102,18 @@ const truncateText = (text) => { return text.length > 60 ? text.substring(0, 60)
 }
 
 .card-text {
-  height: 70px;
-  line-height: 1.5em;
+  height: 45px;
   overflow: hidden;
   display: block;
   width: 100%;
   word-wrap: break-word;
+}
+
+@media (min-width: 300px;) {  
+  .card-text {
+    height: 70px;
+    line-height: 1.5em;
+  }
 }
 
 </style>

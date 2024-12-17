@@ -7,7 +7,7 @@
         <div class="header-top pt-[10px] sp:pt-6 px-1 sp:px-4 pb-1.5 sp:pb-3">
             <h1
                 v-if="withTitleRoute"
-                class="text-[12px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
+                class="text-[14px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
             >
                 {{ $t($route.meta.title) }}
             </h1>
@@ -15,7 +15,7 @@
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="lato text-[12px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
+                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
                     </slot>
                 </div>
 

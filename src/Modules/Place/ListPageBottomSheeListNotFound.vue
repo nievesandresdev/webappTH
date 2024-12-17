@@ -2,10 +2,11 @@
     <div class="w-full">
         <p class="text-[6px] sp:text-sm mb-[17px] sp:mb-[37px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
         <div class="mx-[28px] relative">
-            <div class="flex flex-col space-y-[26px] sp:space-y-[56px] pt-[27px] z-[4000]">
+             <img src="/assets/img/NOT.FOND.PLACES.png" class="w-full h-full absolute top-0 left-0 object-cover" alt="NOT.FOND.PLACES">
+            <div class="flex flex-col space-y-[26px] sp:space-y-[56px] pt-[27px]">
                 <template v-for="item in typePlacesWithNumbers">
                     <template v-if="item.numbers">
-                        <div class="space-y-2  sp:space-y-4 flex flex-col items-center">
+                        <div class="space-y-2  sp:space-y-4 flex flex-col items-center" style="z-index: 7000 !important;">
                             <div class="flex space-x-1 sp:space-x-2">
                                 <img
                                     :src="`/assets/icons/${item.icon_type_place}.svg`"
@@ -24,7 +25,7 @@
                     </template>
                 </template>
             </div>
-             <img src="/assets/img/NOT.FOND.PLACES.png" class="w-full h-full absolute left-0 z-10" alt="NOT.FOND.PLACES">
+           
         </div>
     </div>
 </template>

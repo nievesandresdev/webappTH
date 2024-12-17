@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-[337px] shadow-md border-b border-white rounded-b-[20px] overflow-hidden mockup:h-[190px]" @touchstart="touchStart" @touchend="touchEnd">
+  <div class="relative w-full shadow-md border-b border-white rounded-b-[20px] overflow-hidden h-[190px] sp:h-[337px]" @touchstart="touchStart" @touchend="touchEnd">
     <button
       v-show="showButtonBack"
       class="inline-flex items-center gap-2 p-1 absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"

@@ -113,7 +113,7 @@
         
     </div>
 </template>
-    
+
 <script setup>    
     import { Carousel, Pagination, Slide, Navigation } from 'vue3-carousel'
     import { ref, onMounted, toRefs } from 'vue'
