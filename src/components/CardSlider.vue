@@ -12,7 +12,8 @@
           <img 
             :src="$formatImage({ url: d.image?.url || '', type: d.image?.type })" 
             alt="Image" 
-            class="w-full h-full object-cover" 
+            class="w-full h-full"
+            :class="cover ? 'object-cover' : 'object-fill'" 
           />
           <div v-if="d.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[10px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
             <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ d.ad_tag }}</p>
@@ -39,7 +40,8 @@ const props = defineProps({
     type: Object,
     default: () => ({}) 
   },
-  marginBotton: Boolean
+  marginBotton: Boolean,
+  cover: Boolean
 });
 
 const hotelStore = useHotelStore()

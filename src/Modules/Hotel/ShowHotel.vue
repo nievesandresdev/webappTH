@@ -67,15 +67,26 @@
         <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
       </div>
 
-      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  />
+      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  :cover="false"/>
 
+<<<<<<< HEAD
       <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4">
         <p class="text-[10px] sp:text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
         <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
       </div>
       
+=======
+      <template  v-if="rrss">
+        <div class="flex items-center gap-4 mb-4">
+          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+          <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
+        </div >
+>>>>>>> 44bb0c8c94b8241651e6924472cd24bb2a2ff925
 
-      <HotelRRSS :hotelData="hotelData" />
+        <HotelRRSS :hotelData="hotelData" />
+      </template>
+
+      
 
     </div>
   </div>
