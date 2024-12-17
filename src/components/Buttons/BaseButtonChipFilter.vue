@@ -2,6 +2,7 @@
         <div
             class="flex items-center inline-block px-4 py-[6px] rounded-[100px] max-w-max"
             :class="{'item-menu-cat-active': !active, 'hbg-gray-100 hborder-black-100': active}"
+            @click="changeValue"
         >
                 <img
                     v-if="icon"
@@ -14,7 +15,9 @@
 
 <script setup>
 
-    import { ref } from 'vue';
+    import { ref, defineProps, defineEmits } from 'vue';
+
+    const emits = defineEmits(['change']);
 
     const props = defineProps({
         active: {
@@ -29,7 +32,15 @@
             type: String,
             default: '',
         },
+        value: {
+            type: String,
+            default: '',
+        },
     });
+
+    function changeValue () {
+        emits('change');
+    }
 
 </script>
 
