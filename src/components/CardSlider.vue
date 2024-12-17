@@ -1,14 +1,14 @@
 <template>
   <div ref="carousel" class="carousel-container overflow-x-auto pb-2 sp:pb-4" :class="{'mb-[60px] sp:mb-[55px]' : !marginBotton}" @scroll="saveScrollPosition">
-    <div class="flex gap-2 sp:gap-4 w-max">
+    <div class="flex gap-2 sp:gap-4 w-max pt-0">
       <div
         v-for="d in data"
         :key="d.id"
-        class="flex flex-col justify-center w-[160px] sp:w-[253px] h-[140px] sp:h-[232px] rounded-[10px] sp:rounded-[20px] border border-white shadow-lg bg-gradient-h"
+        class="flex flex-col w-[160px] sp:w-[253px] h-[140px] sp:h-[232px] rounded-[10px] sp:rounded-[20px] border border-white shadow-lg bg-gradient-h"
         style="box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);"
         @click="handleClick(d)"
       >
-        <div class="relative w-full h-full rounded-[10px] sp:rounded-t-[20px] overflow-hidden">
+        <div class="relative w-full h-[168px] rounded-[10px] sp:rounded-t-[20px] m-0 p-0 overflow-hidden">
           <img 
             :src="$formatImage({ url: d.image?.url || '', type: d.image?.type })" 
             alt="Image" 
