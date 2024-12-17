@@ -27,11 +27,14 @@ export const useLocaleStore = defineStore('locale', () => {
         let params = { 
             languages: availableLocation.value,
             selected : localeCurrent.value
-        }
+        };
+        // console.log('test params', params);
         const response = await getForItemApi(params)
+        // console.log('test response', response);
         const { ok, data } = response
         if (ok) {
-            return availableLocation.value = data
+            // return availableLocation.value = data
+            return data
         }
         return [];     
     }
