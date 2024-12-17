@@ -10,7 +10,10 @@
   <div
       v-if="center?.[0] && center?.[1]"
       class="relative"
-      :class="isFullScreen ? 'fullscreen' : `transition-height duration-500 ease-in-out`"
+      :class="[
+                isFullScreen ? 'fullscreen' : '',
+                props.transition ? 'transition-height duration-500 ease-in-out' : ''
+              ]"
       :style="!isFullScreen ? `height: ${heightMap};` : ''"
       ref="mapContainer"
     >
@@ -78,7 +81,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  
+  transition: { // Mantiene la transicion por defecto, la elimina si paso false
+    type: Boolean,
+    default: true,
+  },
 });
 
 

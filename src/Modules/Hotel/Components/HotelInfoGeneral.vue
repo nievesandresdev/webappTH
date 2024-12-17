@@ -40,8 +40,13 @@
         </div>
       </div>
 
-      <div class="mt-3 sp:mt-6">
-        <BaseMap :center="coordCenter" :zoom="15" :height-map="windowWidth >= 250 ? '168px' : '90px'" :showExpand="true">
+      <div class="mt-3 sp:mt-6 ">
+        <BaseMap  :center="coordCenter" 
+                  :zoom="15" 
+                  :height-map="windowWidth >= 250 ? '168px' : '90px'" 
+                  :showExpand="true"
+                  :transition="false"
+        >
           <template v-slot:controls>
             <!-- Marcador en la Ubicación del Hotel -->
             <MapboxMarker :lng-lat="coordCenter">
@@ -52,7 +57,7 @@
       </div>
       
 
-    
+    <section class="no-transition">
       <div class="border-t my-3 sp:my-6 border-[#E9E9E9]" v-show="hotelData.email"></div>
     
       <!-- Sección de Email -->
@@ -112,7 +117,7 @@
           <span class="text-[8px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
         </div>
       </div>
-
+    </section>
   </section>
   
     
@@ -157,5 +162,8 @@
 
   
   </script>
-
-  
+  <style scope>
+  .no-transition {
+      transition: none !important;
+  }
+  </style>
