@@ -215,7 +215,7 @@
         let v = formFilterSheeBottom?.[property];
         let a = v?.includes(value);
         if (a) {
-            let i = v?.[property]?.indexOf(value);
+            let i = v?.indexOf(value);
             if (i !== -1) {
                 v.splice(i, 1);
             }

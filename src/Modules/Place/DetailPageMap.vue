@@ -4,6 +4,7 @@
         :center="coordCenter"
         :height-map="windowWidth >= 250 ? '168px' : '90px'"
         :showExpand="true"
+        :transition="false"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
