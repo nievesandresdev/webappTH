@@ -54,10 +54,14 @@
         @legal-click="handleLegalText"
         @share-click="isModalOpen = true"
       />
-
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
+      
+      <!--DATA DEL HOTEL-->
+      <template v-if="checkin">
+        <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
         
-      <HotelInfoGeneral :hotelData="hotelData" />
+        <HotelInfoGeneral :hotelData="hotelData" />
+      </template>
+      <!--**************-->
 
       <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
@@ -76,8 +80,6 @@
         </div >
         <HotelRRSS :hotelData="hotelData" />
       </template>
-
-      
 
     </div>
   </div>
@@ -251,6 +253,13 @@ const rrss = computed(() => {
           hotelData.value.facebook_url ||
           hotelData.value.pinterest_url ||
           hotelData.value.x_url;
+  });
+
+const checkin = computed(() => {
+   return hotelData.value.checkin ||
+          hotelData.value.checkin_until ||
+          hotelData.value.checkout ||
+          hotelData.value.checkout_until;
   });
 
 </script>
