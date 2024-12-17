@@ -313,6 +313,8 @@ const handleChangePassword = async () => {
     if (response.ok) {
         toastSuccess('Contraseña actualizada');
         isModalOpen.value = false;
+        currentPassword.value = null;
+        newPassword.value = null;
     } else {
         currentPasswordError.value = true;
     }
