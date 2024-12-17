@@ -85,7 +85,6 @@ const numbersFiltersApplied = computed(() => {
     formFilter.score?.length ? filters.push('score') : '';
     formFilter.price_min ? filters.push('price_min') : '';
     formFilter.price_max ? filters.push('price_max') : '';
-    formFilter.search ? filters.push('search') : '';
     formFilter.free_cancelation ? filters.push('free_cancelation') : '';
     formFilter.featured ? filters.push('featured') : '';
     return filters;
