@@ -8,7 +8,7 @@
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
-                    class="size-[40px] sp:size-[50px] object-cover"
+                    class="h-[40px] sp:h-[50px] object-cover"
                     src="/assets/icons/WA.map-pointer.png"
                 >
             </MapboxMarker>
@@ -132,10 +132,10 @@ watch(searchingActive, function(valNew, valOld) {
 });
 
 const heightDinamic = computed(() => {
-    if (positionBottomSheet.value == 'bottom')
-        return '78vh';
-    else
-        return '60vh';
+    // if (positionBottomSheet.value == 'bottom')
+        return '73vh';
+    // else
+        // return '60vh';
 
 
 });

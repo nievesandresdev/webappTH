@@ -8,6 +8,9 @@
         class="w-full overflow-y-scroll flex-1 no-scrollbar px-[8px] sp:px-4"
         @scroll="handleScroll"
     >
+
+        
+
         <template v-if="!isloadingForm && !placesData?.length && !firstLoad && (searchingActive || !emptyFilters)">
             <ListPageBottomSheeListNotFound />
         </template>

@@ -110,9 +110,16 @@ watch(() => formFilter.search, function(valNew, valOld) {
 
 // FUNCTIONS
 function closeSearch () {
-    cleanSearch();
+    cleanSearchInClose();
     activateSearch('medium');
 }
+
+function cleanSearchInClose () {
+    valueSearch.value = '';
+    emits('cleanSearch');
+    resetSearch('');
+}
+
 function cleanSearch () {
     valueSearch.value = '';
     emits('cleanSearch');
