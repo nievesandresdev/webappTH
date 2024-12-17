@@ -8,7 +8,7 @@
     :hotel="hotelData"
   /> -->
   <AppHeader
-    :title="$t('hotel.facilities')" 
+    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
     :tabs="tabsHeader"
     fixed
   />
@@ -125,5 +125,9 @@ function loadTabsHeader () {
     //         onClick: () => changeCategory([], item.id),
     //     };
     // });
+}
+
+function changeTab (r) {
+  router.push({ name: r });
 }
 </script>
