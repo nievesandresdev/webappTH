@@ -52,7 +52,7 @@
                                         :active="formFilterSheeBottom.points.includes(item.value)"
                                         icon="WA.STAR.BLACK"
                                         :name="`${item.star} ${$t(item.name)}`"
-                                        @click="selectFilter(item.value, 'points')"
+                                        @change="selectFilter(item.value, 'points')"
                                     />
                                 </template>
                             </div>
@@ -180,7 +180,7 @@
         let v = formFilterSheeBottom?.[property];
         let a = v?.includes(value);
         if (a) {
-            let i = v?.[property]?.indexOf(value);
+            let i = v?.indexOf(value); 
             if (i !== -1) {
                 v.splice(i, 1);
             }

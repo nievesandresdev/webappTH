@@ -138,7 +138,7 @@ const numbersFiltersApplied = computed(() => {
     let filters = [];
     formFilter.featured ? filters.push('featured') : '';
     formFilter.distances?.length ? filters.push('distances') : '';
-    formFilter.scores?.length ? filters.push('scores') : '';
+    formFilter.points?.length ? filters.push('points') : '';
     return filters;
 });
 const emptyFilters = computed(() => {
@@ -274,6 +274,7 @@ const getFirstCategoryOfType = ()=> {
 async function loadPlaces () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
+    console.log(query, 'query');
     const response = await placeStore.$apiGetAll({page: page.value,...query});
     if (response.ok) {
         Object.assign(paginateData, response.data.places.paginate);
@@ -387,7 +388,7 @@ function filterNonNullAndNonEmpty(obj) {
 function loadQueryInFormFilter () {
     for (const [key, value] of Object.entries(queryRouter.value || {})) {
         if (formFilter.hasOwnProperty(key)) {
-            if (['duration', 'distances', 'categoriplace'].includes(key)) {
+            if (['duration', 'distances', 'categoriplace', 'points'].includes(key)) {
                 if (typeof value === 'string') {
                     formFilter[key].push(value);
                 } else {
