@@ -1,12 +1,13 @@
-export const useMediaQuery = () => {
+export const useShare = () => {
 
-    async function shareContent () {
+    async function shareContent (data) {
+        let { title, text, url } = data;
         if (navigator.share) {
           try {
             await navigator.share({
-              title: 'Título del contenido',
-              text: 'Este es el texto del contenido que quiero compartir.',
-              url: 'https://example.com'
+              title,
+              text,
+              url,
             });
             console.log('¡Compartido con éxito!');
           } catch (error) {

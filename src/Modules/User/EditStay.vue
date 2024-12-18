@@ -66,7 +66,7 @@
             <button
                 v-if="guestsList.length < 10"
                 class="w-full h-10 flex justify-center items-center px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] lato text-sm font-bold hshadow-button mt-4"
-                @click="isModalOpen = true"
+                @click="onShareClick"
             >   
             <img class="w-5 h-5 mr-2" src="/assets/icons/WA.Share.svg" alt="">
                 Compartir estancia
@@ -139,6 +139,12 @@ const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
+  import { useShare } from "@/composables/useShare";
+  const { shareContent } = useShare();
+
+  import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const props = defineProps({
     paramsRouter: {
         type: Object,
@@ -155,6 +161,8 @@ const guestIndexSelected = ref(null);
 const isGuestModalOpen = ref(false);
 const currentStay = ref(null);
 
+  const shareUrl = ref(null);
+
 const form = reactive({
     checkDate: null,
     middle_reservation: '',
@@ -167,6 +175,7 @@ onMounted(async() => {
     currentStay.value = await stayStore.findById(paramsRouter.value.stayId)
     fillForm(currentStay.value)
     await reloadGuestsList()
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}`);
 })
 
 provide('isModalOpen',isModalOpen)
@@ -225,4 +234,13 @@ const options_middle_reservation = [
         {value:'Hotels.com',label:'Hotels.com',},
         {value:'Página web del hotel',label:'Página web del hotel',}
     ] 
+
+  function onShareClick () {
+    let data = {
+      title: t('stay.share.title', { hotel: hotelStore.hotelData.name }),
+      text: t('stay.share.text'),
+      url: shareUrl.value,
+    }
+    shareContent(data);
+  }
 </script>

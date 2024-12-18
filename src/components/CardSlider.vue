@@ -89,7 +89,7 @@ const handleClick = (item) => {
 };
 
 
-const truncateText = (text) => { return text.length > 60 ? text.substring(0, 60)  : text; };
+const truncateText = (text) => { return text?.length > 60 ? text.substring(0, 60)  : text; };
 </script>
 
 <style scoped>

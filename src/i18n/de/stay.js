@@ -6,5 +6,9 @@ export default{
             "placeholder": "TT/MM/JJJJ - TT/MM/JJJJ",
         },
         "continue-button": "Erstellen und zum Aufenthalt zugreifen",
+    },
+    "share": {
+        "title": "Begleiten Sie unseren Aufenthalt im {hotel}",
+        "text": "Treten Sie jetzt bei und genießen Sie alle Vorteile der WebApp, um das Beste aus unserer Erfahrung zu machen"
     }
 }

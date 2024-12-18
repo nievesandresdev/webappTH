@@ -6,5 +6,9 @@ export default{
             "placeholder": "dd/mm/aaaa - dd/mm/aaaa",
         },
         "continue-button":"Crear y acceder a la estancia",
+    },
+    " ": {
+        "title": "Únete a nuestra estancia en {hotel}",
+        "text": "Únete ahora y disfruta de todas las ventajas de la WebApp para aprovechar al máximo nuestra experiencia"
     }
 }
