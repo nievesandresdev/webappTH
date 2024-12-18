@@ -34,6 +34,7 @@ jobs:
             echo "VUE_APP_API_URL_BACKEND_HELPER=${{ secrets.VUE_APP_API_URL_BACKEND_HELPER_MAIN }}" >> .env
             echo "VUE_APP_GOOGLE_CLIENT_ID=${{ secrets.VUE_APP_GOOGLE_CLIENT_ID_MAIN }}" >> .env
             echo "VUE_APP_MAPBOX_ACCESS_TOKEN=${{ secrets.VUE_APP_MAPBOX_ACCESS_TOKEN_MAIN }}" >> .env
+            echo "VUE_APP_API_URL_REVIEW=${{ secrets.VUE_APP_API_URL_REVIEW_MAIN }}" >> .env
           else
             echo "VUE_APP_API_URL_BACKEND_GENERAL=${{ secrets.VUE_APP_API_URL_BACKEND_GENERAL_TEST }}" >> .env
             echo "VUE_APP_STORAGE_URL=${{ secrets.VUE_APP_STORAGE_URL_TEST }}" >> .env
@@ -42,6 +43,7 @@ jobs:
             echo "VUE_APP_API_URL_BACKEND_HELPER=${{ secrets.VUE_APP_API_URL_BACKEND_HELPER_TEST }}" >> .env
             echo "VUE_APP_GOOGLE_CLIENT_ID=${{ secrets.VUE_APP_GOOGLE_CLIENT_ID_TEST }}" >> .env
             echo "VUE_APP_MAPBOX_ACCESS_TOKEN=${{ secrets.VUE_APP_MAPBOX_ACCESS_TOKEN_TEST }}" >> .env
+            echo "VUE_APP_API_URL_REVIEW=${{ secrets.VUE_APP_API_URL_REVIEW_TEST }}" >> .env
           fi
 
       - name: Set up Docker Buildx
