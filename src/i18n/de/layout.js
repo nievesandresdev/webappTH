@@ -1,8 +1,10 @@
 export default {
     "header": {
-        "facilities": "Einrichtungen",
-        "explore": "Erkunden",
-        "experiences": "Erfahrungen",
+        "home": "startseite",
+        "facilities": "einrichtungen",
+        "destination": "ziel",
+        "experiences": "erfahrungen",
+        "messages": "nachrichten"
     },
     "dropdownLanguage": {
         "title": "Sprache"

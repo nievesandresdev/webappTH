@@ -55,7 +55,7 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{item.title}}
+                        {{ $t(item.title) }}
                     </span>
                 </router-link>
             </template>
@@ -84,7 +84,7 @@ const innerWidth = window.innerWidth
 
 const menuItems = reactive([
     {
-        title: 'Home',
+        title: 'layout.header.home',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.HOME',
         iconSelected: 'WA.MENU.SELECTED.HOME',
@@ -92,23 +92,23 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: 'Hotel',
-        exclude: !hotelStore.hotelData.show_profile,
+        title: 'layout.header.hotel',
+        exclude: !hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
         routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
     },
+    // {
+    //     title: 'layout.header.facilities',
+    //     exclude: !hotelStore.hotelData.show_facilities,
+    //     iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
+    //     iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
+    //     to: `/${route.params.hotelSlug}/alojamiento`, 
+    //     routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
+    // },
     {
-        title: 'Instalaciones',
-        exclude: hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
-        iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
-        iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: `/${route.params.hotelSlug}/alojamiento`, 
-        routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
-    },
-    {
-        title: 'Destino',
+        title: 'layout.header.destination',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
@@ -116,7 +116,7 @@ const menuItems = reactive([
         routeNameIncludes: ['PlaceList', 'PlaceDetail'],
     },
     {
-        title: 'Experiencias',
+        title: 'layout.header.experiences',
         exclude: !hotelStore.hotelData.show_experiences,
         iconDefault: 'WA.MENU.DEFAULT.EXPERIENCIAS',
         iconSelected: 'WA.MENU.SELECTED.EXPERIENCIAS',
@@ -124,7 +124,7 @@ const menuItems = reactive([
         routeNameIncludes: ['ExperienceList', 'ExperienceDetail'],
     },
     {
-        title: 'Mensajes',
+        title: 'layout.header.messages',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
