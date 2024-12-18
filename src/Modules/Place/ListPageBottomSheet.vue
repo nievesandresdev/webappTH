@@ -9,8 +9,7 @@
             <PlaceSelected :place-selected="placeSelectedData" :loading="loadingPlaceSeleced"  />
             <!-- {{ `searchingActive: ${searchingActive}` }} {{ `search: ${formFilter.search}` }} {{ `length: ${placesData.length}` }} -->
             <!-- py-[6px] sp:pt-[12px] -->
-            <button @click="shareContent">Open</button>
-            <!-- <div class="h-full">
+            <div class="h-full">
                 <div class="flex flex-col h-full">
                     <div
                         class="header-list-place z-[400000]"
@@ -58,29 +57,12 @@
                     </div>
                     <ListPageBottomSheeList @loadMore="loadMoreHandle" />
                 </div>
-            </div> -->
+            </div>
         </template>
     </BaseBottomSheet>
 </template>
 
 <script setup>
-    async function shareContent () {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: 'Título del contenido',
-            text: 'Este es el texto del contenido que quiero compartir.',
-            url: 'https://example.com'
-          });
-          console.log('¡Compartido con éxito!');
-        } catch (error) {
-          console.error('Error al compartir:', error);
-        }
-      } else {
-        alert('La función de compartir no está disponible en este navegador.');
-      }
-    }
-
     import { ref, inject, toRefs, provide } from 'vue';
 
     import CardList from './components/CardList.vue';
