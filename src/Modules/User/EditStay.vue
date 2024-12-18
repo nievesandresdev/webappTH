@@ -5,7 +5,7 @@
         />
         <!-- view-name-back="MyStays" -->
     </div>
-    <div class="py-6 px-4">
+    <div class="py-6 px-4 mt-[76px]">
 
         <!-- form -->
         <div>
