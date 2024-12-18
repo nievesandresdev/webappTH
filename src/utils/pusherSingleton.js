@@ -8,6 +8,8 @@ import Pusher from 'pusher-js';
 let pusherInstance = null;
 
 export function getPusherInstance() {
+    console.log('test pusher key',process.env.VUE_APP_PUSHER_APP_KEY)
+    
     if (!pusherInstance) {
         // console.log("Creando instancia de pusher...");
         pusherInstance = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
