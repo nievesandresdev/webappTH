@@ -2,6 +2,7 @@ export const useShare = () => {
 
     async function shareContent (data) {
         let { title, text, url } = data;
+        alert(`${title} ${text} ${url}`);
         if (navigator.share) {
           try {
             await navigator.share({
@@ -9,7 +10,6 @@ export const useShare = () => {
               text,
               url,
             });
-            console.log('¡Compartido con éxito!');
           } catch (error) {
             console.error('Error al compartir:', error);
           }
