@@ -12,13 +12,17 @@ export const useReviewStore = defineStore('review', () => {
 
     // ACTIONS
     async function $getHotelDetail (params) {
+        console.log('test getHotelDetail params',params)
         const response = await getHotelDetailApi(params)
+        console.log('test getHotelDetail',response)
         if(response.ok) return response.data
         return []
     }
 
     async function $getDataOTAS (params) {
+        console.log('test getDataOTAS params',params)
         const response = await getDataOTASApi(params)
+        console.log('test getDataOTAS',response)
         if(response.ok) return response.data
         return []
     }
