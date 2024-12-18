@@ -1,8 +1,10 @@
 export default {
     "header": {
+        "home": "accueil",
         "facilities": "installations",
-        "explore": "explorer",
+        "destination": "destination",
         "experiences": "expériences",
+        "messages": "messages"
     },
     "dropdownLanguage": {
         "title": "langage"

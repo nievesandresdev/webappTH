@@ -16,9 +16,9 @@
     </AppHeader>
     <div class="flex-1">
         <!-- <template v-if="pointersData?.features?.length"> -->
-            <ListPageMapClusterPlace
+            <!-- <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
-            />
+            /> -->
         <!-- </template> -->
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <!-- {{loadingPlaceSeleced}} -->
@@ -274,7 +274,6 @@ const getFirstCategoryOfType = ()=> {
 async function loadPlaces () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    console.log(query, 'query');
     const response = await placeStore.$apiGetAll({page: page.value,...query});
     if (response.ok) {
         Object.assign(paginateData, response.data.places.paginate);
