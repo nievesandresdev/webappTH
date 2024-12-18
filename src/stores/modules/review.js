@@ -7,11 +7,13 @@ import {
 
 
 export const useReviewStore = defineStore('review', () => {
-    
+    const URL_BASE_BACKEND_REVIEW = process.env.VUE_APP_API_URL_REVIEW
+        
     // STATE
 
     // ACTIONS
     async function $getHotelDetail (params) {
+        console.log('test URL_BASE_BACKEND_REVIEW',URL_BASE_BACKEND_REVIEW)
         console.log('test getHotelDetail params',params)
         const response = await getHotelDetailApi(params)
         console.log('test getHotelDetail',response)
