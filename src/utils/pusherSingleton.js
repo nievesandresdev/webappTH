@@ -3,7 +3,7 @@ import { utilsPath } from '@/api/config/apiRoute';
 // import { apiHttp } from '@/api/config/apiRoute'
 
 import Pusher from 'pusher-js';
-// Pusher.logToConsole = true;
+Pusher.logToConsole = true;
 
 let pusherInstance = null;
 
