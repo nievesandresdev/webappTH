@@ -67,6 +67,7 @@ const connectPusher = () => {
             channelLogOutGuest.value = pusher.value.subscribe(channelLogOutGuest.value);
             channelLogOutGuest.value.bind('App\\Events\\LogoutWebappGuest', async (data) => {
                 console.log('test LogoutWebappGuest',data);
+                alert('cerrar sesion');
                 if(data.guestId == guestData?.id){
                     authStore.$logout();
                 }
