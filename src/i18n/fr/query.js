@@ -2,6 +2,8 @@ export default {
     "textToast": {
         "sendQueryText": "Nous apprécions sincèrement vos commentaires. Votre expérience compte pour nous et nous nous efforçons de répondre à vos attentes.",
         "updateQueryText" : "Modification envoyée",
+        "registerResponse": "Retour d'information envoyé",
+        "updateResponse": "Retour d'information modifié"
     },
     "form": {
         "send": "Envoyer",

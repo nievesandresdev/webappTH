@@ -104,11 +104,12 @@ const loading = ref(true);
 
 
 const handleMyStays = () => {
-    if(isCheckoutPast.value){
-        authStore.$logoutAndCreateStay();
-    }else{
-        router.push({ name: 'MyStays' });
-    }
+    router.push({ name: 'MyStays' });
+    // if(isCheckoutPast.value){
+    //     authStore.$logoutAndCreateStay();
+    // }else{
+    //     router.push({ name: 'MyStays' });
+    // }
 };
 
 const handlePersonalInfo = () => {

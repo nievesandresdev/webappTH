@@ -19,7 +19,7 @@
                         :showBadge="
                             !$utils.isMockup() &&
                             (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
-                            (item.title == 'Inbox' || item.title == 'Mensajes')
+                            (item.title == 'layout.header.messages')
                         "
                         classes="absolute top-[1px] right-4 border-[1.2px] rounded-full" 
                     />
