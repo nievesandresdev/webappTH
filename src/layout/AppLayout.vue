@@ -67,9 +67,9 @@ const connectPusher = () => {
             channelLogOutGuest.value = pusher.value.subscribe(channelLogOutGuest.value);
             channelLogOutGuest.value.bind('App\\Events\\LogoutWebappGuest', async (data) => {
                 console.log('test LogoutWebappGuest',data);
-                // if(data.guestId == guestData?.id){
-                //     authStore.$logout();
-                // }
+                if(data.guestId == guestData?.id){
+                    authStore.$logout();
+                }
             });
         }
     } else if (!stayStore.stayData && isSubscribed.value) {
