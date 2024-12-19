@@ -55,7 +55,7 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{ $t(item.title) }}
+                        {{ $utils.titleCase($t(item.title)) }}
                     </span>
                 </router-link>
             </template>
@@ -70,6 +70,8 @@ import BaseBadge from '@/components/BaseBadge.vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
+
+import $utils from '@/utils/utils';
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();

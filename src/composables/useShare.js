@@ -2,7 +2,6 @@ export const useShare = () => {
 
     async function shareContent (data) {
         let { title, text, url } = data;
-        alert(`${title} ${text} ${url}`);
         if (navigator.share) {
           try {
             await navigator.share({
