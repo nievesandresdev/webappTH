@@ -171,7 +171,7 @@ onMounted(async () => {
             }
         }
     }
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}`);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
 })
 
 async function getQuerySettings(){

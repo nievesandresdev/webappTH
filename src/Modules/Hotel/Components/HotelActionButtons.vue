@@ -45,7 +45,7 @@
     </PrimaryButton>
   </template>
   
-  <script setup>
+<script setup>
 import { ref, onMounted } from 'vue';
 
   import RoundedButton from '@/components/Buttons/RoundedButton.vue';
@@ -77,7 +77,7 @@ const { t } = useI18n();
   const shareUrl = ref(null);
 
   onMounted(async ()  => {
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}`);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
   });
   
   const emit = defineEmits(['wifi-click', 'call-click', 'legal-click', 'share-click']);
