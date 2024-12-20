@@ -107,13 +107,13 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
 
-    async function $findById (params) {
+    async function $findById (params, config = { showPreloader: true }) {
         let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
         let newParams = {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel },
             ...params
         }
-        const response = await findByIdApi(newParams)
+        const response = await findByIdApi(newParams, config)
         return response
     }
 

@@ -69,7 +69,7 @@
                         class=" underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
                         @click="toggleDescription"
                     >
-                        {{ isExpanded ? $t('place.detail.showLess') : $t('place.detail.showMore') }}
+                        {{ isExpanded ? $t('experience.detail-page.close-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
                     </button>
                 </div>
             </div>

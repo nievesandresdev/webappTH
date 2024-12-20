@@ -9,7 +9,7 @@
             >
                 <div class="flex items-stretch w-2 sp:w-4 h-full">
                     <div class="size-2 sp:size-4 mt-[2px] sp:mt-[4px]">
-                        <img :src="`/assets/icons/WA.${item.type == 1 ? 'check' : 'close'}.svg`" class="w-full" />
+                        <img :src="`/assets/icons/WA.${item.type == 1 ? 'check' : 'Close'}.svg`" class="w-full" />
                     </div>
                 </div>
                 <div class="space-y-1 sp:space-y-2 flex-1">
