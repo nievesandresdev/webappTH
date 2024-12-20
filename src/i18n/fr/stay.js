@@ -10,5 +10,10 @@ export default{
     "share": {
         "title": "Rejoignez notre séjour à {hotel}",
         "text": "Rejoignez-nous maintenant et profitez de tous les avantages de la WebApp pour tirer le meilleur parti de notre expérience"
+    },
+    "detail": {
+        "title": "Mes séjours",
+        "createBtn": "Créer un séjour",
+        "editBtn": "Modifier le séjour"
     }
 }

@@ -10,5 +10,10 @@ export default{
     "share": {
         "title": "Únete a nuestra estancia en {hotel}",
         "text": "Únete ahora y disfruta de todas las ventajas de la WebApp para aprovechar al máximo nuestra experiencia"
+    },
+    "detail": {
+        "title": "Mis estancias",
+        "createBtn": "Crear estancia",
+        "editBtn": "Editar estancia"
     }
 }

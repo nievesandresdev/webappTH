@@ -12,6 +12,7 @@ export default {
         "annulation-gratuite": "cancellazione gratuita",
         "non-refundable": "non rimborsabile",
         "from":"Da",
+        "reviews": "recensioni"
     },
     "list-page": {
         "title": "Esperienze",

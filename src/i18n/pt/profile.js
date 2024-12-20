@@ -15,5 +15,33 @@ export default {
         "description": "Selecione seu idioma padrão"
     },
     "logout": "Sair",
-    "share_stay": "Compartilhar Estadia"
+    "share_stay": "Compartilhar Estadia",
+    "page_personal_info": {
+        "title": "Informações pessoais",
+        "change_photo": "Alterar foto",
+        "change_password": "Alterar senha",
+        "btn_save": "Salvar",
+        "form": {
+            "name": {
+                "label": "Nome",
+                "placeholder": "Digite seu nome"
+            },
+            "last_name": {
+                "label": "Sobrenome",
+                "placeholder": "Digite seu sobrenome"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "Digite seu email"
+            },
+            "number_phone": {
+                "label": "Número de telefone",
+                "placeholder": "Digite seu número de telefone"
+            },
+            "password": {
+                "label": "Senha",
+                "placeholder": "Digite sua senha"
+            }
+        }
+    }
 };

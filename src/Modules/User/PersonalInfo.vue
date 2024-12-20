@@ -1,5 +1,5 @@
 <template>
-    <SectionBar title="Información personal" />
+    <SectionBar :title="$t('profile.page_personal_info.title')" />
     <div class="px-3 mt-[100px] h-auto full-height" ref="formContainer">
         <!-- foto -->
         <div class="flex items-center gap-2 mb-4">
@@ -18,7 +18,7 @@
             <span
                 class="underline text-[14px] font-bold lato cursor-pointer"
                 @click="selectImage"
-                >Cambiar foto</span
+                >{{ $t('profile.page_personal_info.change_photo') }}</span
             >
             <!-- Input file oculto -->
             <input
@@ -32,7 +32,7 @@
 
         <div class="flex flex-col w-full gap-4">
             <THInputText
-                :textLabel="'Nombre*'"
+                :textLabel="`${$t('profile.page_personal_info.form.name.label')}*`"
                 :placeholder="namePlaceholder"
                 v-model="form.name"
                 :isError="!form.name && nameTouched"
@@ -40,13 +40,13 @@
                 :showTextError="false"
             />
             <THInputText
-                :textLabel="'Apellidos'"
-                :placeholder="'Introduce tu apellido'"
+                :textLabel="`${$t('profile.page_personal_info.form.last_name.label')}`"
+                :placeholder="$t('profile.page_personal_info.form.last_name.placeholder')"
                 v-model="form.lastname"
                 :showTextError="false"
             />
             <THInputText
-                :textLabel="'Correo electrónico*'"
+                :textLabel="`${$t('profile.page_personal_info.form.email.label')}*`"
                 :placeholder="emailPlaceholder"
                 v-model="form.email"
                 :isError="(!form.email && emailTouched) || (emailTouched && !isEmailValid)"
@@ -55,13 +55,13 @@
                 :showTextError="false"
             />
             <THInputText
-                :textLabel="'Número de teléfono'"
-                :placeholder="'Introduce tu nº de teléfono'"
+                :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
+                :placeholder="`${$t('profile.page_personal_info.form.number_phone.placeholder')}`"
                 v-model="form.phone"
             />
             <THInputText
-                :textLabel="'Contraseña*'"
-                :placeholder="'Introduce tu contraseña'"
+                :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
+                :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
                 v-model="form.password"
                 topCustom="top-9"
                 type="password"
@@ -72,7 +72,7 @@
             <span
                 class="underline lato text-sm font-bold"
                 @click="openModalPassword"
-                >Cambiar contraseña</span
+                >{{ $t('profile.page_personal_info.change_password') }}</span
             >
         </div>
         <div class="flex w-full">
@@ -86,7 +86,7 @@
                         : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
                 ]"
             >
-                Guardar
+                {{ $t('profile.page_personal_info.btn_save') }}
             </button>
         </div>
     </div>

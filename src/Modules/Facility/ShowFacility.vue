@@ -22,15 +22,15 @@
             </p>
 
             <div  class="flex flex-col w-full p-2 sp:p-4 gap-2 sp:gap-4 border border-[#E9E9E9] rounded-[10px] bg-gradient-h mt-2 sp:mt-4">
-                <p class="lato text-[#333] text-[10px] sp:text-[16px] font-bold">Horarios</p>
-                <p v-if="facility.always_open" class="lato text-[8px] sp:text-sm font-bold">Abierto todos los días las 24hs</p>
+                <p class="lato text-[#333] text-[10px] sp:text-[16px] font-bold">{{ $t('facility.detailPage.sectionSchedules.title') }}</p>
+                <p v-if="facility.always_open" class="lato text-[8px] sp:text-sm font-bold">{{ $t('facility.detailPage.sectionSchedules.openAlways') }}</p>
                 
                 <template v-else-if="activeWeekdays.length">
                     <!-- horarios -->
                     <div class="flex flex-col">
                         <div v-for="(day, index) in activeWeekdays" :key="index">
                             <div class="flex justify-between items-center text-[8px] sp:text-sm text-[#333] py-1 sp:py-2">
-                                <p class="text-[10px] sp:text-[16px] font-bold lato">{{ day.name }}</p>
+                                <p class="text-[10px] sp:text-[16px] font-bold lato">{{ $t(`facility.detailPage.sectionSchedules.days.${day.name}`) }}</p>
                                 <div class="flex gap-2 sp:gap-4">
                                     <span v-for="(time, timeIndex) in day.times" :key="timeIndex" class="lato">
                                         {{ time.start }} - {{ time.end }}
@@ -42,7 +42,7 @@
                     </div>
                 </template>
 
-                <p v-else class="lato text-[8px] sp:text-sm font-bold">Sin horarios especificados. Consulta vía chat.</p>
+                <p v-else class="lato text-[8px] sp:text-sm font-bold">{{ $t('facility.detailPage.sectionSchedules.empty') }}</p>
             </div>
             
         </div>

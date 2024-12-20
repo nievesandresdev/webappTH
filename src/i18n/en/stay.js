@@ -10,5 +10,10 @@ export default{
     "share": {
         "title": "Join our stay at {hotel}",
         "text": "Join now and enjoy all the benefits of the WebApp to make the most of our experience"
+    },
+    "detail": {
+        "title": "My stays",
+        "createBtn": "Create stay",
+        "editBtn": "Edit stay"
     }
 }

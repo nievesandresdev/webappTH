@@ -10,5 +10,10 @@ export default{
     "share": {
         "title": "Unisciti al nostro soggiorno presso {hotel}",
         "text": "Unisciti ora e goditi tutti i vantaggi della WebApp per sfruttare al massimo la nostra esperienza"
+    },
+    "detail": {
+        "title": "Le mie permanenze",
+        "createBtn": "Crea permanenza",
+        "editBtn": "Modifica permanenza"
     }
 }

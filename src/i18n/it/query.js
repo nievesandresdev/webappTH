@@ -28,4 +28,7 @@ export default {
         "questionin-stay": "Come valuteresti il tuo livello di soddisfazione finora?",
         "questionpost-stay": "Com'è stata la tua esperienza con noi?",
     },
+    "inbox": {
+        "title": "Messaggi"
+    }
 }

@@ -12,6 +12,7 @@ export default {
         "annulation-gratuite": "free cancelation",
         "non-refundable": "non refundable",
         "from":"From",
+        "reviews": "reviews"
     },
     "list-page": {
         "title": "Experiences",
