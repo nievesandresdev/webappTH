@@ -41,7 +41,7 @@
                             <BaseBadge
                                 size="medium"
                                 :showBadge="!$utils.isMockup() && tab.notify"
-                                classes="absolute top-[3px] right-1.5 border-[1.2px] rounded-full" 
+                                classes="absolute top-[1px] right-[36px] border-[1.2px] rounded-full" 
                             />
                             <div class="flex flex-col items-center">
                                 <IconCustomColor 

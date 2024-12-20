@@ -232,7 +232,8 @@ const goPlaces = (type, cat) => {
 }
 
 const handleMyStays = () => {
-    authStore.$logoutAndCreateStay();
+    router.push({ name: 'MyStays' });
+    // authStore.$logoutAndCreateStay();
 };
 
 const formType = computed(() => props.acform);

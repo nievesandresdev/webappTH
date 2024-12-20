@@ -1,6 +1,6 @@
 <template>
     <button
-        class="py-1.5 sp:py-2 w-full flex items-center justify-center gap-2 shadow-guest hbg-gray-100 border border-[#333] rounded-[10px]"
+        class="py-1.5 sp:py-2 w-full flex items-center justify-center gap-2 shadow-guest hbg-gray-100 border border-[#333] rounded-[6px] sp:rounded-[10px]"
         :class="customClasess"
         @click="goOta()"
     >
