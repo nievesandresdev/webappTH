@@ -12,6 +12,7 @@ export default {
         "annulation-gratuite": "kostenlose Stornierung",
         "non-refundable": "nicht erstattungsfähig",
         "from":"Von",
+        "reviews": "bewertungen"
     },
     "list-page": {
         "title": "Erfahrungen",

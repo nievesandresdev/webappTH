@@ -32,7 +32,7 @@
                     class="size-[8px] sp:size-4"
                 >
                 <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ data.reviews?.combined_average_rating.toFixed(1) }}</span>
-                <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.reviews?.total_reviews }} reseñas)</span>
+                <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.reviews?.total_reviews }} {{ $t('experience.card-experience.reviews') }} }})</span>
             </div>
             <p class="text-[6px] sp:text-[14px] font-bold lato leading-0" v-html="data.title" />
             <!-- {{data.id}} -->

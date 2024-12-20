@@ -32,7 +32,7 @@
                         class="size-[8px] sp:size-4"
                     >
                     <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ converStar(data.num_stars).toFixed(1) }}</span>
-                    <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.num_reviews }} reseñas)</span>
+                    <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.num_reviews }} {{ $t('experience.card-experience.reviews') }})</span>
                 </div>
                 <div class="truncate-2  h-[16px] sp:h-[32px]">
                     <p class="text-[6px] sp:text-[14px] font-bold truncate-2 lato leading-4" v-html="data.title" />

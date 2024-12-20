@@ -10,5 +10,29 @@ export default{
     "share": {
         "title": "Junte-se à nossa estadia em {hotel}",
         "text": "Junte-se agora e aproveite todas as vantagens do WebApp para aproveitar ao máximo nossa experiência"
+    },
+    "detail": {
+        "title": "Minhas estadias",
+        "createBtn": "Criar estadia",
+        "editBtn": "Editar estadia"
+    },
+    "edit": {
+        "title": "Editar estadia",
+        "information-stay": "Informações da estadia",
+        "input": {
+            "medio-reserva": {
+                "label": "Meio de reserva",
+                "placeholder": "Selecionar meio de reserva",
+                "n-room": "Nº quarto"
+            }
+        },
+        "guests": "Hóspedes",
+        "saveBtn": "Salvar",
+        "share": "Compartilhar estadia",
+        "guest": "Hóspede",
+        "completeCheckin": "Completar check-in",
+        "waitingGuest": "Aguardando acesso do hóspede",
+        "accessRoom": "Acessar estadia",
+        "active": "Ativo"
     }
 }

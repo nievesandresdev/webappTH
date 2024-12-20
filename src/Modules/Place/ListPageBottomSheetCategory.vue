@@ -9,7 +9,7 @@
             @click="changeCategory(item.id, formFilter.typeplace)"
         >
                 <img :src="`/assets/icons/${item.icon}.svg`" class=" w-[10px] sp:w-[20px] sp:w-auto mr-[4px] sp:mr-2 inline" />
-                <span class="text-[8px] sp:text-sm font-bold">{{ item.name }}</span>
+                <span class="text-[8px] sp:text-sm font-bold">{{ item.translation_current }}</span>
         </div>
     </div>
 </template>

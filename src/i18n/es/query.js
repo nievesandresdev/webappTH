@@ -30,4 +30,7 @@ export default{
         "questionin-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia hasta ahora?",
         "questionpost-stay" : "¿Cómo ha sido tu experiencia con nosotros?",
     },
+    "inbox": {
+        "title": "Mensajes"
+    }
 }  
