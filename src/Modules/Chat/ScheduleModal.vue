@@ -11,7 +11,7 @@
         <div class="px-4 pb-4 overflow-y-auto max-h-[400px]">
             <template v-for="schedule in hotelStore.chatHours" :key="schedule">
                 <div v-if="schedule.active" class="flex items-start">
-                    <p class="w-24 text-sm font-medium mt-4 text-left">{{ schedule.day }}</p>
+                    <p class="w-24 text-sm font-medium mt-4 text-left">{{ $t(`detailPage.sectionSchedules.days.${schedule.day}`) }}</p>
                     <div class="">
                         <p class="text-sm font-medium mt-4" v-for="hour in schedule.horary" :key="hour">
                             {{ hour.start }}-{{ hour.end}}
