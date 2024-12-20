@@ -29,7 +29,7 @@
                     <p class="text-base font-bold lato leading-[20px] text-[#333333]">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
-                        <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">Activo</span>
+                        <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">{{ $t('stay.edit.active') }}</span>
                     </span>
                 </div>
                 <div class="flex mt-3">

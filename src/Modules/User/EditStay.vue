@@ -1,7 +1,7 @@
 <template>
     <div class="sticky top-0 left-0 z-10">
         <SectionBar 
-            title="Editar estancia"
+            :title="$t('stay.edit.title')"
         />
         <!-- view-name-back="MyStays" -->
     </div>
@@ -9,7 +9,7 @@
 
         <!-- form -->
         <div>
-            <h3 class="lato text-base font-bold leading-[20px]">Información de la estancia</h3>
+            <h3 class="lato text-base font-bold leading-[20px]">{{ $t('stay.edit.information-stay') }}</h3>
             <!-- hotel name -->
             <div class="mt-4">
                 <label class="lato text-sm font-bold leading-[16px] mb-1">Hotel</label>
@@ -32,9 +32,9 @@
             </div>
             <!-- middle of reserve  -->
             <div class="mt-4">
-                <label class="lato text-sm font-bold leading-[16px] mb-1">Medio de la reserva</label>
+                <label class="lato text-sm font-bold leading-[16px] mb-1">{{ $t('stay.edit.input.medio-reserva.label') }}</label>
                 <THInputField
-                    textLabel="Seleccionar medio de la reserva"
+                    :textLabel="$t('stay.edit.input.medio-reserva.placeholder')"
                     :options="options_middle_reservation"
                     v-model="form.middle_reservation"
                     icon_left="/assets/icons/Wa.reserva.svg"
@@ -43,9 +43,9 @@
             </div>
             <!-- room -->
             <div class="mt-4">
-                <label class="lato text-sm font-bold leading-[16px] mb-1">Nº habitación</label>
+                <label class="lato text-sm font-bold leading-[16px] mb-1">{{ $t('stay.edit.input.medio-reserva.n-room') }}</label>
                 <THInputText
-                    placeholder="Nº habitación"
+                    :placeholder="$t('stay.edit.input.medio-reserva.n-room')"
                     :iconLeft="`/assets/icons/WA.bed.svg`"
                     v-model="form.room"
                 />
@@ -56,20 +56,20 @@
                 @click="submitForm"
                 :disabled="!valid"
             >
-                Guardar
+                {{ $t('stay.edit.saveBtn') }}
             </PrimaryButton> 
             <div class="mt-4 border-b border-[#E9E9E9]"></div>
         </div>
 
         <div class="mt-4">
-            <h1 class="lato text-base font-bold leading-[20px]">Huéspedes</h1>
+            <h1 class="lato text-base font-bold leading-[20px]">{{ $t('stay.edit.guests') }}</h1>
             <button
                 v-if="guestsList.length < 10"
                 class="w-full h-10 flex justify-center items-center px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] lato text-sm font-bold hshadow-button mt-4"
                 @click="onShareClick"
             >   
             <img class="w-5 h-5 mr-2" src="/assets/icons/WA.Share.svg" alt="">
-                Compartir estancia
+                {{ $t('stay.edit.share') }}
             </button>
             <!-- guests list  -->
             <div 
@@ -79,7 +79,7 @@
                 <div>
                     <!-- title card -->
                     <div class="flex items-center">
-                        <h5 class="lato text-base font-bold leading-[20px] mr-auto">Huésped {{ item }}</h5>
+                        <h5 class="lato text-base font-bold leading-[20px] mr-auto">{{ $t('stay.edit.guest') }} {{ item }}</h5>
                         <WATag v-if="item == 1" title="check-in" />
                         <img 
                             v-if="item > 1 && guestsList[item-1]"
@@ -103,12 +103,12 @@
                             v-if="item > 1"
                             classes="block mt-6 h-10 text-center py-3 rounded-[10px] text-sm font-bold leading-[16px] w-full shadow-guest"
                         >
-                            Completar check in
+                           {{ $t('stay.edit.completeCheckin') }}
                         </PrimaryButton> 
                     </template>
                     <div class="flex items-center mt-3" v-else>
                         <img class="w-4 h-4 mr-2" src="/assets/icons/WA.Clock.svg" alt="">
-                        <p class="lato text-sm font-bold">Esperando acceso del huésped</p>
+                        <p class="lato text-sm font-bold">{{ $t('stay.edit.waitingGuest') }}</p>
                     </div>
                 </div>
             </div>

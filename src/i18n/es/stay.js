@@ -15,5 +15,24 @@ export default{
         "title": "Mis estancias",
         "createBtn": "Crear estancia",
         "editBtn": "Editar estancia"
+    },
+    "edit": {
+        "title": "Editar estancia",
+        "information-stay": "Información de la estancia",
+        "input": {
+            "medio-reserva": {
+                "label": "Medio de la reserva",
+                "placeholder": "Seleccionar medio de la reserva",
+                "n-room": "Nº habitación",
+            }
+        },
+        "guests": "Huéspedes",
+        "saveBtn": "Guardar",
+        "share": "Compartir estancia",
+        "guest": "Huésped",
+        "completeCheckin": "Completar check in",
+        "waitingGuest": "Esperando acceso del huésped",
+        "accessRoom": "Acceder a la estancia",
+        "active": "Activo"
     }
 }

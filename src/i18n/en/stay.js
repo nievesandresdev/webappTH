@@ -15,5 +15,24 @@ export default{
         "title": "My stays",
         "createBtn": "Create stay",
         "editBtn": "Edit stay"
+    },
+    "edit": {
+        "title": "Edit stay",
+        "information-stay": "Stay information",
+        "input": {
+            "medio-reserva": {
+                "label": "Booking method",
+                "placeholder": "Select booking method",
+                "n-room": "Room Nº"
+            }
+        },
+        "guests": "Guests",
+        "saveBtn": "Save",
+        "share": "Share stay",
+        "guest": "Guest",
+        "completeCheckin": "Complete check-in",
+        "waitingGuest": "Waiting for guest access",
+        "accessRoom": "Access stay",
+        "active": "Active"
     }
 }

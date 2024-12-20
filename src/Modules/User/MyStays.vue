@@ -35,7 +35,7 @@
         :isOpen="isModalOpen" 
         @update:isOpen="isModalOpen = $event" 
         :showButton="dataModalStay.stayId !== stayStore.stayData?.id" 
-        :buttonText="'Acceder a la estancia'"
+        :buttonText="$t('stay.edit.accessRoom')"
         @handleClick="AccessToStay"
     >
         <div>

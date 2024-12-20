@@ -15,5 +15,24 @@ export default{
         "title": "Le mie permanenze",
         "createBtn": "Crea permanenza",
         "editBtn": "Modifica permanenza"
+    },
+    "edit": {
+        "title": "Modifica permanenza",
+        "information-stay": "Informazioni sulla permanenza",
+        "input": {
+            "medio-reserva": {
+                "label": "Metodo di prenotazione",
+                "placeholder": "Seleziona metodo di prenotazione",
+                "n-room": "Nº stanza"
+            }
+        },
+        "guests": "Ospiti",
+        "saveBtn": "Salva",
+        "share": "Condividi permanenza",
+        "guest": "Ospite",
+        "completeCheckin": "Completa il check-in",
+        "waitingGuest": "In attesa dell'accesso dell'ospite",
+        "accessRoom": "Accedi alla permanenza",
+        "active": "Risorsa"
     }
 }
