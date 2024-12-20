@@ -44,9 +44,8 @@
                         class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
                         @click="toggleDescription"
                     >
-                        {{ isExpanded ? $t('experience.detail-page.open-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
+                        {{ isExpanded ? $t('experience.detail-page.close-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
                     </button>
-
                 </div>
             </div>
             <p v-if="placeData?.type_cuisine" class="mt-2 sp:mt-4 text-[9px] sp:text-sm font-light lato">{{ placeData?.type_cuisine }}</p>

@@ -178,7 +178,7 @@ function loadForFilterGlobal () {
 async function getPlaceById (placeId) {
     placeSelected.value = null;
     loadingPlaceSeleced.value = true;
-    let response = await placeStore.$findById({id: placeId});
+    let response = await placeStore.$findById({id: placeId}, { showPreloader: false });
     if(response.ok) placeSelected.value = response.data.place;
     loadingPlaceSeleced.value = false;
 }
