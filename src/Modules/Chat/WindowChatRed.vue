@@ -150,10 +150,10 @@ provide('isScheduleModalOpen',isScheduleModalOpen)
 
 const handleVisibilityChange = () => {
     if (document.hidden) {
-        console.log('test handleVisibilityChange si')
+        // console.log('test handleVisibilityChange si')
         screenOff.value = true;
     } else {
-        console.log('test handleVisibilityChange no')
+        // console.log('test handleVisibilityChange no')
         chatStore.markMsgsAsRead();
         screenOff.value = false;
     }
@@ -198,7 +198,7 @@ const sendMsg = async (e)=>{
             langWeb : localStorage.getItem('locale') || 'es',
             isAvailable : isAvailable.value
         };
-        console.log('--- SEND MESAGGE')
+        // console.log('--- SEND MESAGGE')
         chatStore.sendMsgToHoster(params);
         // Desenfocar el campo de entrada para cerrar el teclado
         const inputElement = document.getElementById('text-auto');
@@ -242,6 +242,7 @@ const watchAvailability = async () => {
             isAvailable.value = false;
             return false;
         }
+        
         // Verificar si la hora actual está dentro de alguno de los intervalos disponibles
         isAvailable.value = todaysAvailability.horary.some(timeSlot => {
             
@@ -270,7 +271,7 @@ const watchAvailability = async () => {
             // Verificar si la hora actual está dentro del intervalo (inclusive)
             return interval.contains(currentDateTimeParsed);
         });
-
+        console.log('test isAvailable',isAvailable.value)
         return isAvailable.value;
     } catch (error) {
         console.error('Error al verificar la disponibilidad:', error);
