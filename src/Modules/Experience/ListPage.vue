@@ -93,13 +93,22 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+// WATCH
+watch(formFilter, function(value) {
+    experienceStore.setDataFilterList(formFilter);
+});
+
 // ONMOUNTED
 onMounted(async () => {
+    loadForFilterGlobal();
     loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTION
+function loadForFilterGlobal () {
+    Object.assign(formFilter, experienceStore.dataFilterGlobal);
+}
 
 function loadMore () {
     page.value += 1;
