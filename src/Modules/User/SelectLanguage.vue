@@ -10,8 +10,8 @@
                         'font-bold' : lg.abbreviation === selectedLanguage ,
                         'font-medium' : lg.abbreviation != selectedLanguage
                     }"
-                 >  
-                    {{ lg.translatedName }}
+                 >
+                     {{ lg.translatedName }}
                 </span>
             </div>
             <input type="radio" class="hborder-black-100 w-4 h-4" name="language" :id="lg.abbreviation" :value="lg.abbreviation"  v-model="selectedLanguage" @change="handleChangeLanguage(lg.abbreviation)" :checked="lg.abbreviation === selectedLanguage">
@@ -54,11 +54,11 @@ onMounted(() => {
     getLanguages()
 })
 
- const sortedLanguages = computed(() => { 
+ const sortedLanguages = computed(() => {
     return localeStore.availableLocation.map(lg => { 
         return { 
-            ...lg, 
-            translatedName: $utils.capitalize(t(`language.${lg.abbreviation}`)) 
+            abbreviation: lg, 
+            translatedName: $utils.capitalize(t(`language.${lg}`)) 
         }; 
     }).sort((a, b) => a.translatedName.localeCompare(b.translatedName)); 
 });
