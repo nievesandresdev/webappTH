@@ -27,11 +27,14 @@ export const useLocaleStore = defineStore('locale', () => {
         let params = { 
             languages: availableLocation.value,
             selected : localeCurrent.value
-        }
+        };
+        // console.log('test params', params);
         const response = await getForItemApi(params)
+        // console.log('test response', response);
         const { ok, data } = response
         if (ok) {
-            return availableLocation.value = data
+            // return availableLocation.value = data
+            return data
         }
         return [];     
     }
@@ -39,10 +42,12 @@ export const useLocaleStore = defineStore('locale', () => {
     // ACTIONS
     function $change (lg) {
         localStorage.setItem('locale', lg)
-        let guestData = JSON.parse(localStorage.getItem('guestData')) || {};
-        guestData.lang_web = lg; 
-        localStorage.setItem('guestData', JSON.stringify(guestData));
-        // console.log('changeAndReload',localStorage.getItem('locale'))
+        let guestData = JSON.parse(localStorage.getItem('guestData'));
+        //solo se actualiza la data en caso de que existe la sesison
+        if(guestData){
+            guestData.lang_web = lg; 
+            localStorage.setItem('guestData', JSON.stringify(guestData));
+        }
         i18n.global.locale.value = lg
         localeCurrent.value = lg
         localeCurrent.value = lg

@@ -1,25 +1,25 @@
 <template>
-  <div>
+  <div class="no-scrollbar">
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
     <ImageSlider
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
     />
-    <div class="py-[12px] sp:py-[24px]">
-        <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2">
+    <div class="py-[12px] sp:py-[24px] no-scrollbar">
+        <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2 sp:mx-4">
             <div class="flex justify-between">
                 <h2 class="text-[14px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
                     {{ placeData?.title }}
                 </h2>
                 <div class="flex flex-col items-center">
                 <div class="flex items-center mb-0.5 sp:mb-1">
-                    <img src="/assets/icons/WA.STAR.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                    <img src="/assets/icons/WA.star.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
                     <p class="text-[11px] sp:text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
                 </div>
                 <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
-                    {{ placeData?.num_reviews }}
-                    {{ $t('place.detail.opinionsWord') }}
+                    ({{ placeData?.num_reviews }}
+                    {{ $t('place.detail.opinionsWord') }})
                 </p>
                 </div>
             </div>
@@ -36,14 +36,17 @@
                 >
                     {{ description }}
                 </p>
-                <!-- Botón para Mostrar Más/Menos -->
-                <button
+                <div
                     v-if="isLongDescription"
-                    class="mt-[6px] sp:mt-[12px] underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
-                    @click="toggleDescription"
+                    class="mt-[6px] sp:mt-[12px] flex justify-end"
                 >
-                    {{ isExpanded ? $t('place.detail.showLess') : $t('place.detail.showMore') }}
-                </button>
+                    <button
+                        class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
+                        @click="toggleDescription"
+                    >
+                        {{ isExpanded ? $t('experience.detail-page.close-collapse-description') : $t('experience.detail-page.open-collapse-description') }}
+                    </button>
+                </div>
             </div>
             <p v-if="placeData?.type_cuisine" class="mt-2 sp:mt-4 text-[9px] sp:text-sm font-light lato">{{ placeData?.type_cuisine }}</p>
         </div>
@@ -63,8 +66,8 @@
             </p>
         </div>
         <div class="mt-[12px] sp:mt-[24px]">
-            <div class="flex items-center justify-between mx-2 sp:mx-4">
-                <div class="flex items-center space-x-[4px] sp:space-x-[8px]">
+            <div class="flex items-center justify-between pl-2 sp:pl-4 pr-[8px] sp:pr-[16px]">
+                <div class="flex items-center space-x-[4px] sp:space-x-[8px] w-[160px] sp:w-[250px]">
                     <img
                         src="/assets/icons/WA.pointer.svg"
                         class="size-[10px] sp:size-[20px]"
@@ -77,7 +80,7 @@
                 >
                     <img
                         class="size-2 sp:size-4 inline-block mr-1 sp:mr-2"
-                        src="/assets/icons/WA.COPY.svg"
+                        src="/assets/icons/WA.copy.svg"
                         alt="1.TH.COPY"
                     >
                     {{ $utils.titleCase($t('place.detail.copy')) }}
@@ -101,13 +104,13 @@
                 </div>
             </div>
             <div  
-                class="flex justify-around mx-2 sp:mx-4 mb-[12px] sp:mb-[24px]"
+                class="flex justify-around mx-2 sp:mx-4 my-[12px] sp:my-[24px]"
             >
                 <div
                     v-if="placeData?.web_link"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openWebsite"
                     >
@@ -115,14 +118,14 @@
                             src="/assets/icons/WA.website.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.web')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.phone_wheretoeat"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openCall"
                     >
@@ -130,14 +133,14 @@
                             src="/assets/icons/WA.llamar.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.call')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.url_menu"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-1 sp:p-2"
                         @click="openLinkMenu"
                     >
@@ -145,14 +148,14 @@
                             src="/assets/icons/WA.MenuRestaurant.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.menu')) }}</span>
                 </div>
                 <div
                     v-if="placeData?.email_wheretoeat"
-                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center"
+                    class="flex flex-col space-y-1 sp:space-y-2 justify-center items-center cursor-pointer"
                 >
-                    <button
+                    <div
                         class="button-utils p-2"
                         @click="openEmail"
                     >
@@ -160,7 +163,7 @@
                             src="/assets/icons/WA.mail.svg"
                             class="size-[16px] sp:size-[32px]"
                         >
-                    </button>
+                    </div>
                     <span class="text-[9px] sp:text-sm font-bold">{{ $utils.titleCase($t('place.detail.buttoms.email')) }}</span>
                 </div>
             </div>
@@ -359,7 +362,7 @@ const getDataPlace = async () => {
 // Convierte las estrellas
 const converStar = (value) => {
   if (!value) return 0;
-  return parseFloat(value.replace(',', '.'));
+  return parseFloat(value.replace(',', '.'))?.toFixed(1);
 };
 
 function openWebsite () {
@@ -412,7 +415,7 @@ provide('placeData', placeData);
 .button-utils{
     border-radius: 360px;
     border: 1px solid #FFF;
-    background: var(--surface-bg-gradient, linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%));
+    background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
     box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
 }
 

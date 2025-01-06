@@ -2,7 +2,7 @@
     <div 
         id="container-otas-links"
         :class="{
-            'hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
+            'rounded-[10px] sp:rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
         }"
     >
         <!-- <img 
@@ -21,7 +21,7 @@
             class="description-container1 mt-3 md:mt-6" 
             v-html="requestTexts?.text1"
         ></div>
-        <div class="buttons flex flex-col gap-4 md:max-w-[310px] md:mx-auto">
+        <div class="buttons flex flex-col gap-3 sp:gap-4 md:max-w-[310px] md:mx-auto">
             <div v-if="requestTexts?.otas_enabled?.booking && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="booking" textButton="Continuar en Booking"/>
             </div>

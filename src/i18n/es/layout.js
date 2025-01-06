@@ -1,8 +1,11 @@
 export default {
     "header": {
+        "home": "inicio",
         "facilities": "instalaciones",
-        "explore": "explora",
+        "hotel": "hotel",
+        "destination": "destino",
         "experiences": "experiencias",
+        "messages": "mensajes"
     },
     "dropdownLanguage": {
         "title": "idioma"
@@ -17,6 +20,6 @@ export default {
         "search": "Buscar",
         "placeholder": "Destinos, experiencias...",
         "from": "desde"
-    }
+    },
     // más traducciones...
   };

@@ -3,7 +3,7 @@
     <HeroSectionRed />
 
     <div 
-        class="px-4 mt-6"
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
         v-if="isCheckoutPast"
     >
         <WACardBanner 
@@ -15,19 +15,18 @@
     </div>
 
     <!-- carousel's -->
-    <div class="mt-6 pb-[104px]">
+    <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
         <!-- facilities carousel -->
         <section 
             v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-            class="pl-4"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
-                <h2 class="lato text-[20px] font-bold leading-[18px]">
+            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                     {{ $utils.capitalize($t('home.section-facility.title')) }}
                 </h2>
                 <a 
                     @click="goFacilities()" 
-                    class="lato text-sm font-bold leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
                 >
                     {{ $utils.capitalize($t('home.btn-see-all')) }}
                 </a>
@@ -40,15 +39,15 @@
         <!-- what visit carousel -->
         <section 
             v-if="showWhatvisitSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
-                <h2 class="lato text-[20px] font-bold leading-[18px]">
+            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                     {{ $utils.capitalize($t('home.section-what-visit.title')) }}
                 </h2>
                 <a 
                     @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
-                    class="lato text-sm font-bold leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
                 >
                     {{ $utils.capitalize($t('home.btn-see-all')) }}
                 </a>
@@ -61,15 +60,15 @@
         <!-- where eat carousel -->
         <section 
         v-if="showWhereeatSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
-                <h2 class="lato text-[20px] font-bold leading-[18px]">
+            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                     {{ $utils.capitalize($t('home.section-where-eat.title')) }}
                 </h2>
                 <a 
                     @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
-                    class="lato text-sm font-bold leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
                 >
                     {{ $utils.capitalize($t('home.btn-see-all')) }}
                 </a>
@@ -82,15 +81,15 @@
         <!-- leisure carousel -->
         <section 
             v-if="showLeisureSection"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
-                <h2 class="lato text-[20px] font-bold leading-[18px]">
+            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                     {{ $utils.capitalize($t('home.section-leisure.title')) }}
                 </h2>
                 <a 
                     @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
-                    class="lato text-sm font-bold leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
                 >
                     {{ $utils.capitalize($t('home.btn-see-all')) }}
                 </a>
@@ -103,13 +102,13 @@
         <!-- experiences carousel -->
         <section 
             v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-            class="pl-4 mt-2"
+            class="mt-2"
         >
-            <div class="flex items-center justify-between pr-4 h-[28px]">
-                <h2 class="lato text-[20px] font-bold leading-[18px]">
+            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                     {{ $utils.capitalize($t('home.section-experience.title')) }}
                 </h2>
-                <router-link :to="{name:'ExperienceList'}" class="lato text-sm font-bold leading-[16px] underline hover:underline">
+                <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
                     {{ $utils.capitalize($t('home.btn-see-all')) }}
                 </router-link>
             </div>
@@ -190,6 +189,8 @@ onMounted(() => {
     loadCrossellings();
     loadCrossellingsPlaces();
     getPlaceCategories();
+    // console.log('test guestData',guestStore.guestData)
+    
 })
 
 async function loadCrossellings () {
@@ -231,7 +232,8 @@ const goPlaces = (type, cat) => {
 }
 
 const handleMyStays = () => {
-    authStore.$logoutAndCreateStay();
+    router.push({ name: 'MyStays' });
+    // authStore.$logoutAndCreateStay();
 };
 
 const formType = computed(() => props.acform);

@@ -40,14 +40,14 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $load () {
-        // if (hotelData.value || !localStorage.getItem('subdomain')) return
-        if (!localStorage.getItem('subdomain')) return
+        if (hotelData.value || !localStorage.getItem('subdomain')) return
         
         let params = {
             subdomain: localStorage.getItem('subdomain'),
         }
-        // console.log('findByParamsApi',localStorage.getItem('subdomain'))
+        
         const response = await findByParamsApi(params)
+        // console.log('test response',response)
         const { ok } = response
 
         hotelData.value = ok ? response.data : null
@@ -65,7 +65,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
     async function $loadChatHours () {
         const response = await getChatHoursApi()
-        // console.log('chatHoursResponse',response)
+        console.log('test chatHoursResponse',response)
         const { ok, data } = response
         chatHours.value = ok ? response.data : null
         // console.log('chatHoursloadChatHours',chatHours.value)

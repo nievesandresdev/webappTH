@@ -1,18 +1,23 @@
 <template>
-  <SectionBarTab 
+  <!-- <SectionBarTab 
     :title="$t('hotel.facilities')" 
     :tabs="[ 
        { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
        { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
     :hotel="hotelData"
+  /> -->
+  <AppHeader
+    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
+    :tabs="tabsHeader"
+    fixed
   />
-  <div class="bg-[#FAFAFA] mb-[100px]">
+  <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
     <div 
-     class="px-4 space-y-4"
+     class="px-2 sp:px-4 space-y-2 sp:space-y-4"
       :class="{
-        'mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
-        'mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+        'mt-[86px] sp:mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+        'mt-[60px] sp:mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
       }"
     >
       
@@ -20,22 +25,22 @@
         v-for="facility in facilities"
         :key="facility.id"
         @click="goToFacilityShow(facility.id)"
-        class="flex flex-col rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
+        class="flex flex-col rouded-[10px] sp:rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
       >
       
-        <div class="relative w-full h-[226px] rounded-t-lg overflow-hidden">
+        <div class="relative w-full h-[110px] sp:h-[226px] rounded-t-lg overflow-hidden">
           <img
             :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
             alt="Facility Image"
             class="w-full h-full object-cover"
           />
           
-          <div v-if="facility.ad_tag" class="absolute bottom-2 left-2 flex items-center justify-center gap-1 px-2 py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
-            <p class="text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
+          <div v-if="facility.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 sp:py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[9px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
+            <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
           </div>
         </div>
-        <div class="p-4">
-          <h3 class="text-[18px] font-bold lato">{{ facility.title }}</h3>
+        <div class="p-2 sp:p-4">
+          <h3 class="text-[12px] sp:text-[18px] font-bold lato">{{ facility.title }}</h3>
         </div>
       </div>
     </div>
@@ -48,10 +53,16 @@ import router from '@/router';
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
 
+import AppHeader from '@/layout/Components/AppHeader.vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 const hotelStore = useHotelStore();
 const facilities = ref([]);
 
 const hotelData = computed(() => hotelStore.hotelData);
+
+const tabsHeader = ref([]);
 
 const $formatImage = ({ url, type, urlDefault }) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
@@ -83,5 +94,40 @@ const goToFacilityShow = (id) => {
 onMounted(async () => {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
+   loadTabsHeader();
 });
+
+function loadTabsHeader () {
+    const tabInformation = {
+      title: t('hotel.information'),
+      exclude: hotelData.show_profile,
+      iconDefault: 'WA.alojamiento',
+      iconSelected: `WA.alojamiento`,
+      isActive: router.currentRoute.value.name === 'ShowHotel',
+      onClick: () => changeTab('ShowHotel'),
+    }
+    const tabFacility = {
+      title: t('hotel.facilities'),
+      exclude: hotelData.show_facility,
+      iconDefault: 'WA.Instalaciones',
+      iconSelected: `WA.Instalaciones`,
+      isActive: router.currentRoute.value.name === 'FacilityList',
+      onClick: () => changeTab('FacilityList'),
+    }
+    tabsHeader.value  = [tabInformation, tabFacility];
+    // tabsHeader.value = typeplaces.value.map(item => {
+    //     return {
+    //         title: $t('hotel.information'),
+    //         exclude: false,
+    //         iconDefault: `${item.icon}`,
+    //         iconSelected: `${item.icon}.DEFAULT`,
+    //         isActive: item.id == formFilter.typeplace,
+    //         onClick: () => changeCategory([], item.id),
+    //     };
+    // });
+}
+
+function changeTab (r) {
+  router.push({ name: r });
+}
 </script>

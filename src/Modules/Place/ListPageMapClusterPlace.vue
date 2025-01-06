@@ -1,14 +1,15 @@
 <template>
     <BaseMap
+        ref="baseMapRef"
         :center="coordCenter"
-        :height-map="windowWidth >= 250 ? '78vh' : '78vh'"
+        :height-map="windowWidth >= 250 ? heightDinamic : heightDinamic"
         @mb-click="handleMapClick($event, 'map')"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
                 <img
-                    class="size-[38px] sp:size-[80px]"
-                    src="/assets/icons/WA.MAP.POINTER.svg"
+                    class="h-[40px] sp:h-[50px] object-cover"
+                    src="/assets/icons/WA.map-pointer.png"
                 >
             </MapboxMarker>
             <!-- Agregar iconos personalizados por categoría -->
@@ -28,29 +29,30 @@
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
                     'icon-image': ['get', 'category'], 
-                    'icon-size':windowWidth >= 250 ? 0.09 : 0.04
+                    'icon-size':windowWidth >= 250 ? 0.063 : 0.02
                 }"
-                :clusterMinPoints="2"
+                :clusterMinPoints="5"
                 :clusters-paint="{ 'circle-color': 'rgba(0, 123, 255, 0.5)', 'circle-radius': 40 }"
-                @mb-feature-click="handleMapClick($event, 'cluster')"
+                @mb-feature-click="handleMapClickCluster($event, 'cluster')"
             />
-            <!--  -->
         </template>
     </BaseMap>
 </template>
 
 <script setup>
-import { computed, inject, toRaw, onMounted, defineEmits } from 'vue';
+import { computed, inject, toRaw, onMounted, defineEmits, ref, watch } from 'vue';
   import { MapboxMap, MapboxMarker, MapboxCluster, MapboxImage } from '@studiometa/vue-mapbox-gl';
 //   import 'mapbox-gl/dist/mapbox-gl.css';
   
 import BaseMap from '@/components/Maps/BaseMap.vue';
-
+// positionBottomSheet
 const emits = defineEmits(['clickMapCluster']);
 
 // INJECT
 const hotelData = inject('hotelData');
 const pointersData = inject('pointersData');
+const positionBottomSheet = inject('positionBottomSheet');
+const searchingActive = inject('searchingActive');
 
 
  const windowWidth = window.innerWidth;
@@ -121,6 +123,23 @@ const dataMarkets = {
     ]
 }
 
+const baseMapRef = ref(null);
+
+watch(searchingActive, function(valNew, valOld) {
+    if (valOld && !valNew ) {
+        baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    }
+});
+
+const heightDinamic = computed(() => {
+    // if (positionBottomSheet.value == 'bottom')
+        return '73vh';
+    // else
+        // return '60vh';
+
+
+});
+
 const transformedPointersData = computed(() => {
     return JSON.parse(JSON.stringify(pointersData.value)); // Crear una copia inmutable
 });
@@ -131,7 +150,18 @@ const coordCenter = computed(() => {
 });
 
 function handleMapClick ($event, typCap) {
+    
+    // if ($event.type === 'click') {
+    //     baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    //     return;
+    // }
+    // if ($event.type === 'click') {
+    //     baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+    // }
+    // console.log($event, 'handleMapClick');
     emits('clickMapCluster', {event: $event, type: typCap });
 }
-
+function handleMapClickCluster ($event, typCap) {
+    emits('clickMapCluster', {event: $event, type: typCap });
+}
 </script>

@@ -37,6 +37,9 @@ const chatStore = useChatStore()
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 //DATA
 
 const tabsMenu = computed(() => [
@@ -65,6 +68,6 @@ const titleHead = computed(()=>{
     if(route.name == 'Chat'){
         return titleChat;
     }
-    return 'Mensajes';
+    return t('query.inbox.title');
 })
 </script>

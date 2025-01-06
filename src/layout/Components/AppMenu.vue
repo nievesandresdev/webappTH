@@ -2,8 +2,8 @@
     <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
         
         <div class="
-            menu rounded-[10px] sp:rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 space-x-[1px] sp:space-x-1 
-            flex justify-around border border-white bg-gradient-h
+            menu rounded-[10px] sp:rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 
+            flex border border-white bg-gradient-h justify-between
         ">
             <template
                 v-for="item in menuItems"
@@ -14,6 +14,15 @@
                     :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
                     v-if="!item.exclude"
                 >
+                    <BaseBadge
+                        size="medium"
+                        :showBadge="
+                            !$utils.isMockup() &&
+                            (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
+                            (item.title == 'layout.header.messages')
+                        "
+                        classes="absolute top-[1px] right-4 border-[1.2px] rounded-full" 
+                    />
                     <img
                         v-if="!validRoute(item)"
                         :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
@@ -46,16 +55,8 @@
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
                         }"
                     >
-                        {{item.title}}
+                        {{ $utils.titleCase($t(item.title)) }}
                     </span>
-                    <img 
-                        v-if="
-                            (chatStore.countUnreadMessages || queryStore.hasPendingQuery  ) &&
-                            (item.title == 'Inbox' || item.title == 'Mensajes')
-                        "
-                        class="absolute top-[6px] right-[18px] w-[12px] h-[12px] z-10"
-                        src="/assets/icons/item-dot.svg"
-                    >
                 </router-link>
             </template>
         </div>
@@ -65,9 +66,12 @@
 <script setup>
 import { onMounted, reactive, computed, ref  } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
+import BaseBadge from '@/components/BaseBadge.vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
+
+import $utils from '@/utils/utils';
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
@@ -82,7 +86,7 @@ const innerWidth = window.innerWidth
 
 const menuItems = reactive([
     {
-        title: 'Home',
+        title: 'layout.header.home',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.HOME',
         iconSelected: 'WA.MENU.SELECTED.HOME',
@@ -90,23 +94,23 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: 'Hotel',
-        exclude: !hotelStore.hotelData.show_profile,
+        title: 'layout.header.hotel',
+        exclude: !hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
         routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
     },
+    // {
+    //     title: 'layout.header.facilities',
+    //     exclude: !hotelStore.hotelData.show_facilities,
+    //     iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
+    //     iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
+    //     to: `/${route.params.hotelSlug}/alojamiento`, 
+    //     routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
+    // },
     {
-        title: 'Instalaciones',
-        exclude: hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
-        iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
-        iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
-        to: `/${route.params.hotelSlug}/alojamiento`, 
-        routeNameIncludes: ['ShowHotel','FacilityList','ShowFacility'],
-    },
-    {
-        title: 'Destino',
+        title: 'layout.header.destination',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
@@ -114,7 +118,7 @@ const menuItems = reactive([
         routeNameIncludes: ['PlaceList', 'PlaceDetail'],
     },
     {
-        title: 'Experiencias',
+        title: 'layout.header.experiences',
         exclude: !hotelStore.hotelData.show_experiences,
         iconDefault: 'WA.MENU.DEFAULT.EXPERIENCIAS',
         iconSelected: 'WA.MENU.SELECTED.EXPERIENCIAS',
@@ -122,7 +126,7 @@ const menuItems = reactive([
         routeNameIncludes: ['ExperienceList', 'ExperienceDetail'],
     },
     {
-        title: 'Mensajes',
+        title: 'layout.header.messages',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',

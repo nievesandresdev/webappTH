@@ -5,15 +5,20 @@
         <!-- :class="classHeightDinamic" -->
     <div
         id="list-place"
-        class="w-full overflow-y-auto flex-1"
+        class="w-full overflow-y-scroll flex-1 no-scrollbar px-[8px] sp:px-4"
+        @scroll="handleScroll"
     >
-        <template v-if="!isloadingForm && !placesData?.length && !firstLoad">
+
+        
+
+        <template v-if="!isloadingForm && !placesData?.length && !firstLoad && (searchingActive || !emptyFilters)">
             <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>
             <template v-for="(item, index) in (placesData ?? [])">
                 <CardList
-                    :data="item" 
+                    :data="item"
+                    class="mx-[3px] sp:mx-[6px]"
                     :class="index === placesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                 />
             </template>
@@ -42,8 +47,10 @@
     const placesData = inject('placesData');
     const paginateData = inject('paginateData');
     const firstLoad = inject('firstLoad');
+    const searchingActive = inject('searchingActive');
     const isloadingForm = inject('isloadingForm');
     const positionBottomSheet = inject('positionBottomSheet');
+    const isScrollingList = inject('isScrollingList');
 
     onMounted(() => {
         initScrollListener();  
@@ -76,6 +83,14 @@
     });
 
     // FUNCTIONS
+    function handleScroll() {
+        const contentFilter = document.querySelector('#list-place');
+        if (contentFilter) {
+            const maxScroll = contentFilter.scrollHeight - contentFilter.clientHeight;
+            isScrollingList.value = contentFilter.scrollTop != 0;
+        }
+    }
+
     function initScrollListener() {
         const container = document?.querySelector('#list-place');
         if (container) {

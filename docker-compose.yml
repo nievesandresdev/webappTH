@@ -1,6 +1,7 @@
 services:
   #huesped
   huesped:
+    image: huesped:latest
     container_name: thehoster-app-huesped-front
     restart: always
     build:

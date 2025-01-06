@@ -7,7 +7,7 @@
         <div class="header-top pt-[10px] sp:pt-6 px-1 sp:px-4 pb-1.5 sp:pb-3">
             <h1
                 v-if="withTitleRoute"
-                class="text-[12px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
+                class="text-[14px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
             >
                 {{ $t($route.meta.title) }}
             </h1>
@@ -15,7 +15,7 @@
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="lato text-[12px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
+                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
                     </slot>
                 </div>
 
@@ -35,9 +35,14 @@
                     <div class="flex justify-around">
                         <div
                             v-for="(tab, index) in tabs"
-                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative"
+                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative  w-[80px] sp:w-[100px]"
                             :class="{ active: tab.isActive }" @click="tab.onClick"
                         >
+                            <BaseBadge
+                                size="medium"
+                                :showBadge="!$utils.isMockup() && tab.notify"
+                                classes="absolute top-[1px] right-[36px] border-[1.2px] rounded-full" 
+                            />
                             <div class="flex flex-col items-center">
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
@@ -56,11 +61,6 @@
                             >
                                 <div class="tab-item__selected" />
                             </div>
-                            <img 
-                                v-if="tab.notify"
-                                class="absolute top-[-6px] right-[8px] w-[14px] h-[14px] z-10"
-                                src="/assets/icons/item-dot.svg"
-                            >
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
 <script setup>
 import { onMounted, reactive, computed, defineProps } from 'vue';
 import AvatarButton from '@/components/Buttons/AvatarButton.vue';
-
+import BaseBadge from '@/components/BaseBadge.vue';
 import $utils from '@/utils/utils';
 
 const props = defineProps({

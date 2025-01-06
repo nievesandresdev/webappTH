@@ -33,8 +33,9 @@
             <img class="w-6 h-6 mr-2" src="/assets/icons/1.TH.GOOGLE.svg" alt="icon google">
             <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-google')}}</p>
         </button>
-        <!-- @click="goRegisterOrLogin('facebook')" -->
+        
         <button 
+            @click="goRegisterOrLogin('facebook')"
             class="mt-4 bg-white hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/WA.facebook.svg" alt="icon google">

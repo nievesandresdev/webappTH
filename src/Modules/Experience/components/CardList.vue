@@ -1,7 +1,7 @@
 <template>
     <div
         class="card-list flex w-full" :class="class"
-        @click="$router.push({ name: 'ExperienceDetail', params: { id: data.id } })"
+        @click="$router.push({ name: 'ExperienceDetail', params: { slug: data.slug } })"
     >
     
         <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden">
@@ -32,7 +32,7 @@
                     class="size-[8px] sp:size-4"
                 >
                 <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ data.reviews?.combined_average_rating.toFixed(1) }}</span>
-                <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.reviews?.total_reviews }} reseñas)</span>
+                <span class="text-[4px] sp:text-[10px] leading-none font-bold lato leading-none">({{ data.reviews?.total_reviews }} {{ $t('experience.card-experience.reviews') }})</span>
             </div>
             <p class="text-[6px] sp:text-[14px] font-bold lato leading-0" v-html="data.title" />
             <!-- {{data.id}} -->
@@ -42,7 +42,7 @@
                 <div class="flex flex-col space-y-1 sp:space-y-2">
                     <div class="flex items-center space-x-0.5 sp:space-x-1">
                         <img
-                            src="/assets/icons/WA.CLOCK.svg"
+                            src="/assets/icons/WA.Clock.svg"
                             class="size-[6px] sp:size-[12px]"
                         >
                         <span v-if="duration" class="text-[5px] sp:text-[10px] font-bold lato leading-non">

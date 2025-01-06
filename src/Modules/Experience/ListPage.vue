@@ -1,4 +1,5 @@
 <template>
+<div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <AppHeader
         title="Experiencias"
         with-title-route
@@ -84,7 +85,6 @@ const numbersFiltersApplied = computed(() => {
     formFilter.score?.length ? filters.push('score') : '';
     formFilter.price_min ? filters.push('price_min') : '';
     formFilter.price_max ? filters.push('price_max') : '';
-    formFilter.search ? filters.push('search') : '';
     formFilter.free_cancelation ? filters.push('free_cancelation') : '';
     formFilter.featured ? filters.push('featured') : '';
     return filters;
@@ -93,13 +93,22 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+// WATCH
+watch(formFilter, function(value) {
+    experienceStore.setDataFilterList(formFilter);
+});
+
 // ONMOUNTED
 onMounted(async () => {
+    loadForFilterGlobal();
     loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTION
+function loadForFilterGlobal () {
+    Object.assign(formFilter, experienceStore.dataFilterGlobal);
+}
 
 function loadMore () {
     page.value += 1;
@@ -112,14 +121,14 @@ function closeSearchHandle () {
 
 function activateSearchHandle ($event) {
     searchingActive.value = false;
-    formFilter.search = null;
+    formFilter.search = '';
     loadAll({showPreloader: false});
 }
 
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
-    formFilter.search = $event?.target?.value ?? null;
+    formFilter.search = $event?.target?.value ?? '';
     page.value = 1;
     experiencesData.value = [];
     await loadAll({showPreloader: false});

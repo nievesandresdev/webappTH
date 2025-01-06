@@ -3,6 +3,8 @@
     <BaseMap
         :center="coordCenter"
         :height-map="windowWidth >= 250 ? '168px' : '90px'"
+        :showExpand="true"
+        :transition="false"
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
@@ -26,6 +28,8 @@ import BaseMap from '@/components/Maps/BaseMap.vue';
 import $utils from '@/utils/utils';
 
 const placeData = inject('placeData');
+
+const windowWidth = window.innerWidth;
 
 const coordCenter = computed(() => {
     if (!placeData.value) return;

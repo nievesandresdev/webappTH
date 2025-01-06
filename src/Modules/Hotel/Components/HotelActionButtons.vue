@@ -45,10 +45,23 @@
     </PrimaryButton>
   </template>
   
-  <script setup>
+<script setup>
+import { ref, onMounted } from 'vue';
+
   import RoundedButton from '@/components/Buttons/RoundedButton.vue';
   import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import { defineProps, defineEmits, computed } from 'vue';
+
+  import { useHotelStore } from '@/stores/modules/hotel';
+  const hotelStore = useHotelStore();
+  import { useStayStore } from '@/stores/modules/stay';
+  const stayStore = useStayStore();
+
+  import { useShare } from "@/composables/useShare";
+  const { shareContent } = useShare();
+
+  import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
   
   const props = defineProps({
     hotelData: {
@@ -60,6 +73,12 @@
       required: true,
     },
   });
+
+  const shareUrl = ref(null);
+
+  onMounted(async ()  => {
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
+  });
   
   const emit = defineEmits(['wifi-click', 'call-click', 'legal-click', 'share-click']);
   
@@ -68,6 +87,14 @@
   const onWifiClick = () => emit('wifi-click');
   const onCallClick = () => emit('call-click');
   const onLegalClick = () => emit('legal-click');
-  const onShareClick = () => emit('share-click');
+
+  function onShareClick () {
+    let data = {
+      title: t('stay.share.title', { hotel: hotelStore.hotelData.name }),
+      text: t('stay.share.text'),
+      url: shareUrl.value,
+    }
+    shareContent(data);
+  }
   </script>
   

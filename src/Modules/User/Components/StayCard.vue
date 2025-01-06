@@ -29,7 +29,7 @@
                     <p class="text-base font-bold lato leading-[20px] text-[#333333]">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
-                        <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">Activo</span>
+                        <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">{{ $t('stay.edit.active') }}</span>
                     </span>
                 </div>
                 <div class="flex mt-3">
@@ -87,8 +87,18 @@ import QueryModal from './QueryModal.vue';
 //
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 const querySettingsStore = useQuerySettingsStore();
+
+import { useShare } from "@/composables/useShare";
+const { shareContent } = useShare();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const emit = defineEmits(['sharedStay', 'stayClick']);
 
@@ -135,6 +145,7 @@ const EditId = ref(null);
 const EditPeriod = ref(null);
 const EditComment = ref(null);
 const EditQualification = ref(null);
+const shareUrl = ref(null);
 
 provide('EditId',EditId);
 provide('EditPeriod',EditPeriod);
@@ -160,6 +171,7 @@ onMounted(async () => {
             }
         }
     }
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
 })
 
 async function getQuerySettings(){
@@ -189,8 +201,15 @@ const formatDate = (dateString) => {
     return utcDate.toLocaleDateString('es-ES', options).replace(/\s+/g, ' ');
 };
 
+
+
 const isModalOpen = () => {
-    emit('sharedStay');
+    let data = {
+        title: t('stay.share.title', { hotel: hotelStore.hotelData.name }),
+        text: t('stay.share.text'),
+        url: shareUrl.value,
+    }
+    shareContent(data);
 };
 
 function handleStayClick() {

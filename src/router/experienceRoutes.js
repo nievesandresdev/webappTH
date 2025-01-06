@@ -28,7 +28,8 @@ const homeRoutes = [
         name: 'ExperienceDetail',
         path: ':slug',
         component: DetailPage,
-        props: (route) => ({ paramsRouter: {...route.params} })
+        props: (route) => ({ paramsRouter: {...route.params} }),
+        meta: { hiddenMenu: true },
       },
     ],
   },

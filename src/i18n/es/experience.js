@@ -12,6 +12,7 @@ export default {
         "annulation-gratuite": "cancelación gratuita",
         "non-refundable": "no reembolsable",
         "from":"Desde",
+        "reviews": "reseñas"
     },
     "list-page": {
         "title": "Experiencias",
@@ -98,5 +99,11 @@ export default {
         "availability-label":"Ver disponibilidad",
         "free-cancellation-label":"Cancelación gratuita",
         "non-refundable-cancellation-label":"No reembolsable",
+
+        "check-the-availability-of-this-experience": "Consulta la disponibilidad de esta experiencia",
+        "btn-see-availability-on-viator": "Ver disponibilidad en Viator",
+        "title-general-information": "Información general",
+        "tag-paper-ticket": "Ticket de papel",
+        "offered-in": "Ofrecido en",
     }
 }

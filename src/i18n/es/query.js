@@ -2,6 +2,8 @@ export default{
     "textToast": {
         "sendQueryText" : "Agradecemos sinceramente tu feedback. Nos importa tu experiencia y tratamos de cumplir tus expectativas",
         "updateQueryText" : "Modificación enviada",
+        "registerResponse" : "Feedback enviado",
+        "updateResponse" : "Feedback Modificado",
     },
     "form": {
         "send" : "Enviar",
@@ -28,4 +30,7 @@ export default{
         "questionin-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia hasta ahora?",
         "questionpost-stay" : "¿Cómo ha sido tu experiencia con nosotros?",
     },
+    "inbox": {
+        "title": "Mensajes"
+    }
 }  

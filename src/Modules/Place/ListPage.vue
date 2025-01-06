@@ -1,4 +1,5 @@
 <template>
+<div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <AppHeader
         title="Lugares"
         :tabs="tabsHeader"
@@ -14,11 +15,11 @@
         </template>
     </AppHeader>
     <div class="flex-1">
-        <template v-if="pointersData?.features?.length">
+        <!-- <template v-if="pointersData?.features?.length"> -->
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
-        </template>
+        <!-- </template> -->
         <!-- <template v-if="isOpenBottomSheetList"> -->
             <!-- {{loadingPlaceSeleced}} -->
             <ListPageBottomSheet
@@ -61,6 +62,10 @@ import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore;
 
+// COMPOSABLES
+import { useEventBus } from '@/composables/eventBus';
+const { onEvent } = useEventBus();   
+
     // PROPS
 const props = defineProps({
     queryRouter: {
@@ -73,7 +78,7 @@ const { queryRouter } = toRefs(props);
 
 // DATA
 const dataFilter = {
-    categoriplace: null,
+    categoriplace: [],
     typeplace: null,
     points: [],
     distances: [],
@@ -92,7 +97,10 @@ const isloadingForm = ref(false);
 const loadingPlaceSeleced = ref(false);
 const page = ref(1);
 const placesData = ref([]);
-const pointersData = ref([]);
+const pointersData = ref({
+        type: "FeatureCollection",
+        features: []
+});
 const placeSelected = ref(null);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);
@@ -130,7 +138,7 @@ const numbersFiltersApplied = computed(() => {
     let filters = [];
     formFilter.featured ? filters.push('featured') : '';
     formFilter.distances?.length ? filters.push('distances') : '';
-    formFilter.scores?.length ? filters.push('scores') : '';
+    formFilter.points?.length ? filters.push('points') : '';
     return filters;
 });
 const emptyFilters = computed(() => {
@@ -161,6 +169,8 @@ onMounted(async () => {
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
+onEvent('change-category', changeCategoryHandle);
+
 // FUNCTIONS
 function loadForFilterGlobal () {
     Object.assign(formFilter, placeStore.dataFilterGlobal);
@@ -168,7 +178,7 @@ function loadForFilterGlobal () {
 async function getPlaceById (placeId) {
     placeSelected.value = null;
     loadingPlaceSeleced.value = true;
-    let response = await placeStore.$findById({id: placeId});
+    let response = await placeStore.$findById({id: placeId}, { showPreloader: false });
     if(response.ok) placeSelected.value = response.data.place;
     loadingPlaceSeleced.value = false;
 }
@@ -206,6 +216,11 @@ async function loadCategoriPlaces () {
         categoriplacesWithNumbers.value = response.data;
     }
     categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+    // if (!formFilter.categoriplace) {
+    //     formFilter.categoriplace = categoriplaces.value[0]?.id;
+    // }
+    const { hidden_categories } = hotelData;
+    categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
 }
 
 function loadTabsHeader () {
@@ -216,17 +231,34 @@ function loadTabsHeader () {
             iconDefault: `${item.icon}`,
             iconSelected: `${item.icon}.DEFAULT`,
             isActive: item.id == formFilter.typeplace,
-            onClick: () => changeCategory(null, item.id),
+            onClick: () => changeCategory([], item.id),
         };
     });
 }
 
-function changeCategoryHandle ({idCategory, idTypePlace}) {
+function changeCategoryHandle (payload) {
+    console.log(payload, 'payload');
+    const { idCategory, idTypePlace } = payload;
     changeCategory(idCategory, idTypePlace);
 }
 
-async function changeCategory (idCategory = null, idTypePlace = null) {
-    formFilter.categoriplace = idCategory;
+async function changeCategory (idCategory = [], idTypePlace = null) {
+    if (idCategory.length  > 0) {
+        if (formFilter.categoriplace.includes(idCategory)) {
+            let index = formFilter.categoriplace.indexOf(idCategory);
+            if (index !== -1) {
+                formFilter.categoriplace.splice(index, 1);
+            }
+        } else {
+             formFilter.categoriplace.push(String(idCategory));
+        }
+        if (formFilter.categoriplace.length >= categoriplaces.value.length) {
+            formFilter.categoriplace = [];
+        }
+    } else {
+        formFilter.categoriplace = [];
+    }
+
     formFilter.typeplace = idTypePlace;
     loadTabsHeader();
     loadAll({showPreloader: true});
@@ -242,6 +274,7 @@ const getFirstCategoryOfType = ()=> {
 async function loadPlaces () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
+    console.log(query, 'query');
     const response = await placeStore.$apiGetAll({page: page.value,...query});
     if (response.ok) {
         Object.assign(paginateData, response.data.places.paginate);
@@ -303,7 +336,7 @@ function closeSearchHandle () {
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
-    formFilter.search = $event?.target?.value ?? null;
+    formFilter.search = $event?.target?.value ?? '';
     page.value = 1;
     placesData.value = [];
     await loadAll({showPreloader: false});
@@ -315,7 +348,7 @@ function activateSearchHandle ($event) {
     positionBottomSheet.value = $event;
     if ($event == 'medium') {
         searchingActive.value = false;
-        formFilter.search = null;
+        formFilter.search = '';
         loadAll({showPreloader: false});
     }
 }
@@ -355,7 +388,7 @@ function filterNonNullAndNonEmpty(obj) {
 function loadQueryInFormFilter () {
     for (const [key, value] of Object.entries(queryRouter.value || {})) {
         if (formFilter.hasOwnProperty(key)) {
-            if (['duration', 'distances'].includes(key)) {
+            if (['duration', 'distances', 'categoriplace', 'points'].includes(key)) {
                 if (typeof value === 'string') {
                     formFilter[key].push(value);
                 } else {
@@ -380,7 +413,7 @@ async function openFilter () {
     setTimeout(() => {
         positionBottomSheet.value = 'medium';
         searchingActive.value = false;
-        formFilter.search = null;
+        formFilter.search = '';
         isOpenBottomSheetFilter.value = true;
     }, 400);
 }
@@ -398,6 +431,7 @@ provide('placesData', placesData);
 provide('pointersData', pointersData);
 provide('placeSelected', placeSelected);
 provide('loadingSearch', loadingSearch);
+provide('emptyFilters', emptyFilters);
 provide('loadingPlaceSeleced', loadingPlaceSeleced);
 provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);

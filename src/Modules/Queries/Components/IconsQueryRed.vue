@@ -117,6 +117,7 @@ const props = defineProps({
 })
 const guestStore = useGuestStore();
 const textarea = ref(EditComment.value);
+const isUpdate = ref(false);
 const form = reactive({
     type:EditQualification.value
 })
@@ -130,6 +131,19 @@ watch(
   },
   { immediate: true } 
 );
+
+watch(
+  () => EditId.value, 
+  (newValue, oldValue) => {
+    // console.log('test EditId', newValue)
+    if(newValue && newValue !== oldValue){
+        isUpdate.value = true;
+    }
+  },
+  { immediate: true } 
+);
+
+
 
 async function submit(){
     let params = {
@@ -146,9 +160,10 @@ async function submit(){
         // if(form.type !== 'GOOD' || form.type !== 'VERYGOOD' && props.data?.period == 'post-stay'){
         //     emit('showFeedback',null);
         // }
-        let textRes = 'query.textToast.sendQueryText';
-        if(EditPeriod.value){
-            textRes = 'query.textToast.updateQueryText';
+        let textRes = 'query.textToast.registerResponse';
+        // console.log('test isUpdate.value',isUpdate.value)
+        if(isUpdate.value){
+            textRes = 'query.textToast.updateResponse';
         }
         setTimeout(() => {
             toastSuccess(t(textRes)); 
@@ -183,12 +198,12 @@ const assessmentComment = computed(() => {
     let assessment =  '_assessment_good';
     let assessmentShow = '_assessment_good_activate';
     
-    console.log('')
+    // console.log('')
     if(['WRONG','VERYWRONG','NORMAL'].includes(form.type)){
         assessment = '_assessment_normal';
         assessmentShow = '_assessment_normal_activate';
     }
-    console.log('test assessmentShow',assessmentShow)
+    // console.log('test assessmentShow',assessmentShow)
     if(!props.settings[modifiedPeriod.value+assessmentShow]) return ''
     return props.settings[modifiedPeriod.value+assessment][localStorage.getItem('locale')];
 })

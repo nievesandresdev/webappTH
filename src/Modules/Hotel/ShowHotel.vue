@@ -1,45 +1,50 @@
 <template>
-  <SectionBarTab 
+  <!-- <SectionBarTab 
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'" 
     :tabs="[
       { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
       { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
     ]"
     :hotel="hotelData"
+  /> -->
+  <AppHeader
+    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
+    :tabs="tabsHeader"
+    fixed
   />
   <div 
       class="bg-[#FAFAFA]"
       :class="{
-        'mt-[140px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
-        'mt-[60px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+        'mt-[65px] sp:mt-[135px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+        'mt-[25px] sp:mt-[55px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
       }"
-    >
+  >
     <!-- Slider de imágenes -->
     <!-- <ImageSlider :images="hotelData.images" /> -->
     <ImageSlider :images="hotelData?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
 
-    <div class="flex flex-col mt-2 px-4">
-      <h1 class="lato text-[18px] font-bold text-[#333] mb-[7px]">
+    <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
+      <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333] mb-[4px] sp:mb-[7px]">
         {{ hotelData.name }}
       </h1>
 
       <StarRating v-if="hotelData.category !== null" :category="hotelData.category" />
 
       <p
-        :class="isExpanded ? 'text-sm font-normal lato text-[#333] mt-3' : 'text-sm font-normal lato text-[#333] truncate-description mt-3'"
+        :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
       >
         {{ hotelData.description }}
       </p>
 
       <p
         @click="isExpanded = !isExpanded"
-        class="text-[14px] font-bold lato underline text-[#333] mt-3 text-right cursor-pointer"
+        class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
         v-show="hotelData.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
 
-      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
       <HotelActionButtons
         :hotelData="hotelData"
@@ -49,28 +54,38 @@
         @legal-click="handleLegalText"
         @share-click="isModalOpen = true"
       />
-
-      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
-        
-      <HotelInfoGeneral :hotelData="hotelData" />
-
-      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
-
-      <div class="flex items-center gap-4 mb-4" v-show="hotelData.show_facilities === 1" >
-        <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
-        <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-        <span @click="goToFacilities()" class="underline lato text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
-      </div>
-
-      <CardSlider :data="facilities" @itemClick="handleGoFacility" v-show="hotelData.show_facilities === 1" :marginBotton="rrss"  />
-
-      <div class="flex items-center gap-4 mb-4">
-        <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
-        <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-      </div>
       
+      <!--DATA DEL HOTEL-->
+      <template v-if="checkin">
+        <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
+        
+        <HotelInfoGeneral :hotelData="hotelData" />
+      </template>
+      <!--**************-->
 
-      <HotelRRSS :hotelData="hotelData" />
+      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
+
+      <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
+        <p class="text-[10px] text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
+        <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
+        <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
+      </div>
+
+      <CardSlider 
+          :data="facilities" 
+          @itemClick="handleGoFacility" 
+          v-show="hotelData.show_facilities === 1" 
+          :marginBotton="rrss"  
+          :cover="false"
+        />
+
+      <template  v-if="rrss">
+        <div class="flex items-center gap-4 mb-4">
+          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+          <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
+        </div >
+        <HotelRRSS :hotelData="hotelData" />
+      </template>
 
     </div>
   </div>
@@ -129,7 +144,14 @@ import SectionBarTab from '@/components/SectionBarTab.vue';
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
 
+    import { useRouter } from 'vue-router'
+    // const router = useRouter()
+
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 import { useStayStore } from '@/stores/modules/stay';
+import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
 
 const isModalOpen = ref(false);
@@ -147,6 +169,8 @@ const facilities = ref([]);
 
 const stayData = ref({})
 const shareUrl = ref('')
+
+const tabsHeader = ref([]);
 
 
 
@@ -174,14 +198,50 @@ onMounted(async() => {
   facilities.value =  r.crosselling_facilities;
 
   stayData.value = stayStore.getLocalStay();
-  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}`);
+  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}&guestPerStay=true`);
   
 
   if (hotelStore.hotelData.show_profile !== 1) {
     router.push({ name: 'FacilityList' })
   }
 
+  loadTabsHeader();
+
 })
+
+function loadTabsHeader () {
+    const tabInformation = {
+      title: t('hotel.information'),
+      exclude: hotelData.show_profile,
+      iconDefault: 'WA.alojamiento',
+      iconSelected: `WA.alojamiento`,
+      isActive: router.currentRoute.value.name === 'ShowHotel',
+      onClick: () => changeTab('ShowHotel'),
+    }
+    const tabFacility = {
+      title: t('hotel.facilities'),
+      exclude: hotelData.show_facility,
+      iconDefault: 'WA.Instalaciones',
+      iconSelected: `WA.Instalaciones`,
+      isActive: router.currentRoute.value.name === 'FacilityList',
+      onClick: () => changeTab('FacilityList'),
+    }
+    tabsHeader.value  = [tabInformation, tabFacility];
+    // tabsHeader.value = typeplaces.value.map(item => {
+    //     return {
+    //         title: $t('hotel.information'),
+    //         exclude: false,
+    //         iconDefault: `${item.icon}`,
+    //         iconSelected: `${item.icon}.DEFAULT`,
+    //         isActive: item.id == formFilter.typeplace,
+    //         onClick: () => changeCategory([], item.id),
+    //     };
+    // });
+}
+
+function changeTab (r) {
+  router.push({ name: r });
+}
 
 const handleGoFacility = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
@@ -199,6 +259,13 @@ const rrss = computed(() => {
           hotelData.value.facebook_url ||
           hotelData.value.pinterest_url ||
           hotelData.value.x_url;
+  });
+
+const checkin = computed(() => {
+   return hotelData.value.checkin ||
+          hotelData.value.checkin_until ||
+          hotelData.value.checkout ||
+          hotelData.value.checkout_until;
   });
 
 </script>

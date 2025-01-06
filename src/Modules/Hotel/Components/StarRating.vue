@@ -5,11 +5,11 @@
       :key="star"
       src="/assets/icons/WA.star.svg"
       alt="Estrella"
-      class="w-4 h-4 mr-1"
+      class="size-[10px] sp:size-4 mr-[2px] sp:mr-1"
     />
     <!--  "Gran Lujo" o "Superior" -->
-    <span v-if="category == 7" class="text-[#333] text-[14px] ml-1 font-normal lato">Gran Lujo</span>
-    <span v-if="category == 6" class="text-[#333] text-[14px] ml-1 font-normal lato">Superior</span>
+    <span v-if="category == 7" class="text-[#333] text-[7px] sp:text-[14px] ml-0.5 sp:ml-1 font-normal lato">Gran Lujo</span>
+    <span v-if="category == 6" class="text-[#333] text-[7px] sp:text-[14px] ml-0.5 sp:ml-1 font-normal lato">Superior</span>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-    <SectionBar title="Mis estancias" :showButton="true" :button-text="'Crear estancia'" @onClickButton="createStay"/>
-    <div class="px-3 pb-10 pt-6">
+    <SectionBar :title="$t('stay.detail.title')" :showButton="true" :button-text="$t('stay.detail.createBtn')" @onClickButton="createStay"/>
+    <div class="px-3 pb-10 pt-[100px]">
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -34,8 +34,8 @@
     <BottomModal 
         :isOpen="isModalOpen" 
         @update:isOpen="isModalOpen = $event" 
-        :showButton="true" 
-        :buttonText="'Acceder a la estancia'"
+        :showButton="dataModalStay.stayId !== stayStore.stayData?.id" 
+        :buttonText="$t('stay.edit.accessRoom')"
         @handleClick="AccessToStay"
     >
         <div>
@@ -62,13 +62,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex w-full mb-6 mt-2">
+        <div class="flex flex-col gap-6 w-full mt-2">
             <router-link 
                 @click="isModalOpen = false" 
                 :to="{ name:'EditStay', params:{ stayId: dataModalStay.stayId}}"
                 class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] text-sm font-bold hshadow-button mt-4"
             >
-                Editar estancia
+                {{ $t('stay.detail.editBtn') }}
             </router-link>
         </div>
     </BottomModal>

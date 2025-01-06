@@ -32,7 +32,7 @@
             <WACardBanner 
                 @click="handleMyStays"
                 :title="$t('profile.my_stays.title')"
-                :subtitle="isCheckoutPast ? $t('profile.my_stays.subtitle_active') : $t('profile.my_stays.subtitle_inactive')"
+                :subtitle="isCheckoutPast ?  $t('profile.my_stays.subtitle_inactive') : $t('profile.my_stays.subtitle_active')"
                 :active-custom="isCheckoutPast"
             />
         </div>
@@ -104,11 +104,12 @@ const loading = ref(true);
 
 
 const handleMyStays = () => {
-    if(isCheckoutPast.value){
-        authStore.$logoutAndCreateStay();
-    }else{
-        router.push({ name: 'MyStays' });
-    }
+    router.push({ name: 'MyStays' });
+    // if(isCheckoutPast.value){
+    //     authStore.$logoutAndCreateStay();
+    // }else{
+    //     router.push({ name: 'MyStays' });
+    // }
 };
 
 const handlePersonalInfo = () => {
@@ -121,9 +122,8 @@ const selectLanguage = () => {
 
 onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
-
+    stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
-   
 
     await getHotelbyId(stayData.value.hotel_id);
 });

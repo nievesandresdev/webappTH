@@ -1,6 +1,6 @@
 <template>
     <button
-        class="py-1.5 sp:py-2 w-full flex items-center justify-center gap-2 shadow-guest hbg-gray-100 border border-[#333] rounded-[10px]"
+        class="py-1.5 sp:py-2 w-full flex items-center justify-center gap-2 shadow-guest hbg-gray-100 border border-[#333] rounded-[6px] sp:rounded-[10px]"
         :class="customClasess"
         @click="goOta()"
     >
@@ -59,11 +59,12 @@
         let dataOta = await reviewStore.$getDataOTAS({ googleMapCid : hotelData?.code })
         let detailHotel = await reviewStore.$getHotelDetail({ ota: 'GOOGLE', googleMapCid : hotelData?.code })
         let searchTripadvisorData = dataOta.otas.find(item => item.ota == "TRIPADVISOR")
-        
+        // console.log('test detailHotel',detailHotel.hotel)
         if(ota == "google" && detailHotel.hotel){
             let placeid = detailHotel.hotel.placeId;
             urlReview.value = placeid ? `https://search.google.com/local/writereview?placeid=${placeid}` : ''
         }
+        // console.log('test searchTripadvisorData',searchTripadvisorData)
         if(ota == "tripadvisor" && searchTripadvisorData){
             urlReview.value = searchTripadvisorData?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchTripadvisorData?.url)}` : ''
         }

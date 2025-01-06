@@ -11,14 +11,18 @@
         >
             <template v-if="!searchingActive">
                 <template v-if="!formFilter.search && experiencesData.length">
-                {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
+                    {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
                 </template>
-                <template v-else-if="formFilter.search && !experiencesData.length">
+                <template v-else-if="formFilter.search">
                     {{ `${$t('place.list-page.text-count-list-search',  { count: paginateData.total  })}: "${formFilter.search}"` }}
                 </template>
             </template>
             <template v-else>
+                <template v-if="!formFilter.search">
+                    {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
+                </template>
                 <button
+                    v-else
                     class="flex items-center space-x-1 sp:space-x-2"
                     @click="closeSearch"
                 >
@@ -27,7 +31,7 @@
                         class="size-[8px] sp:size-[16px]"
                         alt=""
                     >
-                    <p class="text-[6px] sp:text-sm font-bold border border-b-black">
+                    <p class="text-[6px] sp:text-sm font-bold border-b border-b-black">
                         {{ `${$t('experience.list-page.text-count-list-search-active')}: "${formFilter.search}"` }}
                     </p>
                 </button>
@@ -101,7 +105,6 @@ function closeSearch () {
 }
 function initScrollListener () {
     const container = document?.querySelector('#list-experience');
-    console.log(container, 'initScrollListener');
     if (container) {
         container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
     }
