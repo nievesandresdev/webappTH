@@ -42,7 +42,7 @@ export default{
         "link": "Reset Password",
     },
     "hotel-list":{
-        "title": "Select your accommodation",
+        "title": "Select the accommodation to create your stay in our WebApp",
         "amount-text": "accommodations in the chain",
         "stars-text": "stars",
         "star-text": "star",

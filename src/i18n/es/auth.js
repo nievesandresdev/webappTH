@@ -42,7 +42,7 @@ export default{
         "link":"Restablecer contraseña",
     },
     "hotel-list":{
-        "title":"Selecciona tu alojamiento",
+        "title":"Selecciona el alojamiento para crear tu estancia en nuestra WebApp",
         "amount-text":"alojamientos de la cadena",
         "stars-text":"estrellas",
         "star-text":"estrella",

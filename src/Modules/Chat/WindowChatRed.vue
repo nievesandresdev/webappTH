@@ -271,7 +271,7 @@ const watchAvailability = async () => {
             // Verificar si la hora actual está dentro del intervalo (inclusive)
             return interval.contains(currentDateTimeParsed);
         });
-        console.log('test isAvailable',isAvailable.value)
+        
         return isAvailable.value;
     } catch (error) {
         console.error('Error al verificar la disponibilidad:', error);

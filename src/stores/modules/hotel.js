@@ -20,6 +20,7 @@ export const useHotelStore = defineStore('hotel', () => {
     const hotelData = ref(null)
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
+    const oldSubdomain = ref(null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
     const mainStore = useMainStore()
     // ACTIONS
@@ -39,8 +40,8 @@ export const useHotelStore = defineStore('hotel', () => {
 
     }
 
-    async function $load () {
-        if (hotelData.value || !localStorage.getItem('subdomain')) return
+    async function $load (reload = false) {
+        if ( (hotelData.value || !localStorage.getItem('subdomain')) && !reload) return
         
         let params = {
             subdomain: localStorage.getItem('subdomain'),
@@ -65,7 +66,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
     async function $loadChatHours () {
         const response = await getChatHoursApi()
-        console.log('test chatHoursResponse',response)
+        // console.log('test chatHoursResponse',response)
         const { ok, data } = response
         chatHours.value = ok ? response.data : null
         // console.log('chatHoursloadChatHours',chatHours.value)
@@ -80,13 +81,23 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $setAndLoadLocalHotel (subdomainString) {
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
-        $load()
+        $load(true)//reload
+    }
+
+    async function $setOldLocalHotel (subdomainString) {
+        localStorage.setItem('OldHotelSubdomain',subdomainString)
+        oldSubdomain.value = subdomainString;
     }
 
     async function $deleteLocalHotel () {
         localStorage.removeItem('subdomain')
         subdomain.value = null;
         hotelData.value = null;
+    }
+
+    async function $deleteOldLocalHotel () {
+        localStorage.removeItem('OldHotelSubdomain')
+        oldSubdomain.value = null;
     }
 
 
@@ -115,7 +126,10 @@ export const useHotelStore = defineStore('hotel', () => {
         $setAndLoadLocalHotel,
         $deleteLocalHotel,
         $buildUrlWebApp,
-        $changeCurrentHotelData
+        $changeCurrentHotelData,
+        $setOldLocalHotel,
+        $deleteOldLocalHotel,
+        oldSubdomain
     }
 
 })

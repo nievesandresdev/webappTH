@@ -41,6 +41,7 @@ const submit = async () => {
     let guest = guestStore.getLocalGuest();
     form.guestId = guest?.id;
     form.language = localStorage.getItem('locale') ?? 'es';
+    await stayStore.deleteLocalStayData();
     let stay = await stayStore.createAndInviteGuest(form);
     if(stay){
         navigateTo('Home')

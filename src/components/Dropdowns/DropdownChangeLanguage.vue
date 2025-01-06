@@ -35,7 +35,7 @@
          
         <ul class="bg-white mt-4">
             <li     
-                v-for="(lg, index) in localeStore.availableLocation"
+                v-for="(lg, index) in localeStore.dropdownLangs"
                 :key="index"
                 class="p-4 relative hover-gray-100"
                 @click.prevent="changeLocale(lg.abbreviation)"

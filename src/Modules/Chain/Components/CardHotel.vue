@@ -10,7 +10,7 @@
         <div class="hbg-gray-100 p-4">
             <h2 class="lato text-lg font-bold leading-[28px]">{{data.name}}</h2>
             <div v-if="data.category" class="flex items-center gap-1 mt-3">
-                <img class="w-4 h-4" src="/assets/icons/WA.star.svg" alt="">
+                <img class="w-4 h-4" src="/assets/icons/WA.STAR.BLACK.svg" alt="">
                 <p  class="lato text-sm font-bold leading-[16px]">
                     {{data.category}}
                     <template v-if="Number(data.category) > 1">
@@ -48,6 +48,14 @@ const props = defineProps({
 })
 
 async function selectHotel(){
+    //tomar el actual subdominio
+    //se usara para que en un caso que el huesped decida regresar a la estancia actual
+    //poder tener el subdominio de dicha estancia
+    const currentSubdomain = hotelStore.hotelData?.subdomain;
+    if(currentSubdomain){
+        hotelStore.$setOldLocalHotel(currentSubdomain)
+    }
+    //
     if(!props.clickable) return
     await hotelStore.$setAndLoadLocalHotel(props.data.subdomain)
     router.push({ name:'CreateStayFromChain', params:{ hotelSlug : props.data.subdomain}})
