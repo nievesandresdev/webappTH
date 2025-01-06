@@ -14,7 +14,7 @@
                      {{ lg.translatedName }}
                 </span>
             </div>
-            <input type="radio" class="hborder-black-100 w-4 h-4" name="language" :id="lg.abbreviation" :value="lg.abbreviation"  v-model="selectedLanguage" @change="handleChangeLanguage(lg.abbreviation)" :checked="lg.abbreviation === selectedLanguage">
+            <input type="radio" class="hradio w-4 h-4" name="language" :id="lg.abbreviation" :value="lg.abbreviation"  v-model="selectedLanguage" @change="handleChangeLanguage(lg.abbreviation)" :checked="lg.abbreviation === selectedLanguage">
         </div>
     </div>
 
@@ -75,21 +75,21 @@ const handleChangeLanguage = async (lg) => {
 </script>
 
 <style scoped>
-    input[type="radio"] {
+    /* input[type="radio"] {
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        border: 2.9px solid #BFBFBF; /* Borde negro */
-        background-color: #fff; /* Fondo blanco */
+        border: 2.9px solid #BFBFBF;
+        background-color: #fff;
         position: relative;
         cursor: pointer;
     }
 
     input[type="radio"]:checked {
-        background-color: #000; /* Fondo negro cuando está seleccionado */
+        background-color: #000;
         border-color: #000;
     }
 
@@ -101,7 +101,40 @@ const handleChangeLanguage = async (lg) => {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: #fff; /* El círculo interior blanco */
+        background-color: #fff;
+    } */
+
+
+    .hradio {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2.9px solid #BFBFBF;
+        background: #fff;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    .hradio::before {
+        content: "";
+        width: 60%; 
+        height: 60%;
+        border-radius: 50%;
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .hradio:checked::before {
+        background-color: #fff;
+    }
+    .hradio:checked {
+        background-color: #000;
+        border-color: #000;
     }
 
 </style>
