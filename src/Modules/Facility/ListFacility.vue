@@ -12,6 +12,9 @@
     :tabs="tabsHeader"
     fixed
   />
+
+  <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+
   <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
     <div 
      class="px-2 sp:px-4 space-y-2 sp:space-y-4"

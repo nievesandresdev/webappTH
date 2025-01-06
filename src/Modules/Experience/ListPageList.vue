@@ -13,7 +13,7 @@
                 <template v-if="!formFilter.search && experiencesData.length">
                     {{ paginateData.total }} {{ $t('experience.list-page.text-count-list') }}
                 </template>
-                <template v-else-     ="formFilter.search && !experiencesData.length">
+                <template v-else-if="formFilter.search">
                     {{ `${$t('place.list-page.text-count-list-search',  { count: paginateData.total  })}: "${formFilter.search}"` }}
                 </template>
             </template>

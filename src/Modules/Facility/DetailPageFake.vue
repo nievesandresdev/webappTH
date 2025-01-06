@@ -1,4 +1,5 @@
 <template>
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
     <div class="">
         <div class="h-[190px] sp:h-[295px] w-full bg-black">
             <button class="fixed flex z-20 mt-3 ml-3">

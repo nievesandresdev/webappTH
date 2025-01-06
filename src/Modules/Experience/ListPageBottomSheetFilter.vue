@@ -121,7 +121,7 @@
                 value: '1',
             },
             {
-                name: 'experience.list-page.section-filter.duration.one-hour',
+                name: 'experience.list-page.section-filter.duration.one-four-hour',
                 value: '2',
             },
             {
@@ -225,6 +225,12 @@
     }
 
     function selectPrice (value) {
+        if (JSON.stringify(formFilterSheeBottom.price) == JSON.stringify(value)) {
+            formFilterSheeBottom.price = null;
+            formFilterSheeBottom.price_min = null;
+            formFilterSheeBottom.price_max = null;
+            return;
+        }
         let prices = value.split(',');
         formFilterSheeBottom.price = value;
         let price_min = prices?.[0];

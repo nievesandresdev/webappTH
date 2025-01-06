@@ -14,7 +14,9 @@
             />
         </template>
     </AppHeader>
+
     <div class="flex flex-col">
+    
         <div class="h-[68px]  sp:h-[124px] w-full">
             d
         </div>
@@ -93,13 +95,22 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+// WATCH
+watch(formFilter, function(value) {
+    experienceStore.setDataFilterList(formFilter);
+});
+
 // ONMOUNTED
 onMounted(async () => {
+    loadForFilterGlobal();
     loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 // FUNCTION
+function loadForFilterGlobal () {
+    Object.assign(formFilter, experienceStore.dataFilterGlobal);
+}
 
 function loadMore () {
     page.value += 1;
@@ -112,8 +123,8 @@ function closeSearchHandle () {
 
 function activateSearchHandle ($event) {
     searchingActive.value = false;
-    formFilter.search = '';
-    loadAll({showPreloader: false});
+    // formFilter.search = '';
+    // loadAll({showPreloader: false});
 }
 
 async function searchHandle ($event) {
@@ -196,7 +207,7 @@ async function openFilter () {
     // await nextTick();
     setTimeout(() => {
         searchingActive.value = false;
-        formFilter.search = null;
+        // formFilter.search = null;
         isOpenBottomSheetFilter.value = true;
     }, 400);
 }

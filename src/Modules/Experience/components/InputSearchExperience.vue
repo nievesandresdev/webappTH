@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed, inject } from 'vue';
+import { ref, defineEmits, computed, inject, watch } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import BaseBadge from '@/components/BaseBadge.vue';
 
@@ -94,10 +94,10 @@ const searchFull = computed(() => {
     return !!valueSearch.value;
 });
 
-// watch(() => formFilter.search, function(valNew, valOld) {
-//     if (!valNew || valOld) return;
-//     valueSearch.value = valNew;
-// });
+watch(() => formFilter.search, function(valNew, valOld) {
+    if (!valNew || valOld) return;
+    valueSearch.value = valNew;
+});
 
 // FUNCTIONS
 

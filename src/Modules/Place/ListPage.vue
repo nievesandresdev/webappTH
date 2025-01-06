@@ -348,8 +348,8 @@ function activateSearchHandle ($event) {
     positionBottomSheet.value = $event;
     if ($event == 'medium') {
         searchingActive.value = false;
-        formFilter.search = '';
-        loadAll({showPreloader: false});
+        // formFilter.search = '';
+        // loadAll({showPreloader: false});
     }
 }
 
@@ -413,7 +413,7 @@ async function openFilter () {
     setTimeout(() => {
         positionBottomSheet.value = 'medium';
         searchingActive.value = false;
-        formFilter.search = '';
+        // formFilter.search = '';
         isOpenBottomSheetFilter.value = true;
     }, 400);
 }
