@@ -9,7 +9,7 @@
   /> -->
   <AppHeader
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
-    :tabs="tabsHeader"
+    :tabs="tabs.tabsHeader"
     fixed
   />
   <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
@@ -52,6 +52,7 @@ import { ref, onMounted, computed } from 'vue';
 import router from '@/router';
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
+import { useTabs } from '@/stores/modules/tabs'; 
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
   import { useI18n } from 'vue-i18n';
@@ -59,6 +60,8 @@ import AppHeader from '@/layout/Components/AppHeader.vue';
 
 const hotelStore = useHotelStore();
 const facilities = ref([]);
+
+const tabs = useTabs(); 
 
 const hotelData = computed(() => hotelStore.hotelData);
 
@@ -94,7 +97,9 @@ const goToFacilityShow = (id) => {
 onMounted(async () => {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
-   loadTabsHeader();
+   //if(tabs.tabsHeader.length === 0){
+    loadTabsHeader();
+  //}
 });
 
 function loadTabsHeader () {
@@ -103,6 +108,7 @@ function loadTabsHeader () {
       exclude: hotelData.show_profile,
       iconDefault: 'WA.alojamiento',
       iconSelected: `WA.alojamiento`,
+      routeName: 'ShowHotel',
       isActive: router.currentRoute.value.name === 'ShowHotel',
       onClick: () => changeTab('ShowHotel'),
     }
@@ -111,6 +117,7 @@ function loadTabsHeader () {
       exclude: hotelData.show_facility,
       iconDefault: 'WA.Instalaciones',
       iconSelected: `WA.Instalaciones`,
+      routeName: 'FacilityList',
       isActive: router.currentRoute.value.name === 'FacilityList',
       onClick: () => changeTab('FacilityList'),
     }
@@ -125,6 +132,8 @@ function loadTabsHeader () {
     //         onClick: () => changeCategory([], item.id),
     //     };
     // });
+
+    tabs.setTabsHeader([tabInformation, tabFacility]);
 }
 
 function changeTab (r) {

@@ -9,7 +9,7 @@
   /> -->
   <AppHeader
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
-    :tabs="tabsHeader"
+    :tabs="tabs.tabsHeader"
     fixed
   />
   <div 
@@ -147,6 +147,8 @@ import { computed, ref, onMounted,provide } from 'vue'
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
+import { useTabs } from '@/stores/modules/tabs'; // Ruta de tu store
+
 
     import { useRouter } from 'vue-router'
     // const router = useRouter()
@@ -165,6 +167,8 @@ const CHARACTER_LIMIT = 185;
 
 const hotelStore = useHotelStore()
 const hotelData = computed(() => hotelStore.hotelData)
+
+const tabs = useTabs();
 
 const isExpanded = ref(false)
 const modalWifi = ref(false)
@@ -197,6 +201,7 @@ const handleLegalText = () => {
 
 
 onMounted(async() => {
+  tabs.initializeTabs();
   const r = await hotelStore.$getCrossellings()
   
   facilities.value =  r.crosselling_facilities;
@@ -209,6 +214,8 @@ onMounted(async() => {
     router.push({ name: 'FacilityList' })
   }
 
+  
+
   loadTabsHeader();
 
 })
@@ -219,6 +226,7 @@ function loadTabsHeader () {
       exclude: hotelData.show_profile,
       iconDefault: 'WA.alojamiento',
       iconSelected: `WA.alojamiento`,
+      routeName: 'ShowHotel',
       isActive: router.currentRoute.value.name === 'ShowHotel',
       onClick: () => changeTab('ShowHotel'),
     }
@@ -228,6 +236,7 @@ function loadTabsHeader () {
       iconDefault: 'WA.Instalaciones',
       iconSelected: `WA.Instalaciones`,
       isActive: router.currentRoute.value.name === 'FacilityList',
+      routeName: 'FacilityList',
       onClick: () => changeTab('FacilityList'),
     }
     tabsHeader.value  = [tabInformation, tabFacility];
@@ -241,6 +250,9 @@ function loadTabsHeader () {
     //         onClick: () => changeCategory([], item.id),
     //     };
     // });
+
+  tabs.setTabsHeader([tabInformation, tabFacility]);
+    
 }
 
 function changeTab (r) {

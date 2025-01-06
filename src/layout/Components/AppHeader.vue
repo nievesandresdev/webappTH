@@ -36,7 +36,7 @@
                         <div
                             v-for="(tab, index) in tabs"
                             :key="index" class="tab space-y-[2px] sp:space-y-1 relative  w-[80px] sp:w-[100px]"
-                            :class="{ active: tab.isActive }" @click="tab.onClick"
+                            :class="{ active: tab.isActive }" @click="tab.onClick ? tab.onClick() : navigateTo(tab.routeName)"
                         >
                             <BaseBadge
                                 size="medium"
@@ -74,6 +74,9 @@ import { onMounted, reactive, computed, defineProps } from 'vue';
 import AvatarButton from '@/components/Buttons/AvatarButton.vue';
 import BaseBadge from '@/components/BaseBadge.vue';
 import $utils from '@/utils/utils';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
     title: {
@@ -102,6 +105,11 @@ const props = defineProps({
 
 import IconCustomColor from '@/components/IconCustomColor.vue';
 
+
+const navigateTo = (routeName) => {
+    router.push({ name: routeName });
+};
+
 </script>
 
 <style lang="scss">
@@ -110,7 +118,7 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
         border: 1px solid #FFF;
         background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        z-index: 2000;
+        z-index: 300001;
     }
 
 
