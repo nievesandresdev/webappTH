@@ -42,7 +42,7 @@ export default{
         "link": "Reimposta password",
     },
     "hotel-list":{
-        "title": "Seleziona il tuo alloggio",
+        "title": "Seleziona la struttura per creare il tuo soggiorno nella nostra WebApp",
         "amount-text": "alloggi della catena",
         "stars-text": "stelle",
         "star-text": "stella",

@@ -42,7 +42,7 @@ export default{
         "link": "Réinitialiser le mot de passe",
     },
     "hotel-list":{
-        "title": "Sélectionnez votre hébergement",
+        "title": "Sélectionnez l'hébergement pour créer votre séjour dans notre WebApp",
         "amount-text": "hébergements de la chaîne",
         "stars-text": "étoiles",
         "star-text": "étoile",

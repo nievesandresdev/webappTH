@@ -12,6 +12,7 @@ export const useLocaleStore = defineStore('locale', () => {
     // STATE
     const localeCurrent = ref(localStorage.getItem('locale') ?? 'es')
     const availableLocation = ref(['es', 'en', 'fr','it','de','pt'])
+    const dropdownLangs = ref([])
     const availableLocationNotSelected = ref(availableLocation.value.filter(item => item !== localeCurrent.value))
 
     async function $apiGetAll () {
@@ -28,12 +29,11 @@ export const useLocaleStore = defineStore('locale', () => {
             languages: availableLocation.value,
             selected : localeCurrent.value
         };
-        // console.log('test params', params);
         const response = await getForItemApi(params)
-        // console.log('test response', response);
         const { ok, data } = response
         if (ok) {
             // return availableLocation.value = data
+            dropdownLangs.value = data;
             return data
         }
         return [];     
@@ -56,7 +56,7 @@ export const useLocaleStore = defineStore('locale', () => {
     }
 
     function $load (languageParam = null) {
-        // console.log('i18n.global.locale')
+        
         const urlParams = new URLSearchParams(window.location.search);
         let locale = urlParams.get('lang') || languageParam || localStorage.getItem('locale');
         $change(locale);
@@ -77,6 +77,7 @@ export const useLocaleStore = defineStore('locale', () => {
         $load,
         $changeAndReload,
         availableLocation,
+        dropdownLangs
     }
 
 })

@@ -14,7 +14,9 @@
             />
         </template>
     </AppHeader>
+
     <div class="flex flex-col">
+    
         <div class="h-[68px]  sp:h-[124px] w-full">
             d
         </div>
@@ -121,8 +123,8 @@ function closeSearchHandle () {
 
 function activateSearchHandle ($event) {
     searchingActive.value = false;
-    formFilter.search = '';
-    loadAll({showPreloader: false});
+    // formFilter.search = '';
+    // loadAll({showPreloader: false});
 }
 
 async function searchHandle ($event) {
@@ -205,7 +207,7 @@ async function openFilter () {
     // await nextTick();
     setTimeout(() => {
         searchingActive.value = false;
-        formFilter.search = null;
+        // formFilter.search = null;
         isOpenBottomSheetFilter.value = true;
     }, 400);
 }

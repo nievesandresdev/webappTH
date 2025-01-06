@@ -1,12 +1,17 @@
 <template>
     <!-- head -->
     <div class="sticky top-0 left-0 bg-head w-full py-6 px-4">
-        <HeadInChain :text="$t('auth.hotel-list.title')"/>
+        <HeadInChain 
+            :text="$t('stay.create.title')" 
+            :go-back="Boolean(getUrlParam('fromStay'))" 
+            @go-back="goStayList"
+        />
     </div>
 
     <!-- body -->
     <div class="py-6 px-4">
-        <h4 class="lato text-base font-bold leading-[20px]">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
+        <h1 class="lato text-lg font-bold leading-[20px]">{{$t('auth.hotel-list.title')}}</h1>
+        <h4 class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
         <div class="mt-4">
             <div class="mb-6" v-for="hotel in hotels" >
                 <CardHotel :data="hotel" clickable/>
@@ -16,16 +21,25 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
+import { getUrlParam } from '@/utils/utils.js'
+import { navigateTo } from '@/utils/navigation'
 import HeadInChain from './Components/HeadInChain.vue'
 import CardHotel from './Components/CardHotel.vue'
 //store
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
+//router
+
+
 
 const hotels = ref([])
 onMounted(async() => {
     hotels.value = await chainStore.$getHotelsList()  
 })
+
+async function goStayList(){
+    navigateTo('MyStays')
+}
 
 </script>
 <style scoped> 
