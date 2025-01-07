@@ -5,7 +5,7 @@ export default {
     "card-experience": {
         "hour": "ore",
         "aprox": "approssimativamente",
-        "min-aprox": "minuti approssimativi",
+        "min-aprox": "minuti",
         "and": "e",
         "recommed": "raccomandato",
         "prominent": "prominente",

@@ -26,6 +26,7 @@ export default{
                 "n-room": "Room Nº"
             }
         },
+        "calendar": "Calendar",
         "guests": "Guests",
         "saveBtn": "Save",
         "share": "Share stay",
@@ -33,6 +34,7 @@ export default{
         "completeCheckin": "Complete check-in",
         "waitingGuest": "Waiting for guest access",
         "accessRoom": "Access stay",
-        "active": "Active"
+        "active": "Active",
+        "pageWebHotel": "Hotel website"
     }
 }

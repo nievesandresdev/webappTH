@@ -233,7 +233,7 @@ const options_middle_reservation = [
         {value:'Booking',label:'Booking',},
         {value:'Expedia',label:'Expedia',},
         {value:'Hotels.com',label:'Hotels.com',},
-        {value:'Página web del hotel',label:'Página web del hotel',}
+        {value: t('stay.edit.pageWebHotel'), label: t('stay.edit.pageWebHotel') ,}
     ] 
 
   function onShareClick () {

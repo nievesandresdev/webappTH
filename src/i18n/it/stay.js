@@ -26,6 +26,7 @@ export default{
                 "n-room": "Nº stanza"
             }
         },
+        "calendar": "Calendario",
         "guests": "Ospiti",
         "saveBtn": "Salva",
         "share": "Condividi permanenza",
@@ -33,6 +34,7 @@ export default{
         "completeCheckin": "Completa il check-in",
         "waitingGuest": "In attesa dell'accesso dell'ospite",
         "accessRoom": "Accedi alla permanenza",
-        "active": "Risorsa"
+        "active": "Risorsa",
+        "pageWebHotel": "Sito web dell'hotel"
     }
 }
