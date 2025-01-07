@@ -36,7 +36,6 @@
             num_reviews: props.placeSelected.num_reviews,
             categori_place: props.placeSelected.categori_place,
             distance: props.placeSelected.distance,
-            distance: props.placeSelected.cityName,
         }
     });
     
