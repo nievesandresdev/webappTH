@@ -108,7 +108,7 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $findById (params, config = { showPreloader: true }) {
-        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
             hotel: { id: idHotel, name: nameName, zone: zoneHotel },
             ...params
@@ -125,7 +125,7 @@ export const usePlaceStore = defineStore('place', () => {
     async function $getReviewsByRating (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
             ...params
         }
         const response = await getReviewsByRatingApi(newParams)
