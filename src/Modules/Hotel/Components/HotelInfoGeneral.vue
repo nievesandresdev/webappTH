@@ -133,6 +133,8 @@
 
   import { handleToast } from '@/composables/useToast';
   const { toastSuccess } = handleToast();
+    import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   
   const props = defineProps({
     hotelData: {
@@ -154,7 +156,7 @@
   
   const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-      toastSuccess('Copiado al portapapeles');
+      toastSuccess(t('messageRequest.copiedClipboard'));
     }).catch(err => {
       console.error("Error al copiar el texto: ", err);
     });

@@ -36,6 +36,8 @@
 import { computed, ref, onMounted, toRefs, inject } from 'vue'
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 //store
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
@@ -45,6 +47,7 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
+
 
 const emit = defineEmits(['ShareModalOpen','reloadGuestsList'])
 
@@ -68,7 +71,7 @@ const deleteGuestOfStay = async () => {
     if(response){
         emit('reloadGuestsList')
         setTimeout(() => {
-            toastSuccess("Huesped eliminado");
+            toastSuccess(t('messageRequest.guestDeleted'));
         }, 500);
     }
 };

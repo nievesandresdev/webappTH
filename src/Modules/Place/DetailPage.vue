@@ -222,6 +222,8 @@ import { usePlaceStore } from '@/stores/modules/place';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const placeStore = usePlaceStore();
 
@@ -386,7 +388,7 @@ function openEmail () {
 const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {
         // console.log("Texto copiado");
-        toastSuccess('Copiado con éxito');
+        toastSuccess(t('messageRequest.copiedClipboard'));
     }).catch(err => {
         console.error("Error al copiar el texto: ", err);
     });

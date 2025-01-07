@@ -121,6 +121,7 @@
 </template>
 <script setup>
 import { toRefs, ref, reactive, onMounted, computed, provide } from 'vue'
+
 import ShareStayModal from './Components/ShareStayModal.vue'
 import GuestModal from './Components/GuestModal.vue'
 import THInputText from '@/components/THInputText.vue';
@@ -213,7 +214,7 @@ const submitForm = async () => {
     fillForm(currentStay.value)
     // console.log('test currentStay.value',currentStay.value)
     if(currentStay.value){
-        toastSuccess("Cambios guardados");
+        toastSuccess(t('messageRequest.changeSave'));
     }
 }
 

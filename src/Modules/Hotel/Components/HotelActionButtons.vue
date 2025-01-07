@@ -41,7 +41,7 @@
       classes="text-center py-2.5 rounded-[10px] text-sm font-bold leading-[20px] w-full shadow-guest bg-[#333333] text-[#FFF] lato"
       @click="onShareClick"
     >
-      Compartir estancia
+      {{ $t('hotel.buttons_home.share_stay') }}
     </PrimaryButton>
   </template>
   
