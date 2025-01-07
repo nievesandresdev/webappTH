@@ -1,44 +1,38 @@
 export default{
-    "stayLog":{
-        "title":"Zugang zur Webanwendung",
-        "checkDate":{
-            "label":"Check-in/Check-out Datum",
+    "create":{
+        "title": "Erstelle deinen Aufenthalt",
+        "check-date": {
+            "label": "Check-in/Check-out Datum",
             "placeholder": "TT/MM/JJJJ - TT/MM/JJJJ",
         },
-        "howPeople":"Wie viele Personen werden bleiben?",
-        "button":"Weiter",
-        "backButton":"Zurückgehen",
-        "addGuest":"+ An einen anderen Gast senden",
-        "deleteGuest":"Löschen",
+        "continue-button": "Erstellen und zum Aufenthalt zugreifen",
+    },
+    "share": {
+        "title": "Begleiten Sie unseren Aufenthalt im {hotel}",
+        "text": "Treten Sie jetzt bei und genießen Sie alle Vorteile der WebApp, um das Beste aus unserer Erfahrung zu machen"
+    },
+    "detail": {
+        "title": "Meine Aufenthalte",
+        "createBtn": "Aufenthalt erstellen",
+        "editBtn": "Aufenthalt bearbeiten"
+    },
+    "edit": {
+        "title": "Aufenthalt bearbeiten",
+        "information-stay": "Aufenthaltsinformationen",
+        "input": {
+            "medio-reserva": {
+                "label": "Buchungsmethode",
+                "placeholder": "Buchungsmethode auswählen",
+                "n-room": "Zimmer-Nr."
+            }
+        },
+        "guests": "Gäste",
+        "saveBtn": "Speichern",
+        "share": "Aufenthalt teilen",
         "guest": "Gast",
-        "processing":"Verarbeitung",
-    },
-    "dataModal":{
-        "title":"Aufenthalt",
-        "checkDate":{
-            "label":"Check-in/Check-out Datum",
-            "placeholder": "TT/MM/JJJJ - TT/MM/JJJJ",
-        },
-        "room":{
-            "label":"Zimmer",
-            "placeholder": "Zimmernummer",
-        },
-        "howPeople": "Anzahl der Gäste, die bleiben werden",
-        "howPeopleError":"Sie müssen Gäste entfernen, um diese Aktion durchzuführen",
-        "guestsTitle":"Gäste",
-        "guestLabel":"Gast",
-        "placehoderNull":"Das Feld muss ausgefüllt werden",
-        "phone":{
-            "prefix":"+ Vorwahl",
-            "number": "Telefonnummer des Gastes",
-        },
-        "cancelButton": "Abbrechen",
-        "saveButton": "Speichern",
-    },
-    "noSavedM":{
-        "title":"Nicht gespeicherte Änderungen",
-        "body":"Sie haben nicht gespeicherte Änderungen. Um die Informationen zu aktualisieren, müssen Sie die vorgenommenen Änderungen speichern.",
-        "exitButton":"Ohne Speichern verlassen",
-        "saveButton":"Speichern",
+        "completeCheckin": "Check-in abschließen",
+        "waitingGuest": "Warten auf Gastzugang",
+        "accessRoom": "Aufenthalt betreten",
+        "active": "Vermögenswert"
     }
 }

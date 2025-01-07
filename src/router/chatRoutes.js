@@ -1,24 +1,20 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const WindowChatMobile = () => import('@/Modules/Chat/WindowMobile.vue')
+const WindowChatRed = () => import('@/Modules/Chat/WindowChatRed.vue')
 const FakeChatMobile = () => import('@/Modules/Chat/FakeWindowChat.vue')
-
-import isMobile from '@/middlewares/isMobile'
 
 const chatRoutes = [
   {
-    path: '/mobile-chat',
-    // component: AppLayout,
+    path: 'chat',
+    component: AppLayout,
     meta: {
-      verifyHotel: true,
-      middleware: [
-        isMobile
-     ]
+      verifyHotel: true
     },
     children: [
       {
-        name: 'WindowChatMobile',
+        name: 'Chat',
         path: '',
-        component: WindowChatMobile
+        component: WindowChatRed
       },
       {
         name: 'FakeChatMobile',

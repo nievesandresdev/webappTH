@@ -13,19 +13,19 @@ export const useFacilityStore = defineStore('facility', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (img) {
-        if (!img) return '';
-        let { URL_STORAGE } = mainStore
-        let { type, url } = img
-        // console.log(img, 'img')
-        // console.log(`'type: '${type}, 'url: '${url}`)
-        if (type === 'CDN') return url
-        if (url?.includes('storage/gallery')) return `${URL_STORAGE}${url}`
-        if (!type) return URL_STORAGE+'/storage/facility'+url;
-        return `${URL_STORAGE}${url}`
+    function $loadImage (item,custom = null) {
+        let { image: path, type, url } = item ?? {};
+        let { URL_STORAGE } = mainStore;
+        
+        // let model = 'places';
+        // if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
 
-        // url = type != 'CDN' ? `${URL_STORAGE}${url}` : url
-        // return url
+        // let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
+        // return urlFull
+
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${path}`;
+
     }
 
     async function $getAll () {

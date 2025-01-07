@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { i18n } from '@/i18n'
 
 import {
@@ -19,6 +19,23 @@ const hotelStore = useHotelStore()
 export const useExperienceStore = defineStore('experience', () => {
     
     // STATE
+    const dataFilter = {
+        duration: [],
+        score: [],
+        price_min: null,
+        price_max: null,
+        search:null,
+        city: null,
+        all_cities: false,
+        free_cancelation: false,
+        featured: false,
+    }
+    const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
+
+        // MUTATIONS
+        function setDataFilterList (dataFormFilterInList) {
+            Object.assign(dataFilterGlobal, dataFormFilterInList);
+        }
 
     // ACTIONS
 
@@ -32,7 +49,7 @@ export const useExperienceStore = defineStore('experience', () => {
 
     function $loadImage (path) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/places/${path}`
+        let url = `${URL_STORAGE}/storage/experiences/${path}`
         return url
     }
 
@@ -71,6 +88,8 @@ export const useExperienceStore = defineStore('experience', () => {
 
     //
     return {
+        dataFilterGlobal,
+        setDataFilterList,
         $loadImage,
         $apiGetAll,
         $apiGetNumbersByFilters,

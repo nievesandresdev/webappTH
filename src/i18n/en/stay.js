@@ -1,44 +1,38 @@
 export default{
-    "stayLog":{
-        "title":"Access to the webapp",
-        "checkDate":{
-            "label":"Check-in/Check-out date",
+    "create":{
+        "title": "Create your stay",
+        "check-date": {
+            "label": "Check-in/Check-out Date",
             "placeholder": "dd/mm/yyyy - dd/mm/yyyy",
         },
-        "howPeople":"How many people will stay?",
-        "button":"Next",
-        "backButton":"Go back",
-        "addGuest":"+ Send to another guest",
-        "deleteGuest":"Delete",
+        "continue-button": "Create and access the stay",
+    },
+    "share": {
+        "title": "Join our stay at {hotel}",
+        "text": "Join now and enjoy all the benefits of the WebApp to make the most of our experience"
+    },
+    "detail": {
+        "title": "My stays",
+        "createBtn": "Create stay",
+        "editBtn": "Edit stay"
+    },
+    "edit": {
+        "title": "Edit stay",
+        "information-stay": "Stay information",
+        "input": {
+            "medio-reserva": {
+                "label": "Booking method",
+                "placeholder": "Select booking method",
+                "n-room": "Room Nº"
+            }
+        },
+        "guests": "Guests",
+        "saveBtn": "Save",
+        "share": "Share stay",
         "guest": "Guest",
-        "processing":"Processing",
-    },
-    "dataModal":{
-        "title":"Stay",
-        "checkDate":{
-            "label":"Check-in/Check-out date",
-            "placeholder": "dd/mm/yyyy - dd/mm/yyyy",
-        },
-        "room":{
-            "label":"Room",
-            "placeholder": "Room number",
-        },
-        "howPeople": "Number of guests who will stay",
-        "howPeopleError":"You must remove guests for this action",
-        "guestsTitle":"Guests",
-        "guestLabel":"Guest",
-        "placehoderNull":"The field must be filled",
-        "phone":{
-            "prefix":"+ Prefix",
-            "number": "Guest's phone number",
-        },
-        "cancelButton": "Cancel",
-        "saveButton": "Save",
-    },
-    "noSavedM":{
-        "title":"Unsaved changes",
-        "body":"You have unsaved changes. In order to update the information you must save the changes made.",
-        "exitButton":"Exit without saving",
-        "saveButton":"Save",
+        "completeCheckin": "Complete check-in",
+        "waitingGuest": "Waiting for guest access",
+        "accessRoom": "Access stay",
+        "active": "Active"
     }
 }

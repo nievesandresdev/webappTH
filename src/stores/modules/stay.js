@@ -8,7 +8,8 @@ import {
     updateStayAndGuestsApi,
     deleteGuestOfStayApi,
     existingThenMatchOrSaveApi,
-    existsAndValidateApi
+    existsAndValidateApi,
+    findbyIdApi
 } from '@/api/services/stay.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useQueryStore } from '@/stores/modules/query';
@@ -78,6 +79,8 @@ export const useStayStore = defineStore('stay', () => {
         }
         let lang = otherFomattedLangs[stayData.value.language] ?? formattedLangs[stayData.value.language]
         // console.log(lang, 'setStayData')
+        chatStore.unreadMsgs();
+        queryStore.$existingPendingQuery()
         localeStore.$load(lang)
     }
 
@@ -102,11 +105,10 @@ export const useStayStore = defineStore('stay', () => {
 
     async function updateStayAndGuests (params) {
         let response = await updateStayAndGuestsApi(params);
-        if(response.ok && response.data){
-            await setStayData(response.data)
-            return true;
+        if(response.ok && response.data && response.data.id == stayData.value.id){
+            await reloadLocalStay()
         }
-        return false;
+        return response.ok ? response.data : null;
     }
     
     async function deleteGuestOfStay (stayId,guestId) {
@@ -135,16 +137,43 @@ export const useStayStore = defineStore('stay', () => {
         return localData ? JSON.parse(localData) : null;
     }
 
-    function cleanStayData () {
+    async function deleteLocalStayData () {
         stayData.value = null;
         localStorage.removeItem('stayId')
         localStorage.removeItem('stayData')
     }
 
+    async function findByIdInSetLocalStay (stayId) {    
+        if(stayData.value?.id == stayId) return;
+        const response = await findbyIdApi(stayId)
+        const { ok } = response   
+        stayData.value = ok ? response.data : null;
+        if(stayData){
+            localStorage.setItem('stayId', stayData.value.id)
+            localStorage.setItem('stayData', JSON.stringify(stayData.value))
+        }
+    }
+
+    async function reloadLocalStay () {    
+        console.log('test reloadLocalStay')
+        const response = await findbyIdApi(stayData.value.id)
+        const { ok } = response   
+        stayData.value = ok ? response.data : null;
+        if(stayData){
+            localStorage.setItem('stayId', stayData.value.id)
+            localStorage.setItem('stayData', JSON.stringify(stayData.value))
+        }
+    }
+
+    async function findById (stayId) {    
+        const response = await findbyIdApi(stayId)
+        const { ok } = response   
+        return  ok ? response.data : null;
+    }
     // GETTERS
     const stayDataComputed = computed(() => {
         if(stayData.value){
-            chatStore.unreadMsgs();
+            // chatStore.unreadMsgs();
         }
         return stayData.value
     });
@@ -162,7 +191,10 @@ export const useStayStore = defineStore('stay', () => {
         deleteGuestOfStay,
         getLocalStay,
         existsAndValidate,
-        cleanStayData
+        deleteLocalStayData,
+        findByIdInSetLocalStay,
+        reloadLocalStay,
+        findById
     }
 
 })

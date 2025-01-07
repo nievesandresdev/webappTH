@@ -5,13 +5,16 @@ export default {
     "list-page": {
         "title": "Esplora a",
         "text-count-list": "{count} luoghi trovati",
+        "text-count-list-search": "{count} posti trovati per",
+        "text-count-list-search-active": "Cerca in tutti i luoghi",
+        "text-search-not-found": "Perfeziona la ricerca o prova un'altra categoria",
         "btn-load-more": "Carica altri"
     },
     "results": "Nessun risultato...",
     "seaching": "Ricerca in corso...",
     "categorySearch": "trovato",
     "city": "Città",
-    "cityPlaceholder": "Destinazioni...",
+    "placeholder-search":"Scrivi qualcosa",
     "types": {
         "que-visitar": "Cosa visitare",
         "donde-comer": "Dove mangiare",
@@ -32,7 +35,6 @@ export default {
         "titleList": "Esplora",
         "opinionsTitle": "Opinioni sull'informazione turistica",
         "opinionsWord": "Opinioni",
-        "recommended": "Raccomandato",
         "recommendationWord": "Raccomandazione",
         "featured": "In evidenza",
         "callWord": "Chiama",
@@ -41,6 +43,28 @@ export default {
             "priceRange": "Fasce di prezzo",
             "diet": "Diete speciali",
             "others": "Altri",
+        },
+        "specialRegimes": "Regimi speciali",
+        "additionalInformation": "Informazioni aggiuntive",
+        "copy": "Copiare",
+        "showLess": "Mostra meno",
+        "showMore": "Mostra di più",
+        "recommended": "Raccomandato",
+        "buttoms": {
+            "web": "Web",
+            "call": "Chiamare",
+            "menu": "Menu",
+            "email": "E-mail",
+        },
+        "hours": {
+            "title": "Orari",
+            "monday": "lunedì",
+            "tuesday": "martedì",
+            "wednesday": "mercoledì",
+            "thursday": "giovedì",
+            "friday": "venerdì",
+            "saturday": "sabato",
+            "sunday": "domenica"
         },
         "locationWord": "Località",
         "starWord": "Stella",
@@ -52,12 +76,20 @@ export default {
         "titleAllReviews": "Opinioni sull'informazione turistica",
         "exploreIn": "Esplora a",
         "filters": {
-            "title": "Altri filtri",
+            "title": "Filtra per",
             "ratings": "Valutazioni",
+            "distanceLodding": "Distanza di alloggio",
+            "recommended": "Consigliato",
+            "score": "Punteggio",
             "star": "stella",
-            "stars": "stelle",
-            "remove": "Rimuovi filtri",
+            "remove": "Rimuovi tutto",
             "apply": "Applica filtri",
+            "distante": {
+                "oneKm": "Tra 1 km e 3 km",
+                "threeKm": "Tra 3 km e 5 km",
+                "fiveKm": "Tra 5 km e 10 km",
+                "tenKm": "10 km+"
+            }
         }
     },
 }

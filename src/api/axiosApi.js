@@ -16,7 +16,8 @@ function getPreloaderStore() {// función auxiliar que devuelve el store de prel
 }
 
 axios.interceptors.request.use(config => {
-  if (config.showPreloader !== false) {
+  let showPreloader = config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestStarted();
   }
@@ -26,7 +27,8 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
-  if (response.config.showPreloader !== false) {
+  let showPreloader = response.config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestFinished();
   }
@@ -40,7 +42,7 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL') => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
   let api_url_backend = URL_BASE_BACKEND_GENERAL;
   // console.log('test SLUG_API',SLUG_API)
   SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
@@ -49,15 +51,22 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
     // const { token } = localStorage
-    const subdomain = localStorage.getItem('subdomain') || null
+    const subdomain = localStorage.getItem('subdomain') || null;
+    const chainSubdomain = localStorage.getItem('chainSubdomain') || null;
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
       'subdomainHotel': subdomain,
+      'chainSubdomain': chainSubdomain,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
+
+    if (IS_FORM_DATA) {
+      defaultHeaders['Content-Type'] = 'multipart/form-data';
+    }
+
  // eslint-disable-next-line no-prototype-builtins
  if (!options.hasOwnProperty('headers')) options.headers = defaultHeaders
  let serviceResponse = {}

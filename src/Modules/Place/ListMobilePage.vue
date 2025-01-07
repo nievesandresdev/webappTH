@@ -168,10 +168,10 @@
     })
 
     // PROVIDER
-    provide('categoriplaces', categoriplaces)
-    provide('typeplaces', typeplaces)
-    provide('formFilter', formFilter)
-    provide('paginateData', paginateData)
+    provide('categoriplaces', categoriplaces);
+    provide('typeplaces', typeplaces);
+    provide('formFilter', formFilter);
+    provide('paginateData', paginateData);
 
     // FUNCTION
     async function loadPlaces () {

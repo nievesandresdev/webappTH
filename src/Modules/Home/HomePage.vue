@@ -125,7 +125,7 @@
                 </div>
             </section>
 
-            <section v-if="crossellingPlacesData?.crosselling_places_whatvisit?.length > 0 && !hotelData.hidden_type_places?.includes(catWhatVisitId)" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_whatvisit?.length > 0" id="h-home-whatvisit" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-what-visit.title')) }}
@@ -141,7 +141,7 @@
                     <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
-            <section v-if="crossellingPlacesData?.crosselling_places_whereeat.length > 0 && !hotelData.hidden_type_places?.includes(catWhereEatId)" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_whereeat.length > 0" id="h-home-whereeat" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-where-eat.title')) }}
@@ -158,7 +158,7 @@
                 </div>
             </section>
             
-            <section v-if="crossellingPlacesData?.crosselling_places_leisure.length > 0 && !hotelData.hidden_type_places?.includes(catLeisureId)" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
+            <section v-if="crossellingPlacesData?.crosselling_places_leisure.length > 0" id="h-home-leisure" class="container-fluid-landing pr-mobile-0">
                 <div class="flex items-center justify-between mt-4 sp:mt-8">
                     <h2 class="text-xs font-medium sp:text-base lg:text-lg">
                         {{ $utils.capitalize($t('home.section-leisure.title')) }}

@@ -1,7 +1,9 @@
 export default {
     "textToast": {
-        "sendQueryText": "Response sent",
-        "updateQueryText" : "Amendment submitted"
+        "sendQueryText": "We sincerely appreciate your feedback. Your experience matters to us, and we strive to meet your expectations.",
+        "updateQueryText" : "Amendment submitted",
+        "registerResponse": "Feedback submitted",
+        "updateResponse": "Feedback updated"
     },
     "form": {
         "send": "Send",
@@ -28,4 +30,7 @@ export default {
         "questionin-stay": "How would you rate your level of satisfaction with your stay so far?",
         "questionpost-stay": "How was your experience with us?",
     },
+    "inbox": {
+        "title": "Messages"
+    }
 }

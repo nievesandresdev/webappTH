@@ -1,44 +1,38 @@
 export default{
-    "stayLog":{
-        "title":"Accesso alla webapp",
-        "checkDate":{
-            "label":"Data di check-in/check-out",
+    "create":{
+        "title": "Crea il tuo soggiorno",
+        "check-date": {
+            "label": "Data di Check-in/Check-out",
             "placeholder": "gg/mm/aaaa - gg/mm/aaaa",
         },
-        "howPeople":"Quante persone soggiornano?",
-        "button":"Avanti",
-        "backButton":"Torna indietro",
-        "addGuest":"+ Invia a un altro ospite",
-        "deleteGuest":"Elimina",
+        "continue-button": "Crea e accedi al soggiorno",
+    },
+    "share": {
+        "title": "Unisciti al nostro soggiorno presso {hotel}",
+        "text": "Unisciti ora e goditi tutti i vantaggi della WebApp per sfruttare al massimo la nostra esperienza"
+    },
+    "detail": {
+        "title": "Le mie permanenze",
+        "createBtn": "Crea permanenza",
+        "editBtn": "Modifica permanenza"
+    },
+    "edit": {
+        "title": "Modifica permanenza",
+        "information-stay": "Informazioni sulla permanenza",
+        "input": {
+            "medio-reserva": {
+                "label": "Metodo di prenotazione",
+                "placeholder": "Seleziona metodo di prenotazione",
+                "n-room": "Nº stanza"
+            }
+        },
+        "guests": "Ospiti",
+        "saveBtn": "Salva",
+        "share": "Condividi permanenza",
         "guest": "Ospite",
-        "processing":"Elaborazione",
-    },
-    "dataModal":{
-        "title":"Soggiorno",
-        "checkDate":{
-            "label":"Data di check-in/check-out",
-            "placeholder": "gg/mm/aaaa - gg/mm/aaaa",
-        },
-        "room":{
-            "label":"Camera",
-            "placeholder": "Numero di camera",
-        },
-        "howPeople": "Numero di ospiti che soggiornano",
-        "howPeopleError":"Devi rimuovere ospiti per questa azione",
-        "guestsTitle":"Ospiti",
-        "guestLabel":"Ospite",
-        "placehoderNull":"Il campo deve essere riempito",
-        "phone":{
-            "prefix":"+ Prefisso",
-            "number": "Numero di telefono dell'ospite",
-        },
-        "cancelButton": "Annulla",
-        "saveButton": "Salva",
-    },
-    "noSavedM":{
-        "title":"Modifiche non salvate",
-        "body":"Hai delle modifiche non salvate. Per aggiornare le informazioni devi salvare le modifiche effettuate.",
-        "exitButton":"Esci senza salvare",
-        "saveButton":"Salva",
+        "completeCheckin": "Completa il check-in",
+        "waitingGuest": "In attesa dell'accesso dell'ospite",
+        "accessRoom": "Accedi alla permanenza",
+        "active": "Risorsa"
     }
 }

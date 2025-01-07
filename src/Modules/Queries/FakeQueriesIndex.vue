@@ -53,7 +53,6 @@ const settings = ref([]);
 
 async function getQuerySettings(){
     settings.value = await querySettingsStore.$getAll();
-    console.log('settings.value',settings.value)
 }
 
 const EditId = ref(null);
