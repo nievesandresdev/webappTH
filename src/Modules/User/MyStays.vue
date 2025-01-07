@@ -81,6 +81,7 @@ import { ref, onMounted } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import StayCard from './Components/StayCard.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
+
 import { navigateTo } from '@/utils/navigation'
 
 import { useGuestStore } from '@/stores/modules/guest';
@@ -97,6 +98,9 @@ const authStore = useAuthStore();
 
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const hotelData = ref({});
 const activeStay = ref(null); 
@@ -155,7 +159,9 @@ function handleMyStays(data) {
 }
 
 function createStay() {
-    authStore.$logoutAndCreateStay();
+    // navigateTo('Home',{},{ acform : 'createstay' })
+    router.push({ name:'HotelsList' , query:{ fromStay: 'true'}})
+    // authStore.$logoutAndCreateStay();
 }
 
 const AccessToStay = async () => {

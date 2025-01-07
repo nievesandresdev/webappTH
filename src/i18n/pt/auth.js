@@ -42,7 +42,7 @@ export default{
         "link": "Redefinir Senha",
     },
     "hotel-list":{
-        "title": "Selecione sua acomodação",
+        "title": "Selecione o alojamento para criar a sua estadia na nossa WebApp",
         "amount-text": "acomodações da rede",
         "stars-text": "estrelas",
         "star-text": "estrela",

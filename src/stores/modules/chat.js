@@ -15,7 +15,6 @@ export const useChatStore = defineStore('chat', () => {
     // ACTIONS
     async function sendMsgToHoster (params) {
         const response = await sendMsgToHosterApi(params)
-        console.log('test sendMsgToHoster',response)
         return response
     }
 
@@ -28,7 +27,7 @@ export const useChatStore = defineStore('chat', () => {
             stayId: localStorage.getItem('stayId'),
             guestId: localStorage.getItem('guestId'),
         }
-        // console.log('loadMessagesApi')
+        
         const response = await loadMessagesApi(params)
         const { ok } = response;
         if(ok){

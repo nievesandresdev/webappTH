@@ -28,8 +28,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted,computed } from 'vue';
+import { ref, onMounted,computed,watch } from 'vue';
 import { useHotelStore } from '@/stores/modules/hotel'
+import { nextTick } from 'vue';
+
+
 
 const emit = defineEmits(['itemClick']);
 
@@ -55,13 +58,26 @@ const saveScrollPosition = () => {
   }
 };
 
-const restoreScrollPosition = () => {
+const restoreScrollPosition = async () => {
   const savedPosition = sessionStorage.getItem('carouselScrollPosition');
   if (carousel.value && savedPosition) {
+    await nextTick();
     carousel.value.scrollLeft = parseInt(savedPosition, 10);
   }
 };
 
+
+// Agrega el watch para observar cambios en `data`
+watch(
+  () => props.data, // Observa la prop `data`
+  (newData) => {
+    if (newData && newData.length > 0) {
+      restoreScrollPosition(); // Restaura el scroll cuando los datos cambien
+    }
+  }
+);
+
+// Llama a la restauración en el montaje inicial
 onMounted(() => {
   restoreScrollPosition();
 });

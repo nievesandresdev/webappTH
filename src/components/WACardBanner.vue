@@ -15,8 +15,8 @@
                     :name="nameIconLeft" 
                     :color="iconDesignClass" 
                     only-change-background 
-                    :width=" !$utils.isMockup() ? '24' : '16'"
-                    :height=" !$utils.isMockup() ? '24' : '16'"
+                    :width=" !$utils.isMockup() ? '20' : '16'"
+                    :height=" !$utils.isMockup() ? '20' : '16'"
                 />
                 <p  
                     :class="[classTitle]"
@@ -74,7 +74,7 @@ const props = defineProps({
     },
     classTitle:{
         type: String,
-        default: 'lato text-xs sp:text-lg font-bold leading-[20px]'
+        default: 'lato text-xs sp:text-base font-bold leading-[20px]'
     },
     subtitle:{
         type: String,

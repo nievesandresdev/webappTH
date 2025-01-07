@@ -9,7 +9,7 @@
   /> -->
   <AppHeader
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
-    :tabs="tabsHeader"
+    :tabs="tabs.tabsHeader"
     fixed
   />
   <div 
@@ -61,33 +61,37 @@
         
         <HotelInfoGeneral :hotelData="hotelData" />
       </template>
-      <!--**************-->
+    </div>
+    <!-- seccion de instalaciones -->
+      <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
+        <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
-
-      <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
-        <p class="text-[10px] text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
-        <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
-        <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
+        <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
+          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
+          <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
+          <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
+        </div>
       </div>
-
       <CardSlider 
           :data="facilities" 
           @itemClick="handleGoFacility" 
           v-show="hotelData.show_facilities === 1" 
           :marginBotton="rrss"  
-          :cover="false"
-        />
+          :cover="true"
+      />
+      <!-- fin seccion instalaciones -->
 
-      <template  v-if="rrss">
-        <div class="flex items-center gap-4 mb-4">
-          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
-          <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-        </div >
-        <HotelRRSS :hotelData="hotelData" />
-      </template>
-
-    </div>
+      <!-- Redes Sociales -->
+      <div class="flex flex-col mt-1 sp:mt-2 px-2 sp:px-4">
+          <template  v-if="rrss">
+          <div class="flex items-center gap-4 mb-4">
+            <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+            <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
+          </div >
+          <HotelRRSS :hotelData="hotelData" />
+        </template>
+      </div>
+      <!-- fin redes sociales-->
   </div>
 
   <!-- Modal de Wifi -->
@@ -143,6 +147,8 @@ import { computed, ref, onMounted,provide } from 'vue'
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
+import { useTabs } from '@/stores/modules/tabs'; // Ruta de tu store
+
 
     import { useRouter } from 'vue-router'
     // const router = useRouter()
@@ -161,6 +167,8 @@ const CHARACTER_LIMIT = 185;
 
 const hotelStore = useHotelStore()
 const hotelData = computed(() => hotelStore.hotelData)
+
+const tabs = useTabs();
 
 const isExpanded = ref(false)
 const modalWifi = ref(false)
@@ -193,6 +201,7 @@ const handleLegalText = () => {
 
 
 onMounted(async() => {
+  tabs.initializeTabs();
   const r = await hotelStore.$getCrossellings()
   
   facilities.value =  r.crosselling_facilities;
@@ -205,6 +214,8 @@ onMounted(async() => {
     router.push({ name: 'FacilityList' })
   }
 
+  
+
   loadTabsHeader();
 
 })
@@ -215,6 +226,7 @@ function loadTabsHeader () {
       exclude: hotelData.show_profile,
       iconDefault: 'WA.alojamiento',
       iconSelected: `WA.alojamiento`,
+      routeName: 'ShowHotel',
       isActive: router.currentRoute.value.name === 'ShowHotel',
       onClick: () => changeTab('ShowHotel'),
     }
@@ -224,6 +236,7 @@ function loadTabsHeader () {
       iconDefault: 'WA.Instalaciones',
       iconSelected: `WA.Instalaciones`,
       isActive: router.currentRoute.value.name === 'FacilityList',
+      routeName: 'FacilityList',
       onClick: () => changeTab('FacilityList'),
     }
     tabsHeader.value  = [tabInformation, tabFacility];
@@ -237,6 +250,9 @@ function loadTabsHeader () {
     //         onClick: () => changeCategory([], item.id),
     //     };
     // });
+
+  tabs.setTabsHeader([tabInformation, tabFacility]);
+    
 }
 
 function changeTab (r) {
