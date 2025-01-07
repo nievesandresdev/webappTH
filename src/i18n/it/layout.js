@@ -1,6 +1,6 @@
 export default {
     "header": {
-        "home": "casa",
+        "home": "inizio",
         "facilities": "strutture",
         "destination": "destinazione",
         "experiences": "esperienze",
