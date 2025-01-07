@@ -237,7 +237,6 @@ function loadTabsHeader () {
 }
 
 function changeCategoryHandle (payload) {
-    console.log(payload, 'payload');
     const { idCategory, idTypePlace } = payload;
     changeCategory(idCategory, idTypePlace);
 }
@@ -274,7 +273,6 @@ const getFirstCategoryOfType = ()=> {
 async function loadPlaces () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    console.log(query, 'query');
     const response = await placeStore.$apiGetAll({page: page.value,...query});
     if (response.ok) {
         Object.assign(paginateData, response.data.places.paginate);
