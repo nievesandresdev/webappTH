@@ -34,6 +34,7 @@
 
 <script setup>
 import { ref, defineProps, computed } from 'vue'
+import router from '@/router';
 const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
 const props = defineProps({
   images: {
@@ -52,6 +53,10 @@ const props = defineProps({
   imgDefault: {
     type: String,
     default: '/storage/gallery/general-1.jpg'
+  },
+  from: {
+    type: String,
+    default: null
   }
 })
 
@@ -144,8 +149,33 @@ function touchEnd(event) {
 }
 
 function goBack() {
-  window.history.back()
+
+
+  if(props.from === 'facility' && window.history.state?.back === null){
+    router.push({
+      name: 'FacilityList',
+    })
+  }else if(props.from === 'experiences' && window.history.state?.back === null){
+    router.push({
+      name: 'ExperienceList',
+    })
+  }else if(props.from === 'places' && window.history.state?.back === null){
+    router.push({
+      name: 'PlaceList',
+    })
+
+  }else if (window.history.state?.back) {
+    window.history.back();
+  }
+
+  /* if (window.history.state?.back) {
+    window.history.back();
+  } else {
+    window.location.href = '/ruta-especifica'; // Cambia '/ruta-especifica' por la URL deseada
+  } */
 }
+
+
 </script>
 
 <style scoped>

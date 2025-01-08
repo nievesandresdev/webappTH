@@ -67,7 +67,6 @@ const routes = [
   // Rutas dinámicas (con slug)
   {
     path: '/:hotelSlug',
-    
     beforeEnter: [checkHotelSubdomain],
     children: [
       // aquí van todas las rutas que dependen del slug del hotel

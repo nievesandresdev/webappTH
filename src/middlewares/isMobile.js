@@ -21,14 +21,12 @@ export default isMobile; */
 const isMobile = (to, from, next) => {
     const innerWidth = window.innerWidth;
   
-    // Si el ancho de la ventana es mayor a 768, redirigir a 'ScreenNotAllowed'
     if (innerWidth > 768) {
       console.log('Redirigiendo a ScreenNotAllowed');
       next({
         name: 'ScreenNotAllowed',
       });
     } else {
-      // Continuar con la navegación
       next();
     }
   };
