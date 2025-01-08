@@ -7,11 +7,14 @@
     ]"
     :hotel="hotelData"
   /> -->
+ 
   <AppHeader
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
     :tabs="tabs.tabsHeader"
+    :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
   />
+  
   <div 
       class="bg-[#FAFAFA]"
       :class="{
@@ -33,13 +36,13 @@
       <p
         :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
       >
-        {{ hotelData.translate.description }}
+        {{ hotelData.description }}
       </p>
 
       <p
         @click="isExpanded = !isExpanded"
         class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-        v-show="hotelData.translate.description?.length > CHARACTER_LIMIT"
+        v-show="hotelData.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
@@ -55,15 +58,13 @@
         @share-click="isModalOpen = true"
       />
       
-      <!--DATA DEL HOTEL-->
-      <template v-if="checkin">
-        <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
-        
+      <!--DATA GENERAL DEL HOTEL-->
+      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
+
         <HotelInfoGeneral :hotelData="hotelData" />
-      </template>
     </div>
     <!-- seccion de instalaciones -->
-      <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
+      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4">
         <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
         <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
@@ -72,13 +73,15 @@
           <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
         </div>
       </div>
-      <CardSlider 
-          :data="facilities" 
-          @itemClick="handleGoFacility" 
-          v-show="hotelData.show_facilities === 1" 
-          :marginBotton="rrss"  
-          :cover="true"
-      />
+      <div class="flex flex-col  mt-1 sp:mt-2 pl-2 sp:pl-4">
+        <CardSlider 
+            :data="facilities" 
+            @itemClick="handleGoFacility" 
+            v-show="hotelData.show_facilities === 1" 
+            :marginBotton="rrss"  
+            :cover="true"
+        />
+      </div>
       <!-- fin seccion instalaciones -->
 
       <!-- Redes Sociales -->
@@ -277,12 +280,7 @@ const rrss = computed(() => {
           hotelData.value.x_url;
   });
 
-const checkin = computed(() => {
-   return hotelData.value.checkin ||
-          hotelData.value.checkin_until ||
-          hotelData.value.checkout ||
-          hotelData.value.checkout_until;
-  });
+
 
 </script>
 

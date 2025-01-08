@@ -15,7 +15,7 @@
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
+                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px] first-letter:capitalize">{{ title }}</h1>
                     </slot>
                 </div>
 
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Subheader con tabs (pestañas) -->
-        <div class="subheader">
+        <div class="subheader" v-show="showSubHeader">
             <slot name="tabs">
                 <div class="px-[8px] sp:px-[16px]">
                     <div class="flex justify-around">
@@ -98,6 +98,14 @@ const props = defineProps({
     tabs: {
       type: Array,
       default: () => [],
+    },
+    showSubHeader: {
+      type: Boolean,
+      default: true,
+    },
+    redirectToShow: {
+      type: Boolean,
+      default: false,
     },
 });
 

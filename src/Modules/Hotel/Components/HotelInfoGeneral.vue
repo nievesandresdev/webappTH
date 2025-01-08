@@ -41,11 +41,12 @@
       </div>
 
       <div class="mt-3 sp:mt-6 ">
-        <BaseMap  :center="coordCenter" 
-                  :zoom="15" 
-                  :height-map="windowWidth >= 250 ? '168px' : '90px'" 
-                  :showExpand="true"
-                  :transition="false"
+        <BaseMap 
+          :center="coordCenter" 
+          :zoom="15" 
+          :height-map="windowWidth >= 250 ? '168px' : '90px'" 
+          :showExpand="true"
+          :transition="false"
         >
           <template v-slot:controls>
             <!-- Marcador en la Ubicación del Hotel -->
@@ -161,6 +162,13 @@
       console.error("Error al copiar el texto: ", err);
     });
   };
+
+  const checkin = computed(() => {
+   return props.hotelDatacheckin ||
+          props.hotelDatacheckin_until ||
+          props.hotelDatacheckout ||
+          props.hotelDatacheckout_until;
+  });
 
   
   </script>
