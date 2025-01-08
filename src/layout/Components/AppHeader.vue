@@ -15,7 +15,7 @@
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px]">{{ title }}</h1>
+                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px] first-letter:capitalize">{{ title }}</h1>
                     </slot>
                 </div>
 

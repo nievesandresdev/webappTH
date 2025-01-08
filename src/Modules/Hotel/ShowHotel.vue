@@ -14,6 +14,7 @@
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
   />
+  
   <div 
       class="bg-[#FAFAFA]"
       :class="{
@@ -35,13 +36,13 @@
       <p
         :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
       >
-        {{ hotelData.translate.description }}
+        {{ hotelData.description }}
       </p>
 
       <p
         @click="isExpanded = !isExpanded"
         class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-        v-show="hotelData.translate.description?.length > CHARACTER_LIMIT"
+        v-show="hotelData.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
