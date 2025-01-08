@@ -10,6 +10,7 @@
   <AppHeader
     :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
     :tabs="tabs.tabsHeader"
+    :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
   />
 
@@ -103,6 +104,10 @@ onMounted(async () => {
    //if(tabs.tabsHeader.length === 0){
     loadTabsHeader();
   //}
+
+  if (hotelStore.hotelData.show_facilities !== 1) {
+    router.push({ name: 'ShowHotel' })
+  }
 });
 
 function loadTabsHeader () {

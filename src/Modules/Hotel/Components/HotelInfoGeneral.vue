@@ -160,6 +160,13 @@
     });
   };
 
+  const checkin = computed(() => {
+   return props.hotelDatacheckin ||
+          props.hotelDatacheckin_until ||
+          props.hotelDatacheckout ||
+          props.hotelDatacheckout_until;
+  });
+
   
   </script>
   <style scope>
