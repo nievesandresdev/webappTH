@@ -5,4 +5,8 @@ export default {
     "automatic-response": "Réponse automatique",
     "input": "Écrivez un message...",
     "horary-title": "Heures de discussion",
+    "tabs": {
+        "inbox": "réception", 
+        "chat": "chat"
+    }
 }

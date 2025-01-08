@@ -121,6 +121,7 @@
 </template>
 <script setup>
 import { toRefs, ref, reactive, onMounted, computed, provide } from 'vue'
+
 import ShareStayModal from './Components/ShareStayModal.vue'
 import GuestModal from './Components/GuestModal.vue'
 import THInputText from '@/components/THInputText.vue';
@@ -213,7 +214,7 @@ const submitForm = async () => {
     fillForm(currentStay.value)
     // console.log('test currentStay.value',currentStay.value)
     if(currentStay.value){
-        toastSuccess("Cambios guardados");
+        toastSuccess(t('messageRequest.changeSave'));
     }
 }
 
@@ -232,7 +233,7 @@ const options_middle_reservation = [
         {value:'Booking',label:'Booking',},
         {value:'Expedia',label:'Expedia',},
         {value:'Hotels.com',label:'Hotels.com',},
-        {value:'Página web del hotel',label:'Página web del hotel',}
+        {value: t('stay.edit.pageWebHotel'), label: t('stay.edit.pageWebHotel') ,}
     ] 
 
   function onShareClick () {

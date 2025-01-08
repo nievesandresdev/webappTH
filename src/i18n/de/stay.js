@@ -26,6 +26,7 @@ export default{
                 "n-room": "Zimmer-Nr."
             }
         },
+        "calendar": "Kalender",
         "guests": "Gäste",
         "saveBtn": "Speichern",
         "share": "Aufenthalt teilen",
@@ -33,6 +34,7 @@ export default{
         "completeCheckin": "Check-in abschließen",
         "waitingGuest": "Warten auf Gastzugang",
         "accessRoom": "Aufenthalt betreten",
-        "active": "Vermögenswert"
+        "active": "Vermögenswert",
+        "pageWebHotel": "Hotel-Website"
     }
 }

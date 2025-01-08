@@ -10,7 +10,7 @@
                         >
                 </template>
             </div>
-            <p class="text-[8px] sp:text-[14px] font-medium lato leading-0">{{ experienceViatorData?.reviews?.totalReviews }} reseñas</p>
+            <p class="text-[8px] sp:text-[14px] font-medium lato leading-0">{{ experienceViatorData?.reviews?.totalReviews }} {{ $t('experience.card-experience.reviews').toLowerCase() }}</p>
         </div>
     </div>
     <div class="p-3 sp:p-6 border border-color-secondary bg-gradient-100 rounded-[10px] mt-[5px] sp:mt-[8px]">

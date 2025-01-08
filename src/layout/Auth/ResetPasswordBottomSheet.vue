@@ -46,6 +46,8 @@ import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue';
 import { navigateTo } from '@/utils/navigation'
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
@@ -91,7 +93,7 @@ onMounted(async () => {
 async function submit(){
     let res = await authStore.$resetPassword(token.value, form.password)
     if(res){
-        toastSuccess("Contraseña actualizada!"); 
+        toastSuccess(`${t('messageRequest.passwordUpdated')}!`); 
         router.push({ name: hotelData ? 'Home' : 'ChainLanding'})
     }
 }

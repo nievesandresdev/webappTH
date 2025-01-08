@@ -1,10 +1,17 @@
 export default {
-    "apiError401": "Credenciales Incorrectas",
-    "apiError404": "Servicio No disponible",
-    "apiError405_406": "Solicitud Invalida",
-    "apiError500": "Error de Conexión",
-    "apiErrorUndefined": "Error general de la aplicación",
-    "invalidKey": "Clave Invalida"
-    // más traducciones...
-  };
+  "apiError401": "Falsche anmeldedaten",
+  "apiError404": "Dienst nicht verfügbar",
+  "apiError405_406": "Ungültige anfrage",
+  "apiError500": "Verbindungsfehler",
+  "apiErrorUndefined": "Allgemeiner anwendungsfehler",
+  "invalidKey": "Ungültiger schlüssel",
+  "recordSuccess": "Eintrag abgeschlossen",
+  "emailSuccess": "E-mail gesendet",
+  "passwordUpdated": "Passwort aktualisiert",
+  "copiedClipboard": "In zwischenablage kopiert",
+  "guestDeleted": "Gast gelöscht",
+  "urlClipboard": "Link kopiert",
+  "changeSave": "Änderungen gespeichert",
+  "dataSave": "Daten erfolgreich gespeichert"
+};
   

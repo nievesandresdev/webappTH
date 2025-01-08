@@ -43,9 +43,10 @@
                         alt="volver a formulario huesped"
                         @click="showOptions = false"
                     >
-                    <h3 class="lato text-lg font-bold text-center leading-[18px] h-[28px]">Calendario</h3>
+                    <h3 class="lato text-lg font-bold text-center leading-[18px] h-[28px]">{{ $t('stay.edit.calendar') }}</h3>
                 </div>
                 <DatePicker
+                    :locale="$i18n.locale"
                     v-model="value"
                     expanded
                     is-range

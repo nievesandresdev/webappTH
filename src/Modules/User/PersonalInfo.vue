@@ -128,6 +128,9 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onBeforeUnmount,watch } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
@@ -311,7 +314,7 @@ const handleChangePassword = async () => {
     });
 
     if (response.ok) {
-        toastSuccess('Contraseña actualizada');
+        toastSuccess(t('messageRequest.passwordUpdated'));
         isModalOpen.value = false;
         currentPassword.value = null;
         newPassword.value = null;
@@ -336,7 +339,7 @@ const handleSubmit = async () => {
         const response = await guestStore.$updateDataGuest(formData);
 
         if (response.ok) {
-            toastSuccess('Datos guardados con éxito');
+            toastSuccess(t('messageRequest.dataSave'));
             guestStore.$updateLocalGuestData(response.data);
             initForm(response.data);
         } else {

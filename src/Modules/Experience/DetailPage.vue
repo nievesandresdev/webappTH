@@ -149,6 +149,9 @@ const { hotelData } = hotelStore;
 import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
 
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 // DATA
 const experienceData = ref(null);
 const experienceViatorData = ref(null);
@@ -166,7 +169,7 @@ onMounted(() => {
 
 const duration = computed( ()  => {
     let d = $utils.transformDuration(experienceData?.value?.duration)
-    let text = d?.minutes <= 0 ? `${d?.hours} Horas` : `${d?.hours} horas y ${d?.minutes} minutos`
+    let text = d?.minutes <= 0 ? `${d?.hours} ${t('experience.card-experience.hour')}` : `${d?.hours} ${t('experience.card-experience.hour')} ${t('experience.card-experience.and')} ${d?.minutes} ${t('experience.card-experience.min-aprox')}`
     return text;
 });
 

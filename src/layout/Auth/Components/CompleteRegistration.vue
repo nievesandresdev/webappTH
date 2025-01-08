@@ -63,6 +63,9 @@ import { useRouter } from 'vue-router';
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 //stores
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore()
@@ -132,7 +135,7 @@ async function submit(){
             router.push({ name:'HotelsList' })
         }
     }
-    toastSuccess("Registro completado"); 
+    toastSuccess(t('messageRequest.recordSuccess')); 
 }
 
 const passDisabled = computed(()=>{

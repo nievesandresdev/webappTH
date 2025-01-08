@@ -39,6 +39,9 @@
 </template>
 <script setup>
 import { computed, ref, onMounted, toRefs, inject } from 'vue'
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';
@@ -77,7 +80,7 @@ const addNumberGuest = async (id) => {
 const copyToClipboard = () => {
     if (shareLinkInput.value) {
         navigator.clipboard.writeText(shareLinkInput.value.value).then(() => {
-            toastSuccess("Enlace copiado");
+            toastSuccess(t('messageRequest.urlClipboard'));
         }, 2000);
 
         //isModalOpen.value = false;

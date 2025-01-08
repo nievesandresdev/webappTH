@@ -21,9 +21,13 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import AppHeader from '@/layout/Components/AppHeader.vue';
+import $utils from '@/utils/utils';
 
 import { useMediaQuery } from '@/composables/useMediaQuery.js'
 const { isDesktop } = useMediaQuery()
+
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -37,14 +41,11 @@ const chatStore = useChatStore()
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
 
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
-
 //DATA
 
 const tabsMenu = computed(() => [
     {    
-        title: 'Chat',
+        title: $utils.titleCase(t('chat.tabs.chat')),
         exclude: false,
         iconDefault: `WA.Chat.DISABLED`,
         iconSelected: `WA.Chat`,
@@ -53,7 +54,7 @@ const tabsMenu = computed(() => [
         notify: chatStore.countUnreadMessages 
     },
     {    
-        title: 'Inbox',
+        title: $utils.titleCase(t('chat.tabs.inbox')),
         exclude: false,
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,

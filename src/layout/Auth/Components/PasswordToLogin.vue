@@ -33,6 +33,9 @@ import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+
 import THInputText from '@/components/THInputText.vue';
 //stores
 import { useAuthStore } from '@/stores/modules/auth'
@@ -92,7 +95,7 @@ async function submit(){
 async function sendLinkToReset(){
     let res = await authStore.$sendResetLinkEmail(form.email);
     if(res){
-        toastSuccess("Correo enviado!"); 
+        toastSuccess(`${t('messageRequest.emailSuccess')}!`); 
     }
 }
 

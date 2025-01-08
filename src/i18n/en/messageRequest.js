@@ -1,10 +1,17 @@
 export default {
-    "apiError401": "Credenciales Incorrectas",
-    "apiError404": "Servicio No disponible",
-    "apiError405_406": "Solicitud Invalida",
-    "apiError500": "Error de Conexión",
-    "apiErrorUndefined": "Error general de la aplicación",
-    "invalidKey": "Clave Invalida"
-    // más traducciones...
-  };
+  "apiError401": "Incorrect credentials",
+  "apiError404": "Service not available",
+  "apiError405_406": "Invalid request",
+  "apiError500": "Connection error",
+  "apiErrorUndefined": "General application error",
+  "invalidKey": "Invalid key",
+  "recordSuccess": "Record completed",
+  "emailSuccess": "Email sent",
+  "passwordUpdated": "Password updated",
+  "copiedClipboard": "Copied to clipboard",
+  "guestDeleted": "Guest deleted",
+  "urlClipboard": "Link copied",
+  "changeSave": "Changes saved",
+  "dataSave": "Data successfully saved"
+};
   

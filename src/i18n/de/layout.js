@@ -1,6 +1,6 @@
 export default {
     "header": {
-        "home": "startseite",
+        "home": "start",
         "facilities": "einrichtungen",
         "destination": "ziel",
         "experiences": "erfahrungen",
