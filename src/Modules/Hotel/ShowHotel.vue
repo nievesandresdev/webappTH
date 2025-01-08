@@ -58,30 +58,25 @@
         @share-click="isModalOpen = true"
       />
       
+      <!--HORARIOS DE CHECKIN Y CHECKOUT-->
+      <HotelCheckInOut :hotelData="hotelData" v-if="hotelData.checkin && hotelData.checkout" /> 
+      
       <!--DATA GENERAL DEL HOTEL-->
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
-
-        <HotelInfoGeneral :hotelData="hotelData" />
+      <HotelInfoGeneral :hotelData="hotelData" /> 
     </div>
-    <!-- seccion de instalaciones -->
-      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4">
+
+
+      <!-- seccion de instalaciones -->
+      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4" v-show="hotelData.show_facilities === 1">
         <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
-        <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
+        <div class="flex items-center gap-2 sp:gap-4" v-show="hotelData.show_facilities === 1" >
           <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
           <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
           <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
         </div>
       </div>
-      <div class="flex flex-col  mt-1 sp:mt-2 pl-2 sp:pl-4">
-        <CardSlider 
-            :data="facilities" 
-            @itemClick="handleGoFacility" 
-            v-show="hotelData.show_facilities === 1" 
-            :marginBotton="rrss"  
-            :cover="true"
-        />
-      </div>
+      <CarouselFacilities id="1" :items="facilities" v-show="hotelData.show_facilities === 1"/>
       <!-- fin seccion instalaciones -->
 
       <!-- Redes Sociales -->
@@ -143,21 +138,18 @@ import StarRating from './Components/StarRating.vue'
 import HotelActionButtons from './Components/HotelActionButtons.vue'
 import HotelRRSS from './Components/HotelRRSS.vue'
 import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
-import CardSlider from '@/components/CardSlider.vue'
+import HotelCheckInOut from './Components/HotelCheckInOut.vue'
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { useHotelStore } from '@/stores/modules/hotel'
 import { computed, ref, onMounted,provide } from 'vue'
-import SectionBarTab from '@/components/SectionBarTab.vue';
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
 import { useTabs } from '@/stores/modules/tabs'; // Ruta de tu store
+import CarouselFacilities from '@/Modules/Home/Components/CarouselFacilitiesRed.vue'
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
-    import { useRouter } from 'vue-router'
-    // const router = useRouter()
-
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
 
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -262,9 +254,9 @@ function changeTab (r) {
   router.push({ name: r });
 }
 
-const handleGoFacility = (id) => {
+/* const handleGoFacility = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
-};
+}; */
 
 
 const goToFacilities = () => {
