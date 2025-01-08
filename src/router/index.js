@@ -67,6 +67,7 @@ const routes = [
   // Rutas dinámicas (con slug)
   {
     path: '/:hotelSlug',
+    
     beforeEnter: [checkHotelSubdomain],
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
@@ -79,8 +80,10 @@ const routes = [
       ...hotelRoutes,
       ...queryRoutes,
       ...policiesRoutes,
-    ]
+    ],
+    beforeEnter: [isMobile]
   },
+
 
   // Captura para cualquier URL no reconocida (debe ir al final)
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
