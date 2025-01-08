@@ -3,7 +3,7 @@
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
 
     <div class="bg-[#FAFAFA] mb-[48px]">
-        <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" :imgDefault="hotelData?.image"  showButtonBack :from="'place'" />
+        <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" :imgDefault="hotelData?.image"  showButtonBack :from="'facility'" />
             <!-- v-if="facility.ad_tag" -->
         <div
             v-if="facility.ad_tag"

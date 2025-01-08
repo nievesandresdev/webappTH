@@ -5,7 +5,7 @@
     <ImageSlider
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
-      :from="'place'"
+      :from="'places'"
     />
     <div class="py-[12px] sp:py-[24px] no-scrollbar">
         <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2 sp:mx-4">
