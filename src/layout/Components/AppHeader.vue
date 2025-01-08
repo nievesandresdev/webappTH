@@ -118,7 +118,7 @@ const navigateTo = (routeName) => {
         border: 1px solid #FFF;
         background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        z-index: 300001;
+        z-index: 3000;
     }
 
 
