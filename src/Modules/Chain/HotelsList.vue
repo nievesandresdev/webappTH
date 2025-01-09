@@ -22,14 +22,17 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { getUrlParam } from '@/utils/utils.js'
-import { navigateTo } from '@/utils/navigation'
 import HeadInChain from './Components/HeadInChain.vue'
 import CardHotel from './Components/CardHotel.vue'
 //store
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
-//router
 
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
+//router
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 
 const hotels = ref([])
@@ -38,7 +41,8 @@ onMounted(async() => {
 })
 
 async function goStayList(){
-    navigateTo('MyStays')
+    console.log('test hotel', hotelStore.hotelData?.subdomain)
+    router.push({ name:'MyStays', params:{ hotelSlug : hotelStore.hotelData?.subdomain}})
 }
 
 </script>
