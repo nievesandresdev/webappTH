@@ -122,21 +122,26 @@
 
     <!-- forms -->
     <ResetPasswordBottomSheet 
-        v-if="formType == 'reset'"
+        v-if="showResetPasswordBottomSheet"
         :open="true"
     />
     <RegisterOrLoginBottomSheet 
-        v-if="formType == 'log' || !guestStore.guestData && formType !== 'reset'"
+        v-if="showRegisterOrLoginBottomSheet"
         :open="true"
     />
     <CompleteRegisterBottomSheet 
-        v-if="formType == 'complete' || guestStore.guestData && !guestStore.guestData.name"
+        v-if="showCompleteRegisterBottomSheet"
         :open="true"
     />
     <CreateStayBottomSheet 
-        v-if="formType == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType"
+        v-if="showCreateStayBottomSheet"
         :open="true"
     />
+    <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
+    <div 
+        v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
+        class="fixed top-0 left-0 w-screen h-screen z-[900]"
+    ></div>
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue';
@@ -262,4 +267,23 @@ if(!stayStore.stayData?.check_out) return
   const now = DateTime.now();
   return inputDate < now; // Retorna true si la fecha ya pasó
 });
+
+const showResetPasswordBottomSheet = computed(() => {
+    return formType.value == 'reset'
+});
+
+const showRegisterOrLoginBottomSheet = computed(() => {
+    return formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset'
+});
+
+const showCompleteRegisterBottomSheet = computed(() => {
+    return formType.value == 'complete' || guestStore.guestData && !guestStore.guestData.name
+});
+
+const showCreateStayBottomSheet = computed(() => {
+    return formType.value == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType.value
+});
+
+
+
 </script>

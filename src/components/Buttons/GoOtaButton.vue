@@ -68,6 +68,14 @@
         if(ota == "tripadvisor" && searchTripadvisorData){
             urlReview.value = searchTripadvisorData?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchTripadvisorData?.url)}` : ''
         }
+
+        if(ota == "booking"){
+            // console.log('test width screen',screen.width)
+            urlReview.value = "https://secure.booking.com/reviewmanage.html";
+            if(screen.width > 1020){
+                urlReview.value = "https://secure.booking.com/reviewtimeline.html";
+            }
+        }
     }
 
     function goOta () {

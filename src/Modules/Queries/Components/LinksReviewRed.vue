@@ -25,18 +25,18 @@
             <div v-if="requestTexts?.otas_enabled?.booking && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="booking" textButton="Continuar en Booking"/>
             </div>
-            <div v-if="requestTexts?.otas_enabled?.expedia && requestTexts?.buttonAnchor">
+            <!-- <div v-if="requestTexts?.otas_enabled?.expedia && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="expedia" textButton="Continuar en Expedia"/>
-            </div>
+            </div> -->
             <div v-if="requestTexts?.otas_enabled?.tripadvisor && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="tripadvisor" textButton="Continuar en Tripadvisor" />
             </div>
             <div v-if="requestTexts?.otas_enabled?.google && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="google" textButton="Continuar en Google"/>
             </div>
-            <div v-if="requestTexts?.otas_enabled?.airbnb && requestTexts?.buttonAnchor">
+            <!-- <div v-if="requestTexts?.otas_enabled?.airbnb && requestTexts?.buttonAnchor">
                 <GoOtaButton ota="airbnb" textButton="Continuar en Airbnb"/>
-            </div>
+            </div> -->
         </div>
         <div 
             id="description-container2" 
