@@ -13,7 +13,7 @@
                     :key="schedule"
                     :class="{'border-b border-color-secondary':(hotelStore.chatHours.length - 1) > index}"
                 >
-                    <h2 class="lato text-base font-bold">{{ schedule.day }}</h2>
+                    <h2 class="lato text-base font-bold">{{ $t('chat.nameDay'+schedule.day) }}</h2>
                     <div class="flex items-center">
                         <p 
                             class="lato text-sm" 

@@ -17,7 +17,7 @@
                 class="rounded-[10px] border hborder-black-100 hbg-gray-100 h-10 text-center px-3 py-2.5 lato text-sm font-bold leading-[16px] shadow-guest"
                 @click="editQuery(response, qualification)"
             >
-                Modificar
+            {{ $t('query.form.modify')}}
             </button>
         </div>
     </div>

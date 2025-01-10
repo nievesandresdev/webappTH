@@ -17,7 +17,7 @@
                 :id="'textarea1'"
                 v-model="textarea" 
                 :wordLimit="300"
-                :placeholder="settings?.pre_stay_comment?.es"
+                :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]"
                 showWordLimit
                 customClasses="min-h-[34px] sp:min-h-[72px]"
             />
@@ -51,10 +51,13 @@ const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
+import { useLocaleStore } from '@/stores/modules/locale';
+
 
 const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
+const localeStore = useLocaleStore();
 
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
@@ -85,7 +88,7 @@ async function saveQuery(){
     if(response){
         emit('reloadList')
         // emit('showFeedback',props.settings.pre_stay_thanks.es);
-        let textRes = 'query.textToast.sendQueryText';
+        let textRes = props.settings?.pre_stay_thanks[localeStore.localeCurrent];
         if(EditPeriod.value){
             textRes = 'query.textToast.updateQueryText';
         }

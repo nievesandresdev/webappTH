@@ -5,6 +5,13 @@ export default {
     "automatic-response": "Resposta automática",
     "input": "Escreva uma mensagem...",
     "horary-title": "Horário de chat",
+    "nameDayLunes": "Segunda-feira",
+    "nameDayMartes": "Terça-feira",
+    "nameDayMiércoles": "Quarta-feira",
+    "nameDayJueves": "Quinta-feira",
+    "nameDayViernes": "Sexta-feira",
+    "nameDaySábado": "Sábado",
+    "nameDayDomingo": "Domingo",
     "tabs": {
         "inbox": "entrada", 
         "chat": "chat"

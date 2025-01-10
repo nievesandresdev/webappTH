@@ -31,7 +31,7 @@
         <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
         <div class="mt-2 sp:mt-4 md:mt-8" v-if="form.type">
             <p class="lato text-sm md:text-base md:font-medium leading-[16px] md:leading-[125%]">
-                {{ settings[thanksHoster].es }}
+                {{ settings[thanksHoster][localeStore.localeCurrent] }}
             </p>
         </div>
         <div class="mt-4 md:mt-4" v-if="form.type">
@@ -84,10 +84,12 @@ import { reactive, provide, computed, ref, inject, watch  } from 'vue';
 import FormTabEmojisRed from './FormTabEmojisRed'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
+import { useLocaleStore } from '@/stores/modules/locale';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
@@ -95,6 +97,7 @@ const { toastSuccess } = handleToast();
 const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
+const localeStore = useLocaleStore();
 
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
