@@ -1,12 +1,12 @@
 <template>
     <div
-        class="w-full card-exp rounded-t-lg text-left"
+        class="w-full text-left rounded-t-lg card-exp"
         :class="{'cursor-pointer':!$utils.isMockup(),'no-hover':$utils.isMockup()}"
         @click="goExperience(data)"
     >
-         <div class="container-image rounded-t-lg w-full relative">
+         <div class="relative w-full rounded-t-lg container-image">
             <img
-                class="img w-full h-full lg:h-48 2xl:h-52 overflow-hidden rounded-t-lg object-cover"
+                class="object-cover w-full h-full overflow-hidden rounded-t-lg img lg:h-48 2xl:h-52"
                 :src="data.image?.url"
                 loading="lazy"
                 :alt="data.image?.url"
@@ -48,7 +48,7 @@
                     {{ $t('experience.card-experience.annulation-gratuite').toUpperCase() }}
                 </template>
                 <template v-else>
-                    {{ $t('experience.card-experience.annulation-gratuite').toUpperCase() }}
+                    {{ $t('experience.card-experience.non-refundable').toUpperCase() }}
                 </template>
             </p>
         </div>
@@ -58,7 +58,7 @@
         >
             {{data.title}}
         </h5>
-        <div class="mt-1 sp:mt-2 flex">
+        <div class="flex mt-1 sp:mt-2">
             <div v-if="data?.reviews?.combined_average_rating" class="flex items-center gap-0.5 sp:gap-1 mr-1 sp:mr-2">
                 <img
                     v-for="(item, index) in Math.ceil(data?.reviews?.combined_average_rating)" :key="index"
@@ -72,15 +72,14 @@
                 <span class="text-[10px] sp:text-sm">({{ data.reviews?.total_reviews }})</span>
             </div>
         </div>
-        <h4  class="text-xs sp:text-base mt-1 sp:mt-2 mb-2 sp:mb-4">
+        <h4  class="mt-1 text-xs sp:text-base sp:mt-2">
             {{ $t('experience.card-experience.from') }} {{ $utils.formatPrice(data.from_price) }}€
-            
         </h4>
-        <div class="flex items-center mt-2" v-if="distance">
+        <div class="flex items-center mt-1 sp:mt-2" v-if="distance">
             <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.Location.svg" alt="Location">
             <p class="text-[8px] sp:text-xs font-medium">{{ data.city_experince }}</p>
         </div>
-        <div class="flex items-center mt-2" v-if="distance">
+        <div class="flex items-center mt-1 sp:mt-2" v-if="distance">
             <img class="w-2.5 sp:w-4 h-2.5 sp:h-4 mr-0.5 sp:mr-1" src="/assets/icons/1.TH.footstep.svg" alt="distance">
             <p class="text-[8px] sp:text-xs font-medium"> a {{ distance }} km</p>
         </div>

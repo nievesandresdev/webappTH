@@ -41,9 +41,9 @@
                     class="flex items-center hover:bg-gray-200 w-full cursor-pointer"
                     @click="selectSearch(item)"
                 >
-                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="getImage(item)">
+                    <img class="rounded-lg w-10 h-10 mr-2 object-cover" :src="item.type == 'experience' ? item.image : placeStore.$loadImage(item.image)">
                     <div class="border-b border-gray-300 w-full truncate-1 h-full" :class="item.type == 'city' ? 'py-3.5' : 'py-2'">
-                        <p class="text-sm font-medium truncate-1" :class="{'mb-1': item.type == 'city'}">{{item.title}}</p>
+                        <p class="text-sm font-medium truncate-1" :class="{'mb-1': item.type == 'city'}" v-html="item.title"></p>
                         <p
                             v-if="item.type != 'city'"
                             class="text-xs font-light mt-1"
@@ -66,7 +66,8 @@
     // STORE
     import { useExperienceStore } from '@/stores/modules/experience'
     const experienceStore = useExperienceStore()
-
+    import { usePlaceStore } from '@/stores/modules/place'
+    const placeStore = usePlaceStore()
     // EMIT
     const emit = defineEmits(['inputSearch'])
 
@@ -100,12 +101,6 @@
     const showDropdownMobile = inject('showDropdownMobile')
 
     // FUNCTION
-    function getImage (item) {
-        console.log('getImage',item)
-        console.log()
-        if(item.type == 'place')return `${urlStorage}/storage/places/${item.image.image}`
-        return item.image;
-    }
 
     function selectSearch (item) {
         closeModal();

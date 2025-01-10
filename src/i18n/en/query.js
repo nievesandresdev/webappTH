@@ -1,23 +1,36 @@
 export default {
     "textToast": {
-        "sendQueryText": "Response sent"
+        "sendQueryText": "We sincerely appreciate your feedback. Your experience matters to us, and we strive to meet your expectations.",
+        "updateQueryText" : "Amendment submitted",
+        "registerResponse": "Feedback submitted",
+        "updateResponse": "Feedback updated"
     },
     "form": {
         "send": "Send",
+        "cancel" : "Cancel",
         "title": "Queries",
         "hello": "Hello",
         "whatsup": "What's up",
         "thanksAll" : "Thank you for everything",
-        "btn-wrong-stay": "Very bad",
+        "btn-verywrong-stay": "Very bad",
+        "btn-wrong-stay": "Bad",
         "btn-normal-stay": "Normal",
-        "btn-good-stay": "Very good",
-        "btn-wrong-poststay": "Very bad",
+        "btn-good-stay": "Good",
+        "btn-verygood-stay": "Very good",
+        "btn-verywrong-poststay": "Very bad",
+        "btn-wrong-poststay": "Bad",
         "btn-normal-poststay": "Normal",
-        "btn-good-poststay": "Very good",
+        "btn-good-poststay": "Good",
+        "btn-verygood-poststay": "Very good",
+        "poststay-bad-thanks-title": "Reply sent", 
+        "poststay-bad-thanks-subtitle": "Thank you very much for your time",
     },
     "settings": {
         "questionpre-stay": "Is there anything we can do for your arrival at the hotel?",
         "questionin-stay": "How would you rate your level of satisfaction with your stay so far?",
         "questionpost-stay": "How was your experience with us?",
     },
+    "inbox": {
+        "title": "Messages"
+    }
 }

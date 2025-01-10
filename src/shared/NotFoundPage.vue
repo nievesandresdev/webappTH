@@ -2,7 +2,7 @@
     <section class="h-screen w-screen flex overflow-y-auto px-4">
         <div class="m-auto lg:w-[46rem]">
             <img 
-                src="/assets/img//404_image.svg" 
+                src="/assets/img/404_image.svg" 
                 alt="pagina no encontrada"
                 class="h-[17.3rem] lg:h-[25rem] w-[14.6rem] lg:w-[21rem] mx-auto"
             >

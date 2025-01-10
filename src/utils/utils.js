@@ -85,33 +85,65 @@ const transformDuration = (value) => {
     return data
 }
 
-const loadSubdomain = () => {
-    const ENV = process.env.VUE_APP_ENVIROMENT || 'locale'
-    let subdomain = ENV === 'locale' ? extractSlugHotelToQuery() : extractSlugHoteltoHost()
+const saveHotelSlug = (subdomain) => {
     if(subdomain){
         localStorage.setItem('subdomain', subdomain)
     }
     return subdomain
 }
 
-const extractSlugHotelToQuery = () => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const subdomain = urlParams.get('subdomain') || null
-    return subdomain
-}
 
-const extractSlugHoteltoHost = () => {
-    const hostname = window.location.hostname; // Obtiene el hostname de la URL actual
-    const partes = hostname.split('.'); // Divide el hostname en partes separadas por puntos
-    const slugHotel = partes[0]; // El slug del hotel es la primera parte
-    return slugHotel;
-}
+
 
 const getUrlParam = (param) => {
     const urlParams = new URLSearchParams(window.location.search)
     const dataParam = urlParams.get(param)
     return dataParam
 }
+
+const formatTypeLodging = (valueType) => {
+    const typeLodging = {
+      hotel: "Hotel",
+      hostal: "Hostal",
+      pensión: "Pensión",
+      ca: "Complejo de apartamentos",
+      at: "Apartamento turístico",
+      vft: "Vivienda con fines turísticos",
+    }
+    return typeLodging?.[valueType] ?? null;
+  }
+
+  function $throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function() {
+        const context = this;
+        const args = arguments;
+        if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+        } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function() {
+                if ((Date.now() - lastRan) >= limit) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                }
+            }, limit - (Date.now() - lastRan));
+        }
+    }
+  }
+  
+  function $isElementVisible(el) {
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
 module.exports = {
     slufy,
@@ -122,6 +154,9 @@ module.exports = {
     capitalizeFirstLetter,
     isMockup,
     transformDuration,
-    loadSubdomain,
+    saveHotelSlug,
     getUrlParam,
+    formatTypeLodging,
+    $throttle,
+    $isElementVisible,
 }

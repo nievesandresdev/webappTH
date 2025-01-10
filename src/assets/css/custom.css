@@ -3,16 +3,17 @@ h1,h2,h3,h4,h5,h6,
 p{
     margin: 0;
     padding: 0;
+    color:#333;
 }
 body{
   background-color: #fff;
 }
-*> :not(i){
+/* *> :not(i){
   font-family: 'Montserrat', sans-serif;
 }
 p,a{
     font-family: 'Montserrat', sans-serif !important;
-}
+} */
 /* Eliminar el anillo (outline) predeterminado en todos los elementos de entrada al enfocar */
 input:focus,
 textarea:focus,
@@ -20,12 +21,12 @@ select:focus,
 button:focus {
   outline: none;
   border-width: 1px;
-  box-shadow: none !important;
+  /* box-shadow: none !important; */
 }
 
-button:focus {
+/* button:focus {
   border-width: 0;
-}
+} */
 
 
 /* @import './hoster-colors'; */
@@ -189,10 +190,94 @@ button:focus {
   white-space: nowrap; 
 }
 
+/* Estilos personalizados para el toast de éxito */
+.success-toast {
+  display: flex;
+  width: auto !important; 
+  padding: 20px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  
+  border-radius: 10px;
+  background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
+  box-shadow: -3px 0px 6px 0px rgba(0, 0, 0, 0.10),0px -3px 6px 0px rgba(0, 0, 0, 0.12),0px 3px 6px 0px rgba(0, 0, 0, 0.12),3px 0px 6px 0px rgba(0, 0, 0, 0.10);
+
+  min-width: 0;
+  min-height: 0;
+  position: fixed;
+  right: 12px;
+  left: 12px; 
+}
+
+.bottom-toast-normal {
+  bottom: 16px;
+}
+
+.bottom-toast-over-menu {
+  bottom: 96px;
+}
+
+/* Estilos para el cuerpo del toast */
+.success-toast-body {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 110%;
+  color: #34A98F;
+  font-family: "Lato", sans-serif !important
+}
+
+
 .underline{
   text-decoration: underline  !important;
 }
 
-.hshadow{
+.hshadow, .shadow-guest{
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+.hshadow-button{
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
+}
+
+.hover-input:hover{
+  color: var(--h-green-600);
+  border: 1px solid var(--h-green-600) !important;
+}
+.hover-input:hover::placeholder {
+  color: var(--h-green-600);
+  opacity: 1;
+}
+
+/*fonts*/
+.roboto{
+  font-family: "Roboto", sans-serif !important;
+}
+
+.lato{
+  font-family: "Lato", sans-serif !important;
+}
+
+.item-skeletom {
+  background: #E6E6E6;
+  border-radius: 10px;
+}
+.bg-gradient-h {
+  background: linear-gradient(105deg, #F3F3F3, #FAFAFA);
+}
+
+.truncate-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shadow-guest-2{
+  box-shadow: 0px -4px 6px 0px rgba(0, 0, 0, 0.13);
+}
+
+body{
+  background-color: #fafafa;
 }

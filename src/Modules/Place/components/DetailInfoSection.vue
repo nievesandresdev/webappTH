@@ -6,39 +6,39 @@
             <div class="flex items-center overflow-x-auto max-w-[132px] sp:max-w-[196px] lg:max-w-[600px]">
                 <!-- tag recomendado -->
                 <div v-if="placeData?.recomendations" class="mr-1 lg:mr-2">
-                    <div class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
+                    <div class="tag py-1 px-2 h-[16px] sp:h-6 rounded-full bg-[#FFEBCC]">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap leading-0">
                             {{ $t('place.detail.recommended') }}
                         </p>
                     </div>
                 </div>
                 <!-- tag destacado -->
                 <div v-if="placeData?.place_featured" class="mr-1 lg:mr-2">
-                    <div class="tag py-1 px-2 h-6 rounded-full bg-[#FFEBCC]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
+                    <div class="tag py-1 px-2 h-[16px] sp:h-6 rounded-full bg-[#FFEBCC]">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap leading-0">
                             {{ $t('place.detail.featured') }}
                         </p>
                     </div>
                 </div>
                 <!-- tag type places -->
                 <div class="hidden md:inline">
-                    <div class="tag py-1 px-2 h-6 rounded-full bg-[#EBF4F9]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
+                    <div class="tag py-1 px-2 h-[16px] sp:h-6 rounded-full bg-[#EBF4F9]">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap leading-0">
                             {{ $t('place.types.'+slufy(placeData?.type_place?.name)) }}
                         </p>
                     </div>
                 </div>
                 <!-- tag categoriplace -->
                 <div class="pl-1 lg:pl-2">
-                    <div class="tag py-1 px-2 h-6 rounded-full bg-[#EBF4F9]">
-                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap">
+                    <div class="tag py-1 px-2 h-[16px] sp:h-6 rounded-full bg-[#EBF4F9]">
+                        <p class="text-[6px] sp:text-[10px] font-medium htext-gray-500 whitespace-nowrap leading-0">
                             {{ $t('place.categories.'+slufy(placeData?.category)) }}
                         </p>
                     </div>
                 </div>
             </div>
             <!-- rating  mobile-->
-            <div class="lg:hidden ml-auto">
+            <div class="ml-auto lg:hidden">
                 <div>
                     <img
                         v-for="(value, index) in 5"
@@ -58,6 +58,9 @@
         <div>
             <h1 class="text-xs sp:text-lg lg:text-[22px] font-medium mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.title">
             </h1>
+            <p class="text-xs sp:text-sm lg:text-[22px] font-normal mt-[8px] sp:mt-4 lg:mt-6" v-html="placeData?.description">
+
+            </p>
             <div v-if="placeData?.type_place?.name == 'Dónde comer'">
                 <p v-if="placeData?.range_prices || placeData?.type_cuisine" class="text-[8px] sp:text-sm mt-2.5 sp:mt-4 ">
                     <template v-if="placeData?.range_prices">
@@ -69,7 +72,7 @@
                 </p>
                 <div class="mt-4 space-x-2 flex items-center md:justify-start mx-[-16px] lg:mx-0">
                     <button
-                        v-if="placeData?.url_menu.length > 4"
+                        v-if="placeData?.url_menu?.length > 4"
                         class="md:border-r border-gray-200 text-[8px] sp:text-sm flex flex-col md:flex-row justify-center items-center w-1/4 lg:w-auto"
                         @click="openLink(place.url_menu)"
                     >
@@ -139,7 +142,7 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendations?.message"
+                <p class="text-[6px] sp:text-xs lg:text-sm mt-[6px] sp:mt-3 lg:mt-4" v-html="placeData?.recomendation_language_current">
                 </p>
             </div>
         </div>
@@ -150,7 +153,7 @@
                 {{ $t('place.detail.dataInterest.title') }}
             </h1>
             <div class="lg:flex lg:justify-between" v-if="placeData?.range_numeric_prices || placeData?.diet_specifications">
-                <div class="w-[253px]" v-if="placeData?.range_numeric_prices">
+                <div class="w-[253px]" v-if="placeData?.range_numeric_prices"> 
                     <p class="text-[10px] sp:text-sm lg:text-base lg:font-medium mt-[8px] sp:mt-4">
                         {{ $t('place.detail.dataInterest.priceRange') }}
                     </p>
@@ -213,7 +216,7 @@
                 <div class="mx-[-16px] lg:mx-0 lg:rounded-[10px] h-[160px] lg:h-[215px]" id="location"></div>
             </div>
             <p v-if="placeData?.address" class="text-[8px] sp:text-sm font-medium lg:font-normal mt-[4px] sp:mt-2">
-                <i class="fas fa-map-marker-alt mr-2"></i>{{placeData?.address}}
+                <i class="mr-2 fas fa-map-marker-alt"></i>{{placeData?.address}}
             </p>
         </div>
 
@@ -249,7 +252,7 @@
     }
 
     const createMap = () => {
-        console.log('createMap',props.placeData)
+        // console.log('createMap',props.placeData)
         if(props.placeData){
             var script = document.createElement('script');
             script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA2pl-RXaMKbahzdX9yl0CRFc3-_fbtMog&libraries=places&callback=initMap';

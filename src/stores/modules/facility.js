@@ -13,17 +13,25 @@ export const useFacilityStore = defineStore('facility', () => {
     // STATE
 
     // ACTIONS
-    function $loadImage (img) {
-        if (!img) return;
-        let { URL_STORAGE } = mainStore
-        let { type, url } = img
-        // url = type != 'CDN' ? `${URL_STORAGE}/storage/facility${url}` : url
-        url = type != 'CDN' ? `${URL_STORAGE}${url}` : url
-        return url
+    function $loadImage (item,custom = null) {
+        let { image: path, type, url } = item ?? {};
+        let { URL_STORAGE } = mainStore;
+        
+        // let model = 'places';
+        // if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
+
+        // let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
+        // return urlFull
+
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${path}`;
+
     }
 
     async function $getAll () {
-        const response = await getAllApi()
+        let params = {visible: 1}
+        //
+        const response = await getAllApi(params)
         if(response.ok) return response.data
         return []
     }

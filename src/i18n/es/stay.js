@@ -1,44 +1,40 @@
 export default{
-    "stayLog":{
-        "title":"Acceso a la webapp",
-        "checkDate":{
+    "create":{
+        "title":"Crea tu estancia",
+        "check-date":{
             "label":"Fecha Check-in/ Check-out",
             "placeholder": "dd/mm/aaaa - dd/mm/aaaa",
         },
-        "howPeople":"¿Cuántas personas se alojarán?",
-        "button":"Siguiente",
-        "backButton":"Volver atrás",
-        "addGuest":"+ Enviar a otro huésped",
-        "deleteGuest":"Eliminar",
-        "guest": "Huesped",
-        "processing":"Procesando",
+        "continue-button":"Crear y acceder a la estancia",
     },
-    "dataModal":{
-        "title":"Estancia",
-        "checkDate":{
-            "label":"Fecha Check-in/ Check-out",
-            "placeholder": "dd/mm/aaaa - dd/mm/aaaa",
-        },
-        "room":{
-            "label":"Habitación",
-            "placeholder": "Nº habitación",
-        },
-        "howPeople":"Nº huéspedes que se alojarán",
-        "howPeopleError":"Debes eliminar huéspedes para esta acción",
-        "guestsTitle":"Huéspedes",
-        "guestLabel":"Huésped",
-        "placehoderNull":"El campo debe estar relleno",
-        "phone":{
-            "prefix":"+ Prefijo",
-            "number": "Teléfono del huésped",
-        },
-        "cancelButton": "Cancelar",
-        "saveButton": "Guardar",
+    "share": {
+        "title": "Únete a nuestra estancia en {hotel}",
+        "text": "Únete ahora y disfruta de todas las ventajas de la WebApp para aprovechar al máximo nuestra experiencia"
     },
-    "noSavedM":{
-        "title":"Cambios sin guardar",
-        "body":"Tienes cambios sin guardar. Para poder actualizar la información debes guardar los cambios realizados.",
-        "exitButton":"Salir sin guardar",
-        "saveButton":"Guardar",
+    "detail": {
+        "title": "Mis estancias",
+        "createBtn": "Crear estancia",
+        "editBtn": "Editar estancia"
+    },
+    "edit": {
+        "title": "Editar estancia",
+        "information-stay": "Información de la estancia",
+        "input": {
+            "medio-reserva": {
+                "label": "Medio de la reserva",
+                "placeholder": "Seleccionar medio de la reserva",
+                "n-room": "Nº habitación",
+            }
+        },
+        "calendar": "Calendario",
+        "guests": "Huéspedes",
+        "saveBtn": "Guardar",
+        "share": "Compartir estancia",
+        "guest": "Huésped",
+        "completeCheckin": "Completar check in",
+        "waitingGuest": "Esperando acceso del huésped",
+        "accessRoom": "Acceder a la estancia",
+        "active": "Activo",
+        "pageWebHotel": "Página web del hotel"
     }
 }

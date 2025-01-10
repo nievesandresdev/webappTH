@@ -3,16 +3,19 @@ export default {
         "experiences": "Experiencias",
     },
     "card-experience": {
+        "hour": "horas",
         "aprox": "aproximadamente",
-        "min-aprox": "minutos aproximadamente",
+        "min-aprox": "minutos",
         "and": "y",
         "recommed": "recomendado",
         "prominent": "destacado",
         "annulation-gratuite": "cancelación gratuita",
+        "non-refundable": "no reembolsable",
         "from":"Desde",
+        "reviews": "reseñas"
     },
     "list-page": {
-        "title": "Experiencias en",
+        "title": "Experiencias",
         "section-filter": {
             "label-search": "Filtrar por",
             "placeholder-input-search": "Introduce una palabra clave",
@@ -22,6 +25,28 @@ export default {
             "label-price-max": "Precio máx.",
             "placeholder-price-max": "Máximo..",
             "label-duration": "Duración",
+            "cancellation-policy": {
+                "title": "Política de cancelación",
+                "free-cancellation":"Cancelación gratuita"
+            },
+            "duration": {
+                "title": "Duración",
+                "one-hour": "Hasta 1 hora",
+                "one-four-hour": "Entre 1 y 4 horas",
+                "noon": "Medio día",
+                "whole-day": "Dia entero"
+            },
+            "score": {
+                "title":"Puntaje",
+                "star": "Estrellas"
+            },
+            "price": {
+                "title": "Precio",
+                "0-100": "Entre 0 € y 100 €",
+                "100-250": "Entre 100 € y 250 €",
+                "250-500": "Entre 250 € y 500 €",
+                "500": "+500 €"
+            }
         },
         "section-filter-history": {
             "btn-price": "Hasta {price_max}",
@@ -31,6 +56,10 @@ export default {
         "btn-submit-filter": "Aplicar flitros",
         "text-count-list": "Experiencias encontradas",
         "text-count-list-mobile": "Se han encontrado {count} experiencias.",
+        "placeholder-search": "Buscar una experiencia",
+        "text-count-list-search-active": "Buscar todas las Experiencas para",
+        "text-count-list-search": "{count} Experiencias encontrados para",
+        "text-search-not-found": "Ajusta tu búsqueda o intenta quitando filtros.",
         "without-results": {
             "title": "No se han encontrado experiencias",
             "text": "No se han encontrado experiencias en esta ciudad. Te invitamos a explorar en otras ciudades, en ellas descubrirás diversas experiencias y actividades."
@@ -53,6 +82,7 @@ export default {
         "btn-eye-map": "Ver en Google Maps",
         "subtitle-point-start": "Punto de encuentro",
         "subtitle-point-end": "Punto de finalización",
+        "ends-point-at-meeting-point": "Esta actividad finaliza en el punto de encuentro inicial",
         "title-other-information": "Información adicional",
         "title-politic-cancelation": "Política de cancelación",
         "text-politic-standar-1": "Puede cancelar hasta 24 horas antes de la experiencia para obtener un reembolso completo.",
@@ -69,5 +99,11 @@ export default {
         "availability-label":"Ver disponibilidad",
         "free-cancellation-label":"Cancelación gratuita",
         "non-refundable-cancellation-label":"No reembolsable",
+
+        "check-the-availability-of-this-experience": "Consulta la disponibilidad de esta experiencia",
+        "btn-see-availability-on-viator": "Ver disponibilidad en Viator",
+        "title-general-information": "Información general",
+        "tag-paper-ticket": "Ticket de papel",
+        "offered-in": "Ofrecido en",
     }
 }

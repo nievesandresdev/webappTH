@@ -12,13 +12,13 @@ export const useCityStore = defineStore('city', () => {
     // ACTIONS
     async function $apiGetAll (params) {
         const response = await getAllApi(params)
-        console.log(response, 'response')
+        // console.log(response, 'response')
         return response
     }
 
     async function $getNearCitiesData (params) {
         const response = await getNearCitiesDataApi(params)
-        console.log(response, 'response')
+        // console.log(response, 'response')
         return response
     }
 

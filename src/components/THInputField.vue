@@ -1,20 +1,20 @@
 <template>
     <div class="cursor-pointer relative" v-if="options.length > 0">
-      <button
+      <div
         :disabled="disabled"
         @click="toggleDropdown"
-        class="box-input-field flex items-center h-10 w-full rounded-[6px] py-2 px-3 hoverForm bg-white text-left"
+        class="flex items-center h-10 w-full rounded-[10px] px-2 bg-white text-left border-[#333]"
         :class="{
-          'hborder-gray-400': !error && !modelValue,
-          'hborder-alert-negative': error,
-          'hborder-black-100': modelValue,
+          'border ': !error && !modelValue && !showOptions,
+          'border-2 hborder-alert-negative': error,
+          'border-2': modelValue || showOptions,
         }"
       >
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">
         <span
-          class="flex-grow truncate text-label text-sm font-medium mr-2"
+          class="flex-grow truncate text-label lato text-sm font-medium leading-[12px] mr-2 py-3"
           :class="{
-            'htext-gray-500': !error && !modelValue,
+            'htext-black-100': !error && !modelValue,
             'htext-alert-negative': error,
             'htext-black-100': modelValue,
           }"
@@ -27,20 +27,20 @@
         <template v-else>
           <img :src="icon_right" :class="icon_right_class">
         </template>
-      </button>
+      </div>
       <div
-        class="custom-dropdown-menu max-h-[104px] lg:max-h-[264px] overflow-y-scroll"
+        class="custom-dropdown-menu max-h-[200px] lg:max-h-[264px] overflow-y-scroll rounded-[20px]"
         :class="{'show': showOptions}"
       >
         <div
           v-for="(option, index) in options"
           :key="index"
-          class="custom-option cursor-pointer relative h-10 p-3 text-sm"
+          class="custom-option cursor-pointer relative h-12 px-3 py-4 lato text-sm font-bold leading-[16px]"
           @click.prevent="selectOption(option)"
           @mouseover="hoverOption = true"
           @mouseleave="hoverOption = false"
           tabindex="-1"
-          :class="{'active': (option.value == modelValue) && !hoverOption, 'disabled': option.disabled}"
+          :class="{'active': (option.value == modelValue) && !hoverOption, 'disabled': option.disabled, 'border-top-dropdown': index > 0}"
         >
           <p>
             <img v-if="option.img" :src="option.img" :class="option.img_class ?? option_classes">
@@ -107,7 +107,7 @@
             },
             icon_left_class:{
                 type: String,
-                default: 'h-6 w-6 mr-2',
+                default: 'h-5 w-5 mr-2',
             },
             icon_right:{
                 type: String,
@@ -115,7 +115,7 @@
             },
             icon_right_class:{
                 type: String,
-                default: 'h-6 w-6',
+                default: 'h-5 w-5',
             },
             icon_delete:{
                 type: String,
@@ -123,7 +123,7 @@
             },
             icon_delete_class:{
                 type: String,
-                default: 'h-6 w-6',
+                default: 'h-5 w-5',
             },
             option_classes:{
                 type: String,
@@ -217,15 +217,12 @@
   };
   </script>
   <style scoped>
+  .border-top-dropdown{
+    border: 1px solid #E9E9E9;
+  }
   .border-0:hover,
   .border-0 {
       border: none !important;
-  }
-  .box-input-field:hover {
-      border-color: var(--h-green-600) !important;
-  }
-  .box-input-field:hover > .text-label {
-      color: var(--h-green-600) !important;
   }
   .top-dropdown {
       top: 40px !important;
@@ -239,7 +236,6 @@
       position: absolute;
       z-index: 1000;
       box-shadow: 0px 3.5px 7px rgba(0, 0, 0, 0.15);
-      border-radius: 0px 0px 10px 10px;
       border: none;
       width: 100%;
       padding: 0;
@@ -247,9 +243,6 @@
   }
   .custom-dropdown-menu.show {
       display: block;
-  }
-  .custom-option {
-      border-radius: 0px 0px 10px 10px;
   }
   .custom-option:hover, .custom-option.active {
       background-color: var(--h-gray-100);

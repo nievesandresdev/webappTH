@@ -15,19 +15,19 @@ export const useChatStore = defineStore('chat', () => {
     // ACTIONS
     async function sendMsgToHoster (params) {
         const response = await sendMsgToHosterApi(params)
-        console.log('sendMsgToHoster',response)
         return response
     }
 
-    function addMessage(dataMsg) {
+    async function addMessage(dataMsg) {
         messages.value.push(dataMsg);
     }
 
     async function loadMessages() {
         let params = {
-            stayId: localStorage.getItem('stayId')
+            stayId: localStorage.getItem('stayId'),
+            guestId: localStorage.getItem('guestId'),
         }
-        console.log('loadMessagesApi')
+        
         const response = await loadMessagesApi(params)
         const { ok } = response;
         if(ok){
@@ -36,9 +36,10 @@ export const useChatStore = defineStore('chat', () => {
         return messages.value
     }
 
-    async function markMsgsAsRead() {
+    async function markMsgsAsRead(test = null) {
         let params = {
             stayId: localStorage.getItem('stayId'),
+            guestId: localStorage.getItem('guestId'),
             rol: 'Hoster'
         }
         const response = await markMsgsAsReadApi(params)
@@ -53,6 +54,7 @@ export const useChatStore = defineStore('chat', () => {
     async function unreadMsgs() {
         let params = {
             stayId: localStorage.getItem('stayId'),
+            guestId: localStorage.getItem('guestId'),
             rol: 'Hoster'
         }
         const response = await unreadMsgsApi(params)
@@ -60,6 +62,10 @@ export const useChatStore = defineStore('chat', () => {
         if(ok){
             unreadMsgsRef.value = response.data;
         }
+    }
+
+    function setUnreadMsgsCount(count) {
+        unreadMsgsRef.value = count;
     }
 
     //getters
@@ -77,7 +83,9 @@ export const useChatStore = defineStore('chat', () => {
         markMsgsAsRead,
         unreadMsgs,
         unreadMsgsRef,
-        countUnreadMessages
+        countUnreadMessages,
+        setUnreadMsgsCount,
+        messages
     }
 
 })

@@ -51,18 +51,18 @@
                     :mobileList="mobileList"
                     @openModalFilter="openModalFilter"
                 />
-
                 <template v-if="mobileList">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-[8px] sp:gap-4 xl:gap-6 pt-[8px] sp:pt-4 px-3.5 md:px-0 mb-[10px] mb-20 lg:mb-0">
                         <div v-for="(item, index) in placesData" :key="item.id">
                             <p 
-                                v-if="placesData[index-1]?.cityName == hotelData.zone && hotelData.zone !== item.cityName"
-                                class="py-4 text-[10px] sp:text-base font-medium hborder-top-gray-400"
+                                v-if="(placesData[index-1]?.cityName == hotelData.zone && hotelData.zone !== item.cityName) || (index == 0 && hotelData.zone !== item.cityName)"
+                                class="pb-4 text-[10px] sp:text-base font-medium"
+                                :class="{ 'hborder-top-gray-400 pt-4': index != 0 }"
                             >
                                 {{countOtherCities}} 
                                 {{ countOtherCities > 1 ? 'lugares' : 'lugar' }} cerca de 
                                 {{ hotelData.zone }}
-                            </p>   
+                            </p>
                             <CardProduct 
                                 place heightImg="card-img" 
                                 :data="item"
@@ -143,6 +143,8 @@
         categoriplace: null,
         typeplace: null,
         points: [],
+        distances: [],
+        all_cities: false,
         search:null,
         city: null,
     })
@@ -162,31 +164,32 @@
         loadCategoriPlaces()
         loadPlaces()
         formFilter.city = getUrlParam('city') || hotelData.zone;
-        console.log('mobileList',mobileList.value)
+        // console.log('mobileList',mobileList.value)
     })
 
     // PROVIDER
-    provide('categoriplaces', categoriplaces)
-    provide('typeplaces', typeplaces)
-    provide('formFilter', formFilter)
-    provide('paginateData', paginateData)
+    provide('categoriplaces', categoriplaces);
+    provide('typeplaces', typeplaces);
+    provide('formFilter', formFilter);
+    provide('paginateData', paginateData);
 
     // FUNCTION
     async function loadPlaces () {
-        console.log(formFilter, 'formFilter')
-        const response = await placeStore.$apiGetAll({page: page.value,...formFilter})
-        console.log('loadPlaces', response)
+        let query = {...filterNonNullAndNonEmpty(formFilter)}
+        // console.log(query, 'loadExperiences query');
+        const response = await placeStore.$apiGetAll({page: page.value,...query})
+        // console.log('loadPlaces', response)
         if (response.ok) {
             Object.assign(paginateData, response.data.places.paginate)
             page.value = paginateData.current_page
             placesData.value = [...placesData.value, ...response.data.places.data]
             countOtherCities.value = response.data.countOtherCities;
-            console.log('countOtherCities',countOtherCities.value)
+            // console.log('countOtherCities',countOtherCities.value)
         }
         const cities = await cityStore.$getNearCitiesData()
         if(cities.ok){
             nearCitiesData.value = cities.data;
-            console.log('nearCitiesData.value',nearCitiesData.value)
+            // console.log('nearCitiesData.value',nearCitiesData.value)
         }
     }
 
@@ -219,7 +222,7 @@
         };
         let response = await placeStore.$getRatingCountsPlaces(params);
         countPoints.value = response.ok ? response.data : [];
-        console.log('countPoints.value',countPoints.value)
+        // console.log('countPoints.value',countPoints.value)
     }
 
     function submitSearchCity (city) {
@@ -238,9 +241,29 @@
     function loadQueryInFormFilter () {
         for (const [key, value] of Object.entries(queryRouter.value || {})) {
             if (formFilter.hasOwnProperty(key)) {
-                formFilter[key] = value
+                if (['duration', 'distances'].includes(key)) {
+                    if (typeof value === 'string') {
+                        formFilter[key].push(value);
+                        // filtersSelected[key].push(value);
+                    } else {
+                        formFilter[key] = value;
+                        // filtersSelected[key] = value;
+                    }
+                }else {
+                    formFilter[key] = validValueQuery(key, value);
+                    // filtersSelected[key] = validValueQuery(key, value);
+                }
             }
         }
+        // console.log(formFilter, 'loadQueryInForm')
+    }
+
+    function validValueQuery (field, value) {
+
+        if (value === 'false') return false;
+        if (value === 'true') return true;
+
+        return value;
     }
 
     function clearFilters () {

@@ -3,15 +3,18 @@ import { utilsPath } from '@/api/config/apiRoute';
 // import { apiHttp } from '@/api/config/apiRoute'
 
 import Pusher from 'pusher-js';
+// Pusher.logToConsole = true;
 
 let pusherInstance = null;
 
 export function getPusherInstance() {
+    // console.log('test pusher key',process.env.VUE_APP_PUSHER_APP_KEY)
+    
     if (!pusherInstance) {
         // console.log("Creando instancia de pusher...");
         pusherInstance = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
             cluster: 'us2',
-            authEndpoint: `${process.env.VUE_APP_API_URL_BACKEND}/${utilsPath}/authPusher`,
+            authEndpoint: `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/${utilsPath}/authPusher`,
             auth: {
                 headers: {
                     'x-key-api': process.env.VUE_APP_X_KEY_API

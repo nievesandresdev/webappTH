@@ -14,7 +14,7 @@ export const useStayAccessStore = defineStore('stayAccess', () => {
     // ACTIONS
     async function $save () {
         const response = await saveApi()
-        console.log('stayAccess $save',response)
+        // console.log('stayAccess $save',response)
         if(response.ok) return response.data
         return null
     }

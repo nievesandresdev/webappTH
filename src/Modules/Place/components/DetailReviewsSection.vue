@@ -236,7 +236,7 @@
         if(value){
             let response = await placeStore.$getReviewsByRating(params);
             if(response.ok){
-                console.log('filterReviews',response.data)
+                // console.log('filterReviews',response.data)
                 dataReviews.value = response.data;
             } 
         }

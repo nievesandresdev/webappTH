@@ -1,44 +1,40 @@
 export default{
-    "stayLog":{
-        "title": "Accès à la webapp",
-        "checkDate":{
-            "label": "Date d'arrivée/départ",
+    "create":{
+        "title": "Créez votre séjour",
+        "check-date": {
+            "label": "Date de Check-in/Check-out",
             "placeholder": "jj/mm/aaaa - jj/mm/aaaa",
         },
-        "howPeople": "Combien de personnes resteront ?",
-        "buuton": "Suivant",
-        "backButton": "Retourner",
-        "addGuest": "+ Envoyer à un autre invité",
-        "deleteGuest": "Supprimer",
-        "invite": "Invité",
-        "traitement": "Traitement",
+        "continue-button": "Créer et accéder au séjour",
     },
-    "dataModal":{
-        "title": "Rester",
-        "checkDate":{
-            "label": "Date d'arrivée/départ",
-            "placeholder": "jj/mm/aaaa - jj/mm/aaaa",
-        },
-        "room":{
-            "label": "Chambre",
-            "placeholder": "Numéro de chambre",
-        },
-        "howPeople": "Nombre d'invités qui resteront",
-        "howPeopleError":"Vous devez supprimer des invités pour cette action",
-        "guestsTitle": "Invités",
-        "guestLabel": "Invité",
-        "placehoderNull": "Le champ doit être rempli",
-        "phone":{
-            "prefix": "+ Préfixe",
-            "number": "Numéro de téléphone du client",
-        },
-        "cancelButton": "Annuler",
-        "saveButton": "Enregistrer",
+    "share": {
+        "title": "Rejoignez notre séjour à {hotel}",
+        "text": "Rejoignez-nous maintenant et profitez de tous les avantages de la WebApp pour tirer le meilleur parti de notre expérience"
     },
-    "noSavedM": {
-        "title": "Modifications non enregistrées",
-        "body": "Vous avez des modifications non enregistrées. Afin de mettre à jour les informations, vous devez enregistrer les modifications apportées.",
-        "exitButton": "Quitter sans sauvegarder",
-        "saveButton": "Enregistrer",
+    "detail": {
+        "title": "Mes séjours",
+        "createBtn": "Créer un séjour",
+        "editBtn": "Modifier le séjour"
+    },
+    "edit": {
+        "title": "Modifier le séjour",
+        "information-stay": "Informations sur le séjour",
+        "input": {
+            "medio-reserva": {
+                "label": "Moyen de réservation",
+                "placeholder": "Sélectionner le moyen de réservation",
+                "n-room": "Chambre Nº"
+            }
+        },
+        "calendar": "Calendrier",
+        "guests": "Invités",
+        "saveBtn": "Enregistrer",
+        "share": "Partager le séjour",
+        "guest": "Invité",
+        "completeCheckin": "Compléter l'enregistrement",
+        "waitingGuest": "En attente de l'accès de l'invité",
+        "accessRoom": "Accéder au séjour",
+        "active": "Actif",
+        "pageWebHotel": "Site web de l'hôtel"
     }
 }

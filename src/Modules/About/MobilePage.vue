@@ -20,10 +20,13 @@
         <!-- nombre del hotel  -->
         <div class="px-[8px] sp:px-4">
             <div>
-                <h1 class="text-base sp:text-[22px] font-medium leading-[150%]">
-                    {{ hotelData?.translate.type }}<br>
-                    {{ hotelData?.translate.name }}
+                <h1 class="text-base sp:text-[22px] font-medium leading-[150%] capitalize">
+                    {{ formatTypeLodging(hotelData?.type) }}
                 </h1>
+                <h1 class="text-base sp:text-[22px] font-medium leading-[150%]">
+                    {{ hotelData?.name }}
+                </h1>
+                
 
             </div>
             <div v-if="hotelData?.category">
@@ -66,7 +69,7 @@
                         :msg_copy="$t('about.msgCopyEmail')"
                     />
                 </div>
-                <p class="text-[10px] sp:text-sm font-medium">
+                <p class="text-[10px] sp:text-sm font-medium" style="overflow-wrap:anywhere;">
                     {{ hotelData?.email }}
                 </p>
             </div>
@@ -113,64 +116,13 @@
 
         <!-- Galeria de imagenes  -->
         <div class="px-0 mt-[20px] sp:mt-6" v-if="hotelData?.images?.length > 0">
-            <div class="relative">
-                <!-- Carrusel -->
-                <div class="overflow-hidden">
-                    <div
-                        class="flex transition-transform duration-300 ease-out -translate-x-full translate-x-0"
-                        :style="`transform: translateX(${translateX}px)`"
-                        ref="carouselRef"
-                        id="carousel"
-                    >
-                    <!-- Imágenes -->
-                        <div
-                            v-for="(image, index) in hotelData?.images"
-                            :key="index"
-                            class="w-full h-[120px] sp:h-[240px] flex-shrink-0"
-                        >
-                            <img :src="hotelStore.$loadImage(image?.url)" :alt="image.name" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Botones Next y Previous -->
-                <div v-if="hotelData?.images?.length > 1" class="absolute top-1/2 transform -translate-y-1/2 flex justify-between mt-[4px] sp:mt-2  left-0 right-0">
-                    <span
-                        id="previous"
-                        class="rounded-full hbg-white-100 button-carousel transition-colors duration-300 w-[24px] sp:w-8 h-[24px] sp:h-8 flex items-center justify-center ml-[8px] sp:ml-4"
-                        @click="previousImage($utils.isMockup())"
-                        @mousedown="activate"
-                        @mouseup="deactivate"
-                        :class="{ active: isActive}"
-                    >
-                        <img src="/assets/icons/previousCarrousel.svg" alt="Previous" class="h-2 sp:h-3.5 mr-0.5">
-                    </span>
-                    <span
-                        id="next"
-                        class="rounded-full hbg-white-100 button-carousel transition-colors duration-300 w-[24px] sp:w-8 h-[24px] sp:h-8 flex items-center justify-center mr-[8px] sp:mr-4"
-                        @click="nextImage($utils.isMockup())"
-                        @mousedown="activate"
-                        @mouseup="deactivate"
-                        :class="{ active: isActive}"
-                    >
-                        <img src="/assets/icons/nextCarrousel.svg" alt="Next"  class="h-2 sp:h-3.5 ml-0.5">
-                    </span>
-                </div>
-
-                <!-- Contador -->
-                <div 
-                    class="absolute bottom-[8px] sp:bottom-[1rem] right-[8px] sp:right-[1rem] text-white p-0.5 sp:p-1 info-carousel rounded-[1.5px] sp:rounded-[3px] flex items-center"
-                >
-                    <img src="/assets/icons/images.svg" alt="Imagen" class="w-3.5 sp:w-4 h-3.5 sp:h-4 inline-block">
-                        <span class="text-[8px] sp:text-xs font-medium ml-1 htext-white-100">{{ hotelData?.images?.length }}</span>
-                </div>
-            </div>
+            <ImageCarousel :images="hotelData?.images"/>
         </div>
 
         <!-- Descripción  -->
-        <div class="px-[8px] sp:px-4 mt-[20px] sp:mt-6" v-if="hotelData?.translate.description">
+        <div class="px-[8px] sp:px-4 mt-[20px] sp:mt-6" v-if="hotelData?.description">
             <p class="text-[10px] sp:text-sm font-medium">
-                {{ hotelData?.translate.description }}
+                {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
             </p>
         </div>
 
@@ -190,18 +142,7 @@
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>
-            <div id="pinterest" class="border-b hborder-bottom-gray-400 py-[10px] sp:py-4 flex items-center social"
-                @click="openLink(hotelData?.pinterest_url,$utils.isMockup())"
-                :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
-                v-if="hotelData?.pinterest_url"
-            >
-                <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-4 sp:w-5 h-4 sp:h-5 mr-[12px] sp:mr-4">
-                <div class="h-[10px] sp:h-5 flex flex-grow items-center">
-                    <p class="text-[10px] sp:text-sm font-medium">Pinterest</p>
-                </div>
-                <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
-            </div>
-            <div id="facebook" class="py-[10px] sp:py-4 flex items-center social"
+            <div id="facebook" class="py-[10px] sp:py-4 flex items-center social border-b hborder-bottom-gray-400"
                 @click="openLink(hotelData?.facebook_url,$utils.isMockup())"
                 :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
                 v-if="hotelData?.facebook_url"
@@ -212,45 +153,64 @@
                 </div>
                 <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
             </div>
+            <div id="pinterest" class="py-[10px] sp:py-4 flex items-center social"
+                @click="openLink(hotelData?.pinterest_url,$utils.isMockup())"
+                :class="{ active: isActive,'hover-gray-100':!$utils.isMockup() }"
+                v-if="hotelData?.pinterest_url"
+            >
+                <img src="/assets/icons/pinterest.svg" alt="pinterest" class="w-4 sp:w-5 h-4 sp:h-5 mr-[12px] sp:mr-4">
+                <div class="h-[10px] sp:h-5 flex flex-grow items-center">
+                    <p class="text-[10px] sp:text-sm font-medium">Pinterest</p>
+                </div>
+                <img src="/assets/icons/next.svg" alt="next" class="w-5 sp:w-6 h-5 sp:h-6">   
+            </div>
         </div>
     </div>
   </template>
 
 <script setup>
     import { onMounted, onBeforeUnmount, ref, computed, inject } from 'vue';
+    import { formatTypeLodging } from '@/utils/utils';
     import { useRouter } from 'vue-router';
     import ImageToggle from './components/ImageToggle.vue';
+    import ImageCarousel from './components/ImageCarousel.vue';
     import { useHotelStore } from '@/stores/modules/hotel'
+    import { useLocaleStore } from '@/stores/modules/locale'
+    
+
     const hotelStore = useHotelStore()
     const { hotelData } = hotelStore
+
+    const localeStore = useLocaleStore()
     
     const router = useRouter();
 
 
-    onMounted(() => {
-        if(hotelData?.images?.length){
-            carouselRef.value = document.getElementById('carousel');
-            carouselWidth.value = carouselRef.value.offsetWidth;
-            totalImages.value = Math.ceil(carouselRef.value.scrollWidth / carouselWidth.value);
-        }
+    onMounted(async () => {
+        await hotelStore.$load()
+        // if(hotelData?.images?.length){
+        //     carouselRef.value = document.getElementById('carousel');
+        //     carouselWidth.value = carouselRef.value.offsetWidth;
+        //     totalImages.value = Math.ceil(carouselRef.value.scrollWidth / carouselWidth.value);
+        // }
         initGoogleMap()
     })
 
     /*data*/
     const urlStorage = process.env.VUE_APP_STORAGE_URL;
     const translateX = ref(0);
-    const carouselRef = ref(null);
+    // const carouselRef = ref(null);
     const carouselWidth = ref(0);
     const totalImages = ref(0);
     const header = ref(null);
-    const isSticky = ref(false);
+    // const isSticky = ref(false);
     const activeSocial = ref({});
-    const activate = (socialId) => {
-        activeSocial.value[socialId] = true;
-    };
-    const deactivate = (socialId) => {
-        activeSocial.value[socialId] = false;
-    };
+    // const activate = (socialId) => {
+    //     activeSocial.value[socialId] = true;
+    // };
+    // const deactivate = (socialId) => {
+    //     activeSocial.value[socialId] = false;
+    // };
     const isActive = (socialId) => {
         return activeSocial.value[socialId];
     };

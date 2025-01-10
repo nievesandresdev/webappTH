@@ -1,39 +1,56 @@
 <template>
     <div class="relative">
-        <label v-if="textLabel" class="text-sm font-medium mb-2 block leading-4">{{ textLabel }}</label>
-        <p v-if="textDescription" class="mb-2 text-sm htext-gray-500">{{ textDescription }}</p>
+        <label v-if="textLabel" class="text-sm font-bold mb-2 block lato leading-4">{{ textLabel }}</label>
+        <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
 
-        <img v-if="iconLeft" class="w-6 h-6 absolute left-3 top-2" :src="iconLeft">
+        <img v-if="iconLeft" class="w-5 h-5 absolute left-2 top-2.5" :src="iconLeft">
         <input
-        :ref="id"
-        :id="id"
-        :type="type"
-        :class="computeClasses"
-        :placeholder="placeholderText"
-        :value="modelValue"
-        @input="validateInput"
-        @blur="$emit('blur')"
-        @keyup="keyupInput"
-        autocomplete="nope"
-        :disabled="disabled"
+            :ref="id"
+            :id="id"
+            :type="showPass ? 'text' : type"
+            :class="computeClasses"
+            :placeholder="placeholderText"
+            :value="modelValue"
+            @input="validateInput"
+            @blur="onBlur"
+            @keyup="keyupInput"
+            autocomplete="nope"
+            :disabled="disabled"
+            class="lato text-sm font-medium"
         >
-        <p v-if="isError && showTextError || hasError && showTextError" class="mt-2 text-xs htext-alert-negative flex items-center">
-            <img
+        <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
+        <p 
+            v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >
+            <!-- <img
                 src="/assets/icons/1.TH.WARNING.svg"
                 alt="icon alert red"
                 class="inline w-4 h-4 mr-2"
-            />
-            {{ stringTextError }}
+            /> -->
+            {{ textError }}
         </p>
+        <button 
+            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute right-2"
+            :class="[
+                {'disabled-text': !modelValue || modelValue == '' || disabled},
+                `${topCustom}`
+            ]"
+            v-if="type === 'password'"
+            @click="showPass = !showPass"
+            :disabled="!modelValue || modelValue == '' || disabled"
+        > {{ showPass ? $t('auth.log.input-hide-pass') :$t('auth.log.input-show-pass')}}</button>
     </div>
 </template>
 
 <script>
 export default {
-    emits: ['update:modelValue', 'handleError','keyupInput'],
+    emits: ['update:modelValue', 'handleError','keyupInput','blur'],
     data() {
         return {
             hasError: false,
+            showPass: false,
+            showEmailError: false,
             stringTextError: ''
         };
     },
@@ -56,18 +73,19 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let classes = 'hinput-primary h-10 rounded-[6px] text-sm font-medium w-full px-3 py-2 block';
+            let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
+            let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
+            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
 
-            if (this.hasError || this.isError) {
+
+            if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
-            } else {
-                classes += ' hoverForm';
             }
             if(this.iconLeft){
-                classes += ' pl-[44px]';
+                classes += ' pl-[33px]';
             }
             if(this.iconRight){
-                classes += ' pr-[44px]';
+                classes += ' pr-[33px]';
             }
 
             Object.entries(this.customClasses).forEach(([key, value]) => {
@@ -77,13 +95,19 @@ export default {
             });
 
             return classes;
+        },
+        errorWhenTypeEmail(){
+            return this.showEmailError && this.hasError && this.type === 'email';
+        },
+        errorWhenOtherType(){
+            return this.hasError && this.type !== 'email';
         }
     },
-    watch: {
-        hasError () {
-            this.$emit('handleError',this.hasError)
-        }
-    },
+    // watch: {
+    //     hasError () {
+            
+    //     }
+    // },
     props: {
         id: {
             type: String,
@@ -136,6 +160,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        topCustom: {
+            type: String,
+            default: 'top-3'
+        }
     },
     created(){
         if (this.isError) {
@@ -148,15 +176,21 @@ export default {
         }
     },
     methods: {
+        onBlur(){
+            this.$emit('blur');
+            this.showEmailError = true;
+        },
         keyupInput(){
             this.$emit('keyupInput');
         },
         validateInput(event) {
+            this.showEmailError = false
             const inputValue = this.$refs[this.id].value;
             // console.log("inputValue", inputValue);
             if (inputValue) {
                 if (this.type === 'email') {
                     this.validateEmail();
+                    this.$emit('handleError',this.hasError);
                 } else if (this.type === 'url') {
                 this.validateURL();
                 }
@@ -172,8 +206,7 @@ export default {
 
             if (!emailRegex.test(inputValue)) {
                 this.hasError = true;
-
-                this.$emit('update:modelValue', null);
+                // this.$emit('update:modelValue', null);
             }
         },
 
@@ -197,14 +230,14 @@ export default {
 [type='url']:focus {
     --tw-ring-inset: none;
     --tw-ring-color: none;
-    border-color: initial;
+    /* border-color: initial; */
 }
-
+/* 
 input::placeholder{
     font-size: 14px;
     color: var(--h-gray-500);
     font-weight: 500;
-}
+} */
 
 
 </style>

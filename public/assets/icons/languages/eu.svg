@@ -1,0 +1,20 @@
+<svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Flag_of_the_Basque_Country 1">
+<g clip-path="url(#clip0_2600_18550)">
+<path id="Vector" d="M0 0V11H14V0H0Z" fill="#D52B1E"/>
+<g id="Vector_2">
+<path d="M0 0L14 11L0 0ZM14 0L0 11L14 0Z" fill="black"/>
+<path d="M0 0L14 11M14 0L0 11" stroke="#009B48" stroke-width="1.38214"/>
+</g>
+<g id="Vector_3">
+<path d="M7 0V11V0ZM0 5.5H14H0Z" fill="black"/>
+<path d="M7 0V11M0 5.5H14" stroke="white" stroke-width="1.38214"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2600_18550">
+<rect width="14" height="11" rx="1.78571" fill="white"/>
+</clipPath>
+</defs>
+</svg>

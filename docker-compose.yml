@@ -1,0 +1,18 @@
+services:
+  #huesped
+  huesped:
+    image: huesped:latest
+    container_name: thehoster-app-huesped-front
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    networks:
+      - frontend
+
+networks:
+  frontend:

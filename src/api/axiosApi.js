@@ -6,7 +6,9 @@ import { useLocaleStore } from '@/stores/modules/locale';
 
 
 // const locale = localStorage.getItem('locale') || 'es'
-const API_URL_BACKEND = process.env.VUE_APP_API_URL_BACKEND
+const URL_BASE_BACKEND_GENERAL = process.env.VUE_APP_API_URL_BACKEND_GENERAL
+const URL_BASE_BACKEND_HELPER = process.env.VUE_APP_API_URL_BACKEND_HELPER
+const URL_BASE_BACKEND_REVIEW = process.env.VUE_APP_API_URL_REVIEW
 const X_KEY_API = process.env.VUE_APP_X_KEY_API
 
 function getPreloaderStore() {// función auxiliar que devuelve el store de preloader
@@ -14,7 +16,8 @@ function getPreloaderStore() {// función auxiliar que devuelve el store de prel
 }
 
 axios.interceptors.request.use(config => {
-  if (config.showPreloader !== false) {
+  let showPreloader = config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestStarted();
   }
@@ -24,7 +27,8 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
-  if (response.config.showPreloader !== false) {
+  let showPreloader = response.config.showPreloader ?? true;
+  if (showPreloader) {
     const preloader = getPreloaderStore();
     preloader.requestFinished();
   }
@@ -38,32 +42,42 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}) => {
-
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
+  let api_url_backend = URL_BASE_BACKEND_GENERAL;
+  // console.log('test SLUG_API',SLUG_API)
+  SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
+  SLUG_API === 'API_REVIEW' ? api_url_backend = URL_BASE_BACKEND_REVIEW : '';
+  // console.log('test api_url_backend',api_url_backend)
   const localeStore = useLocaleStore();
   const locale = localeStore.localeCurrent ?? 'es';
     // const { token } = localStorage
-    const subdomain = localStorage.getItem('subdomain') || null
+    const subdomain = localStorage.getItem('subdomain') || null;
+    const chainSubdomain = localStorage.getItem('chainSubdomain') || null;
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
-      'Hotel-SUBDOMAIN': subdomain,
+      'subdomainHotel': subdomain,
+      'chainSubdomain': chainSubdomain,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
+
+    if (IS_FORM_DATA) {
+      defaultHeaders['Content-Type'] = 'multipart/form-data';
+    }
+
  // eslint-disable-next-line no-prototype-builtins
  if (!options.hasOwnProperty('headers')) options.headers = defaultHeaders
  let serviceResponse = {}
  method = method.toLowerCase()
 let paramAxios = {
   method,
-  url: `${API_URL_BACKEND}/${endpoint}`,
+  url: `${api_url_backend}/${endpoint}`,
   data,
   params: data,
   ...options,
 } 
-
  const servicePromise = axios(paramAxios)
 
  try {
