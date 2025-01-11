@@ -2,11 +2,11 @@
     <div 
         id="container-form"
         :class="{
-            'hshadow md:shadow-none rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
+            'hshadow md:shadow-none rounded-[20px] p-2 sp:p-4 md:p-0 mb-2 sp:mb-4 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
         }"
     >
         <h1 
-            class="lato text-xs sp:text-base font-medium leading-[20px]"
+            class="lato text-xs sp:text-base font-medium leading-[12px] sp:leading-[20px]"
             v-if="!inModal"
         >
             <template v-if="data?.period == 'post-stay'">
@@ -20,21 +20,21 @@
         </h1>
         <p 
             v-if="!inModal"
-            class="mt-1.5 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
+            class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
         >
             {{ $t('query.settings.question'+data?.period)}}
         </p>
-        <div class="mt-4 md:mt-8">
+        <div class="mt-3 sp:mt-4 md:mt-8">
             <FormTabEmojisRed :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
         </div>
-        <div  v-if="form.type" class="border-b border-color-secondary w-full mt-2 sp:mt-4 md:hidden"></div>
+        <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-4 md:hidden"></div>
         <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
-        <div class="mt-2 sp:mt-4 md:mt-8" v-if="form.type">
-            <p class="lato text-sm md:text-base md:font-medium leading-[16px] md:leading-[125%]">
+        <div class="mt-3 sp:mt-4 md:mt-8" v-if="form.type">
+            <p class="lato text-[10px] sp:text-sm md:text-base md:font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
                 {{ settings[thanksHoster][localeStore.localeCurrent] }}
             </p>
         </div>
-        <div class="mt-4 md:mt-4" v-if="form.type">
+        <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type">
             <TextareaAutogrow 
                 :id="'textarea1'"
                 v-model="textarea" 
@@ -60,7 +60,7 @@
             </button>
             <div class="ml-auto">
                 <PrimaryButton 
-                    classes="text-center py-2.5 md:py-[14px] rounded-[10px] lato text-sm font-bold leading-[16px] w-[71px] md:w-[82px] shadow-guest"
+                    classes="text-center py-1.5 sp:py-2.5 md:py-[14px] rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] md:w-[82px] shadow-guest"
                     :disabled="!changes"
                     @click="submit"
                 >
@@ -68,9 +68,9 @@
                 </PrimaryButton> 
             </div>
         </div>
-        <div v-else class="mt-6">
+        <div v-else class="mt-4 sp:mt-6">
             <PrimaryButton 
-                    classes="text-center py-2.5 rounded-[10px] lato text-base font-bold leading-[20px] w-full shadow-guest"
+                    classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
                 :disabled="!changes"
                 @click="submit"
             >

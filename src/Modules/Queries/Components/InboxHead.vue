@@ -49,7 +49,7 @@ const tabsMenu = computed(() => [
         exclude: false,
         iconDefault: `WA.Chat.DISABLED`,
         iconSelected: `WA.Chat`,
-        isActive: route.name == 'Chat',
+        isActive: route.name == 'Chat' || route.name == 'FakeChat',
         onClick: () => router.push({ name: 'Chat' }),
         notify: chatStore.countUnreadMessages 
     },
@@ -58,7 +58,7 @@ const tabsMenu = computed(() => [
         exclude: false,
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,
-        isActive: route.name === 'Inbox',
+        isActive: route.name === 'Inbox' || route.name === 'FakeInboxIndex' || route.name === 'FakeLinksOtas',
         onClick: () => router.push({ name: 'Inbox' }),
         notify: queryStore.hasPendingQuery
     }

@@ -1,99 +1,122 @@
 <template>
     
-    <div class="height-chat hbg-gray-200 flex flex-col overflow-hidden no-scrollbar mb-[-26px]">
-        <!-- header -->
-        <div class="xs:py-2 py-3.5 text-center shadow-hoster hbg-white-100">
-            <h1 class="text-base font-medium xs:text-xs">{{settings.name}}</h1>
-            <div class="text-center xs:mt-0 mt-1.5">
-                <p v-if="isAvailable" class="htext-green-600 xs:text-[10px] text-xs inline mr-2">Disponible</p>
-                <p v-else class="htext-alert-negative xs:text-[10px] text-xs inline mr-2">No disponible</p>
-                <p class="xs:text-[10px] text-xs inline mr-2">Horario</p>
-            </div>
-        </div>
+    <div ref="myDiv" 
+        :class="[
+            'flex flex-col hbg-gray-200 w-full h-screen']"
+    >
+        <InboxHead/>
         <!-- body chat -->
-        <div class="body-chat flex-grow flex flex-col xs:p-2 p-3.5 overflow-y-auto  no-scrollbar">
-            <!-- info chat -->
-            <div class="hbg-white-100 rounded-[10px] xs:p-2 p-3.5">
-                <p class="xs:text-[0.53rem] sm:text-sm text-center leading-[150%]">
-                    Bienvenido al chat. Aquí tienes un listado con los idiomas hablados por nuestro personal, podrás comunicarte en cualquiera de ellos.
-                </p>
-                <div class="xs:mt-2 mt-3.5 flex flex-wrap justify-center">
-                    <img 
-                        class="w-5 h-5 mx-2 xs:w-4 xs:h-4" 
-                        v-for="lg in settings.languages" 
-                        :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt=""
-                        :key="lg"
+        <div class="body-chat flex-grow flex flex-col overflow-y-auto px-2 sp:px-4 no-scrollbar">
+                <!-- availabilty tag-->
+                <div 
+                    class="fixed top-[97px] sp:top-[142px] left-2 sp:left-4 bg-gradient-100 rounded-[7px] sp:rounded-[10px] p-1.5 sp:p-3 shadow-guest"
+                    @click="isScheduleModalOpen = true"
+                >
+                    <div class="flex items-center gap-1 sp:gap-2">
+                        <p class="lato text-[10px] sp:text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
+                            {{ isAvailable ? $t('chat.availabilty') : $t('chat.not-availabilty') }}
+                        </p>
+                        <IconCustomColor 
+                            name="WA.Clock" 
+                            :color="isAvailable ? '#34A98F' : '#F66'" 
+                            only-change-background 
+                            height="14"
+                            width="14"
+                        />
+                    </div>
+                </div>
+                <!-- info chat -->
+                <div class="bg-gradient-100 border border-color-secondary rounded-[7px] sp:rounded-[10px] p-3 sp:p-4 mb-3 sp:mb-4 mt-[42px] sp:mt-[64px]">
+                    <p class="lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] text-center" v-html="$t('chat.languages-text')">
+                    </p>
+                    <div class="flex flex-wrap justify-center mt-3 sp:mt-4 gap-2 sp:gap-4">
+                        <img class="w-[14px] sp:w-5 h-[14px] sp:h-5" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
+                    </div>
+                </div>
+                <!-- msgs -->
+                <div 
+                    v-for="msg in chatMessages" 
+                    :key="msg" 
+                    class="min-w-[104px] sp:min-w-[156px] max-w-[164px] sp:max-w-[246px] mb-[14px] sp:mb-5" 
+                    :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}"
+                >
+                    <p 
+                        v-if="msg.automatic"
+                        class="lato text-[8px] sp:text-[10px] font-bold leading-[12px] mb-1"
                     >
+                        {{$t('chat.automatic-response')}}
+                    </p>
+                    <p 
+                        class="break-words lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] p-2.5 sp:p-4" 
+                        :class="{'bg-msg-guest':msg.by == 'Guest','bg-msg-hoster':msg.by !== 'Guest'}"
+                    >
+                        {{ msg.text }}
+                    </p>
+                    <p 
+                        class="lato text-[8px] sp:text-xs font-medium leading-[12px] sp:leading-[16px] mt-1"
+                        :class="{'text-right':msg.by == 'Guest'}"
+                    >
+                    {{ msg.date }} - {{ msg.hour }}
+                    </p>
                 </div>
             </div>
-            <template v-if="$route.query.responses">
-                <template v-for="msg in chatMessages" :key="msg">
-                    <div v-if="msg.show" class="w-3/4" :class="{'ml-auto':msg.by == 'Guest'}" >
-                        <p class="text-[9px] p-1 rounded-[6px] mt-2" :class="{'hbg-gray-100':msg.by == 'Guest','hbg-white-100':msg.by !== 'Guest'}">
-                            {{ msg.text }}
-                        </p>
-                        <p class="text-[8px] text-right">
-                            {{ msg.date }} - {{ msg.hour }}
-                        </p>
-                    </div>
-                </template>
-            </template>
-        </div>
         <!-- input chat -->
-        <div class="flex px-6 py-2 input-chat xs:px-3 hbg-white-100" style="border-top: 1px solid var(--h-gray-400);">
-            <input type="text" class="flex-grow border-0 rounded-[10px] hbg-gray-100 h-full px-3 py-2 min-w-[0px]" :disabled="$utils.isMockup()">
-            <img class="w-6 h-6 my-auto ml-2 xs:w-4 xs:h-4" src="/assets/icons/2.TH.Sendicon.svg" alt="">
-        </div>
-
-    </div>
-
-
-    <!-- modal mockup -->
-    <div v-if="$route.query.showAvailability" class="fixed top-0 left-0 w-screen h-screen" style="background-color: rgba(0, 0, 0, 0.50);z-index:3000">  
-        <div class="hbg-white-100 rounded-[10px] absolute top-16 left-0 mx-2">
-            <!-- header -->
-            <p class="relative text-center py-2 text-[11px] font-medium border-b px-2">
-                <img class="absolute w-4 h-4 left-2 top-2" src="/assets/icons/1.TH.CLOSE.svg" alt="">
-                Disponibilidad del Chat
-            </p>
-            <!-- body -->
-            <div class="p-2">
-                <template v-for="schedule in hotelStore?.chatHours" :key="schedule">
-                    <div v-if="schedule.active" class="flex items-start mt-1">
-                        <p class="w-14 text-[10px] font-medium">{{ schedule.day }}</p>
-                        <p class="text-[10px] font-medium">
-                            <template v-for="(hour, indexh) in schedule.horary" :key="hour">
-                                {{ hour.start }}-{{ hour.end}} <br>
-                            </template>
-                        </p>
-                    </div>
-                </template>
-                <p class="text-[8px] mt-2">**Durante periodos de alta demanda, es posible que nuestro personal aparezca como no disponible. Cuando la carga de trabajo disminuya, estará disponible para atender tus consultas.</p>
+        <div class="bg-white rounded-t-[10px] shadow-guest-2">
+            <div class="px-3 sp:px-6 pt-2 sp:pt-3 pb-3 sp:pb-4 flex items-center gap-1.5 sp:gap-3">
+                <textarea  
+                    id="text-auto" 
+                    class="flex-grow border border-color-secondary rounded-[5px] sp:rounded-[8px] hbg-gray-100 px-2 sp:px-3 py-1.5 sp:py-2 text-[10px] sp:text-sm lato font-medium" 
+                    :placeholder="$t('chat.input')"
+                ></textarea>
+                <div 
+                    class="flex items-center justify-center rounded-full w-7 sp:w-10 h-7 sp:h-10 bg-[#333] shadow-guest border border-white" 
+                    @click="sendMsg"
+                    @touchend.prevent.stop="sendMsg"
+                >
+                    <img class="w-3 sp:w-4 h-3 sp:h-4" src="/assets/icons/paper-plane.svg">
+                </div>
             </div>
+            <div
+                v-if="!hideAppMenu" 
+                class="h-[55px] sp:h-[89px] bg-white"
+            ></div>
         </div>
+
     </div>
-    
+    <ScheduleModal />
+
+    <!-- evitar click mockup -->
+    <div class="fixed top-0 left-0 h-[128px] w-screen z-[5200]"></div>
+    <div class="fixed bottom-0 left-0 h-[128px] w-screen z-[5200]"></div>
+    <div v-if="$route.query.showAvailability" class="fixed top-0 left-0 h-screen w-screen z-[6200]"></div>
 </template>
         
 <script setup>
     //import libraries
     import { onMounted, ref, toRefs, computed, provide } from 'vue';
     import Moment from 'moment'
+    import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+    import ScheduleModal from './ScheduleModalRed.vue';
+    import { useRoute } from 'vue-router'
+    const route = useRoute();
+    
+    //
     import { useHotelStore } from '@/stores/modules/hotel';
-
-    //store
     const hotelStore = useHotelStore()
-
+    import { useChatStore } from '@/stores/modules/chat'
+    const chatStore = useChatStore();
 
     //mounted
     onMounted(async () => {
         await hotelStore.$loadChatHours(); 
         watchAvailability();
         createMessages()
+        isScheduleModalOpen.value = Boolean(route.query.showAvailability);
     });
 
     //data
     const isAvailable = ref(false);
+    const isScheduleModalOpen = ref(false);
     const chatMessages = ref([]);
     const settings = ref(hotelStore?.hotelData?.chatSettings);
 
@@ -145,17 +168,49 @@
             }
         ];
     }
+
+    provide('isScheduleModalOpen',isScheduleModalOpen)
 </script>
     
 <style scoped>
-.height-chat{
-    /* height: calc(100vh - 72px); */
-    height: 100vh;
+.height-chat-normal {
+  /* height: calc(var(--vh, 1vh) * 100);  */
+  height: calc(100vh - 158px); 
 }
-/* @media (max-width:250px){
-    .height-chat{
-        height: calc(100vh - 38px);
-    }
-} */
+.height-chat-hideMenu {
+  height: calc(var(--vh, 1vh) * 89); 
+}
+
+#text-auto {
+    height: 28px; 
+    min-height: 28px; 
+    overflow-y: hidden;
+    resize: none; 
+}
+
+#text-auto:focus {
+    border-color: #333;
+}
+
+#text-auto::placeholder {
+    color: rgba(51, 51, 51, 0.25);
+}
+
+.bg-msg-guest {
+    border-radius: 10px 10px 0px 10px;
+    border: 1px solid #E9E9E9;
+    background: linear-gradient(105deg, #E4E4E4 0%, #FAFAFA 100%);
+}
+
+.bg-msg-hoster {
+    border-radius: 10px 10px 10px 0px;
+    border: 1px solid #fff;
+    background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
+}
+
+
+
+
+
 </style>
         

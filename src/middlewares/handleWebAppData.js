@@ -24,12 +24,14 @@ export default async function handleWebAppData({ to, from, next }) {
     const chainStore = useChainStore();
     await chainStore.$loadChainSubdomain();
     const chainSubdomain = localStorage.getItem('chainSubdomain');//http://localhost:81/?chainsubdomain=nobusevillatex
-    let chainData;
+    
     if (!chainSubdomain) {
         return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }else{
-        chainData = await chainStore.$loadChainData();
-        if(!chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
+        if(chainStore.chainData?.subdomain !== chainSubdomain || !chainStore.chainData){
+            await chainStore.$loadChainData();
+        }
+        if(!chainStore.chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }
     ////////////////////////////////////////////////////////
     //
@@ -40,7 +42,7 @@ export default async function handleWebAppData({ to, from, next }) {
     // if(!stayId || !guestId){
     //     localStorage.removeItem('subdomain');
     // }
-    if(chainData?.type == 'INDEPENDENT'){
+    if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainData?.independentSubdomain);    
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);

@@ -8,7 +8,8 @@
             v-show="showMenu" 
         />
     </div>
-
+    <!-- evitar que se pueda usar la webapp en Mockup -->
+    <div v-if="$utils.isMockup() && route.name !== 'FakeChat'" class="fixed top-0 left-0 w-screen h-screen z-[5000]"></div>
 </template>
 
 <script setup>

@@ -1,15 +1,15 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-2 sp:px-4 pb-1 sp:pb-2 w-full z-[4000]">
+    <div class="container-menu fixed bottom-0 left-0 px-1 sp:px-4 pb-1.5 sp:pb-2 w-full z-[4000]">
         
         <div class="
-            menu rounded-[10px] sp:rounded-[20px] py-[5px] sp:py-[10px] px-2 sp:px-4 
+            menu rounded-[14px] sp:rounded-[20px] py-[6px] sp:py-[10px] px-1 sp:px-4 
             flex border border-white bg-gradient-h justify-between
         ">
             <template
                 v-for="item in menuItems"
             >
                 <router-link
-                    class="menu__item py-[4px] sp:py-[10px] w-[27px] sp:w-[60px] h-[27px] sp:h-[60px] space-y-[1px] sp:space-y-1 text-center flex flex-col justify-center relative"
+                    class="menu__item rounded-[5px] sp:rounded-[8px] py-[6px] sp:py-[10px] w-[36px] sp:w-[60px] h-[36px] sp:h-[60px] space-y-[2px] sp:space-y-1 text-center flex flex-col justify-center relative"
                     :to="item.to"
                     :style="{backgroundColor:validRoute(item) ? chainStore.$bgColor0 : ''}"
                     v-if="!item.exclude"
@@ -27,13 +27,13 @@
                         v-if="!validRoute(item)"
                         :src="validRoute(item) ? `/assets/icons/${item.iconSelected}.svg` : `/assets/icons/${item.iconDefault}.svg`"
                         :alt="item.title"
-                        class="mx-auto size-[12px] sp:size-6"
+                        class="mx-auto size-[16px] sp:size-6"
                     >
                     <IconCustomColor 
                         v-else
                         class="mx-auto"
-                        :width="innerWidth <= 300 ? '12' : '24'"
-                        :height="innerWidth <= 300 ? '12' : '24'"
+                        :width="innerWidth <= 300 ? '16' : '24'"
+                        :height="innerWidth <= 300 ? '16' : '24'"
                         :name="item.iconDefault" 
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
@@ -49,7 +49,7 @@
                     </span>
                     <img  -->
                     <span
-                        class="text-[4px] sp:text-[10px] font-bold leading-none lato"
+                        class="text-[7px] sp:text-[10px] font-bold leading-none lato"
                         :class="validRoute(item) ? `text-white` : `htext-black-100`"
                         :style="{
                             color:validRoute(item) ? chainStore.$colorContrast0 : ''
@@ -131,7 +131,7 @@ const menuItems = reactive([
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
         to: `/${route.params.hotelSlug}/chat`,
-        routeNameIncludes: ['Chat','Inbox'],
+        routeNameIncludes: ['Chat','Inbox','FakeChat','FakeInboxIndex','FakeLinksOtas'],
     },
 ]);
 
@@ -172,9 +172,6 @@ const dynamicTitle = (item) => {
 <style lang="scss">
     .menu {
         box-shadow: -3px 0px 6px 0px rgba(0, 0, 0, 0.10), 0px -3px 6px 0px rgba(0, 0, 0, 0.12), 0px 3px 6px 0px rgba(0, 0, 0, 0.12), 3px 0px 6px 0px rgba(0, 0, 0, 0.10);
-    }
-    .menu__item {
-        border-radius: 8px;
     }
     .menu__item-hover {
         box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
