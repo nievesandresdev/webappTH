@@ -17,6 +17,7 @@ import { useGuestStore } from '@/stores/modules/guest';
 import { useStayStore } from '@/stores/modules/stay';
 import { useChainStore } from '@/stores/modules/chain';
 import { useHotelStore } from '@/stores/modules/hotel';
+import { useHistoryStore } from '@/stores/modules/history';
 
 
 
@@ -26,6 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
     const stayStore = useStayStore()
     const chainStore = useChainStore()
     const hotelStore = useHotelStore()
+    const historyStore = useHistoryStore()
     // STATE
 
     // ACTIONS
@@ -84,6 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
         guestStore.deleteLocalGuest()
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
+        historyStore.$clearHistory();
         if(chainType === 'INDEPENDENT'){
             navigateTo('Home')
         }else{

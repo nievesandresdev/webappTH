@@ -18,10 +18,13 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 import { defineProps } from 'vue';
-
+//
+import { useRouter } from 'vue-router';
 const router = useRouter();
+//
+import { useHistoryStore } from '@/stores/modules/history';
+const historyStore = useHistoryStore()
 
 const emit = defineEmits(['onClickButton'])
 const props = defineProps({
@@ -51,7 +54,8 @@ const goBack = () => {
     if(props.viewNameBack){
         router.push({ name:props.viewNameBack })
     }else{
-        window.history.back();
+        // window.history.back();
+        historyStore.$goBack(router);
     }
 };
 

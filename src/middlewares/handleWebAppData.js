@@ -4,12 +4,14 @@ import { useGuestStore } from '@/stores/modules/guest'
 import { useStayStore } from '@/stores/modules/stay'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useChainStore } from '@/stores/modules/chain'
+import { useHistoryStore } from '@/stores/modules/history'
 import utils from '@/utils/utils.js';
 
 export default async function handleWebAppData({ to, from, next }) {
 
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
+    const historyStore = useHistoryStore();
     //
     const stayId = utils.getUrlParam('e');
     const guestId = utils.getUrlParam('g');
@@ -85,5 +87,13 @@ export default async function handleWebAppData({ to, from, next }) {
     if (to.meta.verifyHotel && !hotel) {
         return next({ name: 'NotFound' });
     }
+
+    //
+    // Agrega la nueva ruta al historial
+    historyStore.$addRoute({
+        name: to.name,
+        params: to.params,
+        query: to.query
+    })
     next();
 }
