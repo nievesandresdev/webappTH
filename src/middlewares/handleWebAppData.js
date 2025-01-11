@@ -43,7 +43,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //     localStorage.removeItem('subdomain');
     // }
     if(chainStore.chainData?.type == 'INDEPENDENT'){
-        utils.saveHotelSlug(chainData?.independentSubdomain);    
+        utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);
     }
