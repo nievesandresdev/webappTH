@@ -15,7 +15,6 @@
         <div class="mt-4">
             <div class="mb-6" v-for="hotel in hotels" >
                 <CardHotel :data="hotel" modal @modalOpen="modalInfoReservation(hotel)"/>
-                 <!-- <pre>{{ hotel }}</pre> -->
             </div>
         </div>
     </div>
@@ -25,7 +24,7 @@
         :isOpen="openModal" 
         showButton 
         :button-text="$t('stay.reservation.button-reservation')" 
-        @handleClick="goStayList" 
+        @handleClick="openModalConfirmReservation" 
         showIconButton 
         iconButton="/assets/icons/WA.Redirect.svg"
     >
@@ -63,14 +62,37 @@
                 <p  class="lato text-sm font-bold leading-[16px]">{{modalInfo.email}}</p>
             </div>
         </div>
-</GeneralBottomSheet>
+    </GeneralBottomSheet>
+
+    <ModalNative
+        :width="'327px'"
+        :top="'30%'"
+        :custom-classes="'p-6 shadow-lg'"
+        >
+        <template #default>
+            <div class="flex flex-col gap-6">
+                <span class="lato text-lg font-bold">¿Quieres continuar?</span>
+                <p class="lato text-sm font-medium">Vas a ser redirigido a la página web del hotel para continuar tu proceso de reserva.</p>
+                <div class="flex flex-col gap-4">
+                    <button @click="goStayList" class="lato text-sm font-bold text-white bg-[#333333] rounded-[10px] py-2">Sí, continuar</button>
+                    <div class="flex justify-center items-center font-bold text-[#333333] cursor-pointer" @click="closeModalConfirmReservation">
+                        <span class="lato text-sm underline">
+                            Cancelar
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </ModalNative>
+
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref,provide } from 'vue';
 import { getUrlParam } from '@/utils/utils.js'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue'
 import CardHotel from '@/Modules/Chain/Components/CardHotel.vue'
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
+import ModalNative from '@/components/ModalNative.vue'
 //store
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
@@ -83,6 +105,19 @@ const router = useRouter();
 
 const modalInfo = ref({})
 const openModal = ref(false)
+
+const openModalConfirmReservation = () => {
+    modalNativeIsOpen.value = true
+}
+
+const closeModalConfirmReservation = () => {
+    modalNativeIsOpen.value = false
+}
+
+
+const modalNativeIsOpen = ref(false);
+provide('modalNativeIsOpen', modalNativeIsOpen);
+
 
 
 const hotels = ref([])
