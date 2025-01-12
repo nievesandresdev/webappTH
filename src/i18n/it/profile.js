@@ -43,5 +43,10 @@ export default {
                 "placeholder": "Inserisci la tua password"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Prenota il tuo prossimo soggiorno",
+        "description": "Pianifica la tua prossima fuga"
     }
+
 };

@@ -43,5 +43,10 @@ export default {
                 "placeholder": "Geben Sie Ihr Passwort ein"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Buche deinen nächsten Aufenthalt",
+        "description": "Plane deinen nächsten Kurzurlaub"
     }
+
 };

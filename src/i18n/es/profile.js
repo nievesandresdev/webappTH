@@ -13,7 +13,7 @@ export default {
         "title": "Información personal",
         "description": "Configura tu información personal"
     },
-    "language" : {
+    "language": {
         "title": "Preferencia de idioma",
         "description": "Selecciona tu idioma predeterminado"
     },
@@ -44,7 +44,11 @@ export default {
             "password": {
                 "label": "Contraseña",
                 "placeholder": "Introduce tu contraseña"
-            },
+            }
         }
+    },
+    "book_next_stay": {
+        "title": "Reserva tu próxima estancia",
+        "description": "Planifica tu siguiente escapada"
     }
 };

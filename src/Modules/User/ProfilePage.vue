@@ -62,10 +62,21 @@
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
+
+        <!-- Sección "REservacion" -->
+        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
+            <div class="flex items-center gap-2">
+                <img src="/assets/icons/Wa.reserva.svg" class="w-8 h-8" alt="Reservation" />
+                <div class="flex flex-col">
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.book_next_stay.title') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.book_next_stay.description') }}</span>
+                </div>
+            </div>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
     
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-[40px] gap-2 cursor-pointer">
-            <!-- <img src="/assets/icons/Wa.logout.svg" class="w-4 h-4" alt="Logout Icon" /> -->
             <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
 

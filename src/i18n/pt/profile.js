@@ -43,5 +43,9 @@ export default {
                 "placeholder": "Digite sua senha"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Reserve sua próxima estadia",
+        "description": "Planeje sua próxima escapada"
     }
 };

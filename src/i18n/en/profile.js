@@ -43,5 +43,10 @@ export default {
                 "placeholder": "Enter your password"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Book your next stay",
+        "description": "Plan your next getaway"
     }
+
 };
