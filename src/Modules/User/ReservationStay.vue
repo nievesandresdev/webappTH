@@ -4,21 +4,35 @@
         <HeadInChain 
             :text="$t('stay.reservation.title')" 
             go-back
-            @go-back="goStayList"
+            @go-back="goProfilePage"
         />
     </div>
-
     <!-- body -->
     <div class="py-6 px-4">
-        <h1 class="lato text-lg font-bold leading-[20px]">{{$t('stay.reservation.title-page')}}</h1>
-        <h4 class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
-        <div class="mt-4">
+        
+        <!-- estos mensajes se muestran si el hotel es tipo chain -->
+        <h1 v-if="typeChainHotel" class="lato text-lg font-bold leading-[20px]">{{$t('stay.reservation.title-page')}}</h1>
+        <h4 v-if="typeChainHotel" class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
+        <!-- fin mensajes -->
+
+        <div :class="typeChainHotel ? 'mt-4' : ''">
             <div class="mb-6" v-for="hotel in hotels" >
-                <CardHotel :data="hotel" modal @modalOpen="modalInfoReservation(hotel)"/>
+                <CardHotel :data="hotel" :modal="typeChainHotel" @modalOpen="modalInfoReservation(hotel)" :more-info="typeChainIndependent"/>
+            </div>
+            <div class="flex flex-col justify-center" v-if="typeChainIndependent">
+                <button
+                    class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
+                    @click="openModalConfirmReservation(hotels[0]?.website_google)"
+                >
+                    <img src="/assets/icons/WA.Redirect.svg" class="w-6 h-6" alt="Icon Button" />
+                    Reservar
+                </button>
             </div>
         </div>
+       
     </div>
  
+    <!-- modal sheet bottom info hotel -->
     <GeneralBottomSheet 
         @update:isOpen="closeModal" 
         :isOpen="openModal" 
@@ -63,7 +77,9 @@
             </div>
         </div>
     </GeneralBottomSheet>
+    <!-- fin modal info hotel -->
 
+    <!-- modal confirmar reservacion -->
     <ModalNative
         :width="'327px'"
         :top="'30%'"
@@ -85,10 +101,11 @@
             </div>
         </template>
     </ModalNative>
+    <!-- fin modal confirmar reservacion -->
 
 </template>
 <script setup>
-import { onMounted, ref,provide } from 'vue';
+import { onMounted, ref,provide, computed } from 'vue';
 import { getUrlParam } from '@/utils/utils.js'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue'
 import CardHotel from '@/Modules/Chain/Components/CardHotel.vue'
@@ -107,8 +124,19 @@ const router = useRouter();
 const modalInfo = ref({})
 const openModal = ref(false)
 
-const openModalConfirmReservation = () => {
+const typeChainIndependent = computed(() => {
+    return chainStore.chainData?.type === 'INDEPENDENT'
+})
+
+const typeChainHotel = computed(() => {
+    return chainStore.chainData?.type === 'CHAIN'
+})
+
+const openModalConfirmReservation = (website = false) => {
     modalNativeIsOpen.value = true
+    if(typeChainIndependent.value){
+        modalInfo.value.website_google = website
+    }
 }
 
 const closeModalConfirmReservation = () => {
@@ -126,13 +154,11 @@ onMounted(async() => {
     hotels.value = await chainStore.$getHotelsList({type : 'reservation'})  
 })
 
-async function goStayList(){
-    console.log('test hotel', hotelStore.hotelData?.subdomain)
-    /* router.push({ name:'MyStays', params:{ hotelSlug : hotelStore.hotelData?.subdomain}}) */
+async function goProfilePage(){
+    router.push({ name: 'Profile' });
 }
 
 const modalInfoReservation = (hotel) => {
-    console.log('hotel', hotel)
     modalInfo.value = hotel
     openModal.value = true
 }
@@ -142,9 +168,19 @@ const closeModal = () => {
 }
 
 const goWebHotel = () => {
-    window.open(modalInfo.value.website_google, '_blank');
-    closeModalConfirmReservation()
-}
+    let url = modalInfo.value.website_google;
+
+    // Verificar si la URL tiene un esquema válido
+    if (!/^https?:\/\//i.test(url)) {
+        url = `https://${url}`;
+    }
+
+    window.open(url, '_blank');
+    closeModalConfirmReservation();
+};
+
+
+
 
 </script>
 <style scoped> 

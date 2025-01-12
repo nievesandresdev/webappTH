@@ -25,9 +25,19 @@
                 <img class="w-4 h-4" src="/assets/icons/WA.map.svg" alt="">
                 <p  class="lato text-sm font-bold leading-[16px]">{{data.address}}</p>
             </div>
-            <div class="flex items-center gap-1 mt-2">
+            <div v-if="data.zone" class="flex items-center gap-1 mt-2">
                 <img class="w-4 h-4" src="/assets/icons/WA.pointer.svg" alt="">
                 <p class="lato text-sm font-bold leading-[16px]">{{data.zone}}</p>
+            </div>
+            <!-- v-if moreinfo  -->
+            <div v-if="moreInfo && data.phone" class="flex items-center gap-1 mt-2">
+                <img class="w-4 h-4" src="/assets/icons/WA.llamar.svg" alt="">
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.phone}}</p>
+            </div>
+            <!-- v-if moreinfo && email -->
+            <div v-if="moreInfo && data.email" class="flex items-center gap-1 mt-2">
+                <img class="w-4 h-4" src="/assets/icons/WA.mail.svg" alt="">
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.email}}</p>
             </div>
         </div>
     </div>
@@ -50,6 +60,10 @@ const props = defineProps({
     modal:{
         type:Boolean,
         default:false
+    },
+    moreInfo: {
+        type: Boolean,
+        default: false
     }
 })
 
