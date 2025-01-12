@@ -68,6 +68,7 @@
         :width="'327px'"
         :top="'30%'"
         :custom-classes="'p-6 shadow-lg'"
+        :position="'fixed'"
         >
         <template #default>
             <div class="flex flex-col gap-6">
@@ -131,7 +132,6 @@ async function goStayList(){
 }
 
 const modalInfoReservation = (hotel) => {
-    console.log('hotel', hotel)
     modalInfo.value = hotel
     openModal.value = true
 }

@@ -9,7 +9,7 @@
     <Transition>
       <div
         v-if="modalNativeIsOpen"
-        :class="`absolute m-auto bg-white left-0 right-0 z-[6002] rounded-[10px] ${customClasses}`"
+        :class="`${position} m-auto bg-white left-0 right-0 z-[6002] rounded-[10px] ${customClasses}`"
         :style="{ width: width, top: top }"
       >
         <slot></slot>
@@ -33,6 +33,10 @@
       type: String,
       default: '',
     },
+    position : {
+      type: String,
+      default: 'absolute'
+    }
   });
   
   const modalNativeIsOpen = inject('modalNativeIsOpen');
