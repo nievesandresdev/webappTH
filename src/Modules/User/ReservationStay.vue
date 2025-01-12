@@ -75,7 +75,7 @@
                 <span class="lato text-lg font-bold">¿Quieres continuar?</span>
                 <p class="lato text-sm font-medium">Vas a ser redirigido a la página web del hotel para continuar tu proceso de reserva.</p>
                 <div class="flex flex-col gap-4">
-                    <button @click="goStayList" class="lato text-sm font-bold text-white bg-[#333333] rounded-[10px] py-2">Sí, continuar</button>
+                    <button @click="goWebHotel" class="lato text-sm font-bold text-white bg-[#333333] rounded-[10px] py-2">Sí, continuar</button>
                     <div class="flex justify-center items-center font-bold text-[#333333] cursor-pointer" @click="closeModalConfirmReservation">
                         <span class="lato text-sm underline">
                             Cancelar
@@ -132,12 +132,18 @@ async function goStayList(){
 }
 
 const modalInfoReservation = (hotel) => {
+    console.log('hotel', hotel)
     modalInfo.value = hotel
     openModal.value = true
 }
 
 const closeModal = () => {
     openModal.value = false
+}
+
+const goWebHotel = () => {
+    window.open(modalInfo.value.website_google, '_blank');
+    closeModalConfirmReservation()
 }
 
 </script>
