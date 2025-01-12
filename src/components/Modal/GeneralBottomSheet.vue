@@ -24,6 +24,7 @@
                 @click="handleSubmit"
                 class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
             >
+                <img v-if="showIconButton" :src="iconButton" class="w-6 h-6" alt="Icon Button" />
                 {{ buttonText }}
             </button>
         </div>
@@ -33,6 +34,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+import Icon from '../Icon.vue';
 
 const props = defineProps({
     isOpen: Boolean,
@@ -40,6 +42,14 @@ const props = defineProps({
     buttonText: {
         type: String,
         default: 'Acción'
+    },
+    showIconButton : {
+        type: Boolean,
+        default: false
+    },
+    iconButton : {
+        type: String,
+        default: ''
     }
 });
 

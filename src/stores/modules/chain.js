@@ -16,8 +16,8 @@ export const useChainStore = defineStore('chain', () => {
      const chainData = ref(localStorage.getItem('chainData') || null);
      const customizationData = ref(null);
     // ACTIONS
-    async function $getHotelsList() {
-        const response = await getHotelsListApi([])
+    async function $getHotelsList(params = {}) {
+        const response = await getHotelsListApi(params)
         return response.ok ? response.data : []; 
         
     }

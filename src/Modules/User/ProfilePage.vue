@@ -64,7 +64,7 @@
         </div>
 
         <!-- Sección "REservacion" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
+        <div class="flex items-center justify-between mt-4 gap-2" @click="handleReservationStay">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/Wa.reserva.svg" class="w-8 h-8" alt="Reservation" />
                 <div class="flex flex-col">
@@ -129,6 +129,10 @@ const handlePersonalInfo = () => {
 
 const selectLanguage = () => {
     navigateTo('SelectLanguage')
+};
+
+const handleReservationStay = () => {
+    navigateTo('ReservationStay')
 };
 
 onMounted(async() => {

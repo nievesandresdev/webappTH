@@ -39,15 +39,25 @@ const router = useRouter();
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 
+const emit = defineEmits(['modalOpen']);
+
 const props = defineProps({
     data:Object,
     clickable:{
+        type:Boolean,
+        default:false
+    },
+    modal:{
         type:Boolean,
         default:false
     }
 })
 
 async function selectHotel(){
+
+    if(props.modal){
+        emit('modalOpen')
+    }
     //tomar el actual subdominio
     //se usara para que en un caso que el huesped decida regresar a la estancia actual
     //poder tener el subdominio de dicha estancia
@@ -59,6 +69,8 @@ async function selectHotel(){
     if(!props.clickable) return
     await hotelStore.$setAndLoadLocalHotel(props.data.subdomain)
     router.push({ name:'CreateStayFromChain', params:{ hotelSlug : props.data.subdomain}})
+
+   
 }
 
 </script>

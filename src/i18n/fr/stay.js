@@ -36,5 +36,12 @@ export default{
         "accessRoom": "Accéder au séjour",
         "active": "Actif",
         "pageWebHotel": "Site web de l'hôtel"
+    },
+    "reservation": {
+        "title": "Réservez votre prochain séjour",
+        "button-reservation": "Réserver",
+        "title-page": "Sélectionnez un hébergement à réserver et nous vous redirigerons vers son site web."
+
     }
+
 }
