@@ -137,6 +137,8 @@ onMounted( async () => {
     isIphone.value = /iPhone/i.test(navigator.userAgent);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
+
+    console.log('test chat',chatStore.messages)
 });
 
 onUnmounted(() => {

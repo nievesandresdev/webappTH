@@ -55,7 +55,7 @@ export const useHistoryStore = defineStore('history', () => {
     const currentRouteName = router.currentRoute.value.name
     // Recupera la anterior
     let last = history.value[history.value.length - 1];
-    console.log('test last',last)
+    
     // excludedRoutes.value.includes(last.name) || 
     if(currentRouteName == last.name){
       last = history.value[history.value.length - 2];
@@ -65,7 +65,7 @@ export const useHistoryStore = defineStore('history', () => {
       // Saca la última ruta (la actual)
       history.value.pop() 
     }
-    console.log('test history',history.value)
+    
     //redirecciona a la ultima vista obtenida
     if (last) {
       router.push({ name: last.name, params: last.params, query: last.query })
