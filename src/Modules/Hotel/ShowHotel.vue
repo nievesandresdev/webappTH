@@ -36,13 +36,13 @@
       <p
         :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
       >
-        {{ hotelData.description }}
+        {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
       </p>
 
       <p
         @click="isExpanded = !isExpanded"
         class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-        v-show="hotelData.description?.length > CHARACTER_LIMIT"
+        v-show="hotelData?.translate?.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
@@ -141,6 +141,7 @@ import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
 import HotelCheckInOut from './Components/HotelCheckInOut.vue'
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { useHotelStore } from '@/stores/modules/hotel'
+import { useLocaleStore } from '@/stores/modules/locale'
 import { computed, ref, onMounted,provide } from 'vue'
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
@@ -154,6 +155,7 @@ const { t } = useI18n();
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
+const localeStore = useLocaleStore()
 
 const isModalOpen = ref(false);
 
