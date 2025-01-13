@@ -3,7 +3,7 @@ export default {
         "home": "start",
         "facilities": "einrichtungen",
         "destination": "ziel",
-        "experiences": "erfahrungen",
+        "experiences": "Erlebnisse",
         "messages": "nachrichten"
     },
     "dropdownLanguage": {
