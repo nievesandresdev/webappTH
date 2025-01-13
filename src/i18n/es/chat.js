@@ -1,4 +1,5 @@
 export default {
+    "title": "Mensajes",
     "availabilty": "Disponible",
     "not-availabilty": "No disponible",
     "languages-text":"Te damos la bienvenida al chat!<br>Puedes comunicarte con nuestro personal en estos idiomas:",

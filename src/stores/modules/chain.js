@@ -57,7 +57,7 @@ export const useChainStore = defineStore('chain', () => {
     async function $loadChainData(){
         const response = await findBySubdomainApi()
         await $getCustomatizacion();
-        // console.log('test customizationData.value',customizationData.value)
+        console.log('test customizationData.value',customizationData.value)
         if(response.ok){
             chainData.value = response.data;
             localStorage.setItem('chainData', JSON.stringify(chainData.value))

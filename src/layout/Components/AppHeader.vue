@@ -1,8 +1,8 @@
 <template>
     <header
         id="header"
-        class="custom-header"
-        :class="{'fixed top-0 left-0 w-full': fixed}"
+        class="custom-header z-[4000]"
+        :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
         <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3">
             <h1

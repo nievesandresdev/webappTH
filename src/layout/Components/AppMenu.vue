@@ -127,10 +127,18 @@ const menuItems = reactive([
     },
     {
         title: 'layout.header.messages',
-        exclude: false,
+        exclude: !hotelStore?.hotelData?.chatSettings.show_guest,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
         to: `/${route.params.hotelSlug}/chat`,
+        routeNameIncludes: ['Chat','Inbox','FakeChat','FakeInboxIndex','FakeLinksOtas'],
+    },
+    {
+        title: 'Inbox',
+        exclude: hotelStore?.hotelData?.chatSettings.show_guest,
+        iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
+        iconSelected: 'WA.MENU.SELECTED.MENSAJES',
+        to: `/${route.params.hotelSlug}/inbox`,
         routeNameIncludes: ['Chat','Inbox','FakeChat','FakeInboxIndex','FakeLinksOtas'],
     },
 ]);

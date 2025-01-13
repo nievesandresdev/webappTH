@@ -54,7 +54,7 @@ const tabsMenu = computed(() => [
         notify: chatStore.countUnreadMessages 
     },
     {    
-        title: $utils.titleCase(t('chat.tabs.inbox')),
+        title: 'Inbox',//$utils.titleCase(t('chat.tabs.inbox'))
         exclude: false,
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,
@@ -65,9 +65,10 @@ const tabsMenu = computed(() => [
 ]);
 
 const titleHead = computed(()=>{
-    let titleChat = hotelStore?.hotelData?.chatSettings?.name
+    // let titleChat = hotelStore?.hotelData?.chatSettings?.name
+    // console.log('test chatsetting',hotelStore?.hotelData?.chatSettings)
     if(route.name == 'Chat'){
-        return titleChat;
+        return t('chat.title');
     }
     return t('query.inbox.title');
 })
