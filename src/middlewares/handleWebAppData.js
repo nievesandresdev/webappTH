@@ -6,6 +6,7 @@ import { useLocaleStore } from '@/stores/modules/locale'
 import { useChainStore } from '@/stores/modules/chain'
 import { useHistoryStore } from '@/stores/modules/history'
 import utils from '@/utils/utils.js';
+import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
 
@@ -79,9 +80,10 @@ export default async function handleWebAppData({ to, from, next }) {
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
         let lang = hotel?.language_default_webapp ?? 'es'
-        localeStore.$load(lang);
+        localeStore.$loadByURL(lang);
     } else if (!utils.isMockup()) {
-        localeStore.$load();
+        let lang = Boolean(localeStore.localeCurrent) && localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
+        localeStore.$loadByURL(lang);
     }
 
     if (to.meta.verifyHotel && !hotel) {
@@ -95,5 +97,9 @@ export default async function handleWebAppData({ to, from, next }) {
         params: to.params,
         query: to.query
     })
+    console.log('test stay',stayStore.stayData)
+    console.log('test guest',guestStore.guestData)
+    console.log('test current',localeStore.localeCurrent)
+    console.log('test i18n',i18n.global.locale.value)
     next();
 }
