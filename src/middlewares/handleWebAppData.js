@@ -79,10 +79,13 @@ export default async function handleWebAppData({ to, from, next }) {
     //data extra
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        let lang = hotel?.language_default_webapp ?? 'es'
+        let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
+        if(localeStore.localeCurrent !== 'es'){
+            lang = localeStore.localeCurrent;
+        }
         localeStore.$loadByURL(lang);
     } else if (!utils.isMockup()) {
-        let lang = Boolean(localeStore.localeCurrent) && localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
+        let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
         localeStore.$loadByURL(lang);
     }
 
@@ -97,9 +100,5 @@ export default async function handleWebAppData({ to, from, next }) {
         params: to.params,
         query: to.query
     })
-    console.log('test stay',stayStore.stayData)
-    console.log('test guest',guestStore.guestData)
-    console.log('test current',localeStore.localeCurrent)
-    console.log('test i18n',i18n.global.locale.value)
     next();
 }
