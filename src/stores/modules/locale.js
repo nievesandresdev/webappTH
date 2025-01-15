@@ -50,7 +50,6 @@ export const useLocaleStore = defineStore('locale', () => {
         }
         i18n.global.locale.value = lg
         localeCurrent.value = lg
-        localeCurrent.value = lg
         $apiGetAllForItem()
 
     }

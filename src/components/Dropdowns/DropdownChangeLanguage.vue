@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-    import { ref, watch, nextTick } from 'vue'
+    import { ref, watch, onMounted } from 'vue'
 
      import { useRouter } from 'vue-router'
     const route = useRouter()
@@ -72,6 +72,9 @@
     const localeStore = useLocaleStore()
     const guestStore = useGuestStore()
 
+    onMounted(()=>{
+        localeStore.$apiGetAllForItem()
+    })
     watch(modalLocale, (value) => {
         if (value) {
             document.body.classList.add('no-scroll')
@@ -87,7 +90,7 @@
 
     async function changeLocale (lg) {
         await guestStore.updateLanguage(lg)
-        localeStore.$load(lg)
+        localeStore.$change(lg)
          modalLocale.value = false
     }
 
