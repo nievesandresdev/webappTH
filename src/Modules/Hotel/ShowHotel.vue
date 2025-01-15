@@ -9,7 +9,7 @@
   /> -->
  
   <AppHeader
-    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
+    :title="hotelData.show_profile == 1 ? $utils.titleCase($t($utils.$formatTypeLodging(hotelData.type))) : 'Instalaciones'"
     :tabs="tabs.tabsHeader"
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
@@ -51,7 +51,7 @@
 
       <HotelActionButtons
         :hotelData="hotelData"
-        :buttonsHome="hotelData.buttons_home"
+        :buttonsHome="true"
         @wifi-click="handleWifi"
         @call-click="handleCall"
         @legal-click="handleLegalText"
@@ -102,7 +102,7 @@
     </div>
     <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
       <p class="text-[16px] text-[#333333] font-semibold text-center lato">
-        El alojamiento cuenta con servicio de internet WiFi gratuito
+        El {{$t($utils.$formatTypeLodging(hotelData.type))}} cuenta con servicio de internet WiFi gratuito
       </p>
     </div>
   </BottomModal>

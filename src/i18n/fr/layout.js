@@ -2,6 +2,7 @@ export default {
     "header": {
         "home": "accueil",
         "facilities": "installations",
+        "hotel": "hotel",
         "destination": "destination",
         "experiences": "expériences",
         "messages": "messages"

@@ -78,7 +78,7 @@ export default {
         "filters": {
             "title": "Entfernung zur Unterkunft",
             "ratings": "Bewertungen",
-            "distanceLogding":"Distance from accommodation",
+            "distanceLogding":"Distance from",
             "recommended": "Empfohlen",
             "score": "Punktzahl",
             "star": "Stern",
