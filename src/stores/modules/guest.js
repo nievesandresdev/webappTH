@@ -223,7 +223,6 @@ export const useGuestStore = defineStore('guest', () => {
             hotelId: hotelStore.hotelData.id,
         }
         const response = await deleteGuestOfStayApi(params)
-        console.log('test deleteGuestOfStay',response)
         const { ok } = response   
         if(ok){
             await stayStore.reloadLocalStay()

@@ -121,7 +121,7 @@ export const useAuthStore = defineStore('auth', () => {
             }
         }
         //redireccionar segun corresponda
-        $redirectAfterLogin()
+        await $redirectAfterLogin()
     }
 
     async function $getStatusSession () {
@@ -131,7 +131,8 @@ export const useAuthStore = defineStore('auth', () => {
     async function $validateSession (to = null, next = null) {
         $getStatusSession();
         // console.log('test vald cond', to.name);
-        if(!to || to && (to.name =='Home' || to.name == 'ChainLanding')) return; 
+        const viewsIgnored = ['Home','HotelsList','ChainLanding','CreateStayFromChain'];
+        if(!to || to && viewsIgnored.includes(to.name)) return; 
         //
         if(sessionActive.value) return;
         //
@@ -141,10 +142,8 @@ export const useAuthStore = defineStore('auth', () => {
         //
         if(Boolean(hotelStore.hotelData)){
             //si hay un hotel cargado va a la home
-            console.log('test entro aqui')
             next({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }else{
-            console.log('test entro aqui 2')
             next({ name:'ChainLanding' })
         }
             
@@ -160,7 +159,7 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('startedWebappBy',JSON.stringify(startedWebappByRoute))
     }
 
-    function $goStartedWebappBy(optional = false) {
+    async function $goStartedWebappBy(optional = false) {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
@@ -171,12 +170,12 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    function $redirectAfterLogin() {
+    async function $redirectAfterLogin() {
         //
         //limpiar
         sessionStorage.removeItem('guestPerStay')
         if(stayStore.stayData){
-            $goStartedWebappBy();
+            await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
                 navigateTo('Home',{},{ acform : 'createstay' })
@@ -187,12 +186,10 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    function $goLoginBySocialNetwork() {
+    async function $goLoginBySocialNetwork() {
         const param = getUrlParam('action')
-        // console.log('test goLoginBySocialNetwork',param)
         if(param == 'toLogin'){
-            console.log('test entro vaina')
-            $goStartedWebappBy(true)
+            await $goStartedWebappBy(true)
         }
     }
     return {

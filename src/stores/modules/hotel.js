@@ -81,7 +81,7 @@ export const useHotelStore = defineStore('hotel', () => {
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
         // console.log('test',subdomain.value)
-        $load(true)//reload
+        await $load(true)//reload
     }
 
     async function $setOldLocalHotel (subdomainString) {

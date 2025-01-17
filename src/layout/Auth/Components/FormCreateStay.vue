@@ -52,6 +52,6 @@ const submit = async () => {
 
     // processingForm.value = false
     // emit('closeModal');
-    authStore.$redirectAfterLogin();
+    await authStore.$redirectAfterLogin();
 }
 </script>

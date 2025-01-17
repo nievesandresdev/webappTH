@@ -11,7 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    console.log('test to',to)
+    
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -57,7 +57,6 @@ export default async function handleWebAppData({ to, from, next }) {
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
-        console.log('test entro aqui')
         return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 
