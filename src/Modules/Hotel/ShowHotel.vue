@@ -204,7 +204,7 @@ onMounted(async() => {
   facilities.value =  r.crosselling_facilities;
 
   stayData.value = stayStore.getLocalStay();
-  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}&guestPerStay=true`);
+  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayData.value?.id}&guestPerStay=true`);
   
 
   if (hotelStore.hotelData.show_profile !== 1) {

@@ -105,36 +105,7 @@ async function submit(){
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
 
-    if(!stayStore?.stayData){
-        //aqui entra solo si no hay una estancia cargada antes de culminar registro
-        await guestStore.findAndValidLastStayAndLogHotel({guestEmail : guestData.email, chainId : chainStore.chainData?.id, hotelId : hotelStore.hotelData?.id})
-    }else{
-        //aqui entra si ya hay una estancia cargada (viene por url)
-        if(Boolean(sessionStorage.getItem('guestPerStay'))){
-            let response = await guestStore.createAccessInStay()
-                if(response?.stay){
-                    //actualizar estancia
-                    await stayStore.setStayData(response.stay)
-                    await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
-                }
-        }else{
-            //sino elimina la estancia actual para que el huesped tenga que crear una
-            await stayStore.deleteLocalStayData()
-        }
-    }
-
-    //limpiar
-    sessionStorage.removeItem('guestPerStay')
-    if(stayStore.stayData){
-            navigateTo('Home')
-    }else{
-        if(hotelStore.hotelData){
-            navigateTo('Home',{},{ acform : 'createstay' })
-        }else{
-            //logica para cuando no se halla cargado un hotel
-            router.push({ name:'HotelsList' })
-        }
-    }
+    await authStore.$logIn(guestData.email);
     toastSuccess(t('messageRequest.recordSuccess')); 
 }
 

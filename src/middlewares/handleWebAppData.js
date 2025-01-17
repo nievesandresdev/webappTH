@@ -5,14 +5,17 @@ import { useStayStore } from '@/stores/modules/stay'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useChainStore } from '@/stores/modules/chain'
 import { useHistoryStore } from '@/stores/modules/history'
+import { useAuthStore } from '@/stores/modules/auth'
+
 import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-
+    console.log('test to',to)
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
+    const authStore = useAuthStore();
     //
     const stayId = utils.getUrlParam('e');
     const guestId = utils.getUrlParam('g');
@@ -54,6 +57,7 @@ export default async function handleWebAppData({ to, from, next }) {
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {
+        console.log('test entro aqui')
         return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
     }
 
@@ -93,12 +97,17 @@ export default async function handleWebAppData({ to, from, next }) {
         return next({ name: 'NotFound' });
     }
 
+    //validar sesion 
+    authStore.$validateSession(to, next);
+    authStore.$goLoginBySocialNetwork();
     //
     // Agrega la nueva ruta al historial
-    historyStore.$addRoute({
-        name: to.name,
-        params: to.params,
-        query: to.query
-    })
+    if(authStore.sessionActive){
+        historyStore.$addRoute({
+            name: to.name,
+            params: to.params,
+            query: to.query
+        })
+    }
     next();
 }

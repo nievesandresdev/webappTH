@@ -176,7 +176,7 @@ onMounted(async() => {
     currentStay.value = await stayStore.findById(paramsRouter.value.stayId)
     fillForm(currentStay.value)
     await reloadGuestsList()
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
 })
 
 provide('isModalOpen',isModalOpen)

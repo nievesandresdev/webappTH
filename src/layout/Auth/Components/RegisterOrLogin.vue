@@ -79,7 +79,7 @@ async function goRegisterOrLogin(type){
         hotelId : hotelStore.hotelData?.id ?? null,
         stayId : stayStore.stayData?.id,
     }
-    await authStore.$registerOrLogin(params);
+    await authStore.$registerOrLoginSN(params);
 }
 
 async function goRegisterOrLoginEmail(){
