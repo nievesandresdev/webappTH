@@ -74,6 +74,18 @@
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
+
+        <!-- Sección "referido" -->
+        <div class="flex items-center justify-between mt-4 gap-2" @click="handleReservationStay" v-show="hotelStore.hotelData.show_referrals">
+            <div class="flex items-center gap-2">
+                <img src="/assets/icons/WA.referido.svg" class="w-8 h-8" alt="Reservation" />
+                <div class="flex flex-col">
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.rewards.title') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.rewards.description') }}</span>
+                </div>
+            </div>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
     
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center mt-[40px] gap-2 cursor-pointer">
@@ -81,6 +93,7 @@
         </div>
 
         <ShareStayModal />
+        <BottomSheetRewards />
     </div>
 </template>
 <script setup>
@@ -89,6 +102,7 @@ import SectionBar from '@/components/SectionBar.vue';
 import WACardBanner from '@/components/WACardBanner.vue';
 import ShareStayModal from './Components/ShareStayModal.vue'
 import StayCard from './Components/StayCard.vue';
+import BottomSheetRewards from './Components/BottomSheetRewards.vue';
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
 import { DateTime } from 'luxon';
@@ -101,6 +115,11 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
+
+const openModalRewards = ref(true);
+
+//provides
+provide('openModalRewards',openModalRewards)
 
 
 const isModalOpen = ref(false);

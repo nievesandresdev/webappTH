@@ -47,6 +47,11 @@ export default {
     "book_next_stay": {
         "title": "Buche deinen nächsten Aufenthalt",
         "description": "Plane deinen nächsten Kurzurlaub"
-    }
+    },
+    "rewards": {
+        "title": "Lade einen Freund ein",
+        "description": "Teile exklusive Vorteile",
+        "bottom-recommend": "Empfehle jetzt einen Freund"
+    },
 
 };

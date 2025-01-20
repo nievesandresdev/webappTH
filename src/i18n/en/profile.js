@@ -47,6 +47,11 @@ export default {
     "book_next_stay": {
         "title": "Book your next stay",
         "description": "Plan your next getaway"
-    }
+    },
+    "rewards": {
+        "title": "Invite a friend",
+        "description": "Share exclusive benefits",
+        "bottom-recommend": "Recommend a friend now"
+    },
 
 };

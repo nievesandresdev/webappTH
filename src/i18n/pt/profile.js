@@ -47,5 +47,10 @@ export default {
     "book_next_stay": {
         "title": "Reserve sua próxima estadia",
         "description": "Planeje sua próxima escapada"
-    }
+    },
+    "rewards": {
+        "title": "Convide um amigo",
+        "description": "Compartilhe benefícios exclusivos",
+        "bottom-recommend": "Recomende um amigo agora"
+    },
 };
