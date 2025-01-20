@@ -51,6 +51,6 @@ export default {
     "rewards": {
         "title": "Convide um amigo",
         "description": "Compartilhe benefícios exclusivos",
-        "bottom-recommend": "Recomende um amigo agora"
+        "button-recommend": "Recomende um amigo agora"
     },
 };

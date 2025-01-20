@@ -4,9 +4,8 @@
         @update:isOpen="closeModal" 
         :isOpen="openModal" 
         showButton 
-        :button-text="$t('profile.rewards.botton-recommend')" 
+        :button-text="$t('profile.rewards.button-recommend')" 
         @handleClick="openModalConfirmReservation" 
-        showIconButton 
     >
         aqui estoy 
     </GeneralBottomSheet>

@@ -51,7 +51,7 @@ export default {
     "rewards": {
         "title": "Lade einen Freund ein",
         "description": "Teile exklusive Vorteile",
-        "bottom-recommend": "Empfehle jetzt einen Freund"
+        "button-recommend": "Empfehle jetzt einen Freund"
     },
 
 };

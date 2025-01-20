@@ -51,7 +51,7 @@ export default {
     "rewards": {
         "title": "Invitez un ami",
         "description": "Partagez des avantages exclusifs",
-        "bottom-recommend": "Recommandez un ami maintenant"
+        "button-recommend": "Recommandez un ami maintenant"
     },
 
 };

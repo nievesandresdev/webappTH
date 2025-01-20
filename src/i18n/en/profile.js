@@ -51,7 +51,7 @@ export default {
     "rewards": {
         "title": "Invite a friend",
         "description": "Share exclusive benefits",
-        "bottom-recommend": "Recommend a friend now"
+        "button-recommend": "Recommend a friend now"
     },
 
 };
