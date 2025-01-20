@@ -42,7 +42,6 @@ export const useHotelStore = defineStore('hotel', () => {
 
     async function $load (reload = false) {
         if ( (hotelData.value || !localStorage.getItem('subdomain')) && !reload) return
-        
         let params = {
             subdomain: localStorage.getItem('subdomain'),
         }
@@ -81,6 +80,7 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $setAndLoadLocalHotel (subdomainString) {
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
+        // console.log('test',subdomain.value)
         $load(true)//reload
     }
 

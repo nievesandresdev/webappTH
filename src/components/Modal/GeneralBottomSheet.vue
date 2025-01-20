@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isOpen || isClosing" class="fixed inset-0 flex items-end z-[30002]">
+    <div v-if="isOpen || isClosing" class="fixed inset-0 flex items-end z-[6000]">
         <div 
             class="absolute inset-0 bg-black bg-opacity-50" 
             @click.self="closeModal"

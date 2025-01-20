@@ -25,6 +25,7 @@
 import {  onMounted, ref,computed } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import $utils from '@/utils/utils';
+import { navigateTo } from '@/utils/navigation'
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -68,7 +69,8 @@ const handleChangeLanguage = async (lg) => {
     await guestStore.updateLanguage(lg)
     setTimeout(() => {
         localeStore.$change(lg)
-        window.location.href = './perfil'
+        navigateTo('Profile')
+        // window.location.href = './perfil'
     }, 500)
 }
 

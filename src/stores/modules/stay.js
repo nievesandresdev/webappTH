@@ -155,7 +155,7 @@ export const useStayStore = defineStore('stay', () => {
     }
 
     async function reloadLocalStay () {    
-        console.log('test reloadLocalStay')
+        
         const response = await findbyIdApi(stayData.value.id)
         const { ok } = response   
         stayData.value = ok ? response.data : null;

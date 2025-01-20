@@ -17,7 +17,7 @@ const chatRoutes = [
         component: WindowChatRed
       },
       {
-        name: 'FakeChatMobile',
+        name: 'FakeChat',
         path: 'fake',
         component: FakeChatMobile,
         props: (route) => ({ paramsRouter: {...route.params} })

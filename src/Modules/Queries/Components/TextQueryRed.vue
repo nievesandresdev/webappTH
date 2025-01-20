@@ -1,6 +1,6 @@
 <template>
-    <div class="hshadow rounded-[20px] p-2 sp:p-4 mb-2 sp:mb-4 bg-gradient-h border border-color-secondary">
-        <h1 class="lato text-xs sp:text-base font-medium sp:leading-[20px]">
+    <div class="hshadow rounded-[14px] sp:rounded-[20px] p-2 sp:p-4 mb-3 sp:mb-4 bg-gradient-h border border-color-secondary">
+        <h1 class="lato text-xs sp:text-base font-medium leading-[14px] sp:leading-[20px]">
             {{ $t('query.form.hello') }} 
             <template v-if="!$utils.isMockup()" >
                 {{ guestStore?.guestData?.name}},
@@ -9,30 +9,31 @@
                 Huésped
             </template>
         </h1>
-        <p class="mt-1.5 sp:mt-3 lato text-[10px] sp:text-sm font-medium sp:leading-[16px]">
+        <p class="mt-2 sp:mt-3 lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
             {{ $t('query.settings.question'+data?.period)}}
         </p>
-        <div class="mt-2 sp:mt-4">
+        <div class="mt-3 sp:mt-4">
             <TextareaAutogrow 
+                v-if="settings?.pre_stay_comment"
                 :id="'textarea1'"
                 v-model="textarea" 
                 :wordLimit="300"
-                :placeholder="settings?.pre_stay_comment?.es"
+                :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]"
                 showWordLimit
-                customClasses="min-h-[34px] sp:min-h-[72px]"
+                customClasses="min-h-[48px] sp:min-h-[72px]"
             />
         </div>
         <div class="mt-3 sp:mt-6 flex items-center">
             <button 
                 v-if="EditPeriod == data?.period"
-                class="text-xs font-semibold leading-[130%] underline"
+                class="text-[8px] sp:text-xs font-semibold leading-[90%] sp:leading-[130%] underline"
                 @click="cancelChanges"
             >
                 Cancelar
             </button>
             <div class="ml-auto">
                 <PrimaryButton 
-                    classes="text-center py-2.5 rounded-[10px] lato text-sm font-bold leading-[16px] w-[71px] shadow-guest"
+                    classes="text-center py-1.5 sp:py-2.5 rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] shadow-guest"
                     :disabled="!changes"
                     @click="saveQuery"
                 >
@@ -51,10 +52,13 @@ const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
+import { useLocaleStore } from '@/stores/modules/locale';
+
 
 const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
+const localeStore = useLocaleStore();
 
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
@@ -85,7 +89,7 @@ async function saveQuery(){
     if(response){
         emit('reloadList')
         // emit('showFeedback',props.settings.pre_stay_thanks.es);
-        let textRes = 'query.textToast.sendQueryText';
+        let textRes = props.settings?.pre_stay_thanks[localeStore.localeCurrent];
         if(EditPeriod.value){
             textRes = 'query.textToast.updateQueryText';
         }

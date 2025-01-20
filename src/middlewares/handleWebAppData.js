@@ -4,12 +4,15 @@ import { useGuestStore } from '@/stores/modules/guest'
 import { useStayStore } from '@/stores/modules/stay'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useChainStore } from '@/stores/modules/chain'
+import { useHistoryStore } from '@/stores/modules/history'
 import utils from '@/utils/utils.js';
+import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
 
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
+    const historyStore = useHistoryStore();
     //
     const stayId = utils.getUrlParam('e');
     const guestId = utils.getUrlParam('g');
@@ -24,12 +27,14 @@ export default async function handleWebAppData({ to, from, next }) {
     const chainStore = useChainStore();
     await chainStore.$loadChainSubdomain();
     const chainSubdomain = localStorage.getItem('chainSubdomain');//http://localhost:81/?chainsubdomain=nobusevillatex
-    let chainData;
+    
     if (!chainSubdomain) {
         return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }else{
-        chainData = await chainStore.$loadChainData();
-        if(!chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
+        if(chainStore.chainData?.subdomain !== chainSubdomain || !chainStore.chainData){
+            await chainStore.$loadChainData();
+        }
+        if(!chainStore.chainData) return next({ name: 'NotFound' }); // Redirige a la ruta NotFound
     }
     ////////////////////////////////////////////////////////
     //
@@ -40,8 +45,8 @@ export default async function handleWebAppData({ to, from, next }) {
     // if(!stayId || !guestId){
     //     localStorage.removeItem('subdomain');
     // }
-    if(chainData?.type == 'INDEPENDENT'){
-        utils.saveHotelSlug(chainData?.independentSubdomain);    
+    if(chainStore.chainData?.type == 'INDEPENDENT'){
+        utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);
     }
@@ -74,14 +79,26 @@ export default async function handleWebAppData({ to, from, next }) {
     //data extra
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        let lang = hotel?.language_default_webapp ?? 'es'
-        localeStore.$load(lang);
+        let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
+        if(localeStore.localeCurrent !== 'es'){
+            lang = localeStore.localeCurrent;
+        }
+        localeStore.$loadByURL(lang);
     } else if (!utils.isMockup()) {
-        localeStore.$load();
+        let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
+        localeStore.$loadByURL(lang);
     }
 
     if (to.meta.verifyHotel && !hotel) {
         return next({ name: 'NotFound' });
     }
+
+    //
+    // Agrega la nueva ruta al historial
+    historyStore.$addRoute({
+        name: to.name,
+        params: to.params,
+        query: to.query
+    })
     next();
 }
