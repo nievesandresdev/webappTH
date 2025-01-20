@@ -199,6 +199,8 @@ const handleLegalText = () => {
 
 onMounted(async() => {
   tabs.initializeTabs();
+  await loadTabsHeader();
+  await hotelStore.$load(true)
   const r = await hotelStore.$getCrossellings()
   
   facilities.value =  r.crosselling_facilities;
@@ -211,13 +213,9 @@ onMounted(async() => {
     router.push({ name: 'FacilityList' })
   }
 
-  
-
-  loadTabsHeader();
-
 })
 
-function loadTabsHeader () {
+async function loadTabsHeader () {
     const tabInformation = {
       title: t('hotel.information'),
       exclude: hotelData.show_profile,
