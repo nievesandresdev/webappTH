@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router'
-import { getUrlParam } from '@/utils/utils'
+import { getUrlParam, isMockup } from '@/utils/utils'
 import { 
     findByEmailApi
 } from '@/api/services/guest.services';
@@ -140,11 +140,13 @@ export const useAuthStore = defineStore('auth', () => {
         $setStartedWebappBy(to)
         //en caso de que no exista session
         //
-        if(Boolean(hotelStore.hotelData)){
-            //si hay un hotel cargado va a la home
-            next({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
-        }else{
-            next({ name:'ChainLanding' })
+        if(!isMockup()){
+            if(Boolean(hotelStore.hotelData)){
+                //si hay un hotel cargado va a la home
+                next({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
+            }else{
+                next({ name:'ChainLanding' })
+            }
         }
             
         //   
