@@ -50,7 +50,6 @@ export const useLocaleStore = defineStore('locale', () => {
         }
         i18n.global.locale.value = lg
         localeCurrent.value = lg
-        localeCurrent.value = lg
         $apiGetAllForItem()
 
     }
@@ -68,6 +67,18 @@ export const useLocaleStore = defineStore('locale', () => {
         window.location.reload()
     }
 
+    function $loadByURL (languageParam = null) {
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        let locale = urlParams.get('lang') || languageParam;
+        if(locale){
+            localStorage.setItem('locale', locale)
+            i18n.global.locale.value = locale
+            localeCurrent.value = locale
+            return locale;   
+        }
+    }
+
     //
     return {
         $apiGetAll,
@@ -77,7 +88,8 @@ export const useLocaleStore = defineStore('locale', () => {
         $load,
         $changeAndReload,
         availableLocation,
-        dropdownLangs
+        dropdownLangs,
+        $loadByURL
     }
 
 })

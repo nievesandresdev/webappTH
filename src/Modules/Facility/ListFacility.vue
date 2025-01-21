@@ -8,7 +8,7 @@
     :hotel="hotelData"
   /> -->
   <AppHeader
-    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
+    :title="hotelData.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed

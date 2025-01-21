@@ -1,17 +1,17 @@
 <template>
     <header
         id="header"
-        class="custom-header"
-        :class="{'fixed top-0 left-0 w-full': fixed}"
+        class="custom-header z-[4000]"
+        :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
-        <div class="header-top pt-[10px] sp:pt-6 px-1 sp:px-4 pb-1.5 sp:pb-3">
+        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3">
             <h1
                 v-if="withTitleRoute"
-                class="text-[14px] sp:text-[20px] font-bold mb-[8px] sp:mb-[16px]"
+                class="text-[14px] sp:text-[20px] font-bold mb-[10px] sp:mb-[16px]"
             >
                 {{ $t($route.meta.title) }}
             </h1>
-            <div class="flex justify-between items-start w-full h-6 sp:h-10 space-x-1 sp:space-x-2">
+            <div class="flex justify-between items-start w-full h-7 sp:h-10 space-x-1 sp:space-x-2">
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
@@ -31,11 +31,11 @@
         <!-- Subheader con tabs (pestañas) -->
         <div class="subheader" v-show="showSubHeader">
             <slot name="tabs">
-                <div class="px-[8px] sp:px-[16px]">
+                <div class="px-[12px] sp:px-[16px]">
                     <div class="flex justify-around">
                         <div
                             v-for="(tab, index) in tabs"
-                            :key="index" class="tab space-y-[2px] sp:space-y-1 relative  w-[80px] sp:w-[100px]"
+                            :key="index" class="tab space-y-[3px] sp:space-y-1 relative  w-[70px] sp:w-[100px]"
                             :class="{ active: tab.isActive }" @click="tab.onClick ? tab.onClick() : navigateTo(tab.routeName)"
                         >
                             <BaseBadge
@@ -47,11 +47,11 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="innerWidth <= 300 ? '12' : '24'"
-                                    :width="innerWidth <= 300 ? '12' : '24'"
+                                    :height="innerWidth <= 300 ? '16' : '24'"
+                                    :width="innerWidth <= 300 ? '16' : '24'"
                                 />
                                 <span
-                                    class="text-[10px] sp:text-base font-bold leading-none lato"
+                                    class="text-[12px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
                                 >{{ tab.title }}</span>
                             </div>

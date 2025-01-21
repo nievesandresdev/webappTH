@@ -226,9 +226,11 @@ onMounted(() => {
 
 // COMPUTED
 const urlHuespedMockup = computed(() => {
+    
     let domain = window.location.origin;
     let { subdomain } = hotelData;
-    let url = `${domain}/webapp/?subdomain=${subdomain}&mockup=true`;
+    let url = `${domain}/${subdomain}/?chainsubdomain=${subdomain}&subdomain=${subdomain}&lang=es&mockup=true&test=x`;
+    console.log('urlHuespedMockup', url, subdomain,domain);
     return url;
 });
 const urlHuespedQR = computed(() => {

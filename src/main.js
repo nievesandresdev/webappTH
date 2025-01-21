@@ -22,6 +22,7 @@ import 'moment-timezone'
 import { i18n }  from './i18n'
 import { pinia } from './stores';
 import * as utils from './utils/utils.js'
+import { $formatTypeLodging } from './utils/helpers'
 // import { useHotelStore } from '@/stores/modules/hotel'
 
 const head = createHead()
@@ -39,6 +40,7 @@ function initializeApp () {
     app.use(head)
     app.config.globalProperties.$utils = utils
     app.config.globalProperties.$moment = moment
+    app.config.globalProperties.$formatTypeLodging = $formatTypeLodging
     app.provide('$moment', app.config.globalProperties.$moment)
     app.mount('#app')
 

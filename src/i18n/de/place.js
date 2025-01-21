@@ -60,6 +60,7 @@ export default {
         "showLess": "Mostra meno",
         "showMore": "Mehr anzeigen",
         "recommended": "Empfohlen",
+        "recommendedTitle": "Empfehlung des {lodging}",
         "buttoms": {
             "web": "Web",
             "call": "Anrufen",
@@ -78,7 +79,7 @@ export default {
         "filters": {
             "title": "Entfernung zur Unterkunft",
             "ratings": "Bewertungen",
-            "distanceLogding":"Distance from accommodation",
+            "distanceLogding":"Distance from",
             "recommended": "Empfohlen",
             "score": "Punktzahl",
             "star": "Stern",

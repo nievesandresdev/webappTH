@@ -50,6 +50,7 @@ export default {
         "showLess": "Mostra meno",
         "showMore": "Mostrar mais",
         "recommended": "Recomendado",
+        "recommendedTitle": "Recomendação do {lodging}",
         "buttoms": {
             "web": "Web",
             "call": "Ligar",
@@ -78,7 +79,7 @@ export default {
         "filters": {
             "title": "Filtern nach",
             "ratings": "Avaliações",
-            "distanceLogding":"Distância de hospedagem",
+            "distanceLogding":"Distância de",
             "score": "Pontuação",
             "recommended": "Consigliato",
             "star": "estrela",

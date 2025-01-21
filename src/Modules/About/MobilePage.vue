@@ -21,7 +21,7 @@
         <div class="px-[8px] sp:px-4">
             <div>
                 <h1 class="text-base sp:text-[22px] font-medium leading-[150%] capitalize">
-                    {{ formatTypeLodging(hotelData?.type) }}
+                    <!-- {{ formatTypeLodging(hotelData?.type) }} -->
                 </h1>
                 <h1 class="text-base sp:text-[22px] font-medium leading-[150%]">
                     {{ hotelData?.name }}
@@ -170,7 +170,7 @@
 
 <script setup>
     import { onMounted, onBeforeUnmount, ref, computed, inject } from 'vue';
-    import { formatTypeLodging } from '@/utils/utils';
+    // import { formatTypeLodging } from '@/utils/utils';
     import { useRouter } from 'vue-router';
     import ImageToggle from './components/ImageToggle.vue';
     import ImageCarousel from './components/ImageCarousel.vue';

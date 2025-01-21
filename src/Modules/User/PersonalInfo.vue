@@ -290,11 +290,10 @@ const isFormValid = computed(() => {
         form.avatar === originalForm.avatar;
 
     return (
-        !isUnchanged &&
+        !isUnchanged && 
         form.name &&
-        form.email &&
-        isEmailValid.value &&
-        form.avatar
+        form.email && 
+        isEmailValid.value 
     );
 });
 

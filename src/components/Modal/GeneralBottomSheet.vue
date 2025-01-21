@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isOpen || isClosing" class="fixed inset-0 flex items-end z-[30002]">
+    <div v-if="isOpen || isClosing" class="fixed inset-0 flex items-end z-[6000]">
         <div 
             class="absolute inset-0 bg-black bg-opacity-50" 
             @click.self="closeModal"
@@ -17,13 +17,22 @@
             @touchend="endTouch"
         >
             <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
+            <!-- Imagen centrada si imgHeader tiene una URL -->
+            <div v-if="imgHeader" class="flex justify-center mb-4">
+                <img 
+                    :src="imgHeader" 
+                    alt="Header Image" 
+                    class="w-auto h-[100px] object-contain mockup:h-[50px]"
+                />
+            </div>
             <!-- Contenido del modal -->
             <slot></slot>
             <button
                 v-if="showButton"
                 @click="handleSubmit"
-                class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
+                class="w-full lato flex justify-center items-center h-10 mockup:h-8 mockup:text-[10px] px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
             >
+                <img v-if="showIconButton" :src="iconButton" class="w-6 h-6" alt="Icon Button" />
                 {{ buttonText }}
             </button>
         </div>
@@ -33,6 +42,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+import Icon from '../Icon.vue';
+import { isMockup } from '@/utils/utils.js';
+
 
 const props = defineProps({
     isOpen: Boolean,
@@ -40,6 +52,18 @@ const props = defineProps({
     buttonText: {
         type: String,
         default: 'Acción'
+    },
+    showIconButton : {
+        type: Boolean,
+        default: false
+    },
+    iconButton : {
+        type: String,
+        default: ''
+    },
+    imgHeader: {
+        type: String,
+        default: ''
     }
 });
 
@@ -85,6 +109,9 @@ const endTouch = () => {
 };
 
 const closeModal = () => {
+    if (isMockup()) {
+        return; 
+    }
     isClosing.value = true;
     setTimeout(() => {
         isClosing.value = false;

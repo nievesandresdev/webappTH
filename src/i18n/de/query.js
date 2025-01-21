@@ -7,6 +7,7 @@ export default {
     },
     "form": {
         "send": "Senden",
+        "modify" : "Ändern",
         "cancel" : "Stornieren",
         "title": "Anfragen",
         "hello": "Hallo",
@@ -24,9 +25,10 @@ export default {
         "btn-verygood-poststay": "Sehr gut",
         "poststay-bad-thanks-title": "Antwort gesendet",
         "poststay-bad-thanks-subtitle": "Vielen Dank für Ihre Zeit",
+        "continueIn" : "Zu Hause"
     },
     "settings": {
-        "questionpre-stay": "Können wir etwas für Ihre Ankunft im Hotel tun?",
+        "questionpre-stay": "Können wir etwas für Ihre Ankunft im {lodging} tun?",
         "questionin-stay": "Wie würden Sie Ihre Zufriedenheit mit Ihrem Aufenthalt bisher bewerten?",
         "questionpost-stay": "Wie war Ihre Erfahrung mit uns?",
     },

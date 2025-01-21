@@ -1,6 +1,6 @@
 export default {
     "breadcrumbs": {
-        "experiences": "Erfahrungen",
+        "experiences": "Erlebnisse",
     },
     "card-experience": {
         "hour": "stunden",
@@ -15,7 +15,7 @@ export default {
         "reviews": "bewertungen"
     },
     "list-page": {
-        "title": "Erfahrungen",
+        "title": "Erlebnisse",
         "section-filter": {
             "label-search": "Filtern nach",
             "placeholder-input-search": "Schlüsselwort eingeben",

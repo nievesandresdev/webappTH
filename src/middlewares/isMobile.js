@@ -1,4 +1,4 @@
-const isMobile = ({ to, from, next }) => {
+/* const isMobile = ({ to, from, next }) => {
     let innerWidth = window.innerWidth;
     // Verificar si se debe saltar el chequeo para móviles
     // if (to.meta?.skipMobileCheck && innerWidth > 768) {
@@ -14,4 +14,21 @@ const isMobile = ({ to, from, next }) => {
     // return next();
 }
 
-export default isMobile;
+export default isMobile; */
+
+const isMobile = (to, from, next) => {
+    const innerWidth = window.innerWidth;
+  
+    if (innerWidth > 768) {
+      console.log('Redirigiendo a ScreenNotAllowed');
+      next({
+        name: 'ScreenNotAllowed',
+      });
+    } else {
+      next();
+    }
+  };
+  
+  export default isMobile;
+  
+  

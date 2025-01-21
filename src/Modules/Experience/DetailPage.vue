@@ -4,6 +4,7 @@
         <ImageSlider
         show-button-back
         :images="experienceData?.images?.map(item => experienceStore.$loadImage(item?.image)) ?? []"
+        :from="'experiences'"
         /> 
         <div class="pt-[12px] sp:pt-[24px] px-[8px] sp:px-[16px] mb-2 sp:mb-4 space-y-3 sp:space-y-6">
             <div class="space-y-2 sp:space-y-4">

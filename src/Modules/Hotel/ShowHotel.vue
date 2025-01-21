@@ -9,7 +9,7 @@
   /> -->
  
   <AppHeader
-    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'"
+    :title="hotelData.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
@@ -36,13 +36,13 @@
       <p
         :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
       >
-        {{ hotelData.description }}
+        {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
       </p>
 
       <p
         @click="isExpanded = !isExpanded"
         class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-        v-show="hotelData.description?.length > CHARACTER_LIMIT"
+        v-show="hotelData?.translate?.description?.length > CHARACTER_LIMIT"
       >
         {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
       </p>
@@ -51,37 +51,32 @@
 
       <HotelActionButtons
         :hotelData="hotelData"
-        :buttonsHome="hotelData.buttons_home"
+        :buttonsHome="true"
         @wifi-click="handleWifi"
         @call-click="handleCall"
         @legal-click="handleLegalText"
         @share-click="isModalOpen = true"
       />
       
+      <!--HORARIOS DE CHECKIN Y CHECKOUT-->
+      <HotelCheckInOut :hotelData="hotelData" v-if="hotelData.checkin && hotelData.checkout" /> 
+      
       <!--DATA GENERAL DEL HOTEL-->
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
-
-        <HotelInfoGeneral :hotelData="hotelData" />
+      <HotelInfoGeneral :hotelData="hotelData" /> 
     </div>
-    <!-- seccion de instalaciones -->
-      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4">
+
+
+      <!-- seccion de instalaciones -->
+      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4" v-show="hotelData.show_facilities === 1">
         <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
-        <div class="flex items-center gap-2 sp:gap-4 mb-2 sp:mb-4" v-show="hotelData.show_facilities === 1" >
+        <div class="flex items-center gap-2 sp:gap-4" v-show="hotelData.show_facilities === 1" >
           <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
           <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
           <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
         </div>
       </div>
-      <div class="flex flex-col  mt-1 sp:mt-2 pl-2 sp:pl-4">
-        <CardSlider 
-            :data="facilities" 
-            @itemClick="handleGoFacility" 
-            v-show="hotelData.show_facilities === 1" 
-            :marginBotton="rrss"  
-            :cover="true"
-        />
-      </div>
+      <CarouselFacilities id="1" :items="facilities" v-show="hotelData.show_facilities === 1"/>
       <!-- fin seccion instalaciones -->
 
       <!-- Redes Sociales -->
@@ -107,7 +102,7 @@
     </div>
     <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
       <p class="text-[16px] text-[#333333] font-semibold text-center lato">
-        El alojamiento cuenta con servicio de internet WiFi gratuito
+        El {{$formatTypeLodging()}} cuenta con servicio de internet WiFi gratuito
       </p>
     </div>
   </BottomModal>
@@ -143,25 +138,24 @@ import StarRating from './Components/StarRating.vue'
 import HotelActionButtons from './Components/HotelActionButtons.vue'
 import HotelRRSS from './Components/HotelRRSS.vue'
 import HotelInfoGeneral from './Components/HotelInfoGeneral.vue'
-import CardSlider from '@/components/CardSlider.vue'
+import HotelCheckInOut from './Components/HotelCheckInOut.vue'
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import { useHotelStore } from '@/stores/modules/hotel'
+import { useLocaleStore } from '@/stores/modules/locale'
 import { computed, ref, onMounted,provide } from 'vue'
-import SectionBarTab from '@/components/SectionBarTab.vue';
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import router from '@/router'
 import { useTabs } from '@/stores/modules/tabs'; // Ruta de tu store
+import CarouselFacilities from '@/Modules/Home/Components/CarouselFacilitiesRed.vue'
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
-    import { useRouter } from 'vue-router'
-    // const router = useRouter()
-
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
 
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
+const localeStore = useLocaleStore()
 
 const isModalOpen = ref(false);
 
@@ -205,25 +199,23 @@ const handleLegalText = () => {
 
 onMounted(async() => {
   tabs.initializeTabs();
+  await loadTabsHeader();
+  await hotelStore.$load(true)
   const r = await hotelStore.$getCrossellings()
   
   facilities.value =  r.crosselling_facilities;
 
   stayData.value = stayStore.getLocalStay();
-  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayData.value.id}&guestPerStay=true`);
+  shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayData.value?.id}&guestPerStay=true`);
   
 
   if (hotelStore.hotelData.show_profile !== 1) {
     router.push({ name: 'FacilityList' })
   }
 
-  
-
-  loadTabsHeader();
-
 })
 
-function loadTabsHeader () {
+async function loadTabsHeader () {
     const tabInformation = {
       title: t('hotel.information'),
       exclude: hotelData.show_profile,
@@ -262,9 +254,9 @@ function changeTab (r) {
   router.push({ name: r });
 }
 
-const handleGoFacility = (id) => {
+/* const handleGoFacility = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
-};
+}; */
 
 
 const goToFacilities = () => {

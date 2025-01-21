@@ -26,8 +26,10 @@ import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore();
 //router
-import { navigateTo } from '@/utils/navigation'
+// import { navigateTo } from '@/utils/navigation'
 
 const form = reactive({
     numberGuests:'1',
@@ -42,12 +44,14 @@ const submit = async () => {
     form.guestId = guest?.id;
     form.language = localStorage.getItem('locale') ?? 'es';
     await stayStore.deleteLocalStayData();
-    let stay = await stayStore.createAndInviteGuest(form);
-    if(stay){
-        navigateTo('Home')
-    }
+    await stayStore.createAndInviteGuest(form);
+    // let stay = await stayStore.createAndInviteGuest(form);
+    // if(stay){
+    //     navigateTo('Home')
+    // }
 
     // processingForm.value = false
     // emit('closeModal');
+    await authStore.$redirectAfterLogin();
 }
 </script>

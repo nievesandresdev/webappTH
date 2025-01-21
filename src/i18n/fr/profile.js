@@ -43,5 +43,30 @@ export default {
                 "placeholder": "Entrez votre mot de passe"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Réservez votre prochain séjour",
+        "description": "Planifiez votre prochaine escapade"
+    },
+    "rewards": {
+        "title": "Invitez un ami",
+        "description": "Partagez des avantages exclusifs",
+        "button-recommend": "Recommandez un ami maintenant",
+        "referrals": {
+            "title": "Recommandez un ami !",
+            "discount": "{amount} de réduction",
+            "description": "Envoyez votre code de parrainage. Il obtiendra {amount} de réduction grâce à votre code."
+        },
+        "referent": {
+            "title": "Recommandez un ami et gagnez tous les deux !",
+            "titleReferred": "{amount} de réduction pour le parrainé",
+            "descerptionReferred": "Envoyez votre code de parrainage. Il obtiendra {amount} de réduction grâce à votre code.",
+            "titleReferent": "Recevez {amount} de réduction",
+            "descerptionReferent": "Une fois le code parrain validé et utilisé, vous obtiendrez {amount} de réduction."
+        },
+        "titleReferentProfile": "Gagnez de l'argent",
+        "descriptionReferentProfile": "Recommandez un ami pour obtenir des avantages"
     }
+
+
 };

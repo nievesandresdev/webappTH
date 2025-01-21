@@ -2,8 +2,9 @@ export default {
     "header": {
         "home": "start",
         "facilities": "einrichtungen",
+        "hotel": "hotel",
         "destination": "ziel",
-        "experiences": "erfahrungen",
+        "experiences": "Erlebnisse",
         "messages": "nachrichten"
     },
     "dropdownLanguage": {
