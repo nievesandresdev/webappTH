@@ -50,6 +50,7 @@ export default {
         "showLess": "Show less",
         "showMore": "Show more",
         "recommended": "Recommended",
+        "recommendedTitle": "Recommendation of {lodging}",
         "buttoms": {
             "web": "Web",
             "call": "Call",

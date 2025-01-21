@@ -28,7 +28,7 @@ export default {
         "continueIn" : "Continua a"
     },
     "settings": {
-        "questionpre-stay": "C'è qualcosa che possiamo fare per il tuo arrivo in hotel?",
+        "questionpre-stay": "C'è qualcosa che possiamo fare per il tuo arrivo in {lodging}?",
         "questionin-stay": "Come valuteresti il tuo livello di soddisfazione finora?",
         "questionpost-stay": "Com'è stata la tua esperienza con noi?",
     },

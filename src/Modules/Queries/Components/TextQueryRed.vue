@@ -10,7 +10,7 @@
             </template>
         </h1>
         <p class="mt-2 sp:mt-3 lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
-            {{ $t('query.settings.question'+data?.period)}}
+            {{ $t('query.settings.question' + data?.period, { lodging: $formatTypeLodging() }) }}
         </p>
         <div class="mt-3 sp:mt-4">
             <TextareaAutogrow 
@@ -53,12 +53,14 @@ import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
 import { useLocaleStore } from '@/stores/modules/locale';
+import { useHotelStore } from '@/stores/modules/hotel';
 
 
 const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
 const localeStore = useLocaleStore();
+const hotelStore = useHotelStore();
 
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
