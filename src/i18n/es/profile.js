@@ -50,5 +50,24 @@ export default {
     "book_next_stay": {
         "title": "Reserva tu próxima estancia",
         "description": "Planifica tu siguiente escapada"
-    }
+    },
+    "rewards": {
+        "title": "Invita a un amigo",
+        "description": "Comparte beneficios exclusivos",
+        "button-recommend": "Recomendar a un amigo ahora",
+        "referrals": {
+            "title": "¡Recomienda a un amigo!",
+            "discount": "{amount} de descuento",
+            "description": "Envíale tu código de referente. Obtendrá {amount} de descuento gracias a tu código.",
+        },
+        "referent" : {
+            "title": "¡Recomienda a un amigo y ganen ambos!",
+            "titleReferred": "{amount} de descuento para el referido",
+            "descerptionReferred": "Envíale tu código de referente. Obtendrá {amount} de descuento gracias a tu código.",
+            "titleReferent": "Recibe {amount} de descuento",
+            "descerptionReferent": "Una vez validado y utilizado el código del referido, conseguirás {amount} de descuento."
+        },
+        "titleReferentProfile" : "Gana dinero",
+        "descriptionReferentProfile": "Refiere a un amigo para obtener beneficios" 
+    },
 };
