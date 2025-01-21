@@ -76,12 +76,24 @@
         </div>
 
         <!-- Sección "referido" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handleReservationStay" v-show="hotelStore.hotelData.show_referrals">
+        <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData.show_referrals && !hotelStore.hotelData.offer_benefits">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.referido.svg" class="w-8 h-8" alt="Reservation" />
                 <div class="flex flex-col">
                     <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.rewards.title') }}</span>
                     <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.rewards.description') }}</span>
+                </div>
+            </div>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
+
+         <!-- Sección "referente y referido" -->
+         <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData.show_referrals && hotelStore.hotelData.offer_benefits">
+            <div class="flex items-center gap-2">
+                <img src="/assets/icons/WA.referente.svg" class="w-8 h-8" alt="Reservation" />
+                <div class="flex flex-col">
+                    <span class="text-[16px] font-medium lato text-[#333333]">{{ $t('profile.rewards.titleReferentProfile') }}</span>
+                    <span class="text-[14px] font-normal lato text-[#333333]">{{ $t('profile.rewards.descriptionReferentProfile') }}</span>
                 </div>
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
@@ -92,8 +104,11 @@
             <span class="text-[14px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
 
+
+
         <ShareStayModal />
-        <BottomSheetRewards />
+        <BottomSheetReferrals />
+        <BottomSheetReferent />
     </div>
 </template>
 <script setup>
@@ -102,7 +117,8 @@ import SectionBar from '@/components/SectionBar.vue';
 import WACardBanner from '@/components/WACardBanner.vue';
 import ShareStayModal from './Components/ShareStayModal.vue'
 import StayCard from './Components/StayCard.vue';
-import BottomSheetRewards from './Components/BottomSheetRewards.vue';
+import BottomSheetReferrals from './Components/Rewards/BottomSheetReferrals.vue';
+import BottomSheetReferent from './Components/Rewards/BottomSheetReferent.vue';
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
 import { DateTime } from 'luxon';
@@ -114,12 +130,29 @@ const authStore = useAuthStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useStayStore } from '@/stores/modules/stay';
+import hotel from '@/i18n/de/hotel';
 const stayStore = useStayStore();
 
-const openModalRewards = ref(true);
+const urlParams = new URLSearchParams(window.location.search);
+const referentUrl = urlParams.get('referent');
+const referralsUrl = urlParams.get('referrals');
+
+const openModalReferrals = ref(false);
+const openModalReferent = ref(false);
+
+if(referentUrl) {
+    openModalReferent.value = true;
+    openModalReferrals.value = false;
+}else if(referralsUrl) {
+    openModalReferrals.value = true;
+    openModalReferent.value = false;
+}
+
 
 //provides
-provide('openModalRewards',openModalRewards)
+provide('openModalReferrals',openModalReferrals)
+provide('openModalReferent',openModalReferent)
+provide('hotelData',hotelStore.hotelData)
 
 
 const isModalOpen = ref(false);
@@ -131,15 +164,16 @@ const stayData = ref({});
 const loading = ref(true);
 
 
-
+const openModalRewards = () => {
+    if(hotelStore.hotelData.show_referrals && !hotelStore.hotelData.offer_benefits) {
+        openModalReferrals.value = true;
+    } else if(hotelStore.hotelData.show_referrals && hotelStore.hotelData.offer_benefits) {
+        openModalReferent.value = true;
+    }
+};
 
 const handleMyStays = () => {
     router.push({ name: 'MyStays' });
-    // if(isCheckoutPast.value){
-    //     authStore.$logoutAndCreateStay();
-    // }else{
-    //     router.push({ name: 'MyStays' });
-    // }
 };
 
 const handlePersonalInfo = () => {

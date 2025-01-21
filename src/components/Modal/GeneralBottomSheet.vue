@@ -17,6 +17,14 @@
             @touchend="endTouch"
         >
             <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
+            <!-- Imagen centrada si imgHeader tiene una URL -->
+            <div v-if="imgHeader" class="flex justify-center mb-4">
+                <img 
+                    :src="imgHeader" 
+                    alt="Header Image" 
+                    class="w-auto h-[100px] object-contain"
+                />
+            </div>
             <!-- Contenido del modal -->
             <slot></slot>
             <button
@@ -35,6 +43,8 @@
 import { ref, watch } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 import Icon from '../Icon.vue';
+import { isMockup } from '@/utils/utils.js';
+
 
 const props = defineProps({
     isOpen: Boolean,
@@ -48,6 +58,10 @@ const props = defineProps({
         default: false
     },
     iconButton : {
+        type: String,
+        default: ''
+    },
+    imgHeader: {
         type: String,
         default: ''
     }
@@ -95,6 +109,9 @@ const endTouch = () => {
 };
 
 const closeModal = () => {
+    if (isMockup()) {
+        return; 
+    }
     isClosing.value = true;
     setTimeout(() => {
         isClosing.value = false;

@@ -49,9 +49,25 @@ export default {
         "description": "Plane deinen nächsten Kurzurlaub"
     },
     "rewards": {
-        "title": "Lade einen Freund ein",
-        "description": "Teile exklusive Vorteile",
-        "button-recommend": "Empfehle jetzt einen Freund"
-    },
+        "title": "Einen Freund einladen",
+        "description": "Teilen Sie exklusive Vorteile",
+        "button-recommend": "Empfehlen Sie jetzt einen Freund",
+        "referrals": {
+            "title": "Empfehlen Sie einen Freund!",
+            "discount": "{amount} Rabatt",
+            "description": "Senden Sie Ihren Empfehlungscode. Er erhält {amount} Rabatt dank Ihres Codes."
+        },
+        "referent": {
+            "title": "Empfehlen Sie einen Freund und gewinnen Sie beide!",
+            "titleReferred": "{amount} Rabatt für den Geworbenen",
+            "descerptionReferred": "Senden Sie Ihren Empfehlungscode. Er erhält {amount} Rabatt dank Ihres Codes.",
+            "titleReferent": "Erhalten Sie {amount} Rabatt",
+            "descerptionReferent": "Sobald der Code validiert und verwendet wurde, erhalten Sie {amount} Rabatt."
+        },
+        "titleReferentProfile": "Geld verdienen",
+        "descriptionReferentProfile": "Empfehlen Sie einen Freund, um Vorteile zu erhalten"
+    }
+
+
 
 };

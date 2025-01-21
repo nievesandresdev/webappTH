@@ -49,9 +49,24 @@ export default {
         "description": "Pianifica la tua prossima fuga"
     },
     "rewards": {
-        "title": "Invita un amico",
-        "description": "Condividi benefici esclusivi",
-        "button-recommend": "Raccomanda un amico ora"
-    },
+            "title": "Invita un amico",
+            "description": "Condividi vantaggi esclusivi",
+            "button-recommend": "Raccomanda un amico ora",
+        "referrals": {
+            "title": "Raccomanda un amico!",
+            "discount": "{amount} di sconto",
+            "description": "Invia il tuo codice di riferimento. Otterrà {amount} di sconto grazie al tuo codice."
+        },
+        "referent": {
+            "title": "Invita un amico e vincete entrambi!",
+            "titleReferred": "{amount} di sconto per il raccomandato",
+            "descerptionReferred": "Invia il tuo codice di riferimento. Otterrà {amount} di sconto grazie al tuo codice.",
+            "titleReferent": "Ricevi {amount} di sconto",
+            "descerptionReferent": "Una volta convalidato e utilizzato il codice del riferimento, otterrai {amount} di sconto."
+        },
+        "titleReferentProfile": "Guadagna denaro",
+        "descriptionReferentProfile": "Raccomanda un amico per ottenere vantaggi"
+    }
+
 
 };

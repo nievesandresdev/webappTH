@@ -49,9 +49,24 @@ export default {
         "description": "Plan your next getaway"
     },
     "rewards": {
-        "title": "Invite a friend",
-        "description": "Share exclusive benefits",
-        "button-recommend": "Recommend a friend now"
-    },
+        "title": "Invite a Friend",
+        "description": "Share Exclusive Benefits",
+        "button-recommend": "Recommend a Friend Now",
+        "referrals": {
+            "title": "Recommend a Friend!",
+            "discount": "{amount} discount",
+            "description": "Send your referral code. They will get a {amount} discount thanks to your code."
+        },
+        "referent": {
+            "title": "Recommend a Friend and Both Win!",
+            "titleReferred": "{amount} discount for the referred",
+            "descerptionReferred": "Send your referral code. They will get a {amount} discount thanks to your code.",
+            "titleReferent": "Get {amount} discount",
+            "descerptionReferent": "Once the code is validated and used, you will get a {amount} discount."
+        },
+        "titleReferentProfile": "Earn money",
+        "descriptionReferentProfile": "Refer a friend to get benefits"
+    }
+
 
 };
