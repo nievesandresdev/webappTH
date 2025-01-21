@@ -8,10 +8,10 @@
         :img-header="'/assets/icons/rewards/referred.svg'"
     >
         <div class="flex flex-col gap-3">
-            <span class="font-bold text-xl lato">¡Recomienda a un amigo!</span>
+            <span class="font-bold text-xl lato mockup:text-[15px]">{{ $t('profile.rewards.referrals.title') }}</span>
             <div class="flex flex-col">
-                <span class="lato font-bold text-lg">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
-                <p class="lato text-sm font-normal">
+                <span class="lato font-bold text-lg mockup:text-sm">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
+                <p class="lato text-sm font-normal mockup:text-[10px]">
                     {{ $t('profile.rewards.referrals.description', { amount: amountFormat} ) }}
                     
                 </p>
@@ -32,10 +32,10 @@ const formatter = new Intl.NumberFormat('es-ES', {
 });
 
 const amountFormat = computed(() => {
-    if(hotelData.referrals.type_discount == 'percentage') {
-        return  `${hotelData.referrals.amount}%`
+    if(hotelData.referrals?.type_discount == 'percentage') {
+        return  `${hotelData.referrals?.amount}%`
     } else {
-        return `${formatter.format(hotelData.referrals.amount)}€`
+        return `${formatter.format(hotelData.referrals?.amount)}€`
     }
 });
 
