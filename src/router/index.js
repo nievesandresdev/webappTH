@@ -3,6 +3,7 @@ import chainRoutes from './chainRoutes'
 import homeRoutes from './homeRoutes'
 import profileRoutes from './userRoutes'
 import experienceRoutes from './experienceRoutes'
+import serviceRoutes from './serviceRoutes'
 import placeRoutes from './placeRoutes'
 import chatRoutes from './chatRoutes'
 import facilityRoutes from './facilityRoutes'
@@ -74,6 +75,7 @@ const routes = [
       ...profileRoutes,
       ...homeRoutes,
       ...experienceRoutes,
+      ...serviceRoutes,
       ...chatRoutes,
       ...facilityRoutes,
       ...hotelRoutes,
