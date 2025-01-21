@@ -67,6 +67,8 @@
 import { onMounted, reactive, computed, ref  } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import BaseBadge from '@/components/BaseBadge.vue';
+
+import { $formatTypeLodging } from '@/utils/utils'
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
@@ -94,7 +96,7 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: 'layout.header.hotel',
+        title: $formatTypeLodging(hotelStore.hotelData?.type),
         exclude: !hotelStore.hotelData.show_profile,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',

@@ -78,7 +78,7 @@ export default {
         "filters":{
             "title": "Filtrer par",
             "ratings": "Notes",
-            "distanceLogding": "Distance d'hébergement",
+            "distanceLogding": "Distance d'",
             "recommended": "Recommandé",
             "score": "Score",
             "star": "étoile",

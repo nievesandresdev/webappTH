@@ -1,6 +1,8 @@
 export default {
   "information": "Información",
   "facilities": "Instalaciones",
+  "lodging": "alojamiento",
+  "apartment": "apartamento",
   "buttons_home": {
       "wifi": "Wifi",
       "call": "Llamar",

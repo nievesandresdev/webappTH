@@ -78,7 +78,7 @@ export default {
         "exploreIn":"Explora en",
         "filters":{
             "title":"Filtrar por",
-            "distanceLogding":"Distancia del alojamiento",
+            "distanceLogding":"Distancia del",
             "recommended": "Recomendado",
             "ratings":"Valoraciones",
             "star":"estrella",
