@@ -105,7 +105,7 @@ onMounted(async() => {
 
 async function getQuerySettings(){
     settings.value = await querySettingsStore.$getAll();
-    console.log('test settings.value',settings.value)
+    // console.log('test settings.value',settings.value)
 }
 
 async function getCurrentPeriod(){

@@ -19,7 +19,7 @@
                     <div class="space-y-6">
                         <div class="space-y-4 border-b border-[--Border-secondary] pb-6">
                             <label class="text-base font-bold">
-                                {{ $t('place.detail.filters.distanceLogding') }} {{$t($utils.$formatTypeLodging(hotelStore.hotelData?.type))}}
+                                {{ $t('place.detail.filters.distanceLogding') }} {{$formatTypeLodging()}}
                             </label>
                             <div class="flex flex-wrap gap-2 leading-110">
                                 <template  v-for="item in filterButtons.distance">
@@ -34,7 +34,7 @@
                         </div>
                         <div class="space-y-4 border-b border-[--Border-secondary] pb-6">
                             <label class="text-base font-bold">
-                                {{ $t('place.detail.recommended') }}
+                                {{ $t('place.detail.recommendedTitle',{ lodging: $formatTypeLodging()}) }}
                             </label>
                             <BaseButtonChipFilter
                                 :active="formFilterSheeBottom.featured"

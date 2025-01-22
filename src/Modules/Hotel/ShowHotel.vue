@@ -9,7 +9,7 @@
   /> -->
  
   <AppHeader
-    :title="hotelData.show_profile == 1 ? $utils.titleCase($t($utils.$formatTypeLodging(hotelData.type))) : $t('hotel.facilities')"
+    :title="hotelData.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
@@ -102,7 +102,7 @@
     </div>
     <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
       <p class="text-[16px] text-[#333333] font-semibold text-center lato">
-        El {{$t($utils.$formatTypeLodging(hotelData.type))}} cuenta con servicio de internet WiFi gratuito
+        El {{$formatTypeLodging()}} cuenta con servicio de internet WiFi gratuito
       </p>
     </div>
   </BottomModal>
