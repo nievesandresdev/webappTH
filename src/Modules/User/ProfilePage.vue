@@ -1,7 +1,7 @@
 <template>
     <SectionBar :title="$t('profile.account')" />
 
-    <div class="px-3 sp:mt-[100px] mt-[70px]">
+    <div class="px-3 sp:mt-[100px] mt-[50px]">
         <div class="flex flex-col items-center mt-6">
             <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
