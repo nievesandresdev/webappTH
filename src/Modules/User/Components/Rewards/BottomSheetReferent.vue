@@ -8,27 +8,27 @@
         :img-header="'/assets/icons/rewards/referent.svg'"
     >
         <div class="flex flex-col gap-3">
-            <span class="font-bold text-xl lato mockup:text-[15px]">{{ $t('profile.rewards.referent.title') }}</span>
+            <span class="font-bold sp:text-xl lato text-[12px]">{{ $t('profile.rewards.referent.title') }}</span>
             <div class="flex flex-col">
                 <div class="flex gap-1">
-                    <div class="flex w-6 h-6 p-2 flex-col justify-center items-center gap-2 rounded-full border border-gray-400 bg-white">
-                        <span class="text-center text-sm font-semibold lato">1</span>
+                    <div class="flex sp:w-6 sp:h-6 sp:p-2 w-4 h-4 p-1 flex-col justify-center items-center gap-2 rounded-full border border-gray-400 bg-white">
+                        <span class="text-center sp:text-sm text-[10px] font-semibold lato">1</span>
                     </div>
-                    <span class="lato font-bold text-[16px] mockup:text-[12px]">{{ $t('profile.rewards.referent.titleReferred', { amount: amountReferredFormat }) }}</span>
+                    <span class="lato font-bold sp:text-[16px] text-[10px]">{{ $t('profile.rewards.referent.titleReferred', { amount: amountReferredFormat }) }}</span>
                 </div>
-                <p class="lato text-sm font-normal mockup:text-[10px]">
+                <p class="lato sp:text-sm font-normal text-[10px]">
                      {{ $t('profile.rewards.referent.descerptionReferred', { amount: amountReferredFormat }) }} 
                 </p>
             </div>
             <div class="flex flex-col">
                 <div class="flex gap-1">
-                    <div class="flex w-6 h-6 p-2 flex-col justify-center items-center gap-2 rounded-full border border-gray-400 bg-white">
-                        <span class="text-center text-sm font-semibold lato">2</span>
+                    <div class="flex sp:w-6 sp:h-6 sp:p-2 w-4 h-4 p-1 flex-col justify-center items-center gap-2 rounded-full border border-gray-400 bg-white">
+                        <span class="text-center sp:text-sm text-[10px] font-semibold lato">2</span>
                     </div>
 
-                    <span class="lato font-bold text-[16px] mockup:text-[12px]">{{ $t('profile.rewards.referent.titleReferent', { amount: amountReferentFormat }) }}</span>
+                    <span class="lato font-bold sp:text-[16px] text-[10px]">{{ $t('profile.rewards.referent.titleReferent', { amount: amountReferentFormat }) }}</span>
                 </div>
-                <p class="lato text-sm font-normal mockup:text-[10px]">
+                <p class="lato sp:text-sm font-normal text-[10px]">
                     {{ $t('profile.rewards.referent.descerptionReferent', { amount: amountReferentFormat }) }}
                 </p>
             </div>
