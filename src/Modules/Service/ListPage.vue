@@ -17,11 +17,7 @@
         <div class="h-[70px]  sp:h-[126px] w-full">
             d
         </div>
-        <ListPageContent>
-            <template v-slot:confort>
-                <router-view />
-            </template>
-        </ListPageContent>
+        <router-view />
     </div>
 
 </template>
@@ -36,11 +32,12 @@ const route = useRouter();
 // COMPONENTS
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import InputSearch from './components/InputSearch.vue';
-import ListPageContent from './ListPageContent.vue';
 
 // STORE
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
+import { useExperienceStore } from '@/stores/modules/experience';
+const experienceStore = useExperienceStore();
 
 
 // DATA
@@ -58,7 +55,6 @@ const isOpenBottomSheetFilter = ref(false);
 const loadingSearch = ref(false);
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
-const page = ref(1);
 const servicesData = ref([]);
 const paginateData = reactive({
     total: 0,
@@ -69,13 +65,13 @@ const paginateData = reactive({
     to: 0,
 });
 
-const tabsHeader = ref();
+const tabsHeader = ref([]);
 
 
 onMounted(() => {
+    loadForFilterGlobal();
     loadType();
     loadTabs();
-    loadForFilterGlobal();
 });
 
 // COMPUTED
@@ -93,6 +89,11 @@ const emptyFilters = computed(() => {
 watch(formFilter, function(value) {
     serviceStore.setDataFilterList(formFilter);
 });
+watch ( () => route.currentRoute.value, (valCurrent) => {
+    loadForFilterGlobal();
+    loadType();
+    loadTabs();
+});
 
 // FUNCTION
 function loadForFilterGlobal () {
@@ -109,7 +110,7 @@ function loadTabs () {
             iconDefault: 'WA.CONFORT',
             iconSelected: 'WA.CONFORT.DEFAULT',
             isActive: 'CONFORT' == formFilter.type,
-            onClick: () => changeCategory('CONFORT'),
+            onClick: () => changeType('Confort'),
         },
         {
             title: 'Transporte',
@@ -117,7 +118,7 @@ function loadTabs () {
             iconDefault: 'WA.TRANSPORT',
             iconSelected: 'WA.TRANSPORT.DEFAULT',
             isActive: 'TRANSPORT' == formFilter.type,
-            onClick: () => changeCategory('TRANSPORT'),
+            onClick: () => changeType('Transport'),
         },
         {
             title: 'Actividades',
@@ -125,27 +126,31 @@ function loadTabs () {
             iconDefault: 'WA.ACTIVITY',
             iconSelected: 'WA.ACTIVITY.DEFAULT',
             isActive: 'ACTIVITY' == formFilter.type,
-            onClick: () => changeCategory('ACTIVITY'),
+            onClick: () => changeType('Activity'),
         },
     ];
 }
 
-function changeCategory (type = null) {
-    
+function changeType (type = null) {
+    formFilter.type = type.toUpperCase();
+    route.push({ name: type });
 }
 
 async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
     formFilter.search = $event?.target?.value ?? '';
-    page.value = 1;
+    // page.value = 1;
     servicesData.value = [];
-    await loadAll({showPreloader: false});
+    // await loadAll({showPreloader: false});
     loadingSearch.value = false;
 }
 
 // PROVIDE
 // provide('hotelData', hotelData);
+provide('experienceStore', experienceStore);
+provide('serviceStore', serviceStore);
+// provide('page', page);
 provide('firstLoad', firstLoad);
 provide('formFilter', formFilter);
 provide('paginateData', paginateData);

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="skeleton-experience-card card-list flex w-full" :class="class"
+        class="skeleton-card card-list flex w-full" :class="class"
     >
         <div class="w-[45px] sp:w-[111px] rounded-[10px] relative overflow-hidden animate-pulse">
             <div class="w-full h-full item-skeletom"></div>

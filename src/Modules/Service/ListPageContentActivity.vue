@@ -1,13 +1,13 @@
 <template>
     <div
-         id="list-confort"
-        class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
+         id="list-activities"
+         class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
     >
         <p
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold lato"
         >
-            {{ paginateData.total }} Servicios encontrados en Confort
+            {{ paginateData.total }} Servicios encontrados en Actividades
         </p>
         <p
             v-else
@@ -17,7 +17,7 @@
             <template v-for="(item, index) in (servicesData ?? [])">
                 <CardList
                     :data="item"
-                    type-service="CONFORT"
+                    type-service="ACTIVITY"
                     :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                 />
             </template>
@@ -43,6 +43,8 @@ import SkeletonCard from './components/SkeletonCard.vue';
 
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
+import { useExperienceStore } from '@/stores/modules/experience';
+const experienceStore = useExperienceStore();
 
 // COMPOSABLE
 import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
@@ -69,7 +71,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     firstLoad,
     paginateData,
     numberItemsLoadCurrent,
-    'list-confort',
+    'list-activities',
     'skeleton-card',
     isloadingForm,
     loadItems
@@ -124,18 +126,18 @@ function submitFilter (payload){
     loadItems();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'Confort', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        route.push({ name: 'Activity', query: {...filterNonNullAndNonEmpty(formFilter)} });
     }
 }
 
 async function loadItems () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    const response = await serviceStore.$apiDetAllConforApi({page: page.value,...query});
+    const response = await experienceStore.$apiGetAll({page: page.value,...query});
     if (response.ok) {
-        Object.assign(paginateData, response.data.paginate);
+        Object.assign(paginateData, response.data.experiences.paginate);
         page.value = paginateData.current_page;
-        servicesData.value = [...servicesData.value, ...response.data.data];
+        servicesData.value = [...servicesData.value, ...response.data.experiences.data];
     }
     firstLoad.value = false;
     isloadingForm.value = false;
@@ -185,12 +187,12 @@ function validValueQuery (field, value) {
 
 <style lang="scss">
 
-#list-confort {
+#list-activities {
     height: calc(100vh - 70px);
 }
 
 @media (min-width: 300px){
-    #list-confort {
+    #list-activities {
         height: calc(100vh - 126px);
     }
 }

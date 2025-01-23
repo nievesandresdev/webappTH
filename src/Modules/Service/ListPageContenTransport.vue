@@ -1,13 +1,13 @@
 <template>
     <div
-         id="list-confort"
-        class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
+         id="list-transports"
+          class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
     >
         <p
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold lato"
         >
-            {{ paginateData.total }} Servicios encontrados en Confort
+            {{ paginateData.total }} Servicios encontrados en Transporte
         </p>
         <p
             v-else
@@ -17,7 +17,7 @@
             <template v-for="(item, index) in (servicesData ?? [])">
                 <CardList
                     :data="item"
-                    type-service="CONFORT"
+                    type-service="TRANSPORT"
                     :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                 />
             </template>
@@ -69,7 +69,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     firstLoad,
     paginateData,
     numberItemsLoadCurrent,
-    'list-confort',
+    'list-transports',
     'skeleton-card',
     isloadingForm,
     loadItems
@@ -88,6 +88,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
 
 onMounted(() => {
     // initScrollListener();
+    console.log('transporte')
     submitFilter({showPreloader: true});
 });
 
@@ -124,14 +125,14 @@ function submitFilter (payload){
     loadItems();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'Confort', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        route.push({ name: 'Transport', query: {...filterNonNullAndNonEmpty(formFilter)} });
     }
 }
 
 async function loadItems () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    const response = await serviceStore.$apiDetAllConforApi({page: page.value,...query});
+    const response = await serviceStore.$apiDetAllTransportApi({page: page.value,...query});
     if (response.ok) {
         Object.assign(paginateData, response.data.paginate);
         page.value = paginateData.current_page;
@@ -185,12 +186,12 @@ function validValueQuery (field, value) {
 
 <style lang="scss">
 
-#list-confort {
+#list-transports {
     height: calc(100vh - 70px);
 }
 
 @media (min-width: 300px){
-    #list-confort {
+    #list-transports {
         height: calc(100vh - 126px);
     }
 }
