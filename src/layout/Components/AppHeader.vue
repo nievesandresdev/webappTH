@@ -22,7 +22,7 @@
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <AvatarButton :size="innerWidth <= 300 ? 20 : 40"/>
+                        <AvatarButton :size="innerWidth <= 300 ? '20' : '40'"/>
                     </slot>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="px-[12px] sp:px-[16px]">
                     <div class="flex justify-around">
                         <div
-                            v-for="(tab, index) in tabs"
+                            v-for="(tab, index) in tabsActives"
                             :key="index" class="tab space-y-[3px] sp:space-y-1 relative  w-[70px] sp:w-[100px]"
                             :class="{ active: tab.isActive }" @click="tab.onClick ? tab.onClick() : navigateTo(tab.routeName)"
                         >
@@ -53,7 +53,7 @@
                                 <span
                                     class="text-[12px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
-                                >{{ tab.title }}</span>
+                                >{{ $t(tab.title) }}</span>
                             </div>
                             <div
                                 class="flex justify-center"
@@ -113,6 +113,9 @@ const props = defineProps({
 
 import IconCustomColor from '@/components/IconCustomColor.vue';
 
+const tabsActives = computed(() => {
+    return props.tabs.filter(item => !item.exclude);
+});
 
 const navigateTo = (routeName) => {
     router.push({ name: routeName });

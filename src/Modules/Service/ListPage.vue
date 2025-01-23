@@ -13,12 +13,14 @@
     </template>
 </AppHeader>
 
-    <div class="flex flex-col">
-        <div class="h-[70px]  sp:h-[126px] w-full">
-            d
-        </div>
-        <router-view />
+<div class="flex flex-col">
+    <div class="h-[95px]  sp:h-[126px] w-full">
+        d
     </div>
+    <router-view />
+</div>
+
+<ListPageBottomSheetFilter />
 
 </template>
 
@@ -32,8 +34,11 @@ const route = useRouter();
 // COMPONENTS
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import InputSearch from './components/InputSearch.vue';
+import ListPageBottomSheetFilter from './ListPageBottomSheetFilter.vue';
 
 // STORE
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
 import { useExperienceStore } from '@/stores/modules/experience';
@@ -55,6 +60,7 @@ const isOpenBottomSheetFilter = ref(false);
 const loadingSearch = ref(false);
 const searchingActive = ref(false);
 const isloadingForm = ref(false);
+const page = ref(1);
 const servicesData = ref([]);
 const paginateData = reactive({
     total: 0,
@@ -105,24 +111,24 @@ function loadType () {
 function loadTabs () {
     tabsHeader.value = [
         {
-            title: 'Confort',
-            exclude: false,
+            title: 'service.confort.title',
+            exclude: !hotelStore.hotelData.show_confort,
             iconDefault: 'WA.CONFORT',
             iconSelected: 'WA.CONFORT.DEFAULT',
             isActive: 'CONFORT' == formFilter.type,
             onClick: () => changeType('Confort'),
         },
         {
-            title: 'Transporte',
-            exclude: false,
+            title: 'service.transport.title',
+            exclude: !hotelStore.hotelData.show_transport,
             iconDefault: 'WA.TRANSPORT',
             iconSelected: 'WA.TRANSPORT.DEFAULT',
             isActive: 'TRANSPORT' == formFilter.type,
             onClick: () => changeType('Transport'),
         },
         {
-            title: 'Actividades',
-            exclude: false,
+            title: 'service.activity.title',
+            exclude: !hotelStore.hotelData.show_experiences,
             iconDefault: 'WA.ACTIVITY',
             iconSelected: 'WA.ACTIVITY.DEFAULT',
             isActive: 'ACTIVITY' == formFilter.type,
@@ -140,17 +146,28 @@ async function searchHandle ($event) {
     searchingActive.value = true;
     loadingSearch.value = true;
     formFilter.search = $event?.target?.value ?? '';
-    // page.value = 1;
+    page.value = 1;
     servicesData.value = [];
-    // await loadAll({showPreloader: false});
     loadingSearch.value = false;
+}
+
+function activateSearchHandle ($event) {
+    searchingActive.value = false;
+}
+
+async function openFilter () {
+    setTimeout(() => {
+        searchingActive.value = false;
+        isOpenBottomSheetFilter.value = true;
+
+    }, 400);
 }
 
 // PROVIDE
 // provide('hotelData', hotelData);
 provide('experienceStore', experienceStore);
 provide('serviceStore', serviceStore);
-// provide('page', page);
+provide('page', page);
 provide('firstLoad', firstLoad);
 provide('formFilter', formFilter);
 provide('paginateData', paginateData);

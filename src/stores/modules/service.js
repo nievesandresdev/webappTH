@@ -31,17 +31,14 @@ export const useServiceStore = defineStore('service', () => {
 
     // ACTIONS
     function $loadImage (item,custom = null) {
-        let { image: path, type, url } = item ?? {};
         let { URL_STORAGE } = mainStore;
-        
-        // let model = 'places';
-        // if(type == "gallery" || url?.includes('storage')) model = 'gallery'; 
 
-        // let urlFull = `${URL_STORAGE}/storage/${model}/${path}`
-        // return urlFull
-
+        let { image: path, type, url, api } = item ?? {};
+        if (api) {
+            return url;
+        }
         if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
-        return `${URL_STORAGE}/storage/confort/${path}`;
+        return `${URL_STORAGE}/storage/places/${item?.image}`;
 
     }
 

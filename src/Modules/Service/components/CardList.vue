@@ -31,17 +31,17 @@
                 class="flex items-end justify-end pb-[4px] sp:pb-[8px]"
                 :class="data.name_api === 'viator' ? 'justify-between' : 'justify-end'"
             >
-                <img v-if="data.name_api === 'viator'" src="/assets/icons/TH.VIATOR.svg" alt="VIATOR">
+                <img v-if="data.name_api === 'viator'" class="w-[30px] sp:w-[49px]" src="/assets/icons/TH.VIATOR.svg" alt="VIATOR">
                 <div class="text-right">
                     <template v-if="showPriceFrom">
-                        <p class="text-[5px] sp:text-[10px] font-medium lato leading-non">{{ $t('experience.card-experience.from') }}</p>
-                        <p class="text-[9px] sp:text-[16px] font-medium lato leading-non">{{ data.from_price?.toFixed(2)?.replace('.', ',') }}€</p>
+                        <p class="text-[5px] sp:text-[10px] font-medium lato leading-none">{{ $t('experience.card-experience.from') }}</p>
+                        <p class="text-[9px] sp:text-[16px] font-medium lato leading-none">{{ price?.toFixed(2)?.replace('.', ',') }}€</p>
                     </template>
                     <template v-else-if="data.type_price == 2">
-                        {{ data.from_price?.toFixed(2)?.replace('.', ',') }}€
+                        <p class="text-[9px] sp:text-[16px] font-medium lato leading-none">{{ price?.toFixed(2)?.replace('.', ',') }}€</p>
                     </template>
                     <template v-else="data.type_price == 3">
-                        Gratis
+                        <p class="text-[9px] sp:text-[16px] font-medium lato leading-none">{{ $t('service.card-item.free') }}</p>
                     </template>
                 </div>
             </div>
@@ -63,6 +63,10 @@ const  { typeService, data } = props;
 
 const serviceStore = inject('serviceStore'); 
 const experienceStore = inject('experienceStore');
+
+const price = computed(() => {
+    return data.from_price ?? data.price;
+});
 
 const showPriceFrom = computed(() => {
     return data?.type_price == 1 || (typeService === 'ACTIVITY' && data?.name_api == 'viator');

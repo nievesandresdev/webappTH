@@ -8,34 +8,42 @@ import isMobile from '@/middlewares/isMobile';
 
 const serviceRoutes = [
   {
+    component: AppLayout,
     path: 'servicios',
-    component: ListPage,
-    meta: {
-      // verifyHotel: true,
-    //   middleware: [
-    //     isMobile
-    //  ],
-     title: 'experience.list-page.title',
-    },
-    props: (route) => ({ queryRouter: {...route.query} }),
+    
     children: [
-        {
-          name: 'Confort',
-          path: 'confort',
-          component: ListPageContenConfort,
-        },
-        {
-          name: 'Transport',
-          path: 'transport',
-          component: ListPageContenTransport,
-        },
-        {
-          name: 'Activity',
-          path: 'activity',
-          component: ListPageContentActivity,
-        },
+      {
+        path: '',
+        component: ListPage,
+        // meta: {
+          // verifyHotel: true,
+        //   middleware: [
+        //     isMobile
+        //  ],
+        // },
+        children: [
+          {
+            name: 'Confort',
+            path: 'confort',
+            component: ListPageContenConfort,
+            props: (route) => ({ queryRouter: {...route.query} }),
+          },
+          {
+            name: 'Transport',
+            path: 'transport',
+            component: ListPageContenTransport,
+            props: (route) => ({ queryRouter: {...route.query} }),
+          },
+          {
+            name: 'Activity',
+            path: 'activity',
+            component: ListPageContentActivity,
+            props: (route) => ({ queryRouter: {...route.query} }),
+          },
+        ]
+      },
     ]
-  },
+  }
 ];
 
 export default serviceRoutes;

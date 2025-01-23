@@ -13,7 +13,7 @@
             v-else
             class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
         />
-        <div class="mt-1 sp:mt-2">
+        <div class="mt-2 sp:mt-4">
             <template v-for="(item, index) in (servicesData ?? [])">
                 <CardList
                     :data="item"
@@ -38,6 +38,13 @@ const route = useRouter();
 
 import { $throttle, $isElementVisible } from '@/utils/utils';
 
+const props = defineProps({
+    queryRouter: {
+        type: Object,
+        default: () => ({})
+    } 
+});
+
 import CardList from './components/CardList.vue';
 import SkeletonCard from './components/SkeletonCard.vue';
 
@@ -51,17 +58,21 @@ import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollIn
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
 const firstLoad = inject('firstLoad');
+const page = inject('page');
 const isloadingForm = inject('isloadingForm');
 const searchingActive = inject('searchingActive');
 const formFilter = inject('formFilter');
 
 // DATA
 const numberCardsToLoadDefault = ref(20);
-const page = ref(1);
 
 // COMPUTED
 const numberItemsLoadCurrent = computed(() => {
     return servicesData.value.length;
+});
+
+watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
+    submitFilter({showPreloader: true});
 });
 
 const { numberCardsToLoad } = usePaginationScrollInfinite(

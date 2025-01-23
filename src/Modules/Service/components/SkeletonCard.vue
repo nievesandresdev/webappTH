@@ -42,6 +42,17 @@
     </div>
 </template>
 
+<script setup>
+
+const props = defineProps({
+    class: {
+        type: String,
+        default: null
+    }
+});
+
+</script>
+
 <style lang="scss">
     .card-list {
         border-radius: 10px;

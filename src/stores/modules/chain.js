@@ -71,7 +71,6 @@ export const useChainStore = defineStore('chain', () => {
         
         // if (customizationData.value) return customizationData.value;
         const response = await getCustomatizacionApi([]);
-        // console.log('test $getCustomatizacion',response)
         let customization = response.ok ? response.data : null;
         if (customization) {
             customizationData.value = customization;

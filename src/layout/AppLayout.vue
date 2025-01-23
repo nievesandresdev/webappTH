@@ -113,7 +113,6 @@ const showMenu = computed(() => {
     let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
     let hiddenMenuByRef = !hideAppMenu.value;
     let existsUrlParam = !getUrlParam('acform');
-
     return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
 });
 </script>
