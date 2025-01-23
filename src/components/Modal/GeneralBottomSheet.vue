@@ -8,7 +8,7 @@
             @touchend="endTouch"
         ></div>
         <div 
-            class="relative w-full max-h-[80vh] py-3 px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
+            class="relative w-full max-h-[80vh] py-3 sp:px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
             :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
             @click.stop
             ref="modalContainer"
@@ -22,7 +22,7 @@
                 <img 
                     :src="imgHeader" 
                     alt="Header Image" 
-                    class="w-auto h-[100px] object-contain mockup:h-[50px]"
+                    class="sp:w-auto sp:h-[100px] h-[40px] object-contain"
                 />
             </div>
             <!-- Contenido del modal -->
@@ -30,9 +30,10 @@
             <button
                 v-if="showButton"
                 @click="handleSubmit"
-                class="w-full lato flex justify-center items-center h-10 mockup:h-8 mockup:text-[10px] px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
+                :disabled="$utils.isMockup()"
+                class="w-full lato flex justify-center items-center h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
             >
-                <img v-if="showIconButton" :src="iconButton" class="w-6 h-6" alt="Icon Button" />
+                <img v-if="showIconButton" :src="iconButton" class="sp:w-6 sp:h-6 h-5 w-5" alt="Icon Button" />
                 {{ buttonText }}
             </button>
         </div>

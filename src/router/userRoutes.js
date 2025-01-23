@@ -4,6 +4,7 @@ const PersonalInfo = () => import('@/Modules/User/PersonalInfo.vue')
 const ReservationStay = () => import('@/Modules/User/ReservationStay.vue')
 const SelectLanguage = () => import('@/Modules/User/SelectLanguage.vue') 
 const EditStay = () => import('@/Modules/User/EditStay.vue')
+const LogoutPage = () => import('@/Modules/Auth/Logout.vue')
 
 const profileRoutes = [
   {
@@ -40,7 +41,13 @@ const profileRoutes = [
         path: 'editar-estancia/:stayId',
         component: EditStay,
         props: (route) => ({ paramsRouter: {...route.params} })
-      }
+      },
+      {
+        name: 'LogoutUser',
+        path: 'logout',
+        component: LogoutPage,
+        props: (route) => ({ paramsRouter: {...route.query} })
+      },
       
     ],
   },

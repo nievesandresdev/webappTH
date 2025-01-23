@@ -8,10 +8,10 @@
         :img-header="'/assets/icons/rewards/referred.svg'"
     >
         <div class="flex flex-col gap-3">
-            <span class="font-bold text-xl lato mockup:text-[15px]">{{ $t('profile.rewards.referrals.title') }}</span>
+            <span class="font-bold sp:text-xl lato text-[14px]">{{ $t('profile.rewards.referrals.title') }}</span>
             <div class="flex flex-col">
-                <span class="lato font-bold text-lg mockup:text-sm">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
-                <p class="lato text-sm font-normal mockup:text-[10px]">
+                <span class="lato font-bold sp:text-lg text-[12px]">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
+                <p class="lato sp:text-sm font-normal text-[9px]">
                     {{ $t('profile.rewards.referrals.description', { amount: amountFormat} ) }}
                     
                 </p>
