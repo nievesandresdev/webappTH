@@ -51,7 +51,7 @@
                                     :width="innerWidth <= 300 ? '16' : '24'"
                                 />
                                 <span
-                                    class="text-[12px] sp:text-base font-bold leading-none lato"
+                                    class="text-[10px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
                                 >{{ tab.title }}</span>
                             </div>
