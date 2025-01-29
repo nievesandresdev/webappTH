@@ -1,11 +1,14 @@
 <template>
+
+<div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+
 <AppHeader
     fixed
     :tabs="tabsHeader"
 >
     <template v-slot:titleOrSearch>
         <InputSearch
-            :empty-filters="emptyFilters"
+            :empty-filters="emptyFilters"   	 
             @search="searchHandle"
             @activateSearch="activateSearchHandle"
             @openFilter="openFilter"
