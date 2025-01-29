@@ -5,7 +5,9 @@ const ReservationStay = () => import('@/Modules/User/ReservationStay.vue')
 const SelectLanguage = () => import('@/Modules/User/SelectLanguage.vue') 
 const EditStay = () => import('@/Modules/User/EditStay.vue')
 const LogoutPage = () => import('@/Modules/Auth/Logout.vue')
-
+const MyStay = () => import('@/Modules/User/MyStay.vue')
+const Guests = () => import('@/Modules/User/Guests.vue')
+const CompleteCheckin = () => import('@/Modules/User/CompleteCheckin.vue')
 const profileRoutes = [
   {
     path: '',
@@ -47,6 +49,21 @@ const profileRoutes = [
         path: 'logout',
         component: LogoutPage,
         props: (route) => ({ paramsRouter: {...route.query} })
+      },
+      {
+        name: 'MyStay',
+        path: 'mi-estancia',
+        component: MyStay
+      },
+      {
+        name: 'Guests',
+        path: 'mi-estancia/huespedes',
+        component: Guests
+      },
+      {
+        name: 'CompleteCheckin',
+        path: 'mi-estancia/huespedes/completar-checkin/:id',
+        component: CompleteCheckin
       },
       
     ],
