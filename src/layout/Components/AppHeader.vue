@@ -53,7 +53,7 @@
                                 <span
                                     class="text-[10px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
-                                >{{ $t(tab.title) }}</span>
+                                >{{ tab.title }}</span>
                             </div>
                             <div
                                 class="flex justify-center"

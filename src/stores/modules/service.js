@@ -5,6 +5,8 @@ import { i18n } from '@/i18n'
 import {
     getAllConforApi,
     getAllTransportApi,
+    findByIdConfortApi,
+    findByIdTransportApi
 } from '@/api/services/service.services'
 
 import { useMainStore } from '@/stores'
@@ -62,6 +64,19 @@ export const useServiceStore = defineStore('service', () => {
         // console.log(response, 'response')
         return response
     }
+    
+    async function $findByIdConfort (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdConfortApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
+    async function $findByIdTransport (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdTransportApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
 
     //
     return {
@@ -70,6 +85,8 @@ export const useServiceStore = defineStore('service', () => {
         $apiDetAllConforApi,
         $apiDetAllTransportApi,
         $loadImage,
+        $findByIdConfort,
+        $findByIdTransport,
     }
 
 })

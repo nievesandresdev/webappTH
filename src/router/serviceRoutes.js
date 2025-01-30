@@ -1,44 +1,46 @@
 const AppLayout = () => import(/* webpackChunkName: "layout" */ '@/layout/AppLayout');
 const ListPage = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPage.vue');
-const ListPageContenConfort = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPageContenConfort.vue');
-const ListPageContenTransport = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPageContenTransport.vue');
+const DetailPage = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/DetailPage.vue');
+const DetailActivityExternalPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Experience/DetailPage.vue')
+
+const ListPageContenConfort = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPageContentConfort.vue');
+const ListPageContenTransport = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPageContentTransport.vue');
 const ListPageContentActivity = () => import(/* webpackChunkName: "service" */ '@/Modules/Service/ListPageContentActivity.vue');
 
 import isMobile from '@/middlewares/isMobile';
+
+const servicesChildRoutes = ['Confort', 'Transport', 'Activity'].map(name => ({
+  name,
+  path:`${name.toLowerCase()}`,
+  component: () => import(`@/Modules/Service/ListPageContent${name}.vue`),
+  props: (route) => ({ queryRouter: { ...route.query } }),
+}));
 
 const serviceRoutes = [
   {
     component: AppLayout,
     path: 'servicios',
-    
     children: [
       {
         path: '',
         component: ListPage,
-        // meta: {
-          // verifyHotel: true,
-        //   middleware: [
-        //     isMobile
-        //  ],
-        // },
+        children: servicesChildRoutes
+      },
+      {
+        path: '',
         children: [
           {
-            name: 'Confort',
-            path: 'confort',
-            component: ListPageContenConfort,
-            props: (route) => ({ queryRouter: {...route.query} }),
+            path: ':service/:slug',
+            name: 'DetailService',
+            component: DetailPage,
+            meta: { hiddenMenu: true },
           },
           {
-            name: 'Transport',
-            path: 'transport',
-            component: ListPageContenTransport,
-            props: (route) => ({ queryRouter: {...route.query} }),
-          },
-          {
-            name: 'Activity',
-            path: 'activity',
-            component: ListPageContentActivity,
-            props: (route) => ({ queryRouter: {...route.query} }),
+            path: 'activity-externa/:slug',
+            name: 'DetailActivity',
+            component: DetailActivityExternalPage,
+            meta: { hiddenMenu: true },
+            props: (route) => ({ paramsRouter: {...route.params} }),
           },
         ]
       },

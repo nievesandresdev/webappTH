@@ -15,24 +15,17 @@
         </template>
     </AppHeader>
     <div class="flex-1">
-        <!-- <template v-if="pointersData?.features?.length"> -->
-            <ListPageMapClusterPlace
-                @clickMapCluster="handleMapCluster"
-            />
-        <!-- </template> -->
-        <!-- <template v-if="isOpenBottomSheetList"> -->
-            <!-- {{loadingPlaceSeleced}} -->
-            <ListPageBottomSheet
-                @changeCategory="changeCategoryHandle($event)"
-                @loadMore="loadMore"
-                @closeSearch="closeSearchHandle"
-            />
-        <!-- </template>
-        <template v-if="isOpenBottomSheetFilter"> -->
-            <ListPagebottomSheetFilter
-                @reloadPlaces="loadAll({ showPreloader: true })"
-            />
-        <!-- </template> -->
+        <ListPageMapClusterPlace
+            @clickMapCluster="handleMapCluster"
+        />
+        <ListPageBottomSheet
+            @changeCategory="changeCategoryHandle($event)"
+            @loadMore="loadMore"
+            @closeSearch="closeSearchHandle"
+        />
+        <ListPagebottomSheetFilter
+            @reloadPlaces="loadAll({ showPreloader: true })"
+        />
     </div>
 </template>
 

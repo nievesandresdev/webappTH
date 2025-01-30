@@ -1,5 +1,11 @@
 export default {
   "title": "Serviços",
+  "modal-request-service": {
+    "button": "Solicitar serviço",
+    "title": "Você está prestes a ser redirecionado para um site externo",
+    "text": "Você está prestes a ser redirecionado para o site do fornecedor do serviço. Deseja continuar?",
+    "button-go": "Ir para o site"
+  },
     "card-item": {
       "free": "Grátis"
     },
