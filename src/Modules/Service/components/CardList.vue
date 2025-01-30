@@ -1,6 +1,8 @@
 <template>
     <div
-        class="card-list flex w-full" :class="class"
+        class="card-list flex w-full cursor-pointer"
+        :class="class"
+        @click="goService"
     >
         <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden">
             <img
@@ -24,7 +26,10 @@
         </div>
 
         
-        <div class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-2 space-y-[8px] sp:space-y-[16px]">
+        <div
+            class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-2 space-y-[8px] sp:space-y-[16px]"
+            
+        >
             <p class="text-[6px] sp:text-[14px] font-bold lato leading-none" v-html="data.name ?? data.title" />
             <p v-if="typeService != 'ACTIVITY'" class="text-[6px] sp:text-[14px] lato leading-none truncate-2" v-html="data.description" />
             <div
@@ -51,6 +56,10 @@
 
 <script setup>
 import { ref, inject, computed } from 'vue';
+
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
+
 const props = defineProps({
     class: String,
     typeService: String,
@@ -70,8 +79,16 @@ const price = computed(() => {
 
 const showPriceFrom = computed(() => {
     return data?.type_price == 1 || (typeService === 'ACTIVITY' && data?.name_api == 'viator');
-    // (typeService != 'ACTIVITY' && data.type_price == 1) || (data?.name_api == 'viator' || (data?.name_api == 'thehoster' && data.type_price == 1)
 });
+
+function goService () {
+    let typeServiceSlug = typeService.toLowerCase();
+    if (typeServiceSlug === 'activity' && data?.name_api == 'viator') {
+        router.push({name: 'DetailActivity', params: { service: typeServiceSlug, slug: data.slug } });
+        return;
+    }
+    router.push({name: 'DetailService', params: { service: typeServiceSlug, slug: data.id } });
+}
 
 </script>
 

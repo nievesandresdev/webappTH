@@ -38,16 +38,6 @@
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
                     />
-                    <!-- <span
-                        class="text-[4px] sp:text-[10px] font-bold leading-none lato"
-                        :class="validRoute(item) ? `text-white` : `htext-black-100`"
-                        :style="{
-                            color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
-                        }"
-                    >
-                        {{ dynamicTitle(item) }}
-                    </span>
-                    <img  -->
                     <span
                         class="text-[7px] sp:text-[10px] font-bold leading-none lato"
                         :class="validRoute(item) ? `text-white` : `htext-black-100`"
@@ -123,9 +113,9 @@ const menuItems = reactive([
         title: 'service.title',
         exclude: false,
         iconDefault: 'WA.MENU.DEFAULT.SERVICE',
-        iconSelected: 'WA.MENU.DEFAULT.SERVICE',
+        iconSelected: 'WA.MENU.SELECTED.SERVICE',
         to: `/${route.params.hotelSlug}/servicios/confort`,
-        routeNameIncludes: ['Confort', 'Transport', 'Activity'],
+        routeNameIncludes: ['Confort', 'Transport', 'Activity', 'DetailServiceConfort', ',DetailServiceTransport' , 'DetailServiceActivity'],
     },
     // {
     //     title: 'layout.header.experiences',

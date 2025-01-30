@@ -47,6 +47,8 @@ const serviceStore = useServiceStore();
 import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 // DATA
 
@@ -114,24 +116,24 @@ function loadType () {
 function loadTabs () {
     tabsHeader.value = [
         {
-            title: 'service.confort.title',
-            exclude: !hotelStore.hotelData.show_confort,
+            title: t('service.confort.title'),
+            exclude: hotelStore.hotelData.show_confort,
             iconDefault: 'WA.CONFORT',
             iconSelected: 'WA.CONFORT.DEFAULT',
             isActive: 'CONFORT' == formFilter.type,
             onClick: () => changeType('Confort'),
         },
         {
-            title: 'service.transport.title',
-            exclude: !hotelStore.hotelData.show_transport,
+            title: t('service.transport.title'),
+            exclude: hotelStore.hotelData.show_transport,
             iconDefault: 'WA.TRANSPORT',
             iconSelected: 'WA.TRANSPORT.DEFAULT',
             isActive: 'TRANSPORT' == formFilter.type,
             onClick: () => changeType('Transport'),
         },
         {
-            title: 'service.activity.title',
-            exclude: !hotelStore.hotelData.show_experiences,
+            title: t('service.activity.title'),
+            exclude: hotelStore.hotelData.show_experiences,
             iconDefault: 'WA.ACTIVITY',
             iconSelected: 'WA.ACTIVITY.DEFAULT',
             isActive: 'ACTIVITY' == formFilter.type,
