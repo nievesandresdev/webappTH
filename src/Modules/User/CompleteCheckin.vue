@@ -33,6 +33,13 @@ const form = reactive({
     kinshipRelationship:null,
     //
     nationality:null,
+    docType:null,
+    docSupportNumber:null,
+    docNumber:null,
+    countryResidence:null,
+    postalCode:null,
+    municipality:null,
+    addressResidence:null,
     test:null
 })
 
@@ -114,6 +121,20 @@ watch(isMinor, (newVal) => {
         }
     }
 });
+// Observa los cambios en el tipo y actualiza la visibilidad de docSupportNumber
+watch(() => form.docType,(newVal) => {
+    if (settings.value && settings.value.second_step) {
+      if (settings.value.second_step.docSupportNumber && (newVal == "NIE" || newVal == "DNI español" )) {
+        settings.value.second_step.docSupportNumber.visible = true;
+        settings.value.second_step.docSupportNumber.mandatory = true;
+      }else{
+        settings.value.second_step.docSupportNumber.visible = false;
+        settings.value.second_step.docSupportNumber.mandatory = false;
+      }
+    }
+  }
+);
+
 
 provide('form',form)
 provide('numberStepsEnabled',numberStepsEnabled)
