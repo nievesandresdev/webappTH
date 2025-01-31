@@ -23,8 +23,13 @@
             :textLabel="`${$t('profile.page_personal_info.form.name.label')}${isMandatory('secondLastname')}`"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.secondLastname"
+            :error="secondLastnameError"
             :showTextError="false"
         />
+        <p
+            v-if="secondLastnameError"
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >Si tu tipo de documento es NIE, completa este campo</p>
     </div>
     <!-- birthdate -->
     <div class="mt-2" v-if="settings?.first_step?.birthdate?.visible">
@@ -106,6 +111,7 @@ import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
 
 const emailError = inject('emailError');
 const phoneError = inject('phoneError');
+const secondLastnameError = inject('secondLastnameError');
 
 const form = inject('form');
 const settings = inject('settings');

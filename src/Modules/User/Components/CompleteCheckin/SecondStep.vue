@@ -14,8 +14,13 @@
             v-model="form.docType"
             :top_dropdown="'top-0'"
             :extra_dropdown="'dropdown-clasess'"
+            :error="secondLastnameError"
             mandatory
         />
+        <p
+            v-if="secondLastnameError"
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >Por favor, completa el campo “Segundo apellido”</p>
     </div>
     <!-- docSupportNumber -->
     <div class="mt-2" v-if="settings?.second_step?.docSupportNumber?.visible">
@@ -24,8 +29,13 @@
             placeholder="Sólo para NIE o DNI español"
             iconLeft="/assets/icons/WA.Passport.svg"
             v-model="form.docSupportNumber"
+            :isError="docSupportNumberError"
             :showTextError="false"
         />
+        <p
+            v-if="docSupportNumberError"
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >La cantidad de caracteres ingresada no es válida</p>
     </div>
     <!-- docNumber -->
     <div class="mt-2" v-if="settings?.second_step?.docNumber?.visible">
@@ -34,8 +44,13 @@
             placeholder="Escribe el número del documento seleccionado"
             iconLeft="/assets/icons/WA.Passport.svg"
             v-model="form.docNumber"
+            :isError="docNumberError"
             :showTextError="false"
         />
+        <p
+            v-if="docNumberError"
+            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+        >La cantidad de caracteres ingresada no es válida</p>
     </div>
     <!-- addressResidence -->
     <div class="mt-2" v-if="settings?.second_step?.countryResidence?.visible">
@@ -68,6 +83,10 @@ import CodeMunicipalityInput from '@/components/Forms/CodeMunicipalityInput.vue'
 
 const form = inject('form');
 const settings = inject('settings');
+const secondLastnameError = inject('secondLastnameError');
+const docNumberError = inject('docNumberError');
+const docSupportNumberError = inject('docSupportNumberError');
+
 
 const docType_options = [
     {value:'Pasaporte',label:'Pasaporte'},

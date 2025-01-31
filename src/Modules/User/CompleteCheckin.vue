@@ -105,6 +105,37 @@ const isMinor = computed(() => {
     return age < 18;
 });
 
+const secondLastnameError = computed(() => {
+    return form.docType == 'NIE' && !form.secondLastname
+});
+
+const docNumberPattern = computed(() => {
+  switch (form.docType) {
+    case 'DNI español': return /^[0-9]{8}[A-Za-z]$/;
+    case 'NIE':         return /^[XYZxyz]\d{7}[A-Za-z]$/;
+    case 'Pasaporte':   return /^[A-Za-z0-9]{6,15}$/;
+    default:            return null; 
+  }
+});
+
+const docNumberError = computed(() => {
+    
+    if(form.docNumber && form.docType){
+        return !docNumberPattern.value?.test(form.docNumber);
+    }
+    return false;
+});
+
+const docSupportNumberError = computed(() => {
+    if(form.docSupportNumber && form.docType){
+        return !docNumberPattern.value?.test(form.docSupportNumber);
+    }
+    return false;
+});
+
+
+
+
 // Observa los cambios en isMinor y actualiza la visibilidad de los campos correspondientes
 watch(isMinor, (newVal) => {
     if (settings.value && settings.value.first_step) {
@@ -121,15 +152,22 @@ watch(isMinor, (newVal) => {
         }
     }
 });
-// Observa los cambios en el tipo y actualiza la visibilidad de docSupportNumber
+// Observa los cambios en el tipo y actualiza la visibilidad de docSupportNumber y secondLastname
 watch(() => form.docType,(newVal) => {
     if (settings.value && settings.value.second_step) {
-      if (settings.value.second_step.docSupportNumber && (newVal == "NIE" || newVal == "DNI español" )) {
+      if (newVal == "NIE" || newVal == "DNI español" ) {
         settings.value.second_step.docSupportNumber.visible = true;
         settings.value.second_step.docSupportNumber.mandatory = true;
       }else{
         settings.value.second_step.docSupportNumber.visible = false;
         settings.value.second_step.docSupportNumber.mandatory = false;
+      }
+      if (newVal == "NIE") {
+        settings.value.first_step.secondLastname.visible = true;
+        settings.value.first_step.secondLastname.mandatory = true;
+      }else{
+        settings.value.first_step.secondLastname.visible = false;
+        settings.value.first_step.secondLastname.mandatory = false;
       }
     }
   }
@@ -143,4 +181,8 @@ provide('settings',settings)
 provide('isMinor',isMinor)
 provide('emailError',emailError)
 provide('phoneError',phoneError)
+provide('secondLastnameError',secondLastnameError)
+provide('docNumberError',docNumberError)
+provide('docSupportNumberError',docSupportNumberError)
+
 </script>

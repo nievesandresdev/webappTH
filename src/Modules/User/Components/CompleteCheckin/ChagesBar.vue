@@ -39,6 +39,9 @@ const settings = inject('settings');
 const numberStepsEnabled = inject('numberStepsEnabled');
 const emailError = inject('emailError');
 const phoneError = inject('phoneError');
+const secondLastnameError = inject('secondLastnameError');
+const docNumberError = inject('docNumberError');
+const docSupportNumberError = inject('docSupportNumberError');
 
 // Propiedad computada para validar el formulario
 const validForm = computed(() => {
@@ -70,7 +73,11 @@ const validForm = computed(() => {
             const value = form[fieldKey];
             
             // Verifica si el valor está definido y no está vacío
-            if (value === null || value === undefined || emailError.value || phoneError.value){
+            if (
+                value === null || value === undefined || emailError.value || phoneError.value || secondLastnameError.value ||
+                (docNumberError.value && currentStep.value == 2) ||
+                (docSupportNumberError.value && currentStep.value == 2)
+            ){
                 // console.log('test',false)
                 return false;
             }
