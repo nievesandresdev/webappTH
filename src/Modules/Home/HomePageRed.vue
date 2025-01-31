@@ -13,8 +13,11 @@
             :active-custom="true"
         />
     </div>
-
     <div 
+        v-if="
+            hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'
+            && !guestStore.guestData?.complete_checkin_data
+        "
         class="px-3 sp:px-4 mt-4 sp:mt-6"
     >
         <WACardBanner 
@@ -173,7 +176,9 @@ import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import WACardBanner from '@/components/WACardBanner.vue';
-
+//
+import { $currentPeriod } from '@/utils/helpers.js'
+//
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'

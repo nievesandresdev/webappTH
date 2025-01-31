@@ -23,7 +23,15 @@
                         'text-white':validForm, 
                         'disabled-text-2':!validForm
                     }"
-                >Siguiente</span>
+                >
+                <template v-if="numberStepsEnabled == currentStep">
+                    Finalizar
+                </template>
+                <template v-else>
+                    Siguiente
+                </template>
+                    
+                </span>
             </button>
         </div>
     </div>
@@ -31,7 +39,11 @@
 
 <script setup>
 import { ref, inject, computed } from 'vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter();
+//
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
 // Inyecta las dependencias necesarias
 const currentStep = inject('currentStep');
 const form = inject('form');
@@ -56,7 +68,8 @@ const validForm = computed(() => {
             stepSettings = settings.value.second_step;
             break;
         case 3:
-            // stepSettings = settings.value.third_step;
+            // console.log()
+            return form.comment.trim();
             break;
         default:
             stepSettings = {};
@@ -96,8 +109,18 @@ const validForm = computed(() => {
     });
 });
 
+const submit = async () => {
+    form.comment = form.comment.trim();
+    const response = await guestStore.$saveCheckinData(form);
+    router.push({ name: 'IsCompleteCheckin' })
+};
+
 // Método para ir al siguiente paso
 const goToNextStep = () => {
+    if(numberStepsEnabled.value == currentStep.value){
+        submit()
+        return;
+    }
     if (validForm.value && currentStep.value < numberStepsEnabled.value){
         currentStep.value += 1;
     }

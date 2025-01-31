@@ -16,12 +16,23 @@ import SecondStep from './Components/CompleteCheckin/SecondStep.vue'
 import ThirdStep from './Components/CompleteCheckin/ThirdStep.vue'
 import ChagesBar from './Components/CompleteCheckin/ChagesBar.vue'
 //
-import { ref, provide, reactive, onMounted, computed, watch } from 'vue'
+import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
 //
 import { useCheckinStore } from '@/stores/modules/checkin';
 const checkinStore = useCheckinStore();
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
+
+const props = defineProps({
+    paramsRouter: {
+        type: Object,
+        default: () => ({})
+    }
+})
+const { paramsRouter } = toRefs(props)
 
 const form = reactive({
+    id:null,//id del huesped actual
     name:null,
     lastname:null,
     secondLastname:null,
@@ -40,17 +51,21 @@ const form = reactive({
     postalCode:null,
     municipality:null,
     addressResidence:null,
-    test:null
+    //
+    comment:'',
+    stayId: localStorage.getItem('stayId')
 })
 
 const settings = ref(null);
-const currentStep = ref(2);
+const currentStep = ref(1);
 const emailError = ref(false);
 const phoneError = ref(false);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
-    console.log('test settings',settings.value)
+    loadDataGuest();
+    form.id = paramsRouter.value.id;
+    // console.log('test paramsRouter',paramsRouter.value.id)
 })
 
 const secondStepEnabled = computed(() => {
@@ -67,6 +82,12 @@ const numberStepsEnabled = computed(() => {
   if(settings.value.show_prestay_query) sum++;
   return sum
 })
+
+function loadDataGuest(dateStr) {
+    form.name = guestStore.guestData.name;
+    form.lastname = guestStore.guestData.lastname;
+    form.email = guestStore.guestData.email;
+}
 
 // Función para parsear la fecha en formato DD/MM/YYYY
 function parseDate(dateStr) {
@@ -132,9 +153,6 @@ const docSupportNumberError = computed(() => {
     }
     return false;
 });
-
-
-
 
 // Observa los cambios en isMinor y actualiza la visibilidad de los campos correspondientes
 watch(isMinor, (newVal) => {

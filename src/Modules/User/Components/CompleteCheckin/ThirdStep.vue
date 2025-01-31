@@ -6,7 +6,7 @@
         <div class="mt-1">
             <TextareaAutogrow 
                 :id="'textarea1'"
-                v-model="textarea" 
+                v-model="form.comment" 
                 :wordLimit="300"
                 :placeholder="''"
                 customClasses="min-h-[48px] sp:min-h-[72px]"
@@ -44,7 +44,7 @@ const props = defineProps({
         default:{}
     },
 })
-const textarea = ref(null);
+const form = inject('form');
 const guestStore = useGuestStore();
 
 async function saveQuery(){

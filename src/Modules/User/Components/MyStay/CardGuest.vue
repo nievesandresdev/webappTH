@@ -11,18 +11,18 @@
             <img class="w-4 h-4 mr-1" src="/assets/icons/WA.mail.svg" alt="">
             <p class="lato text-sm font-medium leading-[16px]">{{data.email}}</p>
         </div>
-        <div class="mt-4">
-            <router-link 
-                class="block border border-white rounded-[10px] shadow-guest hbg-black-100 w-full py-3"
-                :to="{ name:'CompleteCheckin', params:{ id: data.id }}"
-            >
-                <p class="text-center lato text-sm font-bold leading-[16px] text-white">{{ $t('checkin.gocheckinButton') }}</p>
-            </router-link>
-        </div>
+        <router-link 
+            class="block mt-4"
+            :to="{ name:'CompleteCheckin', params:{ id: data.id }}"
+        >
+            <PrimaryButton classes="block w-full rounded-[10px] shadow-guest-2 py-3 lato text-sm font-bold leading-[16px]">
+                {{$t('checkin.gocheckinButton')}}
+            </PrimaryButton> 
+        </router-link>
     </div>
 </template>
 <script setup>
-
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 defineProps({
     data:{
         type:Object,
