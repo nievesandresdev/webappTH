@@ -14,6 +14,18 @@
         />
     </div>
 
+    <div 
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
+    >
+        <WACardBanner 
+            @click="goGuests"
+            :title="$t('checkin.cardBanner.title')"
+            :subtitle="$t('checkin.cardBanner.subtitle')"
+            :active-custom="true"
+            nameIconLeft="WA.checkin.user"
+        />
+    </div>
+
     <!-- carousel's -->
     <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
         <!-- facilities carousel -->
@@ -238,7 +250,10 @@ const goPlaces = (type, cat) => {
 
 const handleMyStays = () => {
     router.push({ name: 'MyStays' });
-    // authStore.$logoutAndCreateStay();
+};
+
+const goGuests = () => {
+    router.push({ name: 'Guests' });
 };
 
 const formType = computed(() => props.acform);

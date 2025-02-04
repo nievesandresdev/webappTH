@@ -78,7 +78,7 @@
         </div>
 
         <!-- Sección "referido" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData.show_referrals && !hotelStore.hotelData.offer_benefits">
+        <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.referido.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="Reservation" />
                 <div class="flex flex-col">
@@ -90,7 +90,7 @@
         </div>
 
          <!-- Sección "referente y referido" -->
-         <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData.show_referrals && hotelStore.hotelData.offer_benefits">
+         <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.referente.svg" class="w-8 h-8" alt="Reservation" />
                 <div class="flex flex-col">
@@ -168,10 +168,10 @@ const loading = ref(true);
 
 
 const openModalRewards = () => {
-    if(hotelStore.hotelData.show_referrals && !hotelStore.hotelData.offer_benefits) {
+    if(hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits) {
         alert('openModalReferrals')
         openModalReferrals.value = true;
-    } else if(hotelStore.hotelData.show_referrals && hotelStore.hotelData.offer_benefits) {
+    } else if(hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits) {
         openModalReferent.value = true;
     }
 };
