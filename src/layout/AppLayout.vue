@@ -4,7 +4,7 @@
 
         <router-view></router-view>
         <MenuMobile 
-            v-if="!isDesktop"
+            v-if="!isDesktop && hotelStore.hotelData"
             v-show="showMenu" 
         />
     </div>
@@ -32,6 +32,8 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore()
 
 
 const hideAppMenu = ref(false);

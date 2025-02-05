@@ -3,7 +3,7 @@
       <div
         :disabled="disabled"
         @click="toggleDropdown"
-        class="flex items-center h-10 w-full rounded-[10px] px-2 bg-white text-left border border-[#333]"
+        class="flex items-center h-7 sp:h-10 w-full rounded-[6px] sp:rounded-[10px] px-2 bg-white text-left border border-[#333]"
         :class="{
           'hborder-alert-negative': error,
         }"
@@ -12,7 +12,7 @@
       <!-- 'border-2': modelValue || showOptions, -->
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">
         <span
-          class="flex-grow truncate text-label lato text-sm font-medium leading-[16px] mr-2 py-3"
+          class="flex-grow truncate text-label lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] mr-2 py-3"
           :class="{
             'htext-gray-500': !error && !modelValue,
             'htext-alert-negative': error,
@@ -42,7 +42,7 @@
           tabindex="-1"
           :class="{'active': (option.value == modelValue) && !hoverOption, 'disabled': option.disabled, 'border-top-dropdown': index > 0}"
         >
-          <p class="lato text-sm font-bold leading-[16px]">
+          <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
             <img v-if="option.img" :src="option.img" :class="option.img_class ?? option_classes">
             {{ option.label }}
             <span v-if="option.tag" class="status-tag inline ml-2" :class="option.tag.class">
@@ -107,7 +107,7 @@
             },
             icon_left_class:{
                 type: String,
-                default: 'h-5 w-5 mr-2',
+                default: 'w-[14px] sp:w-5 h-[14px] sp:h-5 mr-1.5 sp:mr-2',
             },
             icon_right:{
                 type: String,
@@ -115,7 +115,7 @@
             },
             icon_right_class:{
                 type: String,
-                default: 'h-5 w-5',
+                default: 'w-[14px] sp:w-5 h-[14px] sp:h-5',
             },
             icon_delete:{
                 type: String,

@@ -260,6 +260,7 @@ button:focus {
 
 .item-skeletom {
   background: #E6E6E6;
+  /* background: #333; */
   border-radius: 10px;
 }
 .bg-gradient-h {

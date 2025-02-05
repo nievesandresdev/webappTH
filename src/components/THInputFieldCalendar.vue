@@ -5,7 +5,7 @@
             @click="toggleshow"
             class="flex items-center hoverForm"
             :class="{
-                'h-10 rounded-[10px] p-2 hborder-black-100':true,
+                'h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] p-2 hborder-black-100':true,
                 'hborder-alert-negative': error,
                 'button-disabled':disabled && !error
             }"
@@ -14,7 +14,7 @@
             <span
                 class="flex-grow truncate"
                 :class="{
-                'lato text-sm font-medium leading-[16px]':true,
+                'lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]':true,
                 'htext-gray-500': !error && !modelValue,
                 'htext-alert-negative': error,
                 'htext-black-100': modelValue,
@@ -110,7 +110,7 @@ export default {
         },
         icon_left_class:{
             type: String,
-            default: 'h-5 w-5 mr-2',
+            default: 'w-[14px] sp:w-5 h-[14px] sp:h-5 mr-1.5 sp:mr-2',
         },
         icon_right:{
             type: String,
