@@ -10,9 +10,9 @@
         <div class="flex flex-col gap-3">
             <span class="font-bold sp:text-xl lato text-[14px]">{{ $t('profile.rewards.referrals.title') }}</span>
             <div class="flex flex-col">
-                <span class="lato font-bold sp:text-lg text-[12px]">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
+                <span class="lato font-bold sp:text-lg text-[12px]">{{ $t('profile.rewards.referrals.discount', { amount: 2500 }) }}</span>
                 <p class="lato sp:text-sm font-normal text-[9px]">
-                    {{ $t('profile.rewards.referrals.description', { amount: amountFormat} ) }}
+                    {{ $t('profile.rewards.referrals.description', { amount: 2500} ) }}
                     
                 </p>
             </div>
@@ -37,7 +37,7 @@ const formatter = new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
 });
-
+/* 
 const amountFormat = computed(() => {
     if(hotelData.referrals?.type_discount == 'percentage') {
         return  `${hotelData.referrals?.amount}%`
@@ -45,8 +45,8 @@ const amountFormat = computed(() => {
         return `${formatter.format(hotelData.referrals?.amount)}€`
     }
     
-});
-
+}); */
+/* 
 const openModalShareReferrals = () => {
     const data = {
         title: '¡Obtén un descuento especial!',
@@ -54,7 +54,7 @@ const openModalShareReferrals = () => {
 
     };
     shareContent(data);
-}
+} */
 
 const closeModal = () => {
     openModal.value = false;
