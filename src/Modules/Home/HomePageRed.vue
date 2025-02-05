@@ -1,162 +1,167 @@
 <template>
     <HeaderHomeRed />
-    <HeroSectionRed />
+   <PageTransitionGlobal module="home">
 
-    <div 
-        class="px-3 sp:px-4 mt-4 sp:mt-6"
-        v-if="isCheckoutPast"
-    >
-        <WACardBanner 
-            @click="handleMyStays"
-            :title="$t('profile.my_stays.title')"
-            :subtitle="$t('profile.my_stays.subtitle_inactive')"
-            :active-custom="true"
+        <HeroSectionRed />
+
+        <div 
+            class="px-3 sp:px-4 mt-4 sp:mt-6"
+            v-if="isCheckoutPast"
+        >
+            <WACardBanner 
+                @click="handleMyStays"
+                :title="$t('profile.my_stays.title')"
+                :subtitle="$t('profile.my_stays.subtitle_inactive')"
+                :active-custom="true"
+            />
+        </div>
+
+        <div 
+            class="px-3 sp:px-4 mt-4 sp:mt-6"
+        >
+            <WACardBanner 
+                @click="goGuests"
+                :title="$t('checkin.cardBanner.title')"
+                :subtitle="$t('checkin.cardBanner.subtitle')"
+                :active-custom="true"
+                nameIconLeft="WA.checkin.user"
+            />
+        </div>
+
+        <!-- carousel's -->
+        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
+            <!-- facilities carousel -->
+            <section 
+                v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
+            >
+                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+                        {{ $utils.capitalize($t('home.section-facility.title')) }}
+                    </h2>
+                    <a 
+                        @click="goFacilities()" 
+                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
+                </div>
+                <div class="">
+                    <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
+                </div>
+            </section>
+
+            <!-- what visit carousel -->
+            <section 
+                v-if="showWhatvisitSection"
+                class="mt-2"
+            >
+                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+                        {{ $utils.capitalize($t('home.section-what-visit.title')) }}
+                    </h2>
+                    <a 
+                        @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
+                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
+                </div>
+                <div class="">
+                    <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
+                </div>
+            </section>
+
+            <!-- where eat carousel -->
+            <section 
+            v-if="showWhereeatSection"
+                class="mt-2"
+            >
+                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+                        {{ $utils.capitalize($t('home.section-where-eat.title')) }}
+                    </h2>
+                    <a 
+                        @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
+                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
+                </div>
+                <div class="">
+                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
+                </div>
+            </section>
+
+            <!-- leisure carousel -->
+            <section 
+                v-if="showLeisureSection"
+                class="mt-2"
+            >
+                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+                        {{ $utils.capitalize($t('home.section-leisure.title')) }}
+                    </h2>
+                    <a 
+                        @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
+                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
+                    >
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </a>
+                </div>
+                <div class="">
+                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
+                </div>
+            </section>
+
+            <!-- experiences carousel -->
+            <section 
+                v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
+                class="mt-2"
+            >
+                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+                        {{ $utils.capitalize($t('home.section-experience.title')) }}
+                    </h2>
+                    <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
+                        {{ $utils.capitalize($t('home.btn-see-all')) }}
+                    </router-link>
+                </div>
+                <div class="">
+                    <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
+                </div>
+            </section>
+
+            <SocialNetworks v-if="hotelData" />
+        </div>
+
+        <!-- forms -->
+        <ResetPasswordBottomSheet 
+            v-if="showResetPasswordBottomSheet"
+            :open="true"
         />
-    </div>
-
-    <div 
-        class="px-3 sp:px-4 mt-4 sp:mt-6"
-    >
-        <WACardBanner 
-            @click="goGuests"
-            :title="$t('checkin.cardBanner.title')"
-            :subtitle="$t('checkin.cardBanner.subtitle')"
-            :active-custom="true"
-            nameIconLeft="WA.checkin.user"
+        <RegisterOrLoginBottomSheet 
+            v-if="showRegisterOrLoginBottomSheet"
+            :open="true"
         />
-    </div>
+        <CompleteRegisterBottomSheet 
+            v-if="showCompleteRegisterBottomSheet"
+            :open="true"
+        />
+        <CreateStayBottomSheet 
+            v-if="showCreateStayBottomSheet"
+            :open="true"
+        />
+        <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
+        <div 
+            v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
+            class="fixed top-0 left-0 w-screen h-screen z-[900]"
+        ></div>
 
-    <!-- carousel's -->
-    <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
-        <!-- facilities carousel -->
-        <section 
-            v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-        >
-            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                    {{ $utils.capitalize($t('home.section-facility.title')) }}
-                </h2>
-                <a 
-                    @click="goFacilities()" 
-                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                >
-                    {{ $utils.capitalize($t('home.btn-see-all')) }}
-                </a>
-            </div>
-            <div class="">
-                <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
-            </div>
-        </section>
+    </PageTransitionGlobal>
 
-        <!-- what visit carousel -->
-        <section 
-            v-if="showWhatvisitSection"
-            class="mt-2"
-        >
-            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                    {{ $utils.capitalize($t('home.section-what-visit.title')) }}
-                </h2>
-                <a 
-                    @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
-                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                >
-                    {{ $utils.capitalize($t('home.btn-see-all')) }}
-                </a>
-            </div>
-            <div class="">
-                <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
-            </div>
-        </section>
-
-        <!-- where eat carousel -->
-        <section 
-        v-if="showWhereeatSection"
-            class="mt-2"
-        >
-            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                    {{ $utils.capitalize($t('home.section-where-eat.title')) }}
-                </h2>
-                <a 
-                    @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
-                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                >
-                    {{ $utils.capitalize($t('home.btn-see-all')) }}
-                </a>
-            </div>
-            <div class="">
-                <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
-            </div>
-        </section>
-
-        <!-- leisure carousel -->
-        <section 
-            v-if="showLeisureSection"
-            class="mt-2"
-        >
-            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                    {{ $utils.capitalize($t('home.section-leisure.title')) }}
-                </h2>
-                <a 
-                    @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
-                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                >
-                    {{ $utils.capitalize($t('home.btn-see-all')) }}
-                </a>
-            </div>
-            <div class="">
-                <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
-            </div>
-        </section>
-
-        <!-- experiences carousel -->
-        <section 
-            v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-            class="mt-2"
-        >
-            <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                    {{ $utils.capitalize($t('home.section-experience.title')) }}
-                </h2>
-                <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
-                    {{ $utils.capitalize($t('home.btn-see-all')) }}
-                </router-link>
-            </div>
-            <div class="">
-                <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
-            </div>
-        </section>
-
-        <SocialNetworks />
-    </div>
-
-    <!-- forms -->
-    <ResetPasswordBottomSheet 
-        v-if="showResetPasswordBottomSheet"
-        :open="true"
-    />
-    <RegisterOrLoginBottomSheet 
-        v-if="showRegisterOrLoginBottomSheet"
-        :open="true"
-    />
-    <CompleteRegisterBottomSheet 
-        v-if="showCompleteRegisterBottomSheet"
-        :open="true"
-    />
-    <CreateStayBottomSheet 
-        v-if="showCreateStayBottomSheet"
-        :open="true"
-    />
-    <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
-    <div 
-        v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
-        class="fixed top-0 left-0 w-screen h-screen z-[900]"
-    ></div>
 </template>
 <script setup>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed, ref, watch, watchEffect } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -174,18 +179,22 @@ import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import WACardBanner from '@/components/WACardBanner.vue';
 
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore();
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore();
-const { hotelData } = hotelStore
+// const { hotelData } = hotelStore
 import { usePlaceStore } from '@/stores/modules/place'
 const placeStore = usePlaceStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
-
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 const props = defineProps({
     acform: {
@@ -202,13 +211,32 @@ const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 
-onMounted(() => {
-    loadCrossellings();
-    loadCrossellingsPlaces();
-    getPlaceCategories();
+onMounted(async () => {
+    if (hotelData) {
+        loadData();
+    }
+    // loadCrossellings();
+    // loadCrossellingsPlaces();
+    // getPlaceCategories();
     // console.log('test guestData',guestStore.guestData)
     
-})
+});
+
+const hotelData = computed(() => {
+    return hotelStore.hotelData;
+});
+
+watchEffect(hotelData, function(val) {
+    if (val) {
+        loadData();
+    }
+});
+
+async function loadData () {
+    startLoading(SECTIONS.HOME.GLOBAL);
+    await Promise.all([loadCrossellings(), loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    stopLoading(SECTIONS.HOME.GLOBAL);
+}
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
@@ -225,7 +253,7 @@ async function loadCrossellingsPlaces () {
 }
 
 async function getPlaceCategories(){
-    const response = await placeStore.$apiGetCategoriesByType({city: hotelData?.zone, all: true});
+    const response = await placeStore.$apiGetCategoriesByType({city: hotelData.value?.zone, all: true});
     if(response.ok)placeCategories.value = response.data;
     let typePlacesIds = placeCategories.value?.reduce((categoriesObject, categoryCurrent) => {
         if ((categoryCurrent.name_type_place == 'Qué visitar') && !categoriesObject.catWhatVisitId) {
