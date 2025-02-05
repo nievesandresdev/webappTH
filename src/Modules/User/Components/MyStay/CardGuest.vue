@@ -87,6 +87,7 @@
             <PrimaryButton 
                 classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
                 classContainer="mt-6"
+                @click="deleteCheckin"
             >
                 Eliminar Check-in
             </PrimaryButton> 
@@ -156,6 +157,19 @@ async function deleteGuestOfStay(){
         }, 500);
     }
 }
+
+async function deleteCheckin(){
+    let response = await guestStore.$deleteCheckinData(checkinId.value);
+    closeModalDeleteCheckin()
+    if(response){
+        emit('reloadGuestsList')
+        setTimeout(() => {
+            toastSuccess('Checkin Eliminado');
+        }, 500);
+    }
+}
+
+
 
 </script>
 <style scoped>

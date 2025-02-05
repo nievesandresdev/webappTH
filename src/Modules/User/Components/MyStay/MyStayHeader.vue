@@ -15,6 +15,10 @@ const route = useRoute();
 const { t } = useI18n();
 
 import HeaderProfile from '@/layout/Components/HeaderProfile.vue';
+
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
+
 const tabsMenu = computed(() => [
     {    
         title: $utils.titleCase(t('checkin.header.mystay')),
@@ -22,7 +26,7 @@ const tabsMenu = computed(() => [
         iconDefault: `WA.stay.DISABLED`,
         iconSelected: `WA.stay`,
         isActive: route.name == 'MyStay',
-        onClick: () => router.push({ name: 'MyStay' }),
+        onClick: () => router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } }),
         notify: 0
     },
     {    
