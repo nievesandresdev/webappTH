@@ -25,6 +25,7 @@
                 :isLoading="loading"
                 showQueryButton
                 showButtonShared
+                @stayClick="goMyStay"
                 v-if="!$utils.isMockup()"
             />
             <FakeStayCard v-if="$utils.isMockup()"/>
@@ -174,6 +175,10 @@ const openModalRewards = () => {
         openModalReferent.value = true;
     }
 };
+
+function goMyStay(){
+    router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } });
+}
 
 const handleMyStays = () => {
     router.push({ name: 'MyStays' });

@@ -13,7 +13,8 @@ import {
     createAccessInStayApi,
     deleteGuestOfStayApi,
     saveAndFindValidLastStayApi,
-    saveCheckinDataApi
+    saveCheckinDataApi,
+    deleteCheckinDataApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -268,6 +269,16 @@ export const useGuestStore = defineStore('guest', () => {
         }
         return false
     }
+
+    const $deleteCheckinData = async (guestId) => {
+        const response = await deleteCheckinDataApi({id:guestId})
+        
+        const { ok } = response   
+        if(ok){
+            return response.data
+        }
+        return false
+    }
     
 
     return {
@@ -292,7 +303,8 @@ export const useGuestStore = defineStore('guest', () => {
         deleteGuestOfStay,
         saveAndFindValidLastStay,
         findAndValidLastStayAndLogHotel,
-        $saveCheckinData
+        $saveCheckinData,
+        $deleteCheckinData
     }
 
 })

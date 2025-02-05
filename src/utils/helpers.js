@@ -22,8 +22,10 @@ export function  $formatTypeLodging (){
 };
 
 export function $currentPeriod() {
+
     const hotelStore = useHotelStore();
     const stayStore = useStayStore();
+    if(!stayStore.stayData) return null;
 
     // Obtén las fechas y horas de check-in y check-out
     const { check_in, check_out } = stayStore.stayData;

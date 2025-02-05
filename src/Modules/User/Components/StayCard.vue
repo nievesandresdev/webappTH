@@ -1,6 +1,6 @@
 <template>
     <div 
-      class="flex flex-col p-4 gap-2 w-full rounded-[20px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative"
+      class="flex flex-col p-4 gap-2 w-full rounded-[20px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative shadow-guest"
       :style="{ borderColor: colorBorder }"
       :class="{' hshadow-button' : shadowContainer}"
       @click="handleStayClick()"

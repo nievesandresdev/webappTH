@@ -20,4 +20,4 @@ export const updatePasswordToApi = (data) => apiHttp('POST', `${guestPath}/updat
 export const updateDataGuest = (data) => apiHttp('POST', `${guestPath}/updateDataGuest`, data,{},'API_GENERAL',true)
 
 export const saveCheckinDataApi = (params) => apiHttp('POST', `${guestPath}/saveCheckinData/`, params)
-
+export const deleteCheckinDataApi = (params) => apiHttp('POST', `${guestPath}/deleteCheckinData/`, params)

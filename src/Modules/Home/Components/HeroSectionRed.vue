@@ -40,6 +40,6 @@ onMounted(()=>{
 })
 
 function goMyStay(){
-    router.push({ name: 'MyStay' });
+    router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } });
 }
 </script>
