@@ -37,7 +37,7 @@ const formatter = new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
 });
-/* 
+
 const amountFormat = computed(() => {
     if(hotelData.referrals?.type_discount == 'percentage') {
         return  `${hotelData.referrals?.amount}%`
@@ -45,8 +45,8 @@ const amountFormat = computed(() => {
         return `${formatter.format(hotelData.referrals?.amount)}€`
     }
     
-}); */
-/* 
+});
+
 const openModalShareReferrals = () => {
     const data = {
         title: '¡Obtén un descuento especial!',
@@ -54,7 +54,7 @@ const openModalShareReferrals = () => {
 
     };
     shareContent(data);
-} */
+}
 
 const closeModal = () => {
     openModal.value = false;
