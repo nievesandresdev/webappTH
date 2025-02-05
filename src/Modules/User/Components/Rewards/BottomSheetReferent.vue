@@ -4,7 +4,7 @@
         :isOpen="openModal" 
         showButton 
         :button-text="$t('profile.rewards.button-recommend')" 
-        @handleClick="openModalConfirmReservation" 
+        @handleClick="openModalShare" 
         :img-header="'/assets/icons/rewards/referent.svg'"
     >
         <div class="flex flex-col gap-3">
@@ -39,6 +39,10 @@
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
 import { computed, inject } from 'vue';
 
+import { useShare } from "@/composables/useShare";
+const { shareContent } = useShare();
+
+
 const openModal = inject('openModalReferent');
 const hotelData = inject('hotelData');
 
@@ -62,6 +66,15 @@ const amountReferentFormat = computed(() => {
         return `${formatter.format(hotelData.referent.amount)}€`
     }
 });
+
+const openModalShare = () => {
+    const data = {
+        title: '¡Obtén un descuento especial!',
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
+
+    };
+    shareContent(data);
+}
 
 const closeModal = () => {
     openModal.value = false;
