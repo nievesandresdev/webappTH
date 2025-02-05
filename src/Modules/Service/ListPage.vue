@@ -117,7 +117,7 @@ function loadTabs () {
     tabsHeader.value = [
         {
             title: t('service.confort.title'),
-            exclude: hotelStore.hotelData.show_confort,
+            exclude: !hotelStore.hotelData.show_confort,
             iconDefault: 'WA.CONFORT',
             iconSelected: 'WA.CONFORT.DEFAULT',
             isActive: 'CONFORT' == formFilter.type,
@@ -125,7 +125,7 @@ function loadTabs () {
         },
         {
             title: t('service.transport.title'),
-            exclude: hotelStore.hotelData.show_transport,
+            exclude: !hotelStore.hotelData.show_transport,
             iconDefault: 'WA.TRANSPORT',
             iconSelected: 'WA.TRANSPORT.DEFAULT',
             isActive: 'TRANSPORT' == formFilter.type,
@@ -133,7 +133,7 @@ function loadTabs () {
         },
         {
             title: t('service.activity.title'),
-            exclude: hotelStore.hotelData.show_experiences,
+            exclude: !hotelStore.hotelData.show_experiences,
             iconDefault: 'WA.ACTIVITY',
             iconSelected: 'WA.ACTIVITY.DEFAULT',
             isActive: 'ACTIVITY' == formFilter.type,

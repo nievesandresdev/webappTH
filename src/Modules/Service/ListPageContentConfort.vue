@@ -100,6 +100,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
 onMounted(() => {
     // initScrollListener();
     submitFilter({showPreloader: true});
+    console.log('confort');
 });
 
 

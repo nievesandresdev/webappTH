@@ -145,6 +145,7 @@ async function loadItems () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
     const response = await experienceStore.$apiGetAll({page: page.value,...query});
+    console.log('response', response);
     if (response.ok) {
         Object.assign(paginateData, response.data.experiences.paginate);
         page.value = paginateData.current_page;
