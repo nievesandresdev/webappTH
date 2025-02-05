@@ -1,9 +1,9 @@
 <!-- BaseInputPhone.vue -->
 <template>
-    <div class="flex h-10 rounded-[10px]">
+    <div class="flex h-7 sp:h-10 rounded-[6px] sp:rounded-[10px]">
       <!-- Dropdown con la lista de códigos -->
       <div 
-        class="px-2 rounded-dropdown border border-r-none"
+        class="px-1 sp:px-2 rounded-dropdown border border-r-none"
         :class="{'border-[#333]':!hasError,'hborder-alert-negative':hasError}"
       >
         <!-- Notar el nuevo `@selected-code-length="onCodeLength"` -->
@@ -69,5 +69,11 @@
   .rounded-dropdown {
     border-radius: 10px 0px 0px 10px;
   }
+
+  @media (max-width: 224px) {
+    .rounded-dropdown {
+      border-radius: 6px 0px 0px 6px;
+    }
+}
   </style>
   

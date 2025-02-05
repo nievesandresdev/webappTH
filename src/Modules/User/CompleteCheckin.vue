@@ -7,7 +7,7 @@
             <ThirdStep v-else-if="currentStep == 3" /> 
             <FirstStep v-else /> 
             <div 
-                class="my-6 text-center"
+                class="my-3 sp:my-6 text-center"
                 v-if="currentStep < 3"
             >
                 <button 
@@ -21,7 +21,7 @@
         <div 
             v-if="currentStep == numberStepsEnabled" 
         >
-            <p class="lato text-xs leading-[16px] font-medium">
+            <p class="lato text-[8px] sp:text-xs leading-[12px] sp:leading-[16px] font-medium">
                 Al presionar el botón “Finalizar”, declaro que acepto las 
                 <span class="font-bold underline" @click="isPoliciesOpen = true">políticas y normas </span>
                 del alojamiento

@@ -44,7 +44,7 @@
             </div>
         </template>
         <template v-else>
-            <template v-if="$currentPeriod() == 'pre-stay'">
+            <template v-if="$currentPeriod() == 'pre-stay' && hotelStore.hotelData?.show_checkin_stay">
                 <router-link 
                     class="block mt-4"
                     :to="{ name:'CompleteCheckin', params:{ id: data.id }}"
@@ -111,6 +111,8 @@ import ModalNative from '@/components/ModalNative.vue'
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
