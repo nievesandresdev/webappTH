@@ -1,11 +1,14 @@
 <template>
+
+<div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+
 <AppHeader
     fixed
     :tabs="tabsHeader"
 >
     <template v-slot:titleOrSearch>
         <InputSearch
-            :empty-filters="emptyFilters"
+            :empty-filters="emptyFilters"   	 
             @search="searchHandle"
             @activateSearch="activateSearchHandle"
             @openFilter="openFilter"
@@ -13,16 +16,14 @@
     </template>
 </AppHeader>
 
-    <div class="flex flex-col">
-        <div class="h-[70px]  sp:h-[126px] w-full">
-            d
-        </div>
-        <ListPageContent>
-            <template v-slot:confort>
-                <router-view />
-            </template>
-        </ListPageContent>
+<div class="flex flex-col">
+    <div class="h-[95px]  sp:h-[126px] w-full">
+        d
     </div>
+    <router-view />
+</div>
+
+<ListPageBottomSheetFilter />
 
 </template>
 
@@ -36,12 +37,18 @@ const route = useRouter();
 // COMPONENTS
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import InputSearch from './components/InputSearch.vue';
-import ListPageContent from './ListPageContent.vue';
+import ListPageBottomSheetFilter from './ListPageBottomSheetFilter.vue';
 
 // STORE
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
+import { useExperienceStore } from '@/stores/modules/experience';
+const experienceStore = useExperienceStore();
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 // DATA
 
@@ -69,13 +76,13 @@ const paginateData = reactive({
     to: 0,
 });
 
-const tabsHeader = ref();
+const tabsHeader = ref([]);
 
 
 onMounted(() => {
+    loadForFilterGlobal();
     loadType();
     loadTabs();
-    loadForFilterGlobal();
 });
 
 // COMPUTED
@@ -93,6 +100,11 @@ const emptyFilters = computed(() => {
 watch(formFilter, function(value) {
     serviceStore.setDataFilterList(formFilter);
 });
+watch ( () => route.currentRoute.value, (valCurrent) => {
+    loadForFilterGlobal();
+    loadType();
+    loadTabs();
+});
 
 // FUNCTION
 function loadForFilterGlobal () {
@@ -104,34 +116,35 @@ function loadType () {
 function loadTabs () {
     tabsHeader.value = [
         {
-            title: 'Confort',
-            exclude: false,
+            title: t('service.confort.title'),
+            exclude: !hotelStore.hotelData.show_confort,
             iconDefault: 'WA.CONFORT',
             iconSelected: 'WA.CONFORT.DEFAULT',
             isActive: 'CONFORT' == formFilter.type,
-            onClick: () => changeCategory('CONFORT'),
+            onClick: () => changeType('Confort'),
         },
         {
-            title: 'Transporte',
-            exclude: false,
+            title: t('service.transport.title'),
+            exclude: !hotelStore.hotelData.show_transport,
             iconDefault: 'WA.TRANSPORT',
             iconSelected: 'WA.TRANSPORT.DEFAULT',
             isActive: 'TRANSPORT' == formFilter.type,
-            onClick: () => changeCategory('TRANSPORT'),
+            onClick: () => changeType('Transport'),
         },
         {
-            title: 'Actividades',
-            exclude: false,
+            title: t('service.activity.title'),
+            exclude: !hotelStore.hotelData.show_experiences,
             iconDefault: 'WA.ACTIVITY',
             iconSelected: 'WA.ACTIVITY.DEFAULT',
             isActive: 'ACTIVITY' == formFilter.type,
-            onClick: () => changeCategory('ACTIVITY'),
+            onClick: () => changeType('Activity'),
         },
     ];
 }
 
-function changeCategory (type = null) {
-    
+function changeType (type = null) {
+    formFilter.type = type.toUpperCase();
+    route.push({ name: type });
 }
 
 async function searchHandle ($event) {
@@ -140,12 +153,26 @@ async function searchHandle ($event) {
     formFilter.search = $event?.target?.value ?? '';
     page.value = 1;
     servicesData.value = [];
-    await loadAll({showPreloader: false});
     loadingSearch.value = false;
+}
+
+function activateSearchHandle ($event) {
+    searchingActive.value = false;
+}
+
+async function openFilter () {
+    setTimeout(() => {
+        searchingActive.value = false;
+        isOpenBottomSheetFilter.value = true;
+
+    }, 400);
 }
 
 // PROVIDE
 // provide('hotelData', hotelData);
+provide('experienceStore', experienceStore);
+provide('serviceStore', serviceStore);
+provide('page', page);
 provide('firstLoad', firstLoad);
 provide('formFilter', formFilter);
 provide('paginateData', paginateData);

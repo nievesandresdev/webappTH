@@ -42,7 +42,7 @@
     --Surface-color-1-disabled: #33333380; /*es igual a rgba(51, 51, 51, 0.50)*/
     --Text-on-color-1-disabled: #fafafa40; /*es igual a rgba(250, 250, 250, 0.25)*/
     --Border-secondary: #E9E9E9;
-    --Border-on-color-1-disabled: #ffffff40;
+    --Border-on-color-1-disabled: #ffffff40;/*es igual a rgba(255, 255, 255, 0.25)*/
 
     /*
     gradients
@@ -61,8 +61,16 @@
         disabled
     */
 
+    .hbg-disabled-1{
+        background-color : var(--Surface-color-1-disabled);
+    }
+    
     .disabled-text{
         color : var(--Text-disabled);
+    }
+
+    .disabled-text-2{
+        color : var(--Text-on-color-1-disabled);
     }
 
     .hborder-disabled{

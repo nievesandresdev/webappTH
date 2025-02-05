@@ -56,41 +56,41 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $apiGetAll (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel,  city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getAllApi(newParams)
         return response
     }
     async function $apiGetPointer (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel,  city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getPointerApi(newParams)
         return response
     }
     async function $apiGetCategoriesByType (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
             hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
             hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getCategoriesByTypeApi(newParams)
         return response
     }
     async function $apiGetTypePlaces (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         
         let newParams = {
             hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
             hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getTypePlacesApi(newParams)
@@ -98,9 +98,9 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $getRatingCountsPlaces (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getRatingCountsPlacesApi(newParams)
@@ -108,9 +108,9 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $findById (params, config = { showPreloader: true }) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await findByIdApi(newParams, config)
@@ -123,18 +123,18 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $getReviewsByRating (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel },
+            hotel: { id: idHotel, name: nameName, zone: cityId },
             ...params
         }
         const response = await getReviewsByRatingApi(newParams)
         return response
     }
     async function $getCrosselling (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude } =  hotelStore.hotelData
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelStore.hotelData
         let newParams = {
-            hotel: { id: idHotel, name: nameName, zone: zoneHotel, latitude, longitude},
+            hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
         const response = await getCrossellingApi(newParams)

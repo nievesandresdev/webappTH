@@ -4,6 +4,9 @@ import { i18n } from '@/i18n'
 
 import {
     getAllConforApi,
+    getAllTransportApi,
+    findByIdConfortApi,
+    findByIdTransportApi
 } from '@/api/services/service.services'
 
 import { useMainStore } from '@/stores'
@@ -29,6 +32,17 @@ export const useServiceStore = defineStore('service', () => {
         }
 
     // ACTIONS
+    function $loadImage (item,custom = null) {
+        let { URL_STORAGE } = mainStore;
+
+        let { image: path, type, url, api } = item ?? {};
+        if (api) {
+            return url;
+        }
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${item?.image}`;
+
+    }
 
     function getHotelParams(params = {}) {
         const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelStore.hotelData;
@@ -44,12 +58,35 @@ export const useServiceStore = defineStore('service', () => {
         // console.log(response, 'response')
         return response
     }
+    async function $apiDetAllTransportApi (params) {
+        let newParams = getHotelParams(params);
+        const response = await getAllTransportApi(newParams)
+        // console.log(response, 'response')
+        return response
+    }
+    
+    async function $findByIdConfort (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdConfortApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
+    async function $findByIdTransport (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdTransportApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
 
     //
     return {
         dataFilterGlobal,
         setDataFilterList,
         $apiDetAllConforApi,
+        $apiDetAllTransportApi,
+        $loadImage,
+        $findByIdConfort,
+        $findByIdTransport,
     }
 
 })

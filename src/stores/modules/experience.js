@@ -40,9 +40,9 @@ export const useExperienceStore = defineStore('experience', () => {
     // ACTIONS
 
     function getHotelParams(params = {}) {
-        const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelStore.hotelData;
+        const { id: idHotel, name: nameHotel, zone: zoneHotel, city_id: cityId } = hotelStore.hotelData;
         return {
-            hotel: { id: idHotel, name: nameHotel, zone: zoneHotel },
+            hotel: { id: idHotel, name: nameHotel, zone: cityId },
             ...params
         };
     }
@@ -52,6 +52,14 @@ export const useExperienceStore = defineStore('experience', () => {
         let url = `${URL_STORAGE}/storage/experiences/${path}`
         return url
     }
+    // function formatImage (item) {
+    //     let { image: path, type, url, api } = item ?? {};
+    //     if (api) {
+    //         return url;
+    //     }
+    //     if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+    //     return `${URL_STORAGE}/storage/places/${item?.image}`;
+    // }
 
     async function $apiGetAll (params) {
         let newParams = getHotelParams(params);

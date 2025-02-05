@@ -12,7 +12,6 @@
       class="bottom-sheet relative pt-[6px] sp:pt-[12px]"
       :style="{ height: sheetHeight, zIndex: isFullFront ? '100000' : '2000' }"
     >
-      
       <div
         class="flex justify-center py-[6px] sp:py-[12px] w-full absolute top-0 left-0"
         id="handlebar-content"
@@ -56,13 +55,17 @@ const props = defineProps({
     type: String,
     default: 'top',
   },
+  maxHeight: {
+    type: String,
+    default: null,
+  },
   isFullFront: {
     type: Boolean,
     default: false,
   }
 });
 
-const { position, open, isStepThree } = toRefs(props);
+const { position, open, isStepThree, maxHeight } = toRefs(props);
 
 // Alturas definidas para cada caso
 const heights = {
@@ -72,8 +75,7 @@ const heights = {
 
 // Inicia en la posición central
 const currentHeightIndex = ref(isStepThree.value ? 1 : 1);
-const sheetHeight = ref(isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : heights.dragTwoStep[currentHeightIndex.value]);
-
+const sheetHeight = ref(isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : maxHeight ? ['0%', `${maxHeight.value}%`] : heights.dragTwoStep[currentHeightIndex.value]);
 let startY = 0;
 let isDragging = false;
 

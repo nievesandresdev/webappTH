@@ -5,6 +5,7 @@ import {
     createAndInviteGuestApi,
     existingStayThenMatchAndInviteApi,
     getGuestsAndSortByCurrentguestIdApi,
+    getGuestsAndSortByAccessApi,
     updateStayAndGuestsApi,
     deleteGuestOfStayApi,
     existingThenMatchOrSaveApi,
@@ -103,6 +104,15 @@ export const useStayStore = defineStore('stay', () => {
         return []
     }
 
+    async function getGuestsAndSortByAccess (stayId) {
+        const response = await getGuestsAndSortByAccessApi(stayId)
+        const { ok } = response   
+        if(ok){
+            return response.data;
+        }
+        return []
+    }
+
     async function updateStayAndGuests (params) {
         let response = await updateStayAndGuestsApi(params);
         if(response.ok && response.data && response.data.id == stayData.value.id){
@@ -194,7 +204,8 @@ export const useStayStore = defineStore('stay', () => {
         deleteLocalStayData,
         findByIdInSetLocalStay,
         reloadLocalStay,
-        findById
+        findById,
+        getGuestsAndSortByAccess
     }
 
 })

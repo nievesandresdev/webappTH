@@ -17,7 +17,7 @@
             class="absolute left-1.5 sp:left-3 top-[9px] sp:top-[7.5px] w-2.5 sp:w-6 h-3 sp:h-6 z-10"
         >
         <input
-            id="input-search-experience"
+            id="input-search"
             v-model="valueSearch"
             type="text"
             :placeholder="$t('place.placeholder-search')"
@@ -47,8 +47,8 @@
                 <BaseBadge
                     :showBadge="!emptyFilters"
                     size="medium"
-                    :bg-color="chainStore.$bgColor1"
-                    :border-color="chainStore.$colorContrast1"
+                    :bg-color="chainStore?.$bgColor1"
+                    :border-color="chainStore?.$colorContrast1"
                 >
                     <button
                         class="size-[12px] sp:size-6"
@@ -74,8 +74,8 @@ const emits = defineEmits(['search', 'cleanSearch', 'activateSearch', 'openFilte
 
 const props = defineProps({
     emptyFilters: {
-        type: Number,
-        default: 0,
+        type: Boolean,
+        default: false,
     }
 });
 
@@ -120,7 +120,7 @@ function cleanSearch () {
 }
 
 function focusInputSearch () {
-    const input = document.getElementById("input-search-experience");
+    const input = document.getElementById("input-search");
     if (input) {
         input.focus();
     }

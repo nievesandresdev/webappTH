@@ -13,6 +13,18 @@
             :active-custom="true"
         />
     </div>
+    <div 
+        v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
+    >
+        <WACardBanner 
+            @click="goGuests"
+            :title="$t('checkin.cardBanner.title')"
+            :subtitle="$t('checkin.cardBanner.subtitle')"
+            :active-custom="true"
+            nameIconLeft="WA.checkin.user"
+        />
+    </div>
 
     <!-- carousel's -->
     <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
@@ -161,7 +173,9 @@ import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import WACardBanner from '@/components/WACardBanner.vue';
-
+//
+import { $currentPeriod } from '@/utils/helpers.js'
+//
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'
@@ -238,7 +252,10 @@ const goPlaces = (type, cat) => {
 
 const handleMyStays = () => {
     router.push({ name: 'MyStays' });
-    // authStore.$logoutAndCreateStay();
+};
+
+const goGuests = () => {
+    router.push({ name: 'Guests' });
 };
 
 const formType = computed(() => props.acform);

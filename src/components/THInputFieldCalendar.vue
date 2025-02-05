@@ -15,7 +15,7 @@
                 class="flex-grow truncate"
                 :class="{
                 'lato text-sm font-medium leading-[16px]':true,
-                'disabled-text': !error && !modelValue,
+                'htext-gray-500': !error && !modelValue,
                 'htext-alert-negative': error,
                 'htext-black-100': modelValue,
             }"
@@ -49,7 +49,7 @@
                     :locale="$i18n.locale"
                     v-model="value"
                     expanded
-                    is-range
+                    :is-range="is_range"
                     :min-date="NoMinDate ? null : minDate"
                 />
             </div>
@@ -150,7 +150,11 @@ export default {
         show_error_msg:{
             type:Boolean,
             default:true
-        }
+        },
+        is_range:{
+            type:Boolean,
+            default:true
+        },
     },
     computed: {
         value: {
@@ -158,9 +162,13 @@ export default {
                 return this.modelValue
             },
             set (val) {
-                // console.log('set',val)
-                this.dates_selected = this.formatDate(val).label;
-                this.$emit('update:modelValue', this.formatDate(val))
+                if(this.is_range){
+                    this.dates_selected = this.formatDate(val).label;
+                    this.$emit('update:modelValue', this.formatDate(val))
+                }else{
+                    this.dates_selected = this.moment(val).format("DD/MM/YYYY")
+                    this.$emit('update:modelValue', this.dates_selected)
+                }
                 this.showOptions = false;
             },
         },

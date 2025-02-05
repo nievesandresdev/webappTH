@@ -1,17 +1,23 @@
 <template>
     <div
-         id="list-confort"
-         class=""
+         id="list-transports"
+          class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
     >
         <p
+            v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold lato"
         >
-            16 Servicios encontrados en Confort
+            {{ paginateData.total }} Servicios encontrados en Transporte
         </p>
-        <div class="mt-1 sp:mt-2">
+        <p
+            v-else
+            class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
+        />
+        <div class="mt-2 sp:mt-4">
             <template v-for="(item, index) in (servicesData ?? [])">
                 <CardList
-                    :data="item" 
+                    :data="item"
+                    type-service="TRANSPORT"
                     :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                 />
             </template>
@@ -26,7 +32,9 @@
 
 <script setup>
 
-import { inject, onMounted, ref, computed } from 'vue';
+import { inject, onMounted, ref, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+const route = useRouter();
 
 import { $throttle, $isElementVisible } from '@/utils/utils';
 
@@ -36,10 +44,21 @@ import SkeletonCard from './components/SkeletonCard.vue';
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
 
+const props = defineProps({
+    queryRouter: {
+        type: Object,
+        default: () => ({})
+    } 
+});
+
+// COMPOSABLE
+import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
+
 // INJECT
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
 const firstLoad = inject('firstLoad');
+const page = inject('page');
 const isloadingForm = inject('isloadingForm');
 const searchingActive = inject('searchingActive');
 const formFilter = inject('formFilter');
@@ -48,42 +67,62 @@ const formFilter = inject('formFilter');
 const numberCardsToLoadDefault = ref(20);
 
 // COMPUTED
-const numberCardsToLoad = computed(() => {
-    if(firstLoad.value) return numberCardsToLoadDefault.value;
-    if(!firstLoad.value && paginateData.total == 0) return 0;
-    let remaining = paginateData.total - servicesData.value.length;
-    remaining = remaining < 0 ? 0 : remaining;
-    if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
-        return remaining ;
-    }
-    return numberCardsToLoadDefault.value;
+const numberItemsLoadCurrent = computed(() => {
+    return servicesData.value.length;
 });
 
-onMounted(() => {
-    initScrollListener();
+watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
     submitFilter({showPreloader: true});
 });
+
+const { numberCardsToLoad } = usePaginationScrollInfinite(
+    20,
+    firstLoad,
+    paginateData,
+    numberItemsLoadCurrent,
+    'list-transports',
+    'skeleton-card',
+    isloadingForm,
+    loadItems
+);
+
+// const numberCardsToLoad = computed(() => {
+//     if(firstLoad.value) return numberCardsToLoadDefault.value;
+//     if(!firstLoad.value && paginateData.total == 0) return 0;
+//     let remaining = paginateData.total - servicesData.value.length;
+//     remaining = remaining < 0 ? 0 : remaining;
+//     if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
+//         return remaining ;
+//     }
+//     return numberCardsToLoadDefault.value;
+// });
+
+onMounted(() => {
+    // initScrollListener();
+    submitFilter({showPreloader: true});
+});
+
 
 // FUNCTIONS
 function closeSearch () {
     searchingActive.value = false;
 }
-function initScrollListener () {
-    const container = document?.querySelector('#list-experience');
-    if (container) {
-        container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
-    }
-}
+// function initScrollListener () {
+//     const container = document?.querySelector('#list-experience');
+//     if (container) {
+//         container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
+//     }
+// }
 
-function checkLoadMore () {
-    const skeletons = document.querySelectorAll('.skeleton-experience-card');
-    for (let skeleton of skeletons) {
-        if ($isElementVisible(skeleton) && !isloadingForm.value) {
-            loadItems();
-            break;
-        }
-    }   
-}
+// function checkLoadMore () {
+//     const skeletons = document.querySelectorAll('.skeleton-experience-card');
+//     for (let skeleton of skeletons) {
+//         if ($isElementVisible(skeleton) && !isloadingForm.value) {
+//             loadItems();
+//             break;
+//         }
+//     }   
+// }
 
 function loadMore () {
     page.value += 1;
@@ -96,18 +135,18 @@ function submitFilter (payload){
     loadItems();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'Confort', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        route.push({ name: 'Transport', query: {...filterNonNullAndNonEmpty(formFilter)} });
     }
 }
 
 async function loadItems () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    const response = await serviceStore.$apiDetAllConforApi({page: page.value,...query});
+    const response = await serviceStore.$apiDetAllTransportApi({page: page.value,...query});
     if (response.ok) {
-        Object.assign(paginateData, response.data.experiences.paginate);
+        Object.assign(paginateData, response.data.paginate);
         page.value = paginateData.current_page;
-        experiencesData.value = [...experiencesData.value, ...response.data.experiences.data];
+        servicesData.value = [...servicesData.value, ...response.data.data];
     }
     firstLoad.value = false;
     isloadingForm.value = false;
@@ -154,3 +193,17 @@ function validValueQuery (field, value) {
 
 
 </script>
+
+<style lang="scss">
+
+#list-transports {
+    height: calc(100vh - 70px);
+}
+
+@media (min-width: 300px){
+    #list-transports {
+        height: calc(100vh - 126px);
+    }
+}
+
+</style>

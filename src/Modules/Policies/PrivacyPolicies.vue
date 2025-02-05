@@ -119,13 +119,21 @@ const router = useRouter();
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
+import { useHistoryStore } from '@/stores/modules/history';
+const historyStore = useHistoryStore()
+import { useAuthStore } from '@/stores/modules/auth'
+const authStore = useAuthStore()
 
 async function goBack(){
-    // await guestStore.deleteLocalGuest();
-    if(hotelData){
-        navigateTo('Home',{},{ acform : 'complete' })
+    if(authStore.sessionActive){
+        //si existe session usa el historial
+        historyStore.$goBack(router);
     }else{
-        router.push({ name: 'ChainLanding', query:{acform:'complete'}});
+        if(hotelData){
+            navigateTo('Home',{},{ acform : 'complete' })
+        }else{
+            router.push({ name: 'ChainLanding', query:{acform:'complete'}});
+        }
     }
     
 }
