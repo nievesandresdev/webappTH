@@ -4,7 +4,7 @@
         :isOpen="openModal" 
         showButton 
         :button-text="$t('profile.rewards.button-recommend')" 
-        @handleClick="openModalConfirmReservation" 
+        @handleClick="openModalShareReferrals" 
         :img-header="'/assets/icons/rewards/referred.svg'"
     >
         <div class="flex flex-col gap-3">
@@ -47,7 +47,7 @@ const amountFormat = computed(() => {
     
 });
 
-const openModalConfirmReservation = () => {
+const openModalShareReferrals = () => {
     const data = {
         title: '¡Obtén un descuento especial!',
         text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
