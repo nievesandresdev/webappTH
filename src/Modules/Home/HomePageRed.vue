@@ -214,9 +214,6 @@ const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 
 onMounted(async () => {
-    if (hotelData) {
-        loadData();
-    }
     // loadCrossellings();
     // loadCrossellingsPlaces();
     // getPlaceCategories();
@@ -228,9 +225,8 @@ const hotelData = computed(() => {
     return hotelStore.hotelData;
 });
 
-watchEffect(hotelData, function(val) {
-    console.log('test aval',val)
-    if (val) {
+watchEffect(() => {
+    if (hotelData.value) {;
         loadData();
     }
 });
@@ -256,7 +252,6 @@ async function loadCrossellingsPlaces () {
 }
 
 async function getPlaceCategories(){
-    console.log('test hotel',hotelData.value);
     if(!hotelData.value) return;
     const response = await placeStore.$apiGetCategoriesByType({city: hotelData.value?.zone, all: true});
     if(response.ok)placeCategories.value = response.data;
