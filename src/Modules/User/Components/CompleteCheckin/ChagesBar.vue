@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bottom-0 left-0 py-4 px-8 bg-gradient-h border-t border-white w-full">
+    <div class="fixed bottom-0 left-0 py-2.5 sp:py-4 px-4 sp:px-8 bg-gradient-h border-t border-white w-full">
         <div class="flex w-full h-full items-center">
             <button 
                 v-if="currentStep > 1"
@@ -10,7 +10,7 @@
                 <span class="lato text-sm font-bold leading-[16px] underline">Paso anterior</span>
             </button>
             <PrimaryButton 
-                classes="shadow-guest-2 py-2.5 px-4 h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                classes="shadow-guest-2 py-1.5 sp:py-2.5 px-2.5 sp:px-4 sp:h-10 border rounded-[6px] sp:rounded-[10px] text-center lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]"
                 classContainer="ml-auto"
                 :disabled="!validForm"
                 @click="goToNextStep"

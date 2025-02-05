@@ -67,6 +67,7 @@
             <PrimaryButton 
                 classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
                 classContainer="mt-6"
+                @click="deleteGuestOfStay"
             >
                 Eliminar huésped
             </PrimaryButton> 
@@ -112,6 +113,8 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const emit = defineEmits(['reloadGuestsList'])
 
@@ -148,7 +151,7 @@ function closeModalDeleteCheckin(){
 }
 
 async function deleteGuestOfStay(){
-    modalNativeIsOpen.value = true;
+    modalNativeIsOpen.value = false;
     let response = await guestStore.deleteGuestOfStay(guestDeleteId.value);
     if(response){
         emit('reloadGuestsList')
@@ -159,8 +162,8 @@ async function deleteGuestOfStay(){
 }
 
 async function deleteCheckin(){
+    deleteCheckinIsOpen.value = false;
     let response = await guestStore.$deleteCheckinData(checkinId.value);
-    closeModalDeleteCheckin()
     if(response){
         emit('reloadGuestsList')
         setTimeout(() => {

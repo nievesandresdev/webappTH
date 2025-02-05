@@ -2,18 +2,18 @@
     <div class="h-full">
       <!-- Sección “vista previa” donde se ve, por ejemplo, ES +34 -->
       <div class="flex items-center h-full" @click="toggleOpen">
-        <img class="w-5 h-5 mr-2" src="/assets/icons/WA.llamar.svg" alt="">
+        <img class="w-[14px] sp:w-5 h-[14px] sp:h-5 mr-1.5 sp:mr-2" src="/assets/icons/WA.llamar.svg" alt="">
         <div>
           <!-- Muestra algo como 'ES' y '+34'. Aquí podrías mostrar el label exacto que quieras -->
-          <span class="inline lato text-sm font-medium leading-[16px] pr-1">
+          <span class="inline lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] pr-1">
             <!-- Ejemplo: si en `selectedItem.label` está "ES +34", lo partimos o mostramos completo. -->
             {{ selectedItem ? selectedItem.label.split(' ')[0] : 'ES' }}
           </span>
-          <span class="inline lato text-sm font-medium leading-[16px]">
+          <span class="inline lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
             {{ selectedItem ? selectedItem.label.split(' ')[1] : '+34' }}
           </span>
         </div>
-        <img class="w-5 h-5 ml-2" src="/assets/icons/1.TH.I.DROPDOWN.svg" alt="">
+        <img class="w-[14px] sp:w-5 h-[14px] sp:h-5 ml-1.5 sp:ml-2" src="/assets/icons/1.TH.I.DROPDOWN.svg" alt="">
       </div>
   
       <!-- Fondo oscuro para cerrar el modal -->

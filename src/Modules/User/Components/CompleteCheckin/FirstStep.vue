@@ -28,12 +28,12 @@
         />
         <p
             v-if="secondLastnameError"
-            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+            class="lato text-xs font-bold leading-[12px] sp:leading-[16px] htext-alert-negative"
         >Si tu tipo de documento es NIE, completa este campo</p>
     </div>
     <!-- birthdate -->
     <div class="mt-2" v-if="settings?.first_step?.birthdate?.visible">
-        <label class="block mb-2 lato text-sm font-bold leading-[16px]">Fecha de nacimiento{{ isMandatory('birthdate') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Fecha de nacimiento{{ isMandatory('birthdate') }}</label>
         <THInputCalendar
             :textLabel="$t('stay.create.check-date.placeholder')"
             v-model="form.birthdate"
@@ -45,7 +45,7 @@
     </div>
     <!-- gender -->
     <div class="mt-2" v-if="settings?.first_step?.gender?.visible">
-        <label class="block mb-2 lato text-sm font-bold leading-[16px]">Sexo{{ isMandatory('gender') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Sexo{{ isMandatory('gender') }}</label>
         <THInputField
             icon_left="/assets/icons/WA.sexo.svg"
             :textLabel="'Selecciona una opcion'"
@@ -58,7 +58,7 @@
     </div>
     <!-- phone -->
     <div class="mt-2" v-if="settings?.first_step?.phone?.visible">
-        <label class="block mb-2 lato text-sm font-bold leading-[16px]">Teléfono{{ isMandatory('phone') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Teléfono{{ isMandatory('phone') }}</label>
         <BaseInputPhone 
             v-model="form.phone" 
             @handleError="phoneError = $event"
@@ -66,7 +66,7 @@
     </div>
     <!-- email -->
     <div class="mt-2" v-if="settings?.first_step?.email?.visible">
-        <label class="block mb-2 lato text-sm font-bold leading-[16px]">Correo electrónico{{ isMandatory('email') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Correo electrónico{{ isMandatory('email') }}</label>
         <THInputText
             iconLeft="/assets/icons/WA.mail.svg"
             :placeholder="$t('auth.log-or-register.input')"
@@ -90,7 +90,7 @@
     </div>
     <!-- kinshipRelationship -->
     <div class="mt-2" v-if="settings?.first_step?.kinshipRelationship?.visible">
-        <label class="block mb-2 lato text-sm font-bold leading-[16px]">Relación de parentesco{{ isMandatory('kinshipRelationship') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Relación de parentesco{{ isMandatory('kinshipRelationship') }}</label>
         <THInputField
             icon_left="/assets/icons/WA.parentesco.svg"
             :textLabel="'Cómo se vincula el adulto con el menor'"

@@ -65,7 +65,7 @@ const profileRoutes = [
       },
       {
         name: 'CompleteCheckin',
-        path: 'mi-estancia/huespedes/completar-checkin/:id',
+        path: 'mi-estancia/huespedes/completar-checkin/:id?',
         component: CompleteCheckin,
         props: (route) => ({ paramsRouter: {...route.params} })
       },
