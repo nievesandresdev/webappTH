@@ -3,11 +3,13 @@ const MyStays = () => import('@/Modules/User/MyStays.vue')
 const PersonalInfo = () => import('@/Modules/User/PersonalInfo.vue')
 const ReservationStay = () => import('@/Modules/User/ReservationStay.vue')
 const SelectLanguage = () => import('@/Modules/User/SelectLanguage.vue') 
-const EditStay = () => import('@/Modules/User/EditStay.vue')
+// const EditStay = () => import('@/Modules/User/EditStay.vue')
 const LogoutPage = () => import('@/Modules/Auth/Logout.vue')
 const MyStay = () => import('@/Modules/User/MyStay.vue')
 const Guests = () => import('@/Modules/User/Guests.vue')
 const CompleteCheckin = () => import('@/Modules/User/CompleteCheckin.vue')
+const IsCompleteCheckin = () => import('@/Modules/User/IsCompleteCheckin.vue')
+
 const profileRoutes = [
   {
     path: '',
@@ -38,12 +40,12 @@ const profileRoutes = [
         path: 'reservar-estancia',
         component : ReservationStay
       },
-      {
-        name: 'EditStay',
-        path: 'editar-estancia/:stayId',
-        component: EditStay,
-        props: (route) => ({ paramsRouter: {...route.params} })
-      },
+      // {
+      //   name: 'EditStay',
+      //   path: 'editar-estancia/:stayId',
+      //   component: EditStay,
+      //   props: (route) => ({ paramsRouter: {...route.params} })
+      // },
       {
         name: 'LogoutUser',
         path: 'logout',
@@ -52,8 +54,9 @@ const profileRoutes = [
       },
       {
         name: 'MyStay',
-        path: 'mi-estancia',
-        component: MyStay
+        path: 'mi-estancia/:stayId',
+        component: MyStay,
+        props: (route) => ({ paramsRouter: {...route.params} })
       },
       {
         name: 'Guests',
@@ -63,9 +66,14 @@ const profileRoutes = [
       {
         name: 'CompleteCheckin',
         path: 'mi-estancia/huespedes/completar-checkin/:id',
-        component: CompleteCheckin
+        component: CompleteCheckin,
+        props: (route) => ({ paramsRouter: {...route.params} })
       },
-      
+      {
+        name: 'IsCompleteCheckin',
+        path: 'mi-estancia/huespedes/checkin-completado',
+        component: IsCompleteCheckin
+      },
     ],
   },
 ];

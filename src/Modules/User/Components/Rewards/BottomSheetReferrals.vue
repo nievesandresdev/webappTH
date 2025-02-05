@@ -23,6 +23,13 @@
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
 import { computed, inject } from 'vue';
 
+import { useShare } from "@/composables/useShare";
+const { shareContent } = useShare();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+
 const openModal = inject('openModalReferrals');
 const hotelData = inject('hotelData');
 
@@ -37,7 +44,17 @@ const amountFormat = computed(() => {
     } else {
         return `${formatter.format(hotelData.referrals?.amount)}€`
     }
+    
 });
+
+const openModalConfirmReservation = () => {
+    const data = {
+        title: '¡Obtén un descuento especial!',
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
+
+    };
+    shareContent(data);
+}
 
 const closeModal = () => {
     openModal.value = false;

@@ -13,6 +13,7 @@
             :stay="stayStore.stayData" 
             :showButtonShared="true"
             :isLoading="false"
+            @stayClick="goMyStay"
         />
         <FakeStayCard v-if="$utils.isMockup()"/>
     </div>
@@ -21,6 +22,8 @@
 import { onMounted, ref } from 'vue';
 import StayCard from '@/Modules/User/Components/StayCard.vue'
 import FakeStayCard from './FakeStayCard.vue'
+import { useRouter } from 'vue-router';
+const router = useRouter();
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
@@ -35,4 +38,8 @@ onMounted(()=>{
     }
     // hotelData.value = hotelStore.hotelData;
 })
+
+function goMyStay(){
+    router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } });
+}
 </script>

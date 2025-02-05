@@ -1,6 +1,31 @@
 <template>
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
+    <HeroSectionRed />
+
+    <div 
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
+        v-if="isCheckoutPast"
+    >
+        <WACardBanner 
+            @click="handleMyStays"
+            :title="$t('profile.my_stays.title')"
+            :subtitle="$t('profile.my_stays.subtitle_inactive')"
+            :active-custom="true"
+        />
+    </div>
+    <div 
+        v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
+        class="px-3 sp:px-4 mt-4 sp:mt-6"
+    >
+        <WACardBanner 
+            @click="goGuests"
+            :title="$t('checkin.cardBanner.title')"
+            :subtitle="$t('checkin.cardBanner.subtitle')"
+            :active-custom="true"
+            nameIconLeft="WA.checkin.user"
+        />
+    </div>
 
         <HeroSectionRed />
 
@@ -182,6 +207,9 @@ import WACardBanner from '@/components/WACardBanner.vue';
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
 
+//
+import { $currentPeriod } from '@/utils/helpers.js'
+//
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useStayStore } from '@/stores/modules/stay'

@@ -25,6 +25,7 @@
                 :isLoading="loading"
                 showQueryButton
                 showButtonShared
+                @stayClick="goMyStay"
                 v-if="!$utils.isMockup()"
             />
             <FakeStayCard v-if="$utils.isMockup()"/>
@@ -169,12 +170,15 @@ const loading = ref(true);
 
 const openModalRewards = () => {
     if(hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits) {
-        alert('openModalReferrals')
         openModalReferrals.value = true;
     } else if(hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits) {
         openModalReferent.value = true;
     }
 };
+
+function goMyStay(){
+    router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } });
+}
 
 const handleMyStays = () => {
     router.push({ name: 'MyStays' });

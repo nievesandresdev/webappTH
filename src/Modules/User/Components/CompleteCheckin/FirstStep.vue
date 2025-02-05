@@ -20,7 +20,7 @@
     <!-- secondlastname -->
     <div class="mt-2" v-if="settings?.first_step?.secondLastname?.visible">
         <THInputText
-            :textLabel="`${$t('profile.page_personal_info.form.name.label')}${isMandatory('secondLastname')}`"
+            :textLabel="`${'Segundo apellido'}${isMandatory('secondLastname')}`"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.secondLastname"
             :error="secondLastnameError"
