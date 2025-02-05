@@ -49,18 +49,12 @@ const amountFormat = computed(() => {
 
 const openModalConfirmReservation = () => {
     const data = {
-        title: t('stay.share.title', { hotel: 'RIU Hotels' }), // Ejemplo de nombre de cadena
-        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en RIU Hotels.
-        
-            Código: _RIUHOTEL2025_
-                    
-            Para canjearlo: 
-            1. Selecciona tus fechas de estadía
-            2. Completa tus datos
-            3. Ingresa el código al finalizar tu reserva`,
-         url: 'https://www.riuhotels.com/referidos', // URL de ejemplo
-    }
-    shareContent(data);
+    title: '¡Obtén un descuento especial!',
+    text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en RIU Hotels.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
+   
+
+};
+shareContent(data);
 }
 
 const closeModal = () => {
