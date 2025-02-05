@@ -23,6 +23,13 @@
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
 import { computed, inject } from 'vue';
 
+import { useShare } from "@/composables/useShare";
+const { shareContent } = useShare();
+
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+
 const openModal = inject('openModalReferrals');
 const hotelData = inject('hotelData');
 
@@ -37,7 +44,24 @@ const amountFormat = computed(() => {
     } else {
         return `${formatter.format(hotelData.referrals?.amount)}€`
     }
+    
 });
+
+const openModalConfirmReservation = () => {
+    const data = {
+        title: t('stay.share.title', { hotel: 'RIU Hotels' }), // Ejemplo de nombre de cadena
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en RIU Hotels.
+        
+            Código: _RIUHOTEL2025_
+                    
+            Para canjearlo: 
+            1. Selecciona tus fechas de estadía
+            2. Completa tus datos
+            3. Ingresa el código al finalizar tu reserva`,
+         url: 'https://www.riuhotels.com/referidos', // URL de ejemplo
+    }
+    shareContent(data);
+}
 
 const closeModal = () => {
     openModal.value = false;
