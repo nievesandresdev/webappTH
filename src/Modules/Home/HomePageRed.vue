@@ -1,32 +1,6 @@
 <template>
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
-    <HeroSectionRed />
-
-    <div 
-        class="px-3 sp:px-4 mt-4 sp:mt-6"
-        v-if="isCheckoutPast"
-    >
-        <WACardBanner 
-            @click="handleMyStays"
-            :title="$t('profile.my_stays.title')"
-            :subtitle="$t('profile.my_stays.subtitle_inactive')"
-            :active-custom="true"
-        />
-    </div>
-    <div 
-        v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
-        class="px-3 sp:px-4 mt-4 sp:mt-6"
-    >
-        <WACardBanner 
-            @click="goGuests"
-            :title="$t('checkin.cardBanner.title')"
-            :subtitle="$t('checkin.cardBanner.subtitle')"
-            :active-custom="true"
-            nameIconLeft="WA.checkin.user"
-        />
-    </div>
-
         <HeroSectionRed />
 
         <div 
@@ -40,8 +14,8 @@
                 :active-custom="true"
             />
         </div>
-
         <div 
+            v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
             class="px-3 sp:px-4 mt-4 sp:mt-6"
         >
             <WACardBanner 
@@ -255,6 +229,7 @@ const hotelData = computed(() => {
 });
 
 watchEffect(hotelData, function(val) {
+    console.log('test aval',val)
     if (val) {
         loadData();
     }
@@ -281,6 +256,8 @@ async function loadCrossellingsPlaces () {
 }
 
 async function getPlaceCategories(){
+    console.log('test hotel',hotelData.value);
+    if(!hotelData.value) return;
     const response = await placeStore.$apiGetCategoriesByType({city: hotelData.value?.zone, all: true});
     if(response.ok)placeCategories.value = response.data;
     let typePlacesIds = placeCategories.value?.reduce((categoriesObject, categoryCurrent) => {
