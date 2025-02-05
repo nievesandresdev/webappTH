@@ -46,13 +46,21 @@ export function $currentPeriod() {
     }
 }
 
-export async function  $openShareMenu (){ 
+export async function  $openShareMenu (concept = 'invitetToWebapp', params = {}){ 
 
     const { shareContent } = useShare();
     const hotelStore = useHotelStore()
     const stayStore = useStayStore();
 
-    let shareUrl = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
+    let shareUrl;
+    switch (concept) {
+        case 'inviteToCheckin':
+            shareUrl = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,'mi-estancia/huespedes',`e=${stayStore.stayData?.id}&g=${params.guestId}`);
+            break;
+        default:
+            shareUrl = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
+            break;
+    }
     let data = {
         title: i18n.global.t('stay.share.title', { hotel: hotelStore.hotelData.name }),
         text: i18n.global.t('stay.share.text'),

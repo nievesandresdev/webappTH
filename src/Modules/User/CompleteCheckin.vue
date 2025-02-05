@@ -1,13 +1,94 @@
 <template>
     <Head />
-    <div class="pt-6 pb-[100px] px-4">
-        <SecondStep v-if="currentStep == 2" /> 
-        <ThirdStep v-else-if="currentStep == 3" /> 
-        <FirstStep v-else /> 
-        <ChagesBar />
+    <div class="pt-6 pb-[100px] px-4 relative">
+        <div :class="{'min-h-container':currentStep == numberStepsEnabled}">
+            <SecondStep v-if="currentStep == 2" /> 
+            <ThirdStep v-else-if="currentStep == 3" /> 
+            <FirstStep v-else /> 
+            <div 
+                class="my-6 text-center"
+                v-if="currentStep < 3"
+            >
+                <button 
+                    @click="isWhyModalOpen = true"
+                    class="lato text-sm font-bold leading-[16px] underline"
+                >
+                    ¿Por qué pedimos estos datos?
+                </button>
+            </div>
+        </div>
+        <div 
+            v-if="currentStep == numberStepsEnabled" 
+        >
+            <p class="lato text-xs leading-[16px] font-medium">
+                Al presionar el botón “Finalizar”, declaro que acepto las 
+                <span class="font-bold underline" @click="isPoliciesOpen = true">políticas y normas </span>
+                del alojamiento
+            </p>
+        </div>
     </div>
-    
-    
+    <ChagesBar />
+    <ModalNative width="327px" top="18%" @closeModal="isWhyModalOpen = false" :openProp="isWhyModalOpen">
+        <div class="p-6">
+            <h2 class="lato text-lg font-bold leading-[20px]">¿Por qué pedimos estos datos?</h2>
+            <ul class="mt-6 pl-6">
+                <li class="lato text-sm leading-[16px] list-disc">
+                    La ley local exige que los alojamientos turísticos registren a todos sus huéspedes.
+                </li>
+                <li class="lato text-sm leading-[16px] list-disc mt-3">
+                    Por eso, necesitamos algunos datos personales básicos y obligatorios.
+                </li>
+                <li class="lato text-sm leading-[16px] list-disc mt-3">
+                    Completar el check-in online antes de tu llegada te ahorrará tiempo, evitando tener que proporcionar esta información en el alojamiento.
+                </li>
+                <li class="lato text-sm leading-[16px] list-disc mt-3">
+                    Tus datos se procesarán de manera segura y conforme al Reglamento General de Protección de Datos (RGPD). 
+                </li>
+                <li class="lato text-sm leading-[16px] list-disc mt-3">
+                    Puedes obtener más detalles en nuestra política de privacidad.
+                </li>
+            </ul>
+            <PrimaryButton 
+                classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                classContainer="mt-6"
+                @click="isWhyModalOpen = false"
+            >
+                Entendido
+            </PrimaryButton> 
+            <div class="mt-4 text-center">
+                <button class="underline lato text-sm font-bold leading-[16px]" @click="goPolices">
+                    Ver política de privacidad
+                </button>
+            </div>
+        </div>
+    </ModalNative>
+    <!-- bottom sheet politicas y normas -->
+    <BottomModal 
+        :isOpen="isPoliciesOpen"
+        @update:isOpen="isPoliciesOpen = $event" 
+    >
+        <div class="flex items-center">
+            <img class="w-8 h-8 mr-1" src="/assets/icons/WA.normas.svg" alt="">
+            <h1 class="lato text-[20px] font-bold leading-[28px]">Políticas y Normas</h1>
+        </div>
+        <div class="mt-[28px]">
+            <div 
+                class="border border-color-secondary rounded-[20px] p-4"
+                v-for="(item ,index) in norms" :key="item"
+                :class="{'mt-4': index > 0 }"
+            >
+                <h2 class="lato text-base font-bold leading-[20px]">{{item.title}}</h2>
+                <p class="mt-2 lato text-sm leading-[16px]">
+                    {{item.description}}
+                </p>
+                <div v-if="item.penalization" class="my-2 border-b border-color-secondary"></div>
+                <p v-if="item.penalization" class="lato text-sm leading-[16px]">
+                    <span class="font-bold">Penalización:</span>
+                    {{item.penalization_details}}
+                </p>
+            </div>
+        </div>
+    </BottomModal>
 </template>
 <script setup>
 import Head from './Components/CompleteCheckin/Head.vue'
@@ -15,13 +96,21 @@ import FirstStep from './Components/CompleteCheckin/FirstStep.vue'
 import SecondStep from './Components/CompleteCheckin/SecondStep.vue'
 import ThirdStep from './Components/CompleteCheckin/ThirdStep.vue'
 import ChagesBar from './Components/CompleteCheckin/ChagesBar.vue'
+import ModalNative from '@/components/ModalNative.vue'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 //
 import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
+import { navigateTo } from '@/utils/navigation'
 //
+import { useRouter } from 'vue-router'
+const router = useRouter();
 import { useCheckinStore } from '@/stores/modules/checkin';
 const checkinStore = useCheckinStore();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
+import { useLegalStore } from '@/stores/modules/legal';
+const legalStore = useLegalStore();
 
 const props = defineProps({
     paramsRouter: {
@@ -33,24 +122,24 @@ const { paramsRouter } = toRefs(props)
 
 const form = reactive({
     id:null,//id del huesped actual
-    name:null,
-    lastname:null,
-    secondLastname:null,
+    name:'',
+    lastname:'',
+    secondLastname:'',
     birthdate:null,
-    gender:null,
-    phone:null,
-    email:null,
-    responsibleAdult:null,
-    kinshipRelationship:null,
+    gender:'',
+    phone:'',
+    email:'',
+    responsibleAdult:'',
+    kinshipRelationship:'',
     //
-    nationality:null,
-    docType:null,
-    docSupportNumber:null,
-    docNumber:null,
-    countryResidence:null,
-    postalCode:null,
-    municipality:null,
-    addressResidence:null,
+    nationality:'',
+    docType:'',
+    docSupportNumber:'',
+    docNumber:'',
+    countryResidence:'',
+    postalCode:'',
+    municipality:'',
+    addressResidence:'',
     //
     comment:'',
     stayId: localStorage.getItem('stayId')
@@ -58,14 +147,19 @@ const form = reactive({
 
 const settings = ref(null);
 const currentStep = ref(1);
+const currentGuestData = ref(1);
 const emailError = ref(false);
 const phoneError = ref(false);
+const isWhyModalOpen = ref(false);
+const isPoliciesOpen = ref(false);
+const norms = ref([]);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
-    loadDataGuest();
+    loadDataGuest(paramsRouter.value.id);
     form.id = paramsRouter.value.id;
-    // console.log('test paramsRouter',paramsRouter.value.id)
+    norms.value = await legalStore.$getNormsByHotel();
+    // console.log('test settings',settings.value)
 })
 
 const secondStepEnabled = computed(() => {
@@ -83,10 +177,11 @@ const numberStepsEnabled = computed(() => {
   return sum
 })
 
-function loadDataGuest(dateStr) {
-    form.name = guestStore.guestData.name;
-    form.lastname = guestStore.guestData.lastname;
-    form.email = guestStore.guestData.email;
+async function loadDataGuest(id) {
+    currentGuestData.value = await guestStore.findById(id)
+    form.name = currentGuestData.value.name;
+    form.lastname = currentGuestData.value.lastname;
+    form.email = currentGuestData.value.email;
 }
 
 // Función para parsear la fecha en formato DD/MM/YYYY
@@ -95,6 +190,9 @@ function parseDate(dateStr) {
     return new Date(year, month - 1, day);
 }
 
+function goPolices(dateStr) {
+    router.push({ name:'PrivacyPolicies' })
+}
 // Propiedad computada para verificar si es menor de edad
 const isMinor = computed(() => {
     if (!form.birthdate) {
@@ -154,6 +252,25 @@ const docSupportNumberError = computed(() => {
     return false;
 });
 
+const existsChanges = computed(() => {
+
+    let fieldsFilled = form.name !== currentGuestData.value.name ||form.lastname !== currentGuestData.value.lastname || 
+    form.email !== currentGuestData.value.email;
+    //
+    let firsStepRestant = form.secondLastname.trim() || form.birthdate || form.gender.trim() || form.phone.length > 4 || 
+    form.responsibleAdult.trim() || form.kinshipRelationship.trim();
+    //
+    let seconStep = form.nationality || form.docType || form.docSupportNumber || form.docNumber || form.countryResidence ||
+    form.postalCode || form.municipality ||form.addressResidence;
+
+    // console.log('test fieldsFilled',fieldsFilled)
+    // console.log('test firsStepRestant',firsStepRestant)
+    // console.log('test seconStep',!!seconStep)
+
+    return (!!fieldsFilled) || (!!firsStepRestant) || (!!seconStep);
+});
+
+
 // Observa los cambios en isMinor y actualiza la visibilidad de los campos correspondientes
 watch(isMinor, (newVal) => {
     if (settings.value && settings.value.first_step) {
@@ -202,5 +319,11 @@ provide('phoneError',phoneError)
 provide('secondLastnameError',secondLastnameError)
 provide('docNumberError',docNumberError)
 provide('docSupportNumberError',docSupportNumberError)
+provide('existsChanges',existsChanges)
 
 </script>
+<style scoped>
+.min-h-container{
+    min-height: calc( 72vh - 32px);
+}
+</style>

@@ -6,9 +6,9 @@
             class="mb-4"
             v-for="guest in guestsList" :key="guest.id"
         >
-            <CardGuest :data="guest"/>
+            <CardGuest :data="guest" @reloadGuestsList="loadGuestsList"/>
         </div>
-        <div class="mt-4">
+        <div class="mt-8">
             <button
                 @click="$openShareMenu()"
                 class="w-full h-10 flex justify-center items-center px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] lato text-sm font-bold hshadow-button"
@@ -28,16 +28,17 @@ import { $openShareMenu } from '@/utils/helpers.js'
 
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
-import { useGuestStore } from '@/stores/modules/guest';
-const guestStore = useGuestStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
 const guestsList = ref(null)
 
 onMounted(async() => {
-    guestsList.value = await stayStore.getGuestsAndSortByCurrentguestId(stayStore.stayData?.id,guestStore.guestData?.id)  
+    await loadGuestsList();
+    // console.log('test guestsList',guestsList.value)
 })
 
-
+async function loadGuestsList(){
+    guestsList.value = await stayStore.getGuestsAndSortByAccess(stayStore.stayData?.id)  
+}
 </script>

@@ -9,35 +9,25 @@
                 <img class="w-4 h-4 mr-2" src="/assets/icons/WA.chevron.svg" alt="">
                 <span class="lato text-sm font-bold leading-[16px] underline">Paso anterior</span>
             </button>
-            <button 
-                class="shadow-guest-2 py-2.5 px-4 h-10 border rounded-[10px] text-center ml-auto"
-                :class="{
-                    'border-white hbg-black-100':validForm, 
-                    'hborder-color-disabled hbg-disabled-1':!validForm
-                }"
+            <PrimaryButton 
+                classes="shadow-guest-2 py-2.5 px-4 h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                classContainer="ml-auto"
+                :disabled="!validForm"
                 @click="goToNextStep"
             >
-                <span 
-                    class="lato text-sm font-bold leading-[16px] block"
-                    :class="{
-                        'text-white':validForm, 
-                        'disabled-text-2':!validForm
-                    }"
-                >
                 <template v-if="numberStepsEnabled == currentStep">
                     Finalizar
                 </template>
                 <template v-else>
                     Siguiente
                 </template>
-                    
-                </span>
-            </button>
+            </PrimaryButton> 
         </div>
     </div>
 </template>
 
 <script setup>
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { ref, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter();
@@ -69,7 +59,7 @@ const validForm = computed(() => {
             break;
         case 3:
             // console.log()
-            return form.comment.trim();
+            return true;
             break;
         default:
             stepSettings = {};
@@ -117,6 +107,8 @@ const submit = async () => {
 
 // Método para ir al siguiente paso
 const goToNextStep = () => {
+    if(!validForm.value) return;
+
     if(numberStepsEnabled.value == currentStep.value){
         submit()
         return;

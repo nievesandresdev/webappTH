@@ -5,7 +5,15 @@ export const useHistoryStore = defineStore('history', () => {
   // STATE
   const storedHistory = localStorage.getItem('history')
   const history = ref(storedHistory ? JSON.parse(storedHistory) : [])
-  const excludedRoutes = ref(['ChainLanding', 'SelectLanguage','HotelsList','CreateStayFromChain']);// nombres de ruta para no guardar
+  const excludedRoutes = ref([// nombres de ruta para no guardar
+    'ChainLanding', 
+    'SelectLanguage',
+    'HotelsList',
+    'CreateStayFromChain',
+    'IsCompleteCheckin',
+    'CompleteCheckin',
+    'PrivacyPolicies'
+  ]);
 
   // ACTIONS
   function $initHistory() {

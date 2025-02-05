@@ -131,7 +131,7 @@ export const useAuthStore = defineStore('auth', () => {
     async function $validateSession (to = null, next = null) {
         $getStatusSession();
         // console.log('test vald cond', to.name);
-        const viewsIgnored = ['Home','HotelsList','ChainLanding','CreateStayFromChain'];
+        const viewsIgnored = ['Home','HotelsList','ChainLanding','CreateStayFromChain','PrivacyPolicies'];
         if(!to || to && viewsIgnored.includes(to.name)) return; 
         //
         if(sessionActive.value) return;
