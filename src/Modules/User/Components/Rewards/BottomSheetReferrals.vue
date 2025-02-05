@@ -49,12 +49,11 @@ const amountFormat = computed(() => {
 
 const openModalConfirmReservation = () => {
     const data = {
-    title: '¡Obtén un descuento especial!',
-    text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en RIU Hotels.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
-   
+        title: '¡Obtén un descuento especial!',
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
 
-};
-shareContent(data);
+    };
+    shareContent(data);
 }
 
 const closeModal = () => {
