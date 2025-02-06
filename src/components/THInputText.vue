@@ -83,7 +83,7 @@ export default {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             }
             if(this.iconLeft){
-                classes += ' pl-[34px]';
+                classes += ' pl-[26px] sp:pl-[34px]';
             }
             if(this.iconRight){
                 classes += ' pr-[34px]';
@@ -240,5 +240,11 @@ input::placeholder{
     line-height: 14px;
   }
 
+@media (max-width: 224px) {
+    input::placeholder{
+        font-size: 10px;
+        line-height: 10px;
+    }
+}
 
 </style>

@@ -6,7 +6,7 @@
       <input
         type="number"
         placeholder="Nº teléfono"
-        class="border-none w-full h-full px-2 py-3 rounded-input text-sm leading-[14px]"
+        class="border-none w-full h-full px-1 sp:px-2 py-1.5 sp:py-3 rounded-input text-sm leading-[14px]"
         :value="modelValue"
         @blur="onBlur"
         @input="onInput"
@@ -48,5 +48,15 @@
     color: #A0A0A0;
     line-height: 14px;
   }
+  @media (max-width: 224px) {
+    .rounded-input {
+      border-radius: 0px 6px 6px 0px;
+    }
+    input::placeholder{
+      font-size: 10px;
+      line-height: 10px;
+    }
+  }
+  
   </style>
   

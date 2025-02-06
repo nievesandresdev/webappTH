@@ -1,4 +1,5 @@
 const ProfilePage = () => import('@/Modules/User/ProfilePage.vue')
+const ProfilePageMockup = () => import('@/Modules/User/ProfilePageMockup.vue')
 const MyStays = () => import('@/Modules/User/MyStays.vue')
 const PersonalInfo = () => import('@/Modules/User/PersonalInfo.vue')
 const ReservationStay = () => import('@/Modules/User/ReservationStay.vue')
@@ -18,6 +19,11 @@ const profileRoutes = [
         name: 'Profile',
         path: 'perfil',
         component: ProfilePage
+      },
+      {
+        name: 'ProfileMockup',
+        path: 'perfil-mockup',
+        component: ProfilePageMockup
       },
       {
         name: 'MyStays',
