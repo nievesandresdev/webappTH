@@ -5,9 +5,9 @@
     >
         <div class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] rounded-[10px] relative overflow-hidden">
             <img
-                v-if="data.place_images?.[0]?.url"
+                v-if="data.image?.url"
                 class="object-cover w-full h-full"
-                :src="placeStore.$loadImage(data.place_images?.[0])"
+                :src="placeStore.$loadImage(data.image)"
                 alt="img_act"
                 loading="lazy"
             >
