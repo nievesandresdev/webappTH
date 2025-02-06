@@ -9,10 +9,6 @@ module.exports = defineConfig({
         chunks: "all",
         maxSize: 500000, // Fragmenta archivos grandes en chunks menores de 500KB
       }
-    },
-    externals: {
-      vue: "Vue",
-      "vue-router": "VueRouter",
     }
   },
   devServer: {
