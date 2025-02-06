@@ -1,6 +1,6 @@
 <template>
   <Transition name="fade">
-    <div v-if="loading" class="skeleton-wrapper">
+    <div v-if="loading !== null && loading" class="skeleton-wrapper">
       <component :is="getSkeletonComponent()" />
     </div>
     <div v-else class="content">
@@ -40,7 +40,7 @@ const getSkeletonComponent = () => {
 
 .content {
   opacity: 0;
-  animation: fadeIn 0.3s ease-in-out forwards;
+  animation: fadeIn 0.8s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
