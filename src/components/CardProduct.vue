@@ -5,7 +5,6 @@
     >
         <!-- cursor-pointer -->
         <div class="w-full rounded-t-lg container-image" :class="heightImg">
-            {{data}}
             <img
                 v-if="data.image?.[0]?.url"
                 class="object-cover w-full h-full overflow-hidden rounded-t-lg img lg:h-48 2xl:h-52"
