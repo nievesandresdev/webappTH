@@ -6,7 +6,7 @@
     >
         <CarouselCard
             v-for="(item, index) in items"
-            :img-url="item.image?.url"    
+            :img-url="experienceStore. $loadImage(item.image)"    
             :data="item"
             @click="goExperience(item.slug, $utils.isMockup())"
         >
@@ -50,8 +50,8 @@ import CarouselCard from './CarouselCard.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 // STORE
-import { usePlaceStore } from '@/stores/modules/place'
-const placeStore = usePlaceStore()
+import { useExperienceStore } from '@/stores/modules/experience'
+const experienceStore = useExperienceStore()
 
 const duration = ref(null);
 const props =  defineProps({

@@ -47,10 +47,14 @@ export const useExperienceStore = defineStore('experience', () => {
         };
     }
 
-    function $loadImage (path) {
+    function $loadImage (item) {
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/experiences/${path}`
-        return url
+        let { image: path, type, url, api } = item ?? {};
+        if (api) {
+            return url;
+        }
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${item?.image}`;
     }
     // function formatImage (item) {
     //     let { image: path, type, url, api } = item ?? {};

@@ -213,6 +213,8 @@ const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 
+startLoading(SECTIONS.HOME.GLOBAL);
+
 onMounted(async () => {
     // loadCrossellings();
     // loadCrossellingsPlaces();
@@ -232,7 +234,6 @@ watchEffect(() => {
 });
 
 async function loadData () {
-    startLoading(SECTIONS.HOME.GLOBAL);
     await Promise.all([loadCrossellings(), loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
