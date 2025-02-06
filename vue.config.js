@@ -2,22 +2,6 @@ const { defineConfig } = require('@vue/cli-service');
 
 module.exports = defineConfig({
   transpileDependencies: true,
-
-  // Optimización de Webpack para reducir el tamaño de los archivos
-  configureWebpack: {
-    optimization: {
-      splitChunks: {
-        chunks: "all",
-        maxSize: 500000, // Fragmenta archivos grandes en chunks menores de 500KB
-      }
-    },
-    externals: {
-      vue: "Vue",
-      "vue-router": "VueRouter",
-    }
-  },
-
-  // Configuración del Servidor de Desarrollo
   devServer: {
     host: '0.0.0.0',
     port: 81,
@@ -29,11 +13,11 @@ module.exports = defineConfig({
     //   webSocketURL: 'wss://localhost:81/ws', // Cambia `ws` a `wss`
     // },
     // disableHostCheck: true,
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true
-      }
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://127.0.0.1:8000',
+    //     changeOrigin: true
+    //   }
+    // }
   }
 });
