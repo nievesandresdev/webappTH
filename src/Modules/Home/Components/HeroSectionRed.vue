@@ -8,7 +8,7 @@
     </div>
     <div class="mx-3 sp:mx-4 mt-[-16px] sp:mt-[-24px]">
         <StayCard 
-            v-if="stayStore.stayData && !$utils.isMockup()" 
+            v-if="hotelStore.hotelData && stayStore.stayData && !$utils.isMockup()" 
             :hotel="hotelStore.hotelData" 
             :stay="stayStore.stayData" 
             :showButtonShared="true"

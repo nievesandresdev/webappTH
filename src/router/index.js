@@ -11,6 +11,7 @@ import facilityRoutes from './facilityRoutes'
 import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
 
+
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
 import isMobile from '@/middlewares/isMobile'
@@ -25,6 +26,7 @@ const ScreenNotAllowed = () => import(/* webpackChunkName: "home" */ '@/shared/S
 const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/TestButton.vue')
 const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
+const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
 
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
@@ -40,6 +42,7 @@ function checkHotelSubdomain(to, from, next) {
 const routes = [
   //
   //
+ 
   // Rutas que no requieren el slug del hotel
   ...chainRoutes,
   {
@@ -63,9 +66,11 @@ const routes = [
     path: '/restablecer-contrasena',
     component: ResetPassword
   },
+  
   //
   //
   // Rutas dinámicas (con slug)
+
   {
     path: '/:hotelSlug',
     beforeEnter: [checkHotelSubdomain],
@@ -102,6 +107,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  /* if (to.name === 'ProfileMockup' || to.path.includes('/profile-mockup')) {
+    return next();
+  } */
   const middleware = to.meta.middleware ? [...to.meta.middleware, handleWebAppData] : [handleWebAppData];
   const context = { to, from, next };
   return middleware[0]({

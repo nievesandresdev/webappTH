@@ -4,15 +4,15 @@
         :isOpen="openModal" 
         showButton 
         :button-text="$t('profile.rewards.button-recommend')" 
-        @handleClick="openModalConfirmReservation" 
+        @handleClick="openModalShareReferrals" 
         :img-header="'/assets/icons/rewards/referred.svg'"
     >
         <div class="flex flex-col gap-3">
             <span class="font-bold sp:text-xl lato text-[14px]">{{ $t('profile.rewards.referrals.title') }}</span>
             <div class="flex flex-col">
-                <span class="lato font-bold sp:text-lg text-[12px]">{{ $t('profile.rewards.referrals.discount', { amount: amountFormat }) }}</span>
+                <span class="lato font-bold sp:text-lg text-[12px]">{{ $t('profile.rewards.referrals.discount', { amount: 2500 }) }}</span>
                 <p class="lato sp:text-sm font-normal text-[9px]">
-                    {{ $t('profile.rewards.referrals.description', { amount: amountFormat} ) }}
+                    {{ $t('profile.rewards.referrals.description', { amount: 2500} ) }}
                     
                 </p>
             </div>
@@ -47,19 +47,12 @@ const amountFormat = computed(() => {
     
 });
 
-const openModalConfirmReservation = () => {
+const openModalShareReferrals = () => {
     const data = {
-        title: t('stay.share.title', { hotel: 'RIU Hotels' }), // Ejemplo de nombre de cadena
-        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en RIU Hotels.
-        
-            Código: _RIUHOTEL2025_
-                    
-            Para canjearlo: 
-            1. Selecciona tus fechas de estadía
-            2. Completa tus datos
-            3. Ingresa el código al finalizar tu reserva`,
-         url: 'https://www.riuhotels.com/referidos', // URL de ejemplo
-    }
+        title: '¡Obtén un descuento especial!',
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
+
+    };
     shareContent(data);
 }
 

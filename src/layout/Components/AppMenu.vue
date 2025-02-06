@@ -1,5 +1,5 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-1 sp:px-4 pb-1.5 sp:pb-2 w-full z-[4000]">
+    <div v-if="hotelStore.hotelData" class="container-menu fixed bottom-0 left-0 px-1 sp:px-4 pb-1.5 sp:pb-2 w-full z-[4000]">
         
         <div class="
             menu rounded-[14px] sp:rounded-[20px] py-[6px] sp:py-[10px] px-1 sp:px-4 
@@ -87,7 +87,7 @@ const menuItems = reactive([
     },
     {
         title: $formatTypeLodging(),
-        exclude: !hotelStore.hotelData.show_profile,
+        exclude: !hotelStore.hotelData?.show_profile,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
@@ -95,7 +95,7 @@ const menuItems = reactive([
     },
     {
          title: 'layout.header.facilities',
-         exclude: hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
+         exclude: hotelStore.hotelData?.show_profile || !hotelStore.hotelData?.show_facilities,
          iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
          iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
          to: `/${route.params.hotelSlug}/alojamiento`, 

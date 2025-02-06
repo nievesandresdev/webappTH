@@ -1,31 +1,25 @@
 <template>
-    <SectionBar :title="$t('profile.account')" />
+    <!-- <SectionBar :title="$t('profile.account')" /> -->
+
     <div class="px-3 sp:mt-[100px] mt-[50px]">
         <div class="flex flex-col items-center mt-6">
             <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
             </div> -->
-            <div v-if="!$utils.isMockup()" class="flex justify-center items-center border border-black rounded-full overflow-hidden"
-                 style="width: 40px; height: 40px;">
-                <img :src="$formatImage({url: guestData.avatar, type: guestData.avatar_type})" class="object-cover" :class="{'w-6 h-6' : !guestData.avatar}" alt="User Avatar">
-            </div>
-
-            <div v-if="$utils.isMockup()" class="flex justify-center items-center border border-black rounded-full overflow-hidden"
+            <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
                  style="width: 40px; height: 40px;">
                 <img :src="$formatImage({url: '', type: ''})" class="object-cover" :class="{'w-6 h-6' : false}" alt="User Avatar">
+
+
             </div>
-            <p  v-if="!$utils.isMockup()" class="text-[#333333] text-[15px] sp:text-[20px] font-bold lato sp:mt-2 mt-1">
-                {{ $t('profile.greeting', { name: guestData.name }) }}
-            </p>
-            <p  v-if="$utils.isMockup()" class="text-[#333333] text-[15px] sp:text-[20px] font-bold lato sp:mt-2 mt-1">
+            <p class="text-[#333333] text-[15px] sp:text-[20px] font-bold lato sp:mt-2 mt-1">
                 {{ $t('profile.greeting', { name: 'Huesped' }) }}
             </p>
         </div>
 
-
         <!-- Contenedor de hotel y estancia boton compartir -->
         <div class="sp:mt-6 mt-2">
-            <StayCard 
+            <!-- <StayCard 
                 :hotel="hotelData" 
                 :stay="stayStore.stayData" 
                 @sharedStay="isModalOpen = true"
@@ -34,8 +28,8 @@
                 showButtonShared
                 @stayClick="goMyStay"
                 v-if="!$utils.isMockup()"
-            />
-            <FakeStayCard v-if="$utils.isMockup()"/>
+            /> -->
+            <FakeStayCard/>
         </div>
         <!-- Sección "Mis estancias" -->
         <div class="mt-4">
@@ -50,7 +44,7 @@
         <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
 
         <!-- Sección "Información personal" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
+        <div class="flex items-center justify-between mt-4 gap-2">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.id.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="ID Icon" />
                 <div class="flex flex-col">
@@ -58,11 +52,11 @@
                     <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.personal_info.description') }}</span>
                 </div>
             </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6  transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "Idioma" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="selectLanguage">
+        <div class="flex items-center justify-between mt-4 gap-2">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.PreferenciaIdioma.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="ID Icon" />
                 <div class="flex flex-col">
@@ -70,11 +64,11 @@
                     <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.language.description') }}</span>
                 </div>
             </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6  transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "REservacion" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handleReservationStay">
+        <div class="flex items-center justify-between mt-4 gap-2">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/Wa.reserva.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="Reservation" />
                 <div class="flex flex-col">
@@ -82,11 +76,11 @@
                     <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.book_next_stay.description') }}</span>
                 </div>
             </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6  transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "referido" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits">
+        <div class="flex items-center justify-between mt-4 gap-2" v-show="hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.referido.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="Reservation" />
                 <div class="flex flex-col">
@@ -94,11 +88,11 @@
                     <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.rewards.description') }}</span>
                 </div>
             </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6  transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
          <!-- Sección "referente y referido" -->
-         <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
+         <div class="flex items-center justify-between mt-4 gap-2" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
             <div class="flex items-center gap-2">
                 <img src="/assets/icons/WA.referente.svg" class="w-8 h-8" alt="Reservation" />
                 <div class="flex flex-col">
@@ -106,15 +100,15 @@
                     <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.rewards.descriptionReferentProfile') }}</span>
                 </div>
             </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6  transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
     
         <!-- Cerrar sesión -->
-        <div class="flex items-center justify-center sp:mt-[40px] mt-[30px] gap-2 cursor-pointer">
-            <span class="sp:text-[14px] text-[11px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
+        <div class="flex items-center justify-center sp:mt-[40px] mt-[30px] gap-2 ">
+            <span class="sp:text-[14px] text-[11px] font-bold lato text-[#333333] underline ">{{ $t('profile.logout') }}</span>
         </div>
 
-
+        <pre>{{ hotelStore.hotelData }}</pre>
 
         <ShareStayModal />
         <BottomSheetReferrals />
@@ -163,7 +157,7 @@ if(referentUrl) {
 //provides
 provide('openModalReferrals',openModalReferrals)
 provide('openModalReferent',openModalReferent)
-provide('hotelData',hotelStore?.hotelData)
+provide('hotelData',hotelStore.hotelData)
 
 
 const isModalOpen = ref(false);
@@ -176,13 +170,12 @@ const loading = ref(true);
 
 
 const openModalRewards = () => {
-    if(hotelStore?.hotelData?.show_referrals && !hotelStore?.hotelData?.offer_benefits) {
+    if(hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits) {
         openModalReferrals.value = true;
-    } else if(hotelStore?.hotelData?.show_referrals && hotelStore?.hotelData?.offer_benefits) {
+    } else if(hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits) {
         openModalReferent.value = true;
     }
 };
-
 
 function goMyStay(){
     router.push({ name: 'MyStay', params: { stayId:stayStore.stayData.id } });
@@ -209,7 +202,7 @@ onMounted(async() => {
     stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
 
-    await getHotelbyId(stayData.value.hotel_id);
+    await getHotelbyId(hotelStore.hotelData.id);
 });
 
 
@@ -226,8 +219,6 @@ const getHotelbyId = async (id) => {
     loading.value = false;
   
 };
-
-
 
 const isCheckoutPast = computed(() => {
 if(!stayStore.stayData?.check_out) return
@@ -262,8 +253,6 @@ const $formatImage = (payload) => {
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
 
-
-const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avatar,type: 'STORAGE' }));
 
 
 

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <label v-if="textLabel" class="text-sm font-bold mb-2 block lato leading-[16px]">{{ textLabel }}</label>
+        <label v-if="textLabel" class="text-[10px] sp:text-sm font-bold mb-1 sp:mb-2 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
         <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
         <div class="relative">
-            <img v-if="iconLeft" class="w-5 h-5 absolute left-2 top-2.5" :src="iconLeft">
+            <img v-if="iconLeft" class="w-[14px] sp:w-5 h-[14px] sp:h-5 absolute left-[6px] sp:left-2 top-[8px] sp:top-2.5" :src="iconLeft">
             <input
                 :ref="id"
                 :id="id"
@@ -76,14 +76,14 @@ export default {
         computeClasses() {
             let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
             let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
-            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
+            let classes = `hinput-primary ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             }
             if(this.iconLeft){
-                classes += ' pl-[34px]';
+                classes += ' pl-[26px] sp:pl-[34px]';
             }
             if(this.iconRight){
                 classes += ' pr-[34px]';
@@ -240,5 +240,11 @@ input::placeholder{
     line-height: 14px;
   }
 
+@media (max-width: 224px) {
+    input::placeholder{
+        font-size: 10px;
+        line-height: 10px;
+    }
+}
 
 </style>

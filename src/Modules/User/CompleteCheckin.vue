@@ -1,17 +1,18 @@
 <template>
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 z-[10000] w-screen h-screen"></div>
     <Head />
-    <div class="pt-6 pb-[100px] px-4 relative">
+    <div class="pt-4 sp:pt-6 pb-[100px] px-2 sp:px-4 relative">
         <div :class="{'min-h-container':currentStep == numberStepsEnabled}">
             <SecondStep v-if="currentStep == 2" /> 
             <ThirdStep v-else-if="currentStep == 3" /> 
             <FirstStep v-else /> 
             <div 
-                class="my-6 text-center"
+                class="my-3 sp:my-6 text-center"
                 v-if="currentStep < 3"
             >
                 <button 
                     @click="isWhyModalOpen = true"
-                    class="lato text-sm font-bold leading-[16px] underline"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline"
                 >
                     ¿Por qué pedimos estos datos?
                 </button>
@@ -20,7 +21,7 @@
         <div 
             v-if="currentStep == numberStepsEnabled" 
         >
-            <p class="lato text-xs leading-[16px] font-medium">
+            <p class="lato text-[8px] sp:text-xs leading-[12px] sp:leading-[16px] font-medium">
                 Al presionar el botón “Finalizar”, declaro que acepto las 
                 <span class="font-bold underline" @click="isPoliciesOpen = true">políticas y normas </span>
                 del alojamiento
@@ -178,6 +179,7 @@ const numberStepsEnabled = computed(() => {
 })
 
 async function loadDataGuest(id) {
+    if(!id) return;
     currentGuestData.value = await guestStore.findById(id)
     form.name = currentGuestData.value.name;
     form.lastname = currentGuestData.value.lastname;
