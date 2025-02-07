@@ -44,7 +44,7 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $load (reload = false, routeInfo = null) {
-        console.log('test $load',hotelData.value?.name);
+        
         let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
         let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
 
@@ -53,6 +53,7 @@ export const useHotelStore = defineStore('hotel', () => {
                 subdomain: localStorage.getItem('subdomain'),
             }
             const response = await findByParamsApi(params)
+            console.log('test se cargo el hotel',hotelData.value?.name);
             const { ok } = response
             hotelData.value = ok ? response.data : null
             // console.log('test hotel',hotelData.value)

@@ -44,6 +44,7 @@ const phoneError = inject('phoneError');
 const secondLastnameError = inject('secondLastnameError');
 const docNumberError = inject('docNumberError');
 const docSupportNumberError = inject('docSupportNumberError');
+const currentGuestData = inject('currentGuestData');
 
 // Propiedad computada para validar el formulario
 const validForm = computed(() => {
@@ -101,6 +102,8 @@ const validForm = computed(() => {
 
 const submit = async () => {
     form.comment = form.comment.trim();
+    form.checkinEmail = form.email;
+    form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);
     router.push({ name: 'IsCompleteCheckin' })
 };
