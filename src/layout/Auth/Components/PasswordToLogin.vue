@@ -12,7 +12,7 @@
         <div class="mt-4">
             <PrimaryButton 
                 classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :disabled="!form.password"
+                :disabled="!form.password || loading"
                 @click="submit"
             >
                 {{ $t('auth.log.continue-button') }}
@@ -55,8 +55,10 @@ const router = useRouter();
 
 const isError = ref(false)
 const form = inject('form')
+const loading = ref(false)
 
 async function submit(){
+    loading.value = true;
     let response = await authStore.$sendPasswordAndLogin(form);
     if(!response){
         isError.value = true;
@@ -66,6 +68,7 @@ async function submit(){
         //
         form.password = '';
     }
+    loading.value = false;
 }
 
 async function sendLinkToReset(){

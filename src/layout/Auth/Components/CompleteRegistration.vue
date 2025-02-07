@@ -36,7 +36,7 @@
         <div class="mt-4">
             <PrimaryButton 
                 classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :disabled="!validSubmitButton"
+                :disabled="!validSubmitButton || loading"
                 @click="submit"
             >
                 {{$t('auth.register.continue-button')}}
@@ -81,6 +81,7 @@ const hotelStore = useHotelStore()
 const router = useRouter();
 
 const emailError = ref(false)
+const loading = ref(false)
 const method = ref(null)
 const form = reactive({
     id:'',
@@ -101,11 +102,13 @@ onMounted(async () => {
 })
 
 async function submit(){
+    loading.value = true;
     if(method.value == 'google' && method.value == 'facebook') form.password = null;
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
 
     await authStore.$logIn(guestData.email);
+    loading.value = false;
     toastSuccess(t('messageRequest.recordSuccess')); 
 }
 
