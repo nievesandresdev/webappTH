@@ -34,6 +34,7 @@ import GeneralRoutes from './chainRoutes';  // Aseg√∫rate de que esta importaci√
 function checkHotelSubdomain(to, from, next) {
   const subdomain = localStorage.getItem('subdomain');
   if (!subdomain) {
+      console.log('test checkHotelSubdomain');
       return next({ name: 'ChainLanding', query: to.query });
   }
   next();

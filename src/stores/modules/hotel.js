@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref, reactive  } from 'vue'
-
+import { ref, reactive, computed  } from 'vue'
+import router from '@/router'
 import {
     findByParamsApi,
     getCrossellingsApi,
@@ -10,6 +10,8 @@ import {
 } from '@/api/services/hotel.services'
 
  import { useMainStore } from '@/stores'
+ import { useAuthStore } from '@/stores/modules/auth';
+ 
  
 
 export const useHotelStore = defineStore('hotel', () => {
@@ -23,6 +25,7 @@ export const useHotelStore = defineStore('hotel', () => {
     const oldSubdomain = ref(null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
     const mainStore = useMainStore()
+    const authStore = useAuthStore()
     // ACTIONS
 
     function $loadImage (item) {
@@ -40,18 +43,24 @@ export const useHotelStore = defineStore('hotel', () => {
 
     }
 
-    async function $load (reload = false) {
-        if ( (hotelData.value || !localStorage.getItem('subdomain')) && !reload) return
-        let params = {
-            subdomain: localStorage.getItem('subdomain'),
+    async function $load (reload = false, routeInfo = null) {
+        console.log('test $load',hotelData.value?.name);
+        let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
+        let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
+
+        if ( noHotelIfSubdomain || reloadAndSubdomain){
+            let params = {
+                subdomain: localStorage.getItem('subdomain'),
+            }
+            const response = await findByParamsApi(params)
+            const { ok } = response
+            hotelData.value = ok ? response.data : null
+            // console.log('test hotel',hotelData.value)
         }
         
-        const response = await findByParamsApi(params)
-        // console.log('test response',response)
-        const { ok } = response
-
-        hotelData.value = ok ? response.data : null
-        return response.data
+        authStore.$validateSession(routeInfo);
+        return hotelData.value;
+        
     }
 
     async function $getCrossellings () {
@@ -90,6 +99,7 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $deleteLocalHotel () {
+        console.log('test deleteLocalHotel');
         localStorage.removeItem('subdomain')
         subdomain.value = null;
         hotelData.value = null;
@@ -112,10 +122,12 @@ export const useHotelStore = defineStore('hotel', () => {
         const response = await buildUrlWebAppApi(params)
         return response.ok ? response.data : null;
     }
-
-    //
+    const hotelDataComputed = computed(() => {
+        return hotelData.value
+    });
+    
     return {
-        hotelData,
+        hotelData:hotelDataComputed,
         chatHours,
         subdomain,
         $load,

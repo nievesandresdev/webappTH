@@ -77,8 +77,10 @@ export const useAuthStore = defineStore('auth', () => {
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
+            console.log('test redirect logoutAndCreateStay1')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
+            console.log('test redirect logoutAndCreateStay2')
             router.push({ name:'HotelsList' })
         }
         
@@ -128,31 +130,36 @@ export const useAuthStore = defineStore('auth', () => {
         sessionActive.value = Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(stayStore.stayData);    
     }
 
-    async function $validateSession (to = null, next = null) {
+    async function $validateSession (to = null) {
+        
         $getStatusSession();
         // console.log('test vald cond', to.name);
-        const viewsIgnored = ['Home','HotelsList','ChainLanding','CreateStayFromChain','PrivacyPolicies'];
+        const viewsIgnored = ['Home','HotelsList','CreateStayFromChain','PrivacyPolicies'];
         if(!to || to && viewsIgnored.includes(to.name)) return; 
         //
-        if(sessionActive.value) return;
-        //
-        //guardo la vista actual para redireccionar luego en el login
-        $setStartedWebappBy(to)
-        //en caso de que no exista session
-        //
-        if(!isMockup()){
-            if(Boolean(hotelStore.hotelData)){
-                //si hay un hotel cargado va a la home
-                next({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
-            }else{
-                next({ name:'ChainLanding' })
+        // console.log('test sessionActive', sessionActive.value);
+        if(sessionActive.value && to?.name == 'ChainLanding'){
+            console.log('test redirect 1')
+            return router.push({ name: 'Home', params :{ hotelSlug: hotelStore.hotelData.subdomain }, query: to.query });
+        }else{
+            //
+            //guardo la vista actual para redireccionar luego en el login
+            $setStartedWebappBy(to)
+            //en caso de que no exista session
+            //
+            if(!isMockup()){
+                if(Boolean(hotelStore.hotelData) && to?.name == 'ChainLanding'){
+                    //si hay un hotel cargado va a la home
+                    console.log('test redirect 2')
+                    router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
+                }
             }
         }
-            
-        //   
     }
 
     async function $setStartedWebappBy (to) {
+        const viewsIgnored = ['ChainLanding'];
+        if(viewsIgnored.includes(to.name)) return; 
         let startedWebappByRoute = {
             name: to.name,
             params: to.params,
@@ -165,9 +172,11 @@ export const useAuthStore = defineStore('auth', () => {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
+            console.log('test redirect goStartedWebappBy1',route.name)
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
+            console.log('test redirect goStartedWebappBy2')
             router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }
     }
@@ -180,9 +189,11 @@ export const useAuthStore = defineStore('auth', () => {
             await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
+                console.log('test redirect redirectAfterLogin1')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
                 //logica para cuando no se halla cargado un hotel
+                console.log('test redirect redirectAfterLogin2')
                 router.push({ name:'HotelsList' })
             }
         }

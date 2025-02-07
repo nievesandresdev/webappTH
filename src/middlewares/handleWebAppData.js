@@ -11,7 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    
+    console.log('test handleWebAppData');
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -45,21 +45,12 @@ export default async function handleWebAppData({ to, from, next }) {
     //cargar data del hotel
     const hotelStore = useHotelStore();
     //se guarda el subdominio en localstorage en caso de existir
-    // if(!stayId || !guestId){
-    //     localStorage.removeItem('subdomain');
-    // }
     if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);
     }
-    hotelStore.$load();
-    let hotel = hotelStore.hotelData;
-    // Añade la verificación de que no estás ya en 'Home'
-    if (hotel && to.name == 'ChainLanding') {
-        return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
-    }
-
+    hotelStore.$load(false, to);
     ////////////////////////////////////////////////////////
     //
     //
@@ -80,24 +71,25 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //
     //data extra
-    const localeStore = useLocaleStore();
-    if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
-        if(localeStore.localeCurrent !== 'es'){
-            lang = localeStore.localeCurrent;
-        }
-        localeStore.$loadByURL(lang);
-    } else if (!utils.isMockup()) {
-        let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
-        localeStore.$loadByURL(lang);
-    }
+    // const localeStore = useLocaleStore();
+    // if (utils.isMockup() || !localStorage.getItem('guestId')) {
+    //     console.log('test entro aqui')
+    //     let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
+    //     if(localeStore.localeCurrent !== 'es'){
+    //         lang = localeStore.localeCurrent;
+    //     }
+    //     localeStore.$loadByURL(lang);
+    // } else if (!utils.isMockup()) {
+    //     console.log('test entro aqui 2');
+    //     let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
+    //     localeStore.$loadByURL(lang);
+    // }
 
-    if (to.meta.verifyHotel && !hotel) {
-        return next({ name: 'NotFound' });
-    }
+    // if (to.meta.verifyHotel && !hotel) {
+    //     return next({ name: 'NotFound' });
+    // }
 
     //validar sesion 
-    authStore.$validateSession(to, next);
     authStore.$goLoginBySocialNetwork();
     //
     // Agrega la nueva ruta al historial
