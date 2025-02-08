@@ -6,8 +6,10 @@ import {
     getCrossellingsApi,
     getChatHoursApi,
     findByIdApi,
-    buildUrlWebAppApi
+    buildUrlWebAppApi,
+    getRewardsByHotel
 } from '@/api/services/hotel.services'
+
 
  import { useMainStore } from '@/stores'
  import { useAuthStore } from '@/stores/modules/auth';
@@ -15,8 +17,6 @@ import {
  
 
 export const useHotelStore = defineStore('hotel', () => {
-    
-
 
     // STATE
     const hotelData = ref(null)
@@ -43,7 +43,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
     }
 
-    async function $load (reload = false, routeInfo = null) {
+    /* async function $load (reload = false, routeInfo = null) {
         
         let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
         let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
@@ -62,7 +62,37 @@ export const useHotelStore = defineStore('hotel', () => {
         authStore.$validateSession(routeInfo);
         return hotelData.value;
         
+    } */
+
+    async function $load (reload = false, routeInfo = null) {
+        let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
+        let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
+    
+        if (noHotelIfSubdomain || reloadAndSubdomain) {
+            let params = {
+                subdomain: localStorage.getItem('subdomain'),
+            }
+            const response = await findByParamsApi(params);
+            console.log('test se cargo el hotel', hotelData.value?.name);
+            const { ok } = response;
+            
+            if (ok && response.data) {
+                hotelData.value = response.data;
+    
+                // Verificamos que hotelData.value tenga los datos esperados antes de almacenarlos
+                if (hotelData.value && hotelData.value.id) {
+                    localStorage.setItem('hotelId', hotelData.value.id);
+                    localStorage.setItem('hotelData', JSON.stringify(hotelData.value));
+                }
+            } else {
+                hotelData.value = null; // Si no se obtuvo datos, aseguramos que sea null
+            }
+        }
+    
+        authStore.$validateSession(routeInfo);
+        return hotelData.value;
     }
+        
 
     async function $getCrossellings () {
         const response = await getCrossellingsApi()
@@ -111,6 +141,11 @@ export const useHotelStore = defineStore('hotel', () => {
         oldSubdomain.value = null;
     }
 
+    async function $getRewardsByHotel (id) {
+        const response = await getRewardsByHotel(id)
+        return response
+    }
+
 
     async function $changeCurrentHotelData (newHotelId, newsubdomain) {
         if(newHotelId == hotelData.value.id) return;
@@ -142,7 +177,9 @@ export const useHotelStore = defineStore('hotel', () => {
         $changeCurrentHotelData,
         $setOldLocalHotel,
         $deleteOldLocalHotel,
-        oldSubdomain
+        oldSubdomain,
+        $getRewardsByHotel
     }
+
 
 })

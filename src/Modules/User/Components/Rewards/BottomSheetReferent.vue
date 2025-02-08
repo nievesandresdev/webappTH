@@ -37,14 +37,30 @@
 </template>
 <script setup>
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
-import { computed, inject } from 'vue';
+import { computed, inject, defineProps } from 'vue';
+
 
 import { useShare } from "@/composables/useShare";
 const { shareContent } = useShare();
 
+import { useRewardsStore } from '@/stores/modules/rewards';
+const rewardsStore = useRewardsStore();
+
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
+
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
 
 const openModal = inject('openModalReferent');
-const hotelData = inject('hotelData');
+
+const props = defineProps({
+    hotelRewards: {
+        type: Object,
+        required: true
+    }
+});
+
 
 const formatter = new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
@@ -52,33 +68,50 @@ const formatter = new Intl.NumberFormat('es-ES', {
 });
 
 const amountReferredFormat = computed(() => {
-    if(hotelData.referrals.type_discount == 'percentage') {
-        return  `${hotelData.referrals.amount}%`
+    if(props.hotelRewards.referrals.type_discount == 'percentage') {
+        return  `${props.hotelRewards.referrals.amount}%`
     } else {
-        return `${formatter.format(hotelData.referrals.amount)}€`
+        return `${formatter.format(props.hotelRewards.referrals.amount)}€`
     }
 });
 
 const amountReferentFormat = computed(() => {
-    if(hotelData.referent.type_discount == 'percentage') {
-        return  `${hotelData.referent.amount}%`
+    if(props.hotelRewards.referent.type_discount == 'percentage') {
+        return  `${props.hotelRewards.referent.amount}%`
     } else {
-        return `${formatter.format(hotelData.referent.amount)}€`
+        return `${formatter.format(props.hotelRewards.referent.amount)}€`
     }
 });
 
-const openModalShare = () => {
+const openModalShare = async () => {
+
+    let params = {  
+        hotel_id: props.hotelRewards.referent.hotel_id,
+        guest_id: guestStore.guestData.id,
+        stay_id: stayStore.stayData.id,
+        reward_id: props.hotelRewards.referent.id,
+    }
+
+    const response = await rewardsStore.$createCodeReferent(params);
+    const dataShared = response.data;
+
+
     const data = {
         title: '¡Obtén un descuento especial!',
-        text: `Usa mi código de referido para obtener ${amountReferredFormat.value} de descuento en tu compra en ${hotelData.name}.\n\nCódigo: _${hotelData.referrals?.code}_\n\nPara canjearlo:\n\n${hotelData.referrals?.description}`,
+
+        text: `Usa mi código de referido para obtener ${amountReferredFormat.value} de descuento en tu compra en ${dataShared.reward.url}.\n\nCódigo: _${dataShared.code}_\n\nPara canjearlo:\n\n${dataShared.description}`,
+        url : dataShared.full_url,
+
 
     };
+
     shareContent(data);
 }
 
 const closeModal = () => {
     openModal.value = false;
 }
+
 
 
 
