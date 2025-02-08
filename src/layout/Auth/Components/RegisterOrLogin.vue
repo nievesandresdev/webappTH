@@ -13,7 +13,7 @@
         <!-- $t('guest.guestLog.email.error') -->
         <PrimaryButton 
             classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block mt-4"
-            :disabled="!validSubmitButton"
+            :disabled="!validSubmitButton || loading"
             @click="goRegisterOrLoginEmail()"
         >
             {{$t('auth.log-or-register.continue-button')}}
@@ -69,9 +69,11 @@ const emit = defineEmits(['enterPasswordToLogin'])
 
 const emailError = ref(false)
 const inputActive = ref(false)
+const loading = ref(false)
 const form = inject('form')
 
 async function goRegisterOrLogin(type){
+    loading.value = true;
     let params = { 
         type, 
         email: form.email, 
@@ -80,9 +82,12 @@ async function goRegisterOrLogin(type){
         stayId : stayStore.stayData?.id,
     }
     await authStore.$registerOrLoginSN(params);
+    loading.value = false;
 }
 
 async function goRegisterOrLoginEmail(){
+    
+    loading.value = true;
     let params = { 
         guestEmail: form.email,
         chainId : chainStore.chainData?.id,
@@ -100,6 +105,7 @@ async function goRegisterOrLoginEmail(){
             router.push({ name : 'ChainLanding', query:{ g: hasData.guest.id, acform : 'complete' }});
         }    
     }
+    loading.value = false;
     // let find = await guestStore.findByEmail(params);
     // if(find && find.name && find.hasPassword){
     //     form.id = find.id;

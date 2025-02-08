@@ -26,7 +26,7 @@
         <!-- Contenedor de hotel y estancia boton compartir -->
         <div class="sp:mt-6 mt-2">
             <StayCard 
-                :hotel="hotelData" 
+                :hotel="hotelStore.hotelData" 
                 :stay="stayStore.stayData" 
                 @sharedStay="isModalOpen = true"
                 :isLoading="loading"
@@ -208,24 +208,10 @@ onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
     stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
-
-    await getHotelbyId(stayData.value.hotel_id);
-});
-
-
-const getHotelbyId = async (id) => {
     hotelData.value = hotelStore.hotelData;
-    // const response = await hotelStore.$findByIdApi(id);
-
-    // if(response.ok){
-    //     hotelData.value = response.data;
-    // }else{
-    //     console.log('error', response);
-    // }
-
     loading.value = false;
-  
-};
+    // await getHotelbyId(stayData.value.hotel_id);
+});
 
 
 

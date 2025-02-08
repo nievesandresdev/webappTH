@@ -53,7 +53,6 @@ const { localeCurrent } = localeStore
 
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore;
 
 // COMPOSABLES
 import { useEventBus } from '@/composables/eventBus';
@@ -114,7 +113,9 @@ const tabsHeader = ref([]);
 
 
 // COMPUTED
-
+const hotelData = computed(() => {
+    return hotelStore.hotelData ?? {};
+});
 const typePlaceSelected = computed(() => {
     let typeplace = typeplaces.value.find(item => formFilter.typeplace);
     if (typeplace) {
@@ -154,17 +155,29 @@ watch(positionBottomSheet, function(val) {
     }
 });
 
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        console.log('watch');
+        loadData();
+    }
+}, { immediate: true });
+
 // ONMOUNTED
 onMounted(async () => {
-    loadForFilterGlobal();
-    await loadTypePlaces();
-    loadAll({showPreloader: true});
-    formFilter.city = getUrlParam('city') || hotelData.zone;
+
 });
 
 onEvent('change-category', changeCategoryHandle);
 
 // FUNCTIONS
+async function loadData () {
+    console.log('loadData')
+    loadForFilterGlobal();
+    await loadTypePlaces();
+    loadAll({showPreloader: true});
+    formFilter.city = getUrlParam('city') || hotelData.value.zone;
+}
+
 function loadForFilterGlobal () {
     Object.assign(formFilter, placeStore.dataFilterGlobal);
 }
@@ -188,6 +201,7 @@ function handleMapCluster (payload) {
 }
 
 async function loadTypePlaces () {
+    console.log('loadTypePlaces')
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
         loadQueryInFormFilter();
@@ -212,7 +226,7 @@ async function loadCategoriPlaces () {
     // if (!formFilter.categoriplace) {
     //     formFilter.categoriplace = categoriplaces.value[0]?.id;
     // }
-    const { hidden_categories } = hotelData;
+    const { hidden_categories } = hotelData.value;
     categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
 }
 

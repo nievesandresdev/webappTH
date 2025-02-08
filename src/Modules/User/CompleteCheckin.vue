@@ -130,6 +130,7 @@ const form = reactive({
     gender:'',
     phone:'',
     email:'',
+    checkinEmail:'filled@email.com',
     responsibleAdult:'',
     kinshipRelationship:'',
     //
@@ -322,7 +323,7 @@ provide('secondLastnameError',secondLastnameError)
 provide('docNumberError',docNumberError)
 provide('docSupportNumberError',docSupportNumberError)
 provide('existsChanges',existsChanges)
-
+provide('currentGuestData',currentGuestData)
 </script>
 <style scoped>
 .min-h-container{

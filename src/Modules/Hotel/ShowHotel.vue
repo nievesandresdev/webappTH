@@ -212,7 +212,7 @@ watch(hotelData, (valueCurrent, valueOld) => {
 async function loadData () {
   tabs.initializeTabs();
   await loadTabsHeader();
-  await hotelStore.$load(true)
+  // await hotelStore.$load(true)
   const r = await hotelStore.$getCrossellings()
   
   facilities.value =  r.crosselling_facilities;

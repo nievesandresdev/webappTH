@@ -10,7 +10,7 @@
         />
         <PrimaryButton 
             classes="block mt-6 text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-            :disabled="!form.checkDate"
+            :disabled="!form.checkDate || loading"
             @click="submit"
         >
         {{ $t('stay.create.continue-button') }}
@@ -18,7 +18,7 @@
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 //stores
@@ -31,6 +31,8 @@ const authStore = useAuthStore();
 //router
 // import { navigateTo } from '@/utils/navigation'
 
+const loading = ref(false)
+
 const form = reactive({
     numberGuests:'1',
     checkDate:null,
@@ -40,6 +42,7 @@ const form = reactive({
 });
 
 const submit = async () => {
+    loading.value = true;
     let guest = guestStore.getLocalGuest();
     form.guestId = guest?.id;
     form.language = localStorage.getItem('locale') ?? 'es';
@@ -53,5 +56,6 @@ const submit = async () => {
     // processingForm.value = false
     // emit('closeModal');
     await authStore.$redirectAfterLogin();
+    loading.value = false;
 }
 </script>
