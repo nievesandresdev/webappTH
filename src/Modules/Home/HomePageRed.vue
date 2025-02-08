@@ -227,20 +227,19 @@ const hotelData = computed(() => {
     return hotelStore.hotelData;
 });
 
-watchEffect(() => {
-    if (hotelData.value) {;
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
         loadData();
     }
-});
+}, { immediate: true });
 
 async function loadData () {
-    await Promise.all([loadCrossellings(), loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
 
 async function loadCrossellings () {
-    crossellingsData.value = await hotelStore.$getCrossellings()
-    // console.log('test crossellingsData',crossellingsData.value)
+    crossellingsData.value = await hotelStore.$getCrossellings();
 }
 
 const goFacilities = () => {

@@ -53,7 +53,7 @@ export default async function handleWebAppData({ to, from, next }) {
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);
     }
-    hotelStore.$load();
+    await hotelStore.$load();
     let hotel = hotelStore.hotelData;
     // Añade la verificación de que no estás ya en 'Home'
     if (hotel && to.name == 'ChainLanding') {

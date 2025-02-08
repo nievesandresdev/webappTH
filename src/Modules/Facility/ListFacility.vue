@@ -1,12 +1,6 @@
 <template>
-  <!-- <SectionBarTab 
-    :title="$t('hotel.facilities')" 
-    :tabs="[ 
-       { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
-       { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
-    ]"
-    :hotel="hotelData"
-  /> -->
+  <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+
   <AppHeader
     :title="hotelData.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
@@ -14,56 +8,64 @@
     fixed
   />
 
-  <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+  <PageTransitionGlobal module="facility">
 
-  <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
-    <div 
-     class="px-2 sp:px-4 space-y-2 sp:space-y-4"
-      :class="{
-        'mt-[86px] sp:mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
-        'mt-[60px] sp:mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
-      }"
-    >
-      
-      <div
-        v-for="facility in facilities"
-        :key="facility.id"
-        @click="goToFacilityShow(facility.id)"
-        class="flex flex-col rouded-[10px] sp:rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
+    <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
+      <div 
+      class="px-2 sp:px-4 space-y-2 sp:space-y-4"
+        :class="{
+          'mt-[86px] sp:mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+          'mt-[60px] sp:mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+        }"
       >
-      
-        <div class="relative w-full h-[110px] sp:h-[226px] rounded-t-lg overflow-hidden">
-          <img
-            :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
-            alt="Facility Image"
-            class="w-full h-full object-cover"
-          />
-          
-          <div v-if="facility.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 sp:py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[9px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
-            <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
+        
+        <div
+          v-for="facility in facilities"
+          :key="facility.id"
+          @click="goToFacilityShow(facility.id)"
+          class="flex flex-col rouded-[10px] sp:rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
+        >
+        
+          <div class="relative w-full h-[110px] sp:h-[226px] rounded-t-lg overflow-hidden">
+            <img
+              :src="$formatImage({ url: facility.image?.url || '', type: facility.image?.type })"
+              alt="Facility Image"
+              class="w-full h-full object-cover"
+            />
+            
+            <div v-if="facility.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 sp:py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[9px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
+              <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
+            </div>
           </div>
-        </div>
-        <div class="p-2 sp:p-4">
-          <h3 class="text-[12px] sp:text-[18px] font-bold lato">{{ facility.title }}</h3>
+          <div class="p-2 sp:p-4">
+            <h3 class="text-[12px] sp:text-[18px] font-bold lato">{{ facility.title }}</h3>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+  </PageTransitionGlobal>
+
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import router from '@/router';
 import SectionBarTab from '@/components/SectionBarTab.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
 import { useTabs } from '@/stores/modules/tabs'; 
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const hotelStore = useHotelStore();
 const facilities = ref([]);
+
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 const tabs = useTabs(); 
 
@@ -98,7 +100,17 @@ const goToFacilityShow = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
 };
 
+startLoading(SECTIONS.FACILITY.GLOBAL);
 onMounted(async () => {
+});
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+async function loadData () {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
    //if(tabs.tabsHeader.length === 0){
@@ -108,7 +120,8 @@ onMounted(async () => {
   if (hotelStore.hotelData.show_facilities !== 1) {
     router.push({ name: 'ShowHotel' })
   }
-});
+  stopLoading(SECTIONS.FACILITY.GLOBAL);
+}
 
 function loadTabsHeader () {
     const tabInformation = {
@@ -130,16 +143,6 @@ function loadTabsHeader () {
       onClick: () => changeTab('FacilityList'),
     }
     tabsHeader.value  = [tabInformation, tabFacility];
-    // tabsHeader.value = typeplaces.value.map(item => {
-    //     return {
-    //         title: $t('hotel.information'),
-    //         exclude: false,
-    //         iconDefault: `${item.icon}`,
-    //         iconSelected: `${item.icon}.DEFAULT`,
-    //         isActive: item.id == formFilter.typeplace,
-    //         onClick: () => changeCategory([], item.id),
-    //     };
-    // });
 
     tabs.setTabsHeader([tabInformation, tabFacility]);
 }

@@ -1,96 +1,92 @@
 <template>
-  <!-- <SectionBarTab 
-    :title="hotelData.show_profile == 1 ? hotelData.type : 'Instalaciones'" 
-    :tabs="[
-      { name: $t('hotel.information'), routeName: 'ShowHotel', icon: '/assets/icons/WA.alojamiento.svg' },
-      { name: $t('hotel.facilities'), routeName: 'FacilityList', icon: '/assets/icons/WA.Instalaciones.svg' }
-    ]"
-    :hotel="hotelData"
-  /> -->
  
   <AppHeader
     :title="hotelData.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
-    :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
+    :showSubHeader="hotelData?.show_facilities == 1 || hotelData?.show_profile == 1"
     fixed
   />
+
+  <PageTransitionGlobal module="hotel">
   
-  <div 
-      class="bg-[#FAFAFA]"
-      :class="{
-        'mt-[65px] sp:mt-[135px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
-        'mt-[25px] sp:mt-[55px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
-      }"
-  >
-    <!-- Slider de imágenes -->
-    <!-- <ImageSlider :images="hotelData.images" /> -->
-    <ImageSlider :images="hotelData?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
+    <div 
+        class="bg-[#FAFAFA]"
+        :class="{
+          'mt-[65px] sp:mt-[135px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
+          'mt-[25px] sp:mt-[55px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+        }"
+    >
+      <!-- Slider de imágenes -->
+      <!-- <ImageSlider :images="hotelData.images" /> -->
+      <ImageSlider :images="hotelData?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
 
-    <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
-      <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333] mb-[4px] sp:mb-[7px]">
-        {{ hotelData.name }}
-      </h1>
+      <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
+        <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333] mb-[4px] sp:mb-[7px]">
+          {{ hotelData.name }}
+        </h1>
 
-      <StarRating v-if="hotelData.category !== null" :category="hotelData.category" />
+        <StarRating v-if="hotelData.category !== null" :category="hotelData.category" />
 
-      <p
-        :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
-      >
-        {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
-      </p>
+        <p
+          :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
+        >
+          {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
+        </p>
 
-      <p
-        @click="isExpanded = !isExpanded"
-        class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-        v-show="hotelData?.translate?.description?.length > CHARACTER_LIMIT"
-      >
-        {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
-      </p>
+        <p
+          @click="isExpanded = !isExpanded"
+          class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
+          v-show="hotelData?.translate?.description?.length > CHARACTER_LIMIT"
+        >
+          {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
+        </p>
 
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
-
-      <HotelActionButtons
-        :hotelData="hotelData"
-        :buttonsHome="true"
-        @wifi-click="handleWifi"
-        @call-click="handleCall"
-        @legal-click="handleLegalText"
-        @share-click="isModalOpen = true"
-      />
-      
-      <!--HORARIOS DE CHECKIN Y CHECKOUT-->
-      <HotelCheckInOut :hotelData="hotelData" v-if="hotelData.checkin && hotelData.checkout" /> 
-      
-      <!--DATA GENERAL DEL HOTEL-->
-      <HotelInfoGeneral :hotelData="hotelData" /> 
-    </div>
-
-
-      <!-- seccion de instalaciones -->
-      <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4" v-show="hotelData.show_facilities === 1">
         <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
-        <div class="flex items-center gap-2 sp:gap-4" v-show="hotelData.show_facilities === 1" >
-          <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
-          <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
-          <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
-        </div>
+        <HotelActionButtons
+          :hotelData="hotelData"
+          :buttonsHome="true"
+          @wifi-click="handleWifi"
+          @call-click="handleCall"
+          @legal-click="handleLegalText"
+          @share-click="isModalOpen = true"
+        />
+        
+        <!--HORARIOS DE CHECKIN Y CHECKOUT-->
+        <HotelCheckInOut :hotelData="hotelData" v-if="hotelData.checkin && hotelData.checkout" /> 
+        
+        <!--DATA GENERAL DEL HOTEL-->
+        <HotelInfoGeneral :hotelData="hotelData" /> 
       </div>
-      <CarouselFacilities id="1" :items="facilities" v-show="hotelData.show_facilities === 1"/>
-      <!-- fin seccion instalaciones -->
 
-      <!-- Redes Sociales -->
-      <div class="flex flex-col mt-1 sp:mt-2 px-2 sp:px-4">
-          <template  v-if="rrss">
-          <div class="flex items-center gap-4 mb-4">
-            <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
-            <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
-          </div >
-          <HotelRRSS :hotelData="hotelData" />
-        </template>
-      </div>
-      <!-- fin redes sociales-->
-  </div>
+
+        <!-- seccion de instalaciones -->
+        <div class="flex flex-col  mt-1 sp:mt-2 px-4 sp:px-4" v-show="hotelData.show_facilities === 1">
+          <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
+
+          <div class="flex items-center gap-2 sp:gap-4" v-show="hotelData.show_facilities === 1" >
+            <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
+            <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
+            <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
+          </div>
+        </div>
+        <CarouselFacilities id="1" :items="facilities" v-show="hotelData.show_facilities === 1"/>
+        <!-- fin seccion instalaciones -->
+
+        <!-- Redes Sociales -->
+        <div class="flex flex-col mt-1 sp:mt-2 px-2 sp:px-4">
+            <template  v-if="rrss">
+            <div class="flex items-center gap-4 mb-4">
+              <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+              <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
+            </div >
+            <HotelRRSS :hotelData="hotelData" />
+          </template>
+        </div>
+        <!-- fin redes sociales-->
+    </div>
+
+  </PageTransitionGlobal>
 
   <!-- Modal de Wifi -->
   <BottomModal :isOpen="modalWifi && !$utils.isMockup()" @update:isOpen="modalWifi = $event">
@@ -133,6 +129,7 @@
 </template>
 
 <script setup>
+import { watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue'
 import StarRating from './Components/StarRating.vue'
 import HotelActionButtons from './Components/HotelActionButtons.vue'
@@ -151,11 +148,16 @@ import CarouselFacilities from '@/Modules/Home/Components/CarouselFacilitiesRed.
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
 const localeStore = useLocaleStore()
+
 
 const isModalOpen = ref(false);
 
@@ -163,7 +165,7 @@ const CHARACTER_LIMIT = 185;
 
 
 const hotelStore = useHotelStore()
-const hotelData = computed(() => hotelStore.hotelData)
+const hotelData = computed(() => hotelStore.hotelData);
 
 const tabs = useTabs();
 
@@ -196,8 +198,18 @@ const handleLegalText = () => {
 }
 
 
-
+startLoading(SECTIONS.HOME.GLOBAL);
 onMounted(async() => {
+
+})
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+async function loadData () {
   tabs.initializeTabs();
   await loadTabsHeader();
   await hotelStore.$load(true)
@@ -212,8 +224,8 @@ onMounted(async() => {
   if (hotelStore.hotelData.show_profile !== 1) {
     router.push({ name: 'FacilityList' })
   }
-
-})
+  stopLoading(SECTIONS.HOME.GLOBAL);
+}
 
 async function loadTabsHeader () {
     const tabInformation = {
@@ -235,19 +247,8 @@ async function loadTabsHeader () {
       onClick: () => changeTab('FacilityList'),
     }
     tabsHeader.value  = [tabInformation, tabFacility];
-    // tabsHeader.value = typeplaces.value.map(item => {
-    //     return {
-    //         title: $t('hotel.information'),
-    //         exclude: false,
-    //         iconDefault: `${item.icon}`,
-    //         iconSelected: `${item.icon}.DEFAULT`,
-    //         isActive: item.id == formFilter.typeplace,
-    //         onClick: () => changeCategory([], item.id),
-    //     };
-    // });
 
   tabs.setTabsHeader([tabInformation, tabFacility]);
-    
 }
 
 function changeTab (r) {
