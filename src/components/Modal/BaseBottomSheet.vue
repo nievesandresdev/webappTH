@@ -94,7 +94,7 @@ watch(position, () => {
     }
   }
   sheetHeight.value = isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : heights.dragTwoStep[currentHeightIndex.value];
-});
+}, { immediate: true });
 
 watch(currentHeightIndex, () => {
   emits('changeCurrentHeight', currentHeightIndex.value);

@@ -8,5 +8,8 @@ export const SECTIONS = {
     FACILITY: {
       GLOBAL: "facility_global",
     },
+    PLACE: {
+      GLOBAL: "place_global",
+    },
   };
   

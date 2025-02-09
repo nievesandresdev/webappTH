@@ -1,32 +1,20 @@
 <template>
     <div class="skeleton-place-card card-list">
         <div class="animate-pulse flex w-full">
-            <div class="w-[111px] h-[96px] rounded-[10px] relative item-skeletom">
+            <div class="w-[77px] sp:w-[111px] h-[67px] sp:h-[96px] rounded-t-[7px] sp:rounded-t-[10px] rounded-b-none relative item-skeletom">
             </div>
-            <div class="p-[8px] flex flex-col flex-1">
-                <div class="flex-1 truncate-2">
-                    <div class="flex items-center space-x-2 mb-2">
-                        <div class="w-4 h-4 item-skeletom"></div>
-                        <div class="h-4 w-[20px] item-skeletom"></div>
-                        <div class="h-4 w-[20px] item-skeletom"></div>
-                    </div>
-                    <div class="h-[14px] w-[100px] item-skeletom"></div>
+            <div class="p-[5.6px] sp:p-[8px] flex flex-col flex-1">
+                <div class="w-[50%] h-[2.8px] sp:h-4 item-skeletom mb-[4px] sp:mb-2"></div>
+                <div class="w-full h-[13px] sp:h-[32px] item-skeletom mb-[4.2px] sp:mb-[6px]"></div>
+                <div class="flex items-center justify-between">
+                    <div class="h-[8.4px] sp:h-[12px] w-[20%] item-skeletom"></div>
+                    <div class="size-[14px] sp:size-[20px] item-skeletom rounded-[2.8px] sp:rounded-[4px]"></div>
                 </div>
-                <div
-                    class="flex items-center justify-between"
-                >
-                    <div
-                        class="flex items-center space-x-[2px]"
-                    >
-                        <div class="h-[12px] w-[12px] item-skeletom"></div>
-                        <div class="h-[10px] w-[12px] item-skeletom"></div>
-                    </div>
-                    <div class="h-6 w-6 item-skeletom"></div>
-                </div>
-        </div>
+            </div>
         </div>
     </div>
 </template>
+
 
 <style lang="scss">
     .card-list {

@@ -12,7 +12,7 @@
                 </div>
                 <div
                     id="content-filter"
-                     @scroll="handleScroll"
+                    @scroll="handleScroll"
                      ref="contentFilter"
                     class="pl-4 pr-[7px]  overflow-y-scroll flex-1 pt-[24px]"
                 >

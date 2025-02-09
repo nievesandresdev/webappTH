@@ -14,19 +14,21 @@
             />
         </template>
     </AppHeader>
-    <div class="flex-1">
-        <ListPageMapClusterPlace
-            @clickMapCluster="handleMapCluster"
-        />
-        <ListPageBottomSheet
-            @changeCategory="changeCategoryHandle($event)"
-            @loadMore="loadMore"
-            @closeSearch="closeSearchHandle"
-        />
-        <ListPagebottomSheetFilter
-            @reloadPlaces="loadAll({ showPreloader: true })"
-        />
-    </div>
+    <PageTransitionGlobal module="place">
+        <div class="flex-1">
+            <ListPageMapClusterPlace
+                @clickMapCluster="handleMapCluster"
+            />
+            <ListPageBottomSheet
+                @changeCategory="changeCategoryHandle($event)"
+                @loadMore="loadMore"
+                @closeSearch="closeSearchHandle"
+            />
+            <ListPagebottomSheetFilter
+                @reloadPlaces="loadAll({ showPreloader: true })"
+            />
+        </div>
+    </PageTransitionGlobal>
 </template>
 
 <script setup>
@@ -42,6 +44,11 @@ import InputSearchPlace from './components/InputSearchPlace.vue';
 import ListPageMapClusterPlace from './ListPageMapClusterPlace.vue';
 import ListPageBottomSheet from './ListPageBottomSheet.vue';
 import ListPagebottomSheetFilter from './ListPagebottomSheetFilter.vue';
+
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 // STORE
 import { usePlaceStore } from '@/stores/modules/place';
@@ -114,7 +121,7 @@ const tabsHeader = ref([]);
 
 // COMPUTED
 const hotelData = computed(() => {
-    return hotelStore.hotelData ?? {};
+    return hotelStore.hotelData ?? null;
 });
 const typePlaceSelected = computed(() => {
     let typeplace = typeplaces.value.find(item => formFilter.typeplace);
@@ -155,9 +162,9 @@ watch(positionBottomSheet, function(val) {
     }
 });
 
+startLoading(SECTIONS.PLACE.GLOBAL);
 watch(hotelData, (valueCurrent, valueOld) => {
     if (!valueOld && valueCurrent) {
-        console.log('watch');
         loadData();
     }
 }, { immediate: true });
@@ -171,11 +178,11 @@ onEvent('change-category', changeCategoryHandle);
 
 // FUNCTIONS
 async function loadData () {
-    console.log('loadData')
     loadForFilterGlobal();
     await loadTypePlaces();
-    loadAll({showPreloader: true});
+    await loadAll({showPreloader: true});
     formFilter.city = getUrlParam('city') || hotelData.value.zone;
+    stopLoading(SECTIONS.PLACE.GLOBAL);
 }
 
 function loadForFilterGlobal () {
@@ -201,7 +208,6 @@ function handleMapCluster (payload) {
 }
 
 async function loadTypePlaces () {
-    console.log('loadTypePlaces')
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
         loadQueryInFormFilter();

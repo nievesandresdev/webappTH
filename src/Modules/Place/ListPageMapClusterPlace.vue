@@ -127,7 +127,7 @@ const baseMapRef = ref(null);
 
 watch(searchingActive, function(valNew, valOld) {
     if (valOld && !valNew ) {
-        baseMapRef.value.focusOnPoint(Number(hotelData.longitude), Number(hotelData.latitude));
+        baseMapRef.value.focusOnPoint(Number(hotelData.value.longitude), Number(hotelData.value.latitude));
     }
 });
 
@@ -146,7 +146,7 @@ const transformedPointersData = computed(() => {
 
 
 const coordCenter = computed(() => {
-    return [Number(hotelData.longitude), Number(hotelData.latitude)];
+    return [Number(hotelData.value.longitude), Number(hotelData.value.latitude)];
 });
 
 function handleMapClick ($event, typCap) {
