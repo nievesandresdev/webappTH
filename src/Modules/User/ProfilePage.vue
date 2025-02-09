@@ -25,11 +25,12 @@
 
         <!-- Contenedor de hotel y estancia boton compartir -->
         <div class="sp:mt-6 mt-2">
+            {{ stayStore.loadLocalStay.value }}
             <StayCard 
                 :hotel="hotelStore.hotelData" 
                 :stay="stayStore.stayData" 
                 @sharedStay="isModalOpen = true"
-                :isLoading="loading"
+                :isLoading="stayStore.lodingStayData"
                 showQueryButton
                 showButtonShared
                 @stayClick="goMyStay"
@@ -96,7 +97,6 @@
             </div>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
-
          <!-- Sección "referente y referido" -->
          <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
             <div class="flex items-center gap-2">
@@ -117,10 +117,11 @@
 
 
         <ShareStayModal />
-        <BottomSheetReferrals />
-        <BottomSheetReferent />
+        <BottomSheetReferrals :hotelRewards="hotelRewards" />
+        <BottomSheetReferent :hotelRewards="hotelRewards" />
     </div>
 </template>
+
 <script setup>
 import { ref, onMounted, computed, provide } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
@@ -163,7 +164,6 @@ if(referentUrl) {
 //provides
 provide('openModalReferrals',openModalReferrals)
 provide('openModalReferent',openModalReferent)
-provide('hotelData',hotelStore?.hotelData)
 
 
 const isModalOpen = ref(false);
@@ -173,6 +173,8 @@ const guestData = ref({});
 const hotelData = ref({});
 const stayData = ref({});
 const loading = ref(true);
+const hotelRewards = ref({});
+
 
 
 const openModalRewards = () => {
@@ -210,8 +212,13 @@ onMounted(async() => {
     stayData.value = stayStore.stayData;
     hotelData.value = hotelStore.hotelData;
     loading.value = false;
+    const response = await hotelStore.$getRewardsByHotel(stayData.value.hotel_id);
+    hotelRewards.value = response.data;
+
+
     // await getHotelbyId(stayData.value.hotel_id);
 });
+
 
 
 
@@ -247,10 +254,6 @@ const $formatImage = (payload) => {
 
     return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url;
 };
-
-
-const profileImageUrl = computed(() => $formatImage({ url: guestData.value.avatar,type: 'STORAGE' }));
-
 
 
 provide('isModalOpen',isModalOpen)

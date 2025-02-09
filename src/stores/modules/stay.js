@@ -31,6 +31,8 @@ export const useStayStore = defineStore('stay', () => {
     // LOCALE
     const localeStore = useLocaleStore()
 
+    const lodingStayData = ref(true);
+
     // ACTIONS
     async function loadLocalStay () {
         stayId.value = getUrlParam('e');
@@ -153,7 +155,8 @@ export const useStayStore = defineStore('stay', () => {
         localStorage.removeItem('stayData')
     }
 
-    async function findByIdInSetLocalStay (stayId) {    
+    async function findByIdInSetLocalStay (stayId) {  
+        
         if(stayData.value?.id == stayId) return;
         const response = await findbyIdApi(stayId)
         const { ok } = response   
@@ -164,16 +167,43 @@ export const useStayStore = defineStore('stay', () => {
         }
     }
 
-    async function reloadLocalStay () {    
+    /* async function reloadLocalStay () {    
         
         const response = await findbyIdApi(stayData.value.id)
         const { ok } = response   
         stayData.value = ok ? response.data : null;
         if(stayData){
-            localStorage.setItem('stayId', stayData.value.id)
-            localStorage.setItem('stayData', JSON.stringify(stayData.value))
+            localStorage.setItem('stayId', stayData?.value?.id)
+            localStorage.setItem('stayData', JSON.stringify(stayData?.value))
+        }
+
+    } */
+    async function reloadLocalStay() {
+        if (!stayData.value) {
+            
+            lodingStayData.value = true; 
+        }
+        const response = await findbyIdApi(stayData.value ? stayData.value.id : null);
+        const { ok } = response;
+    
+    
+        if (ok && response.data) {
+            stayData.value = response.data;
+    
+            if (stayData.value && stayData.value.id) {
+                console.log('stayData.value',stayData.value)
+                localStorage.setItem('stayId', stayData.value.id);
+                localStorage.setItem('stayData', JSON.stringify(stayData.value));
+            }
+    
+            lodingStayData.value = false; 
+        } else {
+            lodingStayData.value = false;
         }
     }
+        
+        
+        
 
     async function findById (stayId) {    
         const response = await findbyIdApi(stayId)
@@ -205,7 +235,8 @@ export const useStayStore = defineStore('stay', () => {
         findByIdInSetLocalStay,
         reloadLocalStay,
         findById,
-        getGuestsAndSortByAccess
+        getGuestsAndSortByAccess,
+        lodingStayData
     }
 
 })
