@@ -1,33 +1,35 @@
 <template>
-    <div
-         id="list-confort"
-        class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
-    >
-        <p
-            v-if="!isloadingForm"
-            class="text-[6px] sp:text-sm font-bold lato"
+    <PageTransitionGlobal module="service">
+        <div
+            id="list-confort"
+            class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
         >
-            {{ paginateData.total }} Servicios encontrados en Confort
-        </p>
-        <p
-            v-else
-            class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
-        />
-        <div class="mt-2 sp:mt-4">
-            <template v-for="(item, index) in (servicesData ?? [])">
-                <CardList
-                    :data="item"
-                    type-service="CONFORT"
-                    :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
-                />
-            </template>
-            <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
-                <SkeletonCard
-                    :class="index === servicesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
-                />
-            </template>
+            <p
+                v-if="!isloadingForm"
+                class="text-[6px] sp:text-sm font-bold lato"
+            >
+                {{ paginateData.total }} Servicios encontrados en Confort
+            </p>
+            <p
+                v-else
+                class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
+            />
+            <div class="mt-2 sp:mt-4">
+                <template v-for="(item, index) in (servicesData ?? [])">
+                    <CardList
+                        :data="item"
+                        type-service="CONFORT"
+                        :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                    />
+                </template>
+                <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
+                    <SkeletonCard
+                        :class="index === servicesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                    />
+                </template>
+            </div>
         </div>
-    </div>
+    </PageTransitionGlobal>
 </template>
 
 <script setup>
@@ -54,7 +56,13 @@ const serviceStore = useServiceStore();
 // COMPOSABLE
 import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
 
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
+
 // INJECT
+const hotelData = inject('hotelData');
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
 const firstLoad = inject('firstLoad');
@@ -69,10 +77,6 @@ const numberCardsToLoadDefault = ref(20);
 // COMPUTED
 const numberItemsLoadCurrent = computed(() => {
     return servicesData.value.length;
-});
-
-watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
-    submitFilter({showPreloader: true});
 });
 
 const { numberCardsToLoad } = usePaginationScrollInfinite(
@@ -97,14 +101,28 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
 //     return numberCardsToLoadDefault.value;
 // });
 
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
+    if (hotelData.value) {
+        submitFilter({showPreloader: true});
+    }
+});
+
 onMounted(() => {
     // initScrollListener();
-    submitFilter({showPreloader: true});
-    console.log('confort');
+    // submitFilter({showPreloader: true});
 });
 
 
 // FUNCTIONS
+function loadData () {
+    submitFilter({showPreloader: true});
+}
 function closeSearch () {
     searchingActive.value = false;
 }

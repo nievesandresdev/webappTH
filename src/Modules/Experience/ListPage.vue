@@ -48,7 +48,6 @@ const { localeCurrent } = localeStore
 
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore;
 
 // DATA
 
@@ -81,6 +80,9 @@ const paginateData = reactive({
 });
 
 // COMPUTED
+const hotelData = computed(() => {
+    return hotelStore.hotelData ?? null;
+});
 const numbersFiltersApplied = computed(() => {
     let filters = [];
     formFilter.duration?.length ? filters.push('duration') : '';
@@ -96,18 +98,23 @@ const emptyFilters = computed(() => {
 });
 
 // WATCH
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
 watch(formFilter, function(value) {
     experienceStore.setDataFilterList(formFilter);
 });
 
-// ONMOUNTED
-onMounted(async () => {
+// FUNCTION
+async function loadData () {
     loadForFilterGlobal();
     loadAll({showPreloader: true});
-    formFilter.city = getUrlParam('city') || hotelData.zone;
-});
+    formFilter.city = getUrlParam('city') || hotelData.value.zone;
+}
 
-// FUNCTION
 function loadForFilterGlobal () {
     Object.assign(formFilter, experienceStore.dataFilterGlobal);
 }

@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade">
-    <div v-if="loading !== null && loading" class="skeleton-wrapper">
-    <!-- <div v-if="true" class="skeleton-wrapper"> -->
+    <!-- <div v-if="loading !== null && loading" class="skeleton-wrapper"> -->
+    <div v-if="true" class="skeleton-wrapper">
       <component :is="getSkeletonComponent()" />
     </div>
     <div v-else class="content">

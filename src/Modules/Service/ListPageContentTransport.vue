@@ -55,6 +55,7 @@ const props = defineProps({
 import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
 
 // INJECT
+const hotelData = inject('hotelData');
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
 const firstLoad = inject('firstLoad');
@@ -72,8 +73,16 @@ const numberItemsLoadCurrent = computed(() => {
 });
 
 watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
-    submitFilter({showPreloader: true});
+    if (hotelData.value) {
+        submitFilter({showPreloader: true});
+    }
 });
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
 
 const { numberCardsToLoad } = usePaginationScrollInfinite(
     20,
@@ -104,6 +113,9 @@ onMounted(() => {
 
 
 // FUNCTIONS
+function loadData () {
+    submitFilter({showPreloader: true});
+}
 function closeSearch () {
     searchingActive.value = false;
 }

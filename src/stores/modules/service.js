@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { i18n } from '@/i18n'
 
 import {
@@ -26,6 +26,10 @@ export const useServiceStore = defineStore('service', () => {
     }
     const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
 
+        const hotelData = computed(() => {
+            return hotelStore.hotelData;
+        });
+
         // MUTATIONS
         function setDataFilterList (dataFormFilterInList) {
             Object.assign(dataFilterGlobal, dataFormFilterInList);
@@ -45,7 +49,7 @@ export const useServiceStore = defineStore('service', () => {
     }
 
     function getHotelParams(params = {}) {
-        const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelStore.hotelData;
+        const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelData.value;
         return {
             hotel: { id: idHotel, name: nameHotel, zone: zoneHotel },
             ...params

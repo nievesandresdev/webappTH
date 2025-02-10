@@ -57,6 +57,7 @@ const experienceStore = useExperienceStore();
 import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
 
 // INJECT
+const hotelData = inject('hotelData');
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
 const firstLoad = inject('firstLoad');
@@ -66,6 +67,7 @@ const searchingActive = inject('searchingActive');
 const formFilter = inject('formFilter');
 
 // DATA
+
 const numberCardsToLoadDefault = ref(20);
 
 // COMPUTED
@@ -73,8 +75,16 @@ const numberItemsLoadCurrent = computed(() => {
     return servicesData.value.length;
 });
 
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
 watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (valueCurrent) => {
-    submitFilter({showPreloader: true});
+    if (hotelData.value) {
+        submitFilter({showPreloader: true});
+    }
 });
 
 const { numberCardsToLoad } = usePaginationScrollInfinite(
@@ -101,8 +111,13 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
 
 onMounted(() => {
     // initScrollListener();
-    submitFilter({showPreloader: true});
+    // submitFilter({showPreloader: true});
 });
+
+function loadData () {
+    console.log(loadData);
+    submitFilter({showPreloader: true});
+}
 
 
 // FUNCTIONS

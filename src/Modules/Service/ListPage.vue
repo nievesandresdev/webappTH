@@ -77,15 +77,11 @@ const paginateData = reactive({
 });
 
 const tabsHeader = ref([]);
-
-
-onMounted(() => {
-    loadForFilterGlobal();
-    loadType();
-    loadTabs();
+// COMPUTED
+const hotelData = computed(() => {
+    return hotelStore.hotelData ?? null;
 });
 
-// COMPUTED
 const numbersFiltersApplied = computed(() => {
     let filters = [];
     formFilter.price_min ? filters.push('price_min') : '';
@@ -96,17 +92,36 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+onMounted(() => {
+
+});
+
 // WATCH
 watch(formFilter, function(value) {
     serviceStore.setDataFilterList(formFilter);
 });
-watch ( () => route.currentRoute.value, (valCurrent) => {
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+watch (() => route.currentRoute.value, (valCurrent) => {
+    if (hotelData.value) {
+        loadData();
+    }
+});
+
+
+// FUNCTION
+
+function loadData () {
     loadForFilterGlobal();
     loadType();
     loadTabs();
-});
+}
 
-// FUNCTION
 function loadForFilterGlobal () {
     Object.assign(formFilter, serviceStore.dataFilterGlobal);
 }
@@ -169,7 +184,7 @@ async function openFilter () {
 }
 
 // PROVIDE
-// provide('hotelData', hotelData);
+provide('hotelData', hotelData);
 provide('experienceStore', experienceStore);
 provide('serviceStore', serviceStore);
 provide('page', page);

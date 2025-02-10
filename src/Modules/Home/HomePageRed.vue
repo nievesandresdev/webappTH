@@ -239,7 +239,7 @@ async function loadData () {
 }
 
 async function loadCrossellings () {
-    crossellingsData.value = await hotelStore.$getCrossellings();
+    crossellingsData.value = await hotelStore.$getCrossellings()
 }
 
 const goFacilities = () => {
@@ -248,7 +248,7 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
 }
 
 async function getPlaceCategories(){
