@@ -152,13 +152,7 @@ const referralsUrl = urlParams.get('referrals');
 const openModalReferrals = ref(false);
 const openModalReferent = ref(false);
 
-if(referentUrl) {
-    openModalReferent.value = true;
-    openModalReferrals.value = false;
-}else if(referralsUrl) {
-    openModalReferrals.value = true;
-    openModalReferent.value = false;
-}
+
 
 
 //provides
@@ -214,6 +208,15 @@ onMounted(async() => {
     loading.value = false;
     const response = await hotelStore.$getRewardsByHotel(stayData.value.hotel_id);
     hotelRewards.value = response.data;
+
+    if(referentUrl) {
+        openModalReferent.value = true;
+        openModalReferrals.value = false;
+        
+    }else if(referralsUrl) {
+        openModalReferrals.value = true;
+        openModalReferent.value = false;
+    }
 
 
     // await getHotelbyId(stayData.value.hotel_id);
