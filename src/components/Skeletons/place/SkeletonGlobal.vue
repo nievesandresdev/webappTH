@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-full">
+    <div class="relative h-full ">
         <div class="bg-[#E6E6E6] fixed top-0 left-0  w-full h-full"></div>
         <div class="bg-white h-[75%] bottom-sheet relative pt-[6px] sp:pt-[12px]">
             <div

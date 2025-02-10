@@ -19,8 +19,7 @@
 <style lang="scss">
     .card-list {
         border-radius: 10px;
-        border: 1px solid #FFF;
+        border: 2px solid #E6E6E6 ;
         background: linear-gradient(214deg, #F3F3F3 19.98%, #FAFAFA 80.15%);
-        box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
     }
 </style>
