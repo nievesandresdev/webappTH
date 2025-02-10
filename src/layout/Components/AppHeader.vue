@@ -4,7 +4,7 @@
         class="custom-header z-[4000]"
         :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
-        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3">
+        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[23px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
             <h1
                 v-if="withTitleRoute"
                 class="text-[14px] sp:text-[20px] font-bold mb-[10px] sp:mb-[16px]"
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Subheader con tabs (pestañas) -->
-        <div class="subheader" v-show="showSubHeader">
+        <div class="subheader" v-show="showSubHeader && (tabsActives.length > 1)">
             <slot name="tabs">
                 <div class="px-[12px] sp:px-[16px]">
                     <div class="flex justify-around">

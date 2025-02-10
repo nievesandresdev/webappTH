@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="categoriplaces.length > 0"
         class="grid grid-flow-col auto-cols-max pb-[8px] sp:pb-4 z-40 overflow-x-scroll gap-[8px] sp:gap-4 w-full no-scrollbar"
     >
         <div
