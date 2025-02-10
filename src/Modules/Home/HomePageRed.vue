@@ -234,13 +234,12 @@ watchEffect(() => {
 });
 
 async function loadData () {
-    await Promise.all([loadCrossellings(), loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
 
 async function loadCrossellings () {
     crossellingsData.value = await hotelStore.$getCrossellings()
-    // console.log('test crossellingsData',crossellingsData.value)
 }
 
 const goFacilities = () => {
@@ -249,7 +248,7 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
 }
 
 async function getPlaceCategories(){

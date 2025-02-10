@@ -7,7 +7,8 @@ import {
     getChatHoursApi,
     findByIdApi,
     buildUrlWebAppApi,
-    getRewardsByHotel
+    getRewardsByHotel,
+    getMainDataApi
 } from '@/api/services/hotel.services'
 
 
@@ -72,8 +73,8 @@ export const useHotelStore = defineStore('hotel', () => {
             let params = {
                 subdomain: localStorage.getItem('subdomain'),
             }
-            const response = await findByParamsApi(params);
-            console.log('test se cargo el hotel', hotelData.value?.name);
+            const response = await getMainDataApi(params);
+            console.log('test se cargo el hotel', response.data);
             const { ok } = response;
             
             if (ok && response.data) {
