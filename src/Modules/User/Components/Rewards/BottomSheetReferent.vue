@@ -99,10 +99,8 @@ const openModalShare = async () => {
     const data = {
         title: '¡Obtén un descuento especial!',
 
-        text: `Usa mi código de referido para obtener ${amountReferredFormat.value} de descuento en tu compra en \n\n ${dataShared.reward.url}\n\nCódigo: _${dataShared.code}_\n\nPara canjearlo:\n\n${dataShared.reward.description}\n\n\n\n`,
+        text: `Usa mi código de referido para obtener ${amountReferredFormat.value} de descuento en tu compra en \n\n ${dataShared.reward.url}\n\nCódigo: _${dataShared.code}_\n\nPara canjearlo:\n\n${dataShared.reward.description}\n\n\n`,
         url : dataShared.full_url,
-
-
 
     };
 
