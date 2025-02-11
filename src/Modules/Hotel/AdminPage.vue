@@ -9,9 +9,10 @@
   />
 <TransitionBook>
   <router-view v-slot="{ Component }">
-    <component :is="Component" :key="$route.path" />
+    <component :is="Component" :key="$route.fullPath" />
   </router-view>
 </TransitionBook>
+<!-- <router-view :key="$route.fullPath" /> -->
 </template>
 
 <script setup>

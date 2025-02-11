@@ -122,7 +122,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, inject, provide } from 'vue';
+import { computed, ref, onMounted, inject, provide, watch } from 'vue';
 
 // COMPONENTS
 import ImageSlider from '@/components/ImageSlider.vue'
@@ -188,20 +188,20 @@ const handleLegalText = () => {
 }
 
 
-startLoading(SECTIONS.HOME.GLOBAL);
+startLoading(SECTIONS.HOTEL.GLOBAL);
 onMounted(async() => {
   // console.log(hotelData.value, 'hotelData.hotel');
-  console.log('onMounted hotel');
+  // console.log('onMounted hotel');
     // if (hotelData.value) {
-      loadData(); 
+      // loadData(); 
     // }
 })
 
-// watch(hotelData, (valueCurrent, valueOld) => {
-//     if (!valueOld && valueCurrent) {
-//         loadData();
-//     }
-// }, { immediate: true });
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
 
 async function loadData () {
   // await hotelStore.$load(true)
@@ -216,7 +216,7 @@ async function loadData () {
   if (hotelStore.hotelData.show_profile !== 1) {
     router.push({ name: 'FacilityList' })
   }
-  stopLoading(SECTIONS.HOME.GLOBAL);
+  stopLoading(SECTIONS.HOTEL.GLOBAL);
 }
 
 /* const handleGoFacility = (id) => {

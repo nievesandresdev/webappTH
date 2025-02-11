@@ -100,7 +100,7 @@ const goToFacilityShow = (id) => {
 
 startLoading(SECTIONS.FACILITY.GLOBAL);
 onMounted(async () => {
-  console.log('onMounted facility');
+  // console.log('onMounted facility');
   // console.log(hotelData.value, 'hotelData.facility')
   if (hotelData.value) {
     loadData(); 
