@@ -7,8 +7,12 @@
             ]"
         >
             <InboxHead/>
+            
+
             <!-- body chat -->
             <div class="body-chat flex-grow flex flex-col overflow-y-auto px-4">
+                <!-- <h1 class="mt-10 text-3xl">{{ loading }}</h1> -->
+            <PageTransitionGlobal module="chat">
                 <!-- availabilty tag-->
                 <div 
                     class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
@@ -32,7 +36,7 @@
                     <p class="lato text-sm font-medium leading-[16px] text-center" v-html="$t('chat.languages-text')">
                     </p>
                     <div class="flex flex-wrap justify-center mt-4 gap-4">
-                        <img class="w-5 h-5" v-for="lg in settings.languages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
+                        <img class="w-5 h-5" v-for="lg in availableLanguages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
                     </div>
                 </div>
                 <!-- msgs -->
@@ -61,7 +65,10 @@
                         {{ formatTimestampDate(msg.created_at,'dd/MM/yyyy') }} - {{ formatTimestampDate(msg.created_at,'HH:mm')}}
                     </p>
                 </div>
+                
+            </PageTransitionGlobal>
             </div>
+            
             <!-- input chat -->
             <div class="bg-white rounded-t-[10px] shadow-guest-2">
                 <div class="px-6 pt-3 pb-4 flex items-center gap-3">
@@ -100,6 +107,12 @@ import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
 import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+//load
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading, loading } = useLoadingSections();
+//
 import { DateTime, Interval, Settings } from 'luxon';
 import { formatTimestampDate } from '@/utils/dateHelpers'
 import { useRouter } from 'vue-router';
@@ -126,19 +139,26 @@ const pusher = ref(null);
 const screenOff = ref(null);   
 const hideAppMenu = inject('hideAppMenu'); 
 const isIphone = ref(false);
+const availableLanguages = ref([]);
 
+startLoading(SECTIONS.CHAT.GLOBAL);
 //mounted
 onMounted( async () => {
     await chatStore.loadMessages();
+    availableLanguages.value = await chatStore.getAvailableLanguages();
+    await watchAvailability();
+    if(hotelStore.hotelData && !hotelStore.hotelData?.chatSettings?.show_guest){
+        router.push({ name:'Inbox' })
+    }
     setTimeout(scrollToBottom, 50);
     clearTimeouts();
-    watchAvailability();
     connectPusher();
+    console.log('test 5',hotelStore.hotelData)
     isIphone.value = /iPhone/i.test(navigator.userAgent);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
-
-    console.log('test chat',chatStore.messages)
+    stopLoading(SECTIONS.CHAT.GLOBAL);
+    // console.log('test chatSettings',hotelStore.hotelData?.chatSettings?.show_guest)
 });
 
 onUnmounted(() => {

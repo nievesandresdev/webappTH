@@ -12,6 +12,7 @@
         <div class="mt-4">
             <PrimaryButton 
                 classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
+                :isLoading="loading"
                 :disabled="!form.password || loading"
                 @click="submit"
             >

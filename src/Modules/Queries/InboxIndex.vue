@@ -1,62 +1,64 @@
 <template>
     <InboxHead />
     <!-- pre-stay -->
-    <div class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
-        <TextQuery 
-            v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
-            :settings="settings"
-            :data="currentQuery"
-            @reloadList="reloadList"
-        />
-        <!-- in-stay & post-stay -->
-        <div v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
-            <IconsQuery 
+    <PageTransitionGlobal module="query">
+        <div class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
+            <TextQuery 
+                v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
                 :settings="settings"
                 :data="currentQuery"
                 @reloadList="reloadList"
             />
-        </div>
-
-        <LinksReview v-if="showRequestReview" />
-        <div 
-            v-else-if="currentQuery && currentQuery?.answered"
-            class="hidden md:block"
-        >
-            <img class="w-[64px] h-[64px] mx-auto" src="/assets/icons/WA.circle-check.BLACK.svg" alt="">
-            <p class="mt-8 roboto text-[24px] font-medium leading-[116%] text-center">{{ $t('query.form.poststay-bad-thanks-title') }} </p>
-            <p class="mt-4 roboto text-base font-medium leading-[125%] text-center">{{ $t('query.form.poststay-bad-thanks-subtitle') }}</p>
-        </div>
-        
-        <div 
-            v-for="res in responses" :key="res?.id"
-            class="md:hidden"
-        >
-            <ResponseCard 
-                :response="res.comment ? res.comment[res.response_lang] : null"
-                :qualification="res.qualification"
-                :period="res.period"
-                :currentPeriod="period"
-                :id="res.id"
-                v-if="EditPeriod !== res.period"
-            /> 
-            <!-- componentes para editar -->
-            <template v-else>
-                <TextQuery 
-                    v-if="EditPeriod == 'pre-stay'" 
-                    @reloadList="reloadList"
+            <!-- in-stay & post-stay -->
+            <div v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
+                <IconsQuery 
                     :settings="settings"
-                    :data="res"
+                    :data="currentQuery"
+                    @reloadList="reloadList"
                 />
-                <div class="mb-2 sp:mb-4" v-else>
-                    <IconsQuery 
+            </div>
+
+            <LinksReview v-if="showRequestReview" />
+            <div 
+                v-else-if="currentQuery && currentQuery?.answered"
+                class="hidden md:block"
+            >
+                <img class="w-[64px] h-[64px] mx-auto" src="/assets/icons/WA.circle-check.BLACK.svg" alt="">
+                <p class="mt-8 roboto text-[24px] font-medium leading-[116%] text-center">{{ $t('query.form.poststay-bad-thanks-title') }} </p>
+                <p class="mt-4 roboto text-base font-medium leading-[125%] text-center">{{ $t('query.form.poststay-bad-thanks-subtitle') }}</p>
+            </div>
+            
+            <div 
+                v-for="res in responses" :key="res?.id"
+                class="md:hidden"
+            >
+                <ResponseCard 
+                    :response="res.comment ? res.comment[res.response_lang] : null"
+                    :qualification="res.qualification"
+                    :period="res.period"
+                    :currentPeriod="period"
+                    :id="res.id"
+                    v-if="EditPeriod !== res.period"
+                /> 
+                <!-- componentes para editar -->
+                <template v-else>
+                    <TextQuery 
+                        v-if="EditPeriod == 'pre-stay'" 
+                        @reloadList="reloadList"
                         :settings="settings"
                         :data="res"
-                        @reloadList="reloadList"
                     />
-                </div>      
-            </template>
+                    <div class="mb-2 sp:mb-4" v-else>
+                        <IconsQuery 
+                            :settings="settings"
+                            :data="res"
+                            @reloadList="reloadList"
+                        />
+                    </div>      
+                </template>
+            </div>
         </div>
-    </div>
+    </PageTransitionGlobal>
 </template>
 <script setup>
 import { ref, onMounted, provide, computed } from 'vue'
@@ -66,6 +68,12 @@ import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
 import ResponseCard from './Components/ResponseCardRed.vue';
 import LinksReview from './Components/LinksReviewRed.vue'
+//load
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading, loading } = useLoadingSections();
+//
 //store
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 const querySettingsStore = useQuerySettingsStore();
@@ -90,6 +98,9 @@ const EditId = ref(null);
 const EditPeriod = ref(null);
 const EditComment = ref(null);
 const EditQualification = ref(utils.getUrlParam('fill') ?? null);
+//
+startLoading(SECTIONS.QUERY.GLOBAL);
+//
 onMounted(async() => {
     // queryStore.$setPendingQuery(false);
     await getQuerySettings();
@@ -101,6 +112,7 @@ onMounted(async() => {
     requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
     requestTo.value = requestTexts.value.request_to;
+    stopLoading(SECTIONS.QUERY.GLOBAL);
 })
 
 async function getQuerySettings(){
@@ -138,7 +150,7 @@ async function getResponses(){
 }
 
 function reloadList(){
-    // console.log('test reloadList')
+    console.log('test reloadList')
     getCurrentQuery();
     getResponses();
 }

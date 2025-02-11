@@ -7,6 +7,7 @@ export default {
     },
     "form": {
         "send": "Envoyer",
+        "sending": "Envoi en cours",
         "modify" : "Modifier",
         "cancel" : "Annuler",
         "title": "Demandes",

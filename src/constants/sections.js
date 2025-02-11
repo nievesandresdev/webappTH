@@ -11,5 +11,11 @@ export const SECTIONS = {
     PLACE: {
       GLOBAL: "place_global",
     },
+    CHAT: {
+      GLOBAL: "chat_global",
+    },
+    QUERY: {
+      GLOBAL: "query_global",
+    },
   };
   

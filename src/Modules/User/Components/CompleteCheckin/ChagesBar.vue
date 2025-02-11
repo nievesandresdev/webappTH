@@ -9,19 +9,21 @@
                 <img class="w-4 h-4 mr-2" src="/assets/icons/WA.chevron.svg" alt="">
                 <span class="lato text-sm font-bold leading-[16px] underline">Paso anterior</span>
             </button>
-            <PrimaryButton 
-                classes="shadow-guest-2 py-1.5 sp:py-2.5 px-2.5 sp:px-4 sp:h-10 border rounded-[6px] sp:rounded-[10px] text-center lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]"
-                classContainer="ml-auto"
-                :disabled="!validForm"
-                @click="goToNextStep"
-            >
-                <template v-if="numberStepsEnabled == currentStep">
-                    Finalizar
-                </template>
-                <template v-else>
-                    Siguiente
-                </template>
-            </PrimaryButton> 
+            <div class="ml-auto">
+                <PrimaryButton 
+                    classes="shadow-guest-2 py-1.5 sp:py-2.5 px-2.5 sp:px-4 sp:h-10 border rounded-[6px] sp:rounded-[10px] text-center lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]"
+                    :disabled="!validForm || sendingQuery"
+                    :isLoading="sendingQuery"
+                    @click="goToNextStep"
+                >
+                    <template v-if="numberStepsEnabled == currentStep">
+                        {{ sendingQuery ? 'Enviando datos' : 'Finalizar'}}
+                    </template>
+                    <template v-else>
+                        Siguiente
+                    </template>
+                </PrimaryButton> 
+            </div>
         </div>
     </div>
 </template>
@@ -45,6 +47,8 @@ const secondLastnameError = inject('secondLastnameError');
 const docNumberError = inject('docNumberError');
 const docSupportNumberError = inject('docSupportNumberError');
 const currentGuestData = inject('currentGuestData');
+
+const sendingQuery = ref(false);
 
 // Propiedad computada para validar el formulario
 const validForm = computed(() => {
@@ -101,10 +105,12 @@ const validForm = computed(() => {
 });
 
 const submit = async () => {
+    sendingQuery.value = true;
     form.comment = form.comment.trim();
     form.checkinEmail = form.email;
     form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);
+    sendingQuery.value = false;
     router.push({ name: 'IsCompleteCheckin' })
 };
 

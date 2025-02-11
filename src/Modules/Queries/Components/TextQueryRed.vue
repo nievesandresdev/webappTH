@@ -33,11 +33,12 @@
             </button>
             <div class="ml-auto">
                 <PrimaryButton 
-                    classes="text-center py-1.5 sp:py-2.5 rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] shadow-guest"
-                    :disabled="!changes"
+                    classes="text-center py-1.5 sp:py-2.5 px-2 sp:px-4 rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] shadow-guest"
+                    :disabled="!changes || sendingQuery"
+                    :isLoading="sendingQuery"
                     @click="saveQuery"
                 >
-                    {{ $t('query.form.send') }} 
+                    {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
                 </PrimaryButton> 
             </div>
         </div>
@@ -78,10 +79,11 @@ const props = defineProps({
     },
 })
 const textarea = ref(EditComment.value);
+const sendingQuery = ref(false);
 const guestStore = useGuestStore();
 
 async function saveQuery(){
-    
+    sendingQuery.value = true;
     let params = {
         queryId : props.data.id,
         comment : textarea.value,
@@ -100,6 +102,7 @@ async function saveQuery(){
             toastSuccess(t(textRes)); 
             queryStore.$existingPendingQuery()
             emit('loadReponses');
+            sendingQuery.value = true;
         }, 1000);
     }
 }
