@@ -9,7 +9,7 @@
             mandatory
         />
         <PrimaryButton 
-            classes="text-center mt-6 py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block flex items-center justify-center"
+            classes="text-center mt-6 py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
             :isLoading="loading"
             :disabled="!form.checkDate || loading"
             @click="submit"

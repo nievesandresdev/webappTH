@@ -7,6 +7,7 @@ export default {
     },
     "form": {
         "send": "Send",
+        "sending": "Sending",
         "modify" : "Modify",
         "cancel" : "Cancel",
         "title": "Queries",

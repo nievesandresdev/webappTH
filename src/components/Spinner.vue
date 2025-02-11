@@ -7,24 +7,26 @@
             :height="height"   
             viewBox="0 0 100 100" 
             preserveAspectRatio="xMidYMid"
-            xmlns="http://www.w3.org/2000/svg"
-        >
+            xmlns="http://www.w3.org/2000/svg">
+
             <circle 
                 cx="50" 
                 cy="50" 
                 r="30" 
-                fill="none" 
+                fill="none"
                 :stroke="color"
-                stroke-width="6" 
-                stroke-dasharray="141.37 47.12"
+                stroke-width="8"           
+                stroke-linecap="round"     
+                stroke-dasharray="47 141"  
+                stroke-dashoffset="0"
             >
                 <animateTransform
-                    attributeName="transform"
-                    type="rotate"
-                    repeatCount="indefinite"
-                    dur="1s"
-                    values="0 50 50;180 50 50;360 50 50"
-                    keyTimes="0;0.5;1" 
+                attributeName="transform"
+                type="rotate"
+                repeatCount="indefinite"
+                dur="1s"
+                values="0 50 50;180 50 50;360 50 50"
+                keyTimes="0;0.5;1"
                 />
             </circle>
         </svg>

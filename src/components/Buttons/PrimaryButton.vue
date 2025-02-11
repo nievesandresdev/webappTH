@@ -4,8 +4,9 @@
         :class="[
             classes, classButton, conditionClases,
             {'border':true},
-            {'flex items-center gap-2 justify-center': nameIconLeft},
-            {'opacity-50':isDisabled}
+            {'gap-2': nameIconLeft || isLoading},
+            {'opacity-50':isDisabled},
+            'flex items-center justify-center'
         ]"
         :disabled="isDisabled"
         :style="{
@@ -23,12 +24,12 @@
             :color="chainStore.customizationData?.colors[0].contrast_color" 
             only-change-background 
         />
-        <slot></slot>
         <Spinner 
             v-if="isLoading"
             :color="chainStore.$colorContrast0"
-            classContainer="w-6 h-6 inline my-[-2px] ml-1"
+            classContainer="w-6 h-6 inline my-[-2px]"
         />
+        <slot></slot>
     </button>
     
 </template>

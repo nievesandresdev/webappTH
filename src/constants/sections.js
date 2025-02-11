@@ -14,5 +14,8 @@ export const SECTIONS = {
     CHAT: {
       GLOBAL: "chat_global",
     },
+    QUERY: {
+      GLOBAL: "query_global",
+    },
   };
   

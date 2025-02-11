@@ -35,7 +35,7 @@
         </p>
         <div class="mt-4">
             <PrimaryButton 
-                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block flex items-center justify-center"
+                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block"
                 :isLoading="loading"
                 :disabled="!validSubmitButton || loading"
                 @click="submit"

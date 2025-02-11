@@ -34,13 +34,14 @@
             <p class="mt-6 lato text-sm font-medium leading-[16px]">
                 Si sales del proceso ahora, la información que has ingresado no se guardará
             </p>
-            <PrimaryButton 
-                classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
-                classContainer="mt-6"
-                @click="navigateTo('Guests')"
-            >
-                Salir
-            </PrimaryButton> 
+            <div class="mt-6">
+                <PrimaryButton 
+                    classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                    @click="navigateTo('Guests')"
+                >
+                    Salir
+                </PrimaryButton> 
+            </div>
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="closeExistsChangesModal">
                     Continuar con el Check-in   
