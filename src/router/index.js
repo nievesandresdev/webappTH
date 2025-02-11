@@ -27,6 +27,7 @@ const GoogleButton = () => import(/* webpackChunkName: "home" */ '@/Modules/Test
 const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/TestFacebook.vue')
 const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
 const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
+const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
@@ -71,10 +72,11 @@ const routes = [
   //
   //
   // Rutas dinámicas (con slug)
-
+  
   {
     path: '/:hotelSlug',
     beforeEnter: [checkHotelSubdomain],
+    // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       ...placeRoutes,
