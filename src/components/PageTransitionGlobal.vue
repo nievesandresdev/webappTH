@@ -1,13 +1,15 @@
 <template>
-  <Transition name="fade">
-    <div v-if="loading !== null && loading" class="skeleton-wrapper">
-    <!-- <div v-if="true" class="skeleton-wrapper"> -->
-      <component :is="getSkeletonComponent()" />
-    </div>
-    <div v-else class="content">
-      <slot></slot>
-    </div>
-  </Transition>
+  <div>
+    <Transition name="fade">
+      <div v-if="loading !== null && loading" class="skeleton-wrapper">
+      <!-- <div v-if="true" class="skeleton-wrapper"> -->
+        <component :is="getSkeletonComponent()" />
+      </div>
+      <div v-else class="content">
+        <slot></slot>
+      </div>
+    </Transition>
+  </div>
 </template>
 
 <script setup>
