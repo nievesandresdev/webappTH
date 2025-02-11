@@ -8,3 +8,4 @@ export const loadMessagesApi = (params) => apiHttp('POST', `${chatPath}/loadMess
 export const markMsgsAsReadApi = (params) => apiHttp('POST', `${chatPath}/markMsgsAsRead`, params , { showPreloader: false })
 export const unreadMsgsApi = (params) => apiHttp('GET', `${chatPath}/unreadMsgs`, params , { showPreloader: false })
 export const getAvailableLanguagesApi = () => apiHttp('GET', `${chatPath}/getAvailableLanguages`, [] , { showPreloader: false })
+export const getAllSettingsApi = () => apiHttp('GET', `${chatPath}/getAllSettings`, [] , { showPreloader: false })

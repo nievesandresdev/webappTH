@@ -147,14 +147,18 @@ onMounted( async () => {
     await chatStore.loadMessages();
     availableLanguages.value = await chatStore.getAvailableLanguages();
     await watchAvailability();
+    if(hotelStore.hotelData && !hotelStore.hotelData?.chatSettings?.show_guest){
+        router.push({ name:'Inbox' })
+    }
     setTimeout(scrollToBottom, 50);
     clearTimeouts();
     connectPusher();
+    console.log('test 5',hotelStore.hotelData)
     isIphone.value = /iPhone/i.test(navigator.userAgent);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
     stopLoading(SECTIONS.CHAT.GLOBAL);
-    // console.log('test chat',chatStore.messages)
+    // console.log('test chatSettings',hotelStore.hotelData?.chatSettings?.show_guest)
 });
 
 onUnmounted(() => {
