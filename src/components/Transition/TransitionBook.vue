@@ -36,7 +36,7 @@ watch(() => route.name, async (to, from) => {
     const toIndex = customTransitions[to] ?? 1;
     const fromIndex = customTransitions[from] ?? 1;
 
-    console.log("TO:", to, toIndex, "FROM:", from, fromIndex);
+    // console.log("TO:", to, toIndex, "FROM:", from, fromIndex);
 
     if (toIndex === fromIndex) return;
 
