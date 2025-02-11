@@ -7,7 +7,12 @@
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
   />
-<TransitionBook>
+<TransitionBook
+    :custom-transitions="{
+        ShowHotel: 1,
+        FacilityList: 2,
+    }"
+>
   <router-view v-slot="{ Component }">
     <component :is="Component" :key="$route.name" />
   </router-view>
