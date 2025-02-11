@@ -49,7 +49,7 @@ export default async function handleWebAppData({ to, from, next }) {
     }else{
         utils.saveHotelSlug(to.params.hotelSlug);
     }
-    await hotelStore.$load(false, to);
+    hotelStore.$load(false, to);
     ////////////////////////////////////////////////////////
     //
     //
