@@ -113,7 +113,6 @@ export const usePlaceStore = defineStore('place', () => {
     }
 
     async function $findById (params, config = { showPreloader: true }) {
-        console.log(hotelData.value, 'hotelData.value');
         let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelData.value
         let newParams = {
             hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},

@@ -213,7 +213,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick, provide, computed } from 'vue';
+import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
 
@@ -225,6 +225,9 @@ import { handleToast } from "@/composables/useToast";
 const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 
 const placeStore = usePlaceStore();
 
@@ -242,68 +245,28 @@ const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref('');
 
-// const hoursStatic = {
-//     weekRanges: [
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1500,
-//                 "closeHours": "01:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1500,
-//                 "closeHours": "01:00"
-//             }
-//         ]
-//     ],
-//     timezone: "Africa/Ceuta"
-// }
+// COMPUTED
+const hotelData = computed(() => hotelStore.hotelData);
 
 onMounted(async () => {
-  await getDataPlace();
-  description.value = placeData.value?.description;
-  nextTick(() => {
-    checkDescriptionLength();
-  });
+
 });
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+// FUNCTION
+
+async function loadData () {
+    await getDataPlace();
+    description.value = placeData.value?.description;
+    nextTick(() => {
+        checkDescriptionLength();
+    });
+}
 
 const formatHours = computed(() => {
     const dayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
