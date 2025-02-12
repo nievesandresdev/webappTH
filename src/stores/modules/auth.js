@@ -141,7 +141,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $validateSession (to = null, next = null) {
-        
+        if(isMockup()) return;
         $getStatusSession();
         const viewsIgnored = ['Home','HotelsList','CreateStayFromChain','PrivacyPolicies'];
         if(!to || to && viewsIgnored.includes(to.name)) return; 
