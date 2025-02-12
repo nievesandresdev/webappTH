@@ -7,3 +7,5 @@ export const sendMsgToHosterApi = (params) => apiHttp('POST', `${chatPath}/sendM
 export const loadMessagesApi = (params) => apiHttp('POST', `${chatPath}/loadMessages`, params)
 export const markMsgsAsReadApi = (params) => apiHttp('POST', `${chatPath}/markMsgsAsRead`, params , { showPreloader: false })
 export const unreadMsgsApi = (params) => apiHttp('GET', `${chatPath}/unreadMsgs`, params , { showPreloader: false })
+export const getAvailableLanguagesApi = () => apiHttp('GET', `${chatPath}/getAvailableLanguages`, [] , { showPreloader: false })
+export const getAllSettingsApi = () => apiHttp('GET', `${chatPath}/getAllSettings`, [] , { showPreloader: false })

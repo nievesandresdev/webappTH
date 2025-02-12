@@ -88,6 +88,10 @@
         background-color: var(--Border-secondary);
     }
 
+    .htext-secondary{
+        color: var(--Border-secondary);
+    }
+
     .border-color-secondary{
         border-color: var(--Border-secondary);
     }

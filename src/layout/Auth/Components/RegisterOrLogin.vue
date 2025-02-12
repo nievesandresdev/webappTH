@@ -12,7 +12,8 @@
         />
         <!-- $t('guest.guestLog.email.error') -->
         <PrimaryButton 
-            classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block mt-4"
+            classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest mt-4"
+            :isLoading="loading"
             :disabled="!validSubmitButton || loading"
             @click="goRegisterOrLoginEmail()"
         >

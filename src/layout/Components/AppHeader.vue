@@ -27,7 +27,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Subheader con tabs (pestañas) -->
         <div class="subheader" v-show="showSubHeader && (tabsActives.length > 1)">
             <slot name="tabs">

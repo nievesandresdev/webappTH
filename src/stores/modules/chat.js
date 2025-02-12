@@ -4,7 +4,9 @@ import {
     sendMsgToHosterApi,
     loadMessagesApi,
     markMsgsAsReadApi,
-    unreadMsgsApi
+    unreadMsgsApi,
+    getAvailableLanguagesApi,
+    getAllSettingsApi
 } from '@/api/services/chat.services'
 
 export const useChatStore = defineStore('chat', () => {
@@ -64,6 +66,24 @@ export const useChatStore = defineStore('chat', () => {
         }
     }
 
+    async function getAvailableLanguages() {
+        const response = await getAvailableLanguagesApi()
+        const { ok } = response;
+        if(ok){
+            return response.data;
+        }
+        return [];
+    }
+
+    async function getAllSettings() {
+        const response = await getAllSettingsApi()
+        const { ok } = response;
+        if(ok){
+            return response.data;
+        }
+        return [];
+    }
+
     function setUnreadMsgsCount(count) {
         unreadMsgsRef.value = count;
     }
@@ -85,7 +105,9 @@ export const useChatStore = defineStore('chat', () => {
         unreadMsgsRef,
         countUnreadMessages,
         setUnreadMsgsCount,
-        messages
+        getAvailableLanguages,
+        messages,
+        getAllSettings
     }
 
 })

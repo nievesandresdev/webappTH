@@ -7,8 +7,8 @@ import isMobile from '@/middlewares/isMobile'
 
 const homeRoutes = [
   {
-    path: 'instalaciones',
-    component: AppLayout,
+    path: '/',
+    // component: AppLayout,
     /* meta: {
       verifyHotel: true,
       middleware: [
@@ -33,17 +33,17 @@ const homeRoutes = [
         path: 'fakedetail',
         component: DetailPageFake
       }, */
-      {
-        name: 'FacilityList',
-        path: '',
-        component: ListFacility,
-      },
+      // {
+      //   name: 'FacilityList',
+      //   path: '',
+      //   component: ListFacility,
+      // },
       
     ],
   },
   {
     name: 'ShowFacility',
-    path: 'ver-instalacion/:id', 
+    path: 'instalaciones/ver-instalacion/:id', 
     component: ShowFacility,
     props: true, 
   },
