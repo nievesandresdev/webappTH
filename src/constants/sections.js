@@ -7,6 +7,7 @@ export const SECTIONS = {
     },
     FACILITY: {
       GLOBAL: "facility_global",
+      DETAIL: "facility_detail_global",
     },
     PLACE: {
       GLOBAL: "place_global",

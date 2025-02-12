@@ -8,7 +8,6 @@
     fixed
   /> -->
 
-  <!-- <TransitionBook> -->
     <PageTransitionGlobal module="facility">
 
       <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
@@ -46,7 +45,6 @@
       </div>
 
     </PageTransitionGlobal>
-  <!-- </TransitionBook> -->
 
 </template>
 

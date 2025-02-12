@@ -1,11 +1,11 @@
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 
 // hotel
-const AdminPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Hotel/AdminPage.vue')
-const ShowHotel = () => import(/* webpackChunkName: "home" */ '@/Modules/Hotel/ShowHotel.vue')
+const AdminPage = () => import(/* webpackChunkName: "home" */ '@/Modules/Hotel/AdminPage.vue');
+const ShowHotel = () => import(/* webpackChunkName: "home" */ '@/Modules/Hotel/ShowHotel.vue');
 
 // facility
-const ListFacility = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ListFacility.vue')
+const ListFacility = () => import(/* webpackChunkName: "home" */ '@/Modules/Facility/ListFacility.vue');
 
 // import isMobile from '@/middlewares/isMobile'
 
