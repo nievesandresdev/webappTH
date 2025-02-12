@@ -11,6 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
+    console.log('test handleWebAppData');
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -47,6 +48,11 @@ export default async function handleWebAppData({ to, from, next }) {
     if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
     }else{
+        let sudmainsChain = chainStore.chainData.hotels_subdomains;
+        let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
+        //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
+        console.log('to.params.hotelSlug',to.params.hotelSlug)
+        if(!validSubdomain && to.params.hotelSlug) return next({ name: 'ChainLanding' });
         utils.saveHotelSlug(to.params.hotelSlug);
     }
     hotelStore.$load(false, to);
@@ -89,6 +95,7 @@ export default async function handleWebAppData({ to, from, next }) {
     // }
 
     //validar sesion 
+    authStore.$validateSession(to, next);
     authStore.$goLoginBySocialNetwork();
     //
     // Agrega la nueva ruta al historial

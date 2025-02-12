@@ -118,7 +118,6 @@ const router = useRouter();
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore
 import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore()
 import { useAuthStore } from '@/stores/modules/auth'
@@ -129,10 +128,10 @@ async function goBack(){
         //si existe session usa el historial
         historyStore.$goBack(router);
     }else{
-        if(hotelData){
-            navigateTo('Home',{},{ acform : 'complete' })
+        if(hotelStore.hotelData){
+            navigateTo('Home',{},{ acform : 'complete', g : localStorage.getItem('guestId') })
         }else{
-            router.push({ name: 'ChainLanding', query:{acform:'complete'}});
+            router.push({ name: 'ChainLanding', query:{acform:'complete', g : localStorage.getItem('guestId')}});
         }
     }
     

@@ -27,6 +27,7 @@
                 :disabled="passDisabled"
             />
         </div>
+        <p class="lato text-[10px] font-bold leading-[12px] mt-1">{{$t('auth.register.password-info')}}</p>
         <p 
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
         >
@@ -125,7 +126,7 @@ const validSubmitButton = computed(()=>{
     return !emailError.value && 
             Boolean(form.name.trim()) && 
             Boolean(form.email.trim()) && 
-            Boolean(form.password.trim()) && form.password.length > 6;
+            Boolean(form.password.trim()) && form.password.length > 7;
     
 })
 </script>
