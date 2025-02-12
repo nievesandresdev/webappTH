@@ -17,7 +17,6 @@
     <component :is="Component" :key="$route.name" />
   </router-view>
 </TransitionBook>
-<!-- <router-view :key="$route.fullPath" /> -->
 </template>
 
 <script setup>
@@ -85,7 +84,7 @@ function loadTabsHeader () {
     }
     tabsHeader.value  = [tabInformation, tabFacility];
 
-    tabs.setTabsHeader([tabInformation, tabFacility]);
+    tabs.setTabsHeader([tabInformation, tabFacility], router);
 }
 
 function changeTab (r) {
