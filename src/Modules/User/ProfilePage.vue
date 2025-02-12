@@ -206,7 +206,7 @@ onMounted(async() => {
     stayData.value = stayStore.stayData;
     hotelData.value = hotelStore.hotelData;
     loading.value = false;
-    const response = await hotelStore.$getRewardsByHotel(stayData.value.hotel_id);
+    const response = await hotelStore.$getRewardsByHotel();
     hotelRewards.value = response.data;
 
     if(referentUrl) {
