@@ -13,7 +13,6 @@ watch(() => route.name, async (to, from) => {
 
   transitionName.value = lastDirection.value === "slide-left" ? "slide-right" : "slide-left";
   lastDirection.value = transitionName.value;
-  console.log(transitionName.value, 'transitionName.value');
 });
 
   return { transitionName };
