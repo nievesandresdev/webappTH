@@ -1,7 +1,7 @@
 <template>
     <header
         id="header"
-        class="custom-header z-[4000]"
+        class="custom-header"
         :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
         <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[23px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
@@ -122,13 +122,13 @@ const navigateTo = (routeName) => {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .custom-header {
         border-radius: 0px 0px 10px 10px;
         border: 1px solid #FFF;
         background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        z-index: 3000;
+        z-index: 100;
     }
 
 
