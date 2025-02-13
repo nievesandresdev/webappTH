@@ -87,8 +87,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logout () {
-        stayStore.deleteLocalStayData()
-        guestStore.deleteLocalGuest()
+        await stayStore.deleteLocalStayData()
+        await guestStore.deleteLocalGuest()
+        localStorage.removeItem('startedWebappBy')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         historyStore.$clearHistory();
@@ -127,33 +128,49 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $getStatusSession () {
-        sessionActive.value = Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(stayStore.stayData);    
+        let guestData = localStorage.getItem('guestData');
+        let stayData = localStorage.getItem('stayData');
+        let hotelData = localStorage.getItem('stayData');
+        let guestDataObj = JSON.parse(guestData);
+        let stayDataObj = JSON.stringify(stayData);
+        let hotelDataObj = JSON.stringify(hotelData);
+        sessionActive.value = 
+            Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(stayStore.stayData) ||
+            Boolean(hotelData) && Boolean(guestData) && Boolean(guestDataObj.name) && Boolean(stayData) && hotelDataObj.id == stayDataObj.hotel_id;
+        ;    
     }
 
-    async function $validateSession (to = null) {
-        
+    async function $validateSession (to = null, next = null) {
+        if(isMockup()) return;
         $getStatusSession();
-        // console.log('test vald cond', to.name);
         const viewsIgnored = ['Home','HotelsList','CreateStayFromChain','PrivacyPolicies'];
         if(!to || to && viewsIgnored.includes(to.name)) return; 
         //
-        // console.log('test sessionActive', sessionActive.value);
+
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            console.log('test redirect 1')
-            return router.push({ name: 'Home', params :{ hotelSlug: hotelStore.hotelData.subdomain }, query: to.query });
+            console.log('test validateSession 1')
+            next({ name: 'Home', params :{ hotelSlug: hotelStore.hotelData.subdomain }, query: to.query });
         }else{
-            //
+            let sudmainsChain = chainStore.chainData.hotels_subdomains;
+            let currentSubdomainHotel = localStorage.getItem('subdomain');
+            let validSubdomain = sudmainsChain.includes(currentSubdomainHotel);
             //guardo la vista actual para redireccionar luego en el login
             $setStartedWebappBy(to)
             //en caso de que no exista session
             //
-            if(!isMockup()){
-                if(Boolean(hotelStore.hotelData) && to?.name == 'ChainLanding'){
-                    //si hay un hotel cargado va a la home
-                    console.log('test redirect 2')
-                    router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
+            
+            // console.log('guestData',guestData)
+            console.log('sessionActive.value',sessionActive.value)
+            if(!sessionActive.value && to?.name !== 'ChainLanding'){
+                if(!isMockup() && validSubdomain){
+                    //si hay un subdominio de hotel cargado va a la home
+                    console.log('test validateSession 2',sessionActive.value)
+                    next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
+                }else{
+                    console.log('test validateSession 3',sessionActive.value)
+                    next({ name:'ChainLanding' })
                 }
-            }
+            }   
         }
     }
 
@@ -172,11 +189,11 @@ export const useAuthStore = defineStore('auth', () => {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
-            console.log('test redirect goStartedWebappBy1',route.name)
+            console.log('test goStartedWebappBy 1',route.name)
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
-            console.log('test redirect goStartedWebappBy2')
+            console.log('test goStartedWebappBy 2')
             router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }
     }
@@ -189,11 +206,11 @@ export const useAuthStore = defineStore('auth', () => {
             await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
-                console.log('test redirect redirectAfterLogin1')
+                console.log('test redirectAfterLogin 1')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
                 //logica para cuando no se halla cargado un hotel
-                console.log('test redirect redirectAfterLogin2')
+                console.log('test redirectAfterLogin 2')
                 router.push({ name:'HotelsList' })
             }
         }

@@ -44,26 +44,6 @@ export const useHotelStore = defineStore('hotel', () => {
 
     }
 
-    /* async function $load (reload = false, routeInfo = null) {
-        
-        let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
-        let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
-
-        if ( noHotelIfSubdomain || reloadAndSubdomain){
-            let params = {
-                subdomain: localStorage.getItem('subdomain'),
-            }
-            const response = await findByParamsApi(params)
-            const { ok } = response
-            hotelData.value = ok ? response.data : null
-            // console.log('test hotel',hotelData.value)
-        }
-        
-        authStore.$validateSession(routeInfo);
-        return hotelData.value;
-        
-    } */
-
     async function $load (reload = false, routeInfo = null) {
         let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
         let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
@@ -73,7 +53,7 @@ export const useHotelStore = defineStore('hotel', () => {
                 subdomain: localStorage.getItem('subdomain'),
             }
             const response = await getMainDataApi(params);
-            // console.log('test se cargo el hotel', response.data);
+            console.log('test se cargo el hotel', response.data);
             const { ok } = response;
             
             if (ok && response.data) {
@@ -88,8 +68,6 @@ export const useHotelStore = defineStore('hotel', () => {
                 hotelData.value = null; // Si no se obtuvo datos, aseguramos que sea null
             }
         }
-    
-        authStore.$validateSession(routeInfo);
         return hotelData.value;
     }
         

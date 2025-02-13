@@ -29,7 +29,8 @@ export default{
         "text-info-2": "Je ne souhaite pas recevoir de messages promotionnels.",
         "policies-text": "En sélectionnant Accepter et continuer, j'accepte la",
         "policies-title": "Politique de Confidentialité.",
-        "the-chain": "La chaîne"
+        "the-chain": "La chaîne",
+        "password-info": "Le mot de passe doit contenir au moins 8 caractères."
     },
     "reset-pass":{
         "title": "Changer le mot de passe",
