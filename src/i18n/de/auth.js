@@ -29,7 +29,8 @@ export default{
         "text-info-2": "Ich möchte keine Werbenachrichten erhalten.",
         "policies-text": "Indem ich Akzeptieren und fortfahren auswähle, stimme ich der",
         "policies-title": "Datenschutzrichtlinie zu.",
-        "the-chain": "Die Kette"
+        "the-chain": "Die Kette",
+        "password-info":"Das Passwort muss mindestens 8 Zeichen enthalten."
     },
     "reset-pass":{
         "title": "Passwort ändern",

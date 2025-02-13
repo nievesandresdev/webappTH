@@ -11,6 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
+    console.log('test handleWebAppData');
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -47,6 +48,11 @@ export default async function handleWebAppData({ to, from, next }) {
     if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
     }else{
+        let sudmainsChain = chainStore.chainData.hotels_subdomains;
+        let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
+        //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
+        console.log('to.params.hotelSlug',to.params.hotelSlug)
+        if(!validSubdomain && to.params.hotelSlug) return next({ name: 'ChainLanding' });
         utils.saveHotelSlug(to.params.hotelSlug);
     }
     hotelStore.$load(false, to);
@@ -70,25 +76,26 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //
     //data extra
-    // const localeStore = useLocaleStore();
-    // if (utils.isMockup() || !localStorage.getItem('guestId')) {
-    //     console.log('test entro aqui')
-    //     let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
-    //     if(localeStore.localeCurrent !== 'es'){
-    //         lang = localeStore.localeCurrent;
-    //     }
-    //     localeStore.$loadByURL(lang);
-    // } else if (!utils.isMockup()) {
-    //     console.log('test entro aqui 2');
-    //     let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
-    //     localeStore.$loadByURL(lang);
-    // }
+    const localeStore = useLocaleStore();
+    if (utils.isMockup() || !localStorage.getItem('guestId')) {
+        //console.log('test entro aqui')
+        let lang = hotelStore.hotelData?.language_default_webapp ?? localeStore.localeCurrent;
+        if(localeStore.localeCurrent !== 'es'){
+            lang = localeStore.localeCurrent;
+        }
+        localeStore.$loadByURL(lang);
+    } else if (!utils.isMockup()) {
+        //console.log('test entro aqui 2');
+        let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
+        localeStore.$loadByURL(lang);
+    }
 
     // if (to.meta.verifyHotel && !hotel) {
     //     return next({ name: 'NotFound' });
     // }
 
     //validar sesion 
+    authStore.$validateSession(to, next);
     authStore.$goLoginBySocialNetwork();
     //
     // Agrega la nueva ruta al historial

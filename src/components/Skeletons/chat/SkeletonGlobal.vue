@@ -1,5 +1,5 @@
 <template>
-    <div class="py-3 sp:py-6 px-2 xp:px-4 bg-[#fafafa] flex-grow">
+    <div class="py-3 sp:py-6 px-2 xp:px-4 bg-[#fafafa] flex-grow sp:mx-[-16px]">
         <div 
             v-for="msg in chatMessages" 
             :key="msg" 
