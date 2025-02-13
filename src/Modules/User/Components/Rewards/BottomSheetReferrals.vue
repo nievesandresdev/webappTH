@@ -57,7 +57,7 @@ const amountFormat = computed(() => {
 const openModalShareReferrals = () => {
     const data = {
         title: '¡Obtén un descuento especial!',
-        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${props.hotelRewards.name}.\n\nCódigo: _${props.hotelRewards.referrals?.code}_\n\nPara canjearlo:\n${props.hotelRewards.referrals?.description}\n\n`,
+        text: `Usa mi código de referido para obtener ${amountFormat.value} de descuento en tu compra en ${props.hotelRewards.referrals?.url}.\n\nCódigo: _${props.hotelRewards.referrals?.code}_\n\nPara canjearlo:\n${props.hotelRewards.referrals?.description}\n\n`,
         url: `${props.hotelRewards.referrals?.url}`
 
 
