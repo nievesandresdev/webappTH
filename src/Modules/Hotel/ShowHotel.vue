@@ -1,4 +1,5 @@
 <template>
+      <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
       <PageTransitionGlobal module="hotel">
       
         <div
