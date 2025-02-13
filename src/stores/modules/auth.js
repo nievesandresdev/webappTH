@@ -77,10 +77,10 @@ export const useAuthStore = defineStore('auth', () => {
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
-            console.log('test redirect logoutAndCreateStay1')
+            // console.log('test redirect logoutAndCreateStay1')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
-            console.log('test redirect logoutAndCreateStay2')
+            // console.log('test redirect logoutAndCreateStay2')
             router.push({ name:'HotelsList' })
         }
         
@@ -146,28 +146,25 @@ export const useAuthStore = defineStore('auth', () => {
         const viewsIgnored = ['Home','HotelsList','CreateStayFromChain','PrivacyPolicies'];
         if(!to || to && viewsIgnored.includes(to.name)) return; 
         //
-
+        let currentSubdomainHotel = localStorage.getItem('subdomain');
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            console.log('test validateSession 1')
-            next({ name: 'Home', params :{ hotelSlug: hotelStore.hotelData.subdomain }, query: to.query });
+            // console.log('test validateSession 1')
+            next({ name: 'Home', params :{ hotelSlug: currentSubdomainHotel }, query: to.query });
         }else{
             let sudmainsChain = chainStore.chainData.hotels_subdomains;
-            let currentSubdomainHotel = localStorage.getItem('subdomain');
+            
             let validSubdomain = sudmainsChain.includes(currentSubdomainHotel);
             //guardo la vista actual para redireccionar luego en el login
             $setStartedWebappBy(to)
             //en caso de que no exista session
             //
-            
-            // console.log('guestData',guestData)
-            console.log('sessionActive.value',sessionActive.value)
             if(!sessionActive.value && to?.name !== 'ChainLanding'){
                 if(!isMockup() && validSubdomain){
                     //si hay un subdominio de hotel cargado va a la home
-                    console.log('test validateSession 2',sessionActive.value)
+                    // console.log('test validateSession 2',sessionActive.value)
                     next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
                 }else{
-                    console.log('test validateSession 3',sessionActive.value)
+                    // console.log('test validateSession 3',sessionActive.value)
                     next({ name:'ChainLanding' })
                 }
             }   
@@ -186,14 +183,15 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $goStartedWebappBy(optional = false) {
+        if(isMockup()) return;
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
-            console.log('test goStartedWebappBy 1',route.name)
+            // console.log('test goStartedWebappBy 1',route.name)
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
-            console.log('test goStartedWebappBy 2')
+            // console.log('test goStartedWebappBy 2')
             router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }
     }
@@ -206,11 +204,11 @@ export const useAuthStore = defineStore('auth', () => {
             await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
-                console.log('test redirectAfterLogin 1')
+                // console.log('test redirectAfterLogin 1')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
                 //logica para cuando no se halla cargado un hotel
-                console.log('test redirectAfterLogin 2')
+                // console.log('test redirectAfterLogin 2')
                 router.push({ name:'HotelsList' })
             }
         }

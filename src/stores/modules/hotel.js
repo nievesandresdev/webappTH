@@ -21,6 +21,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
     // STATE
     const hotelData = ref(null)
+    const hotelDataStorage = ref(localStorage.getItem('hotelData') ? JSON.parse(localStorage.getItem('hotelData')) : null)
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const oldSubdomain = ref(null)
@@ -53,7 +54,7 @@ export const useHotelStore = defineStore('hotel', () => {
                 subdomain: localStorage.getItem('subdomain'),
             }
             const response = await getMainDataApi(params);
-            console.log('test se cargo el hotel', response.data);
+            // console.log('test se cargo el hotel', response.data);
             const { ok } = response;
             
             if (ok && response.data) {
@@ -110,6 +111,8 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $deleteLocalHotel () {
         // console.log('test deleteLocalHotel');
         localStorage.removeItem('subdomain')
+        localStorage.removeItem('hotelData')
+        localStorage.removeItem('hotelId')
         subdomain.value = null;
         hotelData.value = null;
     }
@@ -137,6 +140,8 @@ export const useHotelStore = defineStore('hotel', () => {
         return response.ok ? response.data : null;
     }
     const hotelDataComputed = computed(() => {
+        localStorage.setItem('hotelData', JSON.stringify(hotelData.value));
+        hotelDataStorage.value = hotelData.value;
         return hotelData.value
     });
     
@@ -156,7 +161,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $setOldLocalHotel,
         $deleteOldLocalHotel,
         oldSubdomain,
-        $getRewardsByHotel
+        $getRewardsByHotel,
+        hotelDataStorage
     }
 
 

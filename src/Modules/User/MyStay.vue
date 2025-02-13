@@ -4,7 +4,7 @@
     <div class="py-6 px-4">
 
         <!-- form -->
-        <div>
+        <div v-if="!loading">
             <h3 class="lato text-base font-bold leading-[20px]">{{ $t('stay.edit.information-stay') }}</h3>
             <!-- hotel name -->
             <div class="mt-4">
@@ -56,7 +56,9 @@
             </PrimaryButton> 
             <div class="mt-4 border-b border-[#E9E9E9]"></div>
         </div>
-
+        <div v-else class="flex justify-center">
+            <Spinner width="40px" height="40px"/>
+        </div>
     </div>
 </template>
 <script setup>
@@ -67,6 +69,7 @@ import THInputText from '@/components/THInputText.vue';
 import THInputField from '@/components/THInputField.vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import Spinner from '@/components/Spinner.vue';
 import WATag from '@/components/WATag.vue';
 //store
 import { useHotelStore } from '@/stores/modules/hotel';
@@ -94,8 +97,8 @@ const { paramsRouter } = toRefs(props)
 
 const hotelNameAddress = ref(null)
 const currentStay = ref(null);
-
-  const shareUrl = ref(null);
+const shareUrl = ref(null);
+const loading = ref(true);
 
 const form = reactive({
     checkDate: null,
@@ -105,10 +108,11 @@ const form = reactive({
 })
 
 onMounted(async() => {
-    hotelNameAddress.value =  `${hotelStore.hotelData.name} - ${hotelStore.hotelData.address}`
     currentStay.value = await stayStore.findById(paramsRouter.value.stayId)
     fillForm(currentStay.value)
     shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
+    hotelNameAddress.value =  `${hotelStore.hotelDataStorage?.name} - ${hotelStore.hotelDataStorage?.zone}`
+    loading.value = false;
 })
 
 
@@ -124,6 +128,8 @@ const fillForm = (stay) =>{
 
 
 const submitForm = async () => {
+    loading.value = true;
+    currentStay.value = null;
     form.stayId = paramsRouter.value.stayId;
     // console.log('test stayId',paramsRouter.value.stayId)
     currentStay.value = await stayStore.updateStayAndGuests(form)
@@ -132,6 +138,7 @@ const submitForm = async () => {
     if(currentStay.value){
         toastSuccess(t('messageRequest.changeSave'));
     }
+    loading.value = false;
 }
 
 const valid = computed(()=>{

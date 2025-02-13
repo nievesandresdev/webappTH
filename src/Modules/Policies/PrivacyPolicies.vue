@@ -128,7 +128,7 @@ async function goBack(){
         //si existe session usa el historial
         historyStore.$goBack(router);
     }else{
-        if(hotelStore.hotelData){
+        if(localStorage.getItem('subdomain')){
             navigateTo('Home',{},{ acform : 'complete', g : localStorage.getItem('guestId') })
         }else{
             router.push({ name: 'ChainLanding', query:{acform:'complete', g : localStorage.getItem('guestId')}});
