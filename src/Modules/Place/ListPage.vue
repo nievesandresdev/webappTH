@@ -230,7 +230,7 @@ async function loadTypePlaces () {
         categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
         const { hidden_categories } = hotelData.value;
         categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
-        validateCategoriplaceCurrent();
+        // validateCategoriplaceCurrent();
 
         loadTabsHeader();
     }
