@@ -99,7 +99,7 @@ async function goRegisterOrLoginEmail(){
         form.id = hasData.guest.id;
         emit('enterPasswordToLogin')
     }else{
-        if(hotelData && hasData.guest?.id){
+        if(localStorage.getItem('subdomain') && hasData.guest?.id){
             navigateTo('Home',{},{ g: hasData.guest?.id, acform : 'complete' })
         }else{
             //logica para cuando no se halla cargado un hotel

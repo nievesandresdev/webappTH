@@ -5,7 +5,7 @@ import { useChainStore } from '@/stores/modules/chain'
 
 export function navigateTo(routeName, params = {}, query = {}) {
   const hotelStore = useHotelStore()
-  const slug = hotelStore.subdomain ?? localeStore.getItem('subdomain');
+  const slug = hotelStore.subdomain ?? localStorage.getItem('subdomain');
 
   const chainStore = useChainStore();
   if (slug && chainStore?.chainData?.type !== "INDEPENDENT") {

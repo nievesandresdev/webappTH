@@ -53,7 +53,7 @@ export const useHotelStore = defineStore('hotel', () => {
                 subdomain: localStorage.getItem('subdomain'),
             }
             const response = await getMainDataApi(params);
-            console.log('test se cargo el hotel', response.data);
+            // console.log('test se cargo el hotel', response.data);
             const { ok } = response;
             
             if (ok && response.data) {
@@ -110,6 +110,8 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $deleteLocalHotel () {
         // console.log('test deleteLocalHotel');
         localStorage.removeItem('subdomain')
+        localStorage.removeItem('hotelData')
+        localStorage.removeItem('hotelId')
         subdomain.value = null;
         hotelData.value = null;
     }
