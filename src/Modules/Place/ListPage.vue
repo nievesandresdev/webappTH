@@ -138,12 +138,11 @@ const firstTypePlace = computed(() => {
     return typeplace;
 });
 const categoriPlaceSelected = computed(() => {
-    let categoriplace = categoriplaces.value.find(item => item.id == formFilter.categoriplace);
+    let categoriplace = categoriplaces.value.filter(item => formFilter.categoriplace.includes(item.id));
     return categoriplace;
 });
 const firstCategoriPlace = computed(() => {
     let categoriplace = categoriplaces.value.find(item => item);
-    console.log(categoriplaces.value, 'categoriplaces.value');
     return categoriplace;
 });
 
@@ -226,13 +225,13 @@ async function loadTypePlaces () {
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
+        validateTyePlaceCurrent();
 
         categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
         const { hidden_categories } = hotelData.value;
         categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
-
-        validateTyePlaceCurrent();
         validateCategoriplaceCurrent();
+
         loadTabsHeader();
     }
 }
@@ -244,7 +243,7 @@ function validateTyePlaceCurrent () {
     }
 }
 function validateCategoriplaceCurrent () {
-    if(!categoriPlaceSelected.value) {
+    if(categoriPlaceSelected.value?.length <= 0) {
         formFilter.categoriplace = [];
     }
 }
@@ -385,6 +384,7 @@ function activateSearchHandle ($event) {
 }
 
 async function loadAll(payload) {
+
     const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
 }
 
