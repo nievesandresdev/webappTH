@@ -11,7 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    console.log('test handleWebAppData');
+    // console.log('test handleWebAppData');
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -51,7 +51,6 @@ export default async function handleWebAppData({ to, from, next }) {
         let sudmainsChain = chainStore.chainData.hotels_subdomains;
         let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
         //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
-        console.log('to.params.hotelSlug',to.params.hotelSlug)
         if(!validSubdomain && to.params.hotelSlug) return next({ name: 'ChainLanding' });
         utils.saveHotelSlug(to.params.hotelSlug);
     }
@@ -61,7 +60,6 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data huesped
     if(guestId){
-        console.log('test middle guestId',guestId)
         await guestStore.findByIdInSetLocalGuest(guestId)
     }
     ////////////////////////////////////////////////////////
@@ -69,7 +67,6 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data stay
     if(stayId){
-        console.log('test middle stayId',stayId)
         await stayStore.findByIdInSetLocalStay(stayId)
     }
     ////////////////////////////////////////////////////////
