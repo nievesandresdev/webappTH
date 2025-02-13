@@ -141,6 +141,11 @@ const categoriPlaceSelected = computed(() => {
     let categoriplace = categoriplaces.value.find(item => item.id == formFilter.categoriplace);
     return categoriplace;
 });
+const firstCategoriPlace = computed(() => {
+    let categoriplace = categoriplaces.value.find(item => item);
+    console.log(categoriplaces.value, 'categoriplaces.value');
+    return categoriplace;
+});
 
 const numbersFiltersApplied = computed(() => {
     let filters = [];
@@ -221,7 +226,13 @@ async function loadTypePlaces () {
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
+
+        categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+        const { hidden_categories } = hotelData.value;
+        categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+
         validateTyePlaceCurrent();
+        validateCategoriplaceCurrent();
         loadTabsHeader();
     }
 }
@@ -229,9 +240,12 @@ async function loadTypePlaces () {
 function validateTyePlaceCurrent () {
     if(!typePlaceSelected.value) {
         let {id: idFirstTypePlace} = firstTypePlace.value;
-        formFilter.typeplace = idFirstTypePlace;
-        // let formFilterWithMockup = {...formFilter, typeplace: idFirstTypePlace, mockup: isMockup() }
-        // route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
+        formFilter.typeplace = idFirstTypePlace;   
+    }
+}
+function validateCategoriplaceCurrent () {
+    if(!categoriPlaceSelected.value) {
+        formFilter.categoriplace = [];
     }
 }
 
@@ -241,9 +255,6 @@ async function loadCategoriPlaces () {
     if (response.ok) {
         categoriplacesWithNumbers.value = response.data;
     }
-    categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
-    const { hidden_categories } = hotelData.value;
-    categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
 }
 
 function loadTabsHeader () {
@@ -265,8 +276,8 @@ function changeCategoryHandle (payload) {
 }
 
 async function changeCategory (idCategory = [], idTypePlace = null) {
-    if (idCategory.length  > 0) {
-        if (formFilter.categoriplace.includes(idCategory)) {
+    if (idCategory.length > 0) {
+        if (formFilter.categoriplace?.includes(idCategory)) {
             let index = formFilter.categoriplace.indexOf(idCategory);
             if (index !== -1) {
                 formFilter.categoriplace.splice(index, 1);
@@ -280,9 +291,7 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
     } else {
         formFilter.categoriplace = [];
     }
-
     formFilter.typeplace = idTypePlace;
-
     loadTabsHeader();
     loadAll({showPreloader: true});
 }
@@ -290,7 +299,7 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
 const getFirstCategoryOfType = ()=> {
     if(formFilter.typeplace){
         let first = categoriplaces.value?.[0] ?? null;
-        formFilter.categoriplace = first?.id;
+        formFilter.categoriplace = [first?.id];
     }
 }
 
