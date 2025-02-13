@@ -51,7 +51,7 @@ export default async function handleWebAppData({ to, from, next }) {
         let sudmainsChain = chainStore.chainData.hotels_subdomains;
         let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
         //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
-        if(!validSubdomain && to.params.hotelSlug) return next({ name: 'ChainLanding' });
+        if(!validSubdomain && to.params.hotelSlug && !utils.isMockup()) return next({ name: 'ChainLanding' });
         utils.saveHotelSlug(to.params.hotelSlug);
     }
     hotelStore.$load(false, to);

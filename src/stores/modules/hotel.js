@@ -21,6 +21,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
     // STATE
     const hotelData = ref(null)
+    const hotelDataStorage = ref(localStorage.getItem('hotelData') ? JSON.parse(localStorage.getItem('hotelData')) : null)
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const oldSubdomain = ref(null)
@@ -139,6 +140,8 @@ export const useHotelStore = defineStore('hotel', () => {
         return response.ok ? response.data : null;
     }
     const hotelDataComputed = computed(() => {
+        localStorage.setItem('hotelData', JSON.stringify(hotelData.value));
+        hotelDataStorage.value = hotelData.value;
         return hotelData.value
     });
     
@@ -158,7 +161,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $setOldLocalHotel,
         $deleteOldLocalHotel,
         oldSubdomain,
-        $getRewardsByHotel
+        $getRewardsByHotel,
+        hotelDataStorage
     }
 
 

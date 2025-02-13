@@ -166,6 +166,7 @@
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
+import { isMockup } from '@/utils/utils'
 const router = useRouter();
 //forms
 import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
@@ -319,6 +320,7 @@ const showResetPasswordBottomSheet = computed(() => {
 });
 
 const showRegisterOrLoginBottomSheet = computed(() => {
+    if(isMockup()) return false;
     return formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset'
 });
 
