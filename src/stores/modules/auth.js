@@ -183,6 +183,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $goStartedWebappBy(optional = false) {
+        if(isMockup()) return;
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
