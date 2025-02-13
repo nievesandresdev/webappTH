@@ -50,7 +50,7 @@
         let response = await placeStore.$findById({id:paramsRouter.value.id})
         placeData.value = null;
         if(response.ok) placeData.value = response.data;
-        console.log('placeData.value',placeData.value)
+        // console.log('placeData.value',placeData.value)
 
     }
 
