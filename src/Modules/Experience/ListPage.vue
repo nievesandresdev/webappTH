@@ -30,7 +30,7 @@
 <script setup>
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam, slufy } from '@/utils/utils.js';
+import { getUrlParam, slufy, isMockup } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -154,7 +154,8 @@ function submitFilter (payload){
     loadExperiences();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        let formFilterWithMockup = {...formFilter, mockup: isMockup() }
+        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
     }
 }
 

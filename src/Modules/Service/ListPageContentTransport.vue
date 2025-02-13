@@ -36,7 +36,7 @@ import { inject, onMounted, ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 const route = useRouter();
 
-import { $throttle, $isElementVisible } from '@/utils/utils';
+import { $throttle, $isElementVisible, isMockup } from '@/utils/utils';
 
 import CardList from './components/CardList.vue';
 import SkeletonCard from './components/SkeletonCard.vue';
@@ -147,7 +147,8 @@ function submitFilter (payload){
     loadItems();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'Transport', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        let formFilterWithMockup = {...formFilter, mockup: isMockup() }
+        route.push({ name: 'Transport', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
     }
 }
 
