@@ -11,19 +11,20 @@
         >
           <!-- Slider de imágenes -->
           <!-- <ImageSlider :images="hotelData.images" /> -->
-          <ImageSlider :images="hotelData?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
+          <ImageSlider :images="hotelInfo?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
 
           <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
             <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333] mb-[4px] sp:mb-[7px]">
               {{ hotelData?.name }}
             </h1>
 
-            <StarRating v-if="hotelData?.category !== null" :category="hotelData?.category" />
+
+            <StarRating v-if="hotelInfo?.category !== null" :category="hotelInfo?.category" />
 
             <p
               :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
             >
-              {{localeStore.localeCurrent == 'es' ? hotelData?.description : hotelData?.translate.description}}
+              {{localeStore.localeCurrent == 'es' ? hotelInfo?.description : hotelInfo?.translate.description}}
             </p>
 
             <p
@@ -37,7 +38,7 @@
             <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
             <HotelActionButtons
-              :hotelData="hotelData"
+              :hotelData="hotelInfo"
               :buttonsHome="true"
               @wifi-click="handleWifi"
               @call-click="handleCall"
@@ -49,7 +50,7 @@
             <HotelCheckInOut :hotelData="hotelData" v-if="hotelData?.checkin && hotelData?.checkout" /> 
             
             <!--DATA GENERAL DEL HOTEL-->
-            <HotelInfoGeneral :hotelData="hotelData" /> 
+            <HotelInfoGeneral :hotelData="hotelInfo" /> 
           </div>
 
 
@@ -73,7 +74,7 @@
                   <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
                   <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
                 </div >
-                <HotelRRSS :hotelData="hotelData" />
+                <HotelRRSS :hotelData="hotelInfo" />
               </template>
             </div>
             <!-- fin redes sociales-->
@@ -102,7 +103,7 @@
               <p class="text-[20px] font-bold text-[#333333] lato">Políticas y Normas</p>
             </div>
           </div>
-          <div v-for="policie in hotelData.policies" :key="policie" class="p-4 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full space-y-4 mb-4">
+          <div v-for="policie in hotelInfo.policies" :key="policie" class="p-4 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full space-y-4 mb-4">
             <div class="text-[#333333] text-sm">
               <p class="font-bold mb-2 lato text-[16px]">{{ policie.title }}</p>
               <p class="font-normal text-sm lato">{{ policie.description }}</p>
@@ -172,6 +173,7 @@ const stayData = ref({})
 const shareUrl = ref('')
 
 const hotelData = inject('hotelData');
+const hotelInfo = ref({})
 
 const handleCall = () => {
   if (hotelData.value.phone) {
@@ -213,6 +215,7 @@ async function loadData () {
 
   stayData.value = stayStore.getLocalStay();
   shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayData.value?.id}&guestPerStay=true`);
+  hotelInfo.value = await hotelStore.$findByParamsApi(hotelStore.hotelData?.id)
   
 
   if (hotelStore.hotelData.show_facilities === 1 && hotelStore.hotelData.show_profile !== 1) {

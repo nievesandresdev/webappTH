@@ -144,6 +144,12 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelDataStorage.value = hotelData.value;
         return hotelData.value
     });
+
+    async function $findByParamsApi (id) {
+        let params ={id} 
+        const response = await findByParamsApi(params)
+        return response.data
+    }
     
     return {
         hotelData:hotelDataComputed,
@@ -162,6 +168,7 @@ export const useHotelStore = defineStore('hotel', () => {
         $deleteOldLocalHotel,
         oldSubdomain,
         $getRewardsByHotel,
+        $findByParamsApi,
         hotelDataStorage
     }
 
