@@ -1,12 +1,4 @@
 <template>
-
-  <!-- <div
-      v-if="center?.[0] && center?.[1]"
-      class="relative transition-height duration-500 ease-in-out"
-      :class="{ 'h-screen': isFullScreen }"
-      :style="{ height: heightMap }"
-      ref="mapContainer"
-    > -->
   <div
       v-if="center?.[0] && center?.[1]"
       class="relative"

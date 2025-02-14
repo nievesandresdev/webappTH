@@ -1,22 +1,9 @@
 <template>
-  <!-- <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
-
-  <AppHeader
-    :title="hotelData?.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
-    :tabs="tabs.tabsHeader"
-    :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
-    fixed
-  /> -->
 
     <PageTransitionGlobal module="facility">
 
       <div class="bg-[#FAFAFA] mb-[50px] sp:mb-[100px]">
-        <div 
-        class="px-2 sp:px-4 space-y-2 sp:space-y-4"
-          :class="{
-            'mt-[86px] sp:mt-[168px]' : hotelData?.show_facilities == 1 && hotelData?.show_profile == 1,
-            'mt-[60px] sp:mt-[105px]' : hotelData?.show_facilities == 0 || hotelData?.show_profile == 0,
-          }"
+        <div
         >
           
           <div
@@ -32,7 +19,7 @@
                 alt="Facility Image"
                 class="w-full h-full object-cover"
               />
-              
+
               <div v-if="facility.ad_tag" class="absolute bottom-1 sp:bottom-2 left-1 sp:left-2 flex items-center justify-center gap-0.5 sp:gap-1 px-1 sp:px-2 py-0.5 sp:py-1 text-white bg-[#FAFAFA] border border-white shadow-lg rounded-[9px] sp:rounded-[18px]" style="box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12);">
                 <p class="text-[7px] sp:text-[12px] font-bold lato text-[#333] uppercase">{{ facility.ad_tag }}</p>
               </div>
@@ -97,24 +84,22 @@ const goToFacilityShow = (id) => {
 };
 
 startLoading(SECTIONS.FACILITY.GLOBAL);
-onMounted(async () => {
-  // console.log('onMounted facility');
-  // console.log(hotelData.value, 'hotelData.facility')
-  if (hotelData.value) {
-    loadData(); 
-  }
-});
+// onMounted(async () => {
+//   // console.log('onMounted facility');
+//   console.log(hotelData.value, 'hotelData.facility')
+//   if (hotelData.value) {
+  //   }
+// });
 
-// watch(hotelData, (valueCurrent, valueOld) => {
-//     if (!valueOld && valueCurrent) {
-//       console.log('entro');
-//     }
-// }, { immediate: true });
+watch(hotelData, (valueCurrent, valueOld) => {
+  if (!valueOld && valueCurrent) {
+    loadData();
+  }
+}, { immediate: true });
 
 async function loadData () {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
-
   if (hotelStore.hotelData.show_facilities !== 1) {
     router.push({ name: 'ShowHotel' })
   }

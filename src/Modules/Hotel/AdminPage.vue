@@ -1,6 +1,5 @@
 <template>
 <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
-
   <AppHeader
     :title="hotelData?.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
@@ -56,8 +55,7 @@ watch(route, () => {
 
 async function loadData () {
     loadTabsHeader();
-
-    if (hotelData.show_facilities !== 1) {
+    if (hotelData.value.show_facilities != 1) {
         router.push({ name: 'ShowHotel' });
     }
 }

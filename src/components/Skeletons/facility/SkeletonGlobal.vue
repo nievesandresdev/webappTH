@@ -3,8 +3,8 @@
       <div 
       class="px-2 sp:px-4 space-y-2 sp:space-y-4"
         :class="{
-          'mt-[86px] sp:mt-[168px]' : hotelData.show_facilities == 1 && hotelData.show_profile == 1,
-          'mt-[60px] sp:mt-[105px]' : hotelData.show_facilities == 0 || hotelData.show_profile == 0,
+          'mt-[86px] sp:mt-[168px]' : hotelData?.show_facilities == 1 && hotelData?.show_profile == 1,
+          'mt-[60px] sp:mt-[105px]' : hotelData?.show_facilities == 0 || hotelData?.show_profile == 0,
         }"
       >
         

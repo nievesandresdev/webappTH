@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { computed, defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent, watch } from "vue";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 
 const props = defineProps({
@@ -33,6 +33,10 @@ const props = defineProps({
 
 const { isLoading } = useLoadingSections();
 const loading = computed(() => isLoading(`${props.name ?? props.module}_global`).value);
+
+watch(loading, (val) => {
+    console.log()
+});
 
 // Carga el skeleton general de la página
 const getSkeletonComponent = () => {
