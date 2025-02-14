@@ -1,4 +1,5 @@
 <template>
+      <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
       <PageTransitionGlobal module="hotel">
       
         <div
@@ -142,6 +143,7 @@ import router from '@/router'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+import { isMockup } from '@/utils/utils.js'
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -213,8 +215,11 @@ async function loadData () {
   shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayData.value?.id}&guestPerStay=true`);
   
 
-  if (hotelStore.hotelData.show_profile !== 1) {
-    router.push({ name: 'FacilityList' })
+  if (hotelStore.hotelData.show_facilities === 1 && hotelStore.hotelData.show_profile !== 1) {
+    router.push({ name: 'FacilityList', query: { mockup: isMockup() } });
+  }
+  if (hotelStore.hotelData.show_facilities !== 1 && hotelStore.hotelData.show_profile !== 1) {
+    router.push({ name: 'Home', query: { mockup: isMockup() } });
   }
   stopLoading(SECTIONS.HOTEL.GLOBAL);
 }

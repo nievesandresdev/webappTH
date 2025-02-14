@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!isStepThree && open"
-    class="w-screen h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.32); z-index: 4000 !important;"
+    class="w-screen h-screen fixed top-0 left-0 " style="background: rgba(0, 0, 0, 0.32); z-index: 3000 !important;"
     @click="emitClose"
   />
   <transition name="slide-fade">

@@ -1,6 +1,9 @@
 <template>
     <SectionBar :title="$t('stay.detail.title')" :showButton="true" :button-text="$t('stay.detail.createBtn')" @onClickButton="createStay"/>
     <div class="px-3 pb-10 pt-[100px]">
+        <div v-if="loading" class="flex justify-center">
+            <Spinner width="40px" height="40px"/>
+        </div>
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -79,6 +82,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
+import Spinner from '@/components/Spinner.vue';
 import StayCard from './Components/StayCard.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 
@@ -159,9 +163,7 @@ function handleMyStays(data) {
 }
 
 function createStay() {
-    // navigateTo('Home',{},{ acform : 'createstay' })
     router.push({ name:'HotelsList' , query:{ fromStay: 'true'}})
-    // authStore.$logoutAndCreateStay();
 }
 
 const AccessToStay = async () => {

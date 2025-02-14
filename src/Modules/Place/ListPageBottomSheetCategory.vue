@@ -1,10 +1,10 @@
 <template>
     <div
-        v-if="categoriplaces.length > 0"
+        v-if="categoriplacesValid.length > 0"
         class="grid grid-flow-col auto-cols-max pb-[8px] sp:pb-4 z-40 overflow-x-scroll gap-[8px] sp:gap-4 w-full no-scrollbar"
     >
         <div
-            v-for="(item, index) in categoriplaces" :key="index"
+            v-for="(item, index) in categoriplacesValid" :key="index"
             class="flex items-center  px-[8px] sp:px-4 py-[3px] sp:py-[6px] rounded-[100px] first:ml-4 last:mr-4"
             :class="{ 'item-menu-cat-active': !formFilter.categoriplace?.includes(String(item.id)), 'hbg-gray-100 hborder-black-100': formFilter.categoriplace?.includes(String(item.id)) }"
             @click="changeCategory(item.id, formFilter.typeplace)"
@@ -16,12 +16,16 @@
 </template>
 
 <script setup>
-import { inject, defineEmits } from 'vue';
+import { inject, defineEmits, computed } from 'vue';
 
 const emits = defineEmits(['changeCategory']);
 
 const categoriplaces = inject('categoriplaces');
 const formFilter = inject('formFilter');
+
+const categoriplacesValid = computed(() => {
+    return categoriplaces.value.length > 1 ? categoriplaces.value : [];
+});
 
 // FUNCTION
 

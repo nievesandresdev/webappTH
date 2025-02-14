@@ -71,7 +71,7 @@
     }
 
     function changeCategoryHandle (payload) {
-        console.log(payload, 'change-category');
+        // console.log(payload, 'change-category');
         emitEvent('change-category', payload);
     }
 

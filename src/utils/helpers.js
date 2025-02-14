@@ -32,8 +32,8 @@ export function $currentPeriod() {
     const { checkin, checkout } = hotelStore.hotelData;
 
     // Combina las fechas y horas en objetos DateTime de Luxon
-    const checkInDateTime = DateTime.fromISO(check_in + 'T' + checkin);
-    const checkOutDateTime = DateTime.fromISO(check_out + 'T' + checkout);
+    const checkInDateTime = DateTime.fromISO(check_in + 'T' + (checkin ?? '14:00'));
+    const checkOutDateTime = DateTime.fromISO(check_out + 'T' + (checkout ?? '14:00'));
 
     // Obtiene el momento actual como un objeto DateTime
     const now = DateTime.local();

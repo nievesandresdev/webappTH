@@ -15,7 +15,7 @@
         </template>
     </AppHeader>
     <PageTransitionGlobal module="place">
-        <div class="flex-1">
+        <div class="flex-1 ">
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
@@ -24,18 +24,18 @@
                 @loadMore="loadMore"
                 @closeSearch="closeSearchHandle"
             />
-            <ListPagebottomSheetFilter
-                @reloadPlaces="loadAll({ showPreloader: true })"
-            />
         </div>
     </PageTransitionGlobal>
+    <ListPagebottomSheetFilter
+        @reloadPlaces="loadAll({ showPreloader: true })"
+    />
 </template>
 
 <script setup>
 
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam, slufy } from '@/utils/utils.js';
+import { getUrlParam, slufy, isMockup } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -124,14 +124,25 @@ const hotelData = computed(() => {
     return hotelStore.hotelData ?? null;
 });
 const typePlaceSelected = computed(() => {
-    let typeplace = typeplaces.value.find(item => formFilter.typeplace);
-    if (typeplace) {
-        delete typeplace.categori_places;
-    }
+    let typeplace = typeplaces.value.find(item => item.id == formFilter.typeplace);
+    // if (typeplace) {
+    //     delete typeplace.categori_places;
+    // }
+    return typeplace;
+});
+const firstTypePlace = computed(() => {
+    let typeplace = typeplaces.value.find(item => item);
+    // if (typeplace) {
+    //     delete typeplace.categori_places;
+    // }
     return typeplace;
 });
 const categoriPlaceSelected = computed(() => {
-    let categoriplace = categoriplaces.value.find(item => formFilter.categoriplace);
+    let categoriplace = categoriplaces.value.filter(item => formFilter.categoriplace.includes(item.id));
+    return categoriplace;
+});
+const firstCategoriPlace = computed(() => {
+    let categoriplace = categoriplaces.value.find(item => item);
     return categoriplace;
 });
 
@@ -171,7 +182,6 @@ watch(hotelData, (valueCurrent, valueOld) => {
 
 // ONMOUNTED
 onMounted(async () => {
-
 });
 
 onEvent('change-category', changeCategoryHandle);
@@ -210,15 +220,31 @@ function handleMapCluster (payload) {
 async function loadTypePlaces () {
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
-        loadQueryInFormFilter();
         typeplaces.value = response.data;
+        loadQueryInFormFilter();
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
-        // if (!formFilter.categoriplace) {
-        //     formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id;
-        // }
+        validateTyePlaceCurrent();
+
+        categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+        const { hidden_categories } = hotelData.value;
+        categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+        // validateCategoriplaceCurrent();
+
         loadTabsHeader();
+    }
+}
+
+function validateTyePlaceCurrent () {
+    if(!typePlaceSelected.value) {
+        let {id: idFirstTypePlace} = firstTypePlace.value;
+        formFilter.typeplace = idFirstTypePlace;   
+    }
+}
+function validateCategoriplaceCurrent () {
+    if(categoriPlaceSelected.value?.length <= 0) {
+        formFilter.categoriplace = [];
     }
 }
 
@@ -228,12 +254,6 @@ async function loadCategoriPlaces () {
     if (response.ok) {
         categoriplacesWithNumbers.value = response.data;
     }
-    categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
-    // if (!formFilter.categoriplace) {
-    //     formFilter.categoriplace = categoriplaces.value[0]?.id;
-    // }
-    const { hidden_categories } = hotelData.value;
-    categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
 }
 
 function loadTabsHeader () {
@@ -255,8 +275,8 @@ function changeCategoryHandle (payload) {
 }
 
 async function changeCategory (idCategory = [], idTypePlace = null) {
-    if (idCategory.length  > 0) {
-        if (formFilter.categoriplace.includes(idCategory)) {
+    if (idCategory.length > 0) {
+        if (formFilter.categoriplace?.includes(idCategory)) {
             let index = formFilter.categoriplace.indexOf(idCategory);
             if (index !== -1) {
                 formFilter.categoriplace.splice(index, 1);
@@ -270,7 +290,6 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
     } else {
         formFilter.categoriplace = [];
     }
-
     formFilter.typeplace = idTypePlace;
     loadTabsHeader();
     loadAll({showPreloader: true});
@@ -279,7 +298,7 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
 const getFirstCategoryOfType = ()=> {
     if(formFilter.typeplace){
         let first = categoriplaces.value?.[0] ?? null;
-        formFilter.categoriplace = first?.id;
+        formFilter.categoriplace = [first?.id];
     }
 }
 
@@ -365,7 +384,8 @@ function activateSearchHandle ($event) {
 }
 
 async function loadAll(payload) {
-     const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
+
+    const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
 }
 
 function submitFilter (payload){
@@ -376,7 +396,8 @@ function submitFilter (payload){
     loadPlaces();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        let formFilterWithMockup = {...formFilter, mockup: isMockup() }
+        route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
     }
 }
 

@@ -62,6 +62,8 @@ export const usePlaceStore = defineStore('place', () => {
     async function $apiGetAll (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel,  city_id: cityId, latitude, longitude } =  hotelData.value;
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }
@@ -71,6 +73,8 @@ export const usePlaceStore = defineStore('place', () => {
     async function $apiGetPointer (params) {
         let { id: idHotel, name: nameName, zone: zoneHotel,  city_id: cityId, latitude, longitude } =  hotelData.value
         let newParams = {
+            hiddenCategoriPlaces: hotelStore?.hotelData?.hidden_categories ?? [],
+            hiddenTypePlaces: hotelStore?.hotelData?.hidden_type_places ?? [],
             hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
             ...params
         }

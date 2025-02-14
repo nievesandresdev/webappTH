@@ -10,8 +10,8 @@
                     </template>
                     <template #content>
                         <KebabOption borderb @click="$openShareMenu()">
-                            <img class="w-4 h-4 mr-2" src="/assets/icons/WA.share.svg" alt="">
-                            <span class="lato text-sm font-bold leading-[16px]">Reenviar enlace a la estancia</span>
+                            <img class="w-4 h-4 mr-2" src="/assets/icons/WA.Share.svg" alt="">
+                            <span class="lato text-sm font-bold leading-[16px]">{{$t('checkin.card-guest.resend-staylink')}}</span>
                         </KebabOption>
                         <KebabOption 
                             v-if="data.id !== guestStore.guestData?.id && !data.complete_checkin_data" 
@@ -19,15 +19,15 @@
                             borderb
                         >
                             <img class="w-4 h-4 mr-2" src="/assets/icons/WA.checkin.user.svg" alt="">
-                            <span class="lato text-sm font-bold leading-[16px]">Invitar a completar Check-in</span>
+                            <span class="lato text-sm font-bold leading-[16px]">{{$t('checkin.card-guest.invite-to-completecheckin')}}</span>
                         </KebabOption>
                         <KebabOption v-if="data.complete_checkin_data" borderb @click="confirmDeleteCheckin(data.id)">
                             <img class="w-4 h-4 mr-2" src="/assets/icons/WA.delete.svg" alt="">
-                            <span class="lato text-sm font-bold leading-[16px]">Eliminar Check-in de huésped</span>
+                            <span class="lato text-sm font-bold leading-[16px]">{{$t('checkin.card-guest.delete-checkin')}}</span>
                         </KebabOption>
                         <KebabOption v-if="data.id !== guestStore.guestData?.id" @click="confirmDeleteGuest(data.id)">
                             <img class="w-4 h-4 mr-2" src="/assets/icons/WA.delete.svg" alt="">
-                            <span class="lato text-sm font-bold leading-[16px]">Eliminar huésped</span>
+                            <span class="lato text-sm font-bold leading-[16px]">{{$t('checkin.card-guest.delete-guest')}}</span>
                         </KebabOption>
                     </template>
                 </KebabMenu>
@@ -60,20 +60,21 @@
     <!-- Eliminar huesped -->
     <ModalNative width="327px" @closeModal="closeModalDeleteGuest" :openProp="modalNativeIsOpen">
         <div class="p-6">
-            <h2 class="lato text-lg font-bold leading-[20px]">¿Eliminar huésped de la estancia?</h2>
+            <h2 class="lato text-lg font-bold leading-[20px]">{{$t('checkin.delete-guest.title')}}</h2>
             <p class="mt-6 lato text-sm font-medium leading-[16px]">
-                Quitarás a este huésped de tu estancia. Podrás volver a enviarle una invitación luego.
+                {{$t('checkin.delete-guest.info')}}
             </p>
-            <PrimaryButton 
-                classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
-                classContainer="mt-6"
-                @click="deleteGuestOfStay"
-            >
-                Eliminar huésped
-            </PrimaryButton> 
+            <div class="mt-6">
+                <PrimaryButton 
+                    classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                    @click="deleteGuestOfStay"
+                >
+                    {{$t('checkin.delete-guest.confirm')}}
+                </PrimaryButton> 
+            </div>
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="closeModalDeleteGuest">
-                    Cancelar
+                    {{$t('checkin.delete-guest.cancel')}}
                 </button>
             </div>
         </div>
@@ -81,20 +82,22 @@
     <!-- Eliminar Check-in -->
     <ModalNative width="327px" @closeModal="closeModalDeleteCheckin" :openProp="deleteCheckinIsOpen">
         <div class="p-6">
-            <h2 class="lato text-lg font-bold leading-[20px]">¿Eliminar Check-in del huésped?</h2>
+            <h2 class="lato text-lg font-bold leading-[20px]">{{$t('checkin.delete-checkin.title')}}</h2>
             <p class="mt-6 lato text-sm font-medium leading-[16px]">
-                Eliminarás la información de Check-in de este huésped. El huésped tendrá que volver a completar su Check-in.
+                {{$t('checkin.delete-checkin.info')}}
             </p>
-            <PrimaryButton 
-                classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
-                classContainer="mt-6"
-                @click="deleteCheckin"
-            >
-                Eliminar Check-in
-            </PrimaryButton> 
+            <div class="mt-6">
+                <PrimaryButton 
+                    classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                    @click="deleteCheckin"
+                >
+                {{$t('checkin.delete-checkin.confirm')}}
+                </PrimaryButton> 
+            </div>
+            
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="closeModalDeleteCheckin">
-                    Cancelar
+                    {{$t('checkin.delete-checkin.cancel')}}
                 </button>
             </div>
         </div>

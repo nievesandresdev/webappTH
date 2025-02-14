@@ -1,4 +1,7 @@
 <template>
+
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
         <HeroSectionRed />
@@ -132,37 +135,36 @@
 
             <SocialNetworks v-if="hotelData" />
         </div>
-
-        <!-- forms -->
-        <ResetPasswordBottomSheet 
-            v-if="showResetPasswordBottomSheet"
-            :open="true"
-        />
-        <RegisterOrLoginBottomSheet 
-            v-if="showRegisterOrLoginBottomSheet"
-            :open="true"
-        />
-        <CompleteRegisterBottomSheet 
-            v-if="showCompleteRegisterBottomSheet"
-            :open="true"
-        />
-        <CreateStayBottomSheet 
-            v-if="showCreateStayBottomSheet"
-            :open="true"
-        />
-        <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
-        <div 
-            v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
-            class="fixed top-0 left-0 w-screen h-screen z-[900]"
-        ></div>
-
     </PageTransitionGlobal>
 
+    <!-- forms -->
+    <ResetPasswordBottomSheet 
+        v-if="showResetPasswordBottomSheet"
+        :open="true"
+    />
+    <RegisterOrLoginBottomSheet 
+        v-if="showRegisterOrLoginBottomSheet"
+        :open="true"
+    />
+    <CompleteRegisterBottomSheet 
+        v-if="showCompleteRegisterBottomSheet"
+        :open="true"
+    />
+    <CreateStayBottomSheet 
+        v-if="showCreateStayBottomSheet"
+        :open="true"
+    />
+    <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
+    <div 
+        v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
+        class="fixed top-0 left-0 w-screen h-screen z-[900]"
+    ></div>
 </template>
 <script setup>
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
+import { isMockup } from '@/utils/utils'
 const router = useRouter();
 //forms
 import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
@@ -316,15 +318,19 @@ const showResetPasswordBottomSheet = computed(() => {
 });
 
 const showRegisterOrLoginBottomSheet = computed(() => {
-    return formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset'
+    if(isMockup()) return false;
+    let val = formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset' && !formType.value;
+    return val;
 });
 
 const showCompleteRegisterBottomSheet = computed(() => {
-    return formType.value == 'complete' || guestStore.guestData && !guestStore.guestData.name
+    let val = formType.value == 'complete' || guestStore.guestData && !guestStore.guestData.name && !formType.value;
+    return val;
 });
 
 const showCreateStayBottomSheet = computed(() => {
-    return formType.value == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType.value
+    let val = formType.value == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType.value;
+    return val;
 });
 
 
