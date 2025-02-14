@@ -69,6 +69,7 @@ const { startLoading, stopLoading } = useLoadingSections();
 
 const hotelData = inject('hotelData');
 
+
 const $formatImage = ({ url, type, urlDefault }) => {
   const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
 
