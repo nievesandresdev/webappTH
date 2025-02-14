@@ -215,8 +215,11 @@ async function loadData () {
   shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayData.value?.id}&guestPerStay=true`);
   
 
-  if (hotelStore.hotelData.show_profile !== 1) {
-     router.push({ name: 'FacilityList', query: { mockup: isMockup() } });
+  if (hotelStore.hotelData.show_facilities === 1 && hotelStore.hotelData.show_profile !== 1) {
+    router.push({ name: 'FacilityList', query: { mockup: isMockup() } });
+  }
+  if (hotelStore.hotelData.show_facilities !== 1 && hotelStore.hotelData.show_profile !== 1) {
+    router.push({ name: 'Home', query: { mockup: isMockup() } });
   }
   stopLoading(SECTIONS.HOTEL.GLOBAL);
 }

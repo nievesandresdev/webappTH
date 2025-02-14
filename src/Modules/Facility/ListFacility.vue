@@ -106,8 +106,11 @@ watch(hotelData, (valueCurrent, valueOld) => {
 async function loadData () {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
-  if (hotelStore.hotelData.show_facilities !== 1) {
+  if (hotelStore.hotelData.show_facilities !== 1 && hotelStore.hotelData.show_profile === 1) {
     router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
+  }
+  if (hotelStore.hotelData.show_facilities !== 1 && hotelStore.hotelData.show_profile !== 1) {
+    router.push({ name: 'Home', query: { mockup: isMockup() } });
   }
   stopLoading(SECTIONS.FACILITY.GLOBAL);
 }
