@@ -1,5 +1,5 @@
 <template>
-    <div v-if="showAll" class="flex gap-2 sp:gap-4 justify-around mb-[60px] sp:mb-[105px]">
+    <div v-if="showAll" class="flex gap-2 sp:gap-4 justify-around ">
       <!-- Instagram -->
       <RoundedButton
         v-if="hotelData.instagram_url"
