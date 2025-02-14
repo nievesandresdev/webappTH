@@ -143,6 +143,7 @@ import router from '@/router'
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+import { isMockup } from '@/utils/utils.js'
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -215,7 +216,7 @@ async function loadData () {
   
 
   if (hotelStore.hotelData.show_profile !== 1) {
-    router.push({ name: 'FacilityList' })
+     router.push({ name: 'FacilityList', query: { mockup: isMockup() } });
   }
   stopLoading(SECTIONS.HOTEL.GLOBAL);
 }
