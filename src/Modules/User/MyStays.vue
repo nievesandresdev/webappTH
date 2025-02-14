@@ -163,9 +163,7 @@ function handleMyStays(data) {
 }
 
 function createStay() {
-    // navigateTo('Home',{},{ acform : 'createstay' })
     router.push({ name:'HotelsList' , query:{ fromStay: 'true'}})
-    // authStore.$logoutAndCreateStay();
 }
 
 const AccessToStay = async () => {

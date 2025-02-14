@@ -8,7 +8,7 @@ export function navigateTo(routeName, params = {}, query = {}) {
   const slug = hotelStore.subdomain ?? localStorage.getItem('subdomain');
 
   const chainStore = useChainStore();
-  if (slug && chainStore?.chainData?.type !== "INDEPENDENT") {
+  if (slug) {
     params.hotelSlug = slug
   }
   router.push({ name: routeName, params, query })

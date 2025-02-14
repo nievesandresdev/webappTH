@@ -30,10 +30,10 @@
                 <img v-if="icon_right" :src="icon_right" :class="icon_right_class">
             </template>
         </buttom>
-        <div v-show="showOptions" @click="toggleshow" class="fixed h-screen w-full bg-[#00000080] z-[2000] top-0 left-0"></div>
+        <div v-show="showOptions" @click="toggleshow" class="fixed h-screen w-full bg-[#00000080] z-[3000] top-0 left-0"></div>
         <transition name="slide-fade">
             <div
-                class="dropdown-calendar bg-white fixed z-[2500] left-0 top-10 hbg-white-100 px-4 pt-6"
+                class="dropdown-calendar bg-white fixed z-[3500] left-0 top-10 hbg-white-100 px-4 pt-6"
                 v-show="showOptions"
             >
                 <div class="relative mb-6">

@@ -42,18 +42,25 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
-    //cargar data del hotel
     const hotelStore = useHotelStore();
     //se guarda el subdominio en localstorage en caso de existir
     if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
+        if(chainStore.chainData?.independentSubdomain && to.name == 'ChainLanding'){
+            // Redirige a la home cuando la cadena sea independiente
+            return next({ name: 'Home', params :{ hotelSlug: chainStore.chainData?.independentSubdomain}, query: to.query }); 
+        } 
     }else{
         let sudmainsChain = chainStore.chainData.hotels_subdomains;
         let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
         //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
-        if(!validSubdomain && to.params.hotelSlug && !utils.isMockup()) return next({ name: 'ChainLanding' });
+        if(!validSubdomain && to.params.hotelSlug && !utils.isMockup()) {
+            await hotelStore.$deleteLocalHotel();
+            return next({ name: 'ChainLanding' });
+        }
         utils.saveHotelSlug(to.params.hotelSlug);
     }
+    //cargar data del hotel
     hotelStore.$load(false, to);
     ////////////////////////////////////////////////////////
     //
