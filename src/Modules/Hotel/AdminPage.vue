@@ -35,6 +35,7 @@ import TransitionBook from '@/components/Transition/TransitionBook.vue';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+import { isMockup } from '@/utils/utils.js'
 
 // DATA
 const tabsHeader = ref([]);
@@ -56,7 +57,7 @@ watch(route, () => {
 async function loadData () {
     loadTabsHeader();
     if (hotelData.value.show_facilities != 1) {
-        router.push({ name: 'ShowHotel' });
+         router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
     }
 }
 

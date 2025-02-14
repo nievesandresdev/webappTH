@@ -51,6 +51,7 @@ const facilities = ref([]);
 // import TransitionBook from '@/components/Transition/TransitionBook.vue';
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
+import { isMockup } from '@/utils/utils.js'
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
@@ -101,7 +102,7 @@ async function loadData () {
   const response = await hotelStore.$getCrossellings();
   facilities.value = response.crosselling_facilities;
   if (hotelStore.hotelData.show_facilities !== 1) {
-    router.push({ name: 'ShowHotel' })
+    router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
   }
   stopLoading(SECTIONS.FACILITY.GLOBAL);
 }
