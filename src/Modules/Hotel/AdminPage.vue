@@ -1,7 +1,7 @@
 <template>
 <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
   <AppHeader
-    :title="hotelData?.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
+    :title="titleHeader"
     :tabs="tabs.tabsHeader"
     :showSubHeader=" hotelData?.show_facilities == 1 && hotelData?.show_profile == 1"
     fixed
@@ -35,13 +35,20 @@ import TransitionBook from '@/components/Transition/TransitionBook.vue';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
-import { isMockup } from '@/utils/utils.js'
+import { isMockup, titleCase } from '@/utils/utils.js';
+import { $formatTypeLodging } from '@/utils/helpers';
 
 // DATA
 const tabsHeader = ref([]);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
+const titleHeader = computed(() => {
+  if(!hotelData) {
+    return '';
+  }
+  return hotelData.value?.show_profile == 1 ? titleCase($formatTypeLodging()) : t('hotel.facilities')
+});
 
 // WATCH
 watch(hotelData, (valueCurrent, valueOld) => {
@@ -56,9 +63,9 @@ watch(route, () => {
 
 async function loadData () {
     loadTabsHeader();
-    if (hotelData.value.show_facilities != 1) {
-         router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
-    }
+    // if (hotelData.value.show_facilities != 1) {
+    //      router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
+    // }
 }
 
 
