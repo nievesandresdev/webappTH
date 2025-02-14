@@ -1,12 +1,4 @@
 <template>
-
-  <!-- <div
-      v-if="center?.[0] && center?.[1]"
-      class="relative transition-height duration-500 ease-in-out"
-      :class="{ 'h-screen': isFullScreen }"
-      :style="{ height: heightMap }"
-      ref="mapContainer"
-    > -->
   <div
       v-if="center?.[0] && center?.[1]"
       class="relative"
@@ -211,7 +203,7 @@ defineExpose({ focusOnPoint });
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 400001; /* Asegúrate de que esté por encima de otros elementos */
+  // z-index: 4; /* Asegúrate de que esté por encima de otros elementos */
 }
 
 </style>

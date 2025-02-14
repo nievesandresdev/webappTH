@@ -1,6 +1,5 @@
 <template>
 <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
-
   <AppHeader
     :title="hotelData?.show_profile == 1 ? $utils.titleCase($formatTypeLodging()) : $t('hotel.facilities')"
     :tabs="tabs.tabsHeader"
@@ -36,6 +35,7 @@ import TransitionBook from '@/components/Transition/TransitionBook.vue';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+import { isMockup } from '@/utils/utils.js'
 
 // DATA
 const tabsHeader = ref([]);
@@ -56,9 +56,8 @@ watch(route, () => {
 
 async function loadData () {
     loadTabsHeader();
-
-    if (hotelData.show_facilities !== 1) {
-        router.push({ name: 'ShowHotel' });
+    if (hotelData.value.show_facilities != 1) {
+         router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
     }
 }
 

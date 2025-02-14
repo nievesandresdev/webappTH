@@ -15,7 +15,7 @@
         </template>
     </AppHeader>
     <PageTransitionGlobal module="place">
-        <div class="flex-1">
+        <div class="flex-1 ">
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
@@ -24,11 +24,11 @@
                 @loadMore="loadMore"
                 @closeSearch="closeSearchHandle"
             />
-            <ListPagebottomSheetFilter
-                @reloadPlaces="loadAll({ showPreloader: true })"
-            />
         </div>
     </PageTransitionGlobal>
+    <ListPagebottomSheetFilter
+        @reloadPlaces="loadAll({ showPreloader: true })"
+    />
 </template>
 
 <script setup>
