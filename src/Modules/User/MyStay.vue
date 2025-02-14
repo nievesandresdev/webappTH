@@ -4,7 +4,7 @@
     <div class="py-6 px-4">
 
         <!-- form -->
-        <div v-if="!loading">
+        <div v-if="!firstLoading">
             <h3 class="lato text-base font-bold leading-[20px]">{{ $t('stay.edit.information-stay') }}</h3>
             <!-- hotel name -->
             <div class="mt-4">
@@ -50,9 +50,10 @@
             <PrimaryButton 
                 classes="block mt-6 h-10 text-center py-3 rounded-[10px] text-sm font-bold leading-[17px] w-full shadow-guest"
                 @click="submitForm"
+                :isLoading="loading"
                 :disabled="!valid"
             >
-                {{ $t('stay.edit.saveBtn') }}
+                {{ loading ? $t('auth.saving-changes') :$t('stay.edit.saveBtn') }}
             </PrimaryButton> 
             <div class="mt-4 border-b border-[#E9E9E9]"></div>
         </div>
@@ -98,7 +99,8 @@ const { paramsRouter } = toRefs(props)
 const hotelNameAddress = ref(null)
 const currentStay = ref(null);
 const shareUrl = ref(null);
-const loading = ref(true);
+const firstLoading = ref(true);
+const loading = ref(false);
 
 const form = reactive({
     checkDate: null,
@@ -112,7 +114,7 @@ onMounted(async() => {
     fillForm(currentStay.value)
     shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
     hotelNameAddress.value =  `${hotelStore.hotelDataStorage?.name} - ${hotelStore.hotelDataStorage?.zone}`
-    loading.value = false;
+    firstLoading.value = false;
 })
 
 

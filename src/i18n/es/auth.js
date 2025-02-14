@@ -48,4 +48,8 @@ export default{
         "stars-text":"estrellas",
         "star-text":"estrella",
     },
+    "my-stay":{
+        "title":"Mi estancia",
+    },
+    "saving-changes":"Guardando cambios",
 }  

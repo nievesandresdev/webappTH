@@ -1,5 +1,6 @@
 <template>
     <HeaderProfile 
+        :title="$t('auth.my-stay.title')"
         :tabs="tabsMenu" 
         :fixed="false"
     />

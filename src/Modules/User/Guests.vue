@@ -1,7 +1,7 @@
 <template>
     <MyStayHeader/>
 
-    <div class="py-6 px-4">
+    <div v-if="!loading" class="py-6 px-4">
         <div 
             class="mb-4"
             v-for="guest in guestsList" :key="guest.id"
@@ -18,11 +18,15 @@
             </button>
         </div>
     </div>
+    <div v-else class="flex justify-center mt-6">
+        <Spinner width="40px" height="40px"/>
+    </div>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
 import MyStayHeader from './Components/MyStay/MyStayHeader.vue'
 import CardGuest from './Components/MyStay/CardGuest.vue'
+import Spinner from '@/components/Spinner.vue';
 import { $openShareMenu } from '@/utils/helpers.js'
 //
 
@@ -32,9 +36,11 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
 const guestsList = ref(null)
+const loading = ref(true);
 
 onMounted(async() => {
     await loadGuestsList();
+    loading.value = false;
     // console.log('test guestsList',guestsList.value)
 })
 
