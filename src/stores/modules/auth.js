@@ -172,8 +172,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $setStartedWebappBy (to) {
+        
         const viewsIgnored = ['ChainLanding'];
-        if(viewsIgnored.includes(to.name)) return; 
+        if(viewsIgnored.includes(to.name) || sessionActive.value) return; 
         let startedWebappByRoute = {
             name: to.name,
             params: to.params,
@@ -199,6 +200,7 @@ export const useAuthStore = defineStore('auth', () => {
     async function $redirectAfterLogin() {
         //
         //limpiar
+        // localStorage.removeItem('guestPerStay')
         sessionStorage.removeItem('guestPerStay')
         if(stayStore.stayData){
             await $goStartedWebappBy();
