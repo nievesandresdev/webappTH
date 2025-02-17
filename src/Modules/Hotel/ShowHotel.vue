@@ -30,7 +30,7 @@
               <p
                 @click="isExpanded = !isExpanded"
                 class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
-                v-show="hotelData?.translate?.description?.length > CHARACTER_LIMIT"
+                v-show="hotelInfo?.description?.length > CHARACTER_LIMIT"
               >
                 {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
               </p>
@@ -47,7 +47,7 @@
               />
               
               <!--HORARIOS DE CHECKIN Y CHECKOUT-->
-              <HotelCheckInOut :hotelData="hotelData" v-if="hotelData?.checkin && hotelData?.checkout" /> 
+              <HotelCheckInOut :hotelData="hotelInfo" v-if="hotelInfo?.checkin && hotelInfo?.checkout" /> 
               
               <!--DATA GENERAL DEL HOTEL-->
               <HotelInfoGeneral :hotelData="hotelInfo" /> 
