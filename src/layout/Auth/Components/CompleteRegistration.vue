@@ -94,6 +94,15 @@ const form = reactive({
 
 onMounted(async () => {
     form.id = getUrlParam('g');
+    console.log('test form.id',form.id)
+    if(!form.id){
+        if(localStorage.getItem('subdomain')){
+            navigateTo('Home');
+        }else{
+            router.push({ name:'ChainLanding'});
+        }
+        
+    }
     method.value = getUrlParam('m');
     let guestData = await guestStore.findById(form.id);
     form.email = guestData?.email ?? '';
