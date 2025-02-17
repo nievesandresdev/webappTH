@@ -47,7 +47,7 @@
               />
               
               <!--HORARIOS DE CHECKIN Y CHECKOUT-->
-              <HotelCheckInOut :hotelData="hotelData" v-if="hotelData?.checkin && hotelData?.checkout" /> 
+              <HotelCheckInOut :hotelData="hotelInfo" v-if="hotelInfo?.checkin && hotelInfo?.checkout" /> 
               
               <!--DATA GENERAL DEL HOTEL-->
               <HotelInfoGeneral :hotelData="hotelInfo" /> 
