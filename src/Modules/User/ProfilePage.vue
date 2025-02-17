@@ -1,6 +1,6 @@
 <template>
     <SectionBar :title="$t('profile.account')" />
-    <div class="px-3 sp:mt-[100px] mt-[50px]">
+    <div class="px-3 sp:my-[100px] my-[50px]">
         <div class="flex flex-col items-center mt-6">
             <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
@@ -110,7 +110,7 @@
         </div>
     
         <!-- Cerrar sesión -->
-        <div class="flex items-center justify-center sp:mt-[40px] mt-[30px] gap-2 cursor-pointer">
+        <div class="flex items-center justify-center sp:mt-[40px] mt-[30px] gap-2 cursor-pointer mb-10">
             <span class="sp:text-[14px] text-[11px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
 
