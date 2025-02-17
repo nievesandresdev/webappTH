@@ -224,7 +224,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $validateStayGuestRelation() {
-        if(stayStore.stayData && guestStore.guestData){
+        if(stayStore.stayData && guestStore.guestData && guestStore.guestData.name){
             console.log('test staydata',stayStore.stayData)
             //ids de huespedes registrados en la estancia
             let guestsIds = stayStore.stayData.guestsIds;
