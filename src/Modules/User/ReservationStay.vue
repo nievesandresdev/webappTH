@@ -12,13 +12,37 @@
         
         <!-- estos mensajes se muestran si el hotel es tipo chain -->
         <h1 v-if="typeChainHotel" class="lato text-lg font-bold leading-[20px]">{{$t('stay.reservation.title-page')}}</h1>
-        <h4 v-if="typeChainHotel" class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
+        <h4 v-if="typeChainHotel && !loading" class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
+        <!-- Skeleton -->
+        <div v-if="typeChainHotel && loading" class="animate-pulse mt-4">
+            <div class="h-5 bg-gray-300 rounded w-32"></div>
+        </div>
+        
         <!-- fin mensajes -->
 
         <div :class="typeChainHotel ? 'mt-4' : ''">
-            <div class="mb-6" v-for="hotel in hotels" >
-                <CardHotel :data="hotel" :modal="typeChainHotel" @modalOpen="modalInfoReservation(hotel)" :more-info="typeChainIndependent"/>
-            </div>
+            <!-- <div class="mb-6" v-for="hotel in hotels" >
+                <CardHotel :data="hotel" :modal="typeChainHotel" @modalOpen="modalInfoReservation(hotel)" :more-info="typeChainIndependent" :loading="loading"/>
+            </div> -->
+            <!-- Skeleton mientras carga -->
+            <template v-if="loading">
+                <div class="mb-6" v-for="i in 2" :key="i">
+                <CardHotelSkeleton />
+                </div>
+            </template>
+
+            <!-- Contenido real -->
+            <template v-else>
+                <div class="mb-6" v-for="hotel in hotels" :key="hotel.id">
+                <CardHotel 
+                    :data="hotel" 
+                    :modal="typeChainHotel" 
+                    @modalOpen="modalInfoReservation(hotel)" 
+                    :more-info="typeChainIndependent"
+                    :loading="false"
+                />
+                </div>
+            </template>
             <div class="flex flex-col justify-center" v-if="typeChainIndependent">
                 <button
                     class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
@@ -109,6 +133,7 @@ import { onMounted, ref,provide, computed } from 'vue';
 import { getUrlParam } from '@/utils/utils.js'
 import HeadInChain from '@/Modules/Chain/Components/HeadInChain.vue'
 import CardHotel from '@/Modules/Chain/Components/CardHotel.vue'
+import CardHotelSkeleton from '@/Modules/Chain/Components/CardHotelSkeleton.vue';
 import GeneralBottomSheet from '@/components/Modal/GeneralBottomSheet.vue';
 import ModalNative from '@/components/ModalNative.vue'
 //store
@@ -119,7 +144,9 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 //router
 import { useRouter } from 'vue-router';
+
 const router = useRouter();
+const loading = ref(true)
 
 const modalInfo = ref({})
 const openModal = ref(false)
@@ -152,6 +179,7 @@ provide('modalNativeIsOpen', modalNativeIsOpen);
 const hotels = ref([])
 onMounted(async() => {
     hotels.value = await chainStore.$getHotelsList({type : 'reservation'})  
+    loading.value = false
 })
 
 async function goProfilePage(){
