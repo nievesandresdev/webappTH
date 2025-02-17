@@ -87,20 +87,29 @@ const map = ref(null);
 // ESTADO
 const isFullScreen = ref(false);
 
-// FUNCIÓN PARA PANTALLA COMPLETA
+const originalParent = ref(null);
+
+onMounted(() => {
+  originalParent.value = mapContainer.value.parentNode;
+});
+
 function toggleFullScreen() {
   const elem = mapContainer.value;
 
   if (!isFullScreen.value) {
-    // Agregar clase para simular pantalla completa
+    document.body.appendChild(elem);
     elem.classList.add('fullscreen');
     isFullScreen.value = true;
   } else {
-    // Quitar clase de pantalla completa
+    if (originalParent.value) {
+      originalParent.value.appendChild(elem);
+    }
     elem.classList.remove('fullscreen');
     isFullScreen.value = false;
   }
 }
+
+
 
 watch(() => props.heightMap, (newHeight) => {
   if (map.value) {
@@ -203,6 +212,7 @@ defineExpose({ focusOnPoint });
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 2147483647; /* Máximo */
   // z-index: 4; /* Asegúrate de que esté por encima de otros elementos */
 }
 
