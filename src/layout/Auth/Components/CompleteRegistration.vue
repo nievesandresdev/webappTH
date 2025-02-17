@@ -97,7 +97,7 @@ onMounted(async () => {
     console.log('test form.id',form.id)
     if(!form.id){
         if(localStorage.getItem('subdomain')){
-            navigateTo('Home');
+            navigateTo('Home',{},{ acform : 'log' })
         }else{
             router.push({ name:'ChainLanding'});
         }

@@ -184,7 +184,6 @@ export const useStayStore = defineStore('stay', () => {
             lodingStayData.value = true; 
         }
         const response = await findbyIdApi(stayData.value ? stayData.value.id : null);
-        console.log('test stay',response)
         const { ok } = response;
     
     
