@@ -138,7 +138,7 @@ const firstTypePlace = computed(() => {
     return typeplace;
 });
 const categoriPlaceSelected = computed(() => {
-    let categoriplace = categoriplaces.value.filter(item => formFilter.categoriplace.includes(item.id));
+    let categoriplace = categoriplaces.value.filter(item => formFilter.categoriplace.includes(String(item.id)));
     return categoriplace;
 });
 const firstCategoriPlace = computed(() => {
@@ -243,9 +243,10 @@ function validateTyePlaceCurrent () {
     }
 }
 function validateCategoriplaceCurrent () {
-    if(categoriPlaceSelected.value?.length <= 0) {
-        formFilter.categoriplace = [];
-    }
+    console.log(categoriPlaceSelected.value);
+    // if(categoriPlaceSelected.value?.length <= 0) {
+    //     formFilter.categoriplace = [];
+    // }
 }
 
 async function loadCategoriPlaces () {
