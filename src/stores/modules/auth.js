@@ -222,6 +222,22 @@ export const useAuthStore = defineStore('auth', () => {
             await $goStartedWebappBy(true)
         }
     }
+
+    async function $validateStayGuestRelation() {
+        if(stayStore.stayData && guestStore.guestData){
+            console.log('test staydata',stayStore.stayData)
+            //ids de huespedes registrados en la estancia
+            let guestsIds = stayStore.stayData.guestsIds;
+            console.log('test guestsIds',guestsIds)
+            let validGuest = guestsIds.includes(guestStore.guestData.id);
+            console.log('test guestsIds',guestsIds)
+            if(!validGuest){
+                console.log('test delete data guest');
+                guestStore.deleteLocalGuest();
+            }
+        }
+    }
+
     return {
         $registerOrLoginSN,
         $updateGuestById,
@@ -235,7 +251,8 @@ export const useAuthStore = defineStore('auth', () => {
         $goStartedWebappBy,
         $logIn,
         $redirectAfterLogin,
-        $goLoginBySocialNetwork
+        $goLoginBySocialNetwork,
+        $validateStayGuestRelation
     }
 
 })
