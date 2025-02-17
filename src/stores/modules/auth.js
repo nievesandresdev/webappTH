@@ -135,7 +135,7 @@ export const useAuthStore = defineStore('auth', () => {
         let stayDataObj = JSON.stringify(stayData);
         let hotelDataObj = JSON.stringify(hotelData);
         sessionActive.value = 
-            Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(stayStore.stayData) ||
+            Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(guestStore.guestData.name) && Boolean(stayStore.stayData) ||
             Boolean(hotelData) && Boolean(guestData) && Boolean(guestDataObj.name) && Boolean(stayData) && hotelDataObj.id == stayDataObj.hotel_id;
         ;    
     }
@@ -235,6 +235,7 @@ export const useAuthStore = defineStore('auth', () => {
             if(!validGuest){
                 console.log('test delete data guest');
                 guestStore.deleteLocalGuest();
+                navigateTo('Home')
             }
         }
     }

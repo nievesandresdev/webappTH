@@ -102,6 +102,7 @@ export default async function handleWebAppData({ to, from, next }) {
     authStore.$validateSession(to, next);
     authStore.$goLoginBySocialNetwork();
     authStore.$validateStayGuestRelation();
+    console.log('test sessionActive',authStore.sessionActive)
     //
     // Agrega la nueva ruta al historial
     if(authStore.sessionActive){
