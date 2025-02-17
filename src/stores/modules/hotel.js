@@ -48,7 +48,8 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $load (reload = false, routeInfo = null) {
         let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
         let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
-    
+        // console.log('test vallocalsubdomain',!!localStorage.getItem('subdomain'));
+        // console.log('test reloadAndSubdomain',reloadAndSubdomain);
         if (noHotelIfSubdomain || reloadAndSubdomain) {
             let params = {
                 subdomain: localStorage.getItem('subdomain'),
@@ -99,7 +100,7 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $setAndLoadLocalHotel (subdomainString) {
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
-        // console.log('test',subdomain.value)
+        // console.log('test subdomain',subdomain.value)
         await $load(true)//reload
     }
 
@@ -115,6 +116,7 @@ export const useHotelStore = defineStore('hotel', () => {
         localStorage.removeItem('hotelId')
         subdomain.value = null;
         hotelData.value = null;
+        hotelDataStorage.value = null;
     }
 
     async function $deleteOldLocalHotel () {
@@ -129,7 +131,7 @@ export const useHotelStore = defineStore('hotel', () => {
 
 
     async function $changeCurrentHotelData (newHotelId, newsubdomain) {
-        if(newHotelId == hotelData.value.id) return;
+        if(newHotelId == hotelDataStorage.value.id) return;
         await $deleteLocalHotel();
         $setAndLoadLocalHotel(newsubdomain)
     }
