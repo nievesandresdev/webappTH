@@ -202,7 +202,7 @@ const handleReservationStay = () => {
 
 onMounted(async() => {
     guestData.value = guestStore.getLocalGuest();
-    stayStore.reloadLocalStay();
+    // stayStore.reloadLocalStay();
     stayData.value = stayStore.stayData;
     hotelData.value = hotelStore.hotelData;
     loading.value = false;

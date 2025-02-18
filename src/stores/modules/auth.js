@@ -77,39 +77,30 @@ export const useAuthStore = defineStore('auth', () => {
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
-            // console.log('test redirect logoutAndCreateStay1')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
-            // console.log('test redirect logoutAndCreateStay2')
             router.push({ name:'HotelsList' })
         }
         
     }
 
     async function $logout () {
-        console.log('test logout 1')
         await stayStore.deleteLocalStayData()
         await guestStore.deleteLocalGuest()
-        console.log('test logout 2')
         localStorage.removeItem('startedWebappBy')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
-        console.log('test logout 3')
         historyStore.$clearHistory();
         if(chainType === 'INDEPENDENT'){
-            console.log('test logout 4')
             navigateTo('Home')
         }else{
-            console.log('test logout 5')
             await hotelStore.$deleteLocalHotel();
             router.push({ name:'ChainLanding' })
         }
     }
 
     async function $logIn (email) {
-        console.log('test logIn')
         if(!stayStore?.stayData){
-            console.log('test logIn 1')
             //aqui entra solo si no hay una estancia cargada antes de culminar registro
             await guestStore.findAndValidLastStayAndLogHotel({
                 guestEmail : email, 
@@ -117,24 +108,20 @@ export const useAuthStore = defineStore('auth', () => {
                 hotelId : hotelStore.hotelData?.id
             })
         }else{
-            console.log('test logIn 2')
             //aqui entra si ya hay una estancia cargada (viene por url)
             if(Boolean(sessionStorage.getItem('guestPerStay'))){
                 let response = await guestStore.createAccessInStay()
                 if(response?.stay){
-                    console.log('test logIn 3')
                     //actualizar estancia
                     await stayStore.setStayData(response.stay)
                     await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
                 }
             }else{
-                console.log('test logIn 4')
                 //sino elimina la estancia actual para que el huesped tenga que crear una
                 await stayStore.deleteLocalStayData()
             }
         }
         //redireccionar segun corresponda
-        console.log('test logIn 5')
         await $redirectAfterLogin()
     }
 
@@ -159,7 +146,7 @@ export const useAuthStore = defineStore('auth', () => {
         //
         let currentSubdomainHotel = localStorage.getItem('subdomain');
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            // console.log('test validateSession 1')
+            
             next({ name: 'Home', params :{ hotelSlug: currentSubdomainHotel }, query: to.query });
         }else{
             let sudmainsChain = chainStore.chainData.hotels_subdomains;
@@ -172,10 +159,10 @@ export const useAuthStore = defineStore('auth', () => {
             if(!sessionActive.value && to?.name !== 'ChainLanding'){
                 if(!isMockup() && validSubdomain){
                     //si hay un subdominio de hotel cargado va a la home
-                    // console.log('test validateSession 2',sessionActive.value)
+                    
                     next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
                 }else{
-                    // console.log('test validateSession 3',sessionActive.value)
+                    
                     next({ name:'ChainLanding' })
                 }
             }   
@@ -199,11 +186,11 @@ export const useAuthStore = defineStore('auth', () => {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
-            // console.log('test goStartedWebappBy 1',route.name)
+            
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
-            // console.log('test goStartedWebappBy 2')
+            
             router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }
     }
@@ -215,17 +202,14 @@ export const useAuthStore = defineStore('auth', () => {
         // localStorage.removeItem('guestPerStay')
         sessionStorage.removeItem('guestPerStay')
         if(stayStore.stayData){
-            console.log('test logIn 6')
+            
             await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
-                console.log('test logIn 7')
-                // console.log('test redirectAfterLogin 1')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
-                console.log('test logIn 8')
+                
                 //logica para cuando no se halla cargado un hotel
-                // console.log('test redirectAfterLogin 2')
                 router.push({ name:'HotelsList' })
             }
         }
@@ -239,16 +223,16 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $validateStayGuestRelation() {
-        // console.log('test guestData',guestStore.guestData)
+        
         if(stayStore.stayData && guestStore.guestData && guestStore.guestData.name){
-            // console.log('test staydata',stayStore.stayData)
+            
             //ids de huespedes registrados en la estancia
             let guestsIds = stayStore.stayData.guestsIds;
-            // console.log('test guestsIds',guestsIds)
+            
             let validGuest = guestsIds.includes(guestStore.guestData.id);
-            // console.log('test guestsIds',guestsIds)
+            
             if(!validGuest){
-                // console.log('test delete data guest');
+                
                 guestStore.deleteLocalGuest();
                 navigateTo('Home')
             }
