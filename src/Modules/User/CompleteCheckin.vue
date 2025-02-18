@@ -3,8 +3,8 @@
     <Head />
     <div class="pt-4 sp:pt-6 pb-[100px] px-2 sp:px-4 relative">
         <div :class="{'min-h-container':currentStep == numberStepsEnabled}">
-            <SecondStep v-if="currentStep == 2" /> 
-            <ThirdStep v-else-if="currentStep == 3" /> 
+            <SecondStep v-if="secondStepEnabled && currentStep == 2" /> 
+            <ThirdStep v-else-if="!secondStepEnabled && currentStep == 2 || currentStep == 3" /> 
             <FirstStep v-else /> 
             <div 
                 class="my-3 sp:my-6 text-center"
