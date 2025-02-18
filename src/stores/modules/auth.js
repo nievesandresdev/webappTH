@@ -87,15 +87,20 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logout () {
+        console.log('test logout 1')
         await stayStore.deleteLocalStayData()
         await guestStore.deleteLocalGuest()
+        console.log('test logout 2')
         localStorage.removeItem('startedWebappBy')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
+        console.log('test logout 3')
         historyStore.$clearHistory();
         if(chainType === 'INDEPENDENT'){
+            console.log('test logout 4')
             navigateTo('Home')
         }else{
+            console.log('test logout 5')
             await hotelStore.$deleteLocalHotel();
             router.push({ name:'ChainLanding' })
         }
