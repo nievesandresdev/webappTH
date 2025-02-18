@@ -14,6 +14,10 @@
       <!-- Campo del número de teléfono -->
       <BaseInputPhoneEnterNumber v-model="localNumber" @onBlur="onBlur" :hasError="hasError"/>
     </div>
+    <p
+        v-if="hasError"
+        class="lato text-xs font-bold leading-[12px] sp:leading-[16px] htext-alert-negative"
+    >Introduzca un numero de telefono valido</p>
   </template>
   
   <script setup>
@@ -46,18 +50,25 @@
   
   // Cada vez que cambien selectedCode o localNumber => reconstruimos
   watch([selectedCode, localNumber], () => {
+    validateNumber(localNumber.value);
     const combined = buildPhone()
     emit('update:modelValue', combined)
   })
   
   function onBlur() {
-    if(props.modelValue?.length > 3 && props.modelValue?.length < 12){
+    emit('onBlur')
+  }
+
+  function validateNumber(number){
+    // console.log('test number?.length',number?.length)
+    if(number?.length > 4 && number?.length < 11){
       hasError.value  = false;
     }else{
       hasError.value  = true;
     }
+
+    if(!number?.length) hasError.value  = false;
     emit('handleError',hasError.value)
-    emit('onBlur')
   }
   
   function buildPhone() {

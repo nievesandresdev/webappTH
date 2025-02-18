@@ -112,6 +112,7 @@
 </template>
 <script setup>
 import HeadWithLang from '@/layout/Components/HeadWithLang.vue'
+import utils from '@/utils/utils.js';
 import { navigateTo } from '@/utils/navigation'
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -122,8 +123,15 @@ import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
-
+// returnTo
 async function goBack(){
+    let fromAnyPlace = Boolean(utils.getUrlParam('returnTo'))
+    //si existe esta query retonarmos a la vista exclusiva guardada
+    if(fromAnyPlace){
+        historyStore.$goExclusiveRoute(router);
+        return;
+    }
+    //de lo contrario seguimos el flujo
     if(authStore.sessionActive){
         //si existe session usa el historial
         historyStore.$goBack(router);

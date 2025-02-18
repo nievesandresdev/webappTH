@@ -1,8 +1,11 @@
 <template>
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 z-[10000] w-screen h-screen"></div>
-    <Head />
+    <Head v-if="!loading" />
     <div class="pt-4 sp:pt-6 pb-[100px] px-2 sp:px-4 relative">
-        <div :class="{'min-h-container':currentStep == numberStepsEnabled}">
+        <div v-if="loading" class="flex justify-center">
+            <Spinner width="40px" height="40px"/>
+        </div>
+        <div v-else :class="{'min-h-container':currentStep == numberStepsEnabled}">
             <SecondStep v-if="secondStepEnabled && currentStep == 2" /> 
             <ThirdStep v-else-if="!secondStepEnabled && currentStep == 2 || currentStep == 3" /> 
             <FirstStep v-else /> 
@@ -19,7 +22,7 @@
             </div>
         </div>
         <div 
-            v-if="currentStep == numberStepsEnabled" 
+            v-if="currentStep == numberStepsEnabled && !loading" 
         >
             <p class="lato text-[8px] sp:text-xs leading-[12px] sp:leading-[16px] font-medium">
                 Al presionar el botón “Finalizar”, declaro que acepto las 
@@ -49,13 +52,14 @@
                     Puedes obtener más detalles en nuestra política de privacidad.
                 </li>
             </ul>
-            <PrimaryButton 
-                classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
-                classContainer="mt-6"
-                @click="isWhyModalOpen = false"
-            >
-                Entendido
-            </PrimaryButton> 
+            <div class="mt-6">
+                <PrimaryButton 
+                    classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
+                    @click="isWhyModalOpen = false"
+                >
+                    Entendido
+                </PrimaryButton> 
+            </div>
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="goPolices">
                     Ver política de privacidad
@@ -100,18 +104,23 @@ import ChagesBar from './Components/CompleteCheckin/ChagesBar.vue'
 import ModalNative from '@/components/ModalNative.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
+import Spinner from '@/components/Spinner.vue';
 //
 import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
 import { navigateTo } from '@/utils/navigation'
 //
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter();
+const route = useRoute();
 import { useCheckinStore } from '@/stores/modules/checkin';
 const checkinStore = useCheckinStore();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useLegalStore } from '@/stores/modules/legal';
 const legalStore = useLegalStore();
+import { useHistoryStore } from '@/stores/modules/history';
+const historyStore = useHistoryStore();
+
 
 const props = defineProps({
     paramsRouter: {
@@ -155,12 +164,14 @@ const phoneError = ref(false);
 const isWhyModalOpen = ref(false);
 const isPoliciesOpen = ref(false);
 const norms = ref([]);
+const loading = ref(true);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
-    loadDataGuest(paramsRouter.value.id);
+    await loadDataGuest(paramsRouter.value.id);
     form.id = paramsRouter.value.id;
     norms.value = await legalStore.$getNormsByHotel();
+    loading.value = false;
     // console.log('test settings',settings.value)
 })
 
@@ -193,8 +204,9 @@ function parseDate(dateStr) {
     return new Date(year, month - 1, day);
 }
 
-function goPolices(dateStr) {
-    router.push({ name:'PrivacyPolicies' })
+async function goPolices(dateStr) {
+    await historyStore.$saveExclusiveRoute(route.name, route.params, route.query);
+    router.push({name:'PrivacyPolicies', query:{ returnTo: 'true' }})
 }
 // Propiedad computada para verificar si es menor de edad
 const isMinor = computed(() => {
@@ -228,17 +240,22 @@ const isMinor = computed(() => {
 });
 
 const secondLastnameError = computed(() => {
-    return form.docType == 'NIE' && !form.secondLastname
+    return form.docType == 'DNI español' && !form.secondLastname
 });
 
 const docNumberPattern = computed(() => {
   switch (form.docType) {
-    case 'DNI español': return /^[0-9]{8}[A-Za-z]$/;
-    case 'NIE':         return /^[XYZxyz]\d{7}[A-Za-z]$/;
-    case 'Pasaporte':   return /^[A-Za-z0-9]{6,15}$/;
-    default:            return null; 
+    case 'DNI español':
+      return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
+    case 'NIE':
+      return /^[Ee]\d{8}$/;        // Letra 'E' + 8 números
+    case 'Pasaporte':
+      return /^[A-Za-z0-9]{6,15}$/;
+    default:
+      return null; 
   }
 });
+
 
 const docNumberError = computed(() => {
     
@@ -300,7 +317,7 @@ watch(() => form.docType,(newVal) => {
         settings.value.second_step.docSupportNumber.visible = false;
         settings.value.second_step.docSupportNumber.mandatory = false;
       }
-      if (newVal == "NIE") {
+      if (newVal == "DNI español") {
         settings.value.first_step.secondLastname.visible = true;
         settings.value.first_step.secondLastname.mandatory = true;
       }else{

@@ -14,7 +14,7 @@
           v-model="searchQuery"
           @input="handleInput"
           @blur="handleBlur"
-          placeholder="Escribe tu código postal o municipio"
+          placeholder="Escribe para ver sugerencias"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 lato text-sm font-medium"
         />
         
@@ -138,7 +138,7 @@
   }
   
   function handleBlur() {
-    console.log('test handleBlur')
+    // console.log('test handleBlur')
     if (!isSelecting.value) {
       validateInput()
       isDropdownOpen.value = false
@@ -146,7 +146,7 @@
   }
   
   function selectPlace(place) {
-    console.log('test place',place)
+    // console.log('test place',place)
     isSelecting.value = true
     // Guardar el valor formateado en el input
     searchQuery.value = place
