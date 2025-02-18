@@ -1,5 +1,6 @@
 <template>
-  <div class="no-scrollbar">
+<LoadPage v-if="loading" />
+  <div v-else class="no-scrollbar">
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
     <ImageSlider
@@ -216,6 +217,7 @@
 import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
+import LoadPage from '@/shared/LoadPage.vue';
 
 import $utils from '@/utils/utils';
 
@@ -244,6 +246,7 @@ const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref('');
+const loading = ref(false);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
@@ -314,6 +317,7 @@ const toggleDescription = () => {
 
 // Cargar datos del lugar
 const getDataPlace = async () => {
+    loading.value = true;
   let response = await placeStore.$findById({ id: props.paramsRouter.id });
   placeData.value = null;
   if (response.ok) {
@@ -323,6 +327,7 @@ const getDataPlace = async () => {
     hourData.value = hours?.weekRanges ?? null;
     await nextTick();
   }
+      loading.value = false;
 }
 
 // Convierte las estrellas

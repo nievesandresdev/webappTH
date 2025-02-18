@@ -11,7 +11,7 @@ export default {
         "btn-load-more": "Carica altri"
     },
     "results": "Nessun risultato...",
-    "seaching": "Ricerca in corso...",
+    "seaching": "Cerca destinazione",
     "categorySearch": "trovato",
     "city": "Città",
     "placeholder-search":"Scrivi qualcosa",

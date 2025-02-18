@@ -1,5 +1,7 @@
 <template>
-  <div class="no-scrollbar">
+    <LoadPage v-if="loading" />
+
+  <div v-else class="no-scrollbar">
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
     <ImageSlider
@@ -96,10 +98,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick, provide, computed } from 'vue';
+import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import Modal from '@/components/Modal.vue';
+import LoadPage from '@/shared/LoadPage.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -108,6 +111,8 @@ import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
 import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 
 // const serviceData = {
 //     name: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
@@ -138,14 +143,24 @@ const isExpandedHire = ref(false);
 const isLongHire = ref(false);
 const hireRef = ref(null);
 const hire = ref(null);
+const loading = ref(true);
+
+// COMPUTED
+const hotelData = computed(() => hotelStore.hotelData);
 
 const serviceCurrent = computed(() => {
     return router.params;
 });
 
 onMounted(() => {
-    loadData();
+    // loadData();
 });
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
 
 function checkDescriptionLength () {
   nextTick(() => {
@@ -162,13 +177,17 @@ function checkDescriptionLength () {
 }
 
 async function loadData () {
+    loading.value = true;
     let response = await serviceStore.$findByIdConfort(3);
     if (response.ok) {
-        serviceData.value = response.data;
-        hire.value = serviceData.value.hire;
-        description.value = serviceData.value.description;
+        let { data } = response;
+        let dataTranslate = { name: data.name, description: data.translation_current.description, hire: data.translation_current.hire, images: data.images, link_url: data.link_url, price: data.price };
+        Object.assign(serviceData.value, dataTranslate);
+        description.value = dataTranslate.description;
+        hire.value = dataTranslate.hire;
         checkDescriptionLength();
     }
+    loading.value = false;
 }
 
 const toggleDescription = () => {

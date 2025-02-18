@@ -11,7 +11,7 @@ export default {
         "btn-load-more": "Charger plus"
     },
     "results":'Sans résultats...',
-    "seaching":'Recherche...',
+    "seaching":'Rechercher une destination',
     "categorySearch":'rencontrés',
     "city":"Ville",
     "placeholder-search": "Écris quelque chose",

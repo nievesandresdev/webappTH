@@ -129,6 +129,7 @@ function loadType () {
     formFilter.type = route.currentRoute.value.name?.toUpperCase();
 }
 function loadTabs () {
+    // console.log(hotelStore.hotelData, 'hotelStore.hotelData');
     tabsHeader.value = [
         {
             title: t('service.confort.title'),
