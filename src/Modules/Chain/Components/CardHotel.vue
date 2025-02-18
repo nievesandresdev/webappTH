@@ -76,7 +76,7 @@ async function selectHotel(){
     //se usara para que en un caso que el huesped decida regresar a la estancia actual
     //poder tener el subdominio de dicha estancia
     const currentSubdomain = localStorage.getItem('subdomain');
-    console.log('test currentSubdomain',currentSubdomain)
+    //console.log('test currentSubdomain',currentSubdomain)
     if(currentSubdomain){
         hotelStore.$setOldLocalHotel(currentSubdomain)
     }

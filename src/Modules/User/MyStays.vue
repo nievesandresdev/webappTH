@@ -167,7 +167,7 @@ function createStay() {
 }
 
 const AccessToStay = async () => {
-    // console.log('test stayId',dataModalStay.value.stayId)
+    isModalOpen.value = false;
     await hotelStore.$changeCurrentHotelData(dataModalStay.value.hotelId, dataModalStay.value.hotelSubdomain);
     await stayStore.findByIdInSetLocalStay(dataModalStay.value.stayId)
     navigateTo('Home')
