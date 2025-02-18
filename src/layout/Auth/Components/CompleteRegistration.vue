@@ -94,7 +94,7 @@ const form = reactive({
 
 onMounted(async () => {
     form.id = getUrlParam('g');
-    console.log('test form.id',form.id)
+    // console.log('test form.id',form.id)
     if(!form.id){
         if(localStorage.getItem('subdomain')){
             navigateTo('Home',{},{ acform : 'log' })

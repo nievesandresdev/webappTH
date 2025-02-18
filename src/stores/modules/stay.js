@@ -191,7 +191,7 @@ export const useStayStore = defineStore('stay', () => {
             stayData.value = response.data;
     
             if (stayData.value && stayData.value.id) {
-                // console.log('stayData.value',stayData.value)
+                console.log('test pending',stayData.value)
                 localStorage.setItem('stayId', stayData.value.id);
                 localStorage.setItem('stayData', JSON.stringify(stayData.value));
             }
