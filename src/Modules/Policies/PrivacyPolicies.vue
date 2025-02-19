@@ -71,7 +71,7 @@
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s5-p1')}}<br/> <br/>
                 {{$t('policies.privacy.s5-p2')}}<br/> <br/>
-                {{$t('policies.privacy.s5-p3')}}<br/> <br/>
+                <!-- {{$t('policies.privacy.s5-p3')}}<br/> <br/> -->
              </p>
         </div>
         <!-- point 6 -->
