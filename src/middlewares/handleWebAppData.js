@@ -82,14 +82,12 @@ export default async function handleWebAppData({ to, from, next }) {
     //data extra
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        //console.log('test entro aqui')
         let lang = hotelStore.hotelData?.language_default_webapp ?? localeStore.localeCurrent;
         if(localeStore.localeCurrent !== 'es'){
             lang = localeStore.localeCurrent;
         }
         localeStore.$loadByURL(lang);
     } else if (!utils.isMockup()) {
-        //console.log('test entro aqui 2');
         let lang = localeStore.localeCurrent !== i18n.global.locale.value ? localeStore.localeCurrent : null;
         localeStore.$loadByURL(lang);
     }

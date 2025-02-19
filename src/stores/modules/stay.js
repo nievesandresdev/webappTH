@@ -184,7 +184,6 @@ export const useStayStore = defineStore('stay', () => {
             lodingStayData.value = true; 
         }
         const response = await findbyIdApi(stayData.value ? stayData.value.id : null);
-        console.log('test stay',response)
         const { ok } = response;
     
     
@@ -192,7 +191,6 @@ export const useStayStore = defineStore('stay', () => {
             stayData.value = response.data;
     
             if (stayData.value && stayData.value.id) {
-                // console.log('stayData.value',stayData.value)
                 localStorage.setItem('stayId', stayData.value.id);
                 localStorage.setItem('stayData', JSON.stringify(stayData.value));
             }

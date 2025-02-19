@@ -82,7 +82,6 @@ const unSubscribePusher = () =>{
 
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
-        // localStorage.setItem('stayData',newStayData);
         // stayData = newStayData;
         if(newStayData){
             unSubscribePusher();

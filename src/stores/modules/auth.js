@@ -77,10 +77,8 @@ export const useAuthStore = defineStore('auth', () => {
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
-            // console.log('test redirect logoutAndCreateStay1')
             navigateTo('Home',{},{ acform : 'createstay' })
         }else{
-            // console.log('test redirect logoutAndCreateStay2')
             router.push({ name:'HotelsList' })
         }
         
@@ -135,7 +133,7 @@ export const useAuthStore = defineStore('auth', () => {
         let stayDataObj = JSON.stringify(stayData);
         let hotelDataObj = JSON.stringify(hotelData);
         sessionActive.value = 
-            Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(stayStore.stayData) ||
+            Boolean(hotelStore.hotelData) && Boolean(guestStore.guestData) && Boolean(guestStore.guestData.name) && Boolean(stayStore.stayData) ||
             Boolean(hotelData) && Boolean(guestData) && Boolean(guestDataObj.name) && Boolean(stayData) && hotelDataObj.id == stayDataObj.hotel_id;
         ;    
     }
@@ -148,7 +146,7 @@ export const useAuthStore = defineStore('auth', () => {
         //
         let currentSubdomainHotel = localStorage.getItem('subdomain');
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            // console.log('test validateSession 1')
+            
             next({ name: 'Home', params :{ hotelSlug: currentSubdomainHotel }, query: to.query });
         }else{
             let sudmainsChain = chainStore.chainData.hotels_subdomains;
@@ -161,10 +159,10 @@ export const useAuthStore = defineStore('auth', () => {
             if(!sessionActive.value && to?.name !== 'ChainLanding'){
                 if(!isMockup() && validSubdomain){
                     //si hay un subdominio de hotel cargado va a la home
-                    // console.log('test validateSession 2',sessionActive.value)
+                    
                     next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
                 }else{
-                    // console.log('test validateSession 3',sessionActive.value)
+                    
                     next({ name:'ChainLanding' })
                 }
             }   
@@ -188,29 +186,30 @@ export const useAuthStore = defineStore('auth', () => {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
-            // console.log('test goStartedWebappBy 1',route.name)
+            
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
-            // console.log('test goStartedWebappBy 2')
+            
             router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
         }
     }
 
     async function $redirectAfterLogin() {
+        
         //
         //limpiar
         // localStorage.removeItem('guestPerStay')
         sessionStorage.removeItem('guestPerStay')
         if(stayStore.stayData){
+            
             await $goStartedWebappBy();
         }else{
             if(hotelStore.hotelData){
-                // console.log('test redirectAfterLogin 1')
                 navigateTo('Home',{},{ acform : 'createstay' })
             }else{
+                
                 //logica para cuando no se halla cargado un hotel
-                // console.log('test redirectAfterLogin 2')
                 router.push({ name:'HotelsList' })
             }
         }
@@ -224,17 +223,18 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $validateStayGuestRelation() {
-        console.log('test guestData',guestStore.guestData)
+        
         if(stayStore.stayData && guestStore.guestData && guestStore.guestData.name){
-            console.log('test staydata',stayStore.stayData)
+            
             //ids de huespedes registrados en la estancia
             let guestsIds = stayStore.stayData.guestsIds;
-            console.log('test guestsIds',guestsIds)
+            
             let validGuest = guestsIds.includes(guestStore.guestData.id);
-            console.log('test guestsIds',guestsIds)
+            
             if(!validGuest){
-                console.log('test delete data guest');
+                
                 guestStore.deleteLocalGuest();
+                navigateTo('Home')
             }
         }
     }

@@ -9,7 +9,7 @@ export const usePaginationScrollInfinite = (
     idSelectorContainer,
     classSelectorCardsSkeleton,
     isloadingForm,
-    loadItems
+    loadMore
 ) => {
 
     onMounted(() => {
@@ -49,7 +49,7 @@ export const usePaginationScrollInfinite = (
         const skeletons = document.querySelectorAll(`.${classSelectorCardsSkeleton}`);
         for (let skeleton of skeletons) {
             if ($isElementVisible(skeleton) && !isloadingForm.value) {
-                loadItems();
+                loadMore();
                 break;
             }
         }   

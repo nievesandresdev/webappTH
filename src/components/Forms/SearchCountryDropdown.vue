@@ -49,7 +49,7 @@
   
   const emit = defineEmits(['update:modelValue']);
   
-  const searchQuery = ref('');
+  const searchQuery = ref(props.modelValue ?? '');
   const countries = ref([]);
   const currentLanguage = ref('es'); // Simulación de idioma actual
   const isDropdownOpen = ref(false);
@@ -63,7 +63,8 @@
   
   const filteredCountries = computed(() => {
     if (!searchQuery.value) return [];
-    const query = searchQuery.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const query = searchQuery.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
     return countries.value.filter(country => {
       const countryName = country.translateCountry[currentLanguage.value].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       return countryName.includes(query);
@@ -88,6 +89,9 @@
   };
   
   const validateInput = () => {
+     // eliminar espacios al inicio y al final:
+    searchQuery.value = searchQuery.value.trim();
+
     const selectedCountry = countries.value.find(country =>
       country.translateCountry[currentLanguage.value].toLowerCase() === searchQuery.value.toLowerCase()
     );

@@ -29,7 +29,7 @@
         <p
             v-if="secondLastnameError"
             class="lato text-xs font-bold leading-[12px] sp:leading-[16px] htext-alert-negative"
-        >Si tu tipo de documento es NIE, completa este campo</p>
+        >Si tu tipo de documento es DNI español, completa este campo</p>
     </div>
     <!-- birthdate -->
     <div class="mt-2" v-if="settings?.first_step?.birthdate?.visible">
