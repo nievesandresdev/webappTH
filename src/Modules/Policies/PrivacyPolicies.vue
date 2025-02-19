@@ -14,14 +14,14 @@
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s1-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s1-p1')}} <br/> <br/>
-                {{$t('policies.privacy.s1-p2')}}<br/> <br/>
+                {{$t('policies.privacy.s1-p2')}} <br/> <br/>
                 <template v-if="false">
                     {{$t('policies.privacy.s1-p3')}} <br/> <br/>
                 </template>
              </p>
         </div>
         <!-- point 2 -->
-        <!-- <div class="mt-2">
+        <div class="mt-2">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s2-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s2-p1')}}<br/> <br/>
@@ -38,9 +38,9 @@
                     <li class="lato text-sm font-medium leading-[16px] mt-4">{{$t('policies.privacy.s2-p7')}}</li>
                 </ul>
              </p>
-        </div> -->
+        </div>
         <!-- point 3 -->
-        <!-- <div class="mt-6">
+        <div class="mt-6">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s3-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s3-p1')}}<br/> <br/>
@@ -52,7 +52,7 @@
                     <li class="lato text-sm font-medium leading-[16px] mt-4">{{$t('policies.privacy.s3-p6')}}</li>
                 </ul>
              </p>
-        </div> -->
+        </div>
         <!-- point 4 -->
         <!-- <div class="mt-6">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s4-t1')}}</h1> <br/>
