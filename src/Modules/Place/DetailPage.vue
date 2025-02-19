@@ -246,7 +246,7 @@ const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref('');
-const loading = ref(false);
+const loading = ref(true);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
