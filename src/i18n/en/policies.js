@@ -33,7 +33,7 @@ export default{
         "s5-t1":"5. DATA TRANSFER.",
         "s5-p1":"Guests' personal data will not be transferred or disclosed to third parties without prior informed consent, except as provided by law.",
         "s5-p2":"However, for the proper functioning of the webapp, it is necessary that certain service providers access guests' personal data as data processors. These providers are obligated to process the data exclusively for the purposes stipulated by the host and under the conditions determined in the corresponding data processing agreements.",
-        "s5-p3":"Among these providers is TheHoster (The Hoster Hospitality S.L. with tax ID B56861479 and contact email info@thehoster.io), which provides the infrastructure and technology necessary for the proper functioning of the webapp. TheHoster always acts as a data processor and only processes the data according to the instructions of the accommodation provider and for the intended purposes.",
+        "s5-p3":"Among these providers is TheHoster (The Hoster Hospitality S.L. with tax ID B56861479 and contact email info\@thehoster.io), which provides the infrastructure and technology necessary for the proper functioning of the webapp. TheHoster always acts as a data processor and only processes the data according to the instructions of the accommodation provider and for the intended purposes.",
         //
         "s6-t1":"6. USER RIGHTS.",
         "s6-p1":"a) Right of access: you have the right to request and obtain confirmation of whether personal data concerning you is being processed, as well as to access your stored personal data.",

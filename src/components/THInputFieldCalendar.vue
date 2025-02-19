@@ -159,7 +159,7 @@ export default {
     computed: {
         value: {
             get () {
-                if(this.modelValue){
+                if(this.modelValue && this.modelValue.start){
                     this.dates_selected = this.formatDate(this.modelValue).label;
                 }
                 return this.modelValue
