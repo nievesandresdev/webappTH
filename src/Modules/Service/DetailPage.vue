@@ -9,7 +9,6 @@
       :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
       :from="'services'"
     />
-    {{serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))}}
     <div class="py-[12px] sp:py-[24px] no-scrollbar mx-2 sp:mx-4">
         <div class="pb-[12px] border-b  border-[#E9E9E9]">
             <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
@@ -213,7 +212,6 @@ async function loadData () {
             link_url: data.link_url ?? data.url,
             price: data.price ?? data.from_price
         };
-        console.log(dataTranslate)
         Object.assign(serviceData.value, dataTranslate);
         description.value = dataTranslate.description;
         hire.value = dataTranslate.hire;
