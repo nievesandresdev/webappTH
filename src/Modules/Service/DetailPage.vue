@@ -6,9 +6,10 @@
 
     <ImageSlider
       show-button-back
-      :images="serviceData.images.map(item=> serviceStore.$loadImage(item))"
+      :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
       :from="'services'"
     />
+    {{serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))}}
     <div class="py-[12px] sp:py-[24px] no-scrollbar mx-2 sp:mx-4">
         <div class="pb-[12px] border-b  border-[#E9E9E9]">
             <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
@@ -114,6 +115,13 @@ const experienceStore = useExperienceStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
+const props = defineProps({
+  paramsRouter: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
 // const serviceData = {
 //     name: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
 //     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
@@ -124,6 +132,7 @@ const hotelStore = useHotelStore();
 // }
 
 const serviceData = ref({
+    type: null,
     name: null,
     description: null,
     hire: null,
@@ -149,11 +158,16 @@ const loading = ref(true);
 const hotelData = computed(() => hotelStore.hotelData);
 
 const serviceCurrent = computed(() => {
-    return router.params;
+    return props.paramsRouter.service;
 });
 
 onMounted(() => {
     // loadData();
+});
+
+const idService = computed(() => {
+    let { id, slug } = props.paramsRouter ?? {};
+    return id ?? slug;
 });
 
 watch(hotelData, (valueCurrent, valueOld) => {
@@ -178,10 +192,28 @@ function checkDescriptionLength () {
 
 async function loadData () {
     loading.value = true;
-    let response = await serviceStore.$findByIdConfort(3);
+    let response = null;
+    if (serviceCurrent.value === 'confort') {
+        response = await serviceStore.$findByIdConfort(idService.value);
+    }
+    if (serviceCurrent.value === 'transport') {
+        response = await serviceStore.$findByIdTransport(idService.value);
+    }
+    if (serviceCurrent.value === 'activity') {
+        response = await experienceStore.$apiFindBySlug({slug: idService.value});
+    }
     if (response.ok) {
         let { data } = response;
-        let dataTranslate = { name: data.name, description: data.translation_current.description, hire: data.translation_current.hire, images: data.images, link_url: data.link_url, price: data.price };
+        let dataTranslate = {
+            type: data?.name_api,
+            name: data?.name ?? data?.title,
+            description: data?.translation_current?.description ?? data?.description,
+            hire: data?.translation_current?.hire ?? data?.hire,
+            images: data.images,
+            link_url: data.link_url ?? data.url,
+            price: data.price ?? data.from_price
+        };
+        console.log(dataTranslate)
         Object.assign(serviceData.value, dataTranslate);
         description.value = dataTranslate.description;
         hire.value = dataTranslate.hire;

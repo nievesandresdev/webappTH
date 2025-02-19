@@ -34,6 +34,7 @@ const serviceRoutes = [
             name: 'DetailService',
             component: DetailPage,
             meta: { hiddenMenu: true },
+            props: (route) => ({ paramsRouter: {...route.params} }),
           },
           {
             path: 'activity-externa/:slug',
