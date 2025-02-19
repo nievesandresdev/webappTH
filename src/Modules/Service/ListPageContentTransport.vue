@@ -92,7 +92,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     'list-transports',
     'skeleton-card',
     isloadingForm,
-    loadItems
+    loadMore
 );
 
 // const numberCardsToLoad = computed(() => {
@@ -108,7 +108,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
 
 onMounted(() => {
     // initScrollListener();
-    submitFilter({showPreloader: true});
+    // submitFilter({showPreloader: true});
 });
 
 

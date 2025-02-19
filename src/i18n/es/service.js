@@ -1,5 +1,5 @@
 export default {
-  "title": "Services",
+  "title": "Servicios",
   "modal-request-service": {
     "button": "Solicitar servicio",
     "title": "Estás por ser redirigido a un sitio web externo",

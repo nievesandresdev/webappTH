@@ -87,7 +87,7 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     'list-confort',
     'skeleton-card',
     isloadingForm,
-    loadItems
+    loadMore
 );
 
 // const numberCardsToLoad = computed(() => {
