@@ -33,7 +33,7 @@ export default{
         "s5-t1": "5. TRANSFERT DES DONNÉES.",
         "s5-p1": "Les données personnelles des hôtes ne seront pas cédées ou transférées à des tiers sans leur consentement préalable éclairé, sauf dans les cas prévus par la loi.",
         "s5-p2": "Cependant, pour le bon fonctionnement de la webapp, il est nécessaire que certains prestataires de services accèdent aux données personnelles des hôtes en tant que sous-traitants. Ces prestataires sont tenus de traiter les données exclusivement pour les finalités stipulées par l'hébergeur et selon les conditions déterminées dans les contrats de sous-traitance correspondants.",
-        "s5-p3": "Parmi ces prestataires figure TheHoster (The Hoster Hospitality S.L. avec le NIF B56861479 et email de contact info\@thehoster.io), qui fournit l'infrastructure et la technologie nécessaires au bon fonctionnement de la webapp. TheHoster agit en tout temps en tant que sous-traitant et ne traite les données que selon les instructions du responsable de l'hébergement et pour les finalités prévues.",
+        "s5-p3": "Parmi ces prestataires figure TheHoster (The Hoster Hospitality S.L. avec le NIF B56861479 et email de contact {email}), qui fournit l'infrastructure et la technologie nécessaires au bon fonctionnement de la webapp. TheHoster agit en tout temps en tant que sous-traitant et ne traite les données que selon les instructions du responsable de l'hébergement et pour les finalités prévues.",
         //
         "s6-t1": "6. DROITS DE L'UTILISATEUR.",
         "s6-p1": "a) Droit d'accès : vous avez le droit de demander et d'obtenir la confirmation quant au traitement de vos données personnelles, ainsi que d'accéder à vos données personnelles stockées.",

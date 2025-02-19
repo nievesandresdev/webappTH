@@ -33,7 +33,7 @@ export default{
         "s5-t1": "5. TRASFERIMENTO DEI DATI.",
         "s5-p1": "I dati personali degli ospiti non saranno ceduti o trasferiti a terzi senza il previo consenso informato, salvo nei casi previsti dalla legge.",
         "s5-p2": "Tuttavia, per il corretto funzionamento della webapp, è necessario che alcuni fornitori di servizi accedano ai dati personali degli ospiti in qualità di responsabili del trattamento. Questi fornitori sono tenuti a trattare i dati esclusivamente per le finalità stabilite dall'host e secondo le condizioni determinate nei relativi contratti di responsabile del trattamento.",
-        "s5-p3": "Tra questi fornitori figura TheHoster (The Hoster Hospitality S.L. con il codice fiscale B56861479 e email di contatto info\@thehoster.io), che fornisce l'infrastruttura e la tecnologia necessarie per il corretto funzionamento della webapp. TheHoster agisce sempre come responsabile del trattamento e tratta i dati esclusivamente secondo le istruzioni del titolare dell'alloggio e per le finalità previste.",
+        "s5-p3": "Tra questi fornitori figura TheHoster (The Hoster Hospitality S.L. con il codice fiscale B56861479 e email di contatto {email}), che fornisce l'infrastruttura e la tecnologia necessarie per il corretto funzionamento della webapp. TheHoster agisce sempre come responsabile del trattamento e tratta i dati esclusivamente secondo le istruzioni del titolare dell'alloggio e per le finalità previste.",
         //
         "s6-t1": "6. DIRITTI DELL'UTENTE.",
         "s6-p1": "a) Diritto di accesso: hai il diritto di richiedere e ottenere conferma se sono trattati dati personali che ti riguardano, nonché di accedere ai tuoi dati personali archiviati.",
