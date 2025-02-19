@@ -75,7 +75,7 @@
              </p>
         </div>
         <!-- point 6 -->
-        <!-- <div class="mt-4">
+        <div class="mt-4">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s6-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s6-p1')}}<br/> <br/>
@@ -88,16 +88,16 @@
                 {{$t('policies.privacy.s6-p8')}}<br/> <br/>
                 {{$t('policies.privacy.s6-p9')}}<br/> <br/>
              </p>
-        </div> -->
+        </div>
         <!-- point 7 -->
-        <!-- <div class="mt-4">
+        <div class="mt-4">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s7-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s7-p1')}}<br/> <br/>
              </p>
-        </div> -->
+        </div>
         <!-- point 8 -->
-        <!-- <div class="mt-4">
+        <div class="mt-4">
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s8-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s8-p1')}}
@@ -107,7 +107,7 @@
              <p class="lato text-sm font-medium leading-[16px]">
                 {{$t('policies.privacy.s8-p2')}}
              </p>
-        </div> -->
+        </div>
     </div>
 </template>
 <script setup>
