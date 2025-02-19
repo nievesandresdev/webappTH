@@ -82,10 +82,10 @@ const closeModal = (e) => {
 
 
 const closeAndShare = (e) => {
-    console.log('test closeAndShare')
+    // console.log('test closeAndShare')
     closeModal();
     setTimeout(() => {
-        console.log('test emit ShareModalOpen')
+        // console.log('test emit ShareModalOpen')
         emit('ShareModalOpen')
     }, 500);
 };

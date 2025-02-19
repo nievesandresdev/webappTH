@@ -58,7 +58,6 @@ export const useHistoryStore = defineStore('history', () => {
     history.value.push(route)
     $saveHistory()
   }
-  
 
   function $goBack(router) {
     
@@ -96,6 +95,24 @@ export const useHistoryStore = defineStore('history', () => {
     localStorage.setItem('history', JSON.stringify(history.value))
   }
 
+  async function $saveExclusiveRoute(name, params = {}, query = {}) {
+    localStorage.setItem('exclusiveRoute', JSON.stringify({
+      name,
+      params,
+      query
+    }))
+  }
+
+  async function $deleteExclusiveRoute(name, params = {}, query = {}) {
+    localStorage.removeItem('exclusiveRoute')
+  }
+
+  async function $goExclusiveRoute(router) {
+    let goTo = JSON.parse(localStorage.getItem('exclusiveRoute'))
+    router.push({ name: goTo.name, params: goTo.params, query: goTo.query });
+    $deleteExclusiveRoute();
+  }
+
   // Retornamos todo lo que queramos exponer
   return {
     history,
@@ -103,6 +120,9 @@ export const useHistoryStore = defineStore('history', () => {
     $loadHistory,
     $addRoute,
     $goBack,
-    $clearHistory
+    $clearHistory,
+    $saveExclusiveRoute,
+    $deleteExclusiveRoute,
+    $goExclusiveRoute,
   }
 })

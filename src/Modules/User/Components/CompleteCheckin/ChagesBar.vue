@@ -75,7 +75,7 @@ const validForm = computed(() => {
     // Itera sobre cada campo del paso actual
     return Object.keys(stepSettings).every(fieldKey => {
         const field = stepSettings[fieldKey];
-        // console.log('test field fieldKey',fieldKey)
+        // console.log('test fieldKey',fieldKey)
         // console.log('test field',field)
         if (field.visible && field.mandatory){
             const value = form[fieldKey];
@@ -84,17 +84,15 @@ const validForm = computed(() => {
             if (
                 value === null || value === undefined || emailError.value || phoneError.value || secondLastnameError.value ||
                 (docNumberError.value && currentStep.value == 2) ||
-                (docSupportNumberError.value && currentStep.value == 2)
+                (docSupportNumberError.value && currentStep.value == 2) ||
+                fieldKey == 'phone' && field.mandatory && form.phone.length < 4
             ){
-                // console.log('test',false)
                 return false;
             }
             if (typeof value === 'string' && value.trim() === ''){
-                // console.log('test',false)
                 return false;
             }
             if (typeof value === 'object' && value !== null && Object.keys(value).length === 0){
-                // console.log('test',false)
                 return false;
             }
             // console.log('test',true)
@@ -108,6 +106,8 @@ const submit = async () => {
     sendingQuery.value = true;
     form.comment = form.comment.trim();
     form.checkinEmail = form.email;
+    form.docSupportNumber = form.docSupportNumber.toUpperCase();
+    form.docNumber = form.docNumber.toUpperCase();
     form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);
     sendingQuery.value = false;

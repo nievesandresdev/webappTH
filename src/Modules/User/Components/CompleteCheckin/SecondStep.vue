@@ -25,6 +25,7 @@
     <!-- docSupportNumber -->
     <div class="mt-2" v-if="settings?.second_step?.docSupportNumber?.visible">
         <THInputText
+            :customClasses="{'uppercase':form.docSupportNumber}"
             :textLabel="`Número de soporte del documento${isMandatory('docSupportNumber')}`"
             placeholder="Sólo para NIE o DNI español"
             iconLeft="/assets/icons/WA.Passport.svg"
@@ -42,6 +43,7 @@
         <THInputText
             :textLabel="`Número de documento${isMandatory('docNumber')}`"
             placeholder="Escribe el número del documento seleccionado"
+            :customClasses="{'uppercase':form.docNumber}"
             iconLeft="/assets/icons/WA.Passport.svg"
             v-model="form.docNumber"
             :isError="docNumberError"
