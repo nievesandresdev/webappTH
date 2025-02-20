@@ -252,7 +252,7 @@ const toggleDescription = () => {
 }
 
 function goInViator ()  {
-    if (!experienceViatorData.value || experienceViatorData?.value?.productUrl) {
+    if (!experienceViatorData.value || !experienceViatorData?.value?.productUrl) {
          router.go(-1);
          return;
     }
