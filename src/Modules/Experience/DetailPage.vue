@@ -209,8 +209,6 @@ async function loadExperienceInViator () {
     if (response.ok) {
         experienceViatorData.value = response.data;
         loadLanguagesAvailables();
-    } else {
-        router.go(-1);
     }
     
 }
@@ -253,7 +251,11 @@ const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
 }
 
-function goInViator () {
+function goInViator ()  {
+    if (!experienceViatorData.value || experienceViatorData?.value?.productUrl) {
+         router.go(-1);
+         return;
+    }
     window.open(experienceViatorData?.value.productUrl, '_blank')
 }
 
