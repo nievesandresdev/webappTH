@@ -14,7 +14,7 @@
                             <span class="lato text-sm font-bold leading-[16px]">{{$t('checkin.card-guest.resend-staylink')}}</span>
                         </KebabOption>
                         <KebabOption 
-                            v-if="data.id !== guestStore.guestData?.id && !data.complete_checkin_data" 
+                            v-if="data.id !== guestStore.guestData?.id && !data.complete_checkin_data && $currentPeriod() == 'pre-stay'" 
                             @click="$openShareMenu('inviteToCheckin',{guestId:data.id})"
                             borderb
                         >
