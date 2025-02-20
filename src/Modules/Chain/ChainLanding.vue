@@ -6,8 +6,8 @@
         }"
     >
         <img 
-            v-if="chainStore.chainData?.logo"
-            class="w-[133px] h-[80px] mx-auto" :src="hotelStore.$loadImage(chainStore.chainData?.logo)" alt="icon google"
+            v-if="chainStore.$getUrlLog()"
+            class="w-[133px] h-[80px] mx-auto" :src="chainStore.$getUrlLog()" alt="icon google"
         >
     </div>
     <RegisterOrLoginBottomSheet :open="formType == 'log'"/>
@@ -38,6 +38,7 @@ const props = defineProps({
 const customData = ref(null)
 onMounted(async () => {
     hotelStore.$deleteLocalHotel();    
+    console.log('test chain', chainStore.customizationData)
     // stayStore.deleteLocalStayData();
 })
 

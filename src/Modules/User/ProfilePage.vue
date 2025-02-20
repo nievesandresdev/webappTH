@@ -25,12 +25,11 @@
 
         <!-- Contenedor de hotel y estancia boton compartir -->
         <div class="sp:mt-6 mt-2">
-            {{ stayStore.loadLocalStay.value }}
             <StayCard 
                 :hotel="hotelStore.hotelData" 
                 :stay="stayStore.stayData" 
                 @sharedStay="isModalOpen = true"
-                :isLoading="stayStore.lodingStayData"
+                :isLoading="false"
                 showQueryButton
                 showButtonShared
                 @stayClick="goMyStay"

@@ -33,7 +33,7 @@ export default{
         "s5-t1": "5. TRANSFERÊNCIA DOS DADOS.",
         "s5-p1": "Os dados pessoais dos hóspedes não serão cedidos ou transferidos a terceiros sem o prévio consentimento informado, salvo nos casos previstos por lei.",
         "s5-p2": "No entanto, para o correto funcionamento da webapp, é necessário que certos prestadores de serviços tenham acesso aos dados pessoais dos hóspedes na qualidade de responsáveis pelo tratamento. Esses prestadores têm a obrigação de tratar os dados exclusivamente para as finalidades estipuladas pelo anfitrião e sob as condições determinadas nos respectivos contratos de tratamento.",
-        "s5-p3": "Entre esses prestadores está a TheHoster (The Hoster Hospitality S.L. com NIF B56861479 e email de contato info@thehoster.io), que fornece a infraestrutura e a tecnologia necessárias para o correto funcionamento da webapp. A TheHoster atua em todos os momentos como responsável pelo tratamento e processa os dados apenas de acordo com as instruções do titular da hospedagem e para as finalidades previstas.",
+        "s5-p3": "Entre esses prestadores está a TheHoster (The Hoster Hospitality S.L. com NIF B56861479 e email de contato {email}), que fornece a infraestrutura e a tecnologia necessárias para o correto funcionamento da webapp. A TheHoster atua em todos os momentos como responsável pelo tratamento e processa os dados apenas de acordo com as instruções do titular da hospedagem e para as finalidades previstas.",
         //
         "s6-t1": "6. DIREITOS DO USUÁRIO.",
         "s6-p1": "a) Direito de acesso: você tem o direito de solicitar e obter a confirmação se dados pessoais que lhe dizem respeito estão sendo processados, bem como de acessar seus dados pessoais armazenados.",
