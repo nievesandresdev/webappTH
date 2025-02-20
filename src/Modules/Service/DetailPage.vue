@@ -14,7 +14,13 @@
             <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                 {{ serviceData?.name }}
             </h2>
-            <p class="text-[14px] sp:text-[20px] font-bold mt-[8px] lato">{{ serviceData?.price?.toFixed(2) }}€</p>
+            <div class="mt-[5px] sp:mt-[8px]">
+                <p v-if="serviceData.type_price === 1" class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
+                <p v-if="serviceData.type_price == 1 || serviceData.type_price == 2" class="text-[14px] sp:text-[20px] font-bold lato">{{ serviceData?.price?.toFixed(2) }}€</p>
+                <template v-else="serviceData.type_price == 3">
+                    <p class="text-[14px] sp:text-[20px] font-bold lato">{{ $t('service.card-item.free') }}</p>
+                </template>
+            </div>
         </div>
         <div
             v-if="description"
@@ -210,7 +216,8 @@ async function loadData () {
             hire: data?.translation_current?.hire ?? data?.hire,
             images: data.images,
             link_url: data.link_url ?? data.url,
-            price: data.price ?? data.from_price
+            price: data.price ?? data.from_price,
+            type_price: data.type_price
         };
         Object.assign(serviceData.value, dataTranslate);
         description.value = dataTranslate.description;
