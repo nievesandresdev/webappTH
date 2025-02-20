@@ -11,11 +11,12 @@ export function  $formatTypeLodging (){
     const type = hotelStore.hotelData?.type;
     //claves de traducciones
     const typeLodging = {
+        hostal: 'layout.header.hostal',
         hotel: 'layout.header.hotel',
         at: 'hotel.apartment',
         vft: 'hotel.apartment',
       }
-    let defaultLetter = 'hotel.lodging';
+    let defaultLetter = 'layout.header.hotel';
     // return t(typeLodging?.[type] ?? defaultLetter);
     return i18n.global.t(typeLodging?.[type] ?? defaultLetter)
 
