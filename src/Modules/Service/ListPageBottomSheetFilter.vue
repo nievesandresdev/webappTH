@@ -3,7 +3,7 @@
         :open="isOpenBottomSheetFilter"
         :position="positionBottomSheet"
         is-full-front
-        max-height="36"
+        max-height="33"
          @changeCurrentHeight="changePositionHandle"
     >
         <template v-slot:content>

@@ -28,9 +28,6 @@
         <div class="content pt-[12px] sp:pt-[24px] h-full">
           <slot name="content" />
         </div>
-        <!-- <div class="footer">
-          <slot name="footer" />
-        </div> -->
       </div>
     </div>
   </transition>
@@ -75,7 +72,7 @@ const heights = {
 
 // Inicia en la posición central
 const currentHeightIndex = ref(isStepThree.value ? 1 : 1);
-const sheetHeight = ref(isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : maxHeight ? ['0%', `${maxHeight.value}%`] : heights.dragTwoStep[currentHeightIndex.value]);
+const sheetHeight = ref(isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : maxHeight.value ? `${maxHeight.value}%` : heights.dragTwoStep[currentHeightIndex.value]);
 let startY = 0;
 let isDragging = false;
 
@@ -93,7 +90,7 @@ watch(position, () => {
       currentHeightIndex.value = 0;
     }
   }
-  sheetHeight.value = isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : heights.dragTwoStep[currentHeightIndex.value];
+  sheetHeight.value = isStepThree.value ? heights.dragThreeStep[currentHeightIndex.value] : maxHeight.value ? `${maxHeight.value}%` : heights.dragTwoStep[currentHeightIndex.value];
 }, { immediate: true });
 
 watch(currentHeightIndex, () => {
@@ -110,7 +107,11 @@ onUpdated(() => {
   // console.log(isStepThree.value, 'isStepThree');
   if (sheetHeight.value == '0%' && position.value == 'min-top' && open.value) {
     currentHeightIndex.value = 1;
-    sheetHeight.value = '73%';
+    if (maxHeight.value) { 
+      sheetHeight.value = `${maxHeight.value}%`;
+    } else {
+      sheetHeight.value = '73%';
+    }
   }
 });
 
