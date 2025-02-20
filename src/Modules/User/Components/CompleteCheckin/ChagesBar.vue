@@ -111,6 +111,7 @@ const submit = async () => {
     form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);
     sendingQuery.value = false;
+    localStorage.removeItem('formDataCheckin')
     router.push({ name: 'IsCompleteCheckin' })
 };
 
