@@ -243,10 +243,9 @@ function validateTyePlaceCurrent () {
     }
 }
 function validateCategoriplaceCurrent () {
-    console.log(categoriPlaceSelected.value);
-    // if(categoriPlaceSelected.value?.length <= 0) {
-    //     formFilter.categoriplace = [];
-    // }
+    if(categoriPlaceSelected.value?.length <= 0) {
+        formFilter.categoriplace = [];
+    }
 }
 
 async function loadCategoriPlaces () {
