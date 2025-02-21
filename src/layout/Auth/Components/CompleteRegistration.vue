@@ -104,6 +104,7 @@ onMounted(async () => {
         
     }
     method.value = getUrlParam('m');
+    console.log('test complete')
     let guestData = await guestStore.findById(form.id);
     form.email = guestData?.email ?? '';
     if(method.value == 'google'){

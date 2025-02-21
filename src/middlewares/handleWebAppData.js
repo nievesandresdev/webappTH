@@ -67,6 +67,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data huesped
     if(guestId){
+        console.log('test mddl guest',guestId)
         await guestStore.findByIdInSetLocalGuest(guestId)
     }
     ////////////////////////////////////////////////////////
