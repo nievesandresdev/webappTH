@@ -196,6 +196,7 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function deleteLocalGuest() {
+        console.log('test deleteLocalGuest')
         guestData.value = null;
         localStorage.removeItem('guestId')
         localStorage.removeItem('guestData')

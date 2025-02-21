@@ -230,9 +230,10 @@ export const useAuthStore = defineStore('auth', () => {
             let guestsIds = stayStore.stayData.guestsIds;
             
             let validGuest = guestsIds.includes(guestStore.guestData.id);
-            
-            if(!validGuest){
-                
+            let logFrom = getUrlParam('m')
+
+            if(!validGuest && logFrom !== 'google'){
+                console.log('test se metio validateStayGuestRelation')
                 guestStore.deleteLocalGuest();
                 navigateTo('Home')
             }
