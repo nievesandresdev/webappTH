@@ -3,9 +3,9 @@ export default{
         "title": "Política de Privacidade",
         //
         "s1-t1": "1. IDENTIFICAÇÃO E RESPONSABILIDADE PELO TRATAMENTO DOS DADOS.",
-        "s1-p1": "[Hotel] com sede em [endereço] e com NIF [NIF] é o responsável pelos dados pessoais coletados através da webapp.",
-        "s1-p2": "Se você tiver alguma dúvida ou precisar de mais informações sobre o tratamento dos seus dados pessoais, pode entrar em contato através de [email].",
-        "s1-p3": "Dados de contato do Encarregado de Proteção de Dados: email [email], endereço postal [endereço].",
+        "s1-p1": "{hotel} com sede em {address} e com NIF {nif} é o responsável pelos dados pessoais coletados através da webapp.",
+        "s1-p2": "Se você tiver alguma dúvida ou precisar de mais informações sobre o tratamento dos seus dados pessoais, pode entrar em contato através de {email}.",
+        "s1-p3": "Dados de contato do Encarregado de Proteção de Dados: email {email}, endereço postal [endereço].",
         //
         "s2-t1": "2. INFORMAÇÕES PESSOAIS COLETADAS.",
         "s2-p1": "Ao utilizar a webapp, podemos coletar e processar as seguintes informações sobre você:",

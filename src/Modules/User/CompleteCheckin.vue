@@ -17,7 +17,7 @@
                     @click="isWhyModalOpen = true"
                     class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline"
                 >
-                    ¿Por qué pedimos estos datos?
+                    {{ $t('checkin.form.why-data') }}
                 </button>
             </div>
         </div>
@@ -25,31 +25,31 @@
             v-if="currentStep == numberStepsEnabled && !loading" 
         >
             <p class="lato text-[8px] sp:text-xs leading-[12px] sp:leading-[16px] font-medium">
-                Al presionar el botón “Finalizar”, declaro que acepto las 
-                <span class="font-bold underline" @click="isPoliciesOpen = true">políticas y normas </span>
-                del alojamiento
+                {{ $t('checkin.form.policies-info-1') }}
+                <span class="font-bold underline" @click="isPoliciesOpen = true">{{ $t('checkin.form.policies-info-2') }} </span>
+                {{ $t('checkin.form.policies-info-3') }}
             </p>
         </div>
     </div>
     <ChagesBar />
     <ModalNative width="327px" top="18%" @closeModal="isWhyModalOpen = false" :openProp="isWhyModalOpen">
         <div class="p-6">
-            <h2 class="lato text-lg font-bold leading-[20px]">¿Por qué pedimos estos datos?</h2>
+            <h2 class="lato text-lg font-bold leading-[20px]">{{ $t('checkin.form.why-data-title') }}</h2>
             <ul class="mt-6 pl-6">
                 <li class="lato text-sm leading-[16px] list-disc">
-                    La ley local exige que los alojamientos turísticos registren a todos sus huéspedes.
+                    {{ $t('checkin.form.why-data-p1') }}
                 </li>
                 <li class="lato text-sm leading-[16px] list-disc mt-3">
-                    Por eso, necesitamos algunos datos personales básicos y obligatorios.
+                    {{ $t('checkin.form.why-data-p2') }}
                 </li>
                 <li class="lato text-sm leading-[16px] list-disc mt-3">
-                    Completar el check-in online antes de tu llegada te ahorrará tiempo, evitando tener que proporcionar esta información en el alojamiento.
+                    {{ $t('checkin.form.why-data-p3') }}
                 </li>
                 <li class="lato text-sm leading-[16px] list-disc mt-3">
-                    Tus datos se procesarán de manera segura y conforme al Reglamento General de Protección de Datos (RGPD). 
+                    {{ $t('checkin.form.why-data-p4') }}
                 </li>
                 <li class="lato text-sm leading-[16px] list-disc mt-3">
-                    Puedes obtener más detalles en nuestra política de privacidad.
+                    {{ $t('checkin.form.why-data-p5') }}
                 </li>
             </ul>
             <div class="mt-6">
@@ -57,12 +57,12 @@
                     classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
                     @click="isWhyModalOpen = false"
                 >
-                    Entendido
+                    {{ $t('checkin.form.why-data-continue') }}
                 </PrimaryButton> 
             </div>
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="goPolices">
-                    Ver política de privacidad
+                    {{ $t('checkin.form.see-policies') }}
                 </button>
             </div>
         </div>
@@ -74,7 +74,7 @@
     >
         <div class="flex items-center">
             <img class="w-8 h-8 mr-1" src="/assets/icons/WA.normas.svg" alt="">
-            <h1 class="lato text-[20px] font-bold leading-[28px]">Políticas y Normas</h1>
+            <h1 class="lato text-[20px] font-bold leading-[28px]">{{ $t('checkin.form.norms-title') }}</h1>
         </div>
         <div class="mt-[28px]">
             <div 
@@ -88,7 +88,7 @@
                 </p>
                 <div v-if="item.penalization" class="my-2 border-b border-color-secondary"></div>
                 <p v-if="item.penalization" class="lato text-sm leading-[16px]">
-                    <span class="font-bold">Penalización:</span>
+                    <span class="font-bold">{{ $t('checkin.form.norms-subtitle') }}</span>
                     {{item.penalization_details}}
                 </p>
             </div>
@@ -169,13 +169,13 @@ const loading = ref(true);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
+    // console.log('test settings',settings)
     await loadDataGuest(paramsRouter.value.id);
     form.id = paramsRouter.value.id;
     norms.value = await legalStore.$getNormsByHotel();
     // Cargar datos guardados en localStorage si existen
     const savedForm = localStorage.getItem('formDataCheckin')
     if (savedForm) {
-        console.log('test savedForm',JSON.parse(savedForm))
         Object.assign(form, JSON.parse(savedForm))
     }
     loading.value = false;
@@ -250,7 +250,7 @@ const secondLastnameError = computed(() => {
     return form.docType == 'DNI español' && !form.secondLastname
 });
 
-const docNumberPattern = computed(() => {
+const docSupportNumberPattern = computed(() => {
   switch (form.docType) {
     case 'DNI español':
       return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
@@ -263,6 +263,23 @@ const docNumberPattern = computed(() => {
   }
 });
 
+const docNumberPattern = computed(() => {
+  switch (form.docType) {
+    case 'DNI español':
+      // 8 dígitos seguidos de 1 letra (por ejemplo, 12345678Z)
+      return /^\d{8}[A-Za-z]$/;
+    case 'NIE':
+      // 1 letra inicial (X, Y o Z), 7 dígitos y 1 letra final (por ejemplo, X1234567L)
+      return /^\d{8}[A-Za-z]$/;
+    case 'Pasaporte':
+      // 6-15 caracteres alfanuméricos sin permitir signos de puntuación
+      return /^[A-Za-z0-9]{6,15}$/;
+    default:
+      return null;
+  }
+});
+
+
 
 const docNumberError = computed(() => {
     
@@ -274,7 +291,7 @@ const docNumberError = computed(() => {
 
 const docSupportNumberError = computed(() => {
     if(form.docSupportNumber && form.docType){
-        return !docNumberPattern.value?.test(form.docSupportNumber);
+        return !docSupportNumberPattern.value?.test(form.docSupportNumber);
     }
     return false;
 });
@@ -338,7 +355,7 @@ watch(() => form.docType,(newVal) => {
 //observar cada cambio en el form
 watch(form, (newForm) => {
     if(!loading.value){
-        console.log('test newForm',newForm)
+        // console.log('test newForm',newForm)
         localStorage.setItem('formDataCheckin', JSON.stringify(newForm))
     }
 }, { deep: true })

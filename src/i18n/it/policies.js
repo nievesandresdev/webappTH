@@ -3,9 +3,9 @@ export default{
         "title": "Informativa sulla privacy",
         //
         "s1-t1": "1. IDENTIFICAZIONE E RESPONSABILITÀ DEL TRATTAMENTO DEI DATI.",
-        "s1-p1": "[Hotel] con sede in [indirizzo] e con il codice fiscale [NIF] è responsabile dei dati personali raccolti tramite la webapp.",
-        "s1-p2": "Se hai domande o hai bisogno di ulteriori informazioni sul trattamento dei tuoi dati personali, puoi contattarci all'indirizzo [email].",
-        "s1-p3": "Contatti del Responsabile della Protezione dei Dati: email [email], indirizzo postale [indirizzo].",
+        "s1-p1": "{hotel} con sede in {address} e con il codice fiscale {nif} è responsabile dei dati personali raccolti tramite la webapp.",
+        "s1-p2": "Se hai domande o hai bisogno di ulteriori informazioni sul trattamento dei tuoi dati personali, puoi contattarci all'indirizzo {email}.",
+        "s1-p3": "Contatti del Responsabile della Protezione dei Dati: email {email}, indirizzo postale [indirizzo].",
         //
         "s2-t1": "2. INFORMAZIONI PERSONALI RACCOLTE.",
         "s2-p1": "Utilizzando la webapp, possiamo raccogliere e trattare le seguenti informazioni su di te:",

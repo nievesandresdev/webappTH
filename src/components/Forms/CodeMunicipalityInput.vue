@@ -14,7 +14,7 @@
           v-model="searchQuery"
           @input="handleInput"
           @blur="handleBlur"
-          placeholder="Escribe para ver sugerencias"
+          :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 lato text-sm font-medium"
         />
         
@@ -50,6 +50,10 @@
   
   const props = defineProps({
     modelValue: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
       type: String,
       default: ''
     }

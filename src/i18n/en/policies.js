@@ -3,9 +3,9 @@ export default{
         "title":"Privacy Policy",
         //
         "s1-t1":"1. IDENTIFICATION AND RESPONSIBILITY FOR DATA PROCESSING.",
-        "s1-p1":"[Hotel] with address at [address] and with tax ID [NIF] is responsible for the personal data collected through the webapp.",
-        "s1-p2":"If you have any questions or need more information about the processing of your personal data, you can contact us at [email].",
-        "s1-p3":"Contact details of the Data Protection Officer: email [email], postal address [address].",
+        "s1-p1":"{hotel} with address at {address} and with tax ID {nif} is responsible for the personal data collected through the webapp.",
+        "s1-p2":"If you have any questions or need more information about the processing of your personal data, you can contact us at {email}.",
+        "s1-p3":"Contact details of the Data Protection Officer: email {email}, postal address [address].",
         //
         "s2-t1":"2. PERSONAL INFORMATION COLLECTED.",
         "s2-p1":"When using the webapp, we may collect and process the following information about you:",
