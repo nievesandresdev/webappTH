@@ -108,6 +108,7 @@ import Spinner from '@/components/Spinner.vue';
 //
 import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
 import { navigateTo } from '@/utils/navigation'
+import { getUrlParam } from '@/utils/utils.js';
 //
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter();
@@ -157,7 +158,7 @@ const form = reactive({
 })
 
 const settings = ref(null);
-const currentStep = ref(1);
+const currentStep = ref(Number(getUrlParam('step')) > 0 ? Number(getUrlParam('step')) : 1);
 const currentGuestData = ref(1);
 const emailError = ref(false);
 const phoneError = ref(false);
@@ -171,8 +172,13 @@ onMounted(async() => {
     await loadDataGuest(paramsRouter.value.id);
     form.id = paramsRouter.value.id;
     norms.value = await legalStore.$getNormsByHotel();
+    // Cargar datos guardados en localStorage si existen
+    const savedForm = localStorage.getItem('formDataCheckin')
+    if (savedForm) {
+        console.log('test savedForm',JSON.parse(savedForm))
+        Object.assign(form, JSON.parse(savedForm))
+    }
     loading.value = false;
-    // console.log('test settings',settings.value)
 })
 
 const secondStepEnabled = computed(() => {
@@ -204,8 +210,9 @@ function parseDate(dateStr) {
     return new Date(year, month - 1, day);
 }
 
-async function goPolices(dateStr) {
-    await historyStore.$saveExclusiveRoute(route.name, route.params, route.query);
+async function goPolices(dateStr) { 
+    let routeQuery = { ...route.query, step: currentStep.value };
+    await historyStore.$saveExclusiveRoute(route.name, route.params, routeQuery);
     router.push({name:'PrivacyPolicies', query:{ returnTo: 'true' }})
 }
 // Propiedad computada para verificar si es menor de edad
@@ -327,6 +334,15 @@ watch(() => form.docType,(newVal) => {
     }
   }
 );
+
+//observar cada cambio en el form
+watch(form, (newForm) => {
+    if(!loading.value){
+        console.log('test newForm',newForm)
+        localStorage.setItem('formDataCheckin', JSON.stringify(newForm))
+    }
+}, { deep: true })
+
 
 
 provide('form',form)

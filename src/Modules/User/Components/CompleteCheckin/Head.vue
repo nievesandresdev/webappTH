@@ -37,7 +37,7 @@
             <div class="mt-6">
                 <PrimaryButton 
                     classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
-                    @click="navigateTo('Guests')"
+                    @click="goGuestsList()"
                 >
                     Salir
                 </PrimaryButton> 
@@ -96,7 +96,12 @@ const goBack = () =>{
     if(existsChanges.value){
         openExistsChangesModal()
     }else{
-        navigateTo('Guests');
+        goGuestsList();
     }
+}
+
+const goGuestsList = () =>{
+    localStorage.removeItem('formDataCheckin')
+    navigateTo('Guests');
 }
 </script>

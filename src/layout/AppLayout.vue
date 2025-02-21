@@ -34,10 +34,13 @@ import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore()
 
 
 const hideAppMenu = ref(false);
 const channelChat = ref(null);
+const channelUpdateStay = ref(null);
 
 const pusher = ref(null);   
 const isSubscribed = ref(false);
@@ -62,11 +65,31 @@ const connectPusher = () => {
             });
         isSubscribed.value = true; // Marcar como suscrito
         }
+
+        const channelUpdateLocalStay = 'private-reload-data-stay-webapp.' + stayStore.stayData?.id;
+        if (!isChannelSubscribed(channelUpdateLocalStay)) {
+            channelUpdateStay.value = channelUpdateLocalStay;
+            pusher.value = getPusherInstance();
+            channelUpdateStay.value = pusher.value.subscribe(channelUpdateStay.value);
+            channelUpdateStay.value.bind('App\\Events\\ReloadDataStayWebapp', async (data) => {
+                // console.log('test ReloadDataStayWebapp', data)
+                if(authStore.sessionActive){
+                    await stayStore.reloadLocalStay();
+                    // console.log('test reloadLocalStay',stayStore.stayData)
+                }
+            });
+        isSubscribed.value = true; // Marcar como suscrito
+        }
         
     } else if (!stayStore.stayData && isSubscribed.value) {
         // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
         if (channelChat.value) {
             pusher.value.unsubscribe(channelChat.value);
+            isSubscribed.value = false; // Marcar como no suscrito
+        }
+
+        if (channelUpdateStay.value) {
+            pusher.value.unsubscribe(channelUpdateStay.value);
             isSubscribed.value = false; // Marcar como no suscrito
         }
     }
