@@ -15,7 +15,7 @@
                 {{ serviceData?.name }}
             </h2>
             <div class="mt-[5px] sp:mt-[8px]">
-                <p v-if="serviceData.type_price === 1" class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
+                <p v-if="serviceData.type_price === 2" class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
                 <p v-if="serviceData.type_price == 1 || serviceData.type_price == 2" class="text-[14px] sp:text-[20px] font-bold lato">{{ serviceData?.price?.toFixed(2) }}€</p>
                 <template v-else="serviceData.type_price == 3">
                     <p class="text-[14px] sp:text-[20px] font-bold lato">{{ $t('service.card-item.free') }}</p>
@@ -48,11 +48,12 @@
 
         <div
             v-if="hire"
-            class="pb-[8px] sp:pb-[16px] mt-4 sp:mt-6"
+            class=" sp:pb-[16px] mt-4 sp:mt-6 card-recommendation p-2 sp:p-4"
         >
+            <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">Cómo contratar</h3>
             <p
                 ref="hireRef"
-                class="hire mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
+                class="hire  text-[9px] sp:text-sm font-medium lato"
                 :class="{ expanded: isExpandedHire }"
                 v-html="hire"
             />
@@ -60,7 +61,6 @@
                 v-if="isLongHire"
                 class="mt-[6px] sp:mt-[12px] flex justify-end"
             >
-
                 <button
                     class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
                     @click="toggleHire"
@@ -69,8 +69,10 @@
                 </button>
             </div>
         </div>
+
         <PrimaryButton 
-            classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato"
+            v-if="serviceData.link_url"
+            classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
             @click="isOpenModelLink = true"
         >
             {{ $t('service.modal-request-service.button') }}
@@ -181,20 +183,6 @@ watch(hotelData, (valueCurrent, valueOld) => {
     }
 }, { immediate: true });
 
-function checkDescriptionLength () {
-  nextTick(() => {
-    if (descriptionRef.value) {
-        const descriptionElement = descriptionRef.value;
-        isLongDescription.value = descriptionElement.scrollHeight > descriptionElement.clientHeight;
-    }
-
-    if (hireRef.value) {
-        const hireElement = hireRef.value;
-        isLongHire.value = hireElement.scrollHeight > hireElement.clientHeight;
-    }
-  });
-}
-
 async function loadData () {
     loading.value = true;
     let response = null;
@@ -222,9 +210,25 @@ async function loadData () {
         Object.assign(serviceData.value, dataTranslate);
         description.value = dataTranslate.description;
         hire.value = dataTranslate.hire;
-        checkDescriptionLength();
+        nextTick(() => {
+            checkDescriptionLength();
+        });
     }
     loading.value = false;
+}
+
+function checkDescriptionLength () {
+  nextTick(() => {
+    if (descriptionRef.value) {
+        const descriptionElement = descriptionRef.value;
+        isLongDescription.value = descriptionElement.scrollHeight > descriptionElement.clientHeight;
+    }
+
+    if (hireRef.value) {
+        const hireElement = hireRef.value;
+        isLongHire.value = hireElement.scrollHeight > hireElement.clientHeight;
+    }
+  });
 }
 
 const toggleDescription = () => {
@@ -262,12 +266,6 @@ const openModalLink = () => {
     border-radius: 10px;
     border: 1px solid #E9E9E9;
     background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
-    &__tag {
-        border-radius: 18px;
-        border: 1px solid  #FFF;
-        background: #FAFAFA;
-        box-shadow: 0px 0.5px 4px 0px rgba(0, 0, 0, 0.12), 0px 6px 13px 0px rgba(0, 0, 0, 0.12);
-    }
 }
 
 </style>
