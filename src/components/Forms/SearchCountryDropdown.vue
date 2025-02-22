@@ -13,7 +13,7 @@
           @input="handleInput"
           @keydown.enter="handleEnter"
           @blur="handleBlur"
-          placeholder="Escribe para ver sugerencias"
+          :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3"
         />
         <img class="w-5 h-5" src="/assets/icons/WA.chevron.DOWN.svg" alt="">
@@ -42,6 +42,10 @@
   
   const props = defineProps({
     modelValue: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
       type: String,
       default: ''
     }

@@ -67,7 +67,13 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data huesped
     if(guestId){
-        await guestStore.findByIdInSetLocalGuest(guestId)
+        
+        let localGuest = guestStore.getLocalGuest();
+        console.log('test mddl localGuest',localGuest)
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            console.log('test mddl guest',guestId)
+            await guestStore.findByIdInSetLocalGuest(guestId)
+        }
     }
     ////////////////////////////////////////////////////////
     //

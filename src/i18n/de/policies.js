@@ -3,9 +3,9 @@ export default{
         "title": "Datenschutzerklärung",
         //
         "s1-t1": "1. IDENTIFIKATION UND VERANTWORTLICHKEIT FÜR DIE DATENVERARBEITUNG.",
-        "s1-p1": "[Hotel] mit Sitz in [Adresse] und mit der Steuernummer [NIF] ist für die über die Webapp erhobenen personenbezogenen Daten verantwortlich.",
-        "s1-p2": "Wenn Sie Fragen haben oder weitere Informationen zur Verarbeitung Ihrer personenbezogenen Daten benötigen, können Sie uns unter [email] kontaktieren.",
-        "s1-p3": "Kontaktdaten des Datenschutzbeauftragten: E-Mail [email], Postanschrift [Adresse].",
+        "s1-p1": "{hotel} mit Sitz in {address} und mit der Steuernummer {nif} ist für die über die Webapp erhobenen personenbezogenen Daten verantwortlich.",
+        "s1-p2": "Wenn Sie Fragen haben oder weitere Informationen zur Verarbeitung Ihrer personenbezogenen Daten benötigen, können Sie uns unter {email} kontaktieren.",
+        "s1-p3": "Kontaktdaten des Datenschutzbeauftragten: E-Mail {email}, Postanschrift [Adresse].",
         //
         "s2-t1": "2. ERFASSTE PERSONENBEZOGENE INFORMATIONEN.",
         "s2-p1": "Bei der Nutzung der Webapp können wir folgende Informationen über Sie erheben und verarbeiten:",

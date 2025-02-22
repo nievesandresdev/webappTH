@@ -7,7 +7,7 @@
                 class="flex items-center"
             >
                 <img class="w-4 h-4 mr-2" src="/assets/icons/WA.chevron.svg" alt="">
-                <span class="lato text-sm font-bold leading-[16px] underline">Paso anterior</span>
+                <span class="lato text-sm font-bold leading-[16px] underline">{{$t('checkin.form.changes-bar-previus')}}</span>
             </button>
             <div class="ml-auto">
                 <PrimaryButton 
@@ -17,10 +17,10 @@
                     @click="goToNextStep"
                 >
                     <template v-if="numberStepsEnabled == currentStep">
-                        {{ sendingQuery ? 'Enviando datos' : 'Finalizar'}}
+                        {{ sendingQuery ? $t('checkin.form.changes-bar-send-data') : $t('checkin.form.changes-bar-finish')}}
                     </template>
                     <template v-else>
-                        Siguiente
+                        {{$t('checkin.form.changes-bar-next')}}
                     </template>
                 </PrimaryButton> 
             </div>

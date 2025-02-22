@@ -13,8 +13,9 @@
         <div>
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s1-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
-                {{$t('policies.privacy.s1-p1')}} <br/> <br/>
-                {{$t('policies.privacy.s1-p2')}} <br/> <br/>
+                {{$t('policies.privacy.s1-p1', {hotel: hotelStore.hotelData?.name, nif: dataLegal?.nif, address: dataLegal?.address})}}
+                <br/> <br/>
+                {{$t('policies.privacy.s1-p2', {email: dataLegal?.email})}} <br/> <br/>
                 <template v-if="false">
                     {{$t('policies.privacy.s1-p3')}} <br/> <br/>
                 </template>
@@ -115,6 +116,7 @@ import HeadWithLang from '@/layout/Components/HeadWithLang.vue'
 import utils from '@/utils/utils.js';
 import { navigateTo } from '@/utils/navigation'
 import { useRouter, useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue'
 const router = useRouter();
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
@@ -123,6 +125,12 @@ import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore()
 import { useAuthStore } from '@/stores/modules/auth'
 const authStore = useAuthStore()
+
+const dataLegal = ref({});
+onMounted(async () => {
+    dataLegal.value = await hotelStore.$getDataLegal();  
+    // console.log('test dataLegal',dataLegal.value)
+})
 // returnTo
 async function goBack(){
     let fromAnyPlace = Boolean(utils.getUrlParam('returnTo'))

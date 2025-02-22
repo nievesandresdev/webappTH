@@ -13,7 +13,7 @@
                     Check-in {{ currentStep }}/{{ numberStepsEnabled }}
                 </h2>
                 <h1 class="mt-0.5 sp:mt-1 lato text-[10px] sp:text-base font-medium leading-[10px] sp:leading-[20px]">
-                    {{titleSections[currentStep-1]}}
+                    {{$t(titleSections[currentStep-1])}}
                 </h1>
             </div>
             <h2 v-else class="lato text-[14px] sp:text-[20px] font-bold leading-[14px] sp:leading-[18px]">
@@ -30,21 +30,21 @@
 
     <ModalNative width="327px" @closeModal="closeExistsChangesModal" :openProp="existsChangesModalisOpen">
         <div class="p-6">
-            <h2 class="lato text-lg font-bold leading-[20px]">¿Salir de Check-in?</h2>
+            <h2 class="lato text-lg font-bold leading-[20px]">{{ $t('checkin.form.exit-title') }}</h2>
             <p class="mt-6 lato text-sm font-medium leading-[16px]">
-                Si sales del proceso ahora, la información que has ingresado no se guardará
+                {{ $t('checkin.form.exit-description') }}
             </p>
             <div class="mt-6">
                 <PrimaryButton 
                     classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"
                     @click="goGuestsList()"
                 >
-                    Salir
+                {{ $t('checkin.form.exit-button') }}
                 </PrimaryButton> 
             </div>
             <div class="mt-4 text-center">
                 <button class="underline lato text-sm font-bold leading-[16px]" @click="closeExistsChangesModal">
-                    Continuar con el Check-in   
+                    {{ $t('checkin.form.exit-continue') }}
                 </button>
             </div>
         </div>
@@ -81,9 +81,9 @@ function closeExistsChangesModal(){
 }
 
 const titleSections = [
-    'Datos personales',
-    'Datos de identificación',
-    'Encuesta',
+    'checkin.form.head-title-1',
+    'checkin.form.head-title-2',
+    'checkin.form.head-title-3',
 ]
 
 const iconSections = [
