@@ -225,12 +225,11 @@ async function loadTypePlaces () {
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
-        validateTyePlaceCurrent();
-
-        categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
-        const { hidden_categories } = hotelData.value;
-        categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
-        validateCategoriplaceCurrent();
+        // validateTyePlaceCurrent();
+        // categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+        // const { hidden_categories } = hotelData.value;
+        // categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+        // validateCategoriplaceCurrent();
 
         loadTabsHeader();
     }
@@ -248,7 +247,7 @@ function validateCategoriplaceCurrent () {
     }
 }
 
-async function loadCategoriPlaces () {
+async function loadCategoriesByType () {
     
     const response = await placeStore.$apiGetCategoriesByType({...formFilter, allCategories: true, all: true, withNumbersPlaces: true});
     if (response.ok) {
@@ -256,7 +255,17 @@ async function loadCategoriPlaces () {
     }
 }
 
+function loadCategoriesPlaces () {
+    categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+    const { hidden_categories } = hotelData.value;
+    categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+    validateCategoriplaceCurrent();
+}
+
 function loadTabsHeader () {
+
+    loadCategoriesPlaces();
+
     tabsHeader.value = typeplaces.value.map(item => {
         return {
             title: item.translation_current,
@@ -311,7 +320,7 @@ async function loadPlaces () {
         page.value = paginateData.current_page;
         placesData.value = [...placesData.value, ...response.data.places.data];
         countOtherCities.value = response.data.countOtherCities;
-        loadCategoriPlaces();
+        loadCategoriesByType();
     }
     firstLoad.value = false;
     isloadingForm.value = false;
@@ -385,7 +394,7 @@ function activateSearchHandle ($event) {
 
 async function loadAll(payload) {
 
-    const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
+    const materialicePromice = await Promise.all([loadCategoriesByType(),  submitFilter(payload), loadPointers()]);
 }
 
 function submitFilter (payload){
