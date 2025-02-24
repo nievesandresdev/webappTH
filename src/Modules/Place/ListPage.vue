@@ -188,6 +188,10 @@ onEvent('change-category', changeCategoryHandle);
 
 // FUNCTIONS
 async function loadData () {
+    if (hotelStore.hotelData.show_places !== 1) {
+        route.push({ name: 'Home', query: { mockup: isMockup() } });
+        return;
+    }
     loadForFilterGlobal();
     await loadTypePlaces();
     await loadAll({showPreloader: true});
