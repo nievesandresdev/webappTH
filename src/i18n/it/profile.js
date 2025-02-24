@@ -66,6 +66,13 @@ export default {
         },
         "titleReferentProfile": "Guadagna denaro",
         "descriptionReferentProfile": "Raccomanda un amico per ottenere vantaggi"
+    },
+    "next-reserve": {
+        "reserve-button": "Prenota",
+        "continue-title": "Vuoi continuare?",
+        "continue-message": "Verrai reindirizzato al sito web dell'hotel per proseguire con il processo di prenotazione.",
+        "continue-yes": "Sì, continua",
+        "continue-cancel": "Annulla"
     }
 
 

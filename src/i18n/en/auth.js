@@ -48,5 +48,8 @@ export default{
         "amount-text": "accommodations in the chain",
         "stars-text": "stars",
         "star-text": "star",
+    },
+    "my-stay": {
+        "title": "My stay"
     }    
 }

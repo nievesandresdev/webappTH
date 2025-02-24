@@ -65,7 +65,14 @@ export default {
             "descerptionReferent": "Once the code is validated and used, you will get a {amount} discount."
         },
         "titleReferentProfile": "Earn money",
-        "descriptionReferentProfile": "Refer a friend to get benefits"
+        "descriptionReferentProfile": "Refer a friend to get benefits",
+    },
+    "next-reserve": {
+        "reserve-button": "Reserve",
+        "continue-title": "Do you want to continue?",
+        "continue-message": "You will be redirected to the hotel's website to continue your reservation process.",
+        "continue-yes": "Yes, continue",
+        "continue-cancel": "Cancel"
     }
 
 

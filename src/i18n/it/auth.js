@@ -47,6 +47,9 @@ export default{
         "amount-text": "alloggi della catena",
         "stars-text": "stelle",
         "star-text": "stella",
+    },
+    "my-stay": {
+        "title": "Il mio soggiorno"
     }        
     
 }

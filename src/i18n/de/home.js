@@ -47,5 +47,8 @@ export default {
     "inputPlaceholder": "E-Mail des Gastes",
     "button": "Einladen",
     "textToast": "Einladung gesendet",
+  },
+  "social": {
+    "title": "Unsere Netzwerke"
   }
 };

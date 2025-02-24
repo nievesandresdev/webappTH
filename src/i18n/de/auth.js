@@ -47,6 +47,9 @@ export default{
         "amount-text": "Unterkünfte der Kette",
         "stars-text": "Sterne",
         "star-text": "Stern",
+    },
+    "my-stay": {
+        "title": "Mein Aufenthalt"
     }
     
     
