@@ -251,11 +251,14 @@ const secondLastnameError = computed(() => {
 });
 
 const docSupportNumberPattern = computed(() => {
+    if(!form.docSupportNumber || form.docSupportNumber == '') return null;
   switch (form.docType) {
     case 'DNI español':
-      return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
+    //   return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
+    return /^[A-Za-z]\d{8}[A-Za-z]$/; //Una letra seguida de ocho cifras y otra letra final.
     case 'NIE':
-      return /^[Ee]\d{8}$/;        // Letra 'E' + 8 números
+    //   return /^[Ee]\d{8}$/;        // Letra 'E' + 8 números
+    return /^[A-Za-z]{3}\d{6}[A-Za-z]$/;//Tres letras seguidas de seis cifras y una letra final.
     case 'Pasaporte':
       return /^[A-Za-z0-9]{6,15}$/;
     default:
@@ -270,7 +273,7 @@ const docNumberPattern = computed(() => {
       return /^\d{8}[A-Za-z]$/;
     case 'NIE':
       // 1 letra inicial (X, Y o Z), 7 dígitos y 1 letra final (por ejemplo, X1234567L)
-      return /^\d{8}[A-Za-z]$/;
+      return /^[xXyYzZ]\d{7}[a-zA-Z]$/;
     case 'Pasaporte':
       // 6-15 caracteres alfanuméricos sin permitir signos de puntuación
       return /^[A-Za-z0-9]{6,15}$/;
@@ -377,6 +380,6 @@ provide('currentGuestData',currentGuestData)
 </script>
 <style scoped>
 .min-h-container{
-    min-height: calc( 72vh - 32px);
+    min-height: calc( 64vh - 32px);
 }
 </style>
