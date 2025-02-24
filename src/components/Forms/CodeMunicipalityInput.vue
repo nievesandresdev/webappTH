@@ -11,10 +11,11 @@
         <img class="w-5 h-5 mr-2" src="/assets/icons/WA.pin-point.svg" alt="location-icon">
         
         <input
-          :type="typeResults.includes('postcode') ? 'number' : 'text'"
+          :type="typeResults.includes('postcode') && focusOn ? 'number' : 'text'"
           v-model="searchQuery"
           @input="handleInput"
           @blur="handleBlur"
+          @focus="focusOn = true"
           :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 lato text-sm font-medium"
         />
@@ -79,6 +80,7 @@
   const isDropdownOpen = ref(false)
   const hasError = ref(false)
   const isSelecting = ref(false)
+  const focusOn = ref(false)
   
   function formatPlace(place) {
   // Extraer datos
@@ -155,6 +157,7 @@
   }
   
   function handleBlur() {
+    focusOn.value = false;
     // console.log('test handleBlur')
     if (!isSelecting.value) {
       validateInput()
@@ -163,6 +166,7 @@
   }
   
   function selectPlace(place) {
+    focusOn.value = false;
     // console.log('test place',place)
     isSelecting.value = true
     // Guardar el valor formateado en el input
