@@ -103,7 +103,7 @@ const menuItems = reactive([
      },
     {
         title: 'layout.header.destination',
-        exclude: hotelStore.hotelData?.show_places,
+        exclude: !hotelStore.hotelData?.show_places,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
         to: `/${route.params.hotelSlug}/lugares`,
