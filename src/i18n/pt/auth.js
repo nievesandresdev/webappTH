@@ -47,6 +47,9 @@ export default{
         "amount-text": "acomodações da rede",
         "stars-text": "estrelas",
         "star-text": "estrela",
+    },
+    "my-stay": {
+        "title": "Minha estadia"
     }    
     
 }

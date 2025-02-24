@@ -54,7 +54,7 @@ const tabsMenu = computed(() => [
         notify: chatStore.countUnreadMessages 
     },
     {    
-        title: 'Inbox',//$utils.titleCase(t('chat.tabs.inbox'))
+        title: $utils.titleCase(t('chat.tabs.inbox')),
         exclude: false,
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,

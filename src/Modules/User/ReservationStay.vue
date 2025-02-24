@@ -49,7 +49,7 @@
                     @click="openModalConfirmReservation(hotels[0]?.website_google)"
                 >
                     <img src="/assets/icons/WA.Redirect.svg" class="w-6 h-6" alt="Icon Button" />
-                    Reservar
+                    {{ $t('profile.next-reserve.reserve-button') }}
                 </button>
             </div>
         </div>
@@ -112,13 +112,13 @@
         >
         <template #default>
             <div class="flex flex-col gap-6">
-                <span class="lato text-lg font-bold">¿Quieres continuar?</span>
-                <p class="lato text-sm font-medium">Vas a ser redirigido a la página web del hotel para continuar tu proceso de reserva.</p>
+                <span class="lato text-lg font-bold">{{ $t('profile.next-reserve.continue-title') }}</span>
+                <p class="lato text-sm font-medium">{{ $t('profile.next-reserve.continue-message') }}</p>
                 <div class="flex flex-col gap-4">
-                    <button @click="goWebHotel" class="lato text-sm font-bold text-white bg-[#333333] rounded-[10px] py-2">Sí, continuar</button>
+                    <button @click="goWebHotel" class="lato text-sm font-bold text-white bg-[#333333] rounded-[10px] py-2">{{ $t('profile.next-reserve.continue-yes') }}</button>
                     <div class="flex justify-center items-center font-bold text-[#333333] cursor-pointer" @click="closeModalConfirmReservation">
                         <span class="lato text-sm underline">
-                            Cancelar
+                            {{ $t('profile.next-reserve.continue-cancel') }}
                         </span>
                     </div>
                 </div>

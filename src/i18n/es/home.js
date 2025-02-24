@@ -43,6 +43,9 @@ export default {
       "inputPlaceholder":"Correo electrónico del huésped",
       "button":"Invitar",
       "textToast":"Invitación enviada"
+    },
+    "social":{
+      "title":"Nuestras redes"
     }
   };
   

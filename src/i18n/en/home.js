@@ -47,5 +47,8 @@ export default {
       "inputPlaceholder":"Guest email",
       "button":"Invite",
       "textToast":"Invitation sent",
+    },
+    "social": {
+      "title": "Our networks"
     }
   };
