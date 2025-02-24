@@ -111,7 +111,7 @@ const menuItems = reactive([
     },
     {
         title: 'service.title',
-        exclude: false,
+        exclude: !hotelStore.hotelData?.show_confort && !hotelStore.hotelData?.show_transport && !hotelStore.hotelData?.show_experiences,
         iconDefault: 'WA.MENU.DEFAULT.SERVICE',
         iconSelected: 'WA.MENU.SELECTED.SERVICE',
         to: `/${route.params.hotelSlug}/servicios/confort`,
