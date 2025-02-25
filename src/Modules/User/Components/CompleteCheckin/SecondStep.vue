@@ -47,6 +47,7 @@
     </div>
     <!-- docNumber -->
     <div class="mt-2" v-if="settings?.second_step?.docNumber?.visible">
+        <!-- {{ String(docNumberError) }} -->
         <THInputText
             :textLabel="`${$t('checkin.form.input-13-label')}${isMandatory('docNumber')}`"
             :placeholder="$t('checkin.form.input-13-plchdr')"
@@ -69,6 +70,7 @@
         <SearchCountryDropdown 
             v-model="form.countryResidence"
             :placeholder="$t('checkin.form.input-14-plchdr')"
+            @selectedCountryCode="selectedCountryCode = $event"
         />
     </div>
     <!-- postalCode -->
@@ -78,7 +80,9 @@
         </label>
         <CodeMunicipalityInput 
             v-model="form.postalCode"
+            :selectedCountry="selectedCountryCode"
             :placeholder="$t('checkin.form.input-15-plchdr')"
+            typeResults="locality,postcode"
         />
     </div>
     <!-- municipality -->
@@ -89,6 +93,7 @@
         <CodeMunicipalityInput
             v-model="form.municipality"
             :placeholder="$t('checkin.form.input-16-plchdr')"
+            :selectedCountry="selectedCountryCode"
         />
     </div>
     <!-- addressResidence -->
@@ -99,6 +104,9 @@
         <CodeMunicipalityInput 
             v-model="form.addressResidence"
             :placeholder="$t('checkin.form.input-17-plchdr')"
+            :selectedCountry="selectedCountryCode"
+            typeResults="address,place,locality"
+            formatResult="address"
         />
     </div>
     
