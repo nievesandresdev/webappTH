@@ -14,33 +14,28 @@
             />
         </template>
     </AppHeader>
-    <div class="flex-1">
-        <!-- <template v-if="pointersData?.features?.length"> -->
+    <PageTransitionGlobal module="place">
+        <div class="flex-1 ">
             <ListPageMapClusterPlace
                 @clickMapCluster="handleMapCluster"
             />
-        <!-- </template> -->
-        <!-- <template v-if="isOpenBottomSheetList"> -->
-            <!-- {{loadingPlaceSeleced}} -->
             <ListPageBottomSheet
                 @changeCategory="changeCategoryHandle($event)"
                 @loadMore="loadMore"
                 @closeSearch="closeSearchHandle"
             />
-        <!-- </template>
-        <template v-if="isOpenBottomSheetFilter"> -->
-            <ListPagebottomSheetFilter
-                @reloadPlaces="loadAll({ showPreloader: true })"
-            />
-        <!-- </template> -->
-    </div>
+        </div>
+    </PageTransitionGlobal>
+    <ListPagebottomSheetFilter
+        @reloadPlaces="loadAll({ showPreloader: true })"
+    />
 </template>
 
 <script setup>
 
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam, slufy } from '@/utils/utils.js';
+import { getUrlParam, slufy, isMockup } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -49,6 +44,11 @@ import InputSearchPlace from './components/InputSearchPlace.vue';
 import ListPageMapClusterPlace from './ListPageMapClusterPlace.vue';
 import ListPageBottomSheet from './ListPageBottomSheet.vue';
 import ListPagebottomSheetFilter from './ListPagebottomSheetFilter.vue';
+
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 // STORE
 import { usePlaceStore } from '@/stores/modules/place';
@@ -60,7 +60,6 @@ const { localeCurrent } = localeStore
 
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore;
 
 // COMPOSABLES
 import { useEventBus } from '@/composables/eventBus';
@@ -121,16 +120,29 @@ const tabsHeader = ref([]);
 
 
 // COMPUTED
-
+const hotelData = computed(() => {
+    return hotelStore.hotelData ?? null;
+});
 const typePlaceSelected = computed(() => {
-    let typeplace = typeplaces.value.find(item => formFilter.typeplace);
-    if (typeplace) {
-        delete typeplace.categori_places;
-    }
+    let typeplace = typeplaces.value.find(item => item.id == formFilter.typeplace);
+    // if (typeplace) {
+    //     delete typeplace.categori_places;
+    // }
+    return typeplace;
+});
+const firstTypePlace = computed(() => {
+    let typeplace = typeplaces.value.find(item => item);
+    // if (typeplace) {
+    //     delete typeplace.categori_places;
+    // }
     return typeplace;
 });
 const categoriPlaceSelected = computed(() => {
-    let categoriplace = categoriplaces.value.find(item => formFilter.categoriplace);
+    let categoriplace = categoriplaces.value.filter(item => formFilter.categoriplace.includes(String(item.id)));
+    return categoriplace;
+});
+const firstCategoriPlace = computed(() => {
+    let categoriplace = categoriplaces.value.find(item => item);
     return categoriplace;
 });
 
@@ -161,17 +173,32 @@ watch(positionBottomSheet, function(val) {
     }
 });
 
+startLoading(SECTIONS.PLACE.GLOBAL);
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
 // ONMOUNTED
 onMounted(async () => {
-    loadForFilterGlobal();
-    await loadTypePlaces();
-    loadAll({showPreloader: true});
-    formFilter.city = getUrlParam('city') || hotelData.zone;
 });
 
 onEvent('change-category', changeCategoryHandle);
 
 // FUNCTIONS
+async function loadData () {
+    if (hotelStore.hotelData.show_places !== 1) {
+        route.push({ name: 'Home', query: { mockup: isMockup() } });
+        return;
+    }
+    loadForFilterGlobal();
+    await loadTypePlaces();
+    await loadAll({showPreloader: true});
+    formFilter.city = getUrlParam('city') || hotelData.value.zone;
+    stopLoading(SECTIONS.PLACE.GLOBAL);
+}
+
 function loadForFilterGlobal () {
     Object.assign(formFilter, placeStore.dataFilterGlobal);
 }
@@ -197,33 +224,52 @@ function handleMapCluster (payload) {
 async function loadTypePlaces () {
     const response = await placeStore.$apiGetTypePlaces();
     if (response.ok) {
-        loadQueryInFormFilter();
         typeplaces.value = response.data;
+        loadQueryInFormFilter();
         if (!formFilter.typeplace) {
             formFilter.typeplace = typeplaces.value?.[0].id;
         }
-        // if (!formFilter.categoriplace) {
-        //     formFilter.categoriplace = typeplaces.value?.[0].categori_places?.[0].id;
-        // }
+        // validateTyePlaceCurrent();
+        // categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
+        // const { hidden_categories } = hotelData.value;
+        // categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+        // validateCategoriplaceCurrent();
+
         loadTabsHeader();
     }
 }
 
-async function loadCategoriPlaces () {
+function validateTyePlaceCurrent () {
+    if(!typePlaceSelected.value) {
+        let {id: idFirstTypePlace} = firstTypePlace.value;
+        formFilter.typeplace = idFirstTypePlace;   
+    }
+}
+function validateCategoriplaceCurrent () {
+    if(categoriPlaceSelected.value?.length <= 0) {
+        formFilter.categoriplace = [];
+    }
+}
+
+async function loadCategoriesByType () {
     
     const response = await placeStore.$apiGetCategoriesByType({...formFilter, allCategories: true, all: true, withNumbersPlaces: true});
     if (response.ok) {
         categoriplacesWithNumbers.value = response.data;
     }
+}
+
+function loadCategoriesPlaces () {
     categoriplaces.value = typeplaces.value.find(item => item.id == formFilter.typeplace)?.categori_places ?? [];
-    // if (!formFilter.categoriplace) {
-    //     formFilter.categoriplace = categoriplaces.value[0]?.id;
-    // }
-    const { hidden_categories } = hotelData;
+    const { hidden_categories } = hotelData.value;
     categoriplaces.value = categoriplaces.value.filter(item => !hidden_categories.includes(item.id));
+    validateCategoriplaceCurrent();
 }
 
 function loadTabsHeader () {
+
+    loadCategoriesPlaces();
+
     tabsHeader.value = typeplaces.value.map(item => {
         return {
             title: item.translation_current,
@@ -242,8 +288,8 @@ function changeCategoryHandle (payload) {
 }
 
 async function changeCategory (idCategory = [], idTypePlace = null) {
-    if (idCategory.length  > 0) {
-        if (formFilter.categoriplace.includes(idCategory)) {
+    if (idCategory.length > 0) {
+        if (formFilter.categoriplace?.includes(idCategory)) {
             let index = formFilter.categoriplace.indexOf(idCategory);
             if (index !== -1) {
                 formFilter.categoriplace.splice(index, 1);
@@ -257,7 +303,6 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
     } else {
         formFilter.categoriplace = [];
     }
-
     formFilter.typeplace = idTypePlace;
     loadTabsHeader();
     loadAll({showPreloader: true});
@@ -266,7 +311,7 @@ async function changeCategory (idCategory = [], idTypePlace = null) {
 const getFirstCategoryOfType = ()=> {
     if(formFilter.typeplace){
         let first = categoriplaces.value?.[0] ?? null;
-        formFilter.categoriplace = first?.id;
+        formFilter.categoriplace = [first?.id];
     }
 }
 
@@ -279,7 +324,7 @@ async function loadPlaces () {
         page.value = paginateData.current_page;
         placesData.value = [...placesData.value, ...response.data.places.data];
         countOtherCities.value = response.data.countOtherCities;
-        loadCategoriPlaces();
+        loadCategoriesByType();
     }
     firstLoad.value = false;
     isloadingForm.value = false;
@@ -352,7 +397,8 @@ function activateSearchHandle ($event) {
 }
 
 async function loadAll(payload) {
-     const materialicePromice = await Promise.all([loadCategoriPlaces(),  submitFilter(payload), loadPointers()]);
+
+    const materialicePromice = await Promise.all([loadCategoriesByType(),  submitFilter(payload), loadPointers()]);
 }
 
 function submitFilter (payload){
@@ -363,7 +409,8 @@ function submitFilter (payload){
     loadPlaces();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        let formFilterWithMockup = {...formFilter, mockup: isMockup() }
+        route.push({ name: 'PlaceList', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
     }
 }
 

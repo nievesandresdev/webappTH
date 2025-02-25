@@ -12,7 +12,8 @@
         <div class="mt-4">
             <PrimaryButton 
                 classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :disabled="!form.password"
+                :isLoading="loading"
+                :disabled="!form.password || loading"
                 @click="submit"
             >
                 {{ $t('auth.log.continue-button') }}
@@ -55,41 +56,20 @@ const router = useRouter();
 
 const isError = ref(false)
 const form = inject('form')
+const loading = ref(false)
 
 async function submit(){
+    loading.value = true;
     let response = await authStore.$sendPasswordAndLogin(form);
     if(!response){
         isError.value = true;
     }else{
-        if(!stayStore?.stayData){
-            //aqui entra solo si no hay una estancia cargada antes de culminar registro
-            await guestStore.findAndValidLastStayAndLogHotel({guestEmail : form.email, chainId : chainStore.chainData.id, hotelId : hotelStore.hotelData?.id})
-        }else{
-            console.log('test 2')
-            //aqui entra si ya hay una estancia cargada (viene por url)
-            if(Boolean(sessionStorage.getItem('guestPerStay'))){
-                let response = await guestStore.createAccessInStay()
-                if(response?.stay){
-                    //actualizar estancia
-                    await stayStore.setStayData(response.stay)
-                    await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
-                }
-            }else{
-                console.log('test intento entrar con estancia x',stayStore?.stayData)
-                await stayStore.deleteLocalStayData()
-            }
-        }
+        //
+        await authStore.$logIn(form.email);
+        //
         form.password = '';
-        if(stayStore.stayData){
-            navigateTo('Home')
-        }else{
-            if(hotelData){
-                navigateTo('Home',{},{ acform : 'createstay' })
-            }else{
-                router.push({ name:'HotelsList' })
-            }
-        }
     }
+    loading.value = false;
 }
 
 async function sendLinkToReset(){

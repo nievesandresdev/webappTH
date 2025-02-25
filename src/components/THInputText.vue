@@ -1,45 +1,46 @@
 <template>
-    <div class="relative">
-        <label v-if="textLabel" class="text-sm font-bold mb-2 block lato leading-4">{{ textLabel }}</label>
+    <div>
+        <label v-if="textLabel" class="text-[10px] sp:text-sm font-bold mb-1 sp:mb-2 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
         <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
-
-        <img v-if="iconLeft" class="w-5 h-5 absolute left-2 top-2.5" :src="iconLeft">
-        <input
-            :ref="id"
-            :id="id"
-            :type="showPass ? 'text' : type"
-            :class="computeClasses"
-            :placeholder="placeholderText"
-            :value="modelValue"
-            @input="validateInput"
-            @blur="onBlur"
-            @keyup="keyupInput"
-            autocomplete="nope"
-            :disabled="disabled"
-            class="lato text-sm font-medium"
-        >
-        <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
-        <p 
-            v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
-            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-        >
-            <!-- <img
-                src="/assets/icons/1.TH.WARNING.svg"
-                alt="icon alert red"
-                class="inline w-4 h-4 mr-2"
-            /> -->
-            {{ textError }}
-        </p>
-        <button 
-            href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute right-2"
-            :class="[
-                {'disabled-text': !modelValue || modelValue == '' || disabled},
-                `${topCustom}`
-            ]"
-            v-if="type === 'password'"
-            @click="showPass = !showPass"
-            :disabled="!modelValue || modelValue == '' || disabled"
-        > {{ showPass ? $t('auth.log.input-hide-pass') :$t('auth.log.input-show-pass')}}</button>
+        <div class="relative">
+            <img v-if="iconLeft" class="w-[14px] sp:w-5 h-[14px] sp:h-5 absolute left-[6px] sp:left-2 top-[8px] sp:top-2.5" :src="iconLeft">
+            <input
+                :ref="id"
+                :id="id"
+                :type="showPass ? 'text' : type"
+                :class="computeClasses"
+                :placeholder="placeholderText"
+                :value="modelValue"
+                @input="validateInput"
+                @blur="onBlur"
+                @keyup="keyupInput"
+                autocomplete="nope"
+                :disabled="disabled"
+                class="lato text-sm font-medium"
+            >
+            <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
+            <p 
+                v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
+                class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+            >
+                <!-- <img
+                    src="/assets/icons/1.TH.WARNING.svg"
+                    alt="icon alert red"
+                    class="inline w-4 h-4 mr-2"
+                /> -->
+                {{ textError }}
+            </p>
+            <button 
+                href="javascript:void(0)" class="text-sm font-bold lato leading-[16px] underline absolute right-2"
+                :class="[
+                    {'disabled-text': !modelValue || modelValue == '' || disabled},
+                    `${topCustom}`
+                ]"
+                v-if="type === 'password'"
+                @click="showPass = !showPass"
+                :disabled="!modelValue || modelValue == '' || disabled"
+            > {{ showPass ? $t('auth.log.input-hide-pass') :$t('auth.log.input-show-pass')}}</button>
+        </div>
     </div>
 </template>
 
@@ -75,17 +76,17 @@ export default {
         computeClasses() {
             let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
             let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
-            let classes = `hinput-primary ${borderClasess} h-10 rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
+            let classes = `hinput-primary ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             }
             if(this.iconLeft){
-                classes += ' pl-[33px]';
+                classes += ' pl-[26px] sp:pl-[34px]';
             }
             if(this.iconRight){
-                classes += ' pr-[33px]';
+                classes += ' pr-[34px]';
             }
 
             Object.entries(this.customClasses).forEach(([key, value]) => {
@@ -232,12 +233,18 @@ export default {
     --tw-ring-color: none;
     /* border-color: initial; */
 }
-/* 
 input::placeholder{
     font-size: 14px;
-    color: var(--h-gray-500);
-    font-weight: 500;
-} */
+    font-family: 'lato';
+    color: #A0A0A0;
+    line-height: 14px;
+  }
 
+@media (max-width: 224px) {
+    input::placeholder{
+        font-size: 10px;
+        line-height: 10px;
+    }
+}
 
 </style>

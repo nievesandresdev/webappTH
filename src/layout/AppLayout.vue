@@ -4,7 +4,7 @@
 
         <router-view></router-view>
         <MenuMobile 
-            v-if="!isDesktop"
+            v-if="!isDesktop && hotelStore.hotelData"
             v-show="showMenu" 
         />
     </div>
@@ -32,12 +32,16 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useChatStore } from '@/stores/modules/chat';
 const chatStore = useChatStore()
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore()
 import { useAuthStore } from '@/stores/modules/auth';
 const authStore = useAuthStore()
 
+
 const hideAppMenu = ref(false);
 const channelChat = ref(null);
-const channelLogOutGuest = ref(null);
+const channelUpdateStay = ref(null);
+
 const pusher = ref(null);   
 const isSubscribed = ref(false);
 provide('hideAppMenu',hideAppMenu)
@@ -61,21 +65,31 @@ const connectPusher = () => {
             });
         isSubscribed.value = true; // Marcar como suscrito
         }
-        //channelLogOutGuest
-        const channelName2 = 'private-logout-webapp-guest.' + guestData?.id;
-        if (!isChannelSubscribed(channelName2)) {
-            channelLogOutGuest.value = channelName2;
-            channelLogOutGuest.value = pusher.value.subscribe(channelLogOutGuest.value);
-            channelLogOutGuest.value.bind('App\\Events\\LogoutWebappGuest', async (data) => {
-                if(data.guestId == guestData?.id){
-                    authStore.$logout();
+
+        const channelUpdateLocalStay = 'private-reload-data-stay-webapp.' + stayStore.stayData?.id;
+        if (!isChannelSubscribed(channelUpdateLocalStay)) {
+            channelUpdateStay.value = channelUpdateLocalStay;
+            pusher.value = getPusherInstance();
+            channelUpdateStay.value = pusher.value.subscribe(channelUpdateStay.value);
+            channelUpdateStay.value.bind('App\\Events\\ReloadDataStayWebapp', async (data) => {
+                // console.log('test ReloadDataStayWebapp', data)
+                if(authStore.sessionActive){
+                    await stayStore.reloadLocalStay();
+                    // console.log('test reloadLocalStay',stayStore.stayData)
                 }
             });
+        isSubscribed.value = true; // Marcar como suscrito
         }
+        
     } else if (!stayStore.stayData && isSubscribed.value) {
         // Lógica para desuscribirse del canal si stayStore.stayData es null o undefined
         if (channelChat.value) {
             pusher.value.unsubscribe(channelChat.value);
+            isSubscribed.value = false; // Marcar como no suscrito
+        }
+
+        if (channelUpdateStay.value) {
+            pusher.value.unsubscribe(channelUpdateStay.value);
             isSubscribed.value = false; // Marcar como no suscrito
         }
     }
@@ -86,17 +100,11 @@ const unSubscribePusher = () =>{
         channelChat.value.unbind('App\\Events\\NotifyUnreadMsgGuest');
         pusher.value.unsubscribe(channelChat.value);
     }
-
-    if (channelLogOutGuest.value && !isMockup()) {
-        channelLogOutGuest.value.unbind('App\\Events\\LogoutWebappGuest');
-        pusher.value.unsubscribe(channelLogOutGuest.value);
-    }
     
 }
 
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
-        // localStorage.setItem('stayData',newStayData);
         // stayData = newStayData;
         if(newStayData){
             unSubscribePusher();
@@ -113,7 +121,6 @@ const showMenu = computed(() => {
     let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
     let hiddenMenuByRef = !hideAppMenu.value;
     let existsUrlParam = !getUrlParam('acform');
-
     return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
 });
 </script>

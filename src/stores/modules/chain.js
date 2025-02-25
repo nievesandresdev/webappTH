@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { getUrlParam } from '@/utils/utils.js'
+import { useMainStore } from '@/stores'
+
 import {
     getHotelsListApi,
     findBySubdomainApi,
@@ -10,14 +12,14 @@ import {
 
 export const useChainStore = defineStore('chain', () => {
     
-    
+    const mainStore = useMainStore()
      // STATE
      const chainSubdomain = ref(localStorage.getItem('chainSubdomain') || '');
      const chainData = ref(localStorage.getItem('chainData') || null);
      const customizationData = ref(null);
     // ACTIONS
-    async function $getHotelsList() {
-        const response = await getHotelsListApi([])
+    async function $getHotelsList(params = {}) {
+        const response = await getHotelsListApi(params)
         return response.ok ? response.data : []; 
         
     }
@@ -71,7 +73,6 @@ export const useChainStore = defineStore('chain', () => {
         
         // if (customizationData.value) return customizationData.value;
         const response = await getCustomatizacionApi([]);
-        // console.log('test $getCustomatizacion',response)
         let customization = response.ok ? response.data : null;
         if (customization) {
             customizationData.value = customization;
@@ -87,6 +88,15 @@ export const useChainStore = defineStore('chain', () => {
         }
         const response = await getStaysGuestByChainApi(params)
         return response
+    }
+
+    function $getUrlLog () {
+        if(!customizationData.value?.logo) return null;
+        
+        let { URL_STORAGE } = mainStore;
+
+        return `${URL_STORAGE}${customizationData.value?.logo}`;
+
     }
     //
 
@@ -125,7 +135,8 @@ export const useChainStore = defineStore('chain', () => {
         $colorContrast0,
         $bgColor1,
         $colorContrast1,
-        $name
+        $name,
+        $getUrlLog
     }
 
 })

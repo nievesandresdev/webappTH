@@ -36,5 +36,12 @@ export default{
         "accessRoom": "Accedi alla permanenza",
         "active": "Risorsa",
         "pageWebHotel": "Sito web dell'hotel"
+    },
+    "reservation": {
+        "title": "Prenota il tuo prossimo soggiorno",
+        "button-reservation": "Prenota",
+        "title-page": "Seleziona un alloggio da prenotare e ti reindirizzeremo al suo sito web."
+
     }
+
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-menu fixed bottom-0 left-0 px-1 sp:px-4 pb-1.5 sp:pb-2 w-full z-[4000]">
+    <div v-if="hotelStore.hotelData" class="container-menu fixed bottom-0 left-0 px-1 sp:px-4 pb-1.5 sp:pb-2 w-full z-[4000]">
         
         <div class="
             menu rounded-[14px] sp:rounded-[20px] py-[6px] sp:py-[10px] px-1 sp:px-4 
@@ -38,16 +38,6 @@
                         :color="validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0" 
                         only-change-background 
                     />
-                    <!-- <span
-                        class="text-[4px] sp:text-[10px] font-bold leading-none lato"
-                        :class="validRoute(item) ? `text-white` : `htext-black-100`"
-                        :style="{
-                            color:validRoute(item) ? chainStore.$colorContrast0 : chainStore.$bgColor0
-                        }"
-                    >
-                        {{ dynamicTitle(item) }}
-                    </span>
-                    <img  -->
                     <span
                         class="text-[7px] sp:text-[10px] font-bold leading-none lato"
                         :class="validRoute(item) ? `text-white` : `htext-black-100`"
@@ -67,6 +57,8 @@
 import { onMounted, reactive, computed, ref  } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import BaseBadge from '@/components/BaseBadge.vue';
+
+import { $formatTypeLodging } from '@/utils/helpers'
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
@@ -94,8 +86,8 @@ const menuItems = reactive([
         routeNameIncludes: ['Home'],
     },
     {
-        title: 'layout.header.hotel',
-        exclude: !hotelStore.hotelData.show_profile,
+        title: $formatTypeLodging(),
+        exclude: !hotelStore.hotelData?.show_profile,
         iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
         iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
         to: `/${route.params.hotelSlug}/alojamiento`, 
@@ -103,7 +95,7 @@ const menuItems = reactive([
     },
     {
          title: 'layout.header.facilities',
-         exclude: hotelStore.hotelData.show_profile || !hotelStore.hotelData.show_facilities,
+         exclude: hotelStore.hotelData?.show_profile || !hotelStore.hotelData?.show_facilities,
          iconDefault: 'WA.MENU.DEFAULT.ALOJAMIENTO',
          iconSelected: 'WA.MENU.SELECTED.ALOJAMIENTO',
          to: `/${route.params.hotelSlug}/alojamiento`, 
@@ -111,20 +103,28 @@ const menuItems = reactive([
      },
     {
         title: 'layout.header.destination',
-        exclude: false,
+        exclude: !hotelStore.hotelData?.show_places,
         iconDefault: 'WA.MENU.DEFAULT.DESTINO',
         iconSelected: 'WA.MENU.SELECTED.DESTINO',
         to: `/${route.params.hotelSlug}/lugares`,
         routeNameIncludes: ['PlaceList', 'PlaceDetail'],
     },
     {
-        title: 'layout.header.experiences',
-        exclude: !hotelStore.hotelData.show_experiences,
-        iconDefault: 'WA.MENU.DEFAULT.EXPERIENCIAS',
-        iconSelected: 'WA.MENU.SELECTED.EXPERIENCIAS',
-        to: `/${route.params.hotelSlug}/experiencias`,
-        routeNameIncludes: ['ExperienceList', 'ExperienceDetail'],
+        title: 'service.title',
+        exclude: !hotelStore.hotelData?.show_confort && !hotelStore.hotelData?.show_transport && !hotelStore.hotelData?.show_experiences,
+        iconDefault: 'WA.MENU.DEFAULT.SERVICE',
+        iconSelected: 'WA.MENU.SELECTED.SERVICE',
+        to: `/${route.params.hotelSlug}/servicios/confort`,
+        routeNameIncludes: ['Confort', 'Transport', 'Activity', 'DetailServiceConfort', ',DetailServiceTransport' , 'DetailServiceActivity'],
     },
+    // {
+    //     title: 'layout.header.experiences',
+    //     exclude: !hotelStore.hotelData.show_experiences,
+    //     iconDefault: 'WA.MENU.DEFAULT.EXPERIENCIAS',
+    //     iconSelected: 'WA.MENU.SELECTED.EXPERIENCIAS',
+    //     to: `/${route.params.hotelSlug}/experiencias`,
+    //     routeNameIncludes: ['ExperienceList', 'ExperienceDetail'],
+    // },
     {
         title: 'layout.header.messages',
         exclude: !hotelStore?.hotelData?.chatSettings.show_guest,

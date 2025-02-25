@@ -47,5 +47,8 @@ export default {
     "inputPlaceholder": "Email dell'ospite",
     "button": "Invita",
     "textToast": "Invito inviato",
+  },
+  "social": {
+    "title": "Le nostre reti"
   }
 };

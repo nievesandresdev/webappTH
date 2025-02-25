@@ -5,14 +5,17 @@ import { useStayStore } from '@/stores/modules/stay'
 import { useLocaleStore } from '@/stores/modules/locale'
 import { useChainStore } from '@/stores/modules/chain'
 import { useHistoryStore } from '@/stores/modules/history'
+import { useAuthStore } from '@/stores/modules/auth'
+
 import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-
+    // console.log('test handleWebAppData');
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
+    const authStore = useAuthStore();
     //
     const stayId = utils.getUrlParam('e');
     const guestId = utils.getUrlParam('g');
@@ -39,38 +42,44 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
-    //cargar data del hotel
     const hotelStore = useHotelStore();
     //se guarda el subdominio en localstorage en caso de existir
-    // if(!stayId || !guestId){
-    //     localStorage.removeItem('subdomain');
-    // }
     if(chainStore.chainData?.type == 'INDEPENDENT'){
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
+        if(chainStore.chainData?.independentSubdomain && to.name == 'ChainLanding'){
+            // Redirige a la home cuando la cadena sea independiente
+            return next({ name: 'Home', params :{ hotelSlug: chainStore.chainData?.independentSubdomain}, query: to.query }); 
+        } 
     }else{
+        let sudmainsChain = chainStore.chainData.hotels_subdomains;
+        let validSubdomain = sudmainsChain.includes(to.params.hotelSlug);
+        //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
+        if(!validSubdomain && to.params.hotelSlug && !utils.isMockup()) {
+            await hotelStore.$deleteLocalHotel();
+            return next({ name: 'ChainLanding' });
+        }
         utils.saveHotelSlug(to.params.hotelSlug);
     }
-    await hotelStore.$load();
-    let hotel = hotelStore.hotelData;
-    // Añade la verificación de que no estás ya en 'Home'
-    if (hotel && to.name == 'ChainLanding') {
-        return next({ name: 'Home', params :{ hotelSlug: hotel.subdomain }, query: to.query });
-    }
-
+    //cargar data del hotel
+    hotelStore.$load(false, to);
     ////////////////////////////////////////////////////////
     //
     //
     //cargar data huesped
     if(guestId){
-        console.log('test middle guestId',guestId)
-        await guestStore.findByIdInSetLocalGuest(guestId)
+        
+        let localGuest = guestStore.getLocalGuest();
+        console.log('test mddl localGuest',localGuest)
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            console.log('test mddl guest',guestId)
+            await guestStore.findByIdInSetLocalGuest(guestId)
+        }
     }
     ////////////////////////////////////////////////////////
     //
     //
     //cargar data stay
     if(stayId){
-        console.log('test middle stayId',stayId)
         await stayStore.findByIdInSetLocalStay(stayId)
     }
     ////////////////////////////////////////////////////////
@@ -79,7 +88,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //data extra
     const localeStore = useLocaleStore();
     if (utils.isMockup() || !localStorage.getItem('guestId')) {
-        let lang = hotel?.language_default_webapp ?? localeStore.localeCurrent;
+        let lang = hotelStore.hotelData?.language_default_webapp ?? localeStore.localeCurrent;
         if(localeStore.localeCurrent !== 'es'){
             lang = localeStore.localeCurrent;
         }
@@ -89,16 +98,22 @@ export default async function handleWebAppData({ to, from, next }) {
         localeStore.$loadByURL(lang);
     }
 
-    if (to.meta.verifyHotel && !hotel) {
-        return next({ name: 'NotFound' });
-    }
+    // if (to.meta.verifyHotel && !hotel) {
+    //     return next({ name: 'NotFound' });
+    // }
 
+    //validar sesion 
+    authStore.$validateSession(to, next);
+    authStore.$goLoginBySocialNetwork();
+    authStore.$validateStayGuestRelation();
     //
     // Agrega la nueva ruta al historial
-    historyStore.$addRoute({
-        name: to.name,
-        params: to.params,
-        query: to.query
-    })
+    if(authStore.sessionActive){
+        historyStore.$addRoute({
+            name: to.name,
+            params: to.params,
+            query: to.query
+        })
+    }
     next();
 }

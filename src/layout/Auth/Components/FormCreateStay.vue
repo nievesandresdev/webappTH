@@ -9,8 +9,9 @@
             mandatory
         />
         <PrimaryButton 
-            classes="block mt-6 text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-            :disabled="!form.checkDate"
+            classes="text-center mt-6 py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
+            :isLoading="loading"
+            :disabled="!form.checkDate || loading"
             @click="submit"
         >
         {{ $t('stay.create.continue-button') }}
@@ -18,7 +19,7 @@
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 //stores
@@ -26,8 +27,12 @@ import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore();
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
+import { useAuthStore } from '@/stores/modules/auth';
+const authStore = useAuthStore();
 //router
-import { navigateTo } from '@/utils/navigation'
+// import { navigateTo } from '@/utils/navigation'
+
+const loading = ref(false)
 
 const form = reactive({
     numberGuests:'1',
@@ -38,16 +43,20 @@ const form = reactive({
 });
 
 const submit = async () => {
+    loading.value = true;
     let guest = guestStore.getLocalGuest();
     form.guestId = guest?.id;
     form.language = localStorage.getItem('locale') ?? 'es';
     await stayStore.deleteLocalStayData();
-    let stay = await stayStore.createAndInviteGuest(form);
-    if(stay){
-        navigateTo('Home')
-    }
+    await stayStore.createAndInviteGuest(form);
+    // let stay = await stayStore.createAndInviteGuest(form);
+    // if(stay){
+    //     navigateTo('Home')
+    // }
 
     // processingForm.value = false
     // emit('closeModal');
+    await authStore.$redirectAfterLogin();
+    loading.value = false;
 }
 </script>

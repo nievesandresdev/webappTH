@@ -4,7 +4,6 @@
         id="list-experience"
         class="w-full overflow-y-scroll px-2 sp:px-4"
     >
-
         <p
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold my-[8px] sp:my-6"

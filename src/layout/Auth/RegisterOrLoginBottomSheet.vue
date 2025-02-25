@@ -9,7 +9,7 @@
             <div :class="{'mt-[96px]':!showEnterPassword && route.name !== 'Home','mt-2':route.name == 'Home'}">
                 <HeadInChain 
                     :text="showEnterPassword ? $t('auth.log.title'): $t('auth.log-or-register.title')"
-                    title-classes="h-[31px] lato text-[20px] font-bold leading-[30px] w-[243px] text-center"
+                    title-classes="h-[31px] lato text-[20px] font-bold leading-[20px] w-[243px] text-center"
                     :go-back="showEnterPassword"
                     @go-back="showEnterPassword = false"
                 />

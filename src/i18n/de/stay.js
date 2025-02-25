@@ -36,5 +36,12 @@ export default{
         "accessRoom": "Aufenthalt betreten",
         "active": "Vermögenswert",
         "pageWebHotel": "Hotel-Website"
+    },
+    "reservation": {
+        "title": "Buche deinen nächsten Aufenthalt",
+        "button-reservation": "Buchen",
+        "title-page": "Wähle eine Unterkunft aus, um zu buchen, und wir leiten dich auf ihre Webseite weiter."
+
     }
+
 }

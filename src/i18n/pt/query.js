@@ -7,6 +7,7 @@ export default {
     },
     "form": {
         "send": "Enviar",
+        "sending": "Enviando",
         "modify" : "Modificar",
         "cancel" : "Cancelar",
         "title": "Consultas",
@@ -28,7 +29,7 @@ export default {
         "continueIn" : "Continuar em"
     },
     "settings": {
-        "questionpre-stay": "Há algo que possamos fazer para a sua chegada no hotel?",
+        "questionpre-stay": "Há algo que possamos fazer para a sua chegada no {lodging}?",
         "questionin-stay": "Como você avaliaria seu nível de satisfação com a sua estadia até agora?",
         "questionpost-stay": "Como foi a sua experiência conosco?",
     },

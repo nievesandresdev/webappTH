@@ -6,9 +6,9 @@
     >
         <CarouselCard
             v-for="(item, index) in items"
-            :img-url="item.image?.url"    
+            :img-url="experienceStore. $loadImage(item.image)"    
             :data="item"
-            @click="goExperience(item.slug, $utils.isMockup())"
+            @click="goExperience(item)"
         >
             <p 
             class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] max-h-[28px] sp:max-h-[40px] truncate-2"
@@ -50,8 +50,8 @@ import CarouselCard from './CarouselCard.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 // STORE
-import { usePlaceStore } from '@/stores/modules/place'
-const placeStore = usePlaceStore()
+import { useExperienceStore } from '@/stores/modules/experience'
+const experienceStore = useExperienceStore()
 
 const duration = ref(null);
 const props =  defineProps({
@@ -77,9 +77,11 @@ function getDuration (data) {
     return m
 }
 
-function goExperience (exp, isMockup) {
-    if(!isMockup){
-        router.push({name:'ExperienceDetail',params:{slug:exp}})
+function goExperience (exp) {
+    if (exp.name_api === 'viator') {
+        router.push({ name:'DetailActivity', params: { slug: exp.slug } });
+    } else {
+        router.push({ name: 'DetailService', params: { service: 'activity', slug: exp.slug } });
     }
 }
 

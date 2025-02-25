@@ -1,28 +1,34 @@
 import { defineStore } from 'pinia'
-import { ref, reactive  } from 'vue'
-
+import { ref, reactive, computed  } from 'vue'
+import router from '@/router'
 import {
     findByParamsApi,
     getCrossellingsApi,
     getChatHoursApi,
     findByIdApi,
-    buildUrlWebAppApi
+    buildUrlWebAppApi,
+    getRewardsByHotel,
+    getMainDataApi,
+    getDataLegalpi
 } from '@/api/services/hotel.services'
 
+
  import { useMainStore } from '@/stores'
+ import { useAuthStore } from '@/stores/modules/auth';
+ 
  
 
 export const useHotelStore = defineStore('hotel', () => {
-    
-
 
     // STATE
     const hotelData = ref(null)
+    const hotelDataStorage = ref(localStorage.getItem('hotelData') ? JSON.parse(localStorage.getItem('hotelData')) : null)
     const chatHours = ref(null)
     const subdomain = ref(localStorage.getItem('subdomain') || null)
     const oldSubdomain = ref(null)
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
     const mainStore = useMainStore()
+    const authStore = useAuthStore()
     // ACTIONS
 
     function $loadImage (item) {
@@ -40,19 +46,34 @@ export const useHotelStore = defineStore('hotel', () => {
 
     }
 
-    async function $load (reload = false) {
-        if ( (hotelData.value || !localStorage.getItem('subdomain')) && !reload) return
-        let params = {
-            subdomain: localStorage.getItem('subdomain'),
+    async function $load (reload = false, routeInfo = null) {
+        let noHotelIfSubdomain = !Boolean(hotelData.value) && !!localStorage.getItem('subdomain');
+        let reloadAndSubdomain  = reload && !!localStorage.getItem('subdomain');
+        // console.log('test vallocalsubdomain',!!localStorage.getItem('subdomain'));
+        // console.log('test reloadAndSubdomain',reloadAndSubdomain);
+        if (noHotelIfSubdomain || reloadAndSubdomain) {
+            let params = {
+                subdomain: localStorage.getItem('subdomain'),
+            }
+            const response = await getMainDataApi(params);
+            // console.log('test se cargo el hotel', response.data);
+            const { ok } = response;
+            
+            if (ok && response.data) {
+                hotelData.value = response.data;
+    
+                // Verificamos que hotelData.value tenga los datos esperados antes de almacenarlos
+                if (hotelData.value && hotelData.value.id) {
+                    localStorage.setItem('hotelId', hotelData.value.id);
+                    localStorage.setItem('hotelData', JSON.stringify(hotelData.value));
+                }
+            } else {
+                hotelData.value = null; // Si no se obtuvo datos, aseguramos que sea null
+            }
         }
-        
-        const response = await findByParamsApi(params)
-        // console.log('test response',response)
-        const { ok } = response
-
-        hotelData.value = ok ? response.data : null
-        return response.data
+        return hotelData.value;
     }
+        
 
     async function $getCrossellings () {
         const response = await getCrossellingsApi()
@@ -80,8 +101,8 @@ export const useHotelStore = defineStore('hotel', () => {
     async function $setAndLoadLocalHotel (subdomainString) {
         localStorage.setItem('subdomain',subdomainString)
         subdomain.value = subdomainString;
-        // console.log('test',subdomain.value)
-        $load(true)//reload
+        // console.log('test subdomain',subdomain.value)
+        await $load(true)//reload
     }
 
     async function $setOldLocalHotel (subdomainString) {
@@ -90,9 +111,13 @@ export const useHotelStore = defineStore('hotel', () => {
     }
 
     async function $deleteLocalHotel () {
+        // console.log('test deleteLocalHotel');
         localStorage.removeItem('subdomain')
+        localStorage.removeItem('hotelData')
+        localStorage.removeItem('hotelId')
         subdomain.value = null;
         hotelData.value = null;
+        hotelDataStorage.value = null;
     }
 
     async function $deleteOldLocalHotel () {
@@ -100,9 +125,14 @@ export const useHotelStore = defineStore('hotel', () => {
         oldSubdomain.value = null;
     }
 
+    async function $getRewardsByHotel (id) {
+        const response = await getRewardsByHotel(id)
+        return response
+    }
+
 
     async function $changeCurrentHotelData (newHotelId, newsubdomain) {
-        if(newHotelId == hotelData.value.id) return;
+        if(newHotelId == hotelDataStorage.value.id) return;
         await $deleteLocalHotel();
         $setAndLoadLocalHotel(newsubdomain)
     }
@@ -112,10 +142,26 @@ export const useHotelStore = defineStore('hotel', () => {
         const response = await buildUrlWebAppApi(params)
         return response.ok ? response.data : null;
     }
+    const hotelDataComputed = computed(() => {
+        localStorage.setItem('hotelData', JSON.stringify(hotelData.value));
+        hotelDataStorage.value = hotelData.value;
+        return hotelData.value
+    });
 
-    //
+    async function $findByParamsApi (id) {
+        let params ={id} 
+        const response = await findByParamsApi(params)
+        return response.data
+    }
+
+    async function $getDataLegal () {
+        const response = await getDataLegalpi()
+        const { ok } = response
+        return ok ? response.data : {}
+    }
+    
     return {
-        hotelData,
+        hotelData:hotelDataComputed,
         chatHours,
         subdomain,
         $load,
@@ -129,7 +175,12 @@ export const useHotelStore = defineStore('hotel', () => {
         $changeCurrentHotelData,
         $setOldLocalHotel,
         $deleteOldLocalHotel,
-        oldSubdomain
+        oldSubdomain,
+        $getRewardsByHotel,
+        $findByParamsApi,
+        hotelDataStorage,
+        $getDataLegal
     }
+
 
 })

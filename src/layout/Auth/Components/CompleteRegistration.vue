@@ -27,6 +27,7 @@
                 :disabled="passDisabled"
             />
         </div>
+        <p class="lato text-[10px] font-bold leading-[12px] mt-1">{{$t('auth.register.password-info')}}</p>
         <p 
             class="mt-6 text-[10px] lato font-bold leading-[12px]"
         >
@@ -35,8 +36,9 @@
         </p>
         <div class="mt-4">
             <PrimaryButton 
-                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest"
-                :disabled="!validSubmitButton"
+                classes="text-center py-2.5 rounded-[10px] text-base font-bold leading-[20px] w-full shadow-guest block"
+                :isLoading="loading"
+                :disabled="!validSubmitButton || loading"
                 @click="submit"
             >
                 {{$t('auth.register.continue-button')}}
@@ -81,6 +83,7 @@ const hotelStore = useHotelStore()
 const router = useRouter();
 
 const emailError = ref(false)
+const loading = ref(false)
 const method = ref(null)
 const form = reactive({
     id:'',
@@ -91,7 +94,17 @@ const form = reactive({
 
 onMounted(async () => {
     form.id = getUrlParam('g');
+    // console.log('test form.id',form.id)
+    if(!form.id){
+        if(localStorage.getItem('subdomain')){
+            navigateTo('Home',{},{ acform : 'log' })
+        }else{
+            router.push({ name:'ChainLanding'});
+        }
+        
+    }
     method.value = getUrlParam('m');
+    console.log('test complete')
     let guestData = await guestStore.findById(form.id);
     form.email = guestData?.email ?? '';
     if(method.value == 'google'){
@@ -101,40 +114,13 @@ onMounted(async () => {
 })
 
 async function submit(){
+    loading.value = true;
     if(method.value == 'google' && method.value == 'facebook') form.password = null;
     let guestData = await authStore.$updateGuestById(form);
     guestStore.setLocalGuest(guestData)
 
-    if(!stayStore?.stayData){
-        //aqui entra solo si no hay una estancia cargada antes de culminar registro
-        await guestStore.findAndValidLastStayAndLogHotel({guestEmail : guestData.email, chainId : chainStore.chainData?.id, hotelId : hotelStore.hotelData?.id})
-    }else{
-        //aqui entra si ya hay una estancia cargada (viene por url)
-        if(Boolean(sessionStorage.getItem('guestPerStay'))){
-            let response = await guestStore.createAccessInStay()
-                if(response?.stay){
-                    //actualizar estancia
-                    await stayStore.setStayData(response.stay)
-                    await hotelStore.$setAndLoadLocalHotel(response.stay.hotelSubdomain)
-                }
-        }else{
-            //sino elimina la estancia actual para que el huesped tenga que crear una
-            await stayStore.deleteLocalStayData()
-        }
-    }
-
-    //limpiar
-    sessionStorage.removeItem('guestPerStay')
-    if(stayStore.stayData){
-            navigateTo('Home')
-    }else{
-        if(hotelStore.hotelData){
-            navigateTo('Home',{},{ acform : 'createstay' })
-        }else{
-            //logica para cuando no se halla cargado un hotel
-            router.push({ name:'HotelsList' })
-        }
-    }
+    await authStore.$logIn(guestData.email);
+    loading.value = false;
     toastSuccess(t('messageRequest.recordSuccess')); 
 }
 
@@ -150,7 +136,7 @@ const validSubmitButton = computed(()=>{
     return !emailError.value && 
             Boolean(form.name.trim()) && 
             Boolean(form.email.trim()) && 
-            Boolean(form.password.trim()) && form.password.length > 6;
+            Boolean(form.password.trim()) && form.password.length > 7;
     
 })
 </script>

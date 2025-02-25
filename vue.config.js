@@ -2,6 +2,15 @@ const { defineConfig } = require('@vue/cli-service');
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  // Optimización de Webpack para reducir el tamaño de los archivos
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        chunks: "all",
+        maxSize: 500000, // Fragmenta archivos grandes en chunks menores de 500KB
+      }
+    }
+  },
   devServer: {
     host: '0.0.0.0',
     port: 81,

@@ -6,7 +6,7 @@
     >
         <CarouselCard
             v-for="(item, index) in items"
-            :img-url="placeStore.$loadImage(item.place_images?.[0])"    
+            :img-url="placeStore.$loadImage(item.image)"    
             :data="item"
             @click="goPlace(item.id, $utils.isMockup())"
         >

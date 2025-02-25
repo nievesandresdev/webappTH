@@ -25,9 +25,19 @@
                 <img class="w-4 h-4" src="/assets/icons/WA.map.svg" alt="">
                 <p  class="lato text-sm font-bold leading-[16px]">{{data.address}}</p>
             </div>
-            <div class="flex items-center gap-1 mt-2">
+            <div v-if="data.zone" class="flex items-center gap-1 mt-2">
                 <img class="w-4 h-4" src="/assets/icons/WA.pointer.svg" alt="">
                 <p class="lato text-sm font-bold leading-[16px]">{{data.zone}}</p>
+            </div>
+            <!-- v-if moreinfo  -->
+            <div v-if="moreInfo && data.phone" class="flex items-center gap-1 mt-2">
+                <img class="w-4 h-4" src="/assets/icons/WA.llamar.svg" alt="">
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.phone}}</p>
+            </div>
+            <!-- v-if moreinfo && email -->
+            <div v-if="moreInfo && data.email" class="flex items-center gap-1 mt-2">
+                <img class="w-4 h-4" src="/assets/icons/WA.mail.svg" alt="">
+                <p  class="lato text-sm font-bold leading-[16px]">{{data.email}}</p>
             </div>
         </div>
     </div>
@@ -39,19 +49,34 @@ const router = useRouter();
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 
+const emit = defineEmits(['modalOpen']);
+
 const props = defineProps({
     data:Object,
     clickable:{
         type:Boolean,
         default:false
+    },
+    modal:{
+        type:Boolean,
+        default:false
+    },
+    moreInfo: {
+        type: Boolean,
+        default: false
     }
 })
 
 async function selectHotel(){
+
+    if(props.modal){
+        emit('modalOpen')
+    }
     //tomar el actual subdominio
     //se usara para que en un caso que el huesped decida regresar a la estancia actual
     //poder tener el subdominio de dicha estancia
-    const currentSubdomain = hotelStore.hotelData?.subdomain;
+    const currentSubdomain = localStorage.getItem('subdomain');
+    //console.log('test currentSubdomain',currentSubdomain)
     if(currentSubdomain){
         hotelStore.$setOldLocalHotel(currentSubdomain)
     }
@@ -59,6 +84,8 @@ async function selectHotel(){
     if(!props.clickable) return
     await hotelStore.$setAndLoadLocalHotel(props.data.subdomain)
     router.push({ name:'CreateStayFromChain', params:{ hotelSlug : props.data.subdomain}})
+
+   
 }
 
 </script>

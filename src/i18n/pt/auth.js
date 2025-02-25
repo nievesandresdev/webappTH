@@ -29,7 +29,8 @@ export default{
         "text-info-2": "Não quero receber mensagens promocionais.",
         "policies-text": "Ao selecionar Aceitar e Continuar, eu aceito a",
         "policies-title": "Política de Privacidade.",
-        "the-chain": "A cadeia"
+        "the-chain": "A cadeia",
+        "password-info": "A senha deve conter pelo menos 8 caracteres."
     },
     "reset-pass":{
         "title": "Alterar Senha",
@@ -46,6 +47,9 @@ export default{
         "amount-text": "acomodações da rede",
         "stars-text": "estrelas",
         "star-text": "estrela",
+    },
+    "my-stay": {
+        "title": "Minha estadia"
     }    
     
 }

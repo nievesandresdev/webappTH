@@ -23,6 +23,7 @@ const i18n = createI18n({
   locale: 'es',
   fallbackLocale: 'es',
   messages: loadLocaleMessages(),
+  globalInjection: true
 });
 
 export { i18n };

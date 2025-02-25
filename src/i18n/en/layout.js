@@ -2,6 +2,8 @@ export default {
     "header": {
         "home": "home",
         "facilities": "facilities",
+        "hotel": "hotel",
+        "hostal": "hostel",
         "destination": "destination",
         "experiences": "experiences",
         "messages": "messages"

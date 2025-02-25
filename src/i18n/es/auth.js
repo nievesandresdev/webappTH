@@ -30,6 +30,7 @@ export default{
         "policies-text" : "Al seleccionar Aceptar y continuar, acepto la",
         "policies-title" : "Política de Privacidad.",
         "the-chain" : "La cadena",
+        "password-info":"La contraseña debe contener al menos 8 caracteres."
     },
     "reset-pass":{
         "title":"Cambiar contraseña",
@@ -47,4 +48,8 @@ export default{
         "stars-text":"estrellas",
         "star-text":"estrella",
     },
+    "my-stay":{
+        "title":"Mi estancia",
+    },
+    "saving-changes":"Guardando cambios",
 }  

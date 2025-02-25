@@ -29,7 +29,8 @@ export default{
         "text-info-2": "Non desidero ricevere messaggi promozionali.",
         "policies-text": "Selezionando Accetta e Continua, accetto la",
         "policies-title": "Politica sulla Privacy.",
-        "the-chain": "La catena"
+        "the-chain": "La catena",
+        "password-info": "La password deve contenere almeno 8 caratteri."
     },
     "reset-pass":{
         "title": "Cambia password",
@@ -46,6 +47,9 @@ export default{
         "amount-text": "alloggi della catena",
         "stars-text": "stelle",
         "star-text": "stella",
+    },
+    "my-stay": {
+        "title": "Il mio soggiorno"
     }        
     
 }

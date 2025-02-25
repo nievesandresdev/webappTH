@@ -8,7 +8,7 @@
             @touchend="endTouch"
         ></div>
         <div 
-            class="relative w-full max-h-[80vh] py-3 px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
+            class="relative w-full max-h-[80vh] py-3 sp:px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
             :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
             @click.stop
             ref="modalContainer"
@@ -17,13 +17,23 @@
             @touchend="endTouch"
         >
             <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
+            <!-- Imagen centrada si imgHeader tiene una URL -->
+            <div v-if="imgHeader" class="flex justify-center mb-4">
+                <img 
+                    :src="imgHeader" 
+                    alt="Header Image" 
+                    class="sp:w-auto sp:h-[100px] h-[40px] object-contain"
+                />
+            </div>
             <!-- Contenido del modal -->
             <slot></slot>
             <button
                 v-if="showButton"
                 @click="handleSubmit"
-                class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button mt-4"
+                :disabled="$utils.isMockup()"
+                class="w-full lato flex justify-center items-center h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
             >
+                <img v-if="showIconButton" :src="iconButton" class="sp:w-6 sp:h-6 h-5 w-5" alt="Icon Button" />
                 {{ buttonText }}
             </button>
         </div>
@@ -33,6 +43,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+import Icon from '../Icon.vue';
+import { isMockup } from '@/utils/utils.js';
+
 
 const props = defineProps({
     isOpen: Boolean,
@@ -40,6 +53,18 @@ const props = defineProps({
     buttonText: {
         type: String,
         default: 'Acción'
+    },
+    showIconButton : {
+        type: Boolean,
+        default: false
+    },
+    iconButton : {
+        type: String,
+        default: ''
+    },
+    imgHeader: {
+        type: String,
+        default: ''
     }
 });
 
@@ -85,6 +110,9 @@ const endTouch = () => {
 };
 
 const closeModal = () => {
+    if (isMockup()) {
+        return; 
+    }
     isClosing.value = true;
     setTimeout(() => {
         isClosing.value = false;

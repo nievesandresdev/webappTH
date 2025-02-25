@@ -3,6 +3,7 @@ export default {
         "home": "inicio",
         "facilities": "instalaciones",
         "hotel": "hotel",
+        "hostal": "hostal",
         "destination": "destino",
         "experiences": "experiencias",
         "messages": "mensajes"

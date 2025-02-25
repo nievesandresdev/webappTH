@@ -5,7 +5,7 @@
             @click="toggleshow"
             class="flex items-center hoverForm"
             :class="{
-                'h-10 rounded-[10px] p-2 hborder-black-100':true,
+                'h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] p-2 hborder-black-100':true,
                 'hborder-alert-negative': error,
                 'button-disabled':disabled && !error
             }"
@@ -14,8 +14,8 @@
             <span
                 class="flex-grow truncate"
                 :class="{
-                'lato text-sm font-medium leading-[16px]':true,
-                'disabled-text': !error && !modelValue,
+                'lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]':true,
+                'htext-gray-500': !error && !modelValue,
                 'htext-alert-negative': error,
                 'htext-black-100': modelValue,
             }"
@@ -30,10 +30,10 @@
                 <img v-if="icon_right" :src="icon_right" :class="icon_right_class">
             </template>
         </buttom>
-        <div v-show="showOptions" @click="toggleshow" class="fixed h-screen w-full bg-[#00000080] z-[100] top-0 left-0"></div>
+        <div v-show="showOptions" @click="toggleshow" class="fixed h-screen w-full bg-[#00000080] z-[3000] top-0 left-0"></div>
         <transition name="slide-fade">
             <div
-                class="dropdown-calendar bg-white fixed z-[150] left-0 top-10 hbg-white-100 px-4 pt-6"
+                class="dropdown-calendar bg-white fixed z-[3500] left-0 top-10 hbg-white-100 px-4 pt-6"
                 v-show="showOptions"
             >
                 <div class="relative mb-6">
@@ -49,7 +49,7 @@
                     :locale="$i18n.locale"
                     v-model="value"
                     expanded
-                    is-range
+                    :is-range="is_range"
                     :min-date="NoMinDate ? null : minDate"
                 />
             </div>
@@ -110,7 +110,7 @@ export default {
         },
         icon_left_class:{
             type: String,
-            default: 'h-5 w-5 mr-2',
+            default: 'w-[14px] sp:w-5 h-[14px] sp:h-5 mr-1.5 sp:mr-2',
         },
         icon_right:{
             type: String,
@@ -150,17 +150,28 @@ export default {
         show_error_msg:{
             type:Boolean,
             default:true
-        }
+        },
+        is_range:{
+            type:Boolean,
+            default:true
+        },
     },
     computed: {
         value: {
             get () {
+                if(this.modelValue && this.modelValue.start){
+                    this.dates_selected = this.formatDate(this.modelValue).label;
+                }
                 return this.modelValue
             },
             set (val) {
-                // console.log('set',val)
-                this.dates_selected = this.formatDate(val).label;
-                this.$emit('update:modelValue', this.formatDate(val))
+                if(this.is_range){
+                    this.dates_selected = this.formatDate(val).label;
+                    this.$emit('update:modelValue', this.formatDate(val))
+                }else{
+                    this.dates_selected = this.moment(val).format("DD/MM/YYYY")
+                    this.$emit('update:modelValue', this.dates_selected)
+                }
                 this.showOptions = false;
             },
         },

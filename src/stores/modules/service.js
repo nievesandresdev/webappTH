@@ -1,0 +1,96 @@
+import { defineStore } from 'pinia'
+import { ref, reactive, computed } from 'vue'
+import { i18n } from '@/i18n'
+
+import {
+    getAllConforApi,
+    getAllTransportApi,
+    findByIdConfortApi,
+    findByIdTransportApi
+} from '@/api/services/service.services'
+
+import { useMainStore } from '@/stores'
+const mainStore = useMainStore()
+
+import { useHotelStore } from '@/stores/modules/hotel'
+const hotelStore = useHotelStore()
+
+export const useServiceStore = defineStore('service', () => {
+    
+    // STATE
+    const dataFilter = {
+        price_min: null,
+        price_max: null,
+        search: null,
+        type: 'CONFORT',
+    }
+    const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
+
+        const hotelData = computed(() => {
+            return hotelStore.hotelData;
+        });
+
+        // MUTATIONS
+        function setDataFilterList (dataFormFilterInList) {
+            Object.assign(dataFilterGlobal, dataFormFilterInList);
+        }
+
+    // ACTIONS
+    function $loadImage (item,custom = null) {
+        let { URL_STORAGE } = mainStore;
+
+        let { image: path, type, url, api } = item ?? {};
+        if (api) {
+            return url;
+        }
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${item?.image}`;
+
+    }
+
+    function getHotelParams(params = {}) {
+        const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelData.value;
+        return {
+            hotel: { id: idHotel, name: nameHotel, zone: zoneHotel },
+            ...params
+        };
+    }
+
+    async function $apiDetAllConforApi (params) {
+        let newParams = getHotelParams(params);
+        const response = await getAllConforApi(newParams)
+        // console.log(response, 'response')
+        return response
+    }
+    async function $apiDetAllTransportApi (params) {
+        let newParams = getHotelParams(params);
+        const response = await getAllTransportApi(newParams)
+        // console.log(response, 'response')
+        return response
+    }
+    
+    async function $findByIdConfort (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdConfortApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
+    async function $findByIdTransport (id) {
+        let newParams = getHotelParams({});
+        const response = await findByIdTransportApi(id, newParams);
+        // console.log(response, 'response')
+        return response
+    }
+
+    //
+    return {
+        dataFilterGlobal,
+        setDataFilterList,
+        $apiDetAllConforApi,
+        $apiDetAllTransportApi,
+        $loadImage,
+        $findByIdConfort,
+        $findByIdTransport,
+    }
+
+})

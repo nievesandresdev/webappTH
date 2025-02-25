@@ -43,5 +43,8 @@ export default {
       "inputPlaceholder": "E-mail invité",
       "button": "Inviter",
       "textToast":"Invitation envoyée",
+    },
+    "social": {
+      "title": "Nos réseaux"
     }
   };

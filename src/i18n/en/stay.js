@@ -36,5 +36,11 @@ export default{
         "accessRoom": "Access stay",
         "active": "Active",
         "pageWebHotel": "Hotel website"
+    },
+    "reservation": {
+        "title": "Book your next stay",
+        "button-reservation": "Book",
+        "title-page": "Select accommodation to book, and we will redirect you to its website."
     }
+
 }

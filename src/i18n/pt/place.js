@@ -11,7 +11,7 @@ export default {
         "btn-load-more": "Carregar mais"
     },
     "results": "Sem resultados...",
-    "seaching": "Pesquisando...",
+    "seaching": "Destino de pesquisa",
     "categorySearch": "encontrado",
     "city": "Cidade",
     "placeholder-search":"Escreva algo",
@@ -50,6 +50,7 @@ export default {
         "showLess": "Mostra meno",
         "showMore": "Mostrar mais",
         "recommended": "Recomendado",
+        "recommendedTitle": "Recomendação do {lodging}",
         "buttoms": {
             "web": "Web",
             "call": "Ligar",
@@ -78,7 +79,7 @@ export default {
         "filters": {
             "title": "Filtern nach",
             "ratings": "Avaliações",
-            "distanceLogding":"Distância de hospedagem",
+            "distanceLogding":"Distância de",
             "score": "Pontuação",
             "recommended": "Consigliato",
             "star": "estrela",

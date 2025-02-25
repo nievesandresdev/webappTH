@@ -1,10 +1,10 @@
 <template>
     <header
         id="header"
-        class="custom-header z-[4000]"
+        class="custom-header"
         :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
-        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3">
+        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[23px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
             <h1
                 v-if="withTitleRoute"
                 class="text-[14px] sp:text-[20px] font-bold mb-[10px] sp:mb-[16px]"
@@ -22,19 +22,18 @@
                 <!-- Sección derecha: Avatar -->
                 <div class="header-avatar">
                     <slot name="avatar">
-                        <AvatarButton :size="innerWidth <= 300 ? 20 : 40"/>
+                        <AvatarButton :size="innerWidth <= 300 ? '20' : '40'"/>
                     </slot>
                 </div>
             </div>
         </div>
-
         <!-- Subheader con tabs (pestañas) -->
-        <div class="subheader" v-show="showSubHeader">
+        <div class="subheader" v-show="showSubHeader && (tabsActives.length > 1)">
             <slot name="tabs">
                 <div class="px-[12px] sp:px-[16px]">
                     <div class="flex justify-around">
                         <div
-                            v-for="(tab, index) in tabs"
+                            v-for="(tab, index) in tabsActives"
                             :key="index" class="tab space-y-[3px] sp:space-y-1 relative  w-[70px] sp:w-[100px]"
                             :class="{ active: tab.isActive }" @click="tab.onClick ? tab.onClick() : navigateTo(tab.routeName)"
                         >
@@ -113,6 +112,9 @@ const props = defineProps({
 
 import IconCustomColor from '@/components/IconCustomColor.vue';
 
+const tabsActives = computed(() => {
+    return props.tabs.filter(item => !item.exclude);
+});
 
 const navigateTo = (routeName) => {
     router.push({ name: routeName });
@@ -126,7 +128,7 @@ const navigateTo = (routeName) => {
         border: 1px solid #FFF;
         background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        z-index: 3000;
+        z-index: 1 !important;
     }
 
 

@@ -1,4 +1,5 @@
 <template>
+    <LoadPage v-if="loading" />
     <div>
         <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
         <ImageSlider
@@ -52,7 +53,7 @@
                 v-if="description"
                 class="pb-[8px] sp:pb-[16px] border-b  border-[#E9E9E9]"
             >
-                <h2 class="text-[10px] sp:text-[18px] lato leading-none mb-1 sp:mb-2 font-bold">Descripción</h2>
+                <h2 class="text-[10px] sp:text-[18px] lato leading-none mb-1 sp:mb-2 font-bold">{{ $t('experience.detail-page.title-description') }}</h2>
                 <p
                     ref="descriptionRef"
                     class="description mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
@@ -106,7 +107,7 @@
                     <img src="/assets/icons/WA.PaperTicket.svg" class="size-2 sp:size-4" />
                     <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-paper-ticket') }}</p>
                 </div>
-                <div class="flex items-center space-x-1 sp:space-x-2">
+                <div v-if="availablelanguages?.length" class="flex items-center space-x-1 sp:space-x-2">
                     <img src="/assets/icons/WA.Idiomas.svg" class="size-2 sp:size-4" />
                     <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.offered-in') }}: {{ availablelanguages?.languages?.map(lg => $t(`language.${lg}`)).join(', ') }} </p>
                 </div>
@@ -120,13 +121,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick, provide, computed, toRefs } from 'vue';
+import { onMounted, ref, nextTick, provide, computed, toRefs, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import DetailPageSectionInclude from './DetailPageSectionInclude.vue';
 import DetailPageSectionAditional from './DetailPageSectionAditional.vue';
 import DetailPageSectionCancellationPolicy from './DetailPageSectionCancellationPolicy.vue';
 import DetailPageSectionRating from './DetailPageSectionRating.vue';
+import LoadPage from '@/shared/LoadPage.vue';
+
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
 
 import $utils from '@/utils/utils';
 
@@ -144,7 +149,6 @@ const { paramsRouter } = toRefs(props);
 // STORE
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
-const { hotelData } = hotelStore;
 
 import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
@@ -161,11 +165,20 @@ const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref(null);
+const loading = ref(true);
+
+const hotelData = computed(() => hotelStore.hotelData);
 
 // ONMOUNTED
 onMounted(() => {
-    loadData();
+    // loadData();
 });
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
 
 const duration = computed( ()  => {
     let d = $utils.transformDuration(experienceData?.value?.duration)
@@ -174,8 +187,9 @@ const duration = computed( ()  => {
 });
 
 // FUNCTION
-function loadData () {
-    Promise.all([loadExperience(), loadExperienceInViator()]);
+async function loadData () {
+    await Promise.all([loadExperience(), loadExperienceInViator()]);
+    loading.value = false;
 }
 
 async function loadExperience () {
@@ -187,6 +201,7 @@ async function loadExperience () {
         description.value = experienceData.value.description;
         checkDescriptionLength();
     }
+
 }
 async function loadExperienceInViator () {
     let shortId = getShortId();
@@ -195,12 +210,13 @@ async function loadExperienceInViator () {
         experienceViatorData.value = response.data;
         loadLanguagesAvailables();
     }
+    
 }
 function loadLanguagesAvailables () {
-    const { languageGuides } = experienceViatorData.value;
+    const { languageGuides } = experienceViatorData.value ?? {};
     const codesLanguages = languageGuides
-        .filter(lg => lg?.language)
-        .map(lg => lg.language);
+        ?.filter(lg => lg?.language)
+        .map(lg => lg.language) ?? [];
     const nameslanguages = codesLanguages;
     const languagesAvailablesData = {
         numbers: nameslanguages?.length - 1,
@@ -235,7 +251,11 @@ const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
 }
 
-function goInViator () {
+function goInViator ()  {
+    if (!experienceViatorData.value || !experienceViatorData?.value?.productUrl) {
+         router.go(-1);
+         return;
+    }
     window.open(experienceViatorData?.value.productUrl, '_blank')
 }
 

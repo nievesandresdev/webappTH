@@ -1,5 +1,6 @@
 <template>
-  <div class="no-scrollbar">
+<LoadPage v-if="loading" />
+  <div v-else class="no-scrollbar">
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
     <ImageSlider
@@ -213,9 +214,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick, provide, computed } from 'vue';
+import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
+import LoadPage from '@/shared/LoadPage.vue';
 
 import $utils from '@/utils/utils';
 
@@ -225,6 +227,9 @@ import { handleToast } from "@/composables/useToast";
 const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 
 const placeStore = usePlaceStore();
 
@@ -241,69 +246,45 @@ const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref('');
+const loading = ref(true);
 
-// const hoursStatic = {
-//     weekRanges: [
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1500,
-//                 "closeHours": "01:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1440,
-//                 "closeHours": "00:00"
-//             }
-//         ],
-//         [
-//             {
-//                 "open": 360,
-//                 "openHours": "06:00",
-//                 "close": 1500,
-//                 "closeHours": "01:00"
-//             }
-//         ]
-//     ],
-//     timezone: "Africa/Ceuta"
-// }
+// COMPUTED
+const hotelData = computed(() => hotelStore.hotelData);
 
 onMounted(async () => {
-  await getDataPlace();
-  description.value = placeData.value?.description;
-  nextTick(() => {
-    checkDescriptionLength();
-  });
+
 });
+
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
+// FUNCTION
+
+// Cargar datos del lugar
+async function getDataPlace () {
+    loading.value = true;
+  let response = await placeStore.$findById({ id: props.paramsRouter.id });
+  placeData.value = null;
+  if (response.ok) {
+    placeData.value = response.data.place;
+    let hours =  response.data.backupPlace?.hours;
+    hours = hours ? JSON.parse(hours) : null;
+    hourData.value = hours?.weekRanges ?? null;
+    await nextTick();
+  }
+      loading.value = false;
+}
+
+async function loadData () {
+    await getDataPlace();
+    description.value = placeData.value?.description;
+    nextTick(() => {
+        checkDescriptionLength();
+    });
+}
 
 const formatHours = computed(() => {
     const dayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -347,19 +328,6 @@ function checkDescriptionLength() {
 
 const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
-}
-
-// Cargar datos del lugar
-const getDataPlace = async () => {
-  let response = await placeStore.$findById({ id: props.paramsRouter.id });
-  placeData.value = null;
-  if (response.ok) {
-    placeData.value = response.data.place;
-    let hours =  response.data.backupPlace?.hours;
-    hours = hours ? JSON.parse(hours) : null;
-    hourData.value = hours?.weekRanges ?? null;
-    await nextTick();
-  }
 }
 
 // Convierte las estrellas

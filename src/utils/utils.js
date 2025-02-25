@@ -1,3 +1,5 @@
+
+
 const  slufy = (text) => {
     /* eslint-disable */ 
     if (!text) return ''
@@ -87,6 +89,7 @@ const transformDuration = (value) => {
 
 const saveHotelSlug = (subdomain) => {
     if(subdomain){
+        // console.log('save slug',subdomain);
         localStorage.setItem('subdomain', subdomain)
     }
     return subdomain
@@ -101,7 +104,8 @@ const getUrlParam = (param) => {
     return dataParam
 }
 
-const formatTypeLodging = (valueType) => {
+  const $formatNameLodging = (valueType) => {
+  
     const typeLodging = {
       hotel: "Hotel",
       hostal: "Hostal",
@@ -111,7 +115,9 @@ const formatTypeLodging = (valueType) => {
       vft: "Vivienda con fines turísticos",
     }
     return typeLodging?.[valueType] ?? null;
-  }
+  };
+  
+
 
   function $throttle(func, limit) {
     let lastFunc;
@@ -156,7 +162,7 @@ module.exports = {
     transformDuration,
     saveHotelSlug,
     getUrlParam,
-    formatTypeLodging,
+    $formatNameLodging,
     $throttle,
     $isElementVisible,
 }

@@ -6,9 +6,9 @@
         <!-- cursor-pointer -->
         <div class="w-full rounded-t-lg container-image" :class="heightImg">
             <img
-                v-if="data.place_images?.[0]?.url"
+                v-if="data.image?.[0]?.url"
                 class="object-cover w-full h-full overflow-hidden rounded-t-lg img lg:h-48 2xl:h-52"
-                :src="placeStore.$loadImage(data.place_images?.[0])"
+                :src="placeStore.$loadImage(data.image?.[0])"
                 alt="img_act"
                 loading="lazy"
             >

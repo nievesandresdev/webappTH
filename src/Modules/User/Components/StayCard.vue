@@ -1,6 +1,6 @@
 <template>
     <div 
-      class="flex flex-col p-4 gap-2 w-full rounded-[20px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative"
+      class="flex flex-col p-4 gap-2 w-full rounded-[20px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative shadow-guest"
       :style="{ borderColor: colorBorder }"
       :class="{' hshadow-button' : shadowContainer}"
       @click="handleStayClick()"
@@ -26,7 +26,7 @@
             <div>
                 <div class="flex justify-between">
                     <!-- Nombre del hotel -->
-                    <p class="text-base font-bold lato leading-[20px] text-[#333333]">{{ hotelName ? stay.hotel_name : hotel.name }}</p>
+                    <p class="text-base font-bold lato leading-[20px] text-[#333333]">{{ hotelName ? stay.hotel_name : hotel?.name }}</p>
                     <!-- Badge "Activo" -->
                     <span v-if="isActive" class="flex h-[20px] px-2 py-1 justify-center items-center gap-[4px] rounded-[18px] border border-white bg-[#34A98F]">
                         <span class="text-[12px] font-bold text-white roboto uppercase tracking-[0.6px]">{{ $t('stay.edit.active') }}</span>
@@ -36,7 +36,7 @@
                     <div>
                         <div class="flex items-center text-[14px] font-bold text-[#333333]">
                             <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 mr-1" alt="Location Icon" />
-                            <span class="lato text-sm font-bold leading-[16px]">{{ hotelName ? stay.hotel_zone : hotel.zone ?? '-'}}</span>
+                            <span class="lato text-sm font-bold leading-[16px]">{{ hotelName ? stay.hotel_zone : hotel?.zone ?? '-'}}</span>
                         </div>
                         <div class="flex items-center mt-2">
                             <img src="/assets/icons/WA.calendar.svg" class="w-4 h-4 mr-1" alt="Calendar Icon" />
@@ -171,7 +171,7 @@ onMounted(async () => {
             }
         }
     }
-    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData.subdomain,null,`e=${stayStore.stayData.id}&guestPerStay=true`);
+    shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
 })
 
 async function getQuerySettings(){
@@ -214,11 +214,11 @@ const isModalOpen = () => {
 
 function handleStayClick() {
     const data = {
-        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,
-        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel.name,
+        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel?.name,
+        hotel_name: props.hotelName ? props.stay?.hotel_name : props.hotel?.name,
         hotelSubdomain: props.stay?.hotel_subdomain,
         hotelId: props.stay?.hotel_id,
-        zone:  props.hotelName ? props.stay?.hotel_zone : props.hotel.zone ,
+        zone:  props.hotelName ? props.stay?.hotel_zone : props.hotel?.zone ,
         stayId: props.stay?.stayId,
         check_in: props.stay?.check_in,
         check_out: props.stay?.check_out,

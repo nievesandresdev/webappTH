@@ -30,7 +30,7 @@
 <script setup>
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getUrlParam, slufy } from '@/utils/utils.js';
+import { getUrlParam, slufy, isMockup } from '@/utils/utils.js';
 const route = useRouter();
 
 import AppHeader from '@/layout/Components/AppHeader.vue';
@@ -48,7 +48,6 @@ const { localeCurrent } = localeStore
 
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
-const { hotelData } = hotelStore;
 
 // DATA
 
@@ -81,6 +80,9 @@ const paginateData = reactive({
 });
 
 // COMPUTED
+const hotelData = computed(() => {
+    return hotelStore.hotelData ?? null;
+});
 const numbersFiltersApplied = computed(() => {
     let filters = [];
     formFilter.duration?.length ? filters.push('duration') : '';
@@ -96,18 +98,23 @@ const emptyFilters = computed(() => {
 });
 
 // WATCH
+watch(hotelData, (valueCurrent, valueOld) => {
+    if (!valueOld && valueCurrent) {
+        loadData();
+    }
+}, { immediate: true });
+
 watch(formFilter, function(value) {
     experienceStore.setDataFilterList(formFilter);
 });
 
-// ONMOUNTED
-onMounted(async () => {
+// FUNCTION
+async function loadData () {
     loadForFilterGlobal();
     loadAll({showPreloader: true});
-    formFilter.city = getUrlParam('city') || hotelData.zone;
-});
+    formFilter.city = getUrlParam('city') || hotelData.value.zone;
+}
 
-// FUNCTION
 function loadForFilterGlobal () {
     Object.assign(formFilter, experienceStore.dataFilterGlobal);
 }
@@ -147,7 +154,8 @@ function submitFilter (payload){
     loadExperiences();
     let { showPreloader } = payload ?? {};
     if (showPreloader) {
-        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilter)} });
+        let formFilterWithMockup = {...formFilter, mockup: isMockup() }
+        route.push({ name: 'ExperienceList', query: {...filterNonNullAndNonEmpty(formFilterWithMockup)} });
     }
 }
 

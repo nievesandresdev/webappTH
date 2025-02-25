@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { i18n } from '@/i18n'
 
 import {
@@ -32,26 +32,43 @@ export const useExperienceStore = defineStore('experience', () => {
     }
     const dataFilterGlobal = reactive(JSON.parse(JSON.stringify(dataFilter)));
 
-        // MUTATIONS
-        function setDataFilterList (dataFormFilterInList) {
-            Object.assign(dataFilterGlobal, dataFormFilterInList);
-        }
+    const hotelData = computed(() => {
+        return hotelStore.hotelData ?? null;
+    });
+
+    // MUTATIONS
+    function setDataFilterList (dataFormFilterInList) {
+        Object.assign(dataFilterGlobal, dataFormFilterInList);
+    }
 
     // ACTIONS
 
     function getHotelParams(params = {}) {
-        const { id: idHotel, name: nameHotel, zone: zoneHotel } = hotelStore.hotelData;
+        const { id: idHotel, name: nameHotel, zone: zoneHotel, city_id: cityId } = hotelData.value;
         return {
-            hotel: { id: idHotel, name: nameHotel, zone: zoneHotel },
+            hotel: { id: idHotel, name: nameHotel, zone: cityId },
             ...params
         };
     }
 
-    function $loadImage (path) {
+    function $loadImage (item) {
+        
         let { URL_STORAGE } = mainStore
-        let url = `${URL_STORAGE}/storage/experiences/${path}`
-        return url
+        let { image: path, type, url, api } = item ?? {};
+        if (api) {
+            return url;
+        }
+        if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+        return `${URL_STORAGE}/storage/places/${item?.image}`;
     }
+    // function formatImage (item) {
+    //     let { image: path, type, url, api } = item ?? {};
+    //     if (api) {
+    //         return url;
+    //     }
+    //     if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
+    //     return `${URL_STORAGE}/storage/places/${item?.image}`;
+    // }
 
     async function $apiGetAll (params) {
         let newParams = getHotelParams(params);

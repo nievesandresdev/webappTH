@@ -43,5 +43,36 @@ export default {
                 "placeholder": "Digite sua senha"
             }
         }
+    },
+    "book_next_stay": {
+        "title": "Reserve sua próxima estadia",
+        "description": "Planeje sua próxima escapada"
+    },
+    "rewards": {
+        "title": "Convide um amigo",
+        "description": "Compartilhe benefícios exclusivos",
+        "button-recommend": "Recomende um amigo agora",
+         "referrals": {
+            "title": "Recomende um amigo!",
+            "discount": "{amount} de desconto",
+            "description": "Envie seu código de referência. Ele receberá {amount} de desconto graças ao seu código."
+        },
+        "referent": {
+            "title": "Indique um amigo e ganhem ambos!",
+            "titleReferred": "{amount} de desconto para o indicado",
+            "descerptionReferred": "Envie seu código de referência. Ele receberá {amount} de desconto graças ao seu código.",
+            "titleReferent": "Receba {amount} de desconto",
+            "descerptionReferent": "Após validar e usar o código do indicado, você receberá {amount} de desconto."
+        },
+        "titleReferentProfile": "Ganhe dinheiro",
+        "descriptionReferentProfile": "Indique um amigo para obter benefícios"
+    },
+    "next-reserve": {
+        "reserve-button": "Reservar",
+        "continue-title": "Deseja continuar?",
+        "continue-message": "Você será redirecionado para o site do hotel para continuar com o seu processo de reserva.",
+        "continue-yes": "Sim, continuar",
+        "continue-cancel": "Cancelar"
     }
+
 };

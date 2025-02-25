@@ -12,14 +12,14 @@
                 </div>
                 <div
                     id="content-filter"
-                     @scroll="handleScroll"
+                    @scroll="handleScroll"
                      ref="contentFilter"
                     class="pl-4 pr-[7px]  overflow-y-scroll flex-1 pt-[24px]"
                 >
                     <div class="space-y-6">
                         <div class="space-y-4 border-b border-[--Border-secondary] pb-6">
                             <label class="text-base font-bold">
-                                {{ $t('place.detail.filters.distanceLogding') }}
+                                {{ $t('place.detail.filters.distanceLogding') }} {{$formatTypeLodging()}}
                             </label>
                             <div class="flex flex-wrap gap-2 leading-110">
                                 <template  v-for="item in filterButtons.distance">
@@ -34,7 +34,7 @@
                         </div>
                         <div class="space-y-4 border-b border-[--Border-secondary] pb-6">
                             <label class="text-base font-bold">
-                                {{ $t('place.detail.recommended') }}
+                                {{ $t('place.detail.recommendedTitle',{ lodging: $formatTypeLodging()}) }}
                             </label>
                             <BaseButtonChipFilter
                                 :active="formFilterSheeBottom.featured"
@@ -89,6 +89,9 @@
     import BaseBottomSheet from '@/components/Modal/BaseBottomSheet.vue';
     import BaseButtonChipFilter from '@/components/Buttons/BaseButtonChipFilter.vue';
     import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+
+    import { useHotelStore } from '@/stores/modules/hotel';
+    const hotelStore = useHotelStore();
 
     const emits = defineEmits(['reloadPlaces']);
 

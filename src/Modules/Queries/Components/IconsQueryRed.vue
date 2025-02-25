@@ -70,11 +70,12 @@
         </div>
         <div v-else class="mt-4 sp:mt-6">
             <PrimaryButton 
-                    classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
-                :disabled="!changes"
+                classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
+                :disabled="!changes || sendingQuery"
+                :isLoading="sendingQuery"
                 @click="submit"
             >
-                {{ $t('query.form.send') }} 
+            {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
             </PrimaryButton> 
         </div>
     </div>
@@ -120,6 +121,7 @@ const props = defineProps({
 })
 const guestStore = useGuestStore();
 const textarea = ref(EditComment.value);
+const sendingQuery = ref(false);
 const isUpdate = ref(false);
 const form = reactive({
     type:EditQualification.value
@@ -149,6 +151,7 @@ watch(
 
 
 async function submit(){
+    sendingQuery.value = true;
     let params = {
         queryId : props.data.id,
         comment : textarea.value,
@@ -171,6 +174,7 @@ async function submit(){
         setTimeout(() => {
             toastSuccess(t(textRes)); 
             queryStore.$existingPendingQuery()
+            sendingQuery.value = false;
         }, 1000);
     }
 }

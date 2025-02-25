@@ -1,6 +1,9 @@
 <template>
     <SectionBar :title="$t('stay.detail.title')" :showButton="true" :button-text="$t('stay.detail.createBtn')" @onClickButton="createStay"/>
     <div class="px-3 pb-10 pt-[100px]">
+        <div v-if="loading" class="flex justify-center">
+            <Spinner width="40px" height="40px"/>
+        </div>
         <!-- Renderiza la estancia activa si existe -->
         <StayCard 
             v-if="activeStay"
@@ -65,7 +68,7 @@
         <div class="flex flex-col gap-6 w-full mt-2">
             <router-link 
                 @click="isModalOpen = false" 
-                :to="{ name:'EditStay', params:{ stayId: dataModalStay.stayId}}"
+                :to="{ name:'MyStay', params:{ stayId: dataModalStay.stayId}}"
                 class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] text-sm font-bold hshadow-button mt-4"
             >
                 {{ $t('stay.detail.editBtn') }}
@@ -79,6 +82,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
+import Spinner from '@/components/Spinner.vue';
 import StayCard from './Components/StayCard.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 
@@ -159,13 +163,11 @@ function handleMyStays(data) {
 }
 
 function createStay() {
-    // navigateTo('Home',{},{ acform : 'createstay' })
     router.push({ name:'HotelsList' , query:{ fromStay: 'true'}})
-    // authStore.$logoutAndCreateStay();
 }
 
 const AccessToStay = async () => {
-    // console.log('test stayId',dataModalStay.value.stayId)
+    isModalOpen.value = false;
     await hotelStore.$changeCurrentHotelData(dataModalStay.value.hotelId, dataModalStay.value.hotelSubdomain);
     await stayStore.findByIdInSetLocalStay(dataModalStay.value.stayId)
     navigateTo('Home')

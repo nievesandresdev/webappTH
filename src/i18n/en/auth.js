@@ -29,7 +29,9 @@ export default{
         "text-info-2": "I do not want to receive promotional messages.",
         "policies-text": "By selecting Accept and Continue, I agree to the",
         "policies-title": "Privacy Policy.",
-        "the-chain": "The Chain"
+        "the-chain": "The Chain",
+        "password-info": "The password must contain at least 8 characters."
+
     },
     "reset-pass":{
         "title": "Change Password",
@@ -46,5 +48,8 @@ export default{
         "amount-text": "accommodations in the chain",
         "stars-text": "stars",
         "star-text": "star",
+    },
+    "my-stay": {
+        "title": "My stay"
     }    
 }
