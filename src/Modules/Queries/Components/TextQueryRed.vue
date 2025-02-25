@@ -13,12 +13,13 @@
             {{ $t('query.settings.question' + data?.period, { lodging: $formatTypeLodging() }) }}
         </p>
         <div class="mt-3 sp:mt-4">
+            <!-- :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]" -->
             <TextareaAutogrow 
                 v-if="settings?.pre_stay_comment"
                 :id="'textarea1'"
                 v-model="textarea" 
                 :wordLimit="300"
-                :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]"
+                placeholder=""
                 showWordLimit
                 customClasses="min-h-[48px] sp:min-h-[72px]"
             />
