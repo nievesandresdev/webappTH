@@ -42,7 +42,7 @@
                         <p class="text-[5px] sp:text-[10px] font-medium lato leading-none">{{ $t('experience.card-experience.from') }}</p>
                         <p class="text-[9px] sp:text-[16px] font-medium lato leading-none">{{ price?.toFixed(2)?.replace('.', ',') }}€</p>
                     </template>
-                    <template v-else-if="data.type_price == 2">
+                    <template v-else-if="data.type_price == 1">
                         <p class="text-[9px] sp:text-[16px] font-medium lato leading-none">{{ price?.toFixed(2)?.replace('.', ',') }}€</p>
                     </template>
                     <template v-else="data.type_price == 3">
@@ -78,7 +78,7 @@ const price = computed(() => {
 });
 
 const showPriceFrom = computed(() => {
-    return data?.type_price == 1 || (typeService === 'ACTIVITY' && data?.name_api == 'viator');
+    return data?.type_price == 2 || (typeService === 'ACTIVITY' && data?.name_api == 'viator');
 });
 
 function goService () {
