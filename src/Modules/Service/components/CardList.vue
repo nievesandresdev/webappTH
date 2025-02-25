@@ -78,7 +78,6 @@ const price = computed(() => {
 });
 
 const showPriceFrom = computed(() => {
-    
     return data?.type_price == 2 || (typeService === 'ACTIVITY' && data?.name_api == 'viator');
 });
 
