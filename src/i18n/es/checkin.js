@@ -81,7 +81,8 @@ export default {
         "exit-continue": "Continuar con el Check-in",
         "norms-title" : "Políticas y Normas",
         "norms-subtitle" : "Penalizacion:",
-        
+        "why-data-continue":"Entendido",
+        "see-policies":"Ver política de privacidad"
 
     },
 }

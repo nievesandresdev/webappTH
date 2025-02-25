@@ -80,6 +80,8 @@ export default {
         "exit-button": "Sair",
         "exit-continue": "Continuar com o check-in",
         "norms-title": "Políticas e Regras",
-        "norms-subtitle": "Penalidade:"
+        "norms-subtitle": "Penalidade:",
+        "why-data-continue": "Entendido",
+        "see-policies": "Ver política de privacidade"
     }
 }
