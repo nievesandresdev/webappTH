@@ -101,7 +101,7 @@
     </section> -->
     <section class="w-full min-h-screen">
         <div class="w-[1120px] mx-[80px] 1xl:mx-auto mt-[80px] space-y-[40px] min-h-screen mb-[80px] ">
-            <h1 class="font-semibold text-[40px] w-[643px] text-center">{{ hotelData.name }}</h1>
+            <h1 class="font-semibold text-[40px] w-[643px] text-center">{{ hotelData?.name }}</h1>
             <div class="flex justify-between">
                 <div class="w-[643px] space-y-[40px]">
                     <div class="title">
@@ -226,7 +226,7 @@ onMounted(() => {
 
 // COMPUTED
 const urlHuespedMockup = computed(() => {
-    
+    if(!hotelData) return '';
     let domain = window.location.origin;
     let { subdomain } = hotelData;
     let url = `${domain}/${subdomain}/?chainsubdomain=${subdomain}&subdomain=${subdomain}&lang=es&mockup=true&test=x`;
@@ -234,6 +234,7 @@ const urlHuespedMockup = computed(() => {
     return url;
 });
 const urlHuespedQR = computed(() => {
+    if(!hotelData) return '';
     let domain = window.location.origin;
     let { subdomain } = hotelData;
     let url = `${domain}/webapp`;

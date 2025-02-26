@@ -54,21 +54,21 @@
                         </div>
                     </div>
                     <div class="mt-auto flex gap-4 ml-auto">
-                        <RoundedButton
-                            id="open-query-modal"
-                            v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
-                            @click="queryModalisOpen = true"
-                            iconUrl="/assets/icons/WA.STAR.BLACK.svg"
-                            sizeIcons="w-6 h-6"
-                            @closeModal="queryModalisOpen = false"
-                        />
-                        <RoundedButton
-                            v-if="showButtonShared" @click.stop="isModalOpen()"
-                            id="open-shared-stay-modal"
-                            iconUrl="/assets/icons/arrow-up-from-bracket.svg"
-                            sizeIcons="w-6 h-6"
-                        />
-                    </div>
+                    <RoundedButton
+                        id="open-query-modal"
+                        v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
+                        @click.stop="queryModalisOpen = true"
+                        iconUrl="/assets/icons/WA.STAR.BLACK.svg"
+                        sizeIcons="w-6 h-6"
+                        @closeModal="queryModalisOpen = false"
+                    />
+                    <RoundedButton
+                        v-if="showButtonShared" @click.stop="isModalOpen()"
+                        id="open-shared-stay-modal"
+                        iconUrl="/assets/icons/arrow-up-from-bracket.svg"
+                        sizeIcons="w-6 h-6"
+                    />
+                </div>
                 </div>
             </div>
         </template>
