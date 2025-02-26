@@ -11,14 +11,17 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    // console.log('test handleWebAppData');
+    // console.log('test handleWebAppData',{to,from});
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
     const authStore = useAuthStore();
     //
-    const stayId = utils.getUrlParam('e');
-    const guestId = utils.getUrlParam('g');
+    // const stayId = utils.getUrlParam('e');
+    // const guestId = utils.getUrlParam('g');
+    const stayId = to.query.e;
+    const guestId = to.query.g;
+    
     sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
     //evitar multiples redirecciones
     
@@ -65,22 +68,20 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
-    //cargar data huesped
-    if(guestId){
-        
-        let localGuest = guestStore.getLocalGuest();
-        console.log('test mddl localGuest',localGuest)
-        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
-            console.log('test mddl guest',guestId)
-            await guestStore.findByIdInSetLocalGuest(guestId)
-        }
+    //cargar data stay
+    if(stayId){
+        await stayStore.findByIdInSetLocalStay(stayId)
     }
     ////////////////////////////////////////////////////////
     //
     //
-    //cargar data stay
-    if(stayId){
-        await stayStore.findByIdInSetLocalStay(stayId)
+    //cargar data huesped
+    if(guestId){
+        
+        let localGuest = guestStore.getLocalGuest();
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            await guestStore.findByIdInSetLocalGuest(guestId)
+        }
     }
     ////////////////////////////////////////////////////////
     //
@@ -105,7 +106,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //validar sesion 
     authStore.$validateSession(to, next);
     authStore.$goLoginBySocialNetwork();
-    authStore.$validateStayGuestRelation();
+    authStore.$validateStayGuestRelation(next);
     //
     // Agrega la nueva ruta al historial
     if(authStore.sessionActive){

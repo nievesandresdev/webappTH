@@ -18,6 +18,14 @@ export default isMobile; */
 
 const isMobile = (to, from, next) => {
     const innerWidth = window.innerWidth;
+    // Array con los nombres de las rutas que no deben redireccionarse
+    const bypassRoutes = ['Inbox'];
+
+    // Si la ruta actual está en bypassRoutes, continúa sin redireccionar
+    if (bypassRoutes.includes(to.name)) {
+      return next();
+    }
+
   
     if (innerWidth > 768) {
       console.log('Redirigiendo a ScreenNotAllowed');
