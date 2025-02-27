@@ -13,7 +13,7 @@
     <template v-else>
         <div class="bg-white shadow-guest py-5">
             <p class="w-[650px] mx-auto roboto text-[30px] font-medium leading-[106%]">
-                {{hotelStore.hotelData.type}} {{hotelStore.hotelData.name}}
+                {{$utils.capitalize(hotelStore.hotelData?.type)}} {{hotelStore.hotelData?.name}}
             </p>  
         </div>
     </template>

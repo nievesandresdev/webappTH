@@ -12,6 +12,7 @@
             :hotel="hotelStore.hotelData" 
             :stay="stayStore.stayData" 
             :showButtonShared="true"
+            showQueryButton
             :isLoading="false"
             @stayClick="goMyStay"
         />

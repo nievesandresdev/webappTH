@@ -57,7 +57,7 @@
                     <RoundedButton
                         id="open-query-modal"
                         v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
-                        @click="queryModalisOpen = true"
+                        @click.stop="queryModalisOpen = true"
                         iconUrl="/assets/icons/WA.STAR.BLACK.svg"
                         sizeIcons="w-6 h-6"
                         @closeModal="queryModalisOpen = false"

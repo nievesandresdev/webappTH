@@ -128,6 +128,8 @@
       codes.value.unshift(selected)
     }
   }
+
+  defineExpose({ codes }) 
   </script>
   
   

@@ -54,16 +54,24 @@
                 type="email"
                 :showTextError="false"
             />
-            <THInputText
+            <!-- <THInputText
                 :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
                 :placeholder="`${$t('profile.page_personal_info.form.number_phone.placeholder')}`"
                 v-model="form.phone"
-            />
+            /> -->
+            <div>
+                <label class="text-[10px] sp:text-sm font-bold mb-1 sp:mb-2 block lato leading-[12px] sp:leading-[16px]">
+                    {{$t('profile.page_personal_info.form.number_phone.label')}}
+                </label>
+                <BaseInputPhone 
+                    v-model="form.phone" 
+                    @handleError="phoneError = $event"
+                /> 
+            </div>
             <THInputText
                 :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
                 :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
                 v-model="form.password"
-                topCustom="top-9"
                 type="password"
                 :disabled="true"
             />
@@ -90,7 +98,6 @@
             </button>
         </div>
     </div>
-
     <!-- Modal para cambiar contraseña -->
     <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
         <div class="flex flex-col w-full gap-4">
@@ -101,14 +108,12 @@
                 :isError="currentPasswordError"
                 :textError="'La contraseña actual introducida es incorrecta'"
                 type="password"
-                topCustom="top-9"
             />
             <THInputText
                 :textLabel="'Nueva contraseña'"
                 :placeholder="'Introduce tu nueva contraseña'"
                 v-model="newPassword"
                 type="password"
-                topCustom="top-9"
             />
             <button
                 @click="handleChangePassword"
@@ -134,6 +139,7 @@ import { ref, reactive, computed, onMounted, onBeforeUnmount,watch } from 'vue';
 import SectionBar from '@/components/SectionBar.vue';
 import THInputText from '@/components/THInputText.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
+import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
@@ -142,6 +148,7 @@ import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
 
 const formContainer = ref(null);
+const phoneError = ref(false);
 
 // Ajustar altura del contenedor al tamaño del viewport
 const updateViewportHeight = () => {
@@ -230,12 +237,15 @@ const isEmailValid = computed(() => {
 
 
 // Watch for changes in isModalOpen
-watch(isModalOpen.value, (newValue) => {
+watch(isModalOpen, (newValue) => {
   if (newValue) {
     lockScroll();
   } else {
     unlockScroll();
   }
+
+    newPassword.value = '';
+    currentPassword.value = '';
 });
 
 const validateEmail = () => {
