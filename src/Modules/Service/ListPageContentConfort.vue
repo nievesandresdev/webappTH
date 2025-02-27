@@ -8,7 +8,8 @@
                 v-if="!isloadingForm"
                 class="text-[6px] sp:text-sm font-bold lato"
             >
-                {{ paginateData.total }} Servicios encontrados en Confort
+                <!-- {{ paginateData.total }} Servicios encontrados en Confort -->
+                {{ $t('service.confort.text-search-found', { number: paginateData.total  }) }}
             </p>
             <p
                 v-else

@@ -7,7 +7,8 @@
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold lato"
         >
-            {{ paginateData.total }} Servicios encontrados en Transporte
+            <!-- {{ paginateData.total }} Servicios encontrados en Transporte -->
+            {{ $t('service.transport.text-search-found', { number: paginateData.total  }) }}
         </p>
         <p
             v-else

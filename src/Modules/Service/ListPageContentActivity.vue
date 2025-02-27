@@ -7,7 +7,7 @@
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-bold lato"
         >
-            {{ paginateData.total }} Servicios encontrados en Actividades
+            {{ paginateData.total }} {{ $t('service.activity.text-search-found') }}
         </p>
         <p
             v-else
