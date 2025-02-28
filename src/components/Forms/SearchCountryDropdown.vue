@@ -115,7 +115,7 @@
     const selectedCountry = uniqueCountries.value.find(country =>
       country.translateCountry[currentLanguage.value].toLowerCase() === searchQuery.value.toLowerCase()
     );
-    console.log('test selectedCountry',selectedCountry)
+    // console.log('test selectedCountry',selectedCountry)
     if (selectedCountry) {
       emit('selectedCountryCode', selectedCountry.codeCountry);
       emit('update:modelValue', selectedCountry.translateCountry[currentLanguage.value]);

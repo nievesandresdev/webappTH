@@ -30,7 +30,7 @@
         >{{$t('checkin.form.input-11-error')}}</p>
     </div>
     <!-- docSupportNumber -->
-    <div class="mt-2" v-if="settings?.second_step?.docSupportNumber?.visible">
+    <div class="mt-2" v-show="settings?.second_step?.docSupportNumber?.visible">
         <THInputText
             :customClasses="{'uppercase':form.docSupportNumber}"
             :textLabel="`${$t('checkin.form.input-12-label')}${isMandatory('docSupportNumber')}`"
@@ -46,7 +46,7 @@
         >{{$t('checkin.form.input-12-error')}}</p>
     </div>
     <!-- docNumber -->
-    <div class="mt-2" v-if="settings?.second_step?.docNumber?.visible">
+    <div class="mt-2" v-show="settings?.second_step?.docNumber?.visible">
         <!-- {{ String(docNumberError) }} -->
         <THInputText
             :textLabel="`${$t('checkin.form.input-13-label')}${isMandatory('docNumber')}`"

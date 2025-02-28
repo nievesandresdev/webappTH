@@ -167,6 +167,7 @@ export default {
         }
     },
     created(){
+        // console.log('test created i')
         if (this.isError) {
             this.hasError = true;
         }
