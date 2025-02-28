@@ -6,6 +6,8 @@
 <script>
 import axios from 'axios';
 
+const svgCache = new Map();
+
 export default {
   props: {
     class: {
@@ -63,9 +65,16 @@ export default {
   },
   methods: {
     async fetchSvg() {
+      if (svgCache.has(this.name)) {
+        this.baseSvgContent = svgCache.get(this.name);
+        this.updateSvgContent();
+        return;
+      }
+
       try {
         const response = await axios.get(`/assets/icons/${this.name}.svg`, { showPreloader: false });
         this.baseSvgContent = response.data;
+        svgCache.set(this.name, response.data); // Guardar en caché
         this.updateSvgContent();
       } catch (error) {
         console.error(`Error loading SVG icon: ${error}`);
