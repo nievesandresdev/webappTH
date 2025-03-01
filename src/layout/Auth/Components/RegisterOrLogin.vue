@@ -35,13 +35,13 @@
             <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-google')}}</p>
         </button>
         
-        <button 
+        <!-- <button 
             @click="goRegisterOrLogin('facebook')"
             class="mt-4 bg-white hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/WA.facebook.svg" alt="icon google">
             <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-fb')}}</p>
-        </button>
+        </button> -->
         
     </div>
 </template>
