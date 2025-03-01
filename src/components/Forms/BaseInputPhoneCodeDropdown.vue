@@ -26,11 +26,11 @@
       <!-- La lista desplegable -->
       <div
         v-show="open"
-        class="fixed w-full h-[70vh] z-50 px-4 top-0 bottom-0 left-0 my-auto"
+        class="fixed w-full h-[70vh] z-[6000] px-4 top-0 bottom-0 left-0 my-auto"
       >
         <div 
           ref="scrollContainer"
-          class="w-full h-full rounded-[20px] bg-gradient-h shadow-menu overflow-y-auto"
+          class="w-full h-full rounded-[20px] bg-gradient-h shadow-guest overflow-y-auto"
         >
           <div
             v-for="(item, index) in codes"

@@ -42,8 +42,9 @@
             :show_error_msg="false"
             :minDate="null"
             :is_range="false"
-            :mandatory="settings?.first_step?.birthdate?.mandatory"
+            mandatory
         />
+        <!-- :mandatory="settings?.first_step?.birthdate?.mandatory" -->
     </div>
     <!-- gender -->
     <div class="mt-2" v-if="settings?.first_step?.gender?.visible">
