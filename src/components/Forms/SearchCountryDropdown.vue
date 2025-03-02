@@ -4,7 +4,7 @@
         class="w-full flex items-center border h-10 px-2"
         :class="[
           'rounded-[10px]',
-          hasError ? 'hborder-alert-negative htext-alert-negative' : 'hborder-black-100'
+          hasError && Boolean(searchQuery) ? 'hborder-alert-negative htext-alert-negative' : 'hborder-black-100'
         ]"
       >
         <img class="w-5 h-5 mr-2" src="/assets/icons/WA.flag.svg" alt="">
@@ -13,7 +13,8 @@
           @input="handleInput"
           @keydown.enter="handleEnter"
           @blur="handleBlur"
-          placeholder="Escribe para ver sugerencias"
+          @focus="handleFocus"
+          :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3"
         />
         <img class="w-5 h-5" src="/assets/icons/WA.chevron.DOWN.svg" alt="">
@@ -26,7 +27,7 @@
         <li
           v-for="(country, index) in filteredCountries"
           :key="country.codeCountry"
-          @mousedown="selectCountry(country.translateCountry[currentLanguage])"
+          @mousedown="selectCountry(country.translateCountry[currentLanguage], country)"
           class="px-2 py-4 cursor-pointer hover:bg-gray-100 lato text-sm font-bold leading-[16px]"
           :class="{'hborder-top-gray-400': index > 0}"
         >
@@ -44,13 +45,18 @@
     modelValue: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
     }
   });
   
-  const emit = defineEmits(['update:modelValue']);
+  const emit = defineEmits(['update:modelValue','selectedCountryCode']);
   
   const searchQuery = ref(props.modelValue ?? '');
   const countries = ref([]);
+  const uniqueCountries = ref([]);
   const currentLanguage = ref('es'); // Simulación de idioma actual
   const isDropdownOpen = ref(false);
   const hasError = ref(false);
@@ -62,10 +68,20 @@
   });
   
   const filteredCountries = computed(() => {
-    if (!searchQuery.value) return [];
+      // Primero quitamos duplicados basándonos en codeCountry
+      uniqueCountries.value = Array.from(
+        new Map(countries.value.map(c => [c.codeCountry, c])).values()
+      );
+
+    if (!searchQuery.value) {
+      return uniqueCountries.value
+    }
+
+  
+    // if (!searchQuery.value) return [];
     const query = searchQuery.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    return countries.value.filter(country => {
+    return uniqueCountries.value.filter(country => {
       const countryName = country.translateCountry[currentLanguage.value].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       return countryName.includes(query);
     });
@@ -87,26 +103,34 @@
       isDropdownOpen.value = false;
     }
   };
+
+  const handleFocus = () => {
+    isDropdownOpen.value = true
+  }
   
   const validateInput = () => {
      // eliminar espacios al inicio y al final:
     searchQuery.value = searchQuery.value.trim();
 
-    const selectedCountry = countries.value.find(country =>
+    const selectedCountry = uniqueCountries.value.find(country =>
       country.translateCountry[currentLanguage.value].toLowerCase() === searchQuery.value.toLowerCase()
     );
+    // console.log('test selectedCountry',selectedCountry)
     if (selectedCountry) {
+      emit('selectedCountryCode', selectedCountry.codeCountry);
       emit('update:modelValue', selectedCountry.translateCountry[currentLanguage.value]);
       hasError.value = false;
     } else {
+        emit('selectedCountryCode', 'ES');
         emit('update:modelValue', null);
-      hasError.value = true;
+        hasError.value = true;
     }
   };
   
-  const selectCountry = (country) => {
+  const selectCountry = (country, fullData) => {
     isSelecting.value = true; // Activar la bandera
     searchQuery.value = country;
+    emit('selectedCountryCode', fullData.codeCountry);
     emit('update:modelValue', country);
     hasError.value = false;
     isDropdownOpen.value = false;

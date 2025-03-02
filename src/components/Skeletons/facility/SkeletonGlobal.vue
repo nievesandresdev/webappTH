@@ -2,16 +2,13 @@
     <div class="mb-[50px] sp:mb-[100px] animate-pulse">
       <div 
       class="px-2 sp:px-4 space-y-2 sp:space-y-4"
-        :class="{
-          'mt-[86px] sp:mt-[168px]' : hotelData?.show_facilities == 1 && hotelData?.show_profile == 1,
-          'mt-[60px] sp:mt-[105px]' : hotelData?.show_facilities == 0 || hotelData?.show_profile == 0,
-        }"
+        :class="hotelData?.show_facilities == 1 && hotelData?.show_profile == 1 ? 'mt-[86px] sp:mt-[168px]' : 'mt-[60px] sp:mt-[105px]'"
       >
         
         <div
           v-for="item in 5"
           :key="item"
-          class="flex flex-col rouded-[10px] sp:rounded-[20px] border border-white shadow-md bg-gradient-to-r bg-gradient-100 cursor-pointer"
+          class="flex flex-col rouded-[10px] sp:rounded-[20px] border border-white bg-gradient-to-r bg-gradient-100 cursor-pointer"
         >
         
           <div class="relative w-full h-[110px] sp:h-[226px] rounded-t-lg overflow-hidden">

@@ -8,7 +8,7 @@
             <h3 class="lato text-base font-bold leading-[20px]">{{ $t('stay.edit.information-stay') }}</h3>
             <!-- hotel name -->
             <div class="mt-4">
-                <label class="lato text-sm font-bold leading-[16px] mb-1">Hotel</label>
+                <label class="lato text-sm font-bold leading-[16px] mb-1">{{$utils.capitalize($formatTypeLodging())}}</label>
                 <THInputText
                     :iconLeft="`/assets/icons/WA.MENU.DISABLED.ALOJAMIENTO.svg`"
                     v-model="hotelNameAddress"
@@ -64,6 +64,7 @@
 </template>
 <script setup>
 import { toRefs, ref, reactive, onMounted, computed, provide } from 'vue'
+import { $formatTypeLodging } from '@/utils/helpers'
 
 import MyStayHeader from './Components/MyStay/MyStayHeader.vue'
 import THInputText from '@/components/THInputText.vue';

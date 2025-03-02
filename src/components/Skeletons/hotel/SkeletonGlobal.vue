@@ -1,4 +1,8 @@
 <template>
+<div
+        class="bg-[#FAFAFA] pb-[100px]"
+        :class="hotelData?.show_facilities == 1 && hotelData?.show_profile == 1 ? 'mt-[65px] sp:mt-[135px]' : 'mt-[25px] sp:mt-[55px]'"
+    >
     <div class="animate-pulse pb-[70px] sp:pb-[100px]">
         <div class="item-skeletom h-[235px] sp:h-[337px]  rounded-b-[20px]"></div>
         <div class="mt-[6px] sp:mt-[8px]">
@@ -56,7 +60,17 @@
             </div>
         </div>
     </div>
+</div>
 </template>
+
+<script setup>
+import { computed } from 'vue';
+
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
+const hotelData = computed(() => hotelStore.hotelData);
+
+</script>
 
 <style lang="scss">
     .card-data {

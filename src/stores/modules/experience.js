@@ -52,6 +52,7 @@ export const useExperienceStore = defineStore('experience', () => {
     }
 
     function $loadImage (item) {
+        
         let { URL_STORAGE } = mainStore
         let { image: path, type, url, api } = item ?? {};
         if (api) {

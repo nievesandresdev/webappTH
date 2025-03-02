@@ -8,6 +8,7 @@ export const getCrossellingsApi = () => apiHttp('GET', `${hotelPath}/getAllCross
 export const getChatHoursApi = () => apiHttp('GET', `${hotelPath}/getChatHours`)
 export const buildUrlWebAppApi = (params) => apiHttp('GET', `${hotelPath}/buildUrlWebApp`, params)
 export const getMainDataApi = (params) => apiHttp('GET', `${hotelPath}/getMainData`, params)
+export const getDataLegalpi = () => apiHttp('GET', `${hotelPath}/getDataLegal`, [])
 //findById
 export const findByIdApi = (id) => apiHttp('GET', `${hotelPath}/findById/${id}`,[])
 export const getRewardsByHotel = (id) => apiHttp('GET', `${hotelPath}/getRewardsByHotel`,[])

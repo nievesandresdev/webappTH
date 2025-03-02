@@ -47,6 +47,9 @@ export default{
         "amount-text": "hébergements de la chaîne",
         "stars-text": "étoiles",
         "star-text": "étoile",
+    },
+    "my-stay": {
+        "title": "Mon séjour"
     }
     
     

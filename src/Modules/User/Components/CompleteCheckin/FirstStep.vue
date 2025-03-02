@@ -11,7 +11,7 @@
     <!-- lastname -->
     <div class="mt-2" v-if="settings?.first_step?.lastname?.visible">
         <THInputText
-            :textLabel="`Primer apellido${isMandatory('lastname')}`"
+            :textLabel="`${$t('checkin.form.input-2-label')}${isMandatory('lastname')}`"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.lastname"
             :showTextError="false"
@@ -20,7 +20,7 @@
     <!-- secondlastname -->
     <div class="mt-2" v-if="settings?.first_step?.secondLastname?.visible">
         <THInputText
-            :textLabel="`${'Segundo apellido'}${isMandatory('secondLastname')}`"
+            :textLabel="`${$t('checkin.form.input-3-label')}${isMandatory('secondLastname')}`"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.secondLastname"
             :error="secondLastnameError"
@@ -29,26 +29,31 @@
         <p
             v-if="secondLastnameError"
             class="lato text-xs font-bold leading-[12px] sp:leading-[16px] htext-alert-negative"
-        >Si tu tipo de documento es DNI español, completa este campo</p>
+        >{{$t('checkin.form.input-3-alert')}}</p>
     </div>
     <!-- birthdate -->
     <div class="mt-2" v-if="settings?.first_step?.birthdate?.visible">
-        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Fecha de nacimiento{{ isMandatory('birthdate') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+            {{$t('checkin.form.input-4-label')}}{{ isMandatory('birthdate') }}
+        </label>
         <THInputCalendar
-            :textLabel="$t('stay.create.check-date.placeholder')"
+            :textLabel="$t('checkin.form.input-4-plchdr')"
             v-model="form.birthdate"
             :show_error_msg="false"
             :minDate="null"
             :is_range="false"
-            :mandatory="settings?.first_step?.birthdate?.mandatory"
+            mandatory
         />
+        <!-- :mandatory="settings?.first_step?.birthdate?.mandatory" -->
     </div>
     <!-- gender -->
     <div class="mt-2" v-if="settings?.first_step?.gender?.visible">
-        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Sexo{{ isMandatory('gender') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+            {{$t('checkin.form.input-5-label')}}{{ isMandatory('gender') }}
+        </label>
         <THInputField
             icon_left="/assets/icons/WA.sexo.svg"
-            :textLabel="'Selecciona una opcion'"
+            :textLabel="$t('checkin.form.input-5-plchdr')"
             :options="options_gender"
             v-model="form.gender"
             :top_dropdown="'top-0'"
@@ -58,7 +63,9 @@
     </div>
     <!-- phone -->
     <div class="mt-2" v-if="settings?.first_step?.phone?.visible">
-        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Teléfono{{ isMandatory('phone') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+            {{$t('checkin.form.input-6-label')}}{{ isMandatory('phone') }}
+        </label>
         <BaseInputPhone 
             v-model="form.phone" 
             @handleError="phoneError = $event"
@@ -66,7 +73,9 @@
     </div>
     <!-- email -->
     <div class="mt-2" v-if="settings?.first_step?.email?.visible">
-        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Correo electrónico{{ isMandatory('email') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+            {{$t('checkin.form.input-7-label')}}{{ isMandatory('email') }}
+        </label>
         <THInputText
             iconLeft="/assets/icons/WA.mail.svg"
             :placeholder="$t('auth.log-or-register.input')"
@@ -81,8 +90,8 @@
     <!-- responsibleAdult -->
     <div class="mt-2" v-if="settings?.first_step?.responsibleAdult?.visible">
         <THInputText
-            :textLabel="`Adulto responsable${isMandatory('responsibleAdult')}`"
-            placeholder="Nombre y apellidos del adulto"
+            :textLabel="`${$t('checkin.form.input-8-label')}${isMandatory('responsibleAdult')}`"
+            :placeholder="$t('checkin.form.input-8-plchdr')"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.responsibleAdult"
             :showTextError="false"
@@ -90,10 +99,12 @@
     </div>
     <!-- kinshipRelationship -->
     <div class="mt-2" v-if="settings?.first_step?.kinshipRelationship?.visible">
-        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">Relación de parentesco{{ isMandatory('kinshipRelationship') }}</label>
+        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+            {{$t('checkin.form.input-9-label')}}{{ isMandatory('kinshipRelationship') }}
+        </label>
         <THInputField
             icon_left="/assets/icons/WA.parentesco.svg"
-            :textLabel="'Cómo se vincula el adulto con el menor'"
+            :textLabel="$t('checkin.form.input-9-plchdr')"
             :options="options_kinshipRelationship"
             v-model="form.kinshipRelationship"
             :top_dropdown="'top-0'"

@@ -6,7 +6,7 @@
 
     <ImageSlider
       show-button-back
-      :images="serviceData.images.map(item=> serviceStore.$loadImage(item))"
+      :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
       :from="'services'"
     />
     <div class="py-[12px] sp:py-[24px] no-scrollbar mx-2 sp:mx-4">
@@ -14,7 +14,13 @@
             <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                 {{ serviceData?.name }}
             </h2>
-            <p class="text-[14px] sp:text-[20px] font-bold mt-[8px] lato">{{ serviceData?.price?.toFixed(2) }}€</p>
+            <div class="mt-[5px] sp:mt-[8px]">
+                <p v-if="serviceData.type_price === 2" class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
+                <p v-if="serviceData.type_price == 1 || serviceData.type_price == 2" class="text-[14px] sp:text-[20px] font-bold lato">{{ serviceData?.price?.toFixed(2) }}€</p>
+                <template v-else="serviceData.type_price == 3">
+                    <p class="text-[14px] sp:text-[20px] font-bold lato">{{ $t('service.card-item.free') }}</p>
+                </template>
+            </div>
         </div>
         <div
             v-if="description"
@@ -42,11 +48,12 @@
 
         <div
             v-if="hire"
-            class="pb-[8px] sp:pb-[16px] mt-4 sp:mt-6"
+            class=" sp:pb-[16px] mt-4 sp:mt-6 card-recommendation p-2 sp:p-4"
         >
+            <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">Cómo contratar</h3>
             <p
                 ref="hireRef"
-                class="hire mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
+                class="hire  text-[9px] sp:text-sm font-medium lato"
                 :class="{ expanded: isExpandedHire }"
                 v-html="hire"
             />
@@ -54,7 +61,6 @@
                 v-if="isLongHire"
                 class="mt-[6px] sp:mt-[12px] flex justify-end"
             >
-
                 <button
                     class="underline hbtn-tertiary text-[9px] sp:text-sm font-bold lato"
                     @click="toggleHire"
@@ -63,8 +69,10 @@
                 </button>
             </div>
         </div>
+
         <PrimaryButton 
-            classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato"
+            v-if="serviceData.link_url"
+            classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
             @click="isOpenModelLink = true"
         >
             {{ $t('service.modal-request-service.button') }}
@@ -114,6 +122,13 @@ const experienceStore = useExperienceStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
+const props = defineProps({
+  paramsRouter: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
 // const serviceData = {
 //     name: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
 //     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
@@ -124,6 +139,7 @@ const hotelStore = useHotelStore();
 // }
 
 const serviceData = ref({
+    type: null,
     name: null,
     description: null,
     hire: null,
@@ -149,11 +165,16 @@ const loading = ref(true);
 const hotelData = computed(() => hotelStore.hotelData);
 
 const serviceCurrent = computed(() => {
-    return router.params;
+    return props.paramsRouter.service;
 });
 
 onMounted(() => {
     // loadData();
+});
+
+const idService = computed(() => {
+    let { id, slug } = props.paramsRouter ?? {};
+    return id ?? slug;
 });
 
 watch(hotelData, (valueCurrent, valueOld) => {
@@ -161,6 +182,40 @@ watch(hotelData, (valueCurrent, valueOld) => {
         loadData();
     }
 }, { immediate: true });
+
+async function loadData () {
+    loading.value = true;
+    let response = null;
+    if (serviceCurrent.value === 'confort') {
+        response = await serviceStore.$findByIdConfort(idService.value);
+    }
+    if (serviceCurrent.value === 'transport') {
+        response = await serviceStore.$findByIdTransport(idService.value);
+    }
+    if (serviceCurrent.value === 'activity') {
+        response = await experienceStore.$apiFindBySlug({slug: idService.value});
+    }
+    if (response.ok) {
+        let { data } = response;
+        let dataTranslate = {
+            type: data?.name_api,
+            name: data?.name ?? data?.title,
+            description: data?.translation_current?.description ?? data?.description,
+            hire: data?.translation_current?.hire ?? data?.hire,
+            images: data.images,
+            link_url: data.link_url ?? data.url,
+            price: data.price ?? data.from_price,
+            type_price: data.type_price
+        };
+        Object.assign(serviceData.value, dataTranslate);
+        description.value = dataTranslate.description;
+        hire.value = dataTranslate.hire;
+        nextTick(() => {
+            checkDescriptionLength();
+        });
+    }
+    loading.value = false;
+}
 
 function checkDescriptionLength () {
   nextTick(() => {
@@ -174,20 +229,6 @@ function checkDescriptionLength () {
         isLongHire.value = hireElement.scrollHeight > hireElement.clientHeight;
     }
   });
-}
-
-async function loadData () {
-    loading.value = true;
-    let response = await serviceStore.$findByIdConfort(3);
-    if (response.ok) {
-        let { data } = response;
-        let dataTranslate = { name: data.name, description: data.translation_current.description, hire: data.translation_current.hire, images: data.images, link_url: data.link_url, price: data.price };
-        Object.assign(serviceData.value, dataTranslate);
-        description.value = dataTranslate.description;
-        hire.value = dataTranslate.hire;
-        checkDescriptionLength();
-    }
-    loading.value = false;
 }
 
 const toggleDescription = () => {
@@ -225,12 +266,6 @@ const openModalLink = () => {
     border-radius: 10px;
     border: 1px solid #E9E9E9;
     background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
-    &__tag {
-        border-radius: 18px;
-        border: 1px solid  #FFF;
-        background: #FAFAFA;
-        box-shadow: 0px 0.5px 4px 0px rgba(0, 0, 0, 0.12), 0px 6px 13px 0px rgba(0, 0, 0, 0.12);
-    }
 }
 
 </style>

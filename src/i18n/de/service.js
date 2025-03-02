@@ -1,5 +1,6 @@
 export default {
   "title": "Dienstleistungen",
+  "placeholder-search": "Suchdienst",
   "modal-request-service": {
     "button": "Dienst anfordern",
     "title": "Sie werden auf eine externe Website weitergeleitet",
@@ -11,16 +12,19 @@ export default {
     },
     "confort": {
       "title": "Komfort",
+      "text-search-found": "Gefundene Dienstleistungen im Komfort {number}",
       "list-page": {},
       "detail-page": {}
     },
     "transport": {
       "title": "Transport",
+      "text-search-found": "Gefundene Dienstleistungen im Transport {number}",
       "list-page": {},
       "detail-page": {}
     },
     "activity": {
       "title": "Aktivitäten",
+      "text-search-found": "Gefundene dienstleistungen in aktivitäten",
       "list-page": {},
       "detail-page": {}
     }

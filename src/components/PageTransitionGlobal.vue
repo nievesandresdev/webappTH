@@ -1,4 +1,5 @@
 <template>
+  <!-- transition container -->
   <div>
     <Transition name="fade">
       <div v-if="loading !== null && loading" class="skeleton-wrapper">
@@ -10,6 +11,7 @@
       </div>
     </Transition>
   </div>
+  <!-- end transition container -->
 </template>
 
 <script setup>
@@ -56,10 +58,10 @@ const getSkeletonComponent = () => {
   /* padding: 10px; */
 }
 
-.content {
+/* .content {
   opacity: 0;
   animation: fadeIn 0.8s ease-in-out forwards;
-}
+} */
 
 @keyframes fadeIn {
   from { opacity: 0; }

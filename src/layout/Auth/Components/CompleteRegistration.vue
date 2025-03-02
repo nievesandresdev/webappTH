@@ -93,8 +93,10 @@ const form = reactive({
 })
 
 onMounted(async () => {
-    form.id = getUrlParam('g');
+    
+    form.id = guestStore.guestData?.id;
     // console.log('test form.id',form.id)
+    // console.log('test complete')
     if(!form.id){
         if(localStorage.getItem('subdomain')){
             navigateTo('Home',{},{ acform : 'log' })
@@ -104,10 +106,10 @@ onMounted(async () => {
         
     }
     method.value = getUrlParam('m');
-    let guestData = await guestStore.findById(form.id);
-    form.email = guestData?.email ?? '';
+    // let guestData = await guestStore.findById(form.id);
+    form.email = guestStore.guestData?.email ?? '';
     if(method.value == 'google'){
-        form.name = guestData?.name ?? '';
+        form.name = guestStore.guestData?.name ?? '';
         form.password = '123456789';
     }
 })

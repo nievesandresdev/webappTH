@@ -53,7 +53,7 @@
                 v-if="description"
                 class="pb-[8px] sp:pb-[16px] border-b  border-[#E9E9E9]"
             >
-                <h2 class="text-[10px] sp:text-[18px] lato leading-none mb-1 sp:mb-2 font-bold">Descripción</h2>
+                <h2 class="text-[10px] sp:text-[18px] lato leading-none mb-1 sp:mb-2 font-bold">{{ $t('experience.detail-page.title-description') }}</h2>
                 <p
                     ref="descriptionRef"
                     class="description mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
@@ -209,8 +209,6 @@ async function loadExperienceInViator () {
     if (response.ok) {
         experienceViatorData.value = response.data;
         loadLanguagesAvailables();
-    } else {
-        router.go(-1);
     }
     
 }
@@ -253,7 +251,11 @@ const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
 }
 
-function goInViator () {
+function goInViator ()  {
+    if (!experienceViatorData.value || !experienceViatorData?.value?.productUrl) {
+         router.go(-1);
+         return;
+    }
     window.open(experienceViatorData?.value.productUrl, '_blank')
 }
 

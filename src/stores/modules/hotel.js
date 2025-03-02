@@ -8,7 +8,8 @@ import {
     findByIdApi,
     buildUrlWebAppApi,
     getRewardsByHotel,
-    getMainDataApi
+    getMainDataApi,
+    getDataLegalpi
 } from '@/api/services/hotel.services'
 
 
@@ -152,6 +153,12 @@ export const useHotelStore = defineStore('hotel', () => {
         const response = await findByParamsApi(params)
         return response.data
     }
+
+    async function $getDataLegal () {
+        const response = await getDataLegalpi()
+        const { ok } = response
+        return ok ? response.data : {}
+    }
     
     return {
         hotelData:hotelDataComputed,
@@ -171,7 +178,8 @@ export const useHotelStore = defineStore('hotel', () => {
         oldSubdomain,
         $getRewardsByHotel,
         $findByParamsApi,
-        hotelDataStorage
+        hotelDataStorage,
+        $getDataLegal
     }
 
 

@@ -8,14 +8,14 @@
       <img src="/assets/icons/WA.chevron.svg" alt="Back Icon" />
     </button>
 
-    <div
+    <img
       v-for="(image, index) in imagesComplete"
       :key="image.id"
-      class="w-full h-full bg-cover bg-center absolute top-0 left-0 transition-opacity duration-500 ease-in-out"
-      :style="{ backgroundImage: `url(${image})` }"
-      v-show="currentSlide === index"
-    >
-    </div>
+      :src="image"
+      class="w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500 ease-in-out"
+      :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }"
+    />
+
 
     <div
       v-if="images.length > 1"

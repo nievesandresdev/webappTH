@@ -159,7 +159,12 @@ function loadTabs () {
 }
 
 function changeType (type = null) {
+    if (isloadingForm.value) {
+        return;
+    }
     formFilter.type = type.toUpperCase();
+    page.value = 1;
+    servicesData.value = [];
     route.push({ name: type });
 }
 

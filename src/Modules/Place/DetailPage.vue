@@ -246,7 +246,7 @@ const isExpanded = ref(false);
 const isLongDescription = ref(false);
 const descriptionRef = ref(null);
 const description = ref('');
-const loading = ref(false);
+const loading = ref(true);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
@@ -262,6 +262,21 @@ watch(hotelData, (valueCurrent, valueOld) => {
 }, { immediate: true });
 
 // FUNCTION
+
+// Cargar datos del lugar
+async function getDataPlace () {
+    loading.value = true;
+  let response = await placeStore.$findById({ id: props.paramsRouter.id });
+  placeData.value = null;
+  if (response.ok) {
+    placeData.value = response.data.place;
+    let hours =  response.data.backupPlace?.hours;
+    hours = hours ? JSON.parse(hours) : null;
+    hourData.value = hours?.weekRanges ?? null;
+    await nextTick();
+  }
+      loading.value = false;
+}
 
 async function loadData () {
     await getDataPlace();
@@ -313,21 +328,6 @@ function checkDescriptionLength() {
 
 const toggleDescription = () => {
   isExpanded.value = !isExpanded.value;
-}
-
-// Cargar datos del lugar
-const getDataPlace = async () => {
-    loading.value = true;
-  let response = await placeStore.$findById({ id: props.paramsRouter.id });
-  placeData.value = null;
-  if (response.ok) {
-    placeData.value = response.data.place;
-    let hours =  response.data.backupPlace?.hours;
-    hours = hours ? JSON.parse(hours) : null;
-    hourData.value = hours?.weekRanges ?? null;
-    await nextTick();
-  }
-      loading.value = false;
 }
 
 // Convierte las estrellas

@@ -20,7 +20,7 @@
             id="input-search"
             v-model="valueSearch"
             type="text"
-            :placeholder="$t('place.placeholder-search')"
+            :placeholder="$t('service.placeholder-search')"
             class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium border-[1px] focus:border-[2px]"
             :class="valueSearch ? 'border-[2px]' : 'border-[1px]'"
             @input="searchHnadle"

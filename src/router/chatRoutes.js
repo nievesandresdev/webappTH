@@ -1,6 +1,7 @@
 const AppLayout = () => import('@/layout/AppLayout')
 const WindowChatMobile = () => import('@/Modules/Chat/WindowMobile.vue')
 const WindowChatRed = () => import('@/Modules/Chat/WindowChatRed.vue')
+const ChatTest = () => import('@/Modules/Chat/ChatTest.vue')
 const FakeChatMobile = () => import('@/Modules/Chat/FakeWindowChat.vue')
 
 const chatRoutes = [
@@ -15,6 +16,11 @@ const chatRoutes = [
         name: 'Chat',
         path: '',
         component: WindowChatRed
+      },
+      {
+        name: 'ChatTest',
+        path: 'test',
+        component: ChatTest
       },
       {
         name: 'FakeChat',

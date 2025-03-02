@@ -13,7 +13,7 @@
     <template v-else>
         <div class="bg-white shadow-guest py-5">
             <p class="w-[650px] mx-auto roboto text-[30px] font-medium leading-[106%]">
-                {{hotelStore.hotelData.type}} {{hotelStore.hotelData.name}}
+                {{$utils.capitalize(hotelStore.hotelData?.type)}} {{hotelStore.hotelData?.name}}
             </p>  
         </div>
     </template>
@@ -54,7 +54,7 @@ const tabsMenu = computed(() => [
         notify: chatStore.countUnreadMessages 
     },
     {    
-        title: 'Inbox',//$utils.titleCase(t('chat.tabs.inbox'))
+        title: $utils.titleCase(t('chat.tabs.inbox')),
         exclude: false,
         iconDefault: `WA.inbox.DISABLED`,
         iconSelected: `WA.inbox`,

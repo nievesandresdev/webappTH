@@ -11,10 +11,12 @@
         <img class="w-5 h-5 mr-2" src="/assets/icons/WA.pin-point.svg" alt="location-icon">
         
         <input
+          :type="typeResults.includes('postcode') && focusOn ? 'number' : 'text'"
           v-model="searchQuery"
           @input="handleInput"
           @blur="handleBlur"
-          placeholder="Escribe para ver sugerencias"
+          @focus="focusOn = true"
+          :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 lato text-sm font-medium"
         />
         
@@ -52,7 +54,23 @@
     modelValue: {
       type: String,
       default: ''
-    }
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    selectedCountry: {
+      type: String,
+      default: 'ES'
+    },
+    typeResults: {
+      type: String,
+      default: 'locality,place'
+    },
+    formatResult: {
+      type: String,
+      default: ''
+    },
   })
   
   const emit = defineEmits(['update:modelValue'])
@@ -62,37 +80,37 @@
   const isDropdownOpen = ref(false)
   const hasError = ref(false)
   const isSelecting = ref(false)
+  const focusOn = ref(false)
   
-  // Función para formatear la sugerencia con "código postal, municipio"
   function formatPlace(place) {
-  // 1. Intentar extraer desde place.context
+  // Extraer datos
   const postalCodeObj = place.context?.find(ctx => ctx.id.startsWith('postcode'))
   const municipalityObj = place.context?.find(ctx => ctx.id.startsWith('place'))
   
-  // 2. Inicializamos code y municipality con lo que haya en context (si existe)
   let code = postalCodeObj?.text || ''
   let municipality = municipalityObj?.text || ''
   
-  // 3. Si el resultado principal en sí mismo es un postcode, pisamos el code
+  // Si queremos mostrar direcciones y la sugerencia es 'address'
+  if (props.formatResult == 'address' && place.place_type.includes('address')) {
+    return place.place_name
+  }
+
+  // Sobrescribir código si es postcode
   if (place.place_type.includes('postcode')) {
     code = place.text
   }
   
-  // 4. Si es un place (ciudad), pisamos el municipality
+  // Sobrescribir municipio si es place/locality
   if (place.place_type.includes('place') || place.place_type.includes('locality')) {
     municipality = place.text
   }
   
-  // 5. Retornar en formato "XXXX, Municipio" si tenemos ambos
-  if (code && municipality) {
-    return `${code}, ${municipality}`
-  } else if (code) {
-    return code
-  } else if (municipality) {
-    return municipality
-  }
+  // Retornar en formato "code, municipality" si ambos existen
+  if (code && municipality) return `${code}, ${municipality}`
+  if (code) return code
+  if (municipality) return municipality
   
-  // 6. Si no tenemos nada de lo anterior, fallback a place.place_name
+  // Fallback
   return place.place_name
 }
 
@@ -107,8 +125,9 @@
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json
       ?access_token=${mapboxgl.accessToken}
       &autocomplete=true
-      &types=locality,place,postcode
+      &types=${props.typeResults}
       &language=es
+      &country=${props.selectedCountry}
       &limit=5`.replace(/\s+/g, '')
 
     const res = await fetch(url)
@@ -138,6 +157,7 @@
   }
   
   function handleBlur() {
+    focusOn.value = false;
     // console.log('test handleBlur')
     if (!isSelecting.value) {
       validateInput()
@@ -146,6 +166,7 @@
   }
   
   function selectPlace(place) {
+    focusOn.value = false;
     // console.log('test place',place)
     isSelecting.value = true
     // Guardar el valor formateado en el input

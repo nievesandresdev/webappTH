@@ -1,5 +1,6 @@
 export default {
   "title": "Serviços",
+  "placeholder-search": "Serviço de pesquisa",
   "modal-request-service": {
     "button": "Solicitar serviço",
     "title": "Você está prestes a ser redirecionado para um site externo",
@@ -11,16 +12,19 @@ export default {
     },
     "confort": {
       "title": "Conforto",
+      "text-search-found": "Serviços encontrados no conforto {number}",
       "list-page": {},
       "detail-page": {}
     },
     "transport": {
       "title": "Transporte",
+      "text-search-found": "Serviços encontrados no transporte {number}",
       "list-page": {},
       "detail-page": {}
     },
     "activity": {
       "title": "Atividades",
+      "text-search-found": "Serviços encontrados em atividades",
       "list-page": {},
       "detail-page": {}
     }
