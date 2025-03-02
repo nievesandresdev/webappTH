@@ -90,9 +90,10 @@
                 :class="[
                     'w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border text-sm font-bold hshadow-button mt-4',
                     isFormValid
-                        ? 'bg-[#333333] text-white border-white'
-                        : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
+                        ? ' text-white border-white'
+                        : ' bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
                 ]"
+                :style="{backgroundColor: buttonBackground}"
             >
                 {{ $t('profile.page_personal_info.btn_save') }}
             </button>
@@ -147,6 +148,9 @@ const guestStore = useGuestStore();
 import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
 
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
+
 const formContainer = ref(null);
 const phoneError = ref(false);
 
@@ -180,6 +184,22 @@ const unlockScroll = () => {
     formContainer.value.style.overflow = '';
   }
 };
+
+const buttonBackground = computed(() => {
+    const hex = chainStore.$bgColor0 || '#333333'; // Color por defecto si no hay valor en el store
+    return isFormValid.value ? hex : convertHexToRGBA(hex, 0.5);
+});
+
+function convertHexToRGBA(hex, alpha = 1) {
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) {
+        hex = hex.split('').map(x => x + x).join('');
+    }
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
 
 

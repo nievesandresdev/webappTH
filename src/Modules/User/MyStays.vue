@@ -39,6 +39,7 @@
         @update:isOpen="isModalOpen = $event" 
         :showButton="dataModalStay.stayId !== stayStore.stayData?.id" 
         :buttonText="$t('stay.edit.accessRoom')"
+        customChain
         @handleClick="AccessToStay"
     >
         <div>

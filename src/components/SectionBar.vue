@@ -10,7 +10,8 @@
         <button
             v-if="showButton"
             @click="onClickButton"
-            class="lato flex items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
+            class="lato flex items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white  text-white text-sm font-bold hshadow-button"
+            :style="{backgroundColor: chainStore.$bgColor0 ? chainStore.$bgColor0 : buttonColor}"
         >
             {{ buttonText }}
         </button>
@@ -26,6 +27,9 @@ const router = useRouter();
 import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore()
 
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
+
 const emit = defineEmits(['onClickButton'])
 const props = defineProps({
     title: {
@@ -38,7 +42,7 @@ const props = defineProps({
     },
     buttonText: {
         type: String,
-        default: 'Crear estancia'
+        default: 'Crear estancias'
     },
     routeName: {
         type: String,
@@ -47,6 +51,10 @@ const props = defineProps({
     viewNameBack: {
         type: String,
         default: null
+    },
+    buttonColor: {
+        type: String,
+        default: 'bg-[#333333]'
     }
 });
 

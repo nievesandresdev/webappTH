@@ -31,7 +31,8 @@
                 v-if="showButton"
                 @click="handleSubmit"
                 :disabled="$utils.isMockup()"
-                class="w-full lato flex justify-center items-center h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
+                class="w-full lato flex justify-center items-center h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white  text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
+                :style="{backgroundColor: customChain ? chainStore.$bgColor0 : '#333333'}"
             >
                 <img v-if="showIconButton" :src="iconButton" class="sp:w-6 sp:h-6 h-5 w-5" alt="Icon Button" />
                 {{ buttonText }}
@@ -45,7 +46,8 @@ import { ref, watch } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 import Icon from '../Icon.vue';
 import { isMockup } from '@/utils/utils.js';
-
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 const props = defineProps({
     isOpen: Boolean,
@@ -65,8 +67,18 @@ const props = defineProps({
     imgHeader: {
         type: String,
         default: ''
+    },
+    customChain: {
+        type: Boolean,
+        default: false
+    },
+    buttonColor: {
+        type: String,
+        default: 'bg-[#333333]'
     }
 });
+
+
 
 const emit = defineEmits(['update:isOpen', 'handleClick']);
 

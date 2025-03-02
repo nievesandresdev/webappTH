@@ -6,6 +6,7 @@
         :button-text="$t('profile.rewards.button-recommend')" 
         @handleClick="openModalShare" 
         :img-header="'/assets/icons/rewards/referent.svg'"
+        customChain
     >
         <div class="flex flex-col gap-3">
             <span class="font-bold sp:text-xl lato text-[12px]">{{ $t('profile.rewards.referent.title') }}</span>
