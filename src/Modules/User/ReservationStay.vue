@@ -47,6 +47,7 @@
                 <button
                     class="w-full lato flex justify-center items-center h-10 px-4 py-2 gap-2 rounded-[10px] border border-white bg-[#333333] text-white text-sm font-bold hshadow-button"
                     @click="openModalConfirmReservation(hotels[0]?.website_google)"
+                    :style="{backgroundColor: chainStore.$bgColor0 ? chainStore.$bgColor0 : '#333333'}"
                 >
                     <img src="/assets/icons/WA.Redirect.svg" class="w-6 h-6" alt="Icon Button" />
                     Reservar
@@ -65,6 +66,7 @@
         @handleClick="openModalConfirmReservation" 
         showIconButton 
         iconButton="/assets/icons/WA.Redirect.svg"
+        customChain
     >
         <div class="">
             <h2 class="lato text-lg font-bold leading-[28px]">{{modalInfo.name}}</h2>
