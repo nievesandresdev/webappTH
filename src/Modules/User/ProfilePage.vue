@@ -1,5 +1,5 @@
 <template>
-    <SectionBar :viewNameBack="'ShowHotel'" :title="$t('profile.account')" />
+    <SectionBar :title="$t('profile.account')" />
     <div class="px-3 sp:my-[100px] my-[50px]">
         <div class="flex flex-col items-center mt-6">
             <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
