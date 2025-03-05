@@ -11,7 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    // console.log('test handleWebAppData',{to,from});
+    console.log('test handleWebAppData',{to,from});
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -51,6 +51,7 @@ export default async function handleWebAppData({ to, from, next }) {
         utils.saveHotelSlug(chainStore.chainData?.independentSubdomain);    
         if(chainStore.chainData?.independentSubdomain && to.name == 'ChainLanding'){
             // Redirige a la home cuando la cadena sea independiente
+            console.log('test mddl 1')
             return next({ name: 'Home', params :{ hotelSlug: chainStore.chainData?.independentSubdomain}, query: to.query }); 
         } 
     }else{
@@ -59,6 +60,7 @@ export default async function handleWebAppData({ to, from, next }) {
         //si el slug no pertenece a un hotel de la cadena se va a la chainlanding
         if(!validSubdomain && to.params.hotelSlug && !utils.isMockup()) {
             await hotelStore.$deleteLocalHotel();
+            console.log('test mddl 2')
             return next({ name: 'ChainLanding' });
         }
         utils.saveHotelSlug(to.params.hotelSlug);
@@ -104,9 +106,12 @@ export default async function handleWebAppData({ to, from, next }) {
     // }
 
     //validar sesion 
-    authStore.$validateSession(to, next);
-    authStore.$goLoginBySocialNetwork();
-    authStore.$validateStayGuestRelation(next);
+    console.log('test screen.width',screen.width)
+    if(screen.width < 767){   
+        authStore.$validateSession(to, next);
+        authStore.$goLoginBySocialNetwork();
+        authStore.$validateStayGuestRelation(next);
+    }
     //
     // Agrega la nueva ruta al historial
     if(authStore.sessionActive){
@@ -116,5 +121,6 @@ export default async function handleWebAppData({ to, from, next }) {
             query: to.query
         })
     }
+    console.log('test mddl fin')
     next();
 }

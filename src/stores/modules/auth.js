@@ -146,7 +146,7 @@ export const useAuthStore = defineStore('auth', () => {
         //
         let currentSubdomainHotel = localStorage.getItem('subdomain');
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            // console.log('test $validateSession 1')
+            console.log('test $validateSession 1')
             next({ name: 'Home', params :{ hotelSlug: currentSubdomainHotel }, query: to.query });
         }else{
             let sudmainsChain = chainStore.chainData.hotels_subdomains;
@@ -159,10 +159,10 @@ export const useAuthStore = defineStore('auth', () => {
             if(!sessionActive.value && to?.name !== 'ChainLanding'){
                 if(!isMockup() && validSubdomain){
                     //si hay un subdominio de hotel cargado va a la home
-                    // console.log('test $validateSession 2')
+                    console.log('test $validateSession 2')
                     next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
                 }else{
-                    // console.log('test $validateSession 3')
+                    console.log('test $validateSession 3')
                     next({ name:'ChainLanding' })
                 }
             }   
@@ -243,10 +243,10 @@ export const useAuthStore = defineStore('auth', () => {
         if(isMockup()) return;
         let subdomainHotel = localStorage.getItem('subdomain');
         if(subdomainHotel){
-            // console.log('test $newHomeOrChain 1');
+            console.log('test $newHomeOrChain 1');
             next({ name:'Home', params: { hotelSlug: subdomainHotel} })
         }else{
-            // console.log('test $newHomeOrChain 2');
+            console.log('test $newHomeOrChain 2');
             next({ name:'ChainLanding' })
         }
          
