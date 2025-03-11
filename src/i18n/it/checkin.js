@@ -83,5 +83,20 @@ export default {
         "norms-subtitle": "Penalità:",
         "why-data-continue": "Capito",
         "see-policies": "Vedi l'informativa sulla privacy"
+    },
+    "autocomplete": {
+        "cardbanner-title": "Compilazione automatica del modulo",
+        "cardbanner-subtitle": "Risparmia tempo scansionando il tuo documento",
+        "title": "Compilazione automatica del modulo",
+        "description-1": "Scannerai il tuo passaporto o la tua carta d'identità utilizzando la fotocamera del tuo dispositivo.",
+        "description-2": "Devi scansionare il codice MRZ.",
+        "description-3": "Qui sotto ti indichiamo dove trovarlo.",
+        "passport-title": "Passaporto",
+        "dninie-title": "Carta d'identità",
+        "scan-doc": "Scansiona documento",
+        "backtoform": "Torna al modulo",
+        "error-scan": "Errore: Devi inquadrare il codice MRZ del documento",
+        "browser-warning": "Accedi tramite un browser come Google Chrome per utilizzare questa funzionalità."
+
     }
 }

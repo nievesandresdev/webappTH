@@ -85,4 +85,18 @@ export default {
         "see-policies":"Ver política de privacidad"
 
     },
+    "autocomplete": {
+        "cardbanner-title": "Autocompletar formulario",
+        "cardbanner-subtitle": "Ahorra tiempo escaneando tu documento",
+        "title": "Autocompletar formulario",
+        "description-1": "Escanearás tu pasaporte o DNI utilizando la cámara de tu dispositivo.",
+        "description-2": "Debes escanear el código MRZ.",
+        "description-3": "Aquí debajo te indicamos dónde encontrarlo.",
+        "passport-title": "Pasaporte",
+        "dninie-title": "DNI/NIE",
+        "scan-doc": "Escanear documento",
+        "backtoform": "Volver al formulario",
+        "error-scan": "Error: Debes enfocar el código MRZ del documento",
+        "browser-warning": "Inicia sesion desde un navegador como Google Chrome para usar esta funcionalidad."
+    },
 }

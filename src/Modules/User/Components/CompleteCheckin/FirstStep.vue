@@ -1,6 +1,14 @@
 <template>
+    
+    <WACardBanner 
+        @click="goAutoComplete"
+        :title="$t('checkin.autocomplete.cardbanner-title')"
+        :subtitle="$t('checkin.autocomplete.cardbanner-subtitle')"
+        :active-custom="true"
+        nameIconLeft="WA.Lightning Bolt"
+    />
     <!-- name -->
-    <div v-if="settings?.first_step?.name?.visible">
+    <div class="mt-6" v-if="settings?.first_step?.name?.visible">
         <THInputText
             :textLabel="`${$t('profile.page_personal_info.form.name.label')}${isMandatory('name')}`"
             iconLeft="/assets/icons/WA.user.svg"
@@ -114,15 +122,31 @@
     </div>
 </template>
 <script setup>
-import { inject, ref } from 'vue'
+import { inject, ref, toRefs } from 'vue'
 import THInputText from '@/components/THInputText.vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import THInputField from '@/components/THInputField.vue';
 import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
+import WACardBanner from '@/components/WACardBanner.vue';
+//
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter();
+const route = useRoute();
+import { useHistoryStore } from '@/stores/modules/history';
+const historyStore = useHistoryStore();
 
 const emailError = inject('emailError');
 const phoneError = inject('phoneError');
 const secondLastnameError = inject('secondLastnameError');
+const currentStep = inject('currentStep');
+
+const props = defineProps({
+    paramsRouter: {
+        type: Object,
+        default: () => ({})
+    }
+})
+const { paramsRouter } = toRefs(props)
 
 const form = inject('form');
 const settings = inject('settings');
@@ -143,6 +167,13 @@ const options_kinshipRelationship = [
 function isMandatory(key){
     return settings.value.first_step[key].mandatory ? '*' : '';
 }
+
+const goAutoComplete = async () => {
+    let routeQuery = { ...route.query, step: currentStep.value };
+    await historyStore.$saveExclusiveRoute(route.name, route.params, routeQuery);
+    router.push({ name: 'AutoCompleteCheckin', params:{id:paramsRouter.value.id}, query:{ returnTo: 'true' }})
+};
+
 
 
 </script>

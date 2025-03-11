@@ -17,3 +17,4 @@ export const findbyIdApi = (stayId) => apiHttp('GET', `${stayPath}/findbyId/${st
 
 //checkin
 export const getAllSettingsApi = (params) => apiHttp('GET', `${stayPath}/${checkinPath}/getAllSettings`, params)
+export const sendPassportImageApi = (formData) => apiHttp('POST', `${stayPath}/${checkinPath}/sendPassportImage`, formData,{},'API_GENERAL',true)

@@ -83,5 +83,20 @@ export default {
         "norms-subtitle": "Strafe:",
         "why-data-continue": "Verstanden",
         "see-policies": "Datenschutzerklärung ansehen"
+    },
+    "autocomplete": {
+      "cardbanner-title": "Formular automatisch ausfüllen",
+      "cardbanner-subtitle": "Sparen Sie Zeit, indem Sie Ihr Dokument scannen",
+      "title": "Formular automatisch ausfüllen",
+      "description-1": "Sie werden Ihren Reisepass oder Personalausweis mit der Kamera Ihres Geräts scannen.",
+      "description-2": "Sie müssen den MRZ-Code scannen.",
+      "description-3": "Hier unten zeigen wir Ihnen, wo Sie ihn finden.",
+      "passport-title": "Reisepass",
+      "dninie-title": "Personalausweis/NIE",
+      "scan-doc": "Dokument scannen",
+      "backtoform": "Zurück zum Formular",
+      "error-scan": "Fehler: Du musst den MRZ-Code des Dokuments fokussieren",
+    "browser-warning": "Melde dich in einem Browser wie Google Chrome an, um diese Funktion zu nutzen."
     }
 }
+  

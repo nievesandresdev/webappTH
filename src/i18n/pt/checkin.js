@@ -83,5 +83,19 @@ export default {
         "norms-subtitle": "Penalidade:",
         "why-data-continue": "Entendido",
         "see-policies": "Ver política de privacidade"
+    },
+    "autocomplete": {
+        "cardbanner-title": "Preenchimento automático do formulário",
+        "cardbanner-subtitle": "Economize tempo escaneando seu documento",
+        "title": "Preenchimento automático do formulário",
+        "description-1": "Você irá escanear seu passaporte ou documento de identidade usando a câmera do seu dispositivo.",
+        "description-2": "Você deve escanear o código MRZ.",
+        "description-3": "Abaixo mostramos onde encontrá-lo.",
+        "passport-title": "Passaporte",
+        "dninie-title": "Cartão de Cidadão",
+        "scan-doc": "Escanear documento",
+        "backtoform": "Voltar ao formulário",
+        "error-scan": "Erro: Você deve focar no código MRZ do documento",
+        "browser-warning": "Faça login a partir de um navegador como o Google Chrome para usar essa funcionalidade."
     }
 }

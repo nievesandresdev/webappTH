@@ -9,6 +9,7 @@ const LogoutPage = () => import('@/Modules/Auth/Logout.vue')
 const MyStay = () => import('@/Modules/User/MyStay.vue')
 const Guests = () => import('@/Modules/User/Guests.vue')
 const CompleteCheckin = () => import('@/Modules/User/CompleteCheckin.vue')
+const AutoCompleteCheckin = () => import('@/Modules/User/AutoCompleteCheckin.vue')
 const IsCompleteCheckin = () => import('@/Modules/User/IsCompleteCheckin.vue')
 
 const profileRoutes = [
@@ -79,6 +80,12 @@ const profileRoutes = [
         name: 'IsCompleteCheckin',
         path: 'mi-estancia/huespedes/checkin-completado',
         component: IsCompleteCheckin
+      },
+      {
+        name: 'AutoCompleteCheckin',
+        path: 'mi-estancia/huespedes/autocompletar-checkin/:id',
+        component: AutoCompleteCheckin,
+        props: (route) => ({ paramsRouter: {...route.params} })
       },
     ],
   },
