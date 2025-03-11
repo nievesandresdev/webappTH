@@ -96,7 +96,8 @@ export default {
       "scan-doc": "Dokument scannen",
       "backtoform": "Zurück zum Formular",
       "error-scan": "Fehler: Du musst den MRZ-Code des Dokuments fokussieren",
-    "browser-warning": "Melde dich in einem Browser wie Google Chrome an, um diese Funktion zu nutzen."
+    "browser-warning": "Melde dich in einem Browser wie Google Chrome an, um diese Funktion zu nutzen.",
+    "rescan-document": "Dokument erneut scannen"
     }
 }
   

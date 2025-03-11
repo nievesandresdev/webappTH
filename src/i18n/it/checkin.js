@@ -96,7 +96,7 @@ export default {
         "scan-doc": "Scansiona documento",
         "backtoform": "Torna al modulo",
         "error-scan": "Errore: Devi inquadrare il codice MRZ del documento",
-        "browser-warning": "Accedi tramite un browser come Google Chrome per utilizzare questa funzionalità."
-
+        "browser-warning": "Accedi tramite un browser come Google Chrome per utilizzare questa funzionalità.",
+        "rescan-document": "Riscansiona il documento"
     }
 }

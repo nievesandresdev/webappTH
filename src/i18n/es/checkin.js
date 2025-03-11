@@ -97,6 +97,7 @@ export default {
         "scan-doc": "Escanear documento",
         "backtoform": "Volver al formulario",
         "error-scan": "Error: Debes enfocar el código MRZ del documento",
-        "browser-warning": "Inicia sesion desde un navegador como Google Chrome para usar esta funcionalidad."
+        "browser-warning": "Inicia sesion desde un navegador como Google Chrome para usar esta funcionalidad.",
+        "rescan-document": "Volver a escanear documento"
     },
 }

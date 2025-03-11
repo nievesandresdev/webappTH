@@ -1,12 +1,20 @@
 <template>
-    
     <WACardBanner 
+        v-if="!form.autoFill"
         @click="goAutoComplete"
         :title="$t('checkin.autocomplete.cardbanner-title')"
         :subtitle="$t('checkin.autocomplete.cardbanner-subtitle')"
         :active-custom="true"
         nameIconLeft="WA.Lightning Bolt"
     />
+    <div v-else>
+        <button
+            @click="goAutoComplete"
+            class="w-full h-10 flex justify-center items-center px-4 py-2 gap-2 rounded-[10px] border bg-white border-[#333333] text-[#333333] lato text-sm font-bold hshadow-button"
+        >   
+            {{ $t('checkin.autocomplete.rescan-document') }}
+        </button>
+    </div>
     <!-- name -->
     <div class="mt-6" v-if="settings?.first_step?.name?.visible">
         <THInputText

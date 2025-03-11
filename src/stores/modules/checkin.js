@@ -26,7 +26,7 @@ export const useCheckinStore = defineStore('checkin', () => {
         formData.append('passportImage', file, file.name);
 
         const response = await sendPassportImageApi(formData)
-        console.log('test response',response)
+        // console.log('test response',response)
         const { ok, data } = response
         if (ok) {
             return data
@@ -35,6 +35,7 @@ export const useCheckinStore = defineStore('checkin', () => {
     }
 
     async function $fillOutForm (data) {
+
         let form = {
             id:null,//id del huesped actual
             name:'',
@@ -60,7 +61,7 @@ export const useCheckinStore = defineStore('checkin', () => {
             comment:'',
             stayId: localStorage.getItem('stayId')
         }
-
+        
         const savedForm = localStorage.getItem('formDataCheckin')
         if (savedForm) {
             Object.assign(form, JSON.parse(savedForm))
@@ -75,9 +76,11 @@ export const useCheckinStore = defineStore('checkin', () => {
         form.nationality = data.nationality ?? form.nationality;
         form.docType = data.DocumentType_translated ?? form.docType;
         form.docSupportNumber = data.docSupportNumber ?? form.docSupportNumber;
-        form.docNumber = data.DocumentNumber ?? form.docNumber;
-
+        form.docNumber = data.docNumber ?? form.docNumber;
+        form.autoFill = true;
+        console.log('test form 2',form)
         localStorage.setItem('formDataCheckin', JSON.stringify(form))
+        
         return form;
     }
 

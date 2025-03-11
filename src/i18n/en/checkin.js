@@ -96,8 +96,8 @@ export default {
       "scan-doc": "Scan document",
       "backtoform": "Back to form",
       "error-scan": "Error: You must focus the MRZ code of the document",
-    "browser-warning": "Sign in using a browser such as Google Chrome to use this functionality."
-
+    "browser-warning": "Sign in using a browser such as Google Chrome to use this functionality.",
+    "rescan-document": "Rescan document"
     }
 }
   

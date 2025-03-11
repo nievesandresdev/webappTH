@@ -76,11 +76,11 @@ function abrirFileInput() {
     alert(t('checkin.autocomplete.browser-warning'));
     return;
   }else{
-    alert('normal');
+    if (fileInput.value) {
+        fileInput.value.click();
+    } 
   }
-//   if (fileInput.value) {
-//     fileInput.value.click();
-//   }
+  
 }
 
 // Cuando el usuario toma la foto / selecciona archivo
@@ -96,7 +96,7 @@ async function onFileSelected(e) {
     // Aquí podrías navegar a otra vista,
     // o mostrar un loader, etc.
     let data = await checkinStore.$sendPassportImage(file)
-    console.log('test data',);
+    
     if(data.mrzData){
         await checkinStore.$fillOutForm(data.mrzData)
         router.push({ name:'CompleteCheckin', params:{ id: paramsRouter.value.id }})

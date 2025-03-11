@@ -96,7 +96,7 @@ export default {
         "scan-doc": "Scanner le document",
         "backtoform": "Retour au formulaire",
         "error-scan": "Erreur : Veuillez cadrer le code MRZ du document",
-        "browser-warning": "Connectez-vous via un navigateur tel que Google Chrome pour utiliser cette fonctionnalité."
-
+        "browser-warning": "Connectez-vous via un navigateur tel que Google Chrome pour utiliser cette fonctionnalité.",
+        "rescan-document": "Scanner à nouveau le document"
       }
 }
