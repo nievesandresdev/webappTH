@@ -56,6 +56,7 @@ const router = useRouter();
 
 const isError = ref(false)
 const form = inject('form')
+const showEnterPassword = inject('showEnterPassword')
 const loading = ref(false)
 
 async function submit(){
@@ -68,6 +69,7 @@ async function submit(){
         await authStore.$logIn(form.email);
         //
         form.password = '';
+        showEnterPassword.value = false;
     }
     loading.value = false;
 }

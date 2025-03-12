@@ -2,7 +2,7 @@
     <div v-if="openBottomSheet" class="relative shadow-guest-2">
         <!-- Full-screen container to center the panel -->
         <div 
-            class="fixed left-0 bottom-0 flex w-screen items-center justify-center z-[2500]" 
+            class="fixed left-0 bottom-0 flex w-screen items-center justify-center z-[9500]" 
             :class="openBottomSheet ? 'dialog-enter-active' : 'dialog-leave-active'"
         >
             <!-- The actual dialog panel -->

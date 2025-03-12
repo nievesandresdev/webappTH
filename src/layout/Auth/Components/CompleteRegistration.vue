@@ -80,6 +80,8 @@ const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 
+const emit = defineEmits(['next'])
+
 const router = useRouter();
 
 const emailError = ref(false)
@@ -123,6 +125,7 @@ async function submit(){
     await authStore.$logIn(guestData.email);
     loading.value = false;
     toastSuccess(t('messageRequest.recordSuccess')); 
+    emit('next')
 }
 
 const passDisabled = computed(()=>{
