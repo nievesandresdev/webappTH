@@ -30,7 +30,8 @@ export default{
         "policies-text": "Indem ich Akzeptieren und fortfahren auswähle, stimme ich der",
         "policies-title": "Datenschutzrichtlinie zu.",
         "the-chain": "Die Kette",
-        "password-info":"Das Passwort muss mindestens 8 Zeichen enthalten."
+        "password-info":"Das Passwort muss mindestens 8 Zeichen enthalten.",
+        "complete-register" : "Registrierung wird abgeschlossen"
     },
     "reset-pass":{
         "title": "Passwort ändern",

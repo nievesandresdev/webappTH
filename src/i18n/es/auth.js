@@ -30,7 +30,8 @@ export default{
         "policies-text" : "Al seleccionar Aceptar y continuar, acepto la",
         "policies-title" : "Política de Privacidad.",
         "the-chain" : "La cadena",
-        "password-info":"La contraseña debe contener al menos 8 caracteres."
+        "password-info":"La contraseña debe contener al menos 8 caracteres.",
+        "complete-register" : "Completando registro"
     },
     "reset-pass":{
         "title":"Cambiar contraseña",

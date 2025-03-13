@@ -30,7 +30,8 @@ export default{
         "policies-text": "Selezionando Accetta e Continua, accetto la",
         "policies-title": "Politica sulla Privacy.",
         "the-chain": "La catena",
-        "password-info": "La password deve contenere almeno 8 caratteri."
+        "password-info": "La password deve contenere almeno 8 caratteri.",
+        "complete-register" : "Registrazione in corso"
     },
     "reset-pass":{
         "title": "Cambia password",

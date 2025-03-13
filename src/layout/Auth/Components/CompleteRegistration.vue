@@ -41,7 +41,7 @@
                 :disabled="!validSubmitButton || loading"
                 @click="submit"
             >
-                {{$t('auth.register.continue-button')}}
+                {{ loading ? $t('auth.register.complete-register') : $t('auth.register.continue-button')}}
             </PrimaryButton> 
         </div>
         <div class="my-6 bg-border-secondary w-full h-[1px]"></div>
