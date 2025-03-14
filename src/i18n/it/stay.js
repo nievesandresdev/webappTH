@@ -6,6 +6,7 @@ export default{
             "placeholder": "gg/mm/aaaa - gg/mm/aaaa",
         },
         "continue-button": "Crea e accedi al soggiorno",
+        "creating": "Creazione del soggiorno"
     },
     "share": {
         "title": "Unisciti al nostro soggiorno presso {hotel}",

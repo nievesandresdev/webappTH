@@ -16,7 +16,8 @@ export default{
         "continue-button": "Continuer",
         "forgot-question": "Mot de passe oublié ?",
         "input-show-pass": "Afficher",
-        "input-hide-pass": "Masquer"
+        "input-hide-pass": "Masquer",
+        "entering": "Connexion en cours"
     },
     "register": {
         "title": "Terminez votre inscription",

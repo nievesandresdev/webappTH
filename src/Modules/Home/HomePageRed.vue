@@ -139,23 +139,6 @@
 
     <!-- forms -->
     <ModalSession />
-    <!-- <ResetPasswordBottomSheet 
-        v-if="showResetPasswordBottomSheet"
-        :open="true"
-    />
-    <RegisterOrLoginBottomSheet 
-        v-if="showRegisterOrLoginBottomSheet"
-        :open="true"
-    />
-    <CompleteRegisterBottomSheet 
-        v-if="showCompleteRegisterBottomSheet"
-        :open="true"
-    />
-    <CreateStayBottomSheet 
-        v-if="showCreateStayBottomSheet"
-        :open="true"
-    /> -->
-    <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
 </template>
 <script setup>
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
@@ -163,11 +146,6 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
-//forms
-// import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
-// import CompleteRegisterBottomSheet from '@/layout/Auth/CompleteRegisterBottomSheet.vue'
-// import CreateStayBottomSheet from '@/layout/Auth/CreateStayBottomSheet.vue'
-// import ResetPasswordBottomSheet from '@/layout/Auth/ResetPasswordBottomSheet.vue'
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
@@ -198,12 +176,6 @@ const authStore = useAuthStore()
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
-// const props = defineProps({
-//     acform: {
-//         type:String,
-//         default:false
-//     }
-// });
 
 // DATA
 const crossellingsData = ref(null)
@@ -310,26 +282,6 @@ if(!stayStore.stayData?.check_out) return
   const now = DateTime.now();
   return inputDate < now; // Retorna true si la fecha ya pasó
 });
-
-// const showResetPasswordBottomSheet = computed(() => {
-//     return formType.value == 'reset'
-// });
-
-// const showRegisterOrLoginBottomSheet = computed(() => {
-//     if(isMockup()) return false;
-//     let val = formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset' && !formType.value;
-//     return val;
-// });
-
-// const showCompleteRegisterBottomSheet = computed(() => {
-//     let val = formType.value == 'complete' || guestStore.guestData && !guestStore.guestData.name && !formType.value;
-//     return val;
-// });
-
-// const showCreateStayBottomSheet = computed(() => {
-//     let val = formType.value == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType.value;
-//     return val;
-// });
 
 
 

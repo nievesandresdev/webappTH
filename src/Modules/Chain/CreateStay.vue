@@ -1,19 +1,15 @@
 <template>
-    <!-- head -->
-    <div class="sticky top-0 left-0 bg-head w-full py-6 px-4">
-        <HeadInChain :text="$t('stay.create.title')" go-back @go-back="goHotelList"/>
-    </div>
-    <!-- body -->
-    <div class="py-6 px-4" v-if="datCard">
-        <CardHotel :data="datCard"/>
-        <div class="mt-6">
-            <FormCreateStay />
+    <PageTransitionGlobal module="chain" name="chain_createstay" component-name="CreateStaySkeleton">
+        <div v-if="datCard">
+            <CardHotel :data="datCard"/>
+            <div class="mt-6">
+                <FormCreateStay />
+            </div>
         </div>
-    </div>
+    </PageTransitionGlobal>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
-import HeadInChain from './Components/HeadInChain.vue'
 import CardHotel from './Components/CardHotel.vue'
 import FormCreateStay from '@/layout/Auth/Components/FormCreateStay.vue'
 //route
@@ -24,32 +20,25 @@ import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
+//
+import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
+
 
 const datCard = ref(null)
 const goBack = ref(false)
 
-onMounted(() =>{
+startLoading(SECTIONS.CHAIN.CREATESTAY);
+onMounted(async () =>{
     datCard.value = hotelStore.hotelData;
+    await sleep(1000); // 1000 ms = 1 segundo
+    stopLoading(SECTIONS.CHAIN.CREATESTAY);
 })
-async function goHotelList(){
-    if(goBack.value) return;
-    goBack.value = true;
-    const oldSubdomain = hotelStore.oldSubdomain;
-    hotelStore.$deleteLocalHotel();
-    if(oldSubdomain){
-        await hotelStore.$setAndLoadLocalHotel(hotelStore.oldSubdomain)
-        await hotelStore.$deleteOldLocalHotel()
-        router.push({ name:'HotelsList'  , query:{ fromStay: 'true'}})
-    }else{
-        router.push({ name:'HotelsList'})
-    }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 </script>
-<style scoped> 
-.bg-head{
-    background: linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-}
-
-</style>

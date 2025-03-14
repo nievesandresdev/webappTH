@@ -16,7 +16,8 @@ export default{
         "continue-button": "Fortsetzen",
         "forgot-question": "Passwort vergessen?",
         "input-show-pass": "Anzeigen",
-        "input-hide-pass": "Verbergen"
+        "input-hide-pass": "Verbergen",
+         "entering": "Anmeldung wird gestartet"
     },
     "register": {
         "title": "Registrierung abschließen",

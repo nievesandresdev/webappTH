@@ -31,7 +31,8 @@ export default{
         "policies-title": "Política de Privacidade.",
         "the-chain": "A cadeia",
         "password-info": "A senha deve conter pelo menos 8 caracteres.",
-        "complete-register" : "Completando o registro"
+        "complete-register" : "Completando o registro",
+         "entering": "Iniciando sessão"
     },
     "reset-pass":{
         "title": "Alterar Senha",

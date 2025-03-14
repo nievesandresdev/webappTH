@@ -16,7 +16,7 @@
                 :disabled="!form.password || loading"
                 @click="submit"
             >
-                {{ $t('auth.log.continue-button') }}
+                {{ loading ? $t('auth.log.entering') : $t('auth.log.continue-button') }}
             </PrimaryButton> 
             <button 
                 class="mt-4 lato text-sm font-bold leading-[16px] underline"

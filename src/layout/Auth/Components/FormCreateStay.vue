@@ -14,7 +14,7 @@
             :disabled="!form.checkDate || loading"
             @click="submit"
         >
-        {{ $t('stay.create.continue-button') }}
+        {{ loading ? $t('stay.create.creating') : $t('stay.create.continue-button')}}
         </PrimaryButton> 
     </div>
 </template>

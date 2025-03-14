@@ -17,6 +17,7 @@ export default{
         "forgot-question": "Hai dimenticato la password?",
         "input-show-pass": "Mostra",
         "input-hide-pass": "Nascondi",
+         "entering": "Accesso in corso"
     },
     "register": {
         "title": "Completa la Registrazione",

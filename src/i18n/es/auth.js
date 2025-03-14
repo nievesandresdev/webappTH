@@ -17,6 +17,7 @@ export default{
         "forgot-question": "¿Has olvidado tu contraseña?",
         "input-show-pass": "Mostrar",
         "input-hide-pass": "Ocultar",
+        "entering" : "Iniciando sesión"
     },
     "register":{
         "title":"Termina de registrarte",
