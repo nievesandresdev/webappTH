@@ -53,6 +53,11 @@ export default {
     "he": "hebreu",
     "da": "danès",
     "zh_CN": "xinès simplificat",
-    "title": "Preferència d'idioma"
+    "title": "Preferència d'idioma",
+    "ca": "Català",
+    "eu": "Basc",
+    "gl": "Gallec",
+    "nl": "Holandès"
+
   }
   

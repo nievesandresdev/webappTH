@@ -53,6 +53,10 @@ export default {
     "he": "hebreo",
     "da": "dinamarqués",
     "zh_CN": "chinés simplificado",
-    "title": "Preferencia de idioma"
+    "title": "Preferencia de idioma",
+    "ca": "Catalán",
+    "eu": "Vasco",
+    "gl": "Galego",
+    "nl": "Holandés"
   }
   

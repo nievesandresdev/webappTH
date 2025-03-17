@@ -53,6 +53,10 @@ export default {
     "he": "Hebreeuws",
     "da": "Deens",
     "zh_CN": "Vereenvoudigd Chinees",
-    "title": "Taalvoorkeur"
+    "title": "Taalvoorkeur",
+    "ca": "Catalaans",
+    "eu": "Baskisch",
+    "gl": "Galisisch",
+    "nl": "Nederlands"
   }
   

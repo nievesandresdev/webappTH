@@ -53,6 +53,11 @@ export default {
     "he": "hebreera",
     "da": "daniera",
     "zh_CN": "txinera sinplifikatua",
-    "title": "Hizkuntza-hobespena"
+    "title": "Hizkuntza-hobespena",
+    "ca": "Katalana",
+    "eu": "Euskara",
+    "gl": "Galiziera",
+    "nl": "Holandera"
+
   }
   
