@@ -51,9 +51,9 @@ export default {
     "da": "Dänisch",
     "zh_CN": "Vereinfachtes Chinesisch",
     "title": "Sprachpräferenz",
-    "ca": "Katalanisch",
-    "eu": "Baskisch",
-    "gl": "Galicisch",
-    "nl": "Niederländisch"
+    "ca": "katalanisch",
+    "eu": "baskisch",
+    "gl": "galicisch",
+    "nl": "niederländisch"
 
 }
