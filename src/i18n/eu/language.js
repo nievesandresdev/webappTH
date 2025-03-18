@@ -54,10 +54,10 @@ export default {
     "da": "daniera",
     "zh_CN": "txinera sinplifikatua",
     "title": "Hizkuntza-hobespena",
-    "ca": "Katalana",
-    "eu": "Euskara",
-    "gl": "Galiziera",
-    "nl": "Holandera"
+    "ca": "katalana",
+    "eu": "euskara",
+    "gl": "galiziera",
+    "nl": "holandera"
 
   }
   
