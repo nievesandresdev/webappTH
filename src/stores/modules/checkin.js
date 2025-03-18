@@ -23,10 +23,11 @@ export const useCheckinStore = defineStore('checkin', () => {
 
         const formData = new FormData();
         // Nombre del campo, p. ej. "passportImage"
+        console.log('test file',file)
         formData.append('passportImage', file, file.name);
-
+        
         const response = await sendPassportImageApi(formData)
-        // console.log('test response',response)
+        console.log('test response',response)
         const { ok, data } = response
         if (ok) {
             return data
