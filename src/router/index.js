@@ -90,6 +90,9 @@ const routes = [
       ...queryRoutes,
       ...policiesRoutes,
     ],
+    //middleware para enviar a la pantalla compartir en caso de esta en pc
+    // este middleware debe funcionar solo para todas las urls con slug hotel
+    //en middleware principal se maneja para chainlanding
     beforeEnter: [isMobile]
   },
 

@@ -219,25 +219,31 @@ import QRCodeVue3 from "qrcode-vue3";
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
- const { hotelData } = hotelStore;
+import { useChainStore } from '@/stores/modules/chain';
+const chainStore = useChainStore();
 
 onMounted(() => {
 })
 
 // COMPUTED
 const urlHuespedMockup = computed(() => {
-    if(!hotelData) return '';
+    // if(!hotelStore.hotelData) return '';
+    // console.log('test chain', chainStore.chainData);
     let domain = window.location.origin;
-    let { subdomain } = hotelData;
-    let url = `${domain}/${subdomain}/?chainsubdomain=${subdomain}&subdomain=${subdomain}&lang=es&mockup=true&test=x`;
-    console.log('urlHuespedMockup', url, subdomain,domain);
+    let subdomain = hotelStore.hotelData?.subdomain ?? chainStore.chainData.hotels_subdomains[0];
+    // console.log('test subdomain', subdomain);
+    let chainSubdomain = localStorage.getItem('chainSubdomain');
+    
+    let url = `${domain}/${subdomain}/?chainsubdomain=${chainSubdomain}&subdomain=${subdomain}&lang=es&mockup=true&test=x`;
+    // console.log('test urlHuespedMockup', url);
+    // console.log('test domain', domain);
     return url;
 });
 const urlHuespedQR = computed(() => {
-    if(!hotelData) return '';
+    // if(!hotelStore.hotelData) return '';
     let domain = window.location.origin;
-    let { subdomain } = hotelData;
-    let url = `${domain}/webapp`;
+    let subdomain = hotelStore.hotelData?.subdomain ?? chainStore.chainData.hotels_subdomains[0];
+    let url = `${domain}/`;
     return url;
 });
 

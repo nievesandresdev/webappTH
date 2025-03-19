@@ -65,7 +65,7 @@ export const useHistoryStore = defineStore('history', () => {
   function $goBack(router) {
     
     const currentRouteName = router.currentRoute.value.name
-    console.log('test ',history.value.length)
+    // console.log('test ',history.value.length)
     // Recupera la anterior
     let last = history.value[history.value.length - 1];
     
