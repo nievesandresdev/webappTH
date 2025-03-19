@@ -92,7 +92,7 @@ async function onFileSelected(e) {
     // El siguiente paso será enviarla a tu backend 
     // para pasársela a Azure (lo harás en la fase posterior).
 
-    console.log('Archivo seleccionado:', file);
+    // console.log('Archivo seleccionado:', file);
     // Aquí podrías navegar a otra vista,
     // o mostrar un loader, etc.
     let data = await checkinStore.$sendPassportImage(file)
