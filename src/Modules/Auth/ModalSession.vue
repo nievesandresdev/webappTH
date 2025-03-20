@@ -14,17 +14,19 @@
         >
         <div class="px-4 pt-4">
             <!-- Mensaje de bienvenida para rutas distintas a Home; se muestra solo cuando la transición finalizó -->
-            <WelcomeMsg 
-              v-if="showRegisterOrLogin && !showEnterPassword && route.name !== 'Home' && transitionFinished"
-            />
-            <div :class="{'mt-[96px]': showRegisterOrLogin && !showEnterPassword && route.name !== 'Home','mt-2': route.name === 'Home'}">
-                <div class="min-h-[31px]">
+            <!-- class="mb-[96px]" -->
+             <div class="mb-6" v-if="showRegisterOrLogin && !showEnterPassword && route.name !== 'Home' && transitionFinished">
+                <WelcomeMsg />
+             </div>
+            <div :class="{'mt-2': route.name === 'Home'}" class="h-[412px] overflow-hidden">
+                <div class="h-[31px] overflow-hidden">
                     <HeadSessionModal @back="handleBack"/>
                 </div>
                 <!-- Mensaje de bienvenida extra para Home -->
                 <div v-if="showRegisterOrLogin && !showEnterPassword && route.name === 'Home'" class="mt-10 pb-2">
                     <WelcomeMsg/>
                 </div>
+                <!-- container forms -->
                 <div class="pt-4">
                     <!-- Transición tipo carrusel -->
                     <Transition :name="transitionName" mode="out-in" @after-enter="handleTransitionFinish">
