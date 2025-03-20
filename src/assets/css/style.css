@@ -8,22 +8,23 @@
       
   } */
 
-  /* GLOBAL – Oculta la barra de scroll pero mantiene el desplazamiento */
+  /* scrollbar all app, muy chiquito que no se vea */
+::-webkit-scrollbar {
+  width: 0.1px; /* Ancho vertical */
+  height: 6px; /* Altura horizontal */
+}
 
-  html,
-  body,
-  #app-container {
-    height: 100%;
-    overflow: auto;                /* Scroll funcional */
-    -ms-overflow-style: none;     /* IE y Edge */
-    scrollbar-width: none;        /* Firefox */
-  }
-  
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar,
-  #app-container::-webkit-scrollbar {
-    display: none;                /* Chrome, Safari, Opera */
-  }
+::-webkit-scrollbar-track {
+  background: transparent; /* Fondo del riel */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4); /* Color del scroll */
+  border-radius: 10px;
+}
+
+
+
   
 
 body {
