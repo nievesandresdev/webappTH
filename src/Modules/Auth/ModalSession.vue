@@ -27,11 +27,11 @@
                     <HeadSessionModal @back="handleBack"/>
                 </div>
                 <!-- Mensaje de bienvenida extra para Home -->
-                <div v-if="showRegisterOrLogin && !showEnterPassword && route.name === 'Home'" class="mt-4 pb-2">
+                <div v-if="showRegisterOrLogin && !showEnterPassword && route.name === 'Home'" class="pt-4 h-[84px]">
                     <WelcomeMsg/>
                 </div>
                 <!-- container forms -->
-                <div class="pt-4 h-[381px] overflow-y-auto">
+                <div class="pt-4 overflow-y-auto" :class="{'h-[381px]': !heightHomeLog, 'h-[297px]': heightHomeLog}">
                     <!-- Transición tipo carrusel -->
                     <Transition :name="transitionName" mode="out-in" @after-enter="handleTransitionFinish">
                         <component 
@@ -69,7 +69,7 @@ const guestStore = useGuestStore()
 const stayStore = useStayStore()
 
 const showEnterPassword = ref(false)
-const formType = ref(route.query.acform)
+const formType = ref(route.query.acform ?? 'log')
 
 const form = reactive({
     id: '',
@@ -78,6 +78,11 @@ const form = reactive({
     password: null
 })
 
+
+const heightHomeLog = computed(() => {
+    console.log('test formType.value', formType.value)
+    return formType.value == 'log' && route.name == 'Home' && !showEnterPassword.value;
+});
 // Mantenemos las condiciones originales para cada formulario:
 const showRegisterOrLogin = computed(() => {
     if(isMockup() || showEnterPassword.value) return false;
