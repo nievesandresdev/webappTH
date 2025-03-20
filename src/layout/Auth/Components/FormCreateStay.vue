@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-6">
         <label class="mb-1 lato text-sm font-bold leading-[16px] block">Check-in/Check-out</label>
         <THInputCalendar
             :textLabel="$t('stay.create.check-date.placeholder')"
@@ -14,7 +14,7 @@
             :disabled="!form.checkDate || loading"
             @click="submit"
         >
-        {{ $t('stay.create.continue-button') }}
+        {{ loading ? $t('stay.create.creating') : $t('stay.create.continue-button')}}
         </PrimaryButton> 
     </div>
 </template>

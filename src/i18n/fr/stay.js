@@ -6,6 +6,7 @@ export default{
             "placeholder": "jj/mm/aaaa - jj/mm/aaaa",
         },
         "continue-button": "Créer et accéder au séjour",
+        "creating": "Création du séjour"
     },
     "share": {
         "title": "Rejoignez notre séjour à {hotel}",

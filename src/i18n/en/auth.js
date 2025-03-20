@@ -17,6 +17,7 @@ export default{
         "forgot-question": "Forgot your password?",
         "input-show-pass": "Show",
         "input-hide-pass": "Hide",
+        "entering": "Logging in"
     },
     "register": {
         "title": "Finish Registering",
@@ -30,8 +31,8 @@ export default{
         "policies-text": "By selecting Accept and Continue, I agree to the",
         "policies-title": "Privacy Policy.",
         "the-chain": "The Chain",
-        "password-info": "The password must contain at least 8 characters."
-
+        "password-info": "The password must contain at least 8 characters.",
+        "complete-register" : "Completing registration",
     },
     "reset-pass":{
         "title": "Change Password",

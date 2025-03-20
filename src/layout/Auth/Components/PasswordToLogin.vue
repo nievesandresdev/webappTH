@@ -16,7 +16,7 @@
                 :disabled="!form.password || loading"
                 @click="submit"
             >
-                {{ $t('auth.log.continue-button') }}
+                {{ loading ? $t('auth.log.entering') : $t('auth.log.continue-button') }}
             </PrimaryButton> 
             <button 
                 class="mt-4 lato text-sm font-bold leading-[16px] underline"
@@ -56,6 +56,7 @@ const router = useRouter();
 
 const isError = ref(false)
 const form = inject('form')
+const showEnterPassword = inject('showEnterPassword')
 const loading = ref(false)
 
 async function submit(){
@@ -68,6 +69,7 @@ async function submit(){
         await authStore.$logIn(form.email);
         //
         form.password = '';
+        showEnterPassword.value = false;
     }
     loading.value = false;
 }

@@ -6,6 +6,7 @@ export default{
             "placeholder": "dd/mm/aaaa - dd/mm/aaaa",
         },
         "continue-button":"Crear y acceder a la estancia",
+        "creating" : "Creando estancia"
     },
     "share": {
         "title": "Únete a nuestra estancia en {hotel}",

@@ -6,6 +6,7 @@ export default{
             "placeholder": "dd/mm/yyyy - dd/mm/yyyy",
         },
         "continue-button": "Create and access the stay",
+        "creating": "Creating stay"
     },
     "share": {
         "title": "Join our stay at {hotel}",

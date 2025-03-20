@@ -83,5 +83,21 @@ export default {
         "norms-subtitle": "Penalty:",
         "why-data-continue": "Understood",
         "see-policies": "See privacy policy"
+    },
+    "autocomplete": {
+      "cardbanner-title": "Autocomplete form",
+      "cardbanner-subtitle": "Save time by scanning your document",
+      "title": "Autocomplete form",
+      "description-1": "You will scan your passport or ID using your device's camera.",
+      "description-2": "You must scan the MRZ code.",
+      "description-3": "Below we show you where to find it.",
+      "passport-title": "Passport",
+      "dninie-title": "ID card",
+      "scan-doc": "Scan document",
+      "backtoform": "Back to form",
+      "error-scan": "Error: You must focus the MRZ code of the document",
+    "browser-warning": "Sign in using a browser such as Google Chrome to use this functionality.",
+    "rescan-document": "Rescan document"
     }
 }
+  

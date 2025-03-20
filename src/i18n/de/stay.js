@@ -6,6 +6,7 @@ export default{
             "placeholder": "TT/MM/JJJJ - TT/MM/JJJJ",
         },
         "continue-button": "Erstellen und zum Aufenthalt zugreifen",
+        "creating": "Aufenthalt wird erstellt"
     },
     "share": {
         "title": "Begleiten Sie unseren Aufenthalt im {hotel}",

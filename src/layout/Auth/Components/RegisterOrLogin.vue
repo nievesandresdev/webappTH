@@ -66,7 +66,7 @@ import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
 
-const emit = defineEmits(['enterPasswordToLogin'])
+const emit = defineEmits(['enterPasswordToLogin','next'])
 
 const emailError = ref(false)
 const inputActive = ref(false)
@@ -106,27 +106,11 @@ async function goRegisterOrLoginEmail(){
             router.push({ name : 'ChainLanding', query:{ g: hasData.guest.id, acform : 'complete' }});
         }    
     }
+    emit('next');
     loading.value = false;
-    // let find = await guestStore.findByEmail(params);
-    // if(find && find.name && find.hasPassword){
-    //     form.id = find.id;
-    //     emit('enterPasswordToLogin')
-    // }else{
-    //     let save = await guestStore.saveOrUpdateByEmail(params);
-    //     if(!save) return
-    //     if(hotelData){
-    //         navigateTo('Home',{},{ g: save.id, acform : 'complete' })
-    //     }else{
-    //         //logica para cuando no se halla cargado un hotel
-    //         router.push({ name : 'ChainLanding', query:{ g: save.id, acform : 'complete' }});
-    //     }
-    // }
-    
-    // console.log('test goRegisterOrLoginEmail',res)
 }
 
 const validSubmitButton = computed(()=>{
     return !emailError.value && Boolean(form.email.trim());
-    // && !inputActive.value;
 })
 </script>

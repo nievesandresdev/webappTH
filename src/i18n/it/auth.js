@@ -17,6 +17,7 @@ export default{
         "forgot-question": "Hai dimenticato la password?",
         "input-show-pass": "Mostra",
         "input-hide-pass": "Nascondi",
+         "entering": "Accesso in corso"
     },
     "register": {
         "title": "Completa la Registrazione",
@@ -30,7 +31,8 @@ export default{
         "policies-text": "Selezionando Accetta e Continua, accetto la",
         "policies-title": "Politica sulla Privacy.",
         "the-chain": "La catena",
-        "password-info": "La password deve contenere almeno 8 caratteri."
+        "password-info": "La password deve contenere almeno 8 caratteri.",
+        "complete-register" : "Registrazione in corso"
     },
     "reset-pass":{
         "title": "Cambia password",

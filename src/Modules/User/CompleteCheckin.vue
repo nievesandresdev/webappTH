@@ -154,7 +154,9 @@ const form = reactive({
     addressResidence:'',
     //
     comment:'',
-    stayId: localStorage.getItem('stayId')
+    stayId: localStorage.getItem('stayId'),
+    //
+    autoFill:false
 })
 
 const settings = ref(null);
@@ -171,13 +173,7 @@ onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
     // console.log('test settings',settings)
     await loadDataGuest(paramsRouter.value.id);
-    form.id = paramsRouter.value.id;
     norms.value = await legalStore.$getNormsByHotel();
-    // Cargar datos guardados en localStorage si existen
-    const savedForm = localStorage.getItem('formDataCheckin')
-    if (savedForm) {
-        Object.assign(form, JSON.parse(savedForm))
-    }
     loading.value = false;
 })
 
@@ -198,10 +194,19 @@ const numberStepsEnabled = computed(() => {
 
 async function loadDataGuest(id) {
     if(!id) return;
-    currentGuestData.value = await guestStore.findById(id)
-    form.name = currentGuestData.value.name;
-    form.lastname = currentGuestData.value.lastname;
-    form.email = currentGuestData.value.email;
+    // Cargar datos guardados en localStorage si existen
+    const savedForm = localStorage.getItem('formDataCheckin')
+    if (savedForm) {
+        Object.assign(form, JSON.parse(savedForm))
+    }else{
+        form.id = id;
+        currentGuestData.value = await guestStore.findById(id)
+        form.name = currentGuestData.value.name;
+        form.lastname = currentGuestData.value.lastname;
+        form.email = currentGuestData.value.email;
+        localStorage.setItem('formDataCheckin', JSON.stringify(form))
+    }
+    console.log('test loadDataGuest',form)
 }
 
 // Función para parsear la fecha en formato DD/MM/YYYY
@@ -254,11 +259,11 @@ const docSupportNumberPattern = computed(() => {
     if(!form.docSupportNumber || form.docSupportNumber == '') return null;
   switch (form.docType) {
     case 'DNI español':
-    //   return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
-    return /^[A-Za-z]\d{8}[A-Za-z]$/; //Una letra seguida de ocho cifras y otra letra final.
+      return /^[A-Za-z]{3}\d{6}$/;  // 3 letras, 6 números
+    // return /^[A-Za-z]\d{8}[A-Za-z]$/; //Una letra seguida de ocho cifras y otra letra final.
     case 'NIE':
-    //   return /^[Ee]\d{8}$/;        // Letra 'E' + 8 números
-    return /^[A-Za-z]{3}\d{6}[A-Za-z]$/;//Tres letras seguidas de seis cifras y una letra final.
+      return /^[Ee]\d{8}$/;        // Letra 'E' + 8 números
+    // return /^[A-Za-z]{3}\d{6}[A-Za-z]$/;//Tres letras seguidas de seis cifras y una letra final.
     case 'Pasaporte':
       return /^[A-Za-z0-9]{6,15}$/;
     default:

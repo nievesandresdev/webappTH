@@ -16,7 +16,8 @@ export default{
         "continue-button": "Fortsetzen",
         "forgot-question": "Passwort vergessen?",
         "input-show-pass": "Anzeigen",
-        "input-hide-pass": "Verbergen"
+        "input-hide-pass": "Verbergen",
+         "entering": "Anmeldung wird gestartet"
     },
     "register": {
         "title": "Registrierung abschließen",
@@ -30,7 +31,8 @@ export default{
         "policies-text": "Indem ich Akzeptieren und fortfahren auswähle, stimme ich der",
         "policies-title": "Datenschutzrichtlinie zu.",
         "the-chain": "Die Kette",
-        "password-info":"Das Passwort muss mindestens 8 Zeichen enthalten."
+        "password-info":"Das Passwort muss mindestens 8 Zeichen enthalten.",
+        "complete-register" : "Registrierung wird abgeschlossen"
     },
     "reset-pass":{
         "title": "Passwort ändern",

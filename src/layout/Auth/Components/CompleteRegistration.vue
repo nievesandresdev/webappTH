@@ -1,6 +1,6 @@
 <template>
     <div class="px-4">
-        <div class="mt-4">
+        <div class="">
             <THInputText
                 iconLeft="/assets/icons/WA.user.svg"
                 :placeholder="$t('auth.register.input-name')"
@@ -29,7 +29,7 @@
         </div>
         <p class="lato text-[10px] font-bold leading-[12px] mt-1">{{$t('auth.register.password-info')}}</p>
         <p 
-            class="mt-6 text-[10px] lato font-bold leading-[12px]"
+            class="mt-4 text-[10px] lato font-bold leading-[12px]"
         >
         {{$t('auth.register.policies-text')}}    
         <router-link :to="{name:'PrivacyPolicies'}"  class="underline">{{$t('auth.register.policies-title')}}</router-link>
@@ -41,15 +41,15 @@
                 :disabled="!validSubmitButton || loading"
                 @click="submit"
             >
-                {{$t('auth.register.continue-button')}}
+                {{ loading ? $t('auth.register.complete-register') : $t('auth.register.continue-button')}}
             </PrimaryButton> 
         </div>
-        <div class="my-6 bg-border-secondary w-full h-[1px]"></div>
-        <p class="lato text-[10px] font-bold leading-[12px]">
+        <!-- <div class="my-2 bg-border-secondary w-full h-[1px]"></div> -->
+        <p class="lato text-[10px] font-bold leading-[12px] mt-2">
             {{hotelStore.hotelData ? hotelStore.hotelData.name : (chainStore.$name ?? $t('auth.register.the-chain'))}}
             {{$t('auth.register.text-info-1')}}
         </p>
-        <div class="mt-4 flex items-center">
+        <div class="mt-2 flex items-center">
             <input type="checkbox" class="hborder-black-100 w-4 h-4">
             <p class="lato text-[10px] font-bold leading-[12px] ml-1">{{$t('auth.register.text-info-2')}}</p>
         </div>
@@ -79,6 +79,8 @@ import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
+
+const emit = defineEmits(['next'])
 
 const router = useRouter();
 
@@ -123,6 +125,7 @@ async function submit(){
     await authStore.$logIn(guestData.email);
     loading.value = false;
     toastSuccess(t('messageRequest.recordSuccess')); 
+    emit('next')
 }
 
 const passDisabled = computed(()=>{

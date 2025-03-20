@@ -51,4 +51,8 @@ export default {
     "da": "danish",
     "zh_CN": "chinese simplified",
     "title": "Language Preference",
+    "ca": "catalan",
+    "eu": "basque",
+    "gl": "galician",
+    "nl": "dutch"
 }

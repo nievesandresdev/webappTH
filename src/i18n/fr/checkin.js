@@ -83,5 +83,20 @@ export default {
         "norms-subtitle": "Pénalité :",
         "why-data-continue": "Compris",
         "see-policies": "Voir la politique de confidentialité"
-    }
+    },
+    "autocomplete": {
+        "cardbanner-title": "Remplir automatiquement le formulaire",
+        "cardbanner-subtitle": "Gagnez du temps en scannant votre document",
+        "title": "Remplir automatiquement le formulaire",
+        "description-1": "Vous allez scanner votre passeport ou votre carte d'identité à l'aide de l'appareil photo de votre dispositif.",
+        "description-2": "Vous devez scanner le code MRZ.",
+        "description-3": "Nous vous indiquons ci-dessous où le trouver.",
+        "passport-title": "Passeport",
+        "dninie-title": "Carte d'identité",
+        "scan-doc": "Scanner le document",
+        "backtoform": "Retour au formulaire",
+        "error-scan": "Erreur : Veuillez cadrer le code MRZ du document",
+        "browser-warning": "Connectez-vous via un navigateur tel que Google Chrome pour utiliser cette fonctionnalité.",
+        "rescan-document": "Scanner à nouveau le document"
+      }
 }

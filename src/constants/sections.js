@@ -18,5 +18,9 @@ export const SECTIONS = {
     QUERY: {
       GLOBAL: "query_global",
     },
+    CHAIN: {
+      HOTELLIST: "chain_hotellist_global",
+      CREATESTAY: "chain_createstay_global",
+    },
   };
   

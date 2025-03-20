@@ -50,5 +50,10 @@ export default {
     "he": "Hebräisch",
     "da": "Dänisch",
     "zh_CN": "Vereinfachtes Chinesisch",
-    "title": "Sprachpräferenz"
+    "title": "Sprachpräferenz",
+    "ca": "katalanisch",
+    "eu": "baskisch",
+    "gl": "galicisch",
+    "nl": "niederländisch"
+
 }

@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]" />
+    <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000" />
 
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
@@ -138,27 +138,7 @@
     </PageTransitionGlobal>
 
     <!-- forms -->
-    <ResetPasswordBottomSheet 
-        v-if="showResetPasswordBottomSheet"
-        :open="true"
-    />
-    <RegisterOrLoginBottomSheet 
-        v-if="showRegisterOrLoginBottomSheet"
-        :open="true"
-    />
-    <CompleteRegisterBottomSheet 
-        v-if="showCompleteRegisterBottomSheet"
-        :open="true"
-    />
-    <CreateStayBottomSheet 
-        v-if="showCreateStayBottomSheet"
-        :open="true"
-    />
-    <!-- overlay para evitar que el huesped interactue con la pagina sin haberse logueado -->
-    <div 
-        v-if="showResetPasswordBottomSheet || showRegisterOrLoginBottomSheet || showCompleteRegisterBottomSheet || showCreateStayBottomSheet" 
-        class="fixed top-0 left-0 w-screen h-screen z-[900]"
-    ></div>
+    <ModalSession />
 </template>
 <script setup>
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
@@ -166,12 +146,8 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
-//forms
-import RegisterOrLoginBottomSheet from '@/layout/Auth/RegisterOrLoginBottomSheet.vue';
-import CompleteRegisterBottomSheet from '@/layout/Auth/CompleteRegisterBottomSheet.vue'
-import CreateStayBottomSheet from '@/layout/Auth/CreateStayBottomSheet.vue'
-import ResetPasswordBottomSheet from '@/layout/Auth/ResetPasswordBottomSheet.vue'
 //sections
+import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
@@ -200,12 +176,6 @@ const authStore = useAuthStore()
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
-const props = defineProps({
-    acform: {
-        type:String,
-        default:false
-    }
-});
 
 // DATA
 const crossellingsData = ref(null)
@@ -286,7 +256,7 @@ const goGuests = () => {
     router.push({ name: 'Guests' });
 };
 
-const formType = computed(() => props.acform);
+// const formType = computed(() => props.acform);
 
 const showWhatvisitSection = computed(() => {
     if(!crossellingPlacesData.value?.crosselling_places_whatvisit?.length) return false;
@@ -311,26 +281,6 @@ if(!stayStore.stayData?.check_out) return
   const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
   const now = DateTime.now();
   return inputDate < now; // Retorna true si la fecha ya pasó
-});
-
-const showResetPasswordBottomSheet = computed(() => {
-    return formType.value == 'reset'
-});
-
-const showRegisterOrLoginBottomSheet = computed(() => {
-    if(isMockup()) return false;
-    let val = formType.value == 'log' || !guestStore.guestData && formType.value !== 'reset' && !formType.value;
-    return val;
-});
-
-const showCompleteRegisterBottomSheet = computed(() => {
-    let val = formType.value == 'complete' || guestStore.guestData && !guestStore.guestData.name && !formType.value;
-    return val;
-});
-
-const showCreateStayBottomSheet = computed(() => {
-    let val = formType.value == 'createstay' || guestStore.guestData && guestStore.guestData.name && !stayStore.stayData && !formType.value;
-    return val;
 });
 
 
