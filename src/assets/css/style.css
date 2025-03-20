@@ -8,7 +8,7 @@
       
   } */
 
-  /* App.vue o assets/global.css */
+  /* scrollbar all app, muy chiquito que no se vea */
 ::-webkit-scrollbar {
   width: 0.1px; /* Ancho vertical */
   height: 6px; /* Altura horizontal */
