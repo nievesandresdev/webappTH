@@ -1,13 +1,15 @@
 <template>
+    <!-- class="h-screen pt-8" -->
     <div 
-        class="h-screen pt-8"
+        class="h-screen pt-4 px-4"
         :style="{
             backgroundColor:chainStore.$bgColor0
         }"
     >
+    <!-- w-[133px]  -->
         <img 
             v-if="chainStore.$getUrlLog()"
-            class="w-[133px] h-[80px] mx-auto" :src="chainStore.$getUrlLog()" alt="icon google"
+            class="h-[80px] mx-auto" :src="chainStore.$getUrlLog()" alt="icon google"
         >
     </div>
     <ModalSession />

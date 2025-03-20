@@ -32,9 +32,10 @@ const goBack = ref(false)
 
 startLoading(SECTIONS.CHAIN.CREATESTAY);
 onMounted(async () =>{
-    datCard.value = hotelStore.hotelData;
     await sleep(1000); // 1000 ms = 1 segundo
     stopLoading(SECTIONS.CHAIN.CREATESTAY);
+    await sleep(400);
+    datCard.value = hotelStore.hotelData;
 })
 
 function sleep(ms) {

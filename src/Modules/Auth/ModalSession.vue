@@ -15,19 +15,23 @@
         <div class="px-4 pt-4">
             <!-- Mensaje de bienvenida para rutas distintas a Home; se muestra solo cuando la transición finalizó -->
             <!-- class="mb-[96px]" -->
-             <div class="mb-6" v-if="showRegisterOrLogin && !showEnterPassword && route.name !== 'Home' && transitionFinished">
-                <WelcomeMsg />
-             </div>
-            <div :class="{'mt-2': route.name === 'Home'}" class="h-[412px] overflow-hidden">
+
+            
+            <div class="h-[68px] mt-[-60px]">
+                <WelcomeMsg v-if="showRegisterOrLogin && !showEnterPassword && route.name !== 'Home' && transitionFinished"/>
+            </div>
+            
+             <!-- class="h-[412px] overflow-hidden" -->
+            <div :class="{'mt-4': route.name == 'ChainLanding'}">
                 <div class="h-[31px] overflow-hidden">
                     <HeadSessionModal @back="handleBack"/>
                 </div>
                 <!-- Mensaje de bienvenida extra para Home -->
-                <div v-if="showRegisterOrLogin && !showEnterPassword && route.name === 'Home'" class="mt-10 pb-2">
+                <div v-if="showRegisterOrLogin && !showEnterPassword && route.name === 'Home'" class="pt-4 h-[84px]">
                     <WelcomeMsg/>
                 </div>
                 <!-- container forms -->
-                <div class="pt-4">
+                <div class="pt-4 overflow-y-auto" :class="{'h-[381px]': !heightHomeLog, 'h-[297px]': heightHomeLog}">
                     <!-- Transición tipo carrusel -->
                     <Transition :name="transitionName" mode="out-in" @after-enter="handleTransitionFinish">
                         <component 
@@ -65,7 +69,7 @@ const guestStore = useGuestStore()
 const stayStore = useStayStore()
 
 const showEnterPassword = ref(false)
-const formType = ref(route.query.acform)
+const formType = ref(route.query.acform ?? 'log')
 
 const form = reactive({
     id: '',
@@ -74,10 +78,15 @@ const form = reactive({
     password: null
 })
 
+
+const heightHomeLog = computed(() => {
+    console.log('test formType.value', formType.value)
+    return formType.value == 'log' && route.name == 'Home' && !showEnterPassword.value;
+});
 // Mantenemos las condiciones originales para cada formulario:
 const showRegisterOrLogin = computed(() => {
     if(isMockup() || showEnterPassword.value) return false;
-    return formType.value === 'log' || 
+    return (formType.value === 'log' && !stayStore.stayData) || 
            (!guestStore.guestData && formType.value !== 'reset' && !formType.value) ||
            (!route.query?.acform && route.name === 'ChainLanding');
 });
