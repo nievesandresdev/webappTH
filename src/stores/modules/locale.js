@@ -30,6 +30,7 @@ export const useLocaleStore = defineStore('locale', () => {
             selected : localeCurrent.value
         };
         const response = await getForItemApi(params)
+        console.log('test response', response)
         const { ok, data } = response
         if (ok) {
             // return availableLocation.value = data
