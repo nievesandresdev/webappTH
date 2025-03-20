@@ -86,7 +86,7 @@ const heightHomeLog = computed(() => {
 // Mantenemos las condiciones originales para cada formulario:
 const showRegisterOrLogin = computed(() => {
     if(isMockup() || showEnterPassword.value) return false;
-    return formType.value === 'log' || 
+    return (formType.value === 'log' && !stayStore.stayData) || 
            (!guestStore.guestData && formType.value !== 'reset' && !formType.value) ||
            (!route.query?.acform && route.name === 'ChainLanding');
 });
