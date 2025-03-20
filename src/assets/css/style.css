@@ -8,12 +8,45 @@
       
   } */
 
+  /* GLOBAL – Oculta la barra de scroll pero mantiene el desplazamiento */
+
+  html,
+  body,
+  #app-container {
+    height: 100%;
+    overflow: auto;                /* Scroll funcional */
+    -ms-overflow-style: none;     /* IE y Edge */
+    scrollbar-width: none;        /* Firefox */
+  }
+  
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  #app-container::-webkit-scrollbar {
+    display: none;                /* Chrome, Safari, Opera */
+  }
+  
+
 body {
     font-size: 16px;
  }
  a:hover {
      text-decoration: none;
  }
+
+ .interaction-blocker {
+  pointer-events: auto;
+  background: transparent;
+}
+
+.interaction-blocker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: all;
+}
+
+ 
 
  a:active,
  a:hover,
