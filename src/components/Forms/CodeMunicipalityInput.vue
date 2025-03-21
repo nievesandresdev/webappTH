@@ -187,7 +187,7 @@
       hasError.value = false
     } else {
       emit('update:modelValue', null)
-      hasError.value = true
+      // hasError.value = true
     }
   }
   </script>

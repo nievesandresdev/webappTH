@@ -206,7 +206,7 @@ async function loadDataGuest(id) {
         form.email = currentGuestData.value.email;
         localStorage.setItem('formDataCheckin', JSON.stringify(form))
     }
-    console.log('test loadDataGuest',form)
+    // console.log('test loadDataGuest',form)
 }
 
 // Función para parsear la fecha en formato DD/MM/YYYY

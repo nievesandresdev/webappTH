@@ -80,6 +80,7 @@ export default {
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
+                // console.log('test errorWhenOtherType', Boolean(this.errorWhenOtherType)); 
                 classes += ' hborder-alert-negative htext-alert-negative placeholder-negative no-hover-input';
             }
             if(this.iconLeft){
@@ -104,11 +105,14 @@ export default {
             return this.hasError && this.type !== 'email';
         }
     },
-    // watch: {
-    //     hasError () {
-            
-    //     }
-    // },
+    // cada vez que 'isError' cambie a false, 'hasError' también se ponga en false.
+    watch: {
+        isError(newVal) {
+            if (!newVal) {
+            this.hasError = false
+            }
+        }
+    },
     props: {
         id: {
             type: String,
@@ -167,8 +171,8 @@ export default {
         }
     },
     created(){
-        // console.log('test created i')
         if (this.isError) {
+            // console.log('test se metio')
             this.hasError = true;
         }
         if(this.textLabel && this.textError == "Campo requerido"){
