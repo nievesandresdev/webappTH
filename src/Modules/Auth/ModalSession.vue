@@ -164,6 +164,19 @@ watch(
   }
 );
 
+// Observar cambios en el estado del modal para controlar el scroll del body
+watch(
+  () => isOpenModal.value && !isMockup(),
+  (shouldBlockScroll) => {
+    if (shouldBlockScroll) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  },
+  { immediate: true }
+);
+
 provide('form', form)
 provide('showEnterPassword', showEnterPassword)
 </script>
