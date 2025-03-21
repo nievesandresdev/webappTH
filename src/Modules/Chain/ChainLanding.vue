@@ -3,7 +3,7 @@
     <div 
         class="h-screen pt-4 px-4"
         :style="{
-            backgroundColor:chainStore.$bgColor0
+            backgroundColor:Number(chainStore.customizationData?.tonality_header) ? '#fafafa' :'#494949'
         }"
     >
     <!-- w-[133px]  -->
