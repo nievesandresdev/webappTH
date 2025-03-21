@@ -2,7 +2,7 @@
     <InboxHead />
     <!-- pre-stay -->
     <PageTransitionGlobal module="query">
-        <div class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
+        <div v-if="Boolean(requestTexts)" class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
             <TextQuery 
                 v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
                 :settings="settings"
@@ -109,10 +109,10 @@ onMounted(async() => {
         await getCurrentQuery();
     }
     await getResponses();
+    stopLoading(SECTIONS.QUERY.GLOBAL);
     requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
     requestTo.value = requestTexts.value.request_to;
-    stopLoading(SECTIONS.QUERY.GLOBAL);
 })
 
 async function getQuerySettings(){
