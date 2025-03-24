@@ -1,10 +1,10 @@
 <template>
     <div
-        class="textarea-border rounded-[10px] w-full border-[2px]" 
+        class="rounded-[10px] w-full border-[2px]" 
         :class="{
             'hborder-alert-negative': isOverLimit,
             'hborder-black-100': isFocused,
-            'hborder-gray-400': !modelValue
+            'hborder-gray-400': !isFocused
         }"
     >
         <div class="cursor-pointer srelative flex h-full w-full">
@@ -119,17 +119,4 @@ textarea::placeholder {
     }
 }
 
-/* .textarea-border:hover{
-    color: var(--h-green-600);
-    border: 1px solid var(--h-green-600) !important;
-}
-
-.textarea-border:hover > textarea::placeholder{
-    color: var(--h-green-600);
-}
-
-.textarea-border:hover textarea::placeholder {
-    color: var(--h-green-600);
-    opacity: 1;
-  } */
 </style>

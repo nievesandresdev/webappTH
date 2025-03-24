@@ -28,7 +28,7 @@
         </div>
         <!-- login with -->
         <button 
-            class="mt-4 bg-white hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
+            class="mt-4 bg-white border hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
             @click="goRegisterOrLogin('google')"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/1.TH.GOOGLE.svg" alt="icon google">

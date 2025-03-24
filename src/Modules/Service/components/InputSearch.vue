@@ -21,17 +21,17 @@
             v-model="valueSearch"
             type="text"
             :placeholder="$t('service.placeholder-search')"
-            class="border-[#333] rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 text-[8px] sp:text-sm font-medium border-[1px] focus:border-[2px]"
+            class="lato rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 py-1.5 sp:py-3 text-[8px] sp:text-sm font-medium leading-[16px] border-[2px] focus:border-[#333] border-[#bfbfbf]"
             :class="valueSearch ? 'border-[2px]' : 'border-[1px]'"
             @input="searchHnadle"
             @focus="isFocused = true"
             @blur="isFocused = false"
             @click="activateSearch('top')"
         >
-        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
+        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 space-x-1 sp:space-x-2 flex items-center">
             <button
                 v-if="searchFull"
-                class="size-[12px] sp:size-6 mb-[1px] sp:mb-[2px]"
+                class="size-[12px] sp:size-6 mb-[1.5px] sp:mb-[3px]"
                 @click="cleanSearch"
             >
                 <img
@@ -146,3 +146,19 @@ function handleOpenFilter () {
 }
 
 </script>
+<style scoped>
+input::placeholder{
+    font-size: 14px;
+    font-family: 'lato';
+    font-weight: 500;
+    color: #A0A0A0;
+    line-height: 16px;
+  }
+
+@media (max-width: 224px) {
+    input::placeholder{
+        font-size: 10px;
+        line-height: 10px;
+    }
+}
+</style>
