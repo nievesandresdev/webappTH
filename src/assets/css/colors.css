@@ -148,7 +148,7 @@
         background-color: var(--h-gray-500);
     }
     .hborder-gray-400 {
-        border: 1px solid var(--h-gray-400);
+        border-color: var(--h-gray-400);
     }
     .hborder-bottom-gray-400 {
         border-bottom: 1px solid var(--h-gray-400);
@@ -177,7 +177,7 @@
     .hborder-alert-negative:focus,
     .hborder-alert-negative:hover,
     .hborder-alert-negative {
-        border: 1px solid var(--alert-negative) !important;
+        border-color: var(--alert-negative) !important;
     }
     .htext-warning {
         color: var(--alert-alert);
@@ -219,7 +219,7 @@
         color: var(--h-black-200);
     }
     .hborder-black-100{
-        border: 1px solid var(--h-black-100);
+        border-color: var(--h-black-100);
     }
     .focus-hborder-black-100:focus{
         border: 1px solid var(--h-black-100);
