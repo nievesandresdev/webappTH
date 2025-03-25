@@ -78,7 +78,7 @@ export default {
         },
         computeClasses() {
             let paddingDefault = this.iconLeft ? 'p-3' : 'px-3 py-2';
-            let borderClasess = this.disabled ? 'border-[#bfbfbf80]' : 'hborder-gray-400'; //hborder-disabled disabled-text
+            let borderClasess = this.disabled ? 'hborder-disabled-2' : 'hborder-gray-400'; //hborder-disabled disabled-text
                 borderClasess = this.isFocused && !this.disabled ? 'hborder-black-100' : borderClasess;
             let bgClasess = this.disabled ? 'bg-[#fafafa80]' : 'bg-white';
             let classes = `${bgClasess} border-[2px] ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;

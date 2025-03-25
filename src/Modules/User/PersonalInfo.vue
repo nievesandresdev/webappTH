@@ -60,10 +60,8 @@
                 v-model="form.phone"
             /> -->
             <div>
-                <label class="text-[10px] sp:text-sm font-bold mb-1 sp:mb-2 block lato leading-[12px] sp:leading-[16px]">
-                    {{$t('profile.page_personal_info.form.number_phone.label')}}
-                </label>
                 <BaseInputPhone 
+                    :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
                     v-model="form.phone" 
                     @handleError="phoneError = $event"
                 /> 
