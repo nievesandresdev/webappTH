@@ -1,13 +1,15 @@
 <template>
-    <div class="cursor-pointer relative" ref="dropdown" id="dropdown-calendar-calendar">
+    <div class="cursor-pointer relative bg-white rounded-[6px] sp:rounded-[10px]" ref="dropdown" id="dropdown-calendar-calendar">
         <buttom
             :disabled="disabled"
             @click="toggleshow"
             class="flex items-center hoverForm"
             :class="{
-                'h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] p-2 hborder-black-100':true,
+                'h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] px-2 py-3 border-[2px]':true,
                 'hborder-alert-negative': error,
-                'button-disabled':disabled && !error
+                'button-disabled':disabled && !error,
+                'hborder-black-100': showOptions,
+                'hborder-gray-400': !showOptions,
             }"
         >
             <img :src="icon_left" :class="icon_left_class">
