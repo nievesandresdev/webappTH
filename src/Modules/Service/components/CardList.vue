@@ -31,7 +31,7 @@
             
         >
             <p class="text-[6px] sp:text-[14px] font-bold lato leading-none" v-html="data.name ?? data.title" />
-            <p v-if="typeService != 'ACTIVITY'" class="text-[6px] sp:text-[14px] lato leading-none truncate-2" v-html="data.description" />
+            <p v-if="typeService != 'ACTIVITY'" class="text-[6px] sp:text-[14px] lato leading-none truncate-2" v-html="data.translation_current?.description ?? data.description" />
             <div
                 class="flex items-end justify-end pb-[4px] sp:pb-[8px]"
                 :class="data.name_api === 'viator' ? 'justify-between' : 'justify-end'"
