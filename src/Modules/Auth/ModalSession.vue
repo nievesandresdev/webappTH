@@ -85,9 +85,14 @@ const heightHomeLog = computed(() => {
 });
 // Mantenemos las condiciones originales para cada formulario:
 const showRegisterOrLogin = computed(() => {
+  console.log('test todo 1', (formType.value === 'log' && !stayStore.stayData))
+  console.log('test todo 2', (!guestStore.guestData && formType.value !== 'reset' && formType.value == 'log'))
+  console.log('test todo 3', (!route.query?.acform && route.name === 'ChainLanding'))
+  
+
     if(isMockup() || showEnterPassword.value) return false;
     return (formType.value === 'log' && !stayStore.stayData) || 
-           (!guestStore.guestData && formType.value !== 'reset' && !formType.value) ||
+           (!guestStore.guestData && formType.value !== 'reset' && formType.value == 'log') ||
            (!route.query?.acform && route.name === 'ChainLanding');
 });
 
