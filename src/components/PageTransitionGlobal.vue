@@ -1,9 +1,8 @@
 <template>
   <!-- transition container -->
   <div>
-    <Transition name="fade">
+    <Transition name="fade" mode="out-in">
       <div v-if="loading !== null && loading" class="skeleton-wrapper">
-      <!-- <div v-if="true" class="skeleton-wrapper"> -->
         <component :is="getSkeletonComponent()" />
       </div>
       <div v-else class="content">
@@ -30,7 +29,7 @@ const props = defineProps({
   componentName: {
     type: String,
     default: 'SkeletonGlobal',
-  }
+  },
 });
 
 const { isLoading } = useLoadingSections();

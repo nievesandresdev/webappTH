@@ -124,7 +124,7 @@ export const useServiceStore = defineStore('service', () => {
                 return item.price;
             }
             return acc;
-        }, subservices[0].price);
+        }, subservices[0]?.price ?? 0);
         return minPrice?.toFixed(2);
     }
 

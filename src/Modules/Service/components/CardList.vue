@@ -6,7 +6,7 @@
     >
         <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden">
             <img
-                class="object-cover w-full h-full"
+                class="object-cover size-full"
                  :src="serviceStore.$loadImage(data?.images?.[0] ?? data?.image)"
                 alt="img_service"
                 loading="lazy"

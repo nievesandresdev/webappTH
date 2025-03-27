@@ -3,7 +3,7 @@
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[2000]"></div>
 
 
-    <PageTransitionGlobal module="service" name="service_detail" :componentName="'SkeletonDetail'">
+    <PageTransitionGlobal module="service" name="service_detail" :component-name="'SkeletonDetail'">
         <ImageSlider
                 show-button-back
                 :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
@@ -162,15 +162,6 @@ const props = defineProps({
     default: () => ({}),
   },
 });
-
-// const serviceData = {
-//     name: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
-//     hire: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam eos culpa perspiciatis. Nesciunt ipsa, quo dolorem necessitatibus voluptates recusandae laudantium modi saepe sint veniam nemo esse molestias commodi perspiciatis doloremque.",
-//     link_url: "http://google.com",
-//     type_price: 0,
-//     price: 200
-// }
 
 const serviceData = ref({
     type: null,

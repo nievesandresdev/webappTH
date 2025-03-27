@@ -1,5 +1,8 @@
 <template>
-  <div class="mt-[36] sp:mt-[48px]">
+  <div
+    v-if="subservices.length > 0"
+    class="mt-[36] sp:mt-[48px]"
+  >
     <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.options.title') }}</h3>
     <div class="mt-[9px] sp:mt-[10px] space-y-[14px] sp:space-y-[14px]">
       <CardList
@@ -12,7 +15,7 @@
     </div>
   </div>
 
-  <BottomSheetDetailSubservice />
+  <BottomSheetDetailSubservice /> 
 </template>
 
 <script setup>
