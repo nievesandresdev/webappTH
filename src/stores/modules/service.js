@@ -82,6 +82,52 @@ export const useServiceStore = defineStore('service', () => {
         return response
     }
 
+    function calPrice (item) {
+        if (!item) return;
+        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_values: fieldsValues, type: typeService, subservices } = item;
+        price = price ?? fromPrice;
+        price = price ? parseFloat(price) : 0;
+        let priceObject = {
+            price,
+            isFree: false,
+            isFrom: false
+        }
+    
+        if(nameApi == 'viator') {
+            priceObject.price = `${price?.toFixed(2)} €`;
+        }
+    
+        if (typePrice == 'Activities') {
+            priceObject.price =  `${price?.toFixed(2)} €`;
+        }
+    
+        if (typeService == '2') {
+            let minPrice = calMinPriceSubservices(subservices);
+            priceObject.price = `${minPrice} €`;
+            priceObject.isFrom = true;
+        }
+    
+        if (!['1','2'].includes(typePrice)) {
+            priceObject.price = `${price?.toFixed(2)} €`;
+        }
+    
+        if (fieldsValues?.includes('PRICE')) {
+            priceObject.isFree = true;
+        }
+        priceObject.price = `${price?.toFixed(2)}€`;
+        return priceObject;
+    }
+    
+    function calMinPriceSubservices (subservices = []) {
+        let minPrice = subservices.reduce((acc, item) => {
+            if (item.price < acc) {
+                return item.price;
+            }
+            return acc;
+        }, subservices[0].price);
+        return minPrice?.toFixed(2);
+    }
+
     //
     return {
         dataFilterGlobal,
@@ -91,6 +137,7 @@ export const useServiceStore = defineStore('service', () => {
         $loadImage,
         $findByIdConfort,
         $findByIdTransport,
+        calPrice,
     }
 
 })

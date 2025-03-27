@@ -15,11 +15,20 @@
                 {{ serviceData?.name }}
             </h2>
             <div class="mt-[5px] sp:mt-[8px]">
-                <p v-if="serviceData.type_price === 2" class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
-                <p v-if="serviceData.type_price == 1 || serviceData.type_price == 2" class="text-[14px] sp:text-[20px] font-bold lato">{{ serviceData?.price?.toFixed(2) }}€</p>
-                <template v-else="serviceData.type_price == 3">
-                    <p class="text-[14px] sp:text-[20px] font-bold lato">{{ $t('service.card-item.free') }}</p>
-                </template>
+                <p
+                    v-if="serviceStore.calPrice(serviceData)?.isFrom"
+                    class="text-[5px] sp:text-[10px] lato leading-none font-bold"
+                >
+                    {{ $t('experience.card-experience.from') }}
+                </p>
+                <p class="text-[14px] sp:text-[20px] font-bold lato">
+                    <template v-if="serviceStore.calPrice(serviceData)?.isFree">
+                        {{ $t('service.card-item.free') }}
+                    </template>
+                    <template v-else>
+                        {{ serviceStore.calPrice(serviceData)?.price }}
+                    </template>
+                </p>
             </div>
         </div>
         <div
@@ -77,6 +86,14 @@
         >
             {{ $t('service.modal-request-service.button') }}
         </PrimaryButton>
+        <template v-if="serviceData.type == 1">
+            <DetailPageCharacteristicsUnico />
+        </template>
+        <template v-else>
+            <DetailPageCharacteristicsVarious />
+        </template>
+
+
         <Modal 
             :openModal="isOpenModelLink"
             :z-index="'z-[1800]'"
@@ -111,6 +128,8 @@ import ImageSlider from '@/components/ImageSlider.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import Modal from '@/components/Modal.vue';
 import LoadPage from '@/shared/LoadPage.vue';
+import DetailPageCharacteristicsUnico from './DetailPageCharacteristicsUnico.vue';
+import DetailPageCharacteristicsVarious from './DetailPageCharacteristicsVarious.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -124,6 +143,10 @@ const hotelStore = useHotelStore();
 
 const props = defineProps({
   paramsRouter: {
+    type: Object,
+    default: () => ({}),
+  },
+  queryRouter: {
     type: Object,
     default: () => ({}),
   },
@@ -205,7 +228,14 @@ async function loadData () {
             images: data.images,
             link_url: data.link_url ?? data.url,
             price: data.price ?? data.from_price,
-            type_price: data.type_price
+            type_price: data.type_price,
+            address: data?.translation_current?.address ?? data?.address,
+            duration: data?.duration,
+            fields_visibles: data?.fields_visibles,
+            languages: data?.languages,
+            requeriment: data?.translation_current?.requeriment ?? data?.requeriment,
+            type: data?.type,
+            subservices: data?.subservices ?? [],
         };
         Object.assign(serviceData.value, dataTranslate);
         description.value = dataTranslate.description;
@@ -244,9 +274,13 @@ const openModalLink = () => {
     window.open(serviceData.value.link_url, '_blank')
 }
 
+provide('queryRouter', props.queryRouter);
+provide('serviceData', serviceData);
+provide('serviceStore', serviceStore);
+
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .description, .hire {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* Mostrar solo 3 líneas */

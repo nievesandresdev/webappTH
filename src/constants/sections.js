@@ -3,11 +3,15 @@ export const SECTIONS = {
       GLOBAL: "home_global",
     },
     HOTEL: {
-      GLOBAL: "hotel_global",
-    },
+        GLOBAL: "hotel_global",
+      },
     FACILITY: {
       GLOBAL: "facility_global",
       DETAIL: "facility_detail_global",
+    },
+    SERVICE: {
+      GLOBAL: "service_global",
+      DETAIL: "service_detail_global",
     },
     PLACE: {
       GLOBAL: "place_global",

@@ -9,11 +9,14 @@
       
       ref="sheet"
       v-if="open"
-      class="bottom-sheet relative pt-[6px] sp:pt-[12px]"
+      class="bottom-sheet relative"
+      :class="{ 'pt-[6px] sp:pt-[12px]': showHandlebar }"
       :style="{ height: sheetHeight, zIndex: isFullFront ? '100000' : '2000' }"
     >
       <div
-        class="flex justify-center py-[6px] sp:py-[12px] w-full absolute top-0 left-0"
+        v-if="showHandlebar"
+        class="flex justify-center w-full absolute top-0 left-0"
+        :class="showHandlebar ? 'py-[6px] sp:py-[12px]' : 'pb-[12px] sp:pb-[24px]'"
         id="handlebar-content"
         @mousedown="startDrag"
         @touchstart="startDrag"
@@ -25,7 +28,10 @@
       </div>
       <!-- {{ sheetHeight }} {{ isStepThree }} -->
       <div class="h-full">
-        <div class="content pt-[12px] sp:pt-[24px] h-full">
+        <div
+          class="content h-full"
+          :class="{ 'pt-[12px] sp:pt-[24px]': showHandlebar }"
+        >
           <slot name="content" />
         </div>
       </div>
@@ -59,6 +65,10 @@ const props = defineProps({
   isFullFront: {
     type: Boolean,
     default: false,
+  },
+  showHandlebar: {
+    type: Boolean,
+    default: true,
   }
 });
 

@@ -9,7 +9,7 @@
     <div class="mx-3 sp:mx-4 mt-[-16px] sp:mt-[-24px]">
         <StayCard 
             v-if="hotelStore.hotelData && stayStore.stayData && !$utils.isMockup()" 
-            :hotel="hotelStore.hotelData" 
+            :hotel="hotelStore.hotelData"
             :stay="stayStore.stayData" 
             :showButtonShared="true"
             showQueryButton

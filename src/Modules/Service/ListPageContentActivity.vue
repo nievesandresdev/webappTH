@@ -1,42 +1,59 @@
 <template>
-    <div
-         id="list-activities"
-         class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
-    >
-        <p
-            v-if="!isloadingForm"
-            class="text-[6px] sp:text-sm font-bold lato"
+    <PageTransitionGlobal module="service">
+        <div
+            id="list-activities"
+            class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
         >
-            {{ paginateData.total }} {{ $t('service.activity.text-search-found') }}
-        </p>
-        <p
-            v-else
-            class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
-        />
-        <div class="mt-2 sp:mt-4">
-            <template v-for="(item, index) in (servicesData ?? [])">
-                <CardList
-                    :data="item"
-                    type-service="ACTIVITY"
-                    :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
-                />
-            </template>
-            <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
-                <SkeletonCard
-                    :class="index === servicesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
-                />
-            </template>
+            <p
+                v-if="!isloadingForm"
+                class="text-[6px] sp:text-sm font-bold lato"
+            >
+                {{ paginateData.total }} {{ $t('service.activity.text-search-found') }}
+            </p>
+            <p
+                v-else
+                class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
+            />
+            <div class="mt-2 sp:mt-4">
+                <template v-for="(item, index) in (servicesData ?? [])">
+                    <CardList
+                        :data="item"
+                        type-service="ACTIVITY"
+                        :class="index === servicesData.length - 1 && !numberCardsToLoad ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                    />
+                </template>
+                <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
+                    <SkeletonCard
+                        :class="index === servicesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                    />
+                </template>
+            </div>
         </div>
-    </div>
+    </PageTransitionGlobal>
 </template>
 
 <script setup>
 
 import { inject, onMounted, ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
+
+
+// COMPONENTS
+import PageTransitionGlobal from '@/components/PageTransitionGlobal.vue';
+
 const route = useRouter();
 
 import { $throttle, $isElementVisible, isMockup } from '@/utils/utils';
+
+// CONSTANTS
+import { SECTIONS } from '@/constants/sections';
+
+// COMPOSABLE
+import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
+
 
 const props = defineProps({
     queryRouter: {
@@ -53,9 +70,6 @@ const serviceStore = useServiceStore();
 import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
 
-// COMPOSABLE
-import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
-
 // INJECT
 const hotelData = inject('hotelData');
 const servicesData = inject('servicesData');
@@ -67,8 +81,6 @@ const searchingActive = inject('searchingActive');
 const formFilter = inject('formFilter');
 
 // DATA
-
-const numberCardsToLoadDefault = ref(20);
 
 // COMPUTED
 const numberItemsLoadCurrent = computed(() => {
@@ -98,24 +110,9 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     loadMore
 );
 
-// const numberCardsToLoad = computed(() => {
-//     if(firstLoad.value) return numberCardsToLoadDefault.value;
-//     if(!firstLoad.value && paginateData.total == 0) return 0;
-//     let remaining = paginateData.total - servicesData.value.length;
-//     remaining = remaining < 0 ? 0 : remaining;
-//     if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
-//         return remaining ;
-//     }
-//     return numberCardsToLoadDefault.value;
-// });
-
-onMounted(() => {
-    // initScrollListener();
-    // submitFilter({showPreloader: true});
-});
+startLoading(SECTIONS.SERVICE.GLOBAL);
 
 function loadData () {
-    // console.log(loadData);
     submitFilter({showPreloader: true});
 }
 
@@ -124,22 +121,6 @@ function loadData () {
 function closeSearch () {
     searchingActive.value = false;
 }
-// function initScrollListener () {
-//     const container = document?.querySelector('#list-experience');
-//     if (container) {
-//         container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
-//     }
-// }
-
-// function checkLoadMore () {
-//     const skeletons = document.querySelectorAll('.skeleton-experience-card');
-//     for (let skeleton of skeletons) {
-//         if ($isElementVisible(skeleton) && !isloadingForm.value) {
-//             loadItems();
-//             break;
-//         }
-//     }   
-// }
 
 function loadMore () {
     page.value += 1;
@@ -168,6 +149,7 @@ async function loadItems () {
     }
     firstLoad.value = false;
     isloadingForm.value = false;
+    stopLoading(SECTIONS.SERVICE.GLOBAL);
 }
 
 function filterNonNullAndNonEmpty(obj) {
@@ -184,22 +166,6 @@ function filterNonNullAndNonEmpty(obj) {
         }
     })
     return filteredObject
-}
-
-function loadQueryInFormFilter () {
-    for (const [key, value] of Object.entries(queryRouter.value || {})) {
-        if (formFilter.hasOwnProperty(key)) {
-            if (['duration', 'distances'].includes(key)) {
-                if (typeof value === 'string') {
-                    formFilter[key].push(value);
-                } else {
-                    formFilter[key] = value;
-                }
-            }else {
-                formFilter[key] = validValueQuery(key, value);
-            }
-        }
-    }
 }
 
 function validValueQuery (field, value) {
