@@ -24,10 +24,11 @@ const props = defineProps({
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .card-list {
         border-radius: 10px;
         border: 2px solid #E6E6E6 ;
         background: linear-gradient(214deg, #F3F3F3 19.98%, #FAFAFA 80.15%);
+        box-shadow: none;
     }
 </style> 

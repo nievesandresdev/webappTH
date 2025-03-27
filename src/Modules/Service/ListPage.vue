@@ -20,7 +20,13 @@
     <div class="h-[95px]  sp:h-[126px] w-full">
         d
     </div>
-    <TransitionBook>
+    <TransitionBook
+        :custom-transitions="{
+            Confort: 1,
+            Transport: 2,
+            Activity: 3,
+        }"
+    >
         <router-view v-slot="{ Component }">
             <component :is="Component" :key="$route.name" />
         </router-view>

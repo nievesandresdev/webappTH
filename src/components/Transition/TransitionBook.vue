@@ -10,9 +10,18 @@
 <script setup>
 import { ref, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
-  const route = useRoute();
+const route = useRoute();
+
+// PROPS
+const props = defineProps({
+  customTransitions: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
 import { useRouteTransition } from "@/composables/useRouteTransition";
-const { transitionName } = useRouteTransition();
+const { transitionName } = useRouteTransition(props.customTransitions);
 // });
 </script>
 
