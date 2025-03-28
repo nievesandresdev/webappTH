@@ -49,10 +49,6 @@ const getSkeletonComponent = () => {
   opacity: 0;
 }
 
-.skeleton-wrapper {
-  /* padding: 10px; */
-}
-
 /* .content {
   opacity: 0;
   animation: fadeIn 0.8s ease-in-out forwards;
