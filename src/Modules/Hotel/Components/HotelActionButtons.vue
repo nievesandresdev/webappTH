@@ -36,6 +36,7 @@
     </div>
   
     <PrimaryButton
+      v-if="showAll"
       classes="text-center py-2.5 rounded-[10px] text-sm font-bold leading-[20px] w-full shadow-guest bg-[#333333] text-[#FFF] lato"
       @click="onShareClick"
     >
@@ -80,7 +81,10 @@ const { t } = useI18n();
   
   const emit = defineEmits(['wifi-click', 'call-click', 'legal-click', 'share-click']);
   
-  const showAll = computed(() => props.buttonsHome?.show_all ?? false);
+  //const showAll = computed(() => props.buttonsHome?.show_all ?? false);
+  const showAll = computed(() => {
+    return !props.hotelData.phone && !props.hotelData.with_wifi && !props.hotelData.legal;
+  });
   
   const onWifiClick = () => emit('wifi-click');
   const onCallClick = () => emit('call-click');
