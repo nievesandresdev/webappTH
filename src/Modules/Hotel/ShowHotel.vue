@@ -171,6 +171,10 @@ import { SECTIONS } from "@/constants/sections.js";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
+//legal
+import { useLegalStore } from '@/stores/modules/legal';
+const legalStore = useLegalStore();
+
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
@@ -197,8 +201,9 @@ const hotelData = inject('hotelData');
 const hotelInfo = ref({})
 
 const handleCall = () => {
-  if (hotelData.value.phone) {
-    window.open(`tel:${hotelData.value.phone}`)
+
+  if (hotelInfo.value.phone) {
+    window.open(`tel:${hotelInfo.value.phone}`)
   } else {
     console.warn('Número de teléfono no disponible.')
   }
@@ -210,8 +215,10 @@ const handleWifi = async() => {
   dataWifi.value = r.data
 }
 
-const handleLegalText = () => {
+const handleLegalText = async() => {
   modalLegal.value = true
+  /* const r = await legalStore.$getNormsByHotel()
+  console.log(r, 'r'); */
 }
 
 

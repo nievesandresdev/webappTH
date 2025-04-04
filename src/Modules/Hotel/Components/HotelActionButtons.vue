@@ -8,7 +8,6 @@
         :showLabel="true"
         @click="onWifiClick"
       />
-   <pre>{{ hotelData }}</pre>
       <!--  Llamar -->
       <RoundedButton
         v-if="hotelData.phone"
@@ -20,7 +19,7 @@
   
       <!--  Normas -->
       <RoundedButton
-        v-if="!hotelData.legal"
+        v-if="hotelData.policies.length > 0"
         iconUrl="/assets/icons/WA.normas.svg"
         :label="$t('hotel.buttons_home.standards')"
         :showLabel="true"
@@ -83,7 +82,7 @@ const { t } = useI18n();
   
   //const showAll = computed(() => props.buttonsHome?.show_all ?? false);
   const showAll = computed(() => {
-    return !props.hotelData.phone && !props.hotelData.with_wifi && !props.hotelData.legal;
+    return !props.hotelData.phone && !props.hotelData.with_wifi && props.hotelData.policies.length > 0;
   });
   
   const onWifiClick = () => emit('wifi-click');
