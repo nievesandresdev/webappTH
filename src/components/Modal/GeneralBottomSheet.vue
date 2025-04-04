@@ -31,7 +31,7 @@
                 <div class="transition-shadow duration-200 w-full px-4 pb-3 relative" :class="{'shadow-md': headerShadow}">
                     <slot name="header" />
                 </div>
-                <div class="overflow-y-auto max-h-[calc(80vh-10px)] px-4" ref="scrollableContainer">
+                <div class="overflow-y-auto max-h-[calc(80vh-80px)] px-4" ref="scrollableContainer">
                     <slot />
                 </div>
             </template>
