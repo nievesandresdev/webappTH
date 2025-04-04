@@ -104,7 +104,8 @@
                 <hr>
                 <div class="flex">
                   <span class="font-bold lato text-[14px]">Contraseña : </span>
-                  <span class="font-normal lato text-[14px]"> {{ data.password }}</span>
+                  <span class="font-normal lato text-[14px]" v-if="data.password"> {{ data.password }}</span>
+                  <span class="font-normal lato text-[14px] italic" v-else> Esta red no tiene contraseña</span>
                 </div>
               </p>
             </div>
