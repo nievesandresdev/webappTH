@@ -20,7 +20,7 @@
   
       <!--  Normas -->
       <RoundedButton
-        v-if="!hotelData.legal && buttonsHome.show_legal_text"
+        v-if="!hotelData.legal"
         iconUrl="/assets/icons/WA.normas.svg"
         :label="$t('hotel.buttons_home.standards')"
         :showLabel="true"
