@@ -95,16 +95,16 @@
             </template>
 
             <!-- Contenido scrolleable -->
-            <div v-for="i in 10" :key="i" class="flex p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-4">
+            <div v-for="data in dataWifi" :key="data.id" v-show="data.visible == 1" class="flex p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-4">
               <p class="text-[16px] text-[#333333] flex flex-col gap-2">
                 <div class="flex">
                   <span class="font-bold lato text-[14px]">Red : </span>
-                  <span class="font-normal lato text-[14px]">Red wifinsjkhsjhjs</span>
+                  <span class="font-normal lato text-[14px]"> {{ data.name }}</span>
                 </div>
                 <hr>
                 <div class="flex">
                   <span class="font-bold lato text-[14px]">Contraseña : </span>
-                  <span class="font-normal lato text-[14px]">contraseña</span>
+                  <span class="font-normal lato text-[14px]"> {{ data.password }}</span>
                 </div>
               </p>
             </div>
@@ -183,6 +183,7 @@ const isExpanded = ref(false)
 const modalWifi = ref(false)
 const modalLegal = ref(false)
 const facilities = ref([]);
+const dataWifi = ref([]);
 
 const stayData = ref({})
 const shareUrl = ref('')
@@ -201,7 +202,7 @@ const handleCall = () => {
 const handleWifi = async() => {
   modalWifi.value = true
   const r = await hotelStore.$getAllWifiHotel()
-  console.log(r, 'r')
+  dataWifi.value = r.data
 }
 
 const handleLegalText = () => {
