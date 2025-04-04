@@ -81,16 +81,31 @@
           </div>
 
           <!-- Modal de Wifi -->
-          <BottomModal :isOpen="modalWifi && !$utils.isMockup()" @update:isOpen="modalWifi = $event">
-            <div class="flex flex-col items-start">
-              <div class="flex items-center gap-1 mb-4 lato">
+          <BottomModal 
+            :isOpen="modalWifi && !$utils.isMockup()" 
+            @update:isOpen="modalWifi = $event"
+            :scrollContentOnly="true"
+          >
+            <!-- Encabezado fijo -->
+            <template #header>
+              <div class="flex items-center gap-1 lato">
                 <img src="/assets/icons/WA.wifi.svg" class="w-8 h-8 text-[#333333]" alt="WiFi Icon" />
                 <p class="text-[20px] font-bold text-[#333333] lato">Wifi</p>
               </div>
-            </div>
-            <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
-              <p class="text-[16px] text-[#333333] font-semibold text-center lato">
-                El {{$formatTypeLodging()}} cuenta con servicio de internet WiFi gratuito
+            </template>
+
+            <!-- Contenido scrolleable -->
+            <div v-for="i in 10" :key="i" class="flex p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-4">
+              <p class="text-[16px] text-[#333333] flex flex-col gap-2">
+                <div class="flex">
+                  <span class="font-bold lato text-[14px]">Red : </span>
+                  <span class="font-normal lato text-[14px]">Red wifinsjkhsjhjs</span>
+                </div>
+                <hr>
+                <div class="flex">
+                  <span class="font-bold lato text-[14px]">Contraseña : </span>
+                  <span class="font-normal lato text-[14px]">contraseña</span>
+                </div>
               </p>
             </div>
           </BottomModal>
@@ -183,8 +198,10 @@ const handleCall = () => {
   }
 }
 
-const handleWifi = () => {
+const handleWifi = async() => {
   modalWifi.value = true
+  const r = await hotelStore.$getAllWifiHotel()
+  console.log(r, 'r')
 }
 
 const handleLegalText = () => {

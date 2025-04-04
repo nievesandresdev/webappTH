@@ -9,7 +9,8 @@ import {
     buildUrlWebAppApi,
     getRewardsByHotel,
     getMainDataApi,
-    getDataLegalpi
+    getDataLegalpi,
+    getAllWifiHotel
 } from '@/api/services/hotel.services'
 
 
@@ -160,6 +161,10 @@ export const useHotelStore = defineStore('hotel', () => {
         return ok ? response.data : {}
     }
     
+    async function $getAllWifiHotel () {
+        const response = await getAllWifiHotel()
+        return response
+    }
     return {
         hotelData:hotelDataComputed,
         chatHours,
@@ -179,7 +184,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $getRewardsByHotel,
         $findByParamsApi,
         hotelDataStorage,
-        $getDataLegal
+        $getDataLegal,
+        $getAllWifiHotel
     }
 
 

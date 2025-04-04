@@ -8,14 +8,15 @@
             @touchend="endTouch"
         ></div>
         <div 
-            class="relative w-full max-h-[80vh] py-3 sp:px-4 overflow-y-auto rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
-            :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing}"
+            class="relative w-full max-h-[80vh] py-3 overflow-hidden rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
+            :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing, 'sp:px-4 overflow-y-auto': !scrollContentOnly}"
             @click.stop
             ref="modalContainer"
             @touchstart="startTouch"
             @touchmove.capture.prevent="moveTouch"
             @touchend="endTouch"
         >
+        
             <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
             <!-- Imagen centrada si imgHeader tiene una URL -->
             <div v-if="imgHeader" class="flex justify-center mb-4">
@@ -25,8 +26,20 @@
                     class="sp:w-auto sp:h-[100px] h-[40px] object-contain"
                 />
             </div>
-            <!-- Contenido del modal -->
-            <slot></slot>
+             <!-- SI scrollContentOnly está activo, dividimos header + contenido -->
+            <template v-if="scrollContentOnly">
+                <div class="transition-shadow duration-200 w-full px-4 pb-3 relative" :class="{'shadow-md': headerShadow}">
+                    <slot name="header" />
+                </div>
+                <div class="overflow-y-auto max-h-[calc(80vh-10px)] px-4" ref="scrollableContainer">
+                    <slot />
+                </div>
+            </template>
+
+            <!-- Si no está activo, usamos todo el slot como hasta ahora -->
+            <template v-else>
+                <slot />
+            </template>
             <button
                 v-if="showButton"
                 @click="handleSubmit"
@@ -42,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 import Icon from '../Icon.vue';
 import { isMockup } from '@/utils/utils.js';
@@ -75,6 +88,10 @@ const props = defineProps({
     buttonColor: {
         type: String,
         default: 'bg-[#333333]'
+    },
+    scrollContentOnly: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -89,15 +106,57 @@ const isSwiping = ref(false);
 
 const modalContainer = ref(null);
 
-watch(() => props.isOpen, (newValue) => {
-    if (newValue) {
-        // Modal está abierto, deshabilita el scroll del body
-        document.body.style.overflow = 'hidden';
-    } else {
-        // Modal está cerrado, habilita el scroll del body
-        document.body.style.overflow = '';
-    }
+const scrollableContainer = ref(null);
+const headerShadow = ref(false);
+
+
+const handleScroll = () => {
+  if (scrollableContainer.value) {
+    console.log(scrollableContainer.value.scrollTop);
+    headerShadow.value = scrollableContainer.value.scrollTop > 0;
+  }
+};
+
+onMounted(() => {
+  if (scrollableContainer.value) {
+    scrollableContainer.value.addEventListener('scroll', handleScroll);
+  }
 });
+
+onBeforeUnmount(() => {
+  if (scrollableContainer.value) {
+    scrollableContainer.value.removeEventListener('scroll', handleScroll);
+  }
+});
+
+
+
+
+
+watch(() => props.isOpen, async (newValue) => {
+  if (newValue) {
+    // Modal abierto: desactiva scroll del body
+    document.body.style.overflow = 'hidden';
+
+    // Esperamos al render del DOM antes de aplicar el scroll listener
+    await nextTick();
+    if (scrollableContainer.value && props.scrollContentOnly) {
+      scrollableContainer.value.addEventListener('scroll', handleScroll);
+      handleScroll(); // Llamamos inmediatamente por si ya hay scroll
+    }
+
+  } else {
+    // Modal cerrado: reactiva scroll del body
+    document.body.style.overflow = '';
+
+    // Limpiamos listener y sombra si estaba activo
+    if (scrollableContainer.value && props.scrollContentOnly) {
+      scrollableContainer.value.removeEventListener('scroll', handleScroll);
+    }
+    headerShadow.value = false;
+  }
+});
+
 
 const startTouch = (event) => {
     isSwiping.value = true;
@@ -135,6 +194,7 @@ const closeModal = () => {
 const handleSubmit = () => {
     emit('handleClick');
 };
+
 </script>
 
 <style scoped>

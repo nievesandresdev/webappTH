@@ -1,18 +1,17 @@
 <template>
-    <div v-if="showAll" class="flex gap-4 justify-around">
-      <!--  Wifi -->
+    <div class="flex gap-4 justify-around">
+      <!--  Wifi --> 
       <RoundedButton
-        v-if="buttonsHome.show_wifi"
+        v-if="hotelData.with_wifi"
         iconUrl="/assets/icons/WA.wifi.svg"
         :label="$t('hotel.buttons_home.wifi')"
         :showLabel="true"
         @click="onWifiClick"
       />
-
   
       <!--  Llamar -->
       <RoundedButton
-        v-if="buttonsHome.show_call && props.hotelData.phone"
+        v-if="hotelData.phone"
         iconUrl="/assets/icons/WA.llamar.svg"
         :label="$t('hotel.buttons_home.call')"
         :showLabel="true"
@@ -37,7 +36,6 @@
     </div>
   
     <PrimaryButton
-      v-else
       classes="text-center py-2.5 rounded-[10px] text-sm font-bold leading-[20px] w-full shadow-guest bg-[#333333] text-[#FFF] lato"
       @click="onShareClick"
     >
