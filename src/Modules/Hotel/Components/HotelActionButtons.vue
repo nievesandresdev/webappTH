@@ -8,7 +8,7 @@
         :showLabel="true"
         @click="onWifiClick"
       />
-  
+   <pre>{{ hotelData }}</pre>
       <!--  Llamar -->
       <RoundedButton
         v-if="hotelData.phone"
