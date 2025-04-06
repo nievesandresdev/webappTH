@@ -46,5 +46,15 @@ export default {
   },
   "social": {
     "title": "As nosas redes"
+  },
+  "wifi":{
+    "title":"Wifi",
+    "red":"Red",
+    "password":"Contrasena",
+    "noPassword":"Esta rede non ten contrasena"
+  },
+  "policies":{
+    "title":"Políticas e normas",
+    "penalization":"Penalización"
   }
 };

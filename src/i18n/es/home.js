@@ -46,6 +46,16 @@ export default {
     },
     "social":{
       "title":"Nuestras redes"
+    },
+    "wifi":{
+      "title":"Wifi",
+      "red":"Red",
+      "password":"Contraseña",
+      "noPassword":"Esta red no tiene contraseña"
+    },
+    "policies":{
+      "title":"Políticas y Normas",
+      "penalization":"Penalización",
     }
   };
   

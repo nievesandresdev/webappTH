@@ -90,7 +90,7 @@
             <template #header>
               <div class="flex items-center gap-1 lato">
                 <img src="/assets/icons/WA.wifi.svg" class="w-8 h-8 text-[#333333]" alt="WiFi Icon" />
-                <p class="text-[20px] font-bold text-[#333333] lato">Wifi</p>
+                <p class="text-[20px] font-bold text-[#333333] lato">{{ $t('home.wifi.title') }}</p>
               </div>
             </template>
 
@@ -98,14 +98,14 @@
             <div v-for="data in dataWifi" :key="data.id" v-show="data.visible == 1" class="flex p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-4">
               <p class="text-[16px] text-[#333333] flex flex-col gap-2">
                 <div class="flex">
-                  <span class="font-bold lato text-[14px]">Red : </span>
-                  <span class="font-normal lato text-[14px]"> {{ data.name }}</span>
+                  <span class="font-bold lato text-[14px]">{{ $t('home.wifi.red') }}</span>
+                  <span class="font-normal lato text-[14px] ml-1"> {{ data.name }}</span>
                 </div>
                 <hr>
                 <div class="flex">
-                  <span class="font-bold lato text-[14px]">Contraseña : </span>
-                  <span class="font-normal lato text-[14px]" v-if="data.password"> {{ data.password }}</span>
-                  <span class="font-normal lato text-[14px] italic" v-else> Esta red no tiene contraseña</span>
+                  <span class="font-bold lato text-[14px]">{{ $t('home.wifi.password') }} : </span>
+                  <span class="font-normal lato text-[14px] ml-1" v-if="data.password"> {{ data.password }}</span>
+                  <span class="font-normal lato text-[14px] italic ml-1" v-else>  {{ $t('home.wifi.noPassword') }}</span>
                 </div>
               </p>
             </div>
@@ -116,7 +116,7 @@
               <template #header>
                 <div class="flex items-center gap-1 lato">
                   <img src="/assets/icons/WA.normas.svg" class="w-8 h-8 text-[#333333]" alt="Normas Icon" />
-                  <p class="text-[20px] font-bold text-[#333333] lato">Políticas y Normas</p>
+                  <p class="text-[20px] font-bold text-[#333333] lato">{{ $t('home.policies.title') }}</p>
                 </div>
               </template>
               <!-- <div class="flex items-center gap-1 mb-4 lato">
@@ -129,7 +129,7 @@
                 <p class="font-normal text-sm lato">{{ policie.description }}</p>
                 <div class="border-t border-[#E9E9E9] my-2" v-show="policie.penalization == 1"></div>
                 <p v-show="policie.penalization == 1">
-                  <span class="font-bold lato text-sm">Penalización: </span>
+                  <span class="font-bold lato text-sm">{{ $t('home.policies.penalization') }}: </span>
                   <span class="font-normal lato text-sm">{{ policie.penalization_details }}</span>
                 </p>
               </div>

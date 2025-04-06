@@ -95,8 +95,6 @@ const props = defineProps({
     }
 });
 
-
-
 const emit = defineEmits(['update:isOpen', 'handleClick']);
 
 const isClosing = ref(false);
@@ -128,9 +126,6 @@ onBeforeUnmount(() => {
     scrollableContainer.value.removeEventListener('scroll', handleScroll);
   }
 });
-
-
-
 
 
 watch(() => props.isOpen, async (newValue) => {

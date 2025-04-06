@@ -31,6 +31,7 @@
         :label="$t('hotel.buttons_home.share_stay')"
         :showLabel="true"
         @click="onShareClick"
+        v-show="!showAll"
       />
     </div>
   
@@ -87,7 +88,7 @@ const chainStore = useChainStore();
   
   //const showAll = computed(() => props.buttonsHome?.show_all ?? false);
   const showAll = computed(() => {
-    return !props.hotelData.phone && !props.hotelData.with_wifi && props.hotelData.policies.length > 0;
+    return !props.hotelData.phone && !props.hotelData.with_wifi && props.hotelData.policies.length == 0;
   });
   
   const onWifiClick = () => emit('wifi-click');
@@ -113,12 +114,12 @@ const chainStore = useChainStore();
   customData.value = chainStore.customizationData;
   logoHotel.value = hotelStore.$loadImage({ type: 'gallery', url: customData.value?.logo });
 
-  console.log(logoHotel.value, 'imgData');  // Verifica que la imagen esté correctamente cargada
+  //console.log(logoHotel.value, 'imgData');  // Verifica que la imagen esté correctamente cargada
 
   // Preparar los datos de compartir
   const data = {
     title: t('stay.share.title', { hotel: hotelStore.hotelData.name }),  // Título dinámico
-    text: t('stay.share.text'),  // Texto dinámico
+    //text: t('stay.share.text'),  // Texto dinámico
     url: shareUrl.value,  // URL que se compartirá
     image: logoHotel.value,  // La imagen que se compartirá
   };
