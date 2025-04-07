@@ -103,7 +103,11 @@ export const useServiceStore = defineStore('service', () => {
     
         if (typeService == '2') {
             let minPrice = calMinPriceSubservices(subservices);
-            priceObject.price = `${minPrice} €`;
+            if (minPrice == 0) {
+                priceObject.isFree = true;
+                return priceObject;
+            }
+            priceObject.price = `${minPrice?.toFixed(2)} €`;
             priceObject.isFrom = true;
         }
     
@@ -124,8 +128,8 @@ export const useServiceStore = defineStore('service', () => {
                 return item.price;
             }
             return acc;
-        }, subservices[0]?.price ?? 0);
-        return minPrice?.toFixed(2);
+        }, 0);
+        return minPrice;
     }
 
     //
