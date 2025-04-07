@@ -8,8 +8,8 @@
             @touchend="endTouch"
         ></div>
         <div 
-            class="relative w-full max-h-[80vh] py-3 overflow-hidden rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-6"
-            :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing, 'sp:px-4 overflow-y-auto': !scrollContentOnly}"
+            class="relative w-full max-h-[80vh] py-3 overflow-hidden rounded-t-[20px] border-t border-r border-l shadow-modal bg-gradient-h pb-3 sp:pb-6"
+            :class="{'dialog-enter-active': !isClosing, 'dialog-leave-active': isClosing, 'px-2 sp:px-4 overflow-y-auto': !scrollContentOnly}"
             @click.stop
             ref="modalContainer"
             @touchstart="startTouch"
@@ -17,7 +17,7 @@
             @touchend="endTouch"
         >
         
-            <div class="h-1 w-[48px] bg-[#777777] rounded-full mx-auto mb-3"></div>
+            <div class="h-[2px] sp:h-1 w-[32px] sp:w-[48px] bg-[#777777] rounded-full mx-auto mb-1.5 sp:mb-3"></div>
             <!-- Imagen centrada si imgHeader tiene una URL -->
             <div v-if="imgHeader" class="flex justify-center mb-4">
                 <img 
@@ -28,10 +28,10 @@
             </div>
              <!-- SI scrollContentOnly está activo, dividimos header + contenido -->
             <template v-if="scrollContentOnly">
-                <div class="transition-shadow duration-200 w-full px-4 pb-3 relative" :class="{'shadow-md': headerShadow}">
+                <div class="transition-shadow duration-200 w-full px-2 sp:px-4 pb-1.5 sp:pb-3 relative" :class="{'shadow-md': headerShadow}">
                     <slot name="header" />
                 </div>
-                <div class="overflow-y-auto max-h-[calc(80vh-80px)] px-4" ref="scrollableContainer">
+                <div class="overflow-y-auto max-h-[calc(80vh-80px)] px-2 sp:px-4" ref="scrollableContainer">
                     <slot />
                 </div>
             </template>
