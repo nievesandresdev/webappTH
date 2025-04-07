@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <!-- <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
     
       <div class="flex justify-between gap-2">
         <div class="flex gap-2 items-center w-1/2">
@@ -59,7 +59,7 @@
             {{ formattedWebsite }}
           </p>
         </div>
-      </div> -->
+      </div>
     
       <div class="border-t my-3 sp:my-6 border-[#E9E9E9]" v-show="hotelData.phone"></div>
     
@@ -126,9 +126,12 @@
   ]);
   
   const formattedWebsite = computed(() => {
-    const url = props.hotelData.website_google;
-    return url ? url.replace(/^https?:\/\/(www\.)?/, '') : '';
+    let url = props.hotelData.website_google || '';
+    url = url.replace(/^https?:\/\/(www\.)?/, ''); // elimina https://, http://, y www.
+    url = url.replace(/\/$/, ''); // elimina la barra (/) final si existe
+    return url;
   });
+
   
   const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {

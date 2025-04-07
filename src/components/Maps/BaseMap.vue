@@ -14,7 +14,7 @@
         <button
           v-if="showExpand"
           @click="toggleFullScreen"
-          class="absolute top-2 right-2 z-10 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
+          class="absolute top-2 right-2 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
         >
           <img
             :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
@@ -24,7 +24,7 @@
         </button>
 
           <MapboxMap
-            class="h-full"
+            class="h-full z-0"
             :access-token="TOKEN"
             ref="mapboxMap"
             map-style="mapbox://styles/mapbox/streets-v11"
@@ -200,6 +200,7 @@ defineExpose({ focusOnPoint });
   box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12),
               0px 3px 1px 0px rgba(0, 0, 0, 0.04);
   border-radius: 6px;
+  z-index: 1 !important;
 }
 
 .transition-height {

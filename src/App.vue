@@ -31,7 +31,26 @@ const preloaderStore = usePreloaderStore();
 
 onMounted(()=>{
   // console.log('test hola')
+  updateOpenGraphMeta({
+    title: 'Título Hoteles',
+    description: 'Descripción Hoteles',
+    image: 'https://miapp.com/nueva-imagen.jpg',
+    url: window.location.href,  // Usando la URL actual
+  });
 })
+
+// Función para actualizar dinámicamente los metadatos de Open Graph
+function updateOpenGraphMeta(data) {
+  const titleMeta = document.querySelector('meta[property="og:title"]');
+  const descriptionMeta = document.querySelector('meta[property="og:description"]');
+  const imageMeta = document.querySelector('meta[property="og:image"]');
+  const urlMeta = document.querySelector('meta[property="og:url"]');
+
+  if (titleMeta) titleMeta.setAttribute('content', data.title);
+  if (descriptionMeta) descriptionMeta.setAttribute('content', data.description);
+  if (imageMeta) imageMeta.setAttribute('content', data.image);
+  if (urlMeta) urlMeta.setAttribute('content', data.url);
+}
 
 const pusher = ref(null);   
 const isSubscribed = ref(false);

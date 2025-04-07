@@ -4,6 +4,7 @@ export const authPath = 'auth'
 
 export const homePath = 'home'
 export const hotelPath = 'hotel'
+export const wifiNetworksPath = 'wifiNetworks'
 export const staySurveyPath = 'staySurvey'
 export const hotelOtaPath = 'hotelOta'
 export const experiencePath = 'experience'

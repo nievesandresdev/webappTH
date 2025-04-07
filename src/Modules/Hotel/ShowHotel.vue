@@ -81,35 +81,55 @@
           </div>
 
           <!-- Modal de Wifi -->
-          <BottomModal :isOpen="modalWifi && !$utils.isMockup()" @update:isOpen="modalWifi = $event">
-            <div class="flex flex-col items-start">
-              <div class="flex items-center gap-1 mb-4 lato">
+          <BottomModal 
+            :isOpen="modalWifi && !$utils.isMockup()" 
+            @update:isOpen="modalWifi = $event"
+            :scrollContentOnly="true"
+          >
+            <!-- Encabezado fijo -->
+            <template #header>
+              <div class="flex items-center gap-1 lato">
                 <img src="/assets/icons/WA.wifi.svg" class="w-8 h-8 text-[#333333]" alt="WiFi Icon" />
-                <p class="text-[20px] font-bold text-[#333333] lato">Wifi</p>
+                <p class="text-[20px] font-bold text-[#333333] lato">{{ $t('home.wifi.title') }}</p>
               </div>
-            </div>
-            <div class="flex items-center justify-center p-8 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full">
-              <p class="text-[16px] text-[#333333] font-semibold text-center lato">
-                El {{$formatTypeLodging()}} cuenta con servicio de internet WiFi gratuito
+            </template>
+
+            <!-- Contenido scrolleable -->
+            <div v-for="data in dataWifi" :key="data.id" v-show="data.visible == 1" class="flex p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-4">
+              <p class="text-[16px] text-[#333333] flex flex-col gap-2">
+                <div class="flex">
+                  <span class="font-bold lato text-[14px]">{{ $t('home.wifi.red') }}</span>
+                  <span class="font-normal lato text-[14px] ml-1"> {{ data.name }}</span>
+                </div>
+                <hr>
+                <div class="flex">
+                  <span class="font-bold lato text-[14px]">{{ $t('home.wifi.password') }} : </span>
+                  <span class="font-normal lato text-[14px] ml-1" v-if="data.password"> {{ data.password }}</span>
+                  <span class="font-normal lato text-[14px] italic ml-1" v-else>  {{ $t('home.wifi.noPassword') }}</span>
+                </div>
               </p>
             </div>
           </BottomModal>
 
           <!-- Políticas y Normas -->
-          <BottomModal :isOpen="modalLegal && !$utils.isMockup()" @update:isOpen="modalLegal = $event">
-            <div class="flex flex-col items-start">
-              <div class="flex items-center gap-1 mb-4 lato">
+          <BottomModal :isOpen="modalLegal && !$utils.isMockup()" @update:isOpen="modalLegal = $event" :scrollContentOnly="true">
+              <template #header>
+                <div class="flex items-center gap-1 lato">
+                  <img src="/assets/icons/WA.normas.svg" class="w-8 h-8 text-[#333333]" alt="Normas Icon" />
+                  <p class="text-[20px] font-bold text-[#333333] lato">{{ $t('home.policies.title') }}</p>
+                </div>
+              </template>
+              <!-- <div class="flex items-center gap-1 mb-4 lato">
                 <img src="/assets/icons/WA.normas.svg" class="w-8 h-8 text-[#333333]" alt="Normas Icon" />
                 <p class="text-[20px] font-bold text-[#333333] lato">Políticas y Normas</p>
-              </div>
-            </div>
-            <div v-for="policie in hotelInfo.policies" :key="policie" class="p-4 gap-2 rounded-[20px] border border-[#E9E9E9] bg-gradient-h h-full space-y-4 mb-4">
+              </div> -->
+            <div v-for="policie in hotelInfo.policies" :key="policie" class="p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full space-y-4 mb-4">
               <div class="text-[#333333] text-sm">
                 <p class="font-bold mb-2 lato text-[16px]">{{ policie.title }}</p>
                 <p class="font-normal text-sm lato">{{ policie.description }}</p>
                 <div class="border-t border-[#E9E9E9] my-2" v-show="policie.penalization == 1"></div>
                 <p v-show="policie.penalization == 1">
-                  <span class="font-bold lato text-sm">Penalización: </span>
+                  <span class="font-bold lato text-sm">{{ $t('home.policies.penalization') }}: </span>
                   <span class="font-normal lato text-sm">{{ policie.penalization_details }}</span>
                 </p>
               </div>
@@ -151,6 +171,10 @@ import { SECTIONS } from "@/constants/sections.js";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
+//legal
+import { useLegalStore } from '@/stores/modules/legal';
+const legalStore = useLegalStore();
+
 import { useStayStore } from '@/stores/modules/stay';
 import AppHeader from '@/layout/Components/AppHeader.vue';
 const stayStore = useStayStore();
@@ -168,6 +192,7 @@ const isExpanded = ref(false)
 const modalWifi = ref(false)
 const modalLegal = ref(false)
 const facilities = ref([]);
+const dataWifi = ref([]);
 
 const stayData = ref({})
 const shareUrl = ref('')
@@ -176,19 +201,24 @@ const hotelData = inject('hotelData');
 const hotelInfo = ref({})
 
 const handleCall = () => {
-  if (hotelData.value.phone) {
-    window.open(`tel:${hotelData.value.phone}`)
+
+  if (hotelInfo.value.phone) {
+    window.open(`tel:${hotelInfo.value.phone}`)
   } else {
     console.warn('Número de teléfono no disponible.')
   }
 }
 
-const handleWifi = () => {
+const handleWifi = async() => {
   modalWifi.value = true
+  const r = await hotelStore.$getAllWifiHotel()
+  dataWifi.value = r.data
 }
 
-const handleLegalText = () => {
+const handleLegalText = async() => {
   modalLegal.value = true
+  /* const r = await legalStore.$getNormsByHotel()
+  console.log(r, 'r'); */
 }
 
 
