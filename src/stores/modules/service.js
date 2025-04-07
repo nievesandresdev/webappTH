@@ -84,7 +84,7 @@ export const useServiceStore = defineStore('service', () => {
 
     function calPrice (item) {
         if (!item) return;
-        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_values: fieldsValues, type: typeService, subservices } = item;
+        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_visibles: fieldsValues, type: typeService, subservices } = item;
         price = price ?? fromPrice;
         price = price ? parseFloat(price) : 0;
         let priceObject = {
@@ -107,7 +107,7 @@ export const useServiceStore = defineStore('service', () => {
             priceObject.isFrom = true;
         }
     
-        if (!['1','2'].includes(typePrice)) {
+        if (!['1','2'].includes(typePrice) && !['PRICE'].includes(typeService)) {
             priceObject.price = `${price?.toFixed(2)} €`;
         }
     

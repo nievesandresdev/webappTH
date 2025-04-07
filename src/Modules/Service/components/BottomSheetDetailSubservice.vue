@@ -180,8 +180,9 @@ const description = computed(() => {
 })
 
 function calculateDuration(duration) {
-    const hours = Math.floor(duration / 60);
-    const minutes = duration % 60;
+    const hours = Math.floor(duration);
+    const minutes = Math.round((duration - hours) * 100);
+    
     if (hours === 0 && minutes > 0) {
         return `${minutes} minutos`;
     }
