@@ -49,11 +49,7 @@ const routes = [
  
   // Rutas que no requieren el slug del hotel
   ...chainRoutes,
-  {
-    path: '/no-notificacion',
-    name: 'DisabledEmail',
-    component: DisabledEmail
-  },
+  
   
   {
     path: '/compartir',
@@ -97,6 +93,11 @@ const routes = [
       ...hotelRoutes,
       ...queryRoutes,
       ...policiesRoutes,
+      {
+        path: '/no-notificacion',
+        name: 'DisabledEmail',
+        component: DisabledEmail
+      },
     ],
     //middleware para enviar a la pantalla compartir en caso de esta en pc
     // este middleware debe funcionar solo para todas las urls con slug hotel
