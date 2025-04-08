@@ -49,11 +49,11 @@ const routes = [
  
   // Rutas que no requieren el slug del hotel
   ...chainRoutes,
-  {
+  /* {
     path: '/no-notificacion',
     name: 'DisabledEmail',
     component: DisabledEmail
-  },
+  }, */
   
   {
     path: '/compartir',
@@ -87,6 +87,11 @@ const routes = [
     // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
+      {
+        path: 'no-notificacion',
+        name: 'DisabledEmail',
+        component: DisabledEmail
+      },
       ...placeRoutes,
       ...profileRoutes,
       ...homeRoutes,
