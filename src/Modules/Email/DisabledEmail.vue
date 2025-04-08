@@ -33,14 +33,11 @@
 
   onMounted(async () => {
 
-    console.log('Código recibido (g):', gParam)
     let params = {
       guest_id: gParam.value
     }
     const response = await emailStore.$disabledEmail(params)
-    enabledEmail.value = true
 
-    //console.log(response, 'response')
   })
 
   const reactivateEmail = async () => {
@@ -49,6 +46,7 @@
       guest_id: gParam.value
     }
     const response = await emailStore.$reactivateEmail(params)
+    enabledEmail.value = true
     //console.log(response, 'response')
   }
   </script>
