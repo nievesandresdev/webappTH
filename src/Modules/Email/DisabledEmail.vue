@@ -40,7 +40,7 @@
     const response = await emailStore.$disabledEmail(params)
     enabledEmail.value = true
 
-    console.log(response, 'response')
+    //console.log(response, 'response')
   })
 
   const reactivateEmail = async () => {
@@ -49,7 +49,7 @@
       guest_id: gParam.value
     }
     const response = await emailStore.$reactivateEmail(params)
-    console.log(response, 'response')
+    //console.log(response, 'response')
   }
   </script>
   
