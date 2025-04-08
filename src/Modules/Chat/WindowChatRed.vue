@@ -1,108 +1,108 @@
 <template>
     <!-- <div class="fixed top-0 left-0 w-full z-[2500]"> -->
-        <div ref="myDiv" 
-            :class="[
-                'flex flex-col hbg-gray-200 w-full',
-                isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]'
-            ]"
-        >
-            <InboxHead/>
-            
+    <div ref="myDiv" 
+        :class="[
+            'flex flex-col hbg-gray-200 w-full',
+            isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen'
+        ]"
+    >
+        <InboxHead/>
+        
 
-            <!-- body chat -->
-            <div class="body-chat flex-grow flex flex-col overflow-y-auto px-4">
-                <!-- <h1 class="mt-10 text-3xl">{{ loading }}</h1> -->
-            <PageTransitionGlobal module="chat">
-                <!-- availabilty tag-->
-                <div 
-                    class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
-                    @click="isScheduleModalOpen = true"
+        <!-- body chat -->
+        <div class="body-chat flex-grow flex flex-col overflow-y-auto px-4">
+            <!-- <h1 class="mt-10 text-3xl">{{ loading }}</h1> -->
+        <PageTransitionGlobal module="chat">
+            <!-- availabilty tag-->
+            <div 
+                class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
+                @click="isScheduleModalOpen = true"
+            >
+                <div class="flex items-center gap-2">
+                    <p class="lato text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
+                        {{ isAvailable ? $t('chat.availabilty') : $t('chat.not-availabilty') }}
+                    </p>
+                    <IconCustomColor 
+                        name="WA.Clock" 
+                        :color="isAvailable ? '#34A98F' : '#F66'" 
+                        only-change-background 
+                        height="14"
+                        width="14"
+                    />
+                </div>
+            </div>
+            <!-- info chat -->
+            <div class="bg-gradient-100 border border-color-secondary rounded-[10px] p-4 mb-4 mt-[64px]">
+                <p class="lato text-sm font-medium leading-[16px] text-center" v-html="$t('chat.languages-text')">
+                </p>
+                <div class="flex flex-wrap justify-center mt-4 gap-4">
+                    <img class="w-5 h-5" v-for="lg in availableLanguages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
+                </div>
+            </div>
+            <!-- msgs -->
+            <div 
+                v-for="msg in chatStore.messages" 
+                :key="msg" 
+                class="min-w-[156px] max-w-[246px] mb-5" 
+                :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}"
+            >
+                <p 
+                    v-if="msg.automatic"
+                    class="lato text-[10px] font-bold leading-[12px] mb-1"
                 >
-                    <div class="flex items-center gap-2">
-                        <p class="lato text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
-                            {{ isAvailable ? $t('chat.availabilty') : $t('chat.not-availabilty') }}
-                        </p>
-                        <IconCustomColor 
-                            name="WA.Clock" 
-                            :color="isAvailable ? '#34A98F' : '#F66'" 
-                            only-change-background 
-                            height="14"
-                            width="14"
-                        />
-                    </div>
-                </div>
-                <!-- info chat -->
-                <div class="bg-gradient-100 border border-color-secondary rounded-[10px] p-4 mb-4 mt-[64px]">
-                    <p class="lato text-sm font-medium leading-[16px] text-center" v-html="$t('chat.languages-text')">
-                    </p>
-                    <div class="flex flex-wrap justify-center mt-4 gap-4">
-                        <img class="w-5 h-5" v-for="lg in availableLanguages" :key="lg" :src="'/assets/icons/languages/'+lg.abbreviation+'.svg'" alt="">
-                    </div>
-                </div>
-                <!-- msgs -->
-                <div 
-                    v-for="msg in chatStore.messages" 
-                    :key="msg" 
-                    class="min-w-[156px] max-w-[246px] mb-5" 
-                    :class="{'ml-auto':msg.by == 'Guest','mr-auto':msg.by == 'Hoster'}"
+                    {{$t('chat.automatic-response')}}
+                </p>
+                <p 
+                    class="break-words lato text-sm font-medium leading-[16px] p-4" 
+                    :class="{'bg-msg-guest':msg.by == 'Guest','bg-msg-hoster':msg.by !== 'Guest'}"
                 >
-                    <p 
-                        v-if="msg.automatic"
-                        class="lato text-[10px] font-bold leading-[12px] mb-1"
-                    >
-                        {{$t('chat.automatic-response')}}
-                    </p>
-                    <p 
-                        class="break-words lato text-sm font-medium leading-[16px] p-4" 
-                        :class="{'bg-msg-guest':msg.by == 'Guest','bg-msg-hoster':msg.by !== 'Guest'}"
-                    >
-                        {{ msg.text }}
-                    </p>
-                    <p 
-                        class="lato text-xs font-medium leading-[16px] mt-1"
-                        :class="{'text-right':msg.by == 'Guest'}"
-                    >
-                        {{ formatTimestampDate(msg.created_at,'dd/MM/yyyy') }} - {{ formatTimestampDate(msg.created_at,'HH:mm')}}
-                    </p>
-                </div>
-                
-            </PageTransitionGlobal>
+                    {{ msg.text }}
+                </p>
+                <p 
+                    class="lato text-xs font-medium leading-[16px] mt-1"
+                    :class="{'text-right':msg.by == 'Guest'}"
+                >
+                    {{ formatTimestampDate(msg.created_at,'dd/MM/yyyy') }} - {{ formatTimestampDate(msg.created_at,'HH:mm')}}
+                </p>
             </div>
             
-            <!-- input chat -->
-            <div class="bg-white rounded-t-[10px] shadow-guest-2">
-                <div class="px-6 pt-3 pb-4 flex items-center gap-3">
-                    <textarea 
-                        id="text-auto" 
-                        class="flex-grow border border-color-secondary rounded-[8px] hbg-gray-100 h-full px-3 py-2 text-sm lato font-medium" 
-                        :placeholder="$t('chat.input')"
-                        @input="autoGrow"
-                        v-model="msg"
-                        @focus="focusTextarea"
-                        @blur="onBlurTextarea"
-                        @keyup.enter="e => { sendMsg(e); }"
-                        @keydown.enter="e => handleEnter(e)"
-                    ></textarea>
-                    <div 
-                        class="flex items-center justify-center rounded-full w-10 h-10 bg-[#333] shadow-guest border border-white" 
-                        @click="sendMsg"
-                        @touchend.prevent.stop="sendMsg"
-                    >
-                        <img class="w-4 h-4" src="/assets/icons/paper-plane.svg">
-                    </div>
-                </div>
-                <div
-                    v-if="!hideAppMenu" 
-                    class="h-[89px] bg-white"
-                ></div>
-            </div>
+        </PageTransitionGlobal>
         </div>
+        
+        <!-- input chat -->
+        <div class="bg-white rounded-t-[10px] shadow-guest-2">
+            <div class="px-6 pt-3 pb-4 flex items-center gap-3">
+                <textarea 
+                    id="text-auto" 
+                    class="flex-grow border border-color-secondary rounded-[8px] hbg-gray-100 h-full px-3 py-2 text-sm lato font-medium" 
+                    :placeholder="$t('chat.input')"
+                    @input="autoGrow"
+                    v-model="msg"
+                    @focus="focusTextarea"
+                    @blur="onBlurTextarea"
+                    @keyup.enter="e => { sendMsg(e); }"
+                    @keydown.enter="e => handleEnter(e)"
+                ></textarea>
+                <div 
+                    class="flex items-center justify-center rounded-full w-10 h-10 bg-[#333] shadow-guest border border-white" 
+                    @click="sendMsg"
+                    @touchend.prevent.stop="sendMsg"
+                >
+                    <img class="w-4 h-4" src="/assets/icons/paper-plane.svg">
+                </div>
+            </div>
+            <div
+                v-if="!hideAppMenu" 
+                class="h-[89px] bg-white"
+            ></div>
+        </div>
+    </div>
 
     <!-- </div> -->
     <ScheduleModal />
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, provide, inject } from 'vue'
+import { ref, onMounted, onUnmounted, provide, inject, computed } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
@@ -140,6 +140,8 @@ const screenOff = ref(null);
 const hideAppMenu = inject('hideAppMenu'); 
 const isIphone = ref(false);
 const availableLanguages = ref([]);
+
+const isMobileScreen = computed(() => screen.width < 768)
 
 startLoading(SECTIONS.CHAT.GLOBAL);
 //mounted
