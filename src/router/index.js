@@ -50,7 +50,7 @@ const routes = [
   // Rutas que no requieren el slug del hotel
   ...chainRoutes,
   {
-    path: '/emails-desactivados',
+    path: '/no-notificacion',
     name: 'DisabledEmail',
     component: DisabledEmail
   },
