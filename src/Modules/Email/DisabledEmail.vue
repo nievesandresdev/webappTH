@@ -12,22 +12,44 @@
           &nbsp;para volver a activarlos.
         </p>
       </div>
+      <div class="max-w-md" v-if="enabledEmail">
+        <h1 class="text-[16px] text-[#333] mb-4 roboto font-medium ">
+          Se ha reactivado tu suscripción
+        </h1>
+      </div>
     </div>
   </template>
   
   <script setup>
-  import { onMounted } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useRoute } from 'vue-router'
-  
+  import { useEmailStore } from '@/stores/modules/email'
+
   const route = useRoute()
-  
-  onMounted(() => {
-    const gParam = route.query.g
+  const emailStore = useEmailStore()
+  const gParam = ref(route.query.g)
+
+  const enabledEmail = ref(false)
+
+  onMounted(async () => {
+
     console.log('Código recibido (g):', gParam)
+    let params = {
+      guest_id: gParam.value
+    }
+    const response = await emailStore.$disabledEmail(params)
+    enabledEmail.value = true
+
+    console.log(response, 'response')
   })
 
-  const reactivateEmail = () => {
+  const reactivateEmail = async () => {
     console.log('Reactivando correo...')
+    let params = {
+      guest_id: gParam.value
+    }
+    const response = await emailStore.$reactivateEmail(params)
+    console.log(response, 'response')
   }
   </script>
   
