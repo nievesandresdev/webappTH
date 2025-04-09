@@ -4,7 +4,7 @@
             class="absolute inset-0 bg-black bg-opacity-50" 
             @click.self="closeModal"
             @touchstart="startTouch"
-            @touchmove.capture.prevent="moveTouch"
+            
             @touchend="endTouch"
         ></div>
         <div 

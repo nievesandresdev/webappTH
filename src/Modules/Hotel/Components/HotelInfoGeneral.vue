@@ -55,7 +55,7 @@
       <div class="flex justify-between gap-2">
         <div class="flex gap-2 items-center w-1/2">
           <img src="/assets/icons/WA.website.svg" class="w-5 h-5" alt="Website Icon" />
-          <p class="text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="copyText(hotelData.website_google)">
+          <p class="text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="goToWebsite(hotelData.website_google)">
             {{ formattedWebsite }}
           </p>
         </div>
@@ -124,6 +124,10 @@
     parseFloat(props.hotelData.longitude), 
     parseFloat(props.hotelData.latitude)
   ]);
+
+  const goToWebsite = (website) => {
+    window.open(website, '_blank');
+  }
   
   const formattedWebsite = computed(() => {
     let url = props.hotelData.website_google || '';

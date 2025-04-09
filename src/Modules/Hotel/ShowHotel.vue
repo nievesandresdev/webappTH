@@ -108,8 +108,13 @@
                 </div>
                 <hr>
                 <div class="flex">
-                  <span class="font-bold lato text-[10px] sp:text-[14px]">{{ $t('home.wifi.password') }} : </span>
-                  <span class="font-normal lato text-[10px] sp:text-[14px] ml-1" v-if="data?.password"> {{ data?.password }}</span>
+                  <span class="font-bold lato text-[10px] sp:text-[14px]">{{ $t('home.wifi.password') }}: </span>
+                  <div class="flex justify-between w-full" v-if="data?.password">
+                    <span class="font-normal lato text-[10px] sp:text-[14px] ml-1" > {{ data?.password }}</span>
+                    <div class="flex gap-1 sp:gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.address)">
+                      <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
+                    </div>
+                  </div>
                   <span class="font-normal lato text-[10px] sp:text-[14px] italic ml-1" v-else-if="data?.name?.trim()">  {{ $t('home.wifi.noPassword') }}</span>
                 </div>
               </p>
@@ -188,6 +193,10 @@ const stayStore = useStayStore();
 const localeStore = useLocaleStore()
 
 
+import { handleToast } from '@/composables/useToast';
+const { toastSuccess } = handleToast();
+
+
 const isModalOpen = ref(false);
 
 const CHARACTER_LIMIT = 185;
@@ -263,6 +272,14 @@ async function loadData () {
   }
   stopLoading(SECTIONS.HOTEL.GLOBAL);
 }
+
+const copyText = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toastSuccess(t('messageRequest.copiedClipboard'));
+    }).catch(err => {
+      console.error("Error al copiar el texto: ", err);
+    });
+  };
 
 /* const handleGoFacility = (id) => {
   router.push({ name: 'ShowFacility', params: { id } });
