@@ -125,8 +125,9 @@
     parseFloat(props.hotelData.latitude)
   ]);
 
+  /* outside the website */
   const goToWebsite = (website) => {
-    window.open(website, '_blank');
+    location.href = website;
   }
   
   const formattedWebsite = computed(() => {

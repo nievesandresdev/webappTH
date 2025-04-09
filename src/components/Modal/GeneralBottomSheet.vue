@@ -13,7 +13,7 @@
             @click.stop
             ref="modalContainer"
             @touchstart="startTouch"
-            @touchmove.capture.prevent="moveTouch"
+            @touchmove.capture="moveTouch"
             @touchend="endTouch"
         >
         
@@ -31,7 +31,7 @@
                 <div class="transition-shadow duration-200 w-full px-2 sp:px-4 pb-1.5 sp:pb-3 relative" :class="{'shadow-md': headerShadow}">
                     <slot name="header" />
                 </div>
-                <div class="overflow-y-auto max-h-[calc(80vh-80px)] px-2 sp:px-4" ref="scrollableContainer">
+                <div class="overflow-y-auto max-h-[calc(80vh-80px)] px-2 sp:px-4 scrollable-container" ref="scrollableContainer">
                     <slot />
                 </div>
             </template>
@@ -158,7 +158,7 @@ const startTouch = (event) => {
     touchStartY.value = event.touches[0].clientY;
 };
 
-const moveTouch = (event) => {
+/* const moveTouch = (event) => {
     if (!isSwiping.value) return;
 
     event.preventDefault(); // Previene el comportamiento predeterminado
@@ -169,7 +169,25 @@ const moveTouch = (event) => {
         isSwiping.value = false;
         closeModal();
     }
+}; */
+
+const moveTouch = (event) => {
+  // Si el usuario está tocando dentro del área scrollable, NO bloquee el evento
+  if (scrollableContainer.value && scrollableContainer.value.contains(event.target)) {
+    return;
+  }
+
+  // Si toca fuera (por ejemplo, en el fondo), se activa el swipe-to-close
+  event.preventDefault();
+  touchCurrentY.value = event.touches[0].clientY;
+  const touchDifference = touchCurrentY.value - touchStartY.value;
+
+  if (touchDifference > 50) {
+    isSwiping.value = false;
+    closeModal();
+  }
 };
+
 
 const endTouch = () => {
     isSwiping.value = false;
@@ -223,5 +241,8 @@ const handleSubmit = () => {
 <style>
 .modal-open {
     overflow: hidden;
+}
+.scrollable-container {
+  -webkit-overflow-scrolling: touch;
 }
 </style>
