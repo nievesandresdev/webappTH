@@ -6,10 +6,15 @@
         :text="$t('policies.privacy.title')"
         title-classes="h-[28px] lato text-[20px] font-bold leading-[28px] w-[255px] text-center"
         sticky
+        v-show="!emailParam"
     />
     
     <div class="py-6 px-4">
         <!-- point 1 -->
+         <!-- title center-->
+         <div class="text-center mb-5 md:lg:mb-10"> 
+            <h1 class="lato text-[20px] md:lg:text-[40px] md:lg:font-medium font-bold leading-[40px] uppercase">{{$t('policies.privacy.title')}}</h1>
+        </div>
         <div>
             <h1 class="lato text-base font-bold leading-[20px]">{{$t('policies.privacy.s1-t1')}}</h1> <br/>
              <p class="lato text-sm font-medium leading-[16px]">
@@ -118,6 +123,8 @@ import { navigateTo } from '@/utils/navigation'
 import { useRouter, useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue'
 const router = useRouter();
+const route = useRoute();
+const emailParam = ref(route.query.email)
 //store
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
