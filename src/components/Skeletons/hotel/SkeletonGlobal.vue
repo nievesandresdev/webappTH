@@ -36,16 +36,18 @@
                     <div class="item-skeletom w-[20%] h-[14px] sp:h-[20px]"></div>
                 </div>
             </div>
-            <div class="ml-[12px] sp:ml-4 space-x-[2.8px] sp:space-x-4 flex overflow-hidden w-full">
-                <template v-for="(item, index) in 2" :key="index">
-                    <div class="min-w-[177px] sp:min-w-[253px]">
-                        <div class="w-[81px] sp:w-[116px] h-[19px] sp:h-[28px] item-skeletom mb-[11px] sp:mb-4"></div>
-                        <div class="h-[117px] sp:h-[168px] item-skeletom"></div>
-                        <div class="p-[11px] sp:p-4">
-                            <div class="h-[22px] sp:h-[32px] w-full item-skeletom"></div>
+            <div class="overflow-x-hidden w-full">
+                <div class="flex space-x-[2.8px] sp:space-x-4 ml-[12px] sp:ml-4">
+                    <template v-for="(item, index) in 2" :key="index">
+                        <div class="w-[177px] sp:w-[253px]">
+                            <div class="w-[81px] sp:w-[116px] h-[19px] sp:h-[28px] item-skeletom mb-[11px] sp:mb-4"></div>
+                            <div class="h-[117px] sp:h-[168px] item-skeletom"></div>
+                            <div class="p-[11px] sp:p-4">
+                                <div class="h-[22px] sp:h-[32px] w-full item-skeletom"></div>
+                            </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
             <div class="mt-[16px] sp:mt-[24px] mx-2 sp:mx-">
                 <div class="item-skeletom w-[20%] h-[14px] sp:h-[20px] mb-3 sp:mb-4"></div>
