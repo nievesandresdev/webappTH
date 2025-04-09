@@ -79,6 +79,9 @@ import { useStayStore } from '@/stores/modules/stay'
 const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
+
 
 const emit = defineEmits(['next'])
 
@@ -91,7 +94,8 @@ const form = reactive({
     id:'',
     name:'',
     email:'',
-    password: ''
+    password: '',
+    lang_web: localeStore.localeCurrent
 })
 
 onMounted(async () => {

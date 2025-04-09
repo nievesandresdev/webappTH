@@ -65,6 +65,8 @@ const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
 
 const emit = defineEmits(['enterPasswordToLogin','next'])
 
@@ -87,12 +89,12 @@ async function goRegisterOrLogin(type){
 }
 
 async function goRegisterOrLoginEmail(){
-    
     loading.value = true;
     let params = { 
         guestEmail: form.email,
         chainId : chainStore.chainData?.id,
         hotelId : hotelStore.hotelData?.id,
+        language : localeStore.localeCurrent
     }
     let hasData = await guestStore.saveAndFindValidLastStay(params)
     if(hasData?.stay && hasData.guest?.hasPassword){

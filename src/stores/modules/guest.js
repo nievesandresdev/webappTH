@@ -87,6 +87,7 @@ export const useGuestStore = defineStore('guest', () => {
     }
 
     async function saveOrUpdate (data, reload = false) {
+        alert('test')
         const response = await saveOrUpdateApi(data)
         const { ok } = response   
         if(ok && response.data){
