@@ -127,8 +127,12 @@
 
   /* outside the website */
   const goToWebsite = (website) => {
+    if (!website.startsWith('http')) {
+      website = 'https://' + website;
+    }
     location.href = website;
-  }
+  };
+
   
   const formattedWebsite = computed(() => {
     let url = props.hotelData.website_google || '';
