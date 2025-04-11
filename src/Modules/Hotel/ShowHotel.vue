@@ -129,10 +129,6 @@
                   <p class="text-[20px] font-bold text-[#333333] lato">{{ $t('home.policies.title') }}</p>
                 </div>
               </template>
-              <!-- <div class="flex items-center gap-1 mb-4 lato">
-                <img src="/assets/icons/WA.normas.svg" class="w-8 h-8 text-[#333333]" alt="Normas Icon" />
-                <p class="text-[20px] font-bold text-[#333333] lato">Políticas y Normas</p>
-              </div> -->
             <div v-for="policie in hotelInfo.policies" :key="policie" class="p-4 gap-2 rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full space-y-4 mb-4">
               <div class="text-[#333333] text-sm">
                 <p class="font-bold mb-2 lato text-[16px]">{{ policie.title }}</p>

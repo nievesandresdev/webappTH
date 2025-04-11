@@ -4,7 +4,7 @@ export default {
   "lodging": "alojamiento",
   "apartment": "apartamento",
   "buttons_home": {
-      "wifi": "Wifi",
+      "wifi": "WiFi",
       "call": "Llamar",
       "standards": "Normas",
       "share_stay": "Compartir Estancia"
