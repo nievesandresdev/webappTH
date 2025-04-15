@@ -209,11 +209,11 @@ function closeBottomSheet() {
 function isModalShareOpen () {
     let data = {
         title: `${hotelData.value.name} - ${serviceData.value.name}`,
-        image: serviceStore.$loadImage(subserviceData.image),
-        text: "Regístrate en nuestra estancia y echa un vistazo a este servicio de nuestro [tipoalojamiento] en su WebApp",
+        image: serviceStore.$loadImage(subserviceData.value.image),
+        text: `Regístrate en nuestra estancia y echa un vistazo a este servicio de nuestro ${hotelData.value.type} en su WebApp`,
         url: router.resolve({ name: 'DetailService', params: { service: serviceData.value.id }, query: { subserviceId: subserviceData.value.id } }).href,
     }
-    // console.log(data);
+    console.log(data);
     shareContent(data);
 };
 
