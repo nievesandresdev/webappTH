@@ -110,12 +110,10 @@ export const useServiceStore = defineStore('service', () => {
             priceObject.isFrom = true;
             return priceObject;
         }
-    
-        if (!['1','2'].includes(typePrice) && !['PRICE'].includes(typeService)) {
+        if (!['1','2'].includes(typePrice) && !fieldsValues.includes('PRICE')) {
             priceObject.price = `${price?.toFixed(2)} €`;
             return priceObject;
         }
-    
         if (fieldsValues?.includes('PRICE') && typeService == '1') {
             priceObject.isFree = true;
             return priceObject;
