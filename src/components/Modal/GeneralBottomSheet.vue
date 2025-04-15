@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
 watch(() => props.isOpen, async (newValue) => {
   if (newValue) {
     // Modal abierto: desactiva scroll del body
-    //document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
     // Esperamos al render del DOM antes de aplicar el scroll listener
     await nextTick();
@@ -142,7 +142,7 @@ watch(() => props.isOpen, async (newValue) => {
 
   } else {
     // Modal cerrado: reactiva scroll del body
-    //document.body.style.overflow = '';
+    document.body.style.overflow = '';
 
     // Limpiamos listener y sombra si estaba activo
     if (scrollableContainer.value && props.scrollContentOnly) {
