@@ -4,9 +4,9 @@
         :class="class"
         @click="goService"
     >
-        <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden">
+        <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden flex-shrink-0">
             <img
-                class="object-cover size-full"
+                class="aspect-[1/1] object-cover w-full h-full"
                  :src="serviceStore.$loadImage(data?.images?.[0] ?? data?.image)"
                 alt="img_service"
                 loading="lazy"
