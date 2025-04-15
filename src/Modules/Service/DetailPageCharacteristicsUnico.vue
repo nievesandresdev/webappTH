@@ -12,7 +12,7 @@
             v-if="serviceData?.availability && serviceData?.fields_visibles?.includes('AVAILABILITY')"
             class="flex items-center space-x-[9px] sp:space-x-[12px]"
         >
-            <img src="/assets/icons/WA.Reserva.svg" class="size-2 sp:size-4" />
+            <img src="/assets/icons/WA.reserva.svg" class="size-2 sp:size-4" />
             <p class="text-[7px] sp:text-[14px] leading-none">{{ serviceData?.availability }}</p>
         </div>
         <div
