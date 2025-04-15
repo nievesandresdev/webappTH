@@ -12,6 +12,7 @@
                 loading="lazy"
             >
             <div
+                v-if="data?.featured"
                 class="absolute bottom-0 left-0 px-[2px] sp:px-[4px] pb-[4px] sp:pb-[8px] z-20 w-full"
             >
                 <div class="rounded-full px-[2px] sp:px-[4px] py-[1px] sp:py-[2px] flex space-x-[1px] sp:space-x-1 bg-white flex items-center">
