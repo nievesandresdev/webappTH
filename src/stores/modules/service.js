@@ -92,15 +92,13 @@ export const useServiceStore = defineStore('service', () => {
             isFree: false,
             isFrom: false
         }
-    
         if(nameApi == 'viator') {
             priceObject.price = `${price?.toFixed(2)} €`;
         }
-    
+        
         if (typePrice == 'Activities') {
             priceObject.price =  `${price?.toFixed(2)} €`;
         }
-    
         if (typeService == '2') {
             let minPrice = calMinPriceSubservices(subservices);
             if (minPrice == 0) {
@@ -108,15 +106,19 @@ export const useServiceStore = defineStore('service', () => {
                 return priceObject;
             }
             priceObject.price = `${minPrice?.toFixed(2)} €`;
+
             priceObject.isFrom = true;
+            return priceObject;
         }
     
         if (!['1','2'].includes(typePrice) && !['PRICE'].includes(typeService)) {
             priceObject.price = `${price?.toFixed(2)} €`;
+            return priceObject;
         }
     
-        if (fieldsValues?.includes('PRICE')) {
+        if (fieldsValues?.includes('PRICE') && typeService == '1') {
             priceObject.isFree = true;
+            return priceObject;
         }
         priceObject.price = `${price?.toFixed(2)}€`;
         return priceObject;
@@ -128,7 +130,7 @@ export const useServiceStore = defineStore('service', () => {
                 return item.price;
             }
             return acc;
-        }, 0);
+        }, subservices?.[0]?.price ?? 0);
         return minPrice;
     }
 

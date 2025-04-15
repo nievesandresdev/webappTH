@@ -79,19 +79,24 @@ const serviceStore = inject('serviceStore');
 const experienceStore = inject('experienceStore');
 
 function goService () {
+
     if (isSubservice) {
         emits('navigate');
         return;
     }
+
     let typeServiceSlug = typeService?.toLowerCase();
+
     if (typeServiceSlug === 'activity' && data?.name_api == 'viator') {
         router.push({name: 'DetailActivity', params: { service: typeServiceSlug, slug: data.slug } });
         return;
     }
+
     if (typeServiceSlug === 'activity' && data?.name_api == 'thehoster') {
         router.push({name: 'DetailService', params: { service: typeServiceSlug, slug: data.slug } });
         return;
     }
+
     router.push({name: 'DetailService', params: { service: typeServiceSlug, slug: data.id } });
 }
 

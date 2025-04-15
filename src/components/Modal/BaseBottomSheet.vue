@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!isStepThree && open"
-    class="w-screen h-screen fixed top-0 left-0 " style="background: rgba(0, 0, 0, 0.32); z-index: 3000 !important;"
+    class="w-screen h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.32); z-index: 30000 !important; "
     @click="emitClose"
   />
   <transition name="slide-fade">
@@ -26,7 +26,6 @@
           class="handlebar"
         />
       </div>
-      <!-- {{ sheetHeight }} {{ isStepThree }} -->
       <div class="h-full">
         <div
           class="content h-full"
@@ -40,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, toRefs, watch, defineEmits, onUpdated, onMounted } from 'vue';
+import { ref, toRefs, watch, defineEmits, onUpdated, onMounted, onUnmounted } from 'vue';
 import { updateGuestByIdApi } from '../../api/services/auth.services';
 
 const emits = defineEmits(['changeCurrentHeight']);
@@ -128,6 +127,20 @@ onUpdated(() => {
 onMounted(() => {
   deleteReloadPageWithTouch();
 });
+
+onUnmounted(() => {
+  document.body.style.overflow = '';
+});
+
+// Watch para controlar el scroll del body
+watch(open, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+});
+
 function deleteReloadPageWithTouch () {
   const bottomSheet = document.getElementById("handlebar-content");
   if (bottomSheet){
