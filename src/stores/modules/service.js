@@ -101,11 +101,11 @@ export const useServiceStore = defineStore('service', () => {
         }
         if (typeService == '2') {
             let minPrice = calMinPriceSubservices(subservices);
-            if (minPrice == 0) {
+            if (minPrice === 0 && minPrice !== null) {
                 priceObject.isFree = true;
                 return priceObject;
             }
-            priceObject.price = `${minPrice?.toFixed(2)} €`;
+            priceObject.price = `${minPrice?.toFixed(2) ?? 0} €`;
 
             priceObject.isFrom = true;
             return priceObject;
