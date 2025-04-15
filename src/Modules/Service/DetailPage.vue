@@ -11,7 +11,7 @@
                     :from="'services'"
             />
             <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4">
-                <div class="pb-[12px] border-b  border-[#E9E9E9]">
+                <div class=" border-b  border-[#E9E9E9]">
                     <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                         {{ serviceData?.name }}
                     </h2>
@@ -236,6 +236,7 @@ async function loadData () {
             type_price: data.type_price,
             address: data?.translation_current?.address ?? data?.address,
             duration: data?.duration,
+            availability: data?.availability,
             fields_visibles: data?.fields_visibles,
             languages: data?.languages,
             requeriment: data?.translation_current?.requeriment ?? data?.requeriment,
@@ -283,6 +284,7 @@ const openModalLink = () => {
 provide('queryRouter', props.queryRouter);
 provide('serviceData', serviceData);
 provide('serviceStore', serviceStore);
+provide('hotelData', hotelData);
 
 </script>
 

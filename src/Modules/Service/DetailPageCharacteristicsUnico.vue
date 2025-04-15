@@ -9,6 +9,13 @@
             <p class="text-[7px] sp:text-[14px] leading-none">{{ calculateDuration(serviceData?.duration) }}</p>
         </div>
         <div
+            v-if="serviceData?.availability && serviceData?.fields_visibles?.includes('AVAILABILITY')"
+            class="flex items-center space-x-[9px] sp:space-x-[12px]"
+        >
+            <img src="/assets/icons/WA.Reserva.svg" class="size-2 sp:size-4" />
+            <p class="text-[7px] sp:text-[14px] leading-none">{{ serviceData?.availability }}</p>
+        </div>
+        <div
             v-if="serviceData?.address && serviceData?.fields_visibles?.includes('ADDRESS')"
             class="flex items-center space-x-[9px] sp:space-x-[12px]"
         >
@@ -16,7 +23,7 @@
             <p class="text-[7px] sp:text-[14px] leading-none">{{ serviceData?.address }}</p>
         </div>
         <div
-            v-if="serviceData?.fields_visibles?.includes('ACCESSIBILITY')"
+            v-if="serviceData?.fields_visibles?.includes('ACCESSIBLE')"
             class="flex items-center space-x-[9px] sp:space-x-[12px]"
         >
             <img src="/assets/icons/WA.PaperTicket.svg" class="size-2 sp:size-4" />
@@ -30,7 +37,7 @@
             <p class="text-[7px] sp:text-[14px] leading-none">{{ `${$t('service.detail-page.offered-in')}: ${serviceData?.languages?.map(lg => $utils.capitalize($t(`language.${lg}`))).join(', ')}` }}</p>
         </div>
     </div>
-    <div class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]">
+    <div v-if="serviceData?.requeriment && serviceData?.fields_visibles?.includes('REQUIREMENT')" class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]"> 
         <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.requeriments.title') }}</h3>
         <p class="text-[7px] sp:text-[14px] leading-none font-medium">{{ serviceData?.requeriment }}</p>
     </div>

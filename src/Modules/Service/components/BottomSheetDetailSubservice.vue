@@ -34,7 +34,7 @@
                         />
                     </div>
                     <div class="py-[12px] sp:py-[24px] no-scrollbar mx-2 sp:mx-4">
-                        <div class="pb-[12px] border-b  border-[#E9E9E9]">
+                        <div class=" border-b  border-[#E9E9E9]">
                             <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                                 {{ subserviceData?.name }}
                             </h2>
@@ -82,6 +82,13 @@
                                 <p class="text-[7px] sp:text-[14px] leading-none">{{ calculateDuration(subserviceData?.duration) }}</p>
                             </div>
                             <div
+                                v-if="subserviceData?.availability && subserviceData?.fields_visibles?.includes('AVAILABILITY')"
+                                class="flex items-center space-x-[9px] sp:space-x-[12px]"
+                            >
+                                <img src="/assets/icons/WA.Reserva.svg" class="size-2 sp:size-4" />
+                                <p class="text-[7px] sp:text-[14px] leading-none">{{ subserviceData?.availability }}</p>
+                            </div>
+                            <div
                                 v-if="subserviceData?.address && subserviceData?.fields_visibles?.includes('ADDRESS')"
                                 class="flex items-center space-x-[9px] sp:space-x-[12px]"
                             >
@@ -89,7 +96,7 @@
                                 <p class="text-[7px] sp:text-[14px] leading-none">{{ subserviceData?.address }}</p>
                             </div>
                             <div
-                                v-if="subserviceData?.fields_visibles?.includes('ACCESSIBILITY')"
+                                v-if="subserviceData?.fields_visibles?.includes('ACCESSIBLE')"
                                 class="flex items-center space-x-[9px] sp:space-x-[12px]"
                             >
                                 <img src="/assets/icons/WA.PaperTicket.svg" class="size-2 sp:size-4" />
@@ -103,7 +110,7 @@
                                 <p class="text-[7px] sp:text-[14px] leading-none">{{ `${$t('service.detail-page.offered-in')}: ${subserviceData?.languages?.map(lg => $utils.capitalize($t(`language.${lg}`))).join(', ')}` }}</p>
                             </div>
                         </div>
-                        <div class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]">
+                        <div v-if="subserviceData?.requeriment && subserviceData?.fields_visibles?.includes('REQUIREMENT')" class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]">
                             <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.requeriments.title') }}</h3>
                             <p class="text-[7px] sp:text-[14px] leading-none font-medium">{{ subserviceData?.requeriment }}</p>
                         </div>
@@ -130,12 +137,14 @@ const isOpenBottomSheet = inject('isOpenBottomSheet');
 const subserviceData = inject('subserviceData');
 const serviceData = inject('serviceData');
 const queryRouter = inject('queryRouter');
+const hotelData = inject('hotelData');
 
 // COMPOSABLES
 import { useShare } from "@/composables/useShare";
 const { shareContent } = useShare();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+
 
 
   
@@ -199,10 +208,11 @@ function closeBottomSheet() {
 
 function isModalShareOpen () {
     let data = {
-        title: "Mira el servicio que ofrece nuestro hotel para nuestra estancia 1",
-        text: "Mira el servicio que ofrece nuestro hotel para nuestra estancia 2",
+        title: `${hotelData.value.name} - ${serviceData.value.name}`,
+        text: "Regístrate en nuestra estancia y echa un vistazo a este servicio de nuestro [tipoalojamiento] en su WebApp",
         url: router.resolve({ name: 'DetailService', params: { service: serviceData.value.id }, query: { subserviceId: subserviceData.value.id } }).href,
     }
+    console.log(data);
     shareContent(data);
 };
 
