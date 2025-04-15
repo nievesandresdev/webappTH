@@ -83,8 +83,11 @@ export const useServiceStore = defineStore('service', () => {
     }
 
     function calPrice (item) {
-        if (!item) return;
-        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_visibles: fieldsValues, type: typeService, subservices } = item;
+        // if (item.name != 'subservicio 2') {
+        //     return;
+        // }
+        // if (!item) return;
+        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_visibles: fieldsValues, type: typeService, subservices, isSubservice } = item;
         price = price ?? fromPrice;
         price = price ? parseFloat(price) : 0;
         let priceObject = {
@@ -114,7 +117,7 @@ export const useServiceStore = defineStore('service', () => {
             priceObject.price = `${price?.toFixed(2)} €`;
             return priceObject;
         }
-        if (fieldsValues?.includes('PRICE') && typeService == '1') {
+        if (fieldsValues?.includes('PRICE') && (typeService == '1' || isSubservice)) {
             priceObject.isFree = true;
             return priceObject;
         }

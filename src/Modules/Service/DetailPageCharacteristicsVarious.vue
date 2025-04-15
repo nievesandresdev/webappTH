@@ -34,6 +34,7 @@ const subservices = computed(() => {
     let subservices = serviceData.value?.subservices ?? [];
     return subservices.map(service => ({
         ...service,
+        isSubservice: true,
         image: {url: service?.image},
     }));
 });
