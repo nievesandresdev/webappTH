@@ -170,13 +170,32 @@ watch(
 );
 
 // Observar cambios en el estado del modal para controlar el scroll del body
+let scrollY = 0;
+
 watch(
   () => isOpenModal.value && !isMockup(),
   (shouldBlockScroll) => {
     if (shouldBlockScroll) {
-      document.body.style.overflow = 'hidden';
+      // 1. Guardamos la posición de scroll
+      scrollY = window.scrollY;
+      
+      // 2. Fijamos el body en esa posición
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%'; 
+      
+      // Opcionalmente, poner overflowY= 'scroll' o 'hidden', 
+      // ya que position:fixed es lo que en iOS realmente bloquea el scroll 
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      // 3. Removemos los estilos
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflowY = '';
+      
+      // Restauramos la posición de scroll
+      window.scrollTo(0, scrollY);
     }
   },
   { immediate: true }
