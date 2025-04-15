@@ -26,11 +26,13 @@
         </div>
 
         <div
-            class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-2 space-y-[8px] sp:space-y-[16px]"
+            class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-2 space-y-[8px] sp:space-y-[16px] justify-between"
             
         >
-            <p class="text-[9px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
-            <p v-if="typeService != 'ACTIVITY'" class="text-[9px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
+            <div class="truncate-2">
+                <p class="text-[9px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
+                <p v-if="typeService != 'ACTIVITY'" class="text-[9px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
+            </div>
             <div
                 class="flex items-end justify-end pb-[4px] sp:pb-[8px]"
                 :class="data?.name_api === 'viator' ? 'justify-between' : 'justify-end'"
