@@ -39,7 +39,7 @@
             :textLabel="`${$t('checkin.form.input-3-label')}${isMandatory('secondLastname')}`"
             iconLeft="/assets/icons/WA.user.svg"
             v-model="form.secondLastname"
-            :error="secondLastnameError"
+            :isError="secondLastnameError"
             :showTextError="false"
         />
         <p

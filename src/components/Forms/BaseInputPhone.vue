@@ -70,7 +70,7 @@
 
   const borderColor = computed(() => {
     if(props.disabled) return 'hborder-disabled-2';
-    if((isFocused.value || openCodesDropdown.value) && !hasError.value) return 'hborder-black-100';
+    if((isFocused.value || openCodesDropdown.value)) return 'hborder-black-100';
     if(hasError.value) return 'hborder-alert-negative'
     return 'hborder-gray-400'
   })

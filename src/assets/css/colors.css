@@ -178,7 +178,7 @@
     */
     .placeholder-negative::placeholder,
     .htext-alert-negative {
-        color: var(--alert-negative) !important;
+        color: var(--alert-negative) ;
     }
     .hbg-alert-negative {
         background-color: var(--alert-negative);
@@ -186,7 +186,7 @@
     .hborder-alert-negative:focus,
     .hborder-alert-negative:hover,
     .hborder-alert-negative {
-        border-color: var(--alert-negative) !important;
+        border-color: var(--alert-negative);
     }
     .htext-warning {
         color: var(--alert-alert);
@@ -228,7 +228,7 @@
         color: var(--h-black-200);
     }
     .hborder-black-100{
-        border-color: var(--h-black-100);
+        border-color: var(--h-black-100) !important;
     }
     .focus-hborder-black-100:focus{
         border: 1px solid var(--h-black-100);

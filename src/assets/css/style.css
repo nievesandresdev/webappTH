@@ -29,7 +29,8 @@
 
 body {
     font-size: 16px;
-    overflow-y: hidden;
+    /* overflow-y: hidden;
+    color: var(--h-black-100); */
  }
  a:hover {
      text-decoration: none;
