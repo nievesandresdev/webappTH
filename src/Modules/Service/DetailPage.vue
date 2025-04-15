@@ -18,7 +18,7 @@
                     <div class="mt-[5px] sp:mt-[8px]">
                         <p
                             v-if="serviceStore.calPrice(serviceData)?.isFrom"
-                            class="text-[5px] sp:text-[10px] lato leading-none font-bold"
+                            class="text-[7px] sp:text-[10px] lato leading-none font-bold"
                         >
                             {{ $t('experience.card-experience.from') }}
                         </p>
