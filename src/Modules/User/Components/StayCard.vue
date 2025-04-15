@@ -54,25 +54,25 @@
                         </div>
                     </div>
                     <div class="mt-auto flex gap-4 ml-auto">
-                    <RoundedButton
-                        id="open-query-modal"
-                        v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
-                        @click.stop="queryModalisOpen = true"
-                        iconUrl="/assets/icons/WA.STAR.BLACK.svg"
-                        sizeIcons="w-6 h-6"
-                        @closeModal="queryModalisOpen = false"
-                    />
-                    <!-- Botón de Compartir -->
-                    <template v-if="showButtonShared">
                         <RoundedButton
-                            v-if="shareUrlReady"
-                            @click.stop="isModalOpen()"
-                            id="open-shared-stay-modal"
-                            iconUrl="/assets/icons/arrow-up-from-bracket.svg"
+                            id="open-query-modal"
+                            v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
+                            @click.stop="queryModalisOpen = true"
+                            iconUrl="/assets/icons/WA.STAR.BLACK.svg"
                             sizeIcons="w-6 h-6"
+                            @closeModal="queryModalisOpen = false"
                         />
-                        <div v-else class="w-6 h-6 rounded-full bg-gray-300 animate-pulse"></div>
-                    </template>
+                        <!-- Botón de Compartir -->
+                        <template v-if="showButtonShared">
+                            <RoundedButton
+                                v-if="shareUrlReady"
+                                @click.stop="isModalOpen()"
+                                id="open-shared-stay-modal"
+                                iconUrl="/assets/icons/arrow-up-from-bracket.svg"
+                                sizeIcons="w-6 h-6"
+                            />
+                            <div v-else class="w-6 h-6 rounded-full bg-gray-300 animate-pulse"></div>
+                        </template>
 
                 </div>
                 </div>

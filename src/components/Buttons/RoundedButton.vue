@@ -1,6 +1,6 @@
 <template>
    <div
-      class="flex flex-col items-center justify-start h-[90px] sp:h-[100px] w-[72px] sp:w-[90px]"
+      class="flex flex-col items-center"
       :class="classContainer"
     >
       <!-- Botón con icono -->
