@@ -12,7 +12,6 @@
                 loading="lazy"
             >
             <div
-                v-if="data?.featured"
                 class="absolute bottom-0 left-0 px-[2px] sp:px-[4px] pb-[4px] sp:pb-[8px] z-20 w-full"
             >
                 <div class="rounded-full px-[2px] sp:px-[4px] py-[1px] sp:py-[2px] flex space-x-[1px] sp:space-x-1 bg-white flex items-center">
@@ -20,7 +19,7 @@
                         src="/assets/icons/WA.STAR.BLACK.svg"
                         class="size-[6px] sp:size-[12px]"
                     >
-                    <span class="text-[4px] sp:text-[10px] font-bold htext-black-100 leading-none lato">{{ ($t('home.card-product.recommended'))?.toUpperCase() }}</span>
+                    <span class="text-[5px] sp:text-[10px] font-bold htext-black-100 leading-none lato">{{ ($t('home.card-product.recommended'))?.toUpperCase() }}</span>
                 </div>
             </div>
         </div>
@@ -29,8 +28,8 @@
             class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-2 space-y-[8px] sp:space-y-[16px]"
             
         >
-            <p class="text-[6px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
-            <p v-if="typeService != 'ACTIVITY'" class="text-[6px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
+            <p class="text-[9px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
+            <p v-if="typeService != 'ACTIVITY'" class="text-[9px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
             <div
                 class="flex items-end justify-end pb-[4px] sp:pb-[8px]"
                 :class="data?.name_api === 'viator' ? 'justify-between' : 'justify-end'"
@@ -38,13 +37,15 @@
                 <img v-if="data?.name_api === 'viator'" class="w-[30px] sp:w-[49px]" src="/assets/icons/TH.VIATOR.svg" alt="VIATOR">
                 <div class="text-right">
                     <template v-if="serviceStore.calPrice(data)?.isFree">
-                        {{ $t('service.card-item.free') }}
+                        <span class="text-[10px] sp:text-[14px] font-medium lato leading-none">
+                            {{ $t('service.card-item.free') }}
+                        </span>
                     </template>
                     <template v-else>
                         <span v-if="serviceStore.calPrice(data)?.isFrom" class="text-[7px] sp:text-[10px] lato leading-none font-bold block">
                             {{ $t('experience.card-experience.from') }}
                         </span>
-                        <span>
+                        <span class="text-[10px] sp:text-[14px] font-medium lato leading-none">
                             {{ serviceStore.calPrice(data)?.price }}
                         </span>
                     </template>
