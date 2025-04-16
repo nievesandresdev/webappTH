@@ -3,7 +3,7 @@ const PrivacyPolicies = () => import(/* webpackChunkName: "home" */ '../Modules/
 const policiesRoutes = [
   {
     name: 'PrivacyPolicies',
-    path: 'privacidad', // <- SIN la barra '/'
+    path: '/privacidad', 
     component: PrivacyPolicies
   },
 ];
