@@ -76,7 +76,7 @@ const routes = [
     path: '/restablecer-contrasena',
     component: ResetPassword
   },
-  
+  ...policiesRoutes,
   //
   //
   // Rutas dinámicas (con slug)
@@ -100,8 +100,7 @@ const routes = [
       ...chatRoutes,
       ...facilityRoutes,
       ...hotelRoutes,
-      ...queryRoutes,
-      ...policiesRoutes,
+      ...queryRoutes
     ],
     //middleware para enviar a la pantalla compartir en caso de esta en pc
     // este middleware debe funcionar solo para todas las urls con slug hotel
