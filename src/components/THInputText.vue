@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label v-if="textLabel" class="text-[10px] sp:text-sm font-bold mb-1 sp:mb-2 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
+        <label v-if="textLabel" class="text-[10px] sp:text-sm font-bold mb-1 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
         <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
         <div class="relative">
             <img v-if="iconLeft" class="w-[14px] sp:w-5 h-[14px] sp:h-5 absolute left-[6px] sp:left-2 top-[8px] sp:top-2.5" :src="iconLeft">
@@ -14,10 +14,12 @@
                 @input="validateInput"
                 @blur="onBlur"
                 @keyup="keyupInput"
+                @focus="onFocus"
                 autocomplete="nope"
                 :disabled="disabled"
                 class="lato text-sm font-medium"
             >
+            <img v-if="iconRight" class="w-[14px] sp:w-5 h-[14px] sp:h-5 absolute right-[6px] sp:right-2 top-[8px] sp:top-2.5" :src="iconRight">
             <!-- this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError -->
             <p 
                 v-if="showTextError && (isError || errorWhenOtherType || errorWhenTypeEmail)" 
@@ -52,7 +54,8 @@ export default {
             hasError: false,
             showPass: false,
             showEmailError: false,
-            stringTextError: ''
+            stringTextError: '',
+            isFocused: false,
         };
     },
     computed: {
@@ -74,9 +77,11 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let paddingDefault = this.iconLeft ? 'p-2' : 'px-3 py-2';
-            let borderClasess = this.disabled ? 'border hborder-disabled disabled-text' : 'hborder-black-100 focus-hborder-black-100';
-            let classes = `hinput-primary ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
+            let paddingDefault = this.iconLeft ? 'p-3' : 'px-3 py-2';
+            let borderClasess = this.disabled ? 'hborder-disabled-2' : 'hborder-gray-400'; //hborder-disabled disabled-text
+                borderClasess = this.isFocused && !this.disabled ? 'hborder-black-100' : borderClasess;
+            let bgClasess = this.disabled ? 'bg-[#fafafa80]' : 'bg-white';
+            let classes = `${bgClasess} border-[2px] ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
@@ -182,8 +187,13 @@ export default {
         }
     },
     methods: {
+        onFocus(){
+            this.isFocused = true;
+            this.$emit('focus');
+        },
         onBlur(){
             this.$emit('blur');
+            this.isFocused = false;
             this.showEmailError = true;
         },
         keyupInput(){
@@ -241,8 +251,9 @@ export default {
 input::placeholder{
     font-size: 14px;
     font-family: 'lato';
+    font-weight: 500;
     color: #A0A0A0;
-    line-height: 14px;
+    line-height: 16px;
   }
 
 @media (max-width: 224px) {

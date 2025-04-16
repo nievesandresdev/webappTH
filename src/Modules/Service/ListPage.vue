@@ -20,7 +20,17 @@
     <div class="h-[95px]  sp:h-[126px] w-full">
         d
     </div>
-    <router-view />
+    <TransitionBook
+        :custom-transitions="{
+            Confort: 1,
+            Transport: 2,
+            Activity: 3,
+        }"
+    >
+        <router-view v-slot="{ Component }">
+            <component :is="Component" :key="$route.name" />
+        </router-view>
+    </TransitionBook>
 </div>
 
 <ListPageBottomSheetFilter />
@@ -38,6 +48,7 @@ const route = useRouter();
 import AppHeader from '@/layout/Components/AppHeader.vue';
 import InputSearch from './components/InputSearch.vue';
 import ListPageBottomSheetFilter from './ListPageBottomSheetFilter.vue';
+import TransitionBook from '@/components/Transition/TransitionBook.vue';
 
 // STORE
 import { useHotelStore } from '@/stores/modules/hotel';
@@ -49,6 +60,13 @@ const experienceStore = useExperienceStore();
 
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
+
+import { SECTIONS } from '@/constants/sections';
+
+// COMPOSABLE
+import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
+import { useLoadingSections } from "@/composables/useLoadingSections";
+const { startLoading, stopLoading } = useLoadingSections();
 
 // DATA
 
@@ -92,6 +110,7 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
+startLoading(SECTIONS.SERVICE.GLOBAL);
 onMounted(() => {
 
 });
@@ -115,7 +134,6 @@ watch (() => route.currentRoute.value, (valCurrent) => {
 
 
 // FUNCTION
-
 function loadData () {
     loadForFilterGlobal();
     loadType();
@@ -166,6 +184,7 @@ function changeType (type = null) {
     page.value = 1;
     servicesData.value = [];
     route.push({ name: type });
+    stopLoading(SECTIONS.SERVICE.GLOBAL);
 }
 
 async function searchHandle ($event) {

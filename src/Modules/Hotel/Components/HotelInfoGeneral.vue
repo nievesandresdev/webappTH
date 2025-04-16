@@ -50,16 +50,16 @@
         </div>
       </div>
 
-      <!-- <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
     
       <div class="flex justify-between gap-2">
         <div class="flex gap-2 items-center w-1/2">
           <img src="/assets/icons/WA.website.svg" class="w-5 h-5" alt="Website Icon" />
-          <p class="text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="copyText(hotelData.website_google)">
+          <p class="text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="goToWebsite(hotelData.website_google)">
             {{ formattedWebsite }}
           </p>
         </div>
-      </div> -->
+      </div>
     
       <div class="border-t my-3 sp:my-6 border-[#E9E9E9]" v-show="hotelData.phone"></div>
     
@@ -124,11 +124,23 @@
     parseFloat(props.hotelData.longitude), 
     parseFloat(props.hotelData.latitude)
   ]);
+
+  /* outside the website */
+  const goToWebsite = (website) => {
+    if (!website.startsWith('http')) {
+      website = 'https://' + website;
+    }
+    location.href = website;
+  };
+
   
   const formattedWebsite = computed(() => {
-    const url = props.hotelData.website_google;
-    return url ? url.replace(/^https?:\/\/(www\.)?/, '') : '';
+    let url = props.hotelData.website_google || '';
+    url = url.replace(/^https?:\/\/(www\.)?/, ''); // elimina https://, http://, y www.
+    url = url.replace(/\/$/, ''); // elimina la barra (/) final si existe
+    return url;
   });
+
   
   const copyText = (text) => {
     navigator.clipboard.writeText(text).then(() => {

@@ -1,10 +1,14 @@
 <template>
   <div class="relative">
     <div
-      class="w-full flex items-center border h-10 px-2"
+      class="w-full flex items-center border-[2px] h-10 px-2"
       :class="[
         'rounded-[10px]',
-        hasError && Boolean(searchQuery) ? 'hborder-alert-negative htext-alert-negative' : 'hborder-black-100'
+        hasError && Boolean(searchQuery) ? 'hborder-alert-negative htext-alert-negative' : '',
+        {
+          'hborder-black-100': isFocused,
+          'hborder-gray-400': !isFocused,
+        }
       ]"
     >
       <img class="w-5 h-5 mr-2" src="/assets/icons/WA.flag.svg" alt="">
@@ -15,7 +19,7 @@
         @blur="handleBlur"
         @focus="handleFocus"
         :placeholder="placeholder"
-        class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3"
+        class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 text-[10px] sp:text-sm lato font-medium leading-[12px] sp:leading-[16px]"
       />
       <img class="w-5 h-5" src="/assets/icons/WA.chevron.DOWN.svg" alt="">
     </div>
@@ -104,6 +108,7 @@ const currentLanguage = ref('es')
 const isDropdownOpen = ref(false)
 const hasError = ref(false)
 const isSelecting = ref(false)
+const isFocused = ref(false)
 
 // Este computed sigue la lógica antigua para quitar duplicados según codeCountry.
 const filteredCountries = computed(() => {
@@ -152,6 +157,7 @@ const handleEnter = () => {
 
 // Validación al perder foco
 const handleBlur = () => {
+  isFocused.value = false
   // Solo si no está haciendo clic en una opción
   if (!isSelecting.value) {
     validateInput()
@@ -161,6 +167,7 @@ const handleBlur = () => {
 
 const handleFocus = () => {
   isDropdownOpen.value = true
+  isFocused.value = true
 }
 
 // Verifica si el país realmente existe en la lista
@@ -207,5 +214,6 @@ input::placeholder {
   font-family: Lato;
   font-size: 14px;
   font-weight: 500;
+  line-height: 10px;
 }
 </style>

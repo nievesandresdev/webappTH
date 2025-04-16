@@ -1,42 +1,11 @@
-// const LegalWarning = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/LegalWarning.vue')
-const PrivacyPolicies = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/PrivacyPolicies.vue')
-// const CookiePolicies = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/CookiePolicies.vue')
-// const TermsConditions = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/TermsConditions.vue')
+const PrivacyPolicies = () => import(/* webpackChunkName: "home" */ '../Modules/Policies/PrivacyPolicies.vue');
 
-import isMobile from '@/middlewares/isMobile'
-
-const homeRoutes = [
-    {
-        path: '/politicas',
-        // meta: {
-        // verifyHotel: true,
-        // middleware: [
-        //     isMobile
-        // ]
-        // },
-        children: [
-        // {
-        //     name: 'LegalWarning',
-        //     path: '/aviso-legal',
-        //     component: LegalWarning
-        // },
-        {
-            name: 'PrivacyPolicies',
-            path: '/privacidad',
-            component: PrivacyPolicies
-        },
-        // {
-        //     name: 'CookiePolicies',
-        //     path: '/cookies',
-        //     component: CookiePolicies
-        // },
-        // {
-        //     name: 'TermsConditions',
-        //     path: '/cookies',
-        //     component: TermsConditions
-        // },
-        ],
-    },
+const policiesRoutes = [
+  {
+    name: 'PrivacyPolicies',
+    path: 'privacidad', // <- SIN la barra '/'
+    component: PrivacyPolicies
+  },
 ];
 
-export default homeRoutes;
+export default policiesRoutes;

@@ -292,6 +292,8 @@
             viewportMetaTag.parentNode.insertBefore(ogTitleTag, viewportMetaTag.nextSibling);
             viewportMetaTag.parentNode.insertBefore(ogImageTag, viewportMetaTag.nextSibling);
             viewportMetaTag.parentNode.insertBefore(ogTypeTag, viewportMetaTag.nextSibling);
+
+            //alert('hola')
             //document.head.appendChild(ogDescriptionTag);
         });
 

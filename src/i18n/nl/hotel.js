@@ -4,7 +4,7 @@ export default {
   "lodging": "accommodatie",
   "apartment": "appartement",
   "buttons_home": {
-    "wifi": "Wifi",
+    "wifi": "WiFi",
     "call": "Bellen",
     "standards": "Regels",
     "share_stay": "Verblijf delen"

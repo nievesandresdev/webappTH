@@ -46,5 +46,16 @@ export default {
   },
   "social": {
     "title": "Les nostres xarxes"
+  },
+  "wifi":{
+    "title":"Wifi",
+    "red":"Red",
+    "password":"Contrasenya",
+    "noPassword":"Aquesta xarxa no té contrasenya"
+  },
+  "policies":{
+    "title":"Polítiques i normes",
+    "penalization":"Penalització"
   }
+  
 };

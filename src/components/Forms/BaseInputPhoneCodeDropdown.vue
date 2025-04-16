@@ -13,7 +13,7 @@
             {{ selectedItem ? selectedItem.label.split(' ')[1] : '+34' }}
           </span>
         </div>
-        <img class="w-[14px] sp:w-5 h-[14px] sp:h-5 ml-1 sp:ml-2" src="/assets/icons/1.TH.I.DROPDOWN.svg" alt="">
+        <img v-if="!disabled" class="w-[14px] sp:w-5 h-[14px] sp:h-5 ml-1 sp:ml-2" src="/assets/icons/1.TH.I.DROPDOWN.svg" alt="">
       </div>
   
       <!-- Fondo oscuro para cerrar el modal -->
@@ -57,7 +57,7 @@
   </template>
   
 <script setup>
-  import { ref, onMounted, computed, nextTick  } from 'vue'
+  import { ref, onMounted, computed, nextTick, inject  } from 'vue'
   import { getPhoneCodesApi } from '@/api/services/utility.services'
   
   // v-model para el prefijo
@@ -76,9 +76,9 @@
 
   
   // Estado local
-  const open = ref(false)
+  const open = inject('openCodesDropdown')
+  const disabled = inject('disabled')
   const codes = ref([])
-  
   onMounted(async () => {
     const response = await getPhoneCodesApi()
     codes.value = response.data
@@ -87,6 +87,7 @@
   })
   
   function toggleOpen() {
+    if(disabled) return;
     open.value = !open.value
     // Si acabamos de abrir el menú, esperamos el render y hacemos scrollTop = 0
     if (open.value) {

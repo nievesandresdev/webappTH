@@ -34,14 +34,14 @@ const serviceRoutes = [
             name: 'DetailService',
             component: DetailPage,
             meta: { hiddenMenu: true },
-            props: (route) => ({ paramsRouter: {...route.params} }),
+            props: (route) => ({ paramsRouter: {...route.params}, queryRouter: {...route.query} }),
           },
           {
             path: 'activity-externa/:slug',
             name: 'DetailActivity',
             component: DetailActivityExternalPage,
             meta: { hiddenMenu: true },
-            props: (route) => ({ paramsRouter: {...route.params} }),
+            props: (route) => ({ paramsRouter: {...route.params}, queryRouter: {...route.query} }),
           },
         ]
       },

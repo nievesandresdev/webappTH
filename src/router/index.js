@@ -28,6 +28,8 @@ const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/Test
 const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
 const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
+const DisabledEmail = () => import('@/Modules/Email/DisabledEmail.vue');
+
 
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
@@ -47,6 +49,12 @@ const routes = [
  
   // Rutas que no requieren el slug del hotel
   ...chainRoutes,
+  /* {
+    path: '/no-notificacion',
+    name: 'DisabledEmail',
+    component: DisabledEmail
+  }, */
+  
   {
     path: '/compartir',
     name: 'ScreenNotAllowed',
@@ -79,6 +87,11 @@ const routes = [
     // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
+      {
+        path: 'no-notificacion',
+        name: 'DisabledEmail',
+        component: DisabledEmail
+      },
       ...placeRoutes,
       ...profileRoutes,
       ...homeRoutes,

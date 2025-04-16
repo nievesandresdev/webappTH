@@ -28,7 +28,7 @@
         </div>
         <!-- login with -->
         <button 
-            class="mt-4 bg-white hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
+            class="mt-4 bg-white border hborder-black-100 shadow-hoster py-2 flex items-center justify-center w-full rounded-[10px] shadow-guest focus-hborder-black-100"
             @click="goRegisterOrLogin('google')"
         >
             <img class="w-6 h-6 mr-2" src="/assets/icons/1.TH.GOOGLE.svg" alt="icon google">
@@ -65,6 +65,8 @@ const stayStore = useStayStore()
 import { useHotelStore } from '@/stores/modules/hotel'
 const hotelStore = useHotelStore()
 const { hotelData } = hotelStore
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
 
 const emit = defineEmits(['enterPasswordToLogin','next'])
 
@@ -87,12 +89,12 @@ async function goRegisterOrLogin(type){
 }
 
 async function goRegisterOrLoginEmail(){
-    
     loading.value = true;
     let params = { 
         guestEmail: form.email,
         chainId : chainStore.chainData?.id,
         hotelId : hotelStore.hotelData?.id,
+        language : localeStore.localeCurrent
     }
     let hasData = await guestStore.saveAndFindValidLastStay(params)
     if(hasData?.stay && hasData.guest?.hasPassword){

@@ -46,5 +46,16 @@ export default {
   },
   "social": {
     "title": "Gure sareak"
+  },
+  "wifi":{
+    "title":"Wifi",
+    "red":"Red",
+    "password":"Pasahitza",
+    "noPassword":"Hau ez du pasahitza"
+  },
+  "policies":{
+    "title":"Egunerak eta erregelak",
+    "penalization":"Penalizazioa"
   }
+  
 };

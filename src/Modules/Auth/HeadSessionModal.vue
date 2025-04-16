@@ -1,6 +1,5 @@
 <template>
     <transition name="fade">
-      <!-- Usamos una key dinámica para disparar la transición al cambiar el título -->
       <HeadInChain 
         :key="showEnterPassword ? 'auth.log.title' : titleKey"
         :text="showEnterPassword ? $t('auth.log.title') : $t(titleKey)"

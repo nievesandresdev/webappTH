@@ -20,7 +20,7 @@ textarea:focus,
 select:focus,
 button:focus {
   outline: none;
-  border-width: 1px;
+  /* border-width: 2px; */
   /* box-shadow: none !important; */
 }
 

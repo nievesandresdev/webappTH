@@ -50,5 +50,15 @@ export default {
   },
   "social": {
     "title": "Nossas redes"
+  },
+  "wifi":{
+    "title":"Wifi",
+    "red":"Red",
+    "password":"Senha",
+    "noPassword":"Esta rede não tem senha"
+  },
+  "policies":{
+    "title":"Políticas e normas",
+    "penalization":"Penalização"
   }
 };

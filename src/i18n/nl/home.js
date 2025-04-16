@@ -46,5 +46,15 @@ export default {
   },
   "social": {
     "title": "Onze netwerken"
+  },
+  "wifi":{
+    "title":"Wifi",
+    "red":"Red",
+    "password":"Wachtwoord",
+    "noPassword":"Deze netwerk heeft geen wachtwoord"
+  },
+  "policies":{
+    "title":"Politieke en regels",
+    "penalization":"Boete"
   }
 };

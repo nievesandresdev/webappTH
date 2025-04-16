@@ -6,7 +6,7 @@
         >
             <p
                 v-if="!isloadingForm"
-                class="text-[6px] sp:text-sm font-bold lato"
+                class="text-[9px] sp:text-sm font-bold lato"
             >
                 <!-- {{ paginateData.total }} Servicios encontrados en Confort -->
                 {{ $t('service.confort.text-search-found', { number: paginateData.total  }) }}
@@ -54,15 +54,14 @@ import SkeletonCard from './components/SkeletonCard.vue';
 import { useServiceStore } from '@/stores/modules/service';
 const serviceStore = useServiceStore();
 
+// CONSTANTS
+import { SECTIONS } from '@/constants/sections';
+
 // COMPOSABLE
 import { usePaginationScrollInfinite } from '@/composables/usePaginationScrollInfinite';
-
-import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
-import { SECTIONS } from "@/constants/sections.js";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading } = useLoadingSections();
 
-// INJECT
 const hotelData = inject('hotelData');
 const servicesData = inject('servicesData');
 const paginateData = inject('paginateData');
@@ -91,17 +90,6 @@ const { numberCardsToLoad } = usePaginationScrollInfinite(
     loadMore
 );
 
-// const numberCardsToLoad = computed(() => {
-//     if(firstLoad.value) return numberCardsToLoadDefault.value;
-//     if(!firstLoad.value && paginateData.total == 0) return 0;
-//     let remaining = paginateData.total - servicesData.value.length;
-//     remaining = remaining < 0 ? 0 : remaining;
-//     if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
-//         return remaining ;
-//     }
-//     return numberCardsToLoadDefault.value;
-// });
-
 watch(hotelData, (valueCurrent, valueOld) => {
     if (!valueOld && valueCurrent) {
         loadData();
@@ -114,10 +102,7 @@ watch(() => [formFilter.search, formFilter.price_min, formFilter.price_max], (va
     }
 });
 
-onMounted(() => {
-    // initScrollListener();
-    // submitFilter({showPreloader: true});
-});
+startLoading(SECTIONS.SERVICE.GLOBAL);
 
 
 // FUNCTIONS
@@ -127,22 +112,6 @@ function loadData () {
 function closeSearch () {
     searchingActive.value = false;
 }
-// function initScrollListener () {
-//     const container = document?.querySelector('#list-experience');
-//     if (container) {
-//         container.addEventListener('scroll', $throttle(checkLoadMore, 300), true);
-//     }
-// }
-
-// function checkLoadMore () {
-//     const skeletons = document.querySelectorAll('.skeleton-experience-card');
-//     for (let skeleton of skeletons) {
-//         if ($isElementVisible(skeleton) && !isloadingForm.value) {
-//             loadItems();
-//             break;
-//         }
-//     }   
-// }
 
 function loadMore () {
     page.value += 1;
@@ -171,6 +140,7 @@ async function loadItems () {
     }
     firstLoad.value = false;
     isloadingForm.value = false;
+    stopLoading(SECTIONS.SERVICE.GLOBAL);
 }
 
 function filterNonNullAndNonEmpty(obj) {
@@ -187,22 +157,6 @@ function filterNonNullAndNonEmpty(obj) {
         }
     })
     return filteredObject
-}
-
-function loadQueryInFormFilter () {
-    for (const [key, value] of Object.entries(queryRouter.value || {})) {
-        if (formFilter.hasOwnProperty(key)) {
-            if (['duration', 'distances'].includes(key)) {
-                if (typeof value === 'string') {
-                    formFilter[key].push(value);
-                } else {
-                    formFilter[key] = value;
-                }
-            }else {
-                formFilter[key] = validValueQuery(key, value);
-            }
-        }
-    }
 }
 
 function validValueQuery (field, value) {

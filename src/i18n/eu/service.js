@@ -10,6 +10,16 @@ export default {
   "card-item": {
     "free": "Doan"
   },
+  "detail-page": {
+    "accessibility": "Erosotasuna",
+    "offered-in": "Erosotasunaren eskubideetan",
+    "requeriments": {
+      "title": "Erosotasunaren eskubideetan"
+    },
+    "options": {
+      "title": "Erosotasunaren eskubideetan"
+    }
+  },
   "confort": {
     "title": "Erosotasuna",
     "text-search-found": "Zerbitzuak aurkitu dira erosotasunean {number}",

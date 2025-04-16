@@ -1,10 +1,14 @@
 <template>
     <div class="relative">
       <div 
-        class="w-full flex items-center border h-10 px-2"
+        class="w-full flex items-center border-[2px] h-10 px-2"
         :class="[
           'rounded-[10px]',
-          hasError ? 'hborder-alert-negative htext-alert-negative' : 'hborder-black-100'
+          hasError ? 'hborder-alert-negative htext-alert-negative' : '',
+          {
+            'hborder-black-100': focusOn,
+            'hborder-gray-400': !focusOn,
+          }
         ]"
       >
         <!-- Ícono de ubicación -->

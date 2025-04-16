@@ -1,9 +1,8 @@
 <template>
   <!-- transition container -->
   <div>
-    <Transition name="fade">
+    <Transition name="fade" mode="out-in">
       <div v-if="loading !== null && loading" class="skeleton-wrapper">
-      <!-- <div v-if="true" class="skeleton-wrapper"> -->
         <component :is="getSkeletonComponent()" />
       </div>
       <div v-else class="content">
@@ -30,15 +29,11 @@ const props = defineProps({
   componentName: {
     type: String,
     default: 'SkeletonGlobal',
-  }
+  },
 });
 
 const { isLoading } = useLoadingSections();
 const loading = computed(() => isLoading(`${props.name ?? props.module}_global`).value);
-
-watch(loading, (val) => {
-    console.log()
-});
 
 // Carga el skeleton general de la página
 const getSkeletonComponent = () => {
@@ -52,10 +47,6 @@ const getSkeletonComponent = () => {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
-}
-
-.skeleton-wrapper {
-  /* padding: 10px; */
 }
 
 /* .content {

@@ -91,7 +91,7 @@
     async function changeLocale (lg) {
         await guestStore.updateLanguage(lg)
         localeStore.$change(lg)
-         modalLocale.value = false
+        modalLocale.value = false
     }
 
 </script>

@@ -10,6 +10,16 @@ export default  {
     "card-item": {
       "free": "Gratis"
     },
+    "detail-page": {
+      "accessibility": "Accessibile",
+      "offered-in": "Offerto in",
+      "requeriments": {
+        "title": "Requisiti"
+      },
+      "options": {
+        "title": "Opzioni"
+      }
+    },
     "confort": {
       "title": "Confort",
       "text-search-found": "Servizi trovati nel comfort {number}",

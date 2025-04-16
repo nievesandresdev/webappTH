@@ -1,9 +1,13 @@
 <template>
-    <div class="flex flex-col items-center">
+   <div
+      class="flex flex-col items-center"
+      :class="classContainer"
+    >
       <!-- Botón con icono -->
       <button 
         :id="id"
-        class="flex items-center p-1 sp:p-2 gap-1 sp:gap-2 rounded-full border border-white bg-gradient-h shadow-md"
+        class="flex items-center p-1 sp:p-2 gap-1 sp:gap-2 border border-white bg-gradient-h shadow-md"
+        :class="classButton"
       >
         <img :src="iconUrl" :class="sizeIcons" alt="Icon" />
       </button>
@@ -34,6 +38,14 @@
     sizeIcons: {
       type: String,
       default: 'size-[20px] sp:size-[32px]'
+    },
+    classContainer: {
+      type: String,
+      default: ''
+    },
+    classButton: {
+      type: String,
+      default: 'rounded-full'
     }
   })
   </script>

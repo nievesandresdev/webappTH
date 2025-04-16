@@ -4,7 +4,7 @@ export default {
   "lodging": "ostatu",
   "apartment": "apartamentu",
   "buttons_home": {
-    "wifi": "Wifi",
+    "wifi": "WiFi",
     "call": "Deitu",
     "standards": "Araudiak",
     "share_stay": "Egonaldia partekatu"

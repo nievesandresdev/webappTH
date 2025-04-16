@@ -3,16 +3,12 @@
       <div
         :disabled="disabled"
         @click="toggleDropdown"
-        class="flex items-center h-7 sp:h-10 w-full rounded-[6px] sp:rounded-[10px] px-2 bg-white text-left border border-[#333]"
-        :class="{
-          'hborder-alert-negative': error,
-        }"
+        class="flex items-center h-7 sp:h-10 w-full rounded-[6px] sp:rounded-[10px] px-2 bg-white text-left border-[2px]"
+        :class="[borderColor]"
       >
-      <!-- 'border': !error && !modelValue && !showOptions, -->
-      <!-- 'border-2': modelValue || showOptions, -->
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">
         <span
-          class="flex-grow truncate text-label lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] mr-2 py-3"
+          class="flex-grow truncate lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] mr-2 py-3"
           :class="{
             'htext-gray-500': !error && !modelValue,
             'htext-alert-negative': error,
@@ -183,6 +179,11 @@
     },
     
     computed: {
+        borderColor() {
+            if(this.error) return 'hborder-alert-negative';
+            if(this.showOptions) return 'hborder-black-100';
+            return 'hborder-gray-400';
+        },
         label () {
             var lb = this.options.find(item => this.modelValue == item.value)
             var text = lb ? lb.label : null

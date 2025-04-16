@@ -82,6 +82,59 @@ export const useServiceStore = defineStore('service', () => {
         return response
     }
 
+    function calPrice (item) {
+        // if (item.name != 'subservicio 2') {
+        //     return;
+        // }
+        // if (!item) return;
+        let { from_price: fromPrice, price: price, name_api: nameApi, type_price: typePrice, fields_visibles: fieldsValues, type: typeService, subservices, isSubservice } = item;
+        price = price ?? fromPrice;
+        price = price ? parseFloat(price) : 0;
+        let priceObject = {
+            price,
+            isFree: false,
+            isFrom: false
+        }
+        if(nameApi == 'viator') {
+            priceObject.price = `${price?.toFixed(2)} €`;
+        }
+        
+        if (typePrice == 'Activities') {
+            priceObject.price =  `${price?.toFixed(2)} €`;
+        }
+        if (typeService == '2') {
+            let minPrice = calMinPriceSubservices(subservices);
+            if (minPrice === 0 && minPrice !== null) {
+                priceObject.isFree = true;
+                return priceObject;
+            }
+            priceObject.price = `${minPrice?.toFixed(2) ?? 0} €`;
+
+            priceObject.isFrom = true;
+            return priceObject;
+        }
+        if (!['1','2'].includes(typePrice) && !fieldsValues.includes('PRICE')) {
+            priceObject.price = `${price?.toFixed(2)} €`;
+            return priceObject;
+        }
+        if (fieldsValues?.includes('PRICE') && (typeService == '1' || isSubservice)) {
+            priceObject.isFree = true;
+            return priceObject;
+        }
+        priceObject.price = `${price?.toFixed(2)}€`;
+        return priceObject;
+    }
+    
+    function calMinPriceSubservices (subservices = []) {
+        let minPrice = subservices.reduce((acc, item) => {
+            if (item.price < acc) {
+                return item.price;
+            }
+            return acc;
+        }, subservices?.[0]?.price ?? 0);
+        return minPrice;
+    }
+
     //
     return {
         dataFilterGlobal,
@@ -91,6 +144,7 @@ export const useServiceStore = defineStore('service', () => {
         $loadImage,
         $findByIdConfort,
         $findByIdTransport,
+        calPrice,
     }
 
 })

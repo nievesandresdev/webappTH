@@ -61,46 +61,35 @@ export const useExperienceStore = defineStore('experience', () => {
         if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
         return `${URL_STORAGE}/storage/places/${item?.image}`;
     }
-    // function formatImage (item) {
-    //     let { image: path, type, url, api } = item ?? {};
-    //     if (api) {
-    //         return url;
-    //     }
-    //     if (type == 'gallery' || url?.includes('storage')) return `${URL_STORAGE}${url}`;
-    //     return `${URL_STORAGE}/storage/places/${item?.image}`;
-    // }
 
     async function $apiGetAll (params) {
         let newParams = getHotelParams(params);
-        const response = await getAllApi(newParams)
-        // console.log(response, 'response')
-        return response
+        const response = await getAllApi(newParams);
+        return response;
     }
     
     async function $apiGetNumbersByFilters (params) {
         let newParams = getHotelParams(params);
-        const response = await getNumbersByFiltersApi(newParams)
-        // console.log(response, 'response')
-        return response
+        const response = await getNumbersByFiltersApi(newParams);
+        return response;
     }
 
     async function $apiFindBySlug (params) {
         let newParams = getHotelParams(params);
-        const response = await findBySlugApi(newParams)
-        return response
+        const response = await findBySlugApi(newParams);
+        return response;
     }
 
     async function $apiFindInVIatorByShortId (params) {
         let newParams = getHotelParams(params);
-        const response = await findInVIatorByShortIdApi(newParams)
-        return response
+        const response = await findInVIatorByShortIdApi(newParams);
+        return response;
     }
 
     async function $apiFindSchedulesInVIator (params) {
         let newParams = getHotelParams(params);
-        const response = await findSchedulesInVIatorApi(newParams)
-        // console.log(response, 'response')
-        return response
+        const response = await findSchedulesInVIatorApi(newParams);
+        return response;
     }
 
     //
