@@ -48,7 +48,7 @@ export default {
     "title": "Les nostres xarxes"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Contrasenya",
     "noPassword":"Aquesta xarxa no té contrasenya"

@@ -52,7 +52,7 @@ export default {
     "title": "Unsere Netzwerke"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Passwort",
     "noPassword":"Diese Netzwerk hat kein Passwort"

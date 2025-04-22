@@ -25,6 +25,7 @@
                 :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
               >
                 {{localeStore.localeCurrent == 'es' ? hotelInfo?.description : hotelInfo?.translate?.description}}
+                <pre>{{ hotelInfo?.translate }}</pre>
               </p>
 
               <p

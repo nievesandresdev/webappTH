@@ -52,7 +52,7 @@ export default {
     "title": "Nossas redes"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Senha",
     "noPassword":"Esta rede não tem senha"
