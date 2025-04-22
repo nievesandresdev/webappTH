@@ -44,7 +44,7 @@
             </div>
         </template>
         <template v-else>
-            <template v-if="$currentPeriod() == 'pre-stay' && hotelStore.hotelData?.show_checkin_stay">
+            <template v-if="$currentPeriod() == 'pre-stay' && hotelStore.hotelData?.show_checkin_stay && hotelStore.hotelData?.checkin_service_enabled">
                 <router-link 
                     class="block mt-4"
                     :to="{ name:'CompleteCheckin', params:{ id: data.id }}"

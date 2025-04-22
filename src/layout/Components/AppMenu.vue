@@ -127,7 +127,7 @@ const menuItems = reactive([
     // },
     {
         title: 'layout.header.messages',
-        exclude: !hotelStore?.hotelData?.chatSettings.show_guest,
+        exclude: !hotelStore?.hotelData?.chatSettings.show_guest || !hotelStore?.hotelData?.chat_service_enabled,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
         to: `/${route.params.hotelSlug}/chat`,
@@ -135,7 +135,7 @@ const menuItems = reactive([
     },
     {
         title: 'Inbox',
-        exclude: hotelStore?.hotelData?.chatSettings.show_guest,
+        exclude: hotelStore?.hotelData?.chatSettings.show_guest && hotelStore?.hotelData?.chat_service_enabled,
         iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
         iconSelected: 'WA.MENU.SELECTED.MENSAJES',
         to: `/${route.params.hotelSlug}/inbox`,
@@ -151,7 +151,7 @@ const itemMenuSelected = computed(() => {
 
 onMounted(() => {
     // chainStore.$getCustomatizacion(); 
-    showChatToGuest.value = hotelStore.hotelData?.chatSettings?.show_guest;
+    showChatToGuest.value = hotelStore.hotelData?.chatSettings?.show_guest && hotelStore.hotelData?.chat_service_enabled;
     if (!showChatToGuest.value) {
         const msgLink = menuItems.find(item => item.title === 'Mensajes');
         if (msgLink) {
