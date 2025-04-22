@@ -8,6 +8,7 @@
         :showLabel="true"
         @click="onWifiClick"
       />
+
       
       <!--  Llamar -->
       <RoundedButton
@@ -72,6 +73,10 @@ const chainStore = useChainStore();
       required: true,
     },
     buttonsHome: {
+      type: Object,
+      required: true,
+    },
+    dataWifi: {
       type: Object,
       required: true,
     },

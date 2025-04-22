@@ -100,7 +100,7 @@
             <div 
               v-for="data in getDataWifi" :key="data.id" 
               v-show="data.visible == 1" 
-              class="flex p-2 sp:p-4 gap-1 sp:gap-2 rounded-[6px] sp:rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-2 sp:mb-4"
+              class="flex-1 p-2 sp:p-4 gap-1 sp:gap-2 rounded-[6px] sp:rounded-[10px] border border-[#E9E9E9] bg-gradient-h h-full mb-2 sp:mb-4"
             >
               <p class="text-[16px] text-[#333333] flex flex-col gap-1 sp:gap-2">
                 <div class="flex">
@@ -235,8 +235,8 @@ const handleLegalText = async() => {
 
 startLoading(SECTIONS.HOTEL.GLOBAL);
 onMounted(async() => {
-  // console.log(hotelData.value, 'hotelData.hotel');
-  // console.log('onMounted hotel');
+    // console.log(hotelData.value, 'hotelData.hotel');
+    // console.log('onMounted hotel');
     // if (hotelData.value) {
       // loadData(); 
     // }
