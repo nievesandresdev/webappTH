@@ -2,12 +2,13 @@
     <div class="flex gap-4 justify-around">
       <!--  Wifi --> 
       <RoundedButton
-        v-if="hotelData.with_wifi"
+        v-if="hotelData.with_wifi === 1"
         iconUrl="/assets/icons/WA.wifi.svg"
         :label="$t('hotel.buttons_home.wifi')"
         :showLabel="true"
         @click="onWifiClick"
       />
+      
       <!--  Llamar -->
       <RoundedButton
         v-if="hotelData.phone"

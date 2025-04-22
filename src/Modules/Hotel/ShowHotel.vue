@@ -40,6 +40,7 @@
               <HotelActionButtons
                 :hotelData="hotelInfo"
                 :buttonsHome="true"
+                :dataWifi="dataWifi"
                 @wifi-click="handleWifi"
                 @call-click="handleCall"
                 @legal-click="handleLegalText"
