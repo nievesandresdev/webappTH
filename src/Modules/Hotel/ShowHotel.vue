@@ -26,6 +26,7 @@
               >
                 {{localeStore.localeCurrent == 'es' ? hotelInfo?.description : hotelInfo?.translate?.description}}
               </p>
+              
 
               <p
                 @click="isExpanded = !isExpanded"
