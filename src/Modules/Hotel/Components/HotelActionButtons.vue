@@ -2,7 +2,7 @@
     <div class="flex gap-4 justify-around">
       <!--  Wifi --> 
       <RoundedButton
-        v-if="hotelData.with_wifi === 1"
+        v-if="hotelData.with_wifi === 1 && dataWifi.length > 0"
         iconUrl="/assets/icons/WA.wifi.svg"
         :label="$t('hotel.buttons_home.wifi')"
         :showLabel="true"

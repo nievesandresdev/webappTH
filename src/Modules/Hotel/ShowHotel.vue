@@ -240,7 +240,7 @@ onMounted(async() => {
     // if (hotelData.value) {
       // loadData(); 
     // }
-    const r = await hotelStore.$getAllWifiHotel()
+    const r = await hotelStore.$getAllWifiByHotelAndVisible()
     dataWifi.value = r.data
 })
 
