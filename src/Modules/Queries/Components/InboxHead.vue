@@ -3,7 +3,7 @@
         <AppHeader 
             :title="titleHead" 
             :tabs="tabsMenu"
-            v-if="hotelStore?.hotelData?.chatSettings?.show_guest"
+            v-if="hotelStore?.hotelData?.chatSettings?.show_guest && hotelStore?.hotelData?.chat_service_enabled"
         />
         <AppHeader 
             v-else

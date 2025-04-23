@@ -18,7 +18,7 @@
             />
         </div>
         <div 
-            v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
+            v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay' && hotelStore.hotelData?.checkin_service_enabled"
             class="px-3 sp:px-4 mt-4 sp:mt-6"
         >
             <WACardBanner 
