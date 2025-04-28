@@ -7,7 +7,7 @@ export default {
         "subtitle_inactive": "Create your next stay"
     },
     "personal_info": {
-        "title": "Personal information",
+        "title": "My data",
         "description": "Set up your personal information"
     },
     "language" : {

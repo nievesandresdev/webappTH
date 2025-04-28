@@ -218,6 +218,10 @@ button:focus {
   bottom: 96px;
 }
 
+.bottom-toast-over-64 {
+  bottom: 64px;
+}
+
 /* Estilos para el cuerpo del toast */
 .success-toast-body {
   font-size: 14px;
