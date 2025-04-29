@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card-list relative"
+        class="card-list "
         @click="$router.push({ name: 'PlaceDetail', params: { id: data.id } })"
     >
         <div
@@ -38,7 +38,7 @@
                     </div>
                 </div> -->
             </div>
-            <div class="p-[4px] sp:p-[8px] flex flex-col flex-1">
+            <div class="p-[4px] sp:p-[8px] flex flex-col flex-1 bg-red-500">
                 <div class="flex-1">
                     <div class="truncate-2  h-[16px] sp:h-[32px]">
                         <p class="text-[6px] sp:text-[14px] font-bold truncate-2 lato leading-4" v-html="data.title" />

@@ -22,12 +22,12 @@
                     <CardList
                         :data="item"
                         class="mx-[3px] sp:mx-[6px]"
-                        :class="index === placesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                        :class="index === placeDataNotRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                     />
                 </template>
                 <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
                     <SkeletonCard
-                        :class="index === placesData.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                        :class="index === placeDataNotRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                     />
                 </template>
             </div>

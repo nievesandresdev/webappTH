@@ -343,20 +343,22 @@ async function loadPointers () {
     const response = await placeStore.$apiGetPointer(query);
     if (response.ok) {
         pointersData.value = transformDataPointer(response.data?.places);
+        console.log('pointersData.value', pointersData.value);
         // console.log(pointersData.value, 'pointersData.value');
     }
 }
 
 function transformDataPointer (data) {
+    const pointers = data.map(item => transformFeaturesPointerData(item));
     return  {
         type: "FeatureCollection",
-        features: data.map(item => transformFeaturesPointerData(item)),
+        features: pointers,
     }
 }
 
 function transformFeaturesPointerData (item) {
-    let categoryName = slufy(item.featured ? `${item.categori_place.name} featured` : item.categori_place.name);
-    return {
+    let categoryName = slufy(item.featured ? `${item.categori_place?.name} recomendation` : item.categori_place?.name);
+    const pointer = {
         type: "Feature",
         geometry: {
             type: "Point",
@@ -367,9 +369,10 @@ function transformFeaturesPointerData (item) {
             name: item.title,
             description: item.description,
             category: categoryName,
-            categoryIcon:  item.categori_place.icon,
+            categoryIcon:  item.categori_place?.icon,
         }
     }
+    return pointer;
 }
 
 function loadMore () {

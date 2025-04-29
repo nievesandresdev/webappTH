@@ -26,7 +26,7 @@
             @input="searchHnadle"
             @focus="isFocused = true"
             @blur="isFocused = false"
-            @click="activateSearch('top')"
+            @click="activateSearch('medium')"
         >
         <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
             <button
