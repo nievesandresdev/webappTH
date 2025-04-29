@@ -6,7 +6,7 @@
         <div
             v-for="(item, index) in categoriplacesValid" :key="index"
             class="flex items-center  px-[8px] sp:px-4 py-[3px] sp:py-[6px] rounded-[100px] first:ml-4 last:mr-4"
-            :class="{ 'item-menu-cat-active': !formFilter.categoriplace?.includes(String(item.id)), 'hbg-gray-100 hborder-black-100': formFilter.categoriplace?.includes(String(item.id)) }"
+            :class="{ 'item-menu-cat-active': !formFilter.categoriplace?.includes(String(item.id)), 'hbg-gray-100 border hborder-black-100': formFilter.categoriplace?.includes(String(item.id)) }"
             @click="changeCategory(item.id, formFilter.typeplace)"
         >
                 <img :src="`/assets/icons/${item.icon}.svg`" class=" w-[10px] sp:w-[20px] sp:w-auto mr-[4px] sp:mr-2 inline" />
