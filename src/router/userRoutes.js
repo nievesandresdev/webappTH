@@ -1,7 +1,6 @@
 const ProfilePage = () => import('@/Modules/User/ProfilePage.vue')
 const ProfilePageMockup = () => import('@/Modules/User/ProfilePageMockup.vue')
 const MyStays = () => import('@/Modules/User/MyStays.vue')
-const PersonalInfo = () => import('@/Modules/User/PersonalInfo.vue')
 const ReservationStay = () => import('@/Modules/User/ReservationStay.vue')
 const SelectLanguage = () => import('@/Modules/User/SelectLanguage.vue') 
 // const EditStay = () => import('@/Modules/User/EditStay.vue')
@@ -11,11 +10,37 @@ const Guests = () => import('@/Modules/User/Guests.vue')
 const CompleteCheckin = () => import('@/Modules/User/CompleteCheckin.vue')
 const AutoCompleteCheckin = () => import('@/Modules/User/AutoCompleteCheckin.vue')
 const IsCompleteCheckin = () => import('@/Modules/User/IsCompleteCheckin.vue')
+// MyData
+const MyDataLayout = () => import('@/Modules/User/MyData/Layout.vue')
+const PersonalInfo = () => import('@/Modules/User/MyData/PersonalInfo.vue')
+const UbicationData = () => import('@/Modules/User/MyData/UbicationData.vue')
+const ContactData = () => import('@/Modules/User/MyData/ContactData.vue')
 
 const profileRoutes = [
   {
     path: '',
     children: [
+      {
+        path: 'mis-datos',
+        component: MyDataLayout,
+        children: [
+          {
+            path: 'informacion',
+            component: PersonalInfo,
+            name: 'PersonalInfo'
+          },
+          {
+            path: 'ubicacion',
+            component: UbicationData,
+            name: 'UbicationData'
+          },
+          {
+            path: 'contacto',
+            component: ContactData,
+            name: 'ContactData'
+          }
+        ]
+      },
       {
         name: 'Profile',
         path: 'perfil',
@@ -31,11 +56,11 @@ const profileRoutes = [
         path: 'mis-estancias',
         component: MyStays
       },
-      {
-        name: 'PersonalInfo',
-        path: 'informacion-personal',
-        component: PersonalInfo
-      },
+      // {
+      //   name: 'PersonalInfo',
+      //   path: 'informacion-personal',
+      //   component: PersonalInfo
+      // },
       {
         name: 'SelectLanguage',
         path: 'seleccionar-idioma',

@@ -26,5 +26,8 @@ export const SECTIONS = {
       HOTELLIST: "chain_hotellist_global",
       CREATESTAY: "chain_createstay_global",
     },
+    MYDATA: {
+      GLOBAL: "mydata_global"
+    },
   };
   

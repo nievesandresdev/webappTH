@@ -149,7 +149,7 @@ onMounted( async () => {
     await chatStore.loadMessages();
     availableLanguages.value = await chatStore.getAvailableLanguages();
     await watchAvailability();
-    if(hotelStore.hotelData && !hotelStore.hotelData?.chatSettings?.show_guest){
+    if(hotelStore.hotelData && (!hotelStore.hotelData?.chatSettings?.show_guest || !hotelStore.hotelData?.chat_service_enabled)){
         router.push({ name:'Inbox' })
     }
     setTimeout(scrollToBottom, 50);
@@ -160,7 +160,6 @@ onMounted( async () => {
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
     stopLoading(SECTIONS.CHAT.GLOBAL);
-    // console.log('test chatSettings',hotelStore.hotelData?.chatSettings?.show_guest)
 });
 
 onUnmounted(() => {

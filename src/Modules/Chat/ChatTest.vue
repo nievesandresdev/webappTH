@@ -164,7 +164,7 @@ onMounted(async () => {
     availableLanguages.value = await chatStore.getAvailableLanguages();
     await watchAvailability();
 
-    if (hotelStore.hotelData && !hotelStore.hotelData?.chatSettings?.show_guest) {
+    if (hotelStore.hotelData && (!hotelStore.hotelData?.chatSettings?.show_guest || !hotelStore.hotelData?.chat_service_enabled)) {
         router.push({ name:'Inbox' })
     }
 

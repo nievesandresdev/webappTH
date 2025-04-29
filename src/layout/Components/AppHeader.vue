@@ -13,7 +13,7 @@
             >
                 {{ $t($route.meta.title) }}
             </h1>
-            <div class="flex justify-between items-start w-full h-7 sp:h-10 space-x-1 sp:space-x-2">
+            <div class="flex justify-between items-center w-full h-7 sp:h-10 space-x-1 sp:space-x-2">
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">

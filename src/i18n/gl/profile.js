@@ -7,7 +7,7 @@ export default {
         "subtitle_inactive": "Crea a túa próxima estadía"
     },
     "personal_info": {
-        "title": "Información persoal",
+        "title": "Os meus datos",
         "description": "Configura a túa información persoal"
     },
     "language": {

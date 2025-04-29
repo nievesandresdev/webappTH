@@ -48,7 +48,7 @@ export default {
     "title": "Onze netwerken"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Wachtwoord",
     "noPassword":"Deze netwerk heeft geen wachtwoord"

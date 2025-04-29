@@ -10,7 +10,8 @@ import {
     getRewardsByHotel,
     getMainDataApi,
     getDataLegalpi,
-    getAllWifiHotel
+    getAllWifiHotel,
+    getAllByHotelAndVisible
 } from '@/api/services/hotel.services'
 
 
@@ -165,6 +166,11 @@ export const useHotelStore = defineStore('hotel', () => {
         const response = await getAllWifiHotel()
         return response
     }
+
+    async function $getAllWifiByHotelAndVisible () {
+        const response = await getAllByHotelAndVisible()
+        return response
+    }
     return {
         hotelData:hotelDataComputed,
         chatHours,
@@ -185,7 +191,8 @@ export const useHotelStore = defineStore('hotel', () => {
         $findByParamsApi,
         hotelDataStorage,
         $getDataLegal,
-        $getAllWifiHotel
+        $getAllWifiHotel,
+        $getAllWifiByHotelAndVisible
     }
 
 

@@ -256,7 +256,8 @@ export const useGuestStore = defineStore('guest', () => {
     
         // Guarda el objeto actualizado en el localStorage
         localStorage.setItem('guestData', JSON.stringify(responseData));
-        
+        guestData.value = responseData;
+        return guestData.value;
     };
     
     const $saveCheckinData = async (data) => {

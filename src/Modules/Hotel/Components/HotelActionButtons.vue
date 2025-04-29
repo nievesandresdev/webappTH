@@ -2,12 +2,14 @@
     <div class="flex gap-4 justify-around">
       <!--  Wifi --> 
       <RoundedButton
-        v-if="hotelData.with_wifi"
+        v-if="hotelData.with_wifi === 1 && dataWifi.length > 0"
         iconUrl="/assets/icons/WA.wifi.svg"
         :label="$t('hotel.buttons_home.wifi')"
         :showLabel="true"
         @click="onWifiClick"
       />
+
+      
       <!--  Llamar -->
       <RoundedButton
         v-if="hotelData.phone"
@@ -19,7 +21,7 @@
   
       <!--  Normas -->
       <RoundedButton
-        v-if="hotelData.policies.length > 0"
+        v-if="hotelData.policies.length > 0 && hotelData.show_rules"
         iconUrl="/assets/icons/WA.normas.svg"
         :label="$t('hotel.buttons_home.standards')"
         :showLabel="true"
@@ -71,6 +73,10 @@ const chainStore = useChainStore();
       required: true,
     },
     buttonsHome: {
+      type: Object,
+      required: true,
+    },
+    dataWifi: {
       type: Object,
       required: true,
     },

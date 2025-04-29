@@ -32,7 +32,7 @@
             class="mt-4 text-[10px] lato font-bold leading-[12px]"
         >
         {{$t('auth.register.policies-text')}}    
-        <router-link :to="{name:'PrivacyPolicies'}"  class="underline">{{$t('auth.register.policies-title')}}</router-link>
+        <span @click="navigateTo('PrivacyPolicies')"  class="underline">{{$t('auth.register.policies-title')}}</span>
         </p>
         <div class="mt-4">
             <PrimaryButton 

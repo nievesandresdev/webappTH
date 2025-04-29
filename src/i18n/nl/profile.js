@@ -7,7 +7,7 @@ export default {
         "subtitle_inactive": "Maak je volgende verblijf aan"
     },
     "personal_info": {
-        "title": "Persoonlijke informatie",
+        "title": "Mijn gegevens",
         "description": "Beheer je persoonlijke gegevens"
     },
     "language": {

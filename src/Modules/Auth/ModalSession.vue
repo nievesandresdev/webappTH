@@ -50,7 +50,7 @@
 
 <script setup>
 import { ref, reactive, computed, watch, provide } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, onBeforeRouteLeave  } from 'vue-router'
 import { useGuestStore } from '@/stores/modules/guest'
 import { useStayStore } from '@/stores/modules/stay'
 
@@ -78,17 +78,21 @@ const form = reactive({
     password: null
 })
 
+onBeforeRouteLeave((to, from, next) => {
+    // desbloquear scroll cuando se sale a la página de hoteles o de creación de estancia
+    if(['HotelsList','CreateStayFromChain'].includes(to.name)) {
+       unblockScroll();
+    }
+    next()
+})
+
 
 const heightHomeLog = computed(() => {
     console.log('test formType.value', formType.value)
     return formType.value == 'log' && route.name == 'Home' && !showEnterPassword.value;
 });
 // Mantenemos las condiciones originales para cada formulario:
-const showRegisterOrLogin = computed(() => {
-  console.log('test todo 1', (formType.value === 'log' && !stayStore.stayData))
-  console.log('test todo 2', (!guestStore.guestData && formType.value !== 'reset' && formType.value == 'log'))
-  console.log('test todo 3', (!route.query?.acform && route.name === 'ChainLanding'))
-  
+const showRegisterOrLogin = computed(() => {  
 
     if(isMockup() || showEnterPassword.value) return false;
     return (formType.value === 'log' && !stayStore.stayData) || 
@@ -160,6 +164,30 @@ function handleTransitionFinish() {
     transitionFinished.value = true;
 }
 
+function blockScroll() {
+    // 1. Guardamos la posición de scroll
+    scrollY = window.scrollY;
+      
+      // 2. Fijamos el body en esa posición
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%'; 
+      
+      // Opcionalmente, poner overflowY= 'scroll' o 'hidden', 
+      // ya que position:fixed es lo que en iOS realmente bloquea el scroll 
+      document.body.style.overflowY = 'hidden';
+}
+
+function unblockScroll() {
+    // 3. Removemos los estilos
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflowY = '';
+    
+    // Restauramos la posición de scroll
+    window.scrollTo(0, scrollY);
+}
 // Observa cambios en la query para actualizar formType
 watch(
   () => route.query.acform,
@@ -176,26 +204,9 @@ watch(
   () => isOpenModal.value && !isMockup(),
   (shouldBlockScroll) => {
     if (shouldBlockScroll) {
-      // 1. Guardamos la posición de scroll
-      scrollY = window.scrollY;
-      
-      // 2. Fijamos el body en esa posición
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%'; 
-      
-      // Opcionalmente, poner overflowY= 'scroll' o 'hidden', 
-      // ya que position:fixed es lo que en iOS realmente bloquea el scroll 
-      document.body.style.overflowY = 'hidden';
+      blockScroll();
     } else {
-      // 3. Removemos los estilos
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflowY = '';
-      
-      // Restauramos la posición de scroll
-      window.scrollTo(0, scrollY);
+      unblockScroll();
     }
   },
   { immediate: true }

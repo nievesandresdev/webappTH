@@ -5,14 +5,14 @@
     >
         <div 
             class="sp:h-[76px] h-[36px] flex items-center justify-between px-4 p-3"
-            :class="{'sp:py-6':!tabs, 'sp:pt-6 sp:pb-4':tabs}"
+            :class="{'sp:py-6':!tabs, 'sp:pt-6 sp:pb-3':tabs}"
             tabs
         >
             <div class="flex items-center justify-center">
                 <button @click="goBack" class="sp:w-6 sp:h-6 w-5 h-5 text-[#333333] mr-2">
                     <img src="/assets/icons/WA.chevron.svg" alt="Chevron Icon" />
                 </button>
-                <span class="sp:text-[20px] text-[13px] font-bold lato">{{ title }}</span>
+                <span class="sp:text-[20px] text-[13px] font-bold lato sp:leading-[28px]">{{ title }}</span>
             </div>
             
             <button
@@ -22,6 +22,7 @@
             >
                 {{ buttonText }}
             </button>
+            <slot name="iconRight"></slot>
         </div>
         <!-- Subheader con tabs (pestañas) -->
         <div class="px-[12px] sp:px-[16px]">
@@ -100,7 +101,7 @@ const props = defineProps({
     },
     fixed: {
       type: Array,
-      default: true,
+      default: false,
     },
 });
 
