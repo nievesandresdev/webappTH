@@ -76,7 +76,7 @@ const { position, open, isStepThree, maxHeight } = toRefs(props);
 // Alturas definidas para cada caso
 const heights = {
   dragTwoStep: ['0%', '75%'],       // Solo permite desplazamiento entre 73% y 0% cuando isStepThree es false
-  dragThreeStep: ['28%', '58%', '77%'], // Permite top, medium y bottom cuando isStepThree es true
+  dragThreeStep: ['28%', '58%', '95%'], // Permite top, medium y bottom cuando isStepThree es true
 };
 
 // Inicia en la posición central

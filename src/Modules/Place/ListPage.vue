@@ -3,8 +3,10 @@
     <AppHeader
         title="Lugares"
         :tabs="tabsHeader"
+        :show-header="positionBottomSheet != 'top'"
         fixed
     >
+        
         <template v-slot:titleOrSearch>
             <InputSearchPlace
                 :empty-filters="emptyFilters"
@@ -119,6 +121,7 @@ const tabsHeader = ref([]);
 
 
 
+
 // COMPUTED
 const hotelData = computed(() => {
     return hotelStore.hotelData ?? null;
@@ -184,6 +187,7 @@ watch(hotelData, (valueCurrent, valueOld) => {
 onMounted(async () => {
 });
 
+onEvent('close-search', closeSearchHandle);
 onEvent('change-category', changeCategoryHandle);
 
 // FUNCTIONS
@@ -351,6 +355,7 @@ function transformDataPointer (data) {
 }
 
 function transformFeaturesPointerData (item) {
+    let categoryName = slufy(item.featured ? `${item.categori_place.name} featured` : item.categori_place.name);
     return {
         type: "Feature",
         geometry: {
@@ -361,7 +366,7 @@ function transformFeaturesPointerData (item) {
             id: item.id,
             name: item.title,
             description: item.description,
-            category: slufy(item.categori_place.name),
+            category: categoryName,
             categoryIcon:  item.categori_place.icon,
         }
     }

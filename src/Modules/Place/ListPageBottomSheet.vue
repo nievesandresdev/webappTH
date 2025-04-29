@@ -16,7 +16,7 @@
                         :class="{ 'shadow-header': isScrollingList }"
                     >
                         <ListPageBottomSheetCategory @changeCategory="changeCategoryHandle($event)" />
-                        <div class="px-[8px] sp:px-4 pb-[8px] sp:pb-4" :class="{ 'shadow-header': isScrollingList }">
+                        <!-- <div class="px-[8px] sp:px-4 pb-[8px] sp:pb-4" :class="{ 'shadow-header': isScrollingList }">
                             <p
                                 v-if="!isloadingForm"
                                 class="text-[6px] sp:text-sm font-bold mt-[8px] sp:mt-4"
@@ -53,7 +53,7 @@
                                 v-else
                                 class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px] mt-[8px] sp:mt-4"
                             />
-                        </div>
+                        </div> -->
                     </div>
                     <ListPageBottomSheeList @loadMore="loadMoreHandle" />
                 </div>

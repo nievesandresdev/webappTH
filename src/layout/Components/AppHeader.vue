@@ -1,8 +1,10 @@
 <template>
-    <header
-        id="header"
-        class="custom-header"
-        :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
+    <transition name="slide-up">
+        <header
+            v-if="showHeader"
+            id="header"
+            class="custom-header"
+            :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
         <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[23px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
             <h1
@@ -65,7 +67,8 @@
                 </div>
             </slot>
         </div>
-    </header>
+        </header>
+    </transition>
 </template>
 
 <script setup>
@@ -78,6 +81,10 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const props = defineProps({
+    showHeader: {
+        type: Boolean,
+        default: true,
+    },
     title: {
       type: String,
       default: '',
@@ -144,5 +151,15 @@ const navigateTo = (routeName) => {
             width: 48px;
             height: 4px;
         }
+     }
+     
+     .slide-up-enter-active,
+     .slide-up-leave-active {
+         transition: all 0.3s ease;
+     }
+     .slide-up-enter-from,
+     .slide-up-leave-to {
+        opacity: 0;
+        transform: translateY(-100%);
      }
 </style>

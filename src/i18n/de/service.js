@@ -1,5 +1,5 @@
 export default {
-  "title": "Dienstleistungen",
+  "title": "Service",
   "placeholder-search": "Suchdienst",
   "modal-request-service": {
     "button": "Dienst anfordern",
@@ -12,6 +12,7 @@ export default {
     },
     "detail-page": {
       "accessibility": "Zugänglich",
+      "how-to-hire": "Wie kontaktieren",
       "offered-in": "Angebot in",
       "requeriments": {
         "title": "Anforderungen"

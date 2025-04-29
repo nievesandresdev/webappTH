@@ -12,6 +12,7 @@ export default {
     },
     "detail-page": {
       "accessibility": "Accessible",
+      "how-to-hire": "How to hire",
       "offered-in": "Offered in",
       "requeriments": {
         "title": "Requirements"

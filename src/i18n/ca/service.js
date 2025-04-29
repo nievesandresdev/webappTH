@@ -12,6 +12,7 @@ export default {
   },
   "detail-page": {
     "accessibility": "Accesible",
+    "how-to-hire": "Com contractar",
     "offered-in": "Ofertat en",
     "requeriments": {
       "title": "Requisits"

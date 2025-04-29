@@ -60,7 +60,7 @@
                     v-if="hire"
                     class=" sp:pb-[16px] mt-4 sp:mt-6 card-recommendation p-2 sp:p-4"
                 >
-                    <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">Cómo contratar</h3>
+                    <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">{{ $t('service.detail-page.how-to-hire') }}</h3>
                     <p
                         ref="hireRef"
                         class="hire  text-[9px] sp:text-sm font-medium lato"

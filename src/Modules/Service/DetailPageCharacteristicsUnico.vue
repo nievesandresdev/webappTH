@@ -66,6 +66,7 @@ function calculateDuration(duration) {
 .card-recommendation {
     border-radius: 10px;
     border: 1px solid #E9E9E9;
-    background:  linear-gradient(105deg, #F3F3F3 0%, #FAFAFA 100%);
+    background: rgba(243, 243, 243, 0.5);
+    background: linear-gradient(105deg, rgba(243, 243, 243, 0.5) 0%, rgba(250, 250, 250, 0.5) 100%);
 }
 </style>
