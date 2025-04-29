@@ -13,7 +13,7 @@
             <img 
                 v-if="showLogo && imgData"
                 :src="hotelStore.$loadImage(imgData)"
-                class="max-w-[132px] sp:max-w-[279px] max-h-[24px] sp:max-h-[48px] z-30"
+                class="max-w-[132px] sp:max-w-[209px] max-h-[24px] sp:max-h-[48px] z-30"
             >
             <h1 v-else 
                 :class="[
