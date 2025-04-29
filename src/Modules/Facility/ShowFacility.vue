@@ -18,13 +18,24 @@
                     <h1 class="lato text-[12px] sp:text-[18px] font-bold text-[#333] ">
                         {{ facility.title }}
                     </h1>
-                    <p v-show="facility.description" :class="isExpanded ? 'text-[8px] sp:text-sm font-normal lato text-[#333] mt-1 sp:mt-2' : 'text-[8px] sp:text-sm font-normal lato text-[#333] truncate-description mt-1 sp:mt-2'">
-                        {{ facility.description }}
-                    </p>
-
-                    <p v-if="facility?.description?.length > CHARACTER_LIMIT" @click="isExpanded = !isExpanded" class="text-[7px] sp:text-[14px] font-bold lato underline text-[#333] mt-1.5 sp:mt-3 text-right cursor-pointer">
-                        {{ isExpanded ? 'Ver menos' : 'Ver más' }}
-                    </p>
+                    <!-- v-if="description" -->
+                    <div
+                    >
+                        <p
+                            ref="descriptionRef"
+                            class="description text-[8px] sp:text-sm font-normal lato text-[#333] mt-1 sp:mt-2"
+                            :class="{ expanded: isExpanded }"
+                        >
+                            {{ description }}
+                        </p>
+                        <p
+                            v-if="isLongDescription"
+                            class="text-[7px] sp:text-[14px] font-bold lato underline text-[#333] mt-1.5 sp:mt-3 text-right cursor-pointer"
+                            @click="toggleDescription"
+                        >
+                            {{ isExpanded ? 'Ver menos' : 'Ver más' }}
+                        </p>
+                    </div>
 
                     <div  class="flex flex-col w-full p-2 sp:p-4 gap-2 sp:gap-4 border border-[#E9E9E9] rounded-[10px] bg-gradient-h mt-2 sp:mt-4">
                         <p class="lato text-[#333] text-[10px] sp:text-[16px] font-bold">{{ $t('facility.detailPage.sectionSchedules.title') }}</p>
@@ -58,7 +69,7 @@
 </template>
 
 <script setup>
-    import { onMounted, defineProps, ref,computed } from 'vue';
+    import { onMounted, defineProps, ref,computed, nextTick } from 'vue';
     import ImageSlider from '@/components/ImageSlider.vue';
     import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
     import { useFacilityStore } from '@/stores/modules/facility.js';
@@ -67,6 +78,10 @@
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";
     const { startLoading, stopLoading } = useLoadingSections();
+
+    const descriptionRef = ref(null);
+    const description = ref('');
+    const isLongDescription = ref(false);
 
     const hotelStore = useHotelStore();
 
@@ -97,9 +112,45 @@
         let response = await facilityStore.$findById(props.id);
         facility.value = response;
 
+        description.value = facility.value.description;
+        // description.value = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.';
+
         const schedules = facility.value.schedules ? JSON.parse(facility.value.schedules) : [];
 
         activeWeekdays.value = schedules.filter(day => day.active);
         stopLoading(SECTIONS.FACILITY.DETAIL);
+        await nextTick();
+        checkDescriptionLength();  
     };
+
+    function checkDescriptionLength() {
+        setTimeout(() => {
+            if (!descriptionRef.value) return;
+            const descriptionElement = descriptionRef.value;
+            isLongDescription.value = descriptionElement.scrollHeight > descriptionElement.clientHeight;
+        }, 400);
+    }
+
+    const toggleDescription = () => {
+        isExpanded.value = !isExpanded.value;
+    }
 </script>
+
+
+<style scoped lang="scss">
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Mostrar solo 3 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  transition: max-height 0.3s ease;
+}
+
+.description.expanded {
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+</style>
