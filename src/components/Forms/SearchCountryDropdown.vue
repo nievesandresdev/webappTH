@@ -1,5 +1,6 @@
 <template>
-  <div class="relative">
+  <div class="relative" ref="root">
+    <!-- {{ String(isDropdownOpen) }} {{ String(openDefaultList) }} {{ filteredCountries.length }} -->
     <div
       class="w-full flex items-center border-[2px] h-10 px-2"
       :class="[
@@ -21,11 +22,15 @@
         :placeholder="placeholder"
         class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 text-[10px] sp:text-sm lato font-medium leading-[12px] sp:leading-[16px]"
       />
-      <img class="w-5 h-5" src="/assets/icons/WA.chevron.DOWN.svg" alt="">
+      <img 
+        class="w-5 h-5" 
+        src="/assets/icons/WA.chevron.DOWN.svg"
+        @click="handleChevronClick"
+      >
     </div>
 
     <ul
-      v-if="isDropdownOpen && filteredCountries.length > 0"
+      v-if="(openDefaultList || isDropdownOpen) && filteredCountries.length > 0"
       class="absolute z-10 w-full bg-gradient-h rounded-[20px] shadow-guest max-h-[267px] overflow-y-auto"
     >
       <li
@@ -42,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import mapboxgl from 'mapbox-gl'
 
 // Tu token de Mapbox
@@ -54,21 +59,11 @@ async function fetchCountriesFromMapbox(query) {
     // Escapa el string de búsqueda:
     const encodedQuery = encodeURIComponent(query)
 
-    // Puedes ajustar los parámetros según tus necesidades:
-    // - types=country: Forzamos que solo busque países
-    // - language=es: Resultados en español (si están disponibles)
-    // - limit=10: Cantidad máxima de resultados
-    // IMPORTANTE: necesitas tu token de Mapbox en mapboxgl.accessToken
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedQuery}.json?access_token=${mapboxgl.accessToken}&autocomplete=true&types=country&language=es&limit=10`
     const res = await fetch(url)
     const data = await res.json()
 
-    // De data.features tomamos lo que nos interesa.
-    // Transformamos cada país en un objeto { codeCountry, translateCountry: { es: '...' } }
     return data.features.map(feature => {
-      // A veces la propiedad short_code viene en feature.properties.short_code
-      // y se suele expresar como "us", "es", "mx", etc.
-      // Si no existe, tratamos de obtenerla del "id", que suele ser "country.us", etc.
       const code = feature.properties?.short_code
         ? feature.properties.short_code.toUpperCase()
         : feature.id.split('.')[1]?.toUpperCase() || ''
@@ -76,8 +71,6 @@ async function fetchCountriesFromMapbox(query) {
       return {
         codeCountry: code,
         translateCountry: {
-          // Usamos place_name en español; si quisieras algo más corto,
-          // podrías usar feature.text (depende de tu preferencia).
           es: feature.place_name
         }
       }
@@ -98,10 +91,11 @@ const props = defineProps({
     default: ''
   }
 })
-const emit = defineEmits(['update:modelValue','selectedCountryCode'])
+const emit = defineEmits(['update:modelValue','selectedCountryCode','hasError'])
 
 // Data principal
 const searchQuery = ref(props.modelValue ?? '')
+const openDefaultList = ref(false)
 const countries = ref([])           // aquí guardamos los resultados "crudos" de Mapbox
 const uniqueCountries = ref([])      // aquí iremos depurando duplicados
 const currentLanguage = ref('es')
@@ -109,6 +103,15 @@ const isDropdownOpen = ref(false)
 const hasError = ref(false)
 const isSelecting = ref(false)
 const isFocused = ref(false)
+const root = ref(null)
+
+onMounted(() => {
+  document.addEventListener('click', onClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', onClickOutside)
+})
 
 // Este computed sigue la lógica antigua para quitar duplicados según codeCountry.
 const filteredCountries = computed(() => {
@@ -116,14 +119,14 @@ const filteredCountries = computed(() => {
   uniqueCountries.value = Array.from(
     new Map(countries.value.map(c => [c.codeCountry, c])).values()
   )
-
+  
   // Si no hay texto en el input, devolvemos todo
-  if (!searchQuery.value) {
+  if (!searchQuery.value || openDefaultList.value) {
     return uniqueCountries.value
   }
-
+  
   // Normalizamos para filtrar localmente (en caso de que quieras filtrar adicionalmente)
-  const query = searchQuery.value.trim().toLowerCase()
+  const query = searchQuery.value?.trim()?.toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   return uniqueCountries.value.filter(country => {
@@ -136,11 +139,36 @@ const filteredCountries = computed(() => {
   })
 })
 
+const handleChevronClick = async () => {
+  if(openDefaultList.value){
+    handleBlur();
+    return;
+  }
+  // Abre el dropdown
+  openDefaultList.value = true
+  isDropdownOpen.value = false
+  hasError.value = false
+  emit('hasError', hasError.value)
+  if (!countries.value.length) {
+    countries.value = [];
+    let search = searchQuery.value?.trim() ? searchQuery.value?.trim() : 'a'
+    countries.value = await fetchCountriesFromMapbox(search)
+  }
+}
+
+const onClickOutside = (event) => {
+  if (root.value && !root.value.contains(event.target)) {
+    isDropdownOpen.value = false
+    openDefaultList.value = false
+  }
+}
+
+
 // Evento al escribir en el input
 const handleInput = async () => {
   isDropdownOpen.value = true
   hasError.value = false
-
+  emit('hasError', hasError.value)
   // Llamamos a Mapbox solo si hay algo que buscar
   if (searchQuery.value.trim()) {
     countries.value = await fetchCountriesFromMapbox(searchQuery.value.trim())
@@ -159,53 +187,72 @@ const handleEnter = () => {
 const handleBlur = () => {
   isFocused.value = false
   // Solo si no está haciendo clic en una opción
+  isDropdownOpen.value = false
+  openDefaultList.value = false
   if (!isSelecting.value) {
     validateInput()
-    isDropdownOpen.value = false
   }
 }
 
 const handleFocus = () => {
-  isDropdownOpen.value = true
   isFocused.value = true
 }
 
 // Verifica si el país realmente existe en la lista
 const validateInput = () => {
   // Quitamos espacios en blanco
-  searchQuery.value = searchQuery.value.trim()
-
-  const selectedCountry = uniqueCountries.value.find(country =>
-    country.translateCountry[currentLanguage.value].toLowerCase() === searchQuery.value.toLowerCase()
+  searchQuery.value = searchQuery.value?.trim()
+  
+  const selectedCountry = uniqueCountries.value.find(country =>{
+      return country.translateCountry[currentLanguage.value].toLowerCase() === searchQuery.value?.toLowerCase()
+    }
   )
-
+  
   if (selectedCountry) {
     emit('selectedCountryCode', selectedCountry.codeCountry)
     emit('update:modelValue', selectedCountry.translateCountry[currentLanguage.value])
     hasError.value = false
   } else {
     // Si no lo encuentra, establecemos un código por defecto o lo que se requiera.
+    if(searchQuery.value?.trim()){
+      hasError.value = true
+    }else{
+      hasError.value = false
+    }
     emit('selectedCountryCode', 'ES')
     emit('update:modelValue', null)
-    hasError.value = true
   }
+  emit('hasError', hasError.value)
 }
 
 // Cuando el usuario hace clic en una opción del dropdown
 const selectCountry = (countryName, fullData) => {
   isSelecting.value = true
+  
   searchQuery.value = countryName
 
   emit('selectedCountryCode', fullData.codeCountry)
   emit('update:modelValue', countryName)
   hasError.value = false
   isDropdownOpen.value = false
+  openDefaultList.value = false
+  emit('hasError', hasError.value)
 
   // Pequeño delay para que el blur no cierre el menú
   setTimeout(() => {
     isSelecting.value = false
   }, 100)
 }
+
+watch(
+  () => props.modelValue,
+  newVal => {
+    if(newVal?.trim()){
+      searchQuery.value = newVal;
+    }
+    
+  }
+)
 </script>
 
 <style scoped>

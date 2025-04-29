@@ -204,6 +204,17 @@ async function loadDataGuest(id) {
         form.name = currentGuestData.value.name;
         form.lastname = currentGuestData.value.lastname;
         form.email = currentGuestData.value.email;
+        form.phone = currentGuestData.value.phone;
+        form.birthdate = currentGuestData.value.birthdate;
+        form.gender = currentGuestData.value.sex;
+        form.docType = currentGuestData.value.doc_type;
+        form.docSupportNumber = currentGuestData.value.doc_support_number;
+        form.docNumber = currentGuestData.value.doc_num;
+        form.nationality = currentGuestData.value.nationality;
+        form.countryResidence = currentGuestData.value.country_address;
+        form.postalCode = currentGuestData.value.postal_code;
+        form.municipality = currentGuestData.value.municipality;
+        form.addressResidence = currentGuestData.value.address;
         localStorage.setItem('formDataCheckin', JSON.stringify(form))
     }
     // console.log('test loadDataGuest',form)

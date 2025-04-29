@@ -7,11 +7,12 @@ export function handleToast() {
   const route = useRoute();
   const toast = useToast();
 
-  const toastSuccess = (msg) => {
+  const toastSuccess = (msg, mBottom = null) => {
     //saldra pegado debajo en las vista de perfil(por ahora)
     //en las demas vistas que tiene menu saldra sobre el menu
     
-    const typeBottom = ['Profile','MyStays','PersonalInfo','EditStay','Home','ChainLanding'].includes(route.name) ? "bottom-toast-normal" : "bottom-toast-over-menu";
+    const ByView = ['Profile','MyStays','PersonalInfo','EditStay','Home','ChainLanding'].includes(route.name) ? "bottom-toast-normal" : "bottom-toast-over-menu";
+    const typeBottom = Boolean(mBottom) ? mBottom : ByView;
     const totalClassToast = "success-toast "+typeBottom;
     toast(msg, {
         toastClassName: totalClassToast,
