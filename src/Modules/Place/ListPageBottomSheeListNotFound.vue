@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <p class="text-[6px] sp:text-sm mb-[17px] sp:mb-[37px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
+        <p class="text-[6px] sp:text-sm mb-[17px] sp:mb-[37px] px-[12px] sp:px-4 mt-[17px] sp:mt-[24px]">{{ `${$t('place.list-page.text-search-not-found')}` }}</p>
         <div class="mx-[28px] relative">
              <img src="/assets/img/NOT.FOND.PLACES.png" class="w-full h-full absolute top-0 left-0 object-cover" alt="NOT.FOND.PLACES">
             <div class="flex flex-col space-y-[26px] sp:space-y-[56px] pt-[27px]">

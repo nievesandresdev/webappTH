@@ -21,7 +21,7 @@
                         {{ $utils.capitalize(facility?.title) }}
                     </h2>
                 </div>
-                <div class="mt-4 hidden lg:flex">
+                 <div class="mt-4 hidden lg:flex">
                     <div class="w-[60%] pr-8">
                         <p class="text-sm">{{ facility?.description }}</p>
                         <section v-if="facility?.schedule">

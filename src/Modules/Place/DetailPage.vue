@@ -364,6 +364,7 @@ const copyText = (text) => {
 };
 
 provide('placeData', placeData);
+provide('hotelData', hotelData);
 
 </script>
 

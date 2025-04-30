@@ -24,6 +24,7 @@
         </button>
 
           <MapboxMap
+            
             class="h-full z-0"
             :access-token="TOKEN"
             ref="mapboxMap"
@@ -77,6 +78,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  refMap: {
+    type: String,
+    default: null,
+  }
 });
 
 
@@ -183,7 +188,7 @@ function focusOnPoint(lng, lat, zoom = 15) {
   }
 }
 
-defineExpose({ focusOnPoint });
+defineExpose({ focusOnPoint, map });
 
 </script>
 

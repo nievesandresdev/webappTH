@@ -1,6 +1,6 @@
 <template>
     <!-- px-[8px] sp:px-4 pb-[8px] sp:pb-4 -->
-    <div class="" :class="{ 'shadow-header': isScrollingList }">
+    <!-- <div class="" :class="{ 'shadow-header': isScrollingList }"> -->
         <p
             v-if="!isloadingForm"
             class="text-[6px] sp:text-sm font-medium"
@@ -14,12 +14,12 @@
                 </template>
             </template>
             <template v-else>
-                <template v-if="!formFilter.search">
+                <template v-if="!formFilter.search || props.hideBtnSearch">
                     {{ $t('place.list-page.text-count-list',  { count: props.numbersPlaces }  ) }}
                 </template>
                 <button
-                v-else
-                    class="flex items-center space-x-1 sp:space-x-2"
+                    v-else-if="!props.hideBtnSearch"
+                    class="flex items-center space-x-1 sp:space-x-2 mb-[16px] sp:mb-[24px]"
                     @click="closeSearch"
                 >
                     <img
@@ -37,7 +37,7 @@
             v-else
             class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px] mt-[8px] sp:mt-4"
         />
-    </div>
+    <!-- </div> -->
 </template>
 
 <script setup>
@@ -57,6 +57,10 @@
             type: Number,
             required: true,
             default: 0,
+        },
+        hideBtnSearch: {
+            type: Boolean,
+            default: false,
         },
     });
 

@@ -14,14 +14,17 @@
                     :placesRecommendated="placeDataRecommendation"
                 />
                 <div class="mt-[8px] sp:mt-[16px] px-[8px] sp:px-4">
-                    <ListPageBottomSheetListText :numbersPlaces="numbersPlacesNotRecommendation" />
+                    <ListPageBottomSheetListText
+                        :numbersPlaces="numbersPlacesNotRecommendation"
+                        hide-btn-search
+                    />
                 </div>
             </template>
             <div v-if="placeDataNotRecommendation?.length" class="px-[8px] sp:px-4 w-full mt-[8px] sp:mt-4">
                 <template v-for="(item, index) in (placeDataNotRecommendation ?? [])">
+                    <!-- class="mx-[3px] sp:mx-[6px]" -->
                     <CardList
                         :data="item"
-                        class="mx-[3px] sp:mx-[6px]"
                         :class="index === placeDataNotRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                     />
                 </template>
@@ -98,7 +101,7 @@
     const numberCardsToLoad = computed(() => {
         if(firstLoad.value) return numberCardsToLoadDefault.value;
         if(!firstLoad.value && paginateData.total == 0) return 0;
-        let remaining = paginateData.total - placesData.value.length;
+        let remaining = paginateData.total - placeDataNotRecommendation.value.length;
         remaining = remaining < 0 ? 0 : remaining;
         if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
             return remaining ;

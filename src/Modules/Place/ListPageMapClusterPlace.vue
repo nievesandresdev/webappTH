@@ -7,37 +7,61 @@
     >
         <template v-slot:controls>
             <MapboxMarker :lng-lat="coordCenter">
-                <img
+                <!-- <img
                     class="h-[40px] sp:h-[50px] object-cover"
                     src="/assets/icons/WA.map-pointer.png"
-                >
+                > -->
             </MapboxMarker>
             <!-- Agregar iconos personalizados por categoría -->
+            <MapboxImage id="hotel" src="/assets/icons/WA.map-pointer.png" />
+
             <MapboxImage id="monumentos" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
             <MapboxImage id="monumentos-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.MONUMENTOS.png" />
+
             <MapboxImage id="museos" src="/assets/icons/WA.MAP.POINTER.MUSEOS.png" />
             <MapboxImage id="museos-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.MUSEOS.png" />
+
             <MapboxImage id="naturaleza" src="/assets/icons/WA.MAP.POINTER.NATURALEZA.png" />
             <MapboxImage id="naturaleza-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.NATURALEZA.png" />
 
             <MapboxImage id="restaurantes" src="/assets/icons/WA.MAP.POINTER.RESTAURANTES.png" />
             <MapboxImage id="restaurantes-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.RESTAURANTES.png" />
+
             <MapboxImage id="cafeterias-y-postres" src="/assets/icons/WA.MAP.POINTER.CAFETERIASYPOSTRES.png" />
             <MapboxImage id="cafeterias-y-postres-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.CAFETERIASYPOSTRES.png" />
 
             <MapboxImage id="compras" src="/assets/icons/WA.MAP.POINTER.COMPRAS.png" />
                 <MapboxImage id="compras-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.COMPRAS.png" />
+
             <MapboxImage id="otros" src="/assets/icons/WA.MAP.POINTER.OTROS.png" />
             <MapboxImage id="otros-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.OTROS.png" />
+
             <MapboxImage id="vida-nocturna" src="/assets/icons/WA.MAP.POINTER.VIDANOCTURNA.png" />
             <MapboxImage id="vida-nocturna-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.VIDANOCTURNA.png" />
-
+            <!-- :unclustered-point-layout="{
+                    'icon-image': ['get', 'category'], 
+                    'icon-size':windowWidth >= 250 ? 0.063 : 0.02
+                }" -->
             <MapboxCluster
                 :data="transformedPointersData"
                 unclustered-point-layer-type="symbol"
                 :unclustered-point-layout="{
-                    'icon-image': ['get', 'category'], 
-                    'icon-size':windowWidth >= 250 ? 0.063 : 0.02
+                    'icon-image': ['get', 'category'],
+                    'icon-size': [
+                        'match',
+                        ['get', 'category'],
+                        'hotel', 0.1,
+                        'monumentos-recomendation', 0.1,
+                        'museos-recomendation', 0.1,
+                        'naturaleza-recomendation', 0.1,
+                        'restaurantes-recomendation', 0.1,
+                        'cafeterias-y-postres-recomendation', 0.1,
+                        'otros-recomendation', 0.1,
+                        'vida nocturna-recomendation', 0.1,
+                        'compras-recomendation', 0.1,
+                        /* default size if category doesn't match */
+                        0.063
+                    ]
                 }"
                 :clusterMinPoints="5"
                 :clusters-paint="{ 'circle-color': 'rgba(0, 123, 255, 0.5)', 'circle-radius': 40 }"
@@ -170,6 +194,8 @@ function handleMapClick ($event, typCap) {
     emits('clickMapCluster', {event: $event, type: typCap });
 }
 function handleMapClickCluster ($event, typCap) {
+    // const feature = $event.features?.[0];
+    // console.log(feature, 'handleMapClickCluster');
     emits('clickMapCluster', {event: $event, type: typCap });
 }
 </script>

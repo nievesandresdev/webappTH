@@ -94,6 +94,7 @@ const loadingSearch = ref(false);
 const isOpenBottomSheetList = ref(true);
 const isOpenBottomSheetFilter = ref(false);
 const searchingActive = ref(false);
+const loadingPlaces = ref(false);
 const isloadingForm = ref(false);
 const loadingPlaceSeleced = ref(false);
 const page = ref(1);
@@ -102,7 +103,7 @@ const pointersData = ref({
         type: "FeatureCollection",
         features: []
 });
-const placeSelected = ref(null);
+const itemSelected = ref(null);
 const countOtherCities = ref(null);
 const categoriplaces = ref([]);
 const categoriplacesWithNumbers = ref(null);
@@ -167,7 +168,7 @@ watch(formFilter, function(value) {
 });
 
 watch(positionBottomSheet, function(val) {
-    placeSelected.value = null;
+    itemSelected.value = null;
     if (val == '0%') {
         isOpenBottomSheetList.value = true;
         setTimeout(() => {
@@ -207,18 +208,31 @@ function loadForFilterGlobal () {
     Object.assign(formFilter, placeStore.dataFilterGlobal);
 }
 async function getPlaceById (placeId) {
-    placeSelected.value = null;
+    itemSelected.value = null;
     loadingPlaceSeleced.value = true;
     let response = await placeStore.$findById({id: placeId}, { showPreloader: false });
-    if(response.ok) placeSelected.value = response.data.place;
+    if(response.ok) itemSelected.value = response.data.place;
+    itemSelected.value.type = 'place';
     loadingPlaceSeleced.value = false;
+}
+function selectHotelInMap () {
+    itemSelected.value = {
+        id: hotelData.value.id,
+        name: hotelData.value.name,
+        image: hotelData.value.image,
+        type: 'hotel',
+    };
 }
 
 function handleMapCluster (payload) {
-    placeSelected.value = null;
+    itemSelected.value = null;
     let { event, type } = payload;
     if (type == 'cluster') {
-        getPlaceById(event.properties.id);
+        if (event.properties.category == 'hotel') {
+            selectHotelInMap();
+        } else {
+            getPlaceById(event.properties.id);
+        }
         positionBottomSheet.value = 'bottom';
     } else {
         positionBottomSheet.value = 'medium';
@@ -343,13 +357,25 @@ async function loadPointers () {
     const response = await placeStore.$apiGetPointer(query);
     if (response.ok) {
         pointersData.value = transformDataPointer(response.data?.places);
-        console.log('pointersData.value', pointersData.value);
-        // console.log(pointersData.value, 'pointersData.value');
     }
 }
 
 function transformDataPointer (data) {
     const pointers = data.map(item => transformFeaturesPointerData(item));
+    const hotel = {
+        id: hotelData.value.id,
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [Number(hotelData.value.longitude), Number(hotelData.value.latitude)]
+        },
+        properties: {
+            id: hotelData.value.id,
+            name: hotelData.value.name,
+            category: 'hotel',
+        }
+    }
+    pointers.push(hotel);
     return  {
         type: "FeatureCollection",
         features: pointers,
@@ -359,6 +385,7 @@ function transformDataPointer (data) {
 function transformFeaturesPointerData (item) {
     let categoryName = slufy(item.featured ? `${item.categori_place?.name} recomendation` : item.categori_place?.name);
     const pointer = {
+        id: item.id,
         type: "Feature",
         geometry: {
             type: "Point",
@@ -375,9 +402,11 @@ function transformFeaturesPointerData (item) {
     return pointer;
 }
 
-function loadMore () {
+async function loadMore () {
+    loadingPlaces.value = true;
     page.value += 1;
-    loadPlaces();
+    await loadPlaces();
+    loadingPlaces.value = false;
 }
 
 function closeSearchHandle () {
@@ -395,7 +424,7 @@ async function searchHandle ($event) {
 }
 
 function activateSearchHandle ($event) {
-    placeSelected.value = null;
+    itemSelected.value = null;
     positionBottomSheet.value = $event;
     if ($event == 'medium') {
         searchingActive.value = false;
@@ -410,7 +439,7 @@ async function loadAll(payload) {
 }
 
 function submitFilter (payload){
-    placeSelected.value = null;
+    itemSelected.value = null;
     isOpenBottomSheetList.value = true;
     page.value = 1;
     placesData.value = [];
@@ -482,7 +511,7 @@ provide('formFilter', formFilter);
 provide('paginateData', paginateData);
 provide('placesData', placesData);
 provide('pointersData', pointersData);
-provide('placeSelected', placeSelected);
+provide('itemSelected', itemSelected);
 provide('loadingSearch', loadingSearch);
 provide('emptyFilters', emptyFilters);
 provide('loadingPlaceSeleced', loadingPlaceSeleced);
@@ -490,6 +519,7 @@ provide('isOpenBottomSheetList', isOpenBottomSheetList);
 provide('isOpenBottomSheetFilter', isOpenBottomSheetFilter);
 provide('positionBottomSheet', positionBottomSheet);
 provide('isloadingForm', isloadingForm);
+provide('loadingPlaces', loadingPlaces); 
 provide('searchingActive', searchingActive);
 provide('categoriplacesWithNumbers', categoriplacesWithNumbers);
 
