@@ -258,7 +258,7 @@ const handleContact = (item) => {
     if (item.type == 'button') {
         item.action()
     }else{
-        window.open(item.link, '_blank');
+        window.open(item.to, '_blank');
     }
 }
 
