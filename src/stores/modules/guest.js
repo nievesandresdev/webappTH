@@ -14,7 +14,9 @@ import {
     deleteGuestOfStayApi,
     saveAndFindValidLastStayApi,
     saveCheckinDataApi,
-    deleteCheckinDataApi
+    deleteCheckinDataApi,
+    sendContactEmailApi,
+    getContactEmailsByStayIdApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -282,6 +284,16 @@ export const useGuestStore = defineStore('guest', () => {
         }
         return false
     }
+
+    const $sendContactEmail = async (data) => {
+        const response = await sendContactEmailApi(data)
+        return response;
+    }
+
+    const $getContactEmailsByStayId = async (data) => {
+        const response = await getContactEmailsByStayIdApi(data)
+        return response;
+    }
     
 
     return {
@@ -307,7 +319,9 @@ export const useGuestStore = defineStore('guest', () => {
         saveAndFindValidLastStay,
         findAndValidLastStayAndLogHotel,
         $saveCheckinData,
-        $deleteCheckinData
+        $deleteCheckinData,
+        $sendContactEmail,
+        $getContactEmailsByStayId
     }
 
 })

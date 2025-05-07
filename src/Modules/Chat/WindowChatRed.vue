@@ -6,7 +6,9 @@
             isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen'
         ]"
     >
-        <InboxHead/>
+        <AppHeader 
+            title="Chat"
+        />
         
 
         <!-- body chat -->
@@ -15,7 +17,7 @@
         <PageTransitionGlobal module="chat">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
+                class="fixed top-[98px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
                 @click="isScheduleModalOpen = true"
             >
                 <div class="flex items-center gap-2">
@@ -106,7 +108,7 @@ import { ref, onMounted, onUnmounted, provide, inject, computed } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
-import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+import AppHeader from '@/layout/Components/AppHeader.vue';
 //load
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";

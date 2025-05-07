@@ -7,17 +7,17 @@ export default {
         "subtitle_inactive": "Create your next stay"
     },
     "personal_info": {
-        "title": "My data",
-        "description": "Set up your personal information"
+        "title": "Personal information",
+        "description": "Configure your personal information"
     },
-    "language" : {
-        "title": "Language",
+    "language": {
+        "title": "Language preference",
         "description": "Select your default language"
     },
     "logout": "Log out",
-    "share_stay": "Share Stay",
+    "share_stay": "Share stay",
     "page_personal_info": {
-        "title": "Personal Information",
+        "title": "Personal information",
         "change_photo": "Change photo",
         "change_password": "Change password",
         "btn_save": "Save",
@@ -27,7 +27,7 @@ export default {
                 "placeholder": "Enter your name"
             },
             "last_name": {
-                "label": "Last Name",
+                "label": "Last name",
                 "placeholder": "Enter your last name"
             },
             "email": {
@@ -35,7 +35,7 @@ export default {
                 "placeholder": "Enter your email"
             },
             "number_phone": {
-                "label": "Phone Number",
+                "label": "Phone number",
                 "placeholder": "Enter your phone number"
             },
             "password": {
@@ -49,31 +49,32 @@ export default {
         "description": "Plan your next getaway"
     },
     "rewards": {
-        "title": "Invite a Friend",
-        "description": "Share Exclusive Benefits",
-        "button-recommend": "Recommend a Friend Now",
+        "title": "Invite a friend",
+        "description": "Share exclusive benefits",
+        "button-recommend": "Recommend a friend now",
         "referrals": {
-            "title": "Recommend a Friend!",
+            "title": "Recommend a friend!",
             "discount": "{amount} discount",
-            "description": "Send your referral code. They will get a {amount} discount thanks to your code."
+            "description": "Send them your referral code. They will get {amount} discount thanks to your code."
         },
         "referent": {
-            "title": "Recommend a Friend and Both Win!",
+            "title": "Invite a friend and both benefit!",
             "titleReferred": "{amount} discount for the referred",
-            "descerptionReferred": "Send your referral code. They will get a {amount} discount thanks to your code.",
-            "titleReferent": "Get {amount} discount",
-            "descerptionReferent": "Once the code is validated and used, you will get a {amount} discount."
+            "descerptionReferred": "Send them your referral code. They will get {amount} discount thanks to your code.",
+            "titleReferent": "Receive {amount} discount",
+            "descerptionReferent": "Once the referred's code is validated and used, you'll get {amount} discount."
         },
         "titleReferentProfile": "Earn money",
-        "descriptionReferentProfile": "Refer a friend to get benefits",
+        "descriptionReferentProfile": "Refer a friend to get benefits"
     },
     "next-reserve": {
         "reserve-button": "Reserve",
         "continue-title": "Do you want to continue?",
-        "continue-message": "You will be redirected to the hotel's website to continue your reservation process.",
+        "continue-message": "You will be redirected to the hotel's website to continue your booking process.",
         "continue-yes": "Yes, continue",
         "continue-cancel": "Cancel"
+    },
+    "inbox": {
+        "title": "Inbox"
     }
-
-
 };

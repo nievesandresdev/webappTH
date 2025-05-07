@@ -1,46 +1,59 @@
 <template>
-    <div class="hshadow rounded-[14px] sp:rounded-[20px] p-2 sp:p-4 mb-3 sp:mb-4 bg-gradient-h border border-color-secondary">
-        <h1 class="lato text-xs sp:text-base font-medium leading-[14px] sp:leading-[20px]">
-            {{ $t('query.form.hello') }} 
-            <template v-if="!$utils.isMockup()" >
-                {{ guestStore?.guestData?.name}},
-            </template>
-            <template v-else>
-                Huésped
-            </template>
-        </h1>
-        <p class="mt-2 sp:mt-3 lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
-            {{ $t('query.settings.question' + data?.period, { lodging: $formatTypeLodging() }) }}
-        </p>
-        <div class="mt-3 sp:mt-4">
-            <!-- :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]" -->
-            <TextareaAutogrow 
-                v-if="settings?.pre_stay_comment"
-                :id="'textarea1'"
-                v-model="textarea" 
-                :wordLimit="300"
-                placeholder=""
-                showWordLimit
-                customClasses="min-h-[48px] sp:min-h-[72px]"
+    <div>
+        <div class="flex items-center mb-2 gap-1">
+            <IconCustomColor
+                class="transform rotate-180"
+                name="arrow-back"
+                color="#777777"
             />
+            <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">{{ $t('query.form.received-text') }} </span>
+            <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">
+                {{ formatTimestampDate(data?.created_at, 'dd/MM/yyyy - HH:mm')+'hs' }}
+            </span>
         </div>
-        <div class="mt-3 sp:mt-6 flex items-center">
-            <button 
-                v-if="EditPeriod == data?.period"
-                class="text-[8px] sp:text-xs font-semibold leading-[90%] sp:leading-[130%] underline"
-                @click="cancelChanges"
-            >
-                Cancelar
-            </button>
-            <div class="ml-auto">
-                <PrimaryButton 
-                    classes="text-center py-1.5 sp:py-2.5 px-2 sp:px-4 rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] shadow-guest"
-                    :disabled="!changes || sendingQuery"
-                    :isLoading="sendingQuery"
-                    @click="saveQuery"
+        <div class="hshadow rounded-[14px] sp:rounded-[20px] p-2 sp:p-4  bg-gradient-h border border-color-secondary">
+            <h1 class="lato text-xs sp:text-base font-medium leading-[14px] sp:leading-[20px]">
+                {{ $t('query.form.hello') }} 
+                <template v-if="!$utils.isMockup()" >
+                    {{ guestStore?.guestData?.name}},
+                </template>
+                <template v-else>
+                    Huésped
+                </template>
+            </h1>
+            <p class="mt-2 sp:mt-3 lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
+                {{ $t('query.settings.question' + data?.period, { lodging: $formatTypeLodging() }) }}
+            </p>
+            <div class="mt-3 sp:mt-4">
+                <!-- :placeholder="settings?.pre_stay_comment[localeStore.localeCurrent]" -->
+                <TextareaAutogrow 
+                    v-if="settings?.pre_stay_comment"
+                    :id="'textarea1'"
+                    v-model="textarea" 
+                    :wordLimit="300"
+                    placeholder=""
+                    showWordLimit
+                    customClasses="min-h-[48px] sp:min-h-[72px]"
+                />
+            </div>
+            <div class="mt-3 sp:mt-6 flex items-center">
+                <button 
+                    v-if="EditPeriod == data?.period"
+                    class="text-[8px] sp:text-xs font-semibold leading-[90%] sp:leading-[130%] underline"
+                    @click="cancelChanges"
                 >
-                    {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
-                </PrimaryButton> 
+                    Cancelar
+                </button>
+                <div class="ml-auto">
+                    <PrimaryButton 
+                        classes="text-center py-1.5 sp:py-2.5 px-2 sp:px-4 rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] shadow-guest"
+                        :disabled="!changes || sendingQuery"
+                        :isLoading="sendingQuery"
+                        @click="saveQuery"
+                    >
+                        {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
+                    </PrimaryButton> 
+                </div>
             </div>
         </div>
     </div>
@@ -49,6 +62,8 @@
 import { ref, inject, computed } from 'vue'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import IconCustomColor from '@/components/IconCustomColor.vue';
+import { formatTimestampDate } from '@/utils/dateHelpers';
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
 import { useI18n } from 'vue-i18n';
