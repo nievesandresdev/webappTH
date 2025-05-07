@@ -132,7 +132,18 @@ function onFullScreenChange() {
 
 onMounted(() => {
   document.addEventListener('fullscreenchange', onFullScreenChange);
+  nextTick(() => {
+    removeUserLocationDot();
+  });
 });
+
+const removeUserLocationDot = () => {
+  const layersToRemove = ['mapboxgl-user-location-dot', 'mapboxgl-user-location-accuracy-circle'];
+  layersToRemove.forEach((layerId) => {
+    if (map.value.getLayer(layerId)) map.value.removeLayer(layerId);
+    if (map.value.getSource(layerId)) map.value.removeSource(layerId);
+  });
+};
 
 onUnmounted(() => {
   document.removeEventListener('fullscreenchange', onFullScreenChange);

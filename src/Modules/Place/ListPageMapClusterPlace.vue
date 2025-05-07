@@ -6,12 +6,12 @@
         @mb-click="handleMapClick($event, 'map')"
     >
         <template v-slot:controls>
-            <MapboxMarker :lng-lat="coordCenter">
+            <!-- <MapboxMarker :lng-lat="coordCenter"> -->
                 <!-- <img
                     class="h-[40px] sp:h-[50px] object-cover"
                     src="/assets/icons/WA.map-pointer.png"
                 > -->
-            </MapboxMarker>
+            <!-- </MapboxMarker> -->
             <!-- Agregar iconos personalizados por categoría -->
             <MapboxImage id="hotel" src="/assets/icons/WA.map-pointer.png" />
 
