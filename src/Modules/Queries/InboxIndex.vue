@@ -159,8 +159,11 @@ async function getResponses(){
         stayId :localStorage.getItem('stayId'),
         guestId :localStorage.getItem('guestId'),
     }
-    responses.value = await queryStore.$getRecentlySortedResponses(params);
-    // console.log('test responses',responses.value)
+    let response = await queryStore.$getRecentlySortedResponses(params);
+    if(response){
+        responses.value = response;
+    }
+    
 }
 
 async function getContactEmailsByStayId(){
@@ -209,8 +212,9 @@ const getCombinedList = () => {
     })
   }
 
+//   console.log('test responses.value',responses.value)
   // 2. Todas las respuestas (suponiendo que el campo de fecha es createdAt)
-  if(responses.value.length > 0){
+  if(responses.value?.length > 0){
     items.push(...responses.value.map(r => ({
         ...r,
         _type: 'response',
@@ -246,7 +250,7 @@ const getCombinedList = () => {
     return formatFa - formatFb
 })
 
-  console.log('test combinedList',combinedList.value)
+//   console.log('test combinedList',combinedList.value)
 }
 
 provide('EditId',EditId);
