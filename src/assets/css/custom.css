@@ -286,3 +286,22 @@ button:focus {
 body{
   background-color: #fafafa;
 }
+
+@media (max-width: 299px) {
+  .carousel-home    .carousel__slide {
+      width: 160px !important;
+  }
+  .carousel-home    .carousel__track {
+      gap: 12px !important;
+      padding: 10px 0!important;
+  }
+}
+@media (min-width: 300px) {
+  .carousel-home    .carousel__slide {
+      width: 253px !important;
+  }
+  .carousel-home    .carousel__track {
+      gap: 16px !important;
+      padding: 16px 0!important;
+  }
+}
