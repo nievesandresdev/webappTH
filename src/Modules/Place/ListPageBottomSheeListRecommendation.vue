@@ -9,9 +9,12 @@
             <!-- <p v-if="placesRecommendated.length > 1" class="text-[10px] sp:text-[14px] font-medium lato">{{ placesRecommendated.length }} lugares</p> -->
             <ListPageBottomSheetListText  :numbersPlaces="placesRecommendated?.length || 0" />
         </div>
-        <div
-            class="pt-[6px] sp:pt-[8px]"
-            :class="placesRecommendated.length > 1 ? 'grid grid-flow-col auto-cols-max overflow-x-auto no-scrollbar gap-[6px] sp:gap-[8px]' : 'flex w-full  px-[8px] sp:px-4'"
+        <NaturalCarousel
+            :classes="{
+                'pt-[6px] sp:pt-[8px]': true,
+                'grid grid-flow-col auto-cols-max overflow-x-auto no-scrollbar gap-[6px] sp:gap-[8px]': placesRecommendated.length > 1,
+                'flex w-full  px-[8px] sp:px-4': !(placesRecommendated.length > 1)
+            }"
         >
             <div
                 v-for="place in placesRecommendated"
@@ -63,7 +66,7 @@
                     loading="lazy"
                 >
             </div>
-        </div>
+        </NaturalCarousel>
     </div>
 </template>
 
@@ -72,6 +75,7 @@
 
     // COMPONENTS
     import ListPageBottomSheetListText from './ListPageBottomSheetListText.vue';
+    import NaturalCarousel from '@/components/Carousel/NaturalCarousel.vue';
 
     // STORE
     import { useChainStore } from '@/stores/modules/chain';

@@ -1,9 +1,10 @@
 <template>
-    <div 
-        v-if="items.length > 0"  
-        id="facility-cross-mobile" 
-        class="flex gap-3 sp:gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
-        :class="{'justify-center': items.length == 1}"
+    <NaturalCarousel
+        v-if="items.length > 0"   
+        :classes="{
+            'flex gap-3 sp:gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar': true,
+            'justify-center': items.length == 1
+        }"
     >
         <CarouselCard
             v-for="(item, index) in items"
@@ -19,9 +20,10 @@
                 ></p>
             </div>  
         </CarouselCard>
-    </div>
+    </NaturalCarousel>
 </template>
 <script setup>
+import NaturalCarousel from '@/components/Carousel/NaturalCarousel.vue';
 import CarouselCard from './CarouselCard.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
