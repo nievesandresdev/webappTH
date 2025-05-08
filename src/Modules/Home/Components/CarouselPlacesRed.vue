@@ -1,36 +1,43 @@
 <template>
-    <NaturalCarousel
-        v-if="items.length > 0"   
-        :classes="{
-            'flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 no-scrollbar px-2.5 sp:px-4': true,
-            'justify-center': items.length == 1
-        }"
+    <div 
+        id="place-cross-mobile"
+        class="carousel-home pl-2.5 sp:pl-4"
     >
-        <CarouselCard
-            v-for="(item, index) in items"
-            :img-url="placeStore.$loadImage(item.image)"    
-            :data="item"
-            @click="goPlace(item.id, $utils.isMockup())"
+        <Carousel 
+            :items-to-show="1.2"
+            :snap-align="items.length > 1 ? 'start' : 'center'"
         >
-            <h1 class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] truncate" v-html="item.title"></h1>
-            <div class="mt-1 sp:mt-3 flex items-center gap-[3px] sp:gap-1">
-                <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.STAR.BLACK.svg">
-                <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{ item.num_stars }} ({{ item.num_reviews }})</p>
-            </div>
-            <div class="mt-[6px] sp:mt-2 flex items-center gap-[3px] sp:gap-1">
-                <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.pointer.svg">
-                <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{item.cityName}}</p>
-            </div>
-            <div class="mt-[6px] sp:mt-2 flex items-center gap-[3px] sp:gap-1">
-                <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.Walking.svg">
-                <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{ item.distance }} km</p>
-            </div>
-        </CarouselCard>
-    </NaturalCarousel>
+            <Slide v-for="(item, index) in items" :key="index">
+                <CarouselCard
+                    :img-url="placeStore.$loadImage(item.image)"    
+                    :data="item"
+                    @mousedown="handleMouseDown"
+                    @mouseup="handleMouseUp(item.id, $utils.isMockup())"
+                >
+                    <h1 class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] truncate text-left" v-html="item.title"></h1>
+                    <div class="mt-1 sp:mt-3 flex items-center gap-[3px] sp:gap-1">
+                        <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.STAR.BLACK.svg">
+                        <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{ item.num_stars }} ({{ item.num_reviews }})</p>
+                    </div>
+                    <div class="mt-[6px] sp:mt-2 flex items-center gap-[3px] sp:gap-1">
+                        <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.pointer.svg">
+                        <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{item.cityName}}</p>
+                    </div>
+                    <div class="mt-[6px] sp:mt-2 flex items-center gap-[3px] sp:gap-1">
+                        <img class="w-3 sp:w-4 h-3 sp:h-4 mr-[3px] sp:mr-1" src="/assets/icons/WA.Walking.svg">
+                        <p class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">{{ item.distance }} km</p>
+                    </div>
+                </CarouselCard>
+            </Slide>
+        </Carousel>
+    </div>
+    
 </template>
 <script setup>
+import { ref } from 'vue';
 import CarouselCard from './CarouselCard.vue';
-import NaturalCarousel from '@/components/Carousel/NaturalCarousel.vue';
+import { Carousel, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 // STORE
@@ -48,9 +55,43 @@ const props =  defineProps({
     }
 })
 
+let isDragging = ref(false);
+
+const handleMouseDown = () => {
+    isDragging.value = false;
+    document.addEventListener('mousemove', handleMouseMove);
+};
+
+const handleMouseMove = () => {
+    isDragging.value = true; // Si hay movimiento, es un arrastre.
+};
+
+const handleMouseUp = (placeId, isMockup) => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    if (!isDragging.value) { // Solo si no hubo arrastre.
+        goPlace(placeId, isMockup);
+    }
+    isDragging.value = false;
+};
+
 function goPlace (place, isMockup) {
     if(!isMockup){
         router.push({name:'PlaceDetail',params:{id:place}})
     }
 }
 </script>
+<style>
+
+
+
+@media (max-width: 299px) {
+    #place-cross-mobile .carousel__slide {
+        height: 194px;
+    }
+}
+@media (min-width: 300px) {
+    #place-cross-mobile .carousel__slide {
+        height: 300px;
+    }
+}
+</style>

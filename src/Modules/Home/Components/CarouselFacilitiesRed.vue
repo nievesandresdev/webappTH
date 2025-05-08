@@ -1,10 +1,14 @@
 <template>
     <div 
-        id="facility-cross-mobile"
-        class="carousel-home pl-2.5 sp:pl-4"
+        :id="`${items.length > 1 ? 'facility-cross-mobile' : ''}`"
+        class="carousel-home"
+        :class="{
+            'pl-2.5 sp:pl-4': items.length > 1,
+            'flex justify-center': !(items.length > 1)
+        }"
     >
         <Carousel 
-            :items-to-show="1.2"
+            :items-to-show="items.length > 1 ? 1.2 : 1"
             :snap-align="items.length > 1 ? 'start' : 'center'"
         >
             <Slide v-for="(item, index) in items" :key="index">
@@ -17,7 +21,7 @@
                     <div class="flex items-center h-[22px] sp:h-[32px]">
                         <p 
                             v-if="item.title"
-                            class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] truncate-2"
+                            class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] truncate-2t text-left"
                             v-html="item.title[0].toUpperCase() + item.title.substring(1)"
                         ></p>
                     </div>  
