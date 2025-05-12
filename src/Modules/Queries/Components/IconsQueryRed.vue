@@ -1,90 +1,105 @@
 <template>
-    <div 
-        id="container-form"
-        :class="{
-            'hshadow md:shadow-none rounded-[20px] p-2 sp:p-4 md:p-0 mb-2 sp:mb-4 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
-        }"
-    >
-        <h1 
-            class="lato text-xs sp:text-base font-medium leading-[12px] sp:leading-[20px]"
-            v-if="!inModal"
-        >
-            <template v-if="data?.period == 'post-stay'">
-                {{ $t('query.form.thanksAll') }} 
-                {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
-            </template>
-            <template v-else>
-                ¿{{ $t('query.form.whatsup') }} 
-                {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
-            </template>
-        </h1>
-        <p 
-            v-if="!inModal"
-            class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
-        >
-            {{ $t('query.settings.question'+data?.period)}}
-        </p>
-        <div class="mt-3 sp:mt-4 md:mt-8">
-            <FormTabEmojisRed :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
-        </div>
-        <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-4 md:hidden"></div>
-        <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
-        <div class="mt-3 sp:mt-4 md:mt-8" v-if="form.type">
-            <p class="lato text-[10px] sp:text-sm md:text-base md:font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
-                {{ settings[thanksHoster][localeStore.localeCurrent] }}
-            </p>
-        </div>
-        <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type">
-            <TextareaAutogrow 
-                :id="'textarea1'"
-                v-model="textarea" 
-                :wordLimit="300"
-                :placeholder="assessmentComment"
-                showWordLimit
-                customClasses="min-h-[72px] md:min-h-[232px]"
+    <div>
+        <div class="flex items-center mb-2 gap-1">
+            <IconCustomColor
+                class="transform rotate-180"
+                name="arrow-back"
+                color="#777777"
             />
+            <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">{{ $t('query.form.received-text') }} </span>
+            <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">
+                {{ formatTimestampDate(data?.created_at, 'dd/MM/yyyy - HH:mm')+'hs' }}
+            </span>
         </div>
-        <!-- <pre>
-            {{ settings }}
-        </pre> -->
         <div 
-            class="flex items-center mt-3 sp:mt-6 md:mt-8"
-            v-if="!inModal"
+            id="container-form"
+            :class="{
+                'hshadow md:shadow-none rounded-[20px] p-2 sp:p-4 md:p-0 bg-gradient-h border border-color-secondary': !inModal
+            }"
         >
-            <button 
-                v-if="EditPeriod == data?.period"
-                class="text-xs font-semibold leading-[130%] underline"
-                @click="cancelChanges"
+            <h1 
+                class="lato text-xs sp:text-base font-medium leading-[12px] sp:leading-[20px]"
+                v-if="!inModal"
             >
-                Cancelar
-            </button>
-            <div class="ml-auto">
+                <template v-if="data?.period == 'post-stay'">
+                    {{ $t('query.form.thanksAll') }} 
+                    {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
+                </template>
+                <template v-else>
+                    ¿{{ $t('query.form.whatsup') }} 
+                    {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
+                </template>
+            </h1>
+            <p 
+                v-if="!inModal"
+                class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
+            >
+                {{ $t('query.settings.question'+data?.period)}}
+            </p>
+            <div class="mt-3 sp:mt-4 md:mt-8">
+                <FormTabEmojisRed :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
+            </div>
+            <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-4 md:hidden"></div>
+            <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
+            <div class="mt-3 sp:mt-4 md:mt-8" v-if="form.type">
+                <p class="lato text-[10px] sp:text-sm md:text-base md:font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
+                    {{ settings[thanksHoster][localeStore.localeCurrent] }}
+                </p>
+            </div>
+            <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type">
+                <TextareaAutogrow 
+                    :id="'textarea1'"
+                    v-model="textarea" 
+                    :wordLimit="300"
+                    :placeholder="assessmentComment"
+                    showWordLimit
+                    customClasses="min-h-[72px] md:min-h-[232px]"
+                />
+            </div>
+            <!-- <pre>
+                {{ settings }}
+            </pre> -->
+            <div 
+                class="flex items-center mt-3 sp:mt-6 md:mt-8"
+                v-if="!inModal"
+            >
+                <button 
+                    v-if="EditPeriod == data?.period"
+                    class="text-xs font-semibold leading-[130%] underline"
+                    @click="cancelChanges"
+                >
+                    Cancelar
+                </button>
+                <div class="ml-auto">
+                    <PrimaryButton 
+                        classes="text-center py-1.5 sp:py-2.5 md:py-[14px] rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] md:w-[82px] shadow-guest"
+                        :disabled="!changes"
+                        @click="submit"
+                    >
+                        {{ $t('query.form.send') }} 
+                    </PrimaryButton> 
+                </div>
+            </div>
+            <div v-else class="mt-4 sp:mt-6">
                 <PrimaryButton 
-                    classes="text-center py-1.5 sp:py-2.5 md:py-[14px] rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] md:w-[82px] shadow-guest"
-                    :disabled="!changes"
+                    classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
+                    :disabled="!changes || sendingQuery"
+                    :isLoading="sendingQuery"
                     @click="submit"
                 >
-                    {{ $t('query.form.send') }} 
+                {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
                 </PrimaryButton> 
             </div>
-        </div>
-        <div v-else class="mt-4 sp:mt-6">
-            <PrimaryButton 
-                classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
-                :disabled="!changes || sendingQuery"
-                :isLoading="sendingQuery"
-                @click="submit"
-            >
-            {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
-            </PrimaryButton> 
         </div>
     </div>
 </template>
 <script setup>
 import { reactive, provide, computed, ref, inject, watch  } from 'vue';
+import { formatTimestampDate } from '@/utils/dateHelpers';
 import FormTabEmojisRed from './FormTabEmojisRed'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+import IconCustomColor from '@/components/IconCustomColor.vue';
 
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';

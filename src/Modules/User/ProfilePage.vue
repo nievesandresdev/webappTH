@@ -1,6 +1,6 @@
 <template>
     <SectionBar :title="$t('profile.account')" />
-    <div class="px-3 sp:my-[100px] my-[50px]">
+    <div class="px-2 sp:px-4 sp:my-[100px] my-[50px]">
         <div class="flex flex-col items-center mt-6">
             <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
             :style="{ backgroundImage: `url(${profileImageUrl})` }"> 
@@ -48,72 +48,57 @@
         </div>
 
         <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
+        <!-- seccion buzon-->
+        <div class="flex items-center mt-4 sp:gap-2 gap-1" @click="handleInbox">
+            <img src="/assets/icons/WA.inbox.svg" class="sp:w-6 sp:h-6 w-4 h-4" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.inbox.title') }}</span>
+            <BaseBadge
+                size="medium"
+                :showBadge="queryStore.hasPendingQuery"
+                classes="border-[1.2px] rounded-full"
+            />
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
+        </div>
 
         <!-- Sección "Información personal" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handlePersonalInfo">
-            <div class="flex items-center gap-2">
-                <img src="/assets/icons/WA.id.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="ID Icon" />
-                <div class="flex flex-col">
-                    <span class="sp:text-[16px] text-[10px] font-medium lato text-[#333333]">{{ $t('profile.personal_info.title') }}</span>
-                    <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.personal_info.description') }}</span>
-                </div>
-            </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="handlePersonalInfo">
+            <img src="/assets/icons/WA.id.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.personal_info.title') }}</span>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "Idioma" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="selectLanguage">
-            <div class="flex items-center gap-2">
-                <img src="/assets/icons/WA.PreferenciaIdioma.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="ID Icon" />
-                <div class="flex flex-col">
-                    <span class="sp:text-[16px] text-[10px] font-medium lato text-[#333333]">{{ $t('profile.language.title') }}</span>
-                    <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.language.description') }}</span>
-                </div>
-            </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="selectLanguage">
+            <img :src="`/assets/icons/languages/${localeStore.localeCurrent}.svg`" class="sp:w-6 sp:h-6 w-4 h-4" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.language.title') }}</span>
+            <span class="sp:text-[14px] text-[10px] font-medium lato leading-[16px] text-[#777]">{{ $utils.capitalize($t('language.'+localeStore.localeCurrent)) }}</span>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "REservacion" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="handleReservationStay">
-            <div class="flex items-center gap-2">
-                <img src="/assets/icons/Wa.reserva.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="Reservation" />
-                <div class="flex flex-col">
-                    <span class="sp:text-[16px] text-[10px] font-medium lato text-[#333333]">{{ $t('profile.book_next_stay.title') }}</span>
-                    <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.book_next_stay.description') }}</span>
-                </div>
-            </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="handleReservationStay">
+            <img src="/assets/icons/WA.reserva.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.book_next_stay.title') }}</span>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
 
         <!-- Sección "referido" -->
-        <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits">
-            <div class="flex items-center gap-2">
-                <img src="/assets/icons/WA.referido.svg" class="sp:w-8 sp:h-8 w-5 h-5" alt="Reservation" />
-                <div class="flex flex-col">
-                    <span class="sp:text-[16px] text-[10px] font-medium lato text-[#333333]">{{ $t('profile.rewards.title') }}</span>
-                    <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.rewards.description') }}</span>
-                </div>
-            </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+        <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && !hotelStore.hotelData?.offer_benefits">
+            <img src="/assets/icons/WA.referido.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.rewards.title') }}</span>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
          <!-- Sección "referente y referido" -->
-         <div class="flex items-center justify-between mt-4 gap-2" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
-            <div class="flex items-center gap-2">
-                <img src="/assets/icons/WA.referente.svg" class="w-8 h-8" alt="Reservation" />
-                <div class="flex flex-col">
-                    <span class="sp:text-[16px] text-[10px] font-medium lato text-[#333333]">{{ $t('profile.rewards.titleReferentProfile') }}</span>
-                    <span class="sp:text-[14px] text-[8px] font-normal lato text-[#333333]">{{ $t('profile.rewards.descriptionReferentProfile') }}</span>
-                </div>
-            </div>
-            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 cursor-pointer transform rotate-180 self-center" alt="Chevron Icon" />
+         <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="openModalRewards" v-show="hotelStore.hotelData?.show_referrals && hotelStore.hotelData?.offer_benefits">
+            <img src="/assets/icons/WA.referente.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
+            <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.rewards.titleReferentProfile') }}</span>
+            <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>
     
         <!-- Cerrar sesión -->
         <div class="flex items-center justify-center sp:mt-[40px] mt-[30px] gap-2 cursor-pointer mb-10">
             <span class="sp:text-[14px] text-[11px] font-bold lato text-[#333333] underline cursor-pointer" @click="handleLogoutGuest">{{ $t('profile.logout') }}</span>
         </div>
-
-
 
         <ShareStayModal />
         <BottomSheetReferrals :hotelRewards="hotelRewards" />
@@ -129,6 +114,7 @@ import ShareStayModal from './Components/ShareStayModal.vue'
 import StayCard from './Components/StayCard.vue';
 import BottomSheetReferrals from './Components/Rewards/BottomSheetReferrals.vue';
 import BottomSheetReferent from './Components/Rewards/BottomSheetReferent.vue';
+import BaseBadge from '@/components/BaseBadge.vue';
 import { navigateTo } from '@/utils/navigation'
 import router from '@/router';
 import FakeStayCard from '@/Modules/Home/Components/FakeStayCard.vue'
@@ -140,9 +126,12 @@ import { useAuthStore } from '@/stores/modules/auth';
 const authStore = useAuthStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
 import { useStayStore } from '@/stores/modules/stay';
-import hotel from '@/i18n/de/hotel';
 const stayStore = useStayStore();
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
 
 const urlParams = new URLSearchParams(window.location.search);
 const referentUrl = urlParams.get('referent');
@@ -197,6 +186,10 @@ const selectLanguage = () => {
 
 const handleReservationStay = () => {
     navigateTo('ReservationStay')
+};
+
+const handleInbox = () => {
+    navigateTo('Inbox')
 };
 
 onMounted(async() => {

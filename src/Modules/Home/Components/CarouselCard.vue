@@ -1,5 +1,10 @@
 <template>
-    <div class="bg-gradient-h rounded-[16px] sp:rounded-[20px] overflow-hidden w-[160px] sp:w-[253px] flex-shrink-0 shadow-guest z-[150] border border-white">
+    <div 
+        class="bg-gradient-h rounded-[16px] sp:rounded-[20px] overflow-hidden w-[160px] sp:w-[253px] flex-shrink-0 shadow-guest z-[150] border border-white"
+        :class="`carousel-card-${model}`"
+        :id="id"
+        :data-id="id"
+    >
         <!-- img section -->
         <div class="relative">
             <img 
@@ -36,6 +41,8 @@ import { toRefs } from 'vue';
 const props = defineProps({
     imgUrl:String,
     data:Object,
+    model:String,
+    id:String
 })
 
 const { imgUrl } = toRefs(props)

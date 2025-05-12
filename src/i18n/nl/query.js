@@ -1,11 +1,11 @@
 export default {
-    "textToast": {
-      "sendQueryText": "Bedankt voor je feedback. Jouw ervaring is belangrijk voor ons en we streven ernaar om aan je verwachtingen te voldoen",
+  "textToast": {
+      "sendQueryText": "We waarderen je feedback zeer. Je ervaring is belangrijk voor ons en we streven ernaar aan je verwachtingen te voldoen",
       "updateQueryText": "Wijziging verzonden",
       "registerResponse": "Feedback verzonden",
       "updateResponse": "Feedback bijgewerkt"
-    },
-    "form": {
+  },
+  "form": {
       "send": "Verzenden",
       "sending": "Bezig met verzenden",
       "modify": "Wijzigen",
@@ -24,17 +24,18 @@ export default {
       "btn-normal-poststay": "Normaal",
       "btn-good-poststay": "Goed",
       "btn-verygood-poststay": "Zeer goed",
-      "poststay-bad-thanks-title": "Antwoord verzonden",
-      "poststay-bad-thanks-subtitle": "Bedankt voor je tijd",
-      "continueIn": "Doorgaan in"
-    },
-    "settings": {
-      "questionpre-stay": "Is er iets dat we kunnen doen voor je aankomst in {lodging}?",
-      "questionin-stay": "Hoe zou je je tevredenheid tot nu toe beoordelen?",
-      "questionpost-stay": "Hoe was je ervaring met ons?"
-    },
-    "inbox": {
+      "poststay-bad-thanks-title": "Reactie verzonden",
+      "poststay-bad-thanks-subtitle": "Hartelijk dank voor je tijd",
+      "continueIn": "Doorgaan in",
+      "received-text": "Ontvangen",
+      "sent-text": "Verzonden"
+  },
+  "settings": {
+      "questionpre-stay": "Is er iets wat we kunnen doen voor je aankomst bij {lodging}?",
+      "questionin-stay": "Hoe zou je je tevredenheid over je verblijf tot nu toe beoordelen?",
+      "questionpost-stay": "Hoe is je ervaring met ons geweest?"
+  },
+  "inbox": {
       "title": "Berichten"
-    }
   }
-  
+};

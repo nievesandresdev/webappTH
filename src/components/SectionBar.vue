@@ -1,5 +1,8 @@
 <template>
-    <div class="w-full sp:h-[76px] h-[36px] fixed top-0 left-0 px-4 sp:py-6 p-3  z-[2000] flex items-center justify-between bg-head bg-gradient-100">
+    <div 
+        class="w-full sp:h-[76px] h-[36px] top-0 left-0 px-4 sp:py-6 p-3  z-[2000] flex items-center justify-between bg-head bg-gradient-100"
+        :class="{'fixed':fixed}"
+    >
         <div class="flex items-center justify-center">
             <button @click="goBack" class="sp:w-6 sp:h-6 w-5 h-5 text-[#333333] mr-2">
                 <img src="/assets/icons/WA.chevron.svg" alt="Chevron Icon" />
@@ -55,6 +58,10 @@ const props = defineProps({
     buttonColor: {
         type: String,
         default: 'bg-[#333333]'
+    },
+    fixed: {
+        type: Boolean,
+        default: true
     }
 });
 

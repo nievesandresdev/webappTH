@@ -21,3 +21,6 @@ export const updateDataGuest = (data) => apiHttp('POST', `${guestPath}/updateDat
 
 export const saveCheckinDataApi = (params) => apiHttp('POST', `${guestPath}/saveCheckinData/`, params)
 export const deleteCheckinDataApi = (params) => apiHttp('POST', `${guestPath}/deleteCheckinData/`, params)
+
+export const sendContactEmailApi = (params) => apiHttp('POST', `${guestPath}/sendContactEmail/`, params, { showPreloader: false })
+export const getContactEmailsByStayIdApi = (params) => apiHttp('GET', `${guestPath}/getContactEmailsByStayId/`, params)

@@ -1,11 +1,11 @@
 export default {
-    "textToast": {
-      "sendQueryText": "Agradecemos sinceramente o teu feedback. A túa experiencia é importante para nós e tratamos de cumprir coas túas expectativas",
+  "textToast": {
+      "sendQueryText": "Apreciamos sinceramente o teu feedback. A túa experiencia importa e esforzámonos por cumprir as túas expectativas",
       "updateQueryText": "Modificación enviada",
       "registerResponse": "Feedback enviado",
-      "updateResponse": "Feedback modificado"
-    },
-    "form": {
+      "updateResponse": "Feedback actualizado"
+  },
+  "form": {
       "send": "Enviar",
       "sending": "Enviando",
       "modify": "Modificar",
@@ -26,15 +26,16 @@ export default {
       "btn-verygood-poststay": "Moi boa",
       "poststay-bad-thanks-title": "Resposta enviada",
       "poststay-bad-thanks-subtitle": "Moitas grazas polo teu tempo",
-      "continueIn": "Continuar en"
-    },
-    "settings": {
-      "questionpre-stay": "Hai algo que poidamos facer para a túa chegada ao {lodging}?",
-      "questionin-stay": "Como valorarías o teu nivel de satisfacción coa estancia ata agora?",
-      "questionpost-stay": "Como foi a túa experiencia connosco?"
-    },
-    "inbox": {
+      "continueIn": "Continuar en",
+      "received-text": "Recibido",
+      "sent-text": "Enviado"
+  },
+  "settings": {
+      "questionpre-stay": "Hai algo que poidamos facer para a túa chegada a {lodging}?",
+      "questionin-stay": "Como valorarías o teu nivel de satisfacción coa túa estancia ata agora?",
+      "questionpost-stay": "Como foi a túa experiencia con nós?"
+  },
+  "inbox": {
       "title": "Mensaxes"
-    }
   }
-  
+};

@@ -7,15 +7,15 @@ export default {
         "subtitle_inactive": "Crea il tuo prossimo soggiorno"
     },
     "personal_info": {
-        "title": "I miei dati",
+        "title": "Informazioni personali",
         "description": "Configura le tue informazioni personali"
     },
-    "language" : {
-        "title": "Lingua",
-        "description": "Seleziona la lingua predefinita"
+    "language": {
+        "title": "Preferenza di lingua",
+        "description": "Seleziona la tua lingua predefinita"
     },
     "logout": "Disconnettersi",
-    "share_stay": "Condividi Soggiorno",
+    "share_stay": "Condividi soggiorno",
     "page_personal_info": {
         "title": "Informazioni personali",
         "change_photo": "Cambia foto",
@@ -49,31 +49,32 @@ export default {
         "description": "Pianifica la tua prossima fuga"
     },
     "rewards": {
-            "title": "Invita un amico",
-            "description": "Condividi vantaggi esclusivi",
-            "button-recommend": "Raccomanda un amico ora",
+        "title": "Invita un amico",
+        "description": "Condividi benefici esclusivi",
+        "button-recommend": "Consiglia un amico ora",
         "referrals": {
-            "title": "Raccomanda un amico!",
+            "title": "Consiglia un amico!",
             "discount": "{amount} di sconto",
-            "description": "Invia il tuo codice di riferimento. Otterrà {amount} di sconto grazie al tuo codice."
+            "description": "Invia loro il tuo codice di riferimento. Otterranno {amount} di sconto grazie al tuo codice."
         },
         "referent": {
-            "title": "Invita un amico e vincete entrambi!",
-            "titleReferred": "{amount} di sconto per il raccomandato",
-            "descerptionReferred": "Invia il tuo codice di riferimento. Otterrà {amount} di sconto grazie al tuo codice.",
+            "title": "Invita un amico e beneficiate entrambi!",
+            "titleReferred": "{amount} di sconto per il referral",
+            "descerptionReferred": "Invia loro il tuo codice di riferimento. Otterranno {amount} di sconto grazie al tuo codice.",
             "titleReferent": "Ricevi {amount} di sconto",
-            "descerptionReferent": "Una volta convalidato e utilizzato il codice del riferimento, otterrai {amount} di sconto."
+            "descerptionReferent": "Una volta che il codice del referral è stato convalidato e utilizzato, otterrai {amount} di sconto."
         },
         "titleReferentProfile": "Guadagna denaro",
-        "descriptionReferentProfile": "Raccomanda un amico per ottenere vantaggi"
+        "descriptionReferentProfile": "Referisci un amico per ottenere vantaggi"
     },
     "next-reserve": {
         "reserve-button": "Prenota",
         "continue-title": "Vuoi continuare?",
-        "continue-message": "Verrai reindirizzato al sito web dell'hotel per proseguire con il processo di prenotazione.",
+        "continue-message": "Verrai reindirizzato al sito web dell’hotel per continuare il processo di prenotazione.",
         "continue-yes": "Sì, continua",
         "continue-cancel": "Annulla"
+    },
+    "inbox": {
+        "title": "Posta in arrivo"
     }
-
-
 };

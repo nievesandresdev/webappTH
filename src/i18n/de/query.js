@@ -1,39 +1,41 @@
 export default {
     "textToast": {
-        "sendQueryText": "Wir schätzen Ihr Feedback aufrichtig. Ihre Erfahrung ist uns wichtig, und wir bemühen uns, Ihre Erwartungen zu erfüllen.",
-        "updateQueryText" : "Änderung gesendet",
+        "sendQueryText": "Wir bedanken uns herzlich für dein Feedback. Deine Erfahrungen sind uns wichtig, und wir bemühen uns, deine Erwartungen zu erfüllen",
+        "updateQueryText": "Änderung gesendet",
         "registerResponse": "Feedback gesendet",
         "updateResponse": "Feedback aktualisiert"
     },
     "form": {
         "send": "Senden",
         "sending": "Wird gesendet",
-        "modify" : "Ändern",
-        "cancel" : "Stornieren",
-        "title": "Anfragen",
+        "modify": "Ändern",
+        "cancel": "Abbrechen",
+        "title": "Feedback",
         "hello": "Hallo",
-        "whatsup": "Was gibt's?",
-        "thanksAll" : "Danke für alles",
+        "whatsup": "Wie geht’s?",
+        "thanksAll": "Danke für alles",
         "btn-verywrong-stay": "Sehr schlecht",
         "btn-wrong-stay": "Schlecht",
-        "btn-normal-stay": "Normal",
+        "btn-normal-stay": "In Ordnung",
         "btn-good-stay": "Gut",
         "btn-verygood-stay": "Sehr gut",
         "btn-verywrong-poststay": "Sehr schlecht",
         "btn-wrong-poststay": "Schlecht",
-        "btn-normal-poststay": "Normal",
+        "btn-normal-poststay": "In Ordnung",
         "btn-good-poststay": "Gut",
         "btn-verygood-poststay": "Sehr gut",
         "poststay-bad-thanks-title": "Antwort gesendet",
-        "poststay-bad-thanks-subtitle": "Vielen Dank für Ihre Zeit",
-        "continueIn" : "Zu Hause"
+        "poststay-bad-thanks-subtitle": "Vielen Dank für deine Zeit",
+        "continueIn": "Fortsetzen in",
+        "received-text": "Empfangen",
+        "sent-text": "Gesendet"
     },
     "settings": {
-        "questionpre-stay": "Können wir etwas für Ihre Ankunft im {lodging} tun?",
-        "questionin-stay": "Wie würden Sie Ihre Zufriedenheit mit Ihrem Aufenthalt bisher bewerten?",
-        "questionpost-stay": "Wie war Ihre Erfahrung mit uns?",
+        "questionpre-stay": "Gibt es etwas, das wir für deine Ankunft im {lodging} tun können?",
+        "questionin-stay": "Wie würdest du deine Zufriedenheit mit deinem Aufenthalt bisher bewerten?",
+        "questionpost-stay": "Wie war deine Erfahrung mit uns?"
     },
     "inbox": {
         "title": "Nachrichten"
     }
-}
+};

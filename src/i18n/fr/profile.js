@@ -7,19 +7,19 @@ export default {
         "subtitle_inactive": "Créez votre prochain séjour"
     },
     "personal_info": {
-        "title": "Mes données",
+        "title": "Informations personnelles",
         "description": "Configurez vos informations personnelles"
     },
-    "language" : {
-        "title": "Langue",
+    "language": {
+        "title": "Préférence de langue",
         "description": "Sélectionnez votre langue par défaut"
     },
     "logout": "Se déconnecter",
-    "share_stay": "Partager le Séjour",
+    "share_stay": "Partager le séjour",
     "page_personal_info": {
         "title": "Informations personnelles",
         "change_photo": "Changer de photo",
-        "change_password": "Changer de mot de passe",
+        "change_password": "Changer le mot de passe",
         "btn_save": "Enregistrer",
         "form": {
             "name": {
@@ -51,29 +51,30 @@ export default {
     "rewards": {
         "title": "Invitez un ami",
         "description": "Partagez des avantages exclusifs",
-        "button-recommend": "Recommandez un ami maintenant",
+        "button-recommend": "Invitez un ami maintenant",
         "referrals": {
-            "title": "Recommandez un ami !",
+            "title": "Invitez un ami !",
             "discount": "{amount} de réduction",
-            "description": "Envoyez votre code de parrainage. Il obtiendra {amount} de réduction grâce à votre code."
+            "description": "Envoyez-leur votre code de parrainage. Ils bénéficieront de {amount} de réduction grâce à votre code."
         },
         "referent": {
-            "title": "Recommandez un ami et gagnez tous les deux !",
+            "title": "Invitez un ami et profitez-en tous les deux !",
             "titleReferred": "{amount} de réduction pour le parrainé",
-            "descerptionReferred": "Envoyez votre code de parrainage. Il obtiendra {amount} de réduction grâce à votre code.",
+            "descerptionReferred": "Envoyez-leur votre code de parrainage. Ils bénéficieront de {amount} de réduction grâce à votre code.",
             "titleReferent": "Recevez {amount} de réduction",
-            "descerptionReferent": "Une fois le code parrain validé et utilisé, vous obtiendrez {amount} de réduction."
+            "descerptionReferent": "Une fois le code du parrainé validé et utilisé, vous recevrez {amount} de réduction."
         },
         "titleReferentProfile": "Gagnez de l'argent",
-        "descriptionReferentProfile": "Recommandez un ami pour obtenir des avantages"
+        "descriptionReferentProfile": "Parrainez un ami pour obtenir des avantages"
     },
     "next-reserve": {
         "reserve-button": "Réserver",
-        "continue-title": "Voulez-vous continuer?",
-        "continue-message": "Vous serez redirigé vers le site web de l'hôtel pour poursuivre votre réservation.",
+        "continue-title": "Voulez-vous continuer ?",
+        "continue-message": "Vous serez redirigé vers le site Web de l'hôtel pour poursuivre votre réservation.",
         "continue-yes": "Oui, continuer",
         "continue-cancel": "Annuler"
+    },
+    "inbox": {
+        "title": "Boîte de réception"
     }
-
-
 };

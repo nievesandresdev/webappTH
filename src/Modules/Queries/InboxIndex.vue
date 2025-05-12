@@ -1,78 +1,85 @@
 <template>
-    <InboxHead />
+    <SectionBar :title="$t('profile.inbox.title')" :fixed="false"/>
     <!-- pre-stay -->
     <PageTransitionGlobal module="query">
-        <div v-if="Boolean(requestTexts)" class="mt-6 md:mt-20 px-4 pb-[132px] md:w-[650px] md:mx-auto">
-            <TextQuery 
-                v-if="period == 'pre-stay' && currentQuery && !currentQuery?.answered" 
-                :settings="settings"
-                :data="currentQuery"
-                @reloadList="reloadList"
-            />
-            <!-- in-stay & post-stay -->
-            <div v-if="(period == 'in-stay' || period == 'post-stay') && currentQuery &&  !currentQuery?.answered" >
-                <IconsQuery 
+        <div class="flex flex-col gap-6 px-4 pt-6 pb-[114px]">
+            <template v-for="(item,index) in combinedList" :key="index">
+                <!-- {{ item._type }} - {{ item._date }} -->
+                <TextQuery 
+                    v-if="period == 'pre-stay' && item._type == 'query' && !item?.answered" 
                     :settings="settings"
-                    :data="currentQuery"
+                    :data="item"
                     @reloadList="reloadList"
                 />
-            </div>
-
-            <LinksReview v-if="showRequestReview" />
-            <div 
-                v-else-if="currentQuery && currentQuery?.answered"
-                class="hidden md:block"
-            >
-                <img class="w-[64px] h-[64px] mx-auto" src="/assets/icons/WA.circle-check.BLACK.svg" alt="">
-                <p class="mt-8 roboto text-[24px] font-medium leading-[116%] text-center">{{ $t('query.form.poststay-bad-thanks-title') }} </p>
-                <p class="mt-4 roboto text-base font-medium leading-[125%] text-center">{{ $t('query.form.poststay-bad-thanks-subtitle') }}</p>
-            </div>
-            
-            <div 
-                v-for="res in responses" :key="res?.id"
-                class="md:hidden"
-            >
+                <IconsQuery 
+                    v-else-if="period !== 'pre-stay' && item._type == 'query' && !item?.answered"
+                    :settings="settings"
+                    :data="item"
+                    @reloadList="reloadList"
+                />
+                <div v-else-if="showRequestReview && item._type == 'request'" >
+                    <div class="flex items-center mb-2 gap-1">
+                        <IconCustomColor
+                            class="transform rotate-180"
+                            name="arrow-back"
+                            color="#777777"
+                        />
+                        <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">{{ $t('query.form.received-text') }} </span>
+                        <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">
+                            {{ formatAnyDate(item?._date, 'dd/MM/yyyy - HH:mm')+'hs' }}
+                        </span>
+                    </div>
+                    <LinksReview />
+                </div>
                 <ResponseCard 
-                    :response="res.comment ? res.comment[res.response_lang] : null"
-                    :qualification="res.qualification"
-                    :period="res.period"
+                    v-else-if="item._type == 'response' && EditPeriod !== item.period"
+                    :response="item.comment ? item.comment[item.response_lang] : null"
+                    :qualification="item.qualification"
+                    :period="item.period"
                     :currentPeriod="period"
-                    :id="res.id"
-                    v-if="EditPeriod !== res.period"
-                /> 
-                <!-- componentes para editar -->
-                <template v-else>
+                    :responded_at="item.responded_at"
+                    :id="item.id"
+                />
+                <template v-else-if="item._type == 'response' && EditPeriod == item.period">
                     <TextQuery 
                         v-if="EditPeriod == 'pre-stay'" 
                         @reloadList="reloadList"
                         :settings="settings"
-                        :data="res"
+                        :data="item"
                     />
-                    <div class="mb-2 sp:mb-4" v-else>
-                        <IconsQuery 
-                            :settings="settings"
-                            :data="res"
-                            @reloadList="reloadList"
-                        />
-                    </div>      
+                    <IconsQuery 
+                        v-else
+                        :settings="settings"
+                        :data="item"
+                        @reloadList="reloadList"
+                    />    
                 </template>
-            </div>
+                <ContactEmailCard 
+                    v-else-if="item._type == 'emails'"
+                    :data="item"
+                />
+            </template>
         </div>
     </PageTransitionGlobal>
 </template>
 <script setup>
 import { ref, onMounted, provide, computed } from 'vue'
+import { DateTime } from 'luxon'
 import utils from '@/utils/utils.js';
-import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+import SectionBar from '@/components/SectionBar.vue';
 import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
 import ResponseCard from './Components/ResponseCardRed.vue';
 import LinksReview from './Components/LinksReviewRed.vue'
+import ContactEmailCard from './Components/ContactEmailCard.vue';
+import IconCustomColor from '@/components/IconCustomColor.vue';
+import { formatAnyDate } from '@/utils/dateHelpers';
 //load
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 const { startLoading, stopLoading, loading } = useLoadingSections();
+import {$currentPeriod} from '@/utils/helpers';
 //
 //store
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
@@ -86,6 +93,7 @@ const guestStore = useGuestStore();
 import { useRequestSettingStore } from '@/stores/modules/requestSettings';
 const requestSettingsStore = useRequestSettingStore();
 
+
  
 const settings = ref([]);
 const responses = ref([]);
@@ -93,6 +101,8 @@ const period = ref(null);
 const currentQuery = ref(null);
 const requestTexts = ref(null);
 const requestTo = ref(null);
+const contactEmails = ref([]);
+const combinedList = ref([]);
 //
 const EditId = ref(null);
 const EditPeriod = ref(null);
@@ -104,15 +114,19 @@ startLoading(SECTIONS.QUERY.GLOBAL);
 onMounted(async() => {
     // queryStore.$setPendingQuery(false);
     await getQuerySettings();
-    await getCurrentPeriod();
+    period.value = $currentPeriod();
+    // console.log('test period',period.value)
     if(period.value){
         await getCurrentQuery();
     }
     await getResponses();
+    await getContactEmailsByStayId();
     stopLoading(SECTIONS.QUERY.GLOBAL);
     requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
     requestTo.value = requestTexts.value.request_to;
+    getCombinedList();
+    
 })
 
 async function getQuerySettings(){
@@ -120,15 +134,15 @@ async function getQuerySettings(){
     // console.log('test settings.value',settings.value)
 }
 
-async function getCurrentPeriod(){
-    // if(!stayStore?.stayData?.id){
-    //     await guestStore.loadLocalGuest();
-    // }
-    let params = {
-        stayId : stayStore?.stayData?.id
-    }
-    period.value = await queryStore.$getCurrentPeriod(params);
-}
+// async function getCurrentPeriod(){
+//     // if(!stayStore?.stayData?.id){
+//     //     await guestStore.loadLocalGuest();
+//     // }
+//     let params = {
+//         stayId : stayStore?.stayData?.id
+//     }
+//     period.value = await queryStore.$getCurrentPeriod(params);
+// }
 
 async function getCurrentQuery(){
     let params = {
@@ -145,14 +159,29 @@ async function getResponses(){
         stayId :localStorage.getItem('stayId'),
         guestId :localStorage.getItem('guestId'),
     }
-    responses.value = await queryStore.$getRecentlySortedResponses(params);
-    // console.log('test responses',responses.value)
+    let response = await queryStore.$getRecentlySortedResponses(params);
+    if(response){
+        responses.value = response;
+    }
+    
 }
 
-function reloadList(){
-    console.log('test reloadList')
-    getCurrentQuery();
-    getResponses();
+async function getContactEmailsByStayId(){
+    let params = {
+        stayId :localStorage.getItem('stayId'),
+        guestId :localStorage.getItem('guestId'),
+    }
+    const { ok, data } = await guestStore.$getContactEmailsByStayId(params);
+    if(ok){
+        contactEmails.value = data;
+    }
+    // console.log('test contactEmails',contactEmails.value)
+}
+async function reloadList(){
+    // console.log('test reloadList')
+    await getCurrentQuery();
+    await getResponses();
+    getCombinedList();
 }
 
 const showRequestReview = computed(()=>{
@@ -170,6 +199,59 @@ const showRequestReview = computed(()=>{
     
     return false
 })
+
+const getCombinedList = () => {
+  const items = []
+
+  // 1. La consulta actual (suponiendo que el campo de fecha es answeredAt)
+  if (currentQuery.value && !currentQuery.value.answered) {
+    items.push({
+      ...currentQuery.value,
+      _type: 'query',
+      _date: currentQuery.value.created_at
+    })
+  }
+
+//   console.log('test responses.value',responses.value)
+  // 2. Todas las respuestas (suponiendo que el campo de fecha es createdAt)
+  if(responses.value?.length > 0){
+    items.push(...responses.value.map(r => ({
+        ...r,
+        _type: 'response',
+        _date: r.responded_at
+    })))
+  }
+  
+  // 3. La solicitud al usuario (suponiendo que el campo de fecha es requestDate)
+  if (responses.value.length > 0) {
+    items.push({
+      ...requestTexts.value,
+      _type: 'request',
+      _date: responses.value.find(r => r.period == period.value)?.responded_at
+    })
+  }
+
+  if(contactEmails.value.length > 0){
+    items.push(...contactEmails.value.map(c => ({
+      ...c,
+      _type: 'emails',
+      _date: c.created_at
+    })))
+  }
+  // ordenar de más antiguo a más reciente
+  combinedList.value = items.sort((a, b) => {
+    // console.log('--------------------------------')
+    // console.log('test a',a._date)
+    // console.log('test b',b._date)
+    const fa = formatAnyDate(a._date, 'dd/MM/yyyy - HH:mm')
+    const fb = formatAnyDate(b._date, 'dd/MM/yyyy - HH:mm')
+    const formatFa = DateTime.fromFormat(fa, 'dd/MM/yyyy - HH:mm')
+    const formatFb = DateTime.fromFormat(fb, 'dd/MM/yyyy - HH:mm')
+    return formatFa - formatFb
+})
+
+//   console.log('test combinedList',combinedList.value)
+}
 
 provide('EditId',EditId);
 provide('EditPeriod',EditPeriod);

@@ -191,7 +191,7 @@ export const useAuthStore = defineStore('auth', () => {
         }else{
             if(optional) return
             
-            router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
+            router.push({ name:'Home', params: { hotelSlug: localStorage.getItem('subdomain')} })
         }
     }
 

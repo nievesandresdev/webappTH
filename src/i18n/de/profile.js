@@ -3,19 +3,19 @@ export default {
     "greeting": "Hallo, {name}!",
     "my_stays": {
         "title": "Meine Aufenthalte",
-        "subtitle_active": "Verwalten Sie Ihre Aufenthalte",
-        "subtitle_inactive": "Erstellen Sie Ihren nächsten Aufenthalt"
+        "subtitle_active": "Verwalte deine Aufenthalte",
+        "subtitle_inactive": "Erstelle deinen nächsten Aufenthalt"
     },
     "personal_info": {
-        "title": "Meine Daten",
-        "description": "Richten Sie Ihre persönlichen Informationen ein"
+        "title": "Persönliche Informationen",
+        "description": "Konfiguriere deine persönlichen Informationen"
     },
-    "language" : {
-        "title": "Sprache",
-        "description": "Wählen Sie Ihre Standardsprache aus"
+    "language": {
+        "title": "Sprachpräferenz",
+        "description": "Wähle deine Standardsprache"
     },
     "logout": "Abmelden",
-    "share_stay": "Aufenthalt Teilen",
+    "share_stay": "Aufenthalt teilen",
     "page_personal_info": {
         "title": "Persönliche Informationen",
         "change_photo": "Foto ändern",
@@ -23,58 +23,58 @@ export default {
         "btn_save": "Speichern",
         "form": {
             "name": {
-                "label": "Vorname",
-                "placeholder": "Geben Sie Ihren Vornamen ein"
+                "label": "Name",
+                "placeholder": "Gib deinen Namen ein"
             },
             "last_name": {
                 "label": "Nachname",
-                "placeholder": "Geben Sie Ihren Nachnamen ein"
+                "placeholder": "Gib deinen Nachnamen ein"
             },
             "email": {
                 "label": "E-Mail",
-                "placeholder": "Geben Sie Ihre E-Mail ein"
+                "placeholder": "Gib deine E-Mail-Adresse ein"
             },
             "number_phone": {
                 "label": "Telefonnummer",
-                "placeholder": "Geben Sie Ihre Telefonnummer ein"
+                "placeholder": "Gib deine Telefonnummer ein"
             },
             "password": {
                 "label": "Passwort",
-                "placeholder": "Geben Sie Ihr Passwort ein"
+                "placeholder": "Gib dein Passwort ein"
             }
         }
     },
     "book_next_stay": {
         "title": "Buche deinen nächsten Aufenthalt",
-        "description": "Plane deinen nächsten Kurzurlaub"
+        "description": "Plane deinen nächsten Ausflug"
     },
     "rewards": {
-        "title": "Einen Freund einladen",
-        "description": "Teilen Sie exklusive Vorteile",
-        "button-recommend": "Empfehlen Sie jetzt einen Freund",
+        "title": "Lade einen Freund ein",
+        "description": "Teile exklusive Vorteile",
+        "button-recommend": "Empfehle jetzt einen Freund",
         "referrals": {
-            "title": "Empfehlen Sie einen Freund!",
+            "title": "Empfehle einen Freund!",
             "discount": "{amount} Rabatt",
-            "description": "Senden Sie Ihren Empfehlungscode. Er erhält {amount} Rabatt dank Ihres Codes."
+            "description": "Sende ihm deinen Empfehlungs­code. Er erhält {amount} Rabatt dank deines Codes."
         },
         "referent": {
-            "title": "Empfehlen Sie einen Freund und gewinnen Sie beide!",
+            "title": "Empfehle einen Freund und ihr profitiert beide!",
             "titleReferred": "{amount} Rabatt für den Geworbenen",
-            "descerptionReferred": "Senden Sie Ihren Empfehlungscode. Er erhält {amount} Rabatt dank Ihres Codes.",
-            "titleReferent": "Erhalten Sie {amount} Rabatt",
-            "descerptionReferent": "Sobald der Code validiert und verwendet wurde, erhalten Sie {amount} Rabatt."
+            "descerptionReferred": "Sende ihm deinen Empfehlungs­code. Er erhält {amount} Rabatt dank deines Codes.",
+            "titleReferent": "Erhalte {amount} Rabatt",
+            "descerptionReferent": "Sobald der Code des Geworbenen validiert und verwendet wurde, erhältst du {amount} Rabatt."
         },
         "titleReferentProfile": "Geld verdienen",
-        "descriptionReferentProfile": "Empfehlen Sie einen Freund, um Vorteile zu erhalten"
+        "descriptionReferentProfile": "Werbe einen Freund, um Vorteile zu erhalten"
     },
     "next-reserve": {
-        "reserve-button": "Reservieren",
-        "continue-title": "Möchten Sie fortfahren?",
-        "continue-message": "Sie werden zur Hotelwebseite weitergeleitet, um Ihren Buchungsprozess fortzusetzen.",
+        "reserve-button": "Buchen",
+        "continue-title": "Möchtest du fortfahren?",
+        "continue-message": "Du wirst zur Website des Hotels weitergeleitet, um deinen Buchungsprozess fortzusetzen.",
         "continue-yes": "Ja, fortfahren",
         "continue-cancel": "Abbrechen"
+    },
+    "inbox": {
+        "title": "Posteingang"
     }
-
-
-
 };

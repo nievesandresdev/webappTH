@@ -2,20 +2,20 @@ export default {
     "account": "Minha conta",
     "greeting": "Olá, {name}!",
     "my_stays": {
-        "title": "Minhas estadias",
+        "title": "Meas estadias",
         "subtitle_active": "Gerencie suas estadias",
         "subtitle_inactive": "Crie sua próxima estadia"
     },
     "personal_info": {
-        "title": "Os meus dados",
+        "title": "Informações pessoais",
         "description": "Configure suas informações pessoais"
     },
-    "language" : {
+    "language": {
         "title": "Preferência de idioma",
         "description": "Selecione seu idioma padrão"
     },
     "logout": "Sair",
-    "share_stay": "Compartilhar Estadia",
+    "share_stay": "Compartilhar estadia",
     "page_personal_info": {
         "title": "Informações pessoais",
         "change_photo": "Alterar foto",
@@ -31,11 +31,11 @@ export default {
                 "placeholder": "Digite seu sobrenome"
             },
             "email": {
-                "label": "Email",
-                "placeholder": "Digite seu email"
+                "label": "E-mail",
+                "placeholder": "Digite seu e-mail"
             },
             "number_phone": {
-                "label": "Número de telefone",
+                "label": "Telefone",
                 "placeholder": "Digite seu número de telefone"
             },
             "password": {
@@ -46,33 +46,35 @@ export default {
     },
     "book_next_stay": {
         "title": "Reserve sua próxima estadia",
-        "description": "Planeje sua próxima escapada"
+        "description": "Planeje sua próxima viagem"
     },
     "rewards": {
         "title": "Convide um amigo",
         "description": "Compartilhe benefícios exclusivos",
         "button-recommend": "Recomende um amigo agora",
-         "referrals": {
+        "referrals": {
             "title": "Recomende um amigo!",
             "discount": "{amount} de desconto",
-            "description": "Envie seu código de referência. Ele receberá {amount} de desconto graças ao seu código."
+            "description": "Envie a ele seu código de indicação. Ele receberá {amount} de desconto graças ao seu código."
         },
         "referent": {
-            "title": "Indique um amigo e ganhem ambos!",
+            "title": "Convide um amigo e aproveitem juntos!",
             "titleReferred": "{amount} de desconto para o indicado",
-            "descerptionReferred": "Envie seu código de referência. Ele receberá {amount} de desconto graças ao seu código.",
+            "descerptionReferred": "Envie a ele seu código de indicação. Ele receberá {amount} de desconto graças ao seu código.",
             "titleReferent": "Receba {amount} de desconto",
-            "descerptionReferent": "Após validar e usar o código do indicado, você receberá {amount} de desconto."
+            "descerptionReferent": "Uma vez que o código do indicado seja validado e usado, você receberá {amount} de desconto."
         },
         "titleReferentProfile": "Ganhe dinheiro",
         "descriptionReferentProfile": "Indique um amigo para obter benefícios"
     },
     "next-reserve": {
         "reserve-button": "Reservar",
-        "continue-title": "Deseja continuar?",
-        "continue-message": "Você será redirecionado para o site do hotel para continuar com o seu processo de reserva.",
+        "continue-title": "Você quer continuar?",
+        "continue-message": "Você será redirecionado ao site do hotel para continuar seu processo de reserva.",
         "continue-yes": "Sim, continuar",
         "continue-cancel": "Cancelar"
+    },
+    "inbox": {
+        "title": "Caixa de entrada"
     }
-
 };

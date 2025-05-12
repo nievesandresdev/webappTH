@@ -26,7 +26,9 @@ export default{
         "btn-verygood-poststay": "Muy buena",
         "poststay-bad-thanks-title": "Respuesta enviada ",
         "poststay-bad-thanks-subtitle": "Muchas gracias por tu tiempo",
-        "continueIn" : "Continuar en"
+        "continueIn" : "Continuar en",
+        "received-text" : "Recibido",
+        "sent-text" : "Enviado"
     },
     "settings":{
         "questionpre-stay": "¿Hay algo que podamos hacer para tu llegada al {lodging}?",

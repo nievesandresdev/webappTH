@@ -77,4 +77,7 @@ export default {
         "continue-yes": "Sí, continuar",
         "continue-cancel": "Cancelar",
     },
+    "inbox": {
+        "title": "Buzón de mensajes",
+    }
 };
