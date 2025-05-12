@@ -2,7 +2,7 @@ import axios from 'axios'
 import { i18n } from '@/i18n'
 import { usePreloaderStore } from '@/stores/modules/preloader';
 import { useLocaleStore } from '@/stores/modules/locale';
-
+import { generateHash } from '@/utils/hash';
 
 
 // const locale = localStorage.getItem('locale') || 'es'
@@ -53,12 +53,19 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
     // const { token } = localStorage
     const subdomain = localStorage.getItem('subdomain') || null;
     const chainSubdomain = localStorage.getItem('chainSubdomain') || null;
+
+    const HASH_HOTEL = await generateHash(subdomain ?? '');
+    const HASH_USER = await generateHash(chainSubdomain ?? '');
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
       'subdomainHotel': subdomain,
       'chainSubdomain': chainSubdomain,
+      'Hash-Hotel': HASH_HOTEL,
+      'Hash-User': HASH_USER,
+      'Origin-Component': 'HUESPED',
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
