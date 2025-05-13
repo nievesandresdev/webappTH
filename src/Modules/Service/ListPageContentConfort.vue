@@ -1,5 +1,5 @@
 <template>
-    <PageTransitionGlobal module="service">
+    <!-- <PageTransitionGlobal module="service"> -->
         <div
             id="list-confort"
             class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
@@ -30,7 +30,7 @@
                 </template>
             </div>
         </div>
-    </PageTransitionGlobal>
+    <!-- </PageTransitionGlobal> -->
 </template>
 
 <script setup>
