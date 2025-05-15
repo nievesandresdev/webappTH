@@ -14,12 +14,18 @@
             <ImageSlider :images="hotelInfo?.images?.map(item=> hotelStore.$loadImage(item)) ?? []" />
 
             <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
-              <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333] mb-[4px] sp:mb-[7px]">
-                {{ hotelData?.name }}
+              <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333]">
+                {{ hotelData?.name }} {{ hotelInfo?.category }}
               </h1>
 
 
-              <StarRating v-if="hotelInfo?.category !== null" :category="hotelInfo?.category" />
+              <div
+                class="mt-[4px] sp:mt-[7px]"
+                v-if="hotelInfo?.category !== null && hotelInfo?.category !== '5'"
+              >
+                <StarRating :category="hotelInfo?.category" />
+              </div>
+              
 
               <p
                 :class="isExpanded ? 'text-[10px] sp:text-sm font-normal lato text-[#333] mt-2 sp:mt-3' : 'text-[10px] sp:text-sm font-normal lato text-[#333] truncate-description mt-2 sp:mt-3'"
