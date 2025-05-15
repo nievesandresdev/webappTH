@@ -15,13 +15,13 @@
 
             <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
               <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333]">
-                {{ hotelData?.name }} {{ hotelInfo?.category }}
+                {{ hotelData?.name }}
               </h1>
 
 
               <div
                 class="mt-[4px] sp:mt-[7px]"
-                v-if="hotelInfo?.category !== null && hotelInfo?.category !== '5'"
+                v-if="hotelInfo?.category !== null && hotelInfo?.category !== '8'"
               >
                 <StarRating :category="hotelInfo?.category" />
               </div>

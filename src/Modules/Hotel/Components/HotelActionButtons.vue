@@ -19,7 +19,7 @@
   
       <!--  Normas -->
       <RoundedButton
-        v-if="hotelData.policies.length > 0"
+        v-if="hotelData?.policies?.length > 0"
         iconUrl="/assets/icons/WA.normas.svg"
         :label="$t('hotel.buttons_home.standards')"
         :showLabel="true"
