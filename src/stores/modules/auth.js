@@ -32,6 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
     const historyStore = useHistoryStore()
     // STATE
     const sessionActive = ref(false)
+    const token = ref(localStorage.getItem('token'));
 
     // ACTIONS
     async function $registerOrLoginSN (params) {
@@ -51,9 +52,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $sendPasswordAndLogin (params) {
+
         const response = await confirmPasswordApi(params)
         if(response.ok && response.data){
-            guestStore.setLocalGuest(response.data)
+            // console.log('test response',response.data.token);
+            localStorage.setItem('token', response.data?.token);
+            guestStore.setLocalGuest(response.data?.guest);
             return response.data;
         }
         return null
@@ -88,12 +92,13 @@ export const useAuthStore = defineStore('auth', () => {
         await stayStore.deleteLocalStayData()
         await guestStore.deleteLocalGuest()
         localStorage.removeItem('startedWebappBy')
+        localStorage.removeItem('token')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         historyStore.$clearHistory();
         if(chainType === 'INDEPENDENT'){
             navigateTo('Home')
-        }else{
+        } else {
             await hotelStore.$deleteLocalHotel();
             router.push({ name:'ChainLanding' })
         }

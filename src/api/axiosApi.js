@@ -21,6 +21,13 @@ axios.interceptors.request.use(config => {
     const preloader = getPreloaderStore();
     preloader.requestStarted();
   }
+
+  const token = localStorage.getItem('token');
+  // console.log('test token',token)
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+
   return config;
 }, error => {
   return Promise.reject(error);
