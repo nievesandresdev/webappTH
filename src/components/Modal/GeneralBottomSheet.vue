@@ -110,7 +110,7 @@ const headerShadow = ref(false);
 
 const handleScroll = () => {
   if (scrollableContainer.value) {
-    console.log(scrollableContainer.value.scrollTop);
+    // console.log(scrollableContainer.value.scrollTop);
     headerShadow.value = scrollableContainer.value.scrollTop > 0;
   }
 };
