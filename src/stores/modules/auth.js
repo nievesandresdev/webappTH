@@ -12,7 +12,8 @@ import {
     updateGuestByIdApi,
     confirmPasswordApi,
     sendResetLinkEmailApi,
-    resetPasswordApi
+    resetPasswordApi,
+    createTokenSessionByGoogleApi
 } from '@/api/services/auth.services'
 
 import { useGuestStore } from '@/stores/modules/guest';
@@ -47,8 +48,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $updateGuestById (params) {
-        const response = await updateGuestByIdApi(params)
-        return response.ok ? response.data : null;
+        const response = await updateGuestByIdApi(params);
+        if (response.ok && response.data){
+            localStorage.setItem('token', response.data?.token);
+            return response.data.guest;
+        }
+        return null;
     }
 
     async function $sendPasswordAndLogin (params) {
@@ -126,6 +131,7 @@ export const useAuthStore = defineStore('auth', () => {
                 await stayStore.deleteLocalStayData()
             }
         }
+
         //redireccionar segun corresponda
         await $redirectAfterLogin()
     }
@@ -257,6 +263,24 @@ export const useAuthStore = defineStore('auth', () => {
          
     }
 
+    async function $createTokenSessionByGoogle(googleId) {
+        let body = {
+            googleId,
+        }
+        const response = await createTokenSessionByGoogleApi(body);
+        if (!response?.ok) return;
+        return response.data
+    }
+
+    async function $loginByGoogle(guestId, googleId) {  
+        const {token, guest } = await $createTokenSessionByGoogle(googleId);
+        localStorage.setItem('token', token);
+        let localGuest = guestStore.getLocalGuest();
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            guestStore.setLocalGuest(guest);
+        }
+    }
+
     return {
         $registerOrLoginSN,
         $updateGuestById,
@@ -269,6 +293,7 @@ export const useAuthStore = defineStore('auth', () => {
         sessionActive,
         $goStartedWebappBy,
         $logIn,
+        $loginByGoogle,
         $redirectAfterLogin,
         $goLoginBySocialNetwork,
         $validateStayGuestRelation
