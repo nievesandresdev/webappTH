@@ -18,4 +18,5 @@ export const getRewardsByHotel = (id) => apiHttp('GET', `${hotelPath}/getRewards
 export const getAllWifiHotel = () => apiHttp('GET', `${hotelPath}/${wifiNetworksPath}/getAllByHotel`,[]);
 //getAllByHotelAndVisible
 export const getAllByHotelAndVisible = () => apiHttp('GET', `${hotelPath}/${wifiNetworksPath}/getAllByHotelAndVisible`);
-
+//buttons
+export const getActiveHotelButtons = () => apiHttp('GET', `${hotelPath}/getActiveHotelButtons`);

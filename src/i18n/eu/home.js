@@ -56,6 +56,15 @@ export default {
   "policies":{
     "title":"Egunerak eta erregelak",
     "penalization":"Penalizazioa"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Deitu",
+    "wifi": "WiFi",
+    "rules": "Arauak",
+    "reserve": "Erreserbatu!",
+    "refered": "Gomendatu"
   }
+
   
 };

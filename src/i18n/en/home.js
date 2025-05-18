@@ -60,5 +60,14 @@ export default {
     "policies":{
       "title":"Policies and Rules",
       "penalization":"Penalization"
+    },
+    "buttons": {
+      "checkin": "Check-in",
+      "call": "Call",
+      "wifi": "WiFi",
+      "rules": "Rules",
+      "reserve": "Reserve!",
+      "refered": "Refer"
     }
+
   };

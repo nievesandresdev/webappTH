@@ -30,7 +30,7 @@
             />
         </div>
 
-        <div class="px-3 sp:px-4 mt-3 sp:mt-6">
+        <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
             <ButtonsSection />
         </div>
 

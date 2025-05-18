@@ -11,7 +11,8 @@ import {
     getMainDataApi,
     getDataLegalpi,
     getAllWifiHotel,
-    getAllByHotelAndVisible
+    getAllByHotelAndVisible,
+    getActiveHotelButtons
 } from '@/api/services/hotel.services'
 
 
@@ -171,6 +172,15 @@ export const useHotelStore = defineStore('hotel', () => {
         const response = await getAllByHotelAndVisible()
         return response
     }
+
+    async function $getActiveHotelButtons () {
+        const response = await getActiveHotelButtons()
+        if(response.ok) {
+            return response.data
+        }
+        return null
+    }
+
     return {
         hotelData:hotelDataComputed,
         chatHours,
@@ -192,7 +202,8 @@ export const useHotelStore = defineStore('hotel', () => {
         hotelDataStorage,
         $getDataLegal,
         $getAllWifiHotel,
-        $getAllWifiByHotelAndVisible
+        $getAllWifiByHotelAndVisible,
+        $getActiveHotelButtons
     }
 
 
