@@ -7,7 +7,7 @@ export default {
     "wifi": "WiFi",
     "call": "Trucar",
     "standards": "Normes",
-    "share_stay": "Compartir estada"
+    "share_stay": "Compartir"
   },
   "utils": {
     "see_more": "Veure més",

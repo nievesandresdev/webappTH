@@ -7,7 +7,7 @@ export default {
     "wifi": "WiFi",
     "call": "Deitu",
     "standards": "Araudiak",
-    "share_stay": "Egonaldia partekatu"
+    "share_stay": "Egin"
   },
   "utils": {
     "see_more": "Ikusi gehiago",

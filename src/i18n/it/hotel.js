@@ -7,7 +7,7 @@ export default {
         "wifi": "WiFi",
         "call": "Chiamare",
         "standards": "Norme",
-        "share_stay": "Condividi Soggiorno"
+        "share_stay": "Condividi"
     },
     "utils": {
         "see_more": "Vedi di più",

@@ -7,7 +7,7 @@ export default {
     "wifi": "WiFi",
     "call": "Bellen",
     "standards": "Regels",
-    "share_stay": "Verblijf delen"
+    "share_stay": "Delen"
   },
   "utils": {
     "see_more": "Meer weergeven",
