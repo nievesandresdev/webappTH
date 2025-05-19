@@ -49,7 +49,7 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false, RESET_CACHE = false) => {
   let api_url_backend = URL_BASE_BACKEND_GENERAL;
   // console.log('test SLUG_API',SLUG_API)
   SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
@@ -73,6 +73,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Hash-Hotel': HASH_HOTEL,
       'Hash-User': HASH_USER,
       'Origin-Component': 'HUESPED',
+      'reset-cache': RESET_CACHE ? 1 : 0,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
