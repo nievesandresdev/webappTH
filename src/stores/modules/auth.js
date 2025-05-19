@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
         const response = await updateGuestByIdApi(params);
         if (response.ok && response.data){
             localStorage.setItem('token', response.data?.token);
-            return response.data.guest;
+            return response.data?.guest;
         }
         return null;
     }
