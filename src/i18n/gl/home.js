@@ -56,5 +56,15 @@ export default {
   "policies":{
     "title":"Políticas e normas",
     "penalization":"Penalización"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Chamar",
+    "wifi": "WiFi",
+    "rules": "Normas",
+    "reserve": "Reserva!",
+    "refered": "Referir"
   }
+
+
 };

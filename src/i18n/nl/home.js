@@ -56,5 +56,14 @@ export default {
   "policies":{
     "title":"Politieke en regels",
     "penalization":"Boete"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Bellen",
+    "wifi": "WiFi",
+    "rules": "Regels",
+    "reserve": "Reserveren!",
+    "refered": "Doorverwijzen"
   }
+
 };

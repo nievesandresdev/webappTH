@@ -56,5 +56,14 @@ export default {
     "policies":{
       "title":"Politiques et règles",
       "penalization":"Penalité"
+    },
+    "buttons": {
+      "checkin": "Check-in",
+      "call": "Appeler",
+      "wifi": "WiFi",
+      "rules": "Règles",
+      "reserve": "Réserver !",
+      "refered": "Parrainer"
     }
+
   };

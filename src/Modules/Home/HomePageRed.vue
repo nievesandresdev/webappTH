@@ -30,6 +30,10 @@
             />
         </div>
 
+        <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
+            <ButtonsSection />
+        </div>
+
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
@@ -154,6 +158,7 @@ import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
+import ButtonsSection from './Components/ButtonsSection.vue'
 import WACardBanner from '@/components/WACardBanner.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
