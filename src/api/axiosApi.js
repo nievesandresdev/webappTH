@@ -73,7 +73,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Hash-Hotel': HASH_HOTEL,
       'Hash-User': HASH_USER,
       'Origin-Component': 'HUESPED',
-      'reset-cache': RESET_CACHE ? 1 : 0,
+      'Reset-Cache': RESET_CACHE ? 1 : 0,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
