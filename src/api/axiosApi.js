@@ -64,6 +64,13 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
     const HASH_HOTEL = await generateHash(subdomain ?? '');
     const HASH_USER = await generateHash(chainSubdomain ?? '');
 
+    const newNumbersRandom = Math.floor(Math.random() * 10000000000000000);
+    let numbersRandom = localStorage.getItem('reset-cache') ?? null;
+    if (RESET_CACHE || !numbersRandom) {
+      numbersRandom = newNumbersRandom;
+      localStorage.setItem('reset-cache', numbersRandom);
+    }
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -73,7 +80,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Hash-Hotel': HASH_HOTEL,
       'Hash-User': HASH_USER,
       'Origin-Component': 'HUESPED',
-      'Reset-Cache': RESET_CACHE ? 1 : 0,
+      'Reset-Cache': numbersRandom,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }
