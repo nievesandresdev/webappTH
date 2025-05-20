@@ -10,3 +10,4 @@ export const confirmPasswordApi = (params) => apiHttp('POST', `${guestPath}/${au
 export const sendResetLinkEmailApi = (params) => apiHttp('POST', `${guestPath}/${authPath}/sendResetLinkEmail`, params, {}, 'API_GENERAL', false, true)
 export const resetPasswordApi = (params) => apiHttp('POST', `${guestPath}/${authPath}/resetPassword`, params, {}, 'API_GENERAL', false, true)
 export const createTokenSessionByGoogleApi = (params) => apiHttp('POST', `${guestPath}/${authPath}/google/login`, params, {}, 'API_GENERAL', false, true)
+export const autenticateWithGuestDemoApi = () => apiHttp('POST', `${guestPath}/${authPath}/guestDefault`, {}, {}, 'API_GENERAL')

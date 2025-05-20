@@ -81,6 +81,11 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
+
+    if (to.query.mockup) {
+        await authStore.$autenticateWithGuestDemo();
+    }
+
     //cargar data stay
     if(stayId){
         await stayStore.findByIdInSetLocalStay(stayId)
