@@ -18,7 +18,7 @@ export const getValueResetCache = () => {
 export const getPropertyResetCacheInQueryUrl = () => {
     try {
         const url = window.location.href;
-        console.log('test url',url)
+        // console.log('test url',url)
         const urlObj = new URL(url);
         const valueResetCache = urlObj.searchParams.get('rc') ?? null;
         
