@@ -81,6 +81,11 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
+
+    if (to.query.mockup) {
+        await authStore.$autenticateWithGuestDemo();
+    }
+
     //cargar data stay
     if(stayId){
         await stayStore.findByIdInSetLocalStay(stayId)
@@ -92,7 +97,7 @@ export default async function handleWebAppData({ to, from, next }) {
     if(guestId){
         if (googleId) {
             await authStore.$loginByGoogle(guestId, googleId);
-            // return next({ name: 'Home', params :{ hotelSlug: chainStore.chainData?.independentSubdomain}, query: to.query }); // quitar query googleId
+            return next({ name: 'Home', params :{ hotelSlug: chainStore.chainData?.independentSubdomain}, query: to.query }); // quitar query googleId
         } else {
             let localGuest = guestStore.getLocalGuest();
             if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){

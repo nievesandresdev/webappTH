@@ -3,6 +3,7 @@ import { i18n } from '@/i18n'
 import { usePreloaderStore } from '@/stores/modules/preloader';
 import { useLocaleStore } from '@/stores/modules/locale';
 import { generateHash } from '@/utils/hash';
+import { getPropertyResetCacheInQueryUrl } from '@/utils/treatmentCache';
 
 
 // const locale = localStorage.getItem('locale') || 'es'
@@ -49,7 +50,7 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false, RESET_CACHE = false) => {
   let api_url_backend = URL_BASE_BACKEND_GENERAL;
   // console.log('test SLUG_API',SLUG_API)
   SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
@@ -64,6 +65,17 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
     const HASH_HOTEL = await generateHash(subdomain ?? '');
     const HASH_USER = await generateHash(chainSubdomain ?? '');
 
+    const valueResetCacheInQueryUrl = getPropertyResetCacheInQueryUrl();
+    const newNumbersRandom = Math.floor(Math.random() * 10000000000000000);
+    let numbersRandom = localStorage.getItem('reset-cache') ?? null;
+    if (valueResetCacheInQueryUrl) {
+      numbersRandom = valueResetCacheInQueryUrl;
+    }
+    else if (RESET_CACHE || !numbersRandom) {
+      numbersRandom = newNumbersRandom;
+    }
+    localStorage.setItem('reset-cache', numbersRandom);
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -73,6 +85,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Hash-Hotel': HASH_HOTEL,
       'Hash-User': HASH_USER,
       'Origin-Component': 'HUESPED',
+      'Reset-Cache': numbersRandom,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }

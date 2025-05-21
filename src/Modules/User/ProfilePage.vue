@@ -77,7 +77,7 @@
 
         <!-- Sección "REservacion" -->
         <div class="flex items-center mt-6 sp:gap-2 gap-1" @click="handleReservationStay">
-            <img src="/assets/icons/WA.reserva.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
+            <img src="/assets/icons/Wa.reserva.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="ID Icon" />
             <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.book_next_stay.title') }}</span>
             <img src="/assets/icons/WA.chevron.svg" class="w-6 h-6 transform rotate-180 self-center" alt="Chevron Icon" />
         </div>

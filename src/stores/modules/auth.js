@@ -13,7 +13,8 @@ import {
     confirmPasswordApi,
     sendResetLinkEmailApi,
     resetPasswordApi,
-    createTokenSessionByGoogleApi
+    createTokenSessionByGoogleApi,
+    autenticateWithGuestDemoApi
 } from '@/api/services/auth.services'
 
 import { useGuestStore } from '@/stores/modules/guest';
@@ -52,7 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
         const response = await updateGuestByIdApi(params);
         if (response.ok && response.data){
             localStorage.setItem('token', response.data?.token);
-            return response.data.guest;
+            return response.data?.guest;
         }
         return null;
     }
@@ -284,6 +285,19 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function $autenticateWithGuestDemo () {
+        try {
+            const response = await autenticateWithGuestDemoApi();
+            if(response.ok && response.data){
+                localStorage.setItem('token', response.data?.token);
+            }
+        } catch (error) {
+            console.log('autenticateWithGuestDemo', error);
+        }
+    }
+
+
+
     return {
         $registerOrLoginSN,
         $updateGuestById,
@@ -299,7 +313,8 @@ export const useAuthStore = defineStore('auth', () => {
         $loginByGoogle,
         $redirectAfterLogin,
         $goLoginBySocialNetwork,
-        $validateStayGuestRelation
+        $validateStayGuestRelation,
+        $autenticateWithGuestDemo
     }
 
 })
