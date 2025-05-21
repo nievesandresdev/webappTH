@@ -51,7 +51,7 @@ provide('hideAppMenu',hideAppMenu)
 
 onMounted(() => {
     setTimeout(() => {
-        if(queryStore.hasPendingQuery){
+        if(queryStore.hasPendingQuery && !isMockup()){
             queryStore.$firstOpenPopUp();
         }
     }, 20000);
