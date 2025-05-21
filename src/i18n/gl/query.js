@@ -1,11 +1,11 @@
 export default {
-  "textToast": {
-      "sendQueryText": "Apreciamos sinceramente o teu feedback. A túa experiencia importa e esforzámonos por cumprir as túas expectativas",
+    "textToast": {
+      "sendQueryText": "Agradecemos sinceramente o teu feedback. A túa experiencia importa e tentamos cumprir as túas expectativas",
       "updateQueryText": "Modificación enviada",
       "registerResponse": "Feedback enviado",
-      "updateResponse": "Feedback actualizado"
-  },
-  "form": {
+      "updateResponse": "Feedback modificado"
+    },
+    "form": {
       "send": "Enviar",
       "sending": "Enviando",
       "modify": "Modificar",
@@ -13,7 +13,7 @@ export default {
       "title": "Feedback",
       "hello": "Ola",
       "whatsup": "Que tal",
-      "thanksAll": "Grazas por todo",
+      "thanksAll": "Como o fixemos?",
       "btn-verywrong-stay": "Moi malo",
       "btn-wrong-stay": "Malo",
       "btn-normal-stay": "Normal",
@@ -26,16 +26,30 @@ export default {
       "btn-verygood-poststay": "Moi boa",
       "poststay-bad-thanks-title": "Resposta enviada",
       "poststay-bad-thanks-subtitle": "Moitas grazas polo teu tempo",
-      "continueIn": "Continuar en",
-      "received-text": "Recibido",
+      "continueIn": "Valorar en",
+      "received-text": "Recebido",
       "sent-text": "Enviado"
-  },
-  "settings": {
-      "questionpre-stay": "Hai algo que poidamos facer para a túa chegada a {lodging}?",
-      "questionin-stay": "Como valorarías o teu nivel de satisfacción coa túa estancia ata agora?",
-      "questionpost-stay": "Como foi a túa experiencia con nós?"
-  },
-  "inbox": {
+    },
+    "settings": {
+      "questionpre-stay": "Hai algo que poidamos facer para a túa chegada a",
+      "questionin-stay": "Como cualificarías o teu nivel de satisfacción coa túa estadía ata agora?",
+      "questionpost-stay": "Como cualificarías o teu nivel de satisfacción coa túa estadía en {lodging}?"
+    },
+    "inbox": {
       "title": "Mensaxes"
+    },
+    "popup": {
+      "thanksResponse": "Grazas pola túa resposta",
+      "sorryResponse": "Sentímolo moito, {guestName}!",
+      "sorryDescription": "Sentímolo moito por non cumprir as túas expectativas. Recibimos os teus comentarios e traballaremos para solucionalo. Grazas por axudarnos a mellorar!",
+      "bannerHome-in-stay": {
+        "title": "Como vai todo?",
+        "subtitle": "Encantaríanos saber como te sentes ata agora."
+      },
+      "bannerHome-post-stay": {
+        "title": "Como foi a túa experiencia?",
+        "subtitle": "Encantaríanos coñecer a túa opinión sobre a túa estadía"
+      }
+    }
   }
-};
+  

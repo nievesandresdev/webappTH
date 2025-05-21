@@ -1,19 +1,19 @@
 export default {
-  "textToast": {
-      "sendQueryText": "Zure feedback-a bihotzez eskertzen dugu. Zure esperientzia garrantzitsua da guretzat eta zure itxaropenak betetzeko ahalegintzen gara",
+    "textToast": {
+      "sendQueryText": "Zure iritzia benetan eskertzen dugu. Zure esperientzia garrantzitsua da guretzat eta zure itxaropenak betetzeko ahalegina egiten dugu",
       "updateQueryText": "Aldaketa bidalia",
-      "registerResponse": "Feedback-a bidalia",
-      "updateResponse": "Feedback eguneratua"
-  },
-  "form": {
+      "registerResponse": "Iritzia bidalia",
+      "updateResponse": "Iritzia aldatu da"
+    },
+    "form": {
       "send": "Bidali",
       "sending": "Bidaltzen",
       "modify": "Aldatu",
-      "cancel": "Utzi",
-      "title": "Feedback",
+      "cancel": "Ezeztatu",
+      "title": "Iritzia",
       "hello": "Kaixo",
-      "whatsup": "Nola zaude",
-      "thanksAll": "Eskerrik asko denagatik",
+      "whatsup": "Nola zaude?",
+      "thanksAll": "Nola egin dugu?",
       "btn-verywrong-stay": "Oso txarra",
       "btn-wrong-stay": "Txarra",
       "btn-normal-stay": "Normala",
@@ -26,16 +26,30 @@ export default {
       "btn-verygood-poststay": "Oso ona",
       "poststay-bad-thanks-title": "Erantzuna bidalia",
       "poststay-bad-thanks-subtitle": "Eskerrik asko zure denboragatik",
-      "continueIn": "Jarraitu hemen",
-      "received-text": "Jaso",
+      "continueIn": "Baloratu hemen",
+      "received-text": "Jasota",
       "sent-text": "Bidalia"
-  },
-  "settings": {
-      "questionpre-stay": "Badago zerbait {lodging}-era iristean egin dezakegunik?",
-      "questionin-stay": "Nola baloratzen zenuke zure egonaldiarekin izan duzun asebetetze-maila orain arte?",
-      "questionpost-stay": "Nola izan da gurekin izandako zure esperientzia?"
-  },
-  "inbox": {
+    },
+    "settings": {
+      "questionpre-stay": "Zure iritsierarako zerbait egin dezakegu",
+      "questionin-stay": "Nola baloratuko zenuke zure asebetetze maila orain arteko egonaldiarekin?",
+      "questionpost-stay": "Nola baloratuko zenuke zure asebetetze maila {lodging} egonaldiarekin?"
+    },
+    "inbox": {
       "title": "Mezuak"
+    },
+    "popup": {
+      "thanksResponse": "Eskerrik asko zure erantzunagatik",
+      "sorryResponse": "Barkatu oso {guestName}!",
+      "sorryDescription": "Barkatu ez genuela zure itxaropenak bete. Zure iritziak jaso ditugu eta hobetzeko lan egingo dugu. Eskerrik asko hobetzen laguntzeagatik!",
+      "bannerHome-in-stay": {
+        "title": "Nola doa dena?",
+        "subtitle": "Pozik izango ginateke nola sentitzen zaren jakiteko."
+      },
+      "bannerHome-post-stay": {
+        "title": "Nola izan da zure esperientzia?",
+        "subtitle": "Zure iritzia ezagutzea gustatuko litzaiguke zure egonaldiari buruz"
+      }
+    }
   }
-};
+  

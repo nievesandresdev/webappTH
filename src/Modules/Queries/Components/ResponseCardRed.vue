@@ -14,7 +14,7 @@
         <div class="rounded-[20px] p-4 bg-gradient-h">
             <div class="flex">
                 <h1 class="lato text-sm font-medium leading-[16px]">
-                    {{ $t('query.settings.question'+period, { lodging: $formatTypeLodging() })}}
+                    {{ $t('query.settings.question'+period, { lodging: hotelStore?.hotelData?.name })}}
                 </h1>
                 <img class="w-6 h-6 ml-4" src="/assets/icons/WA.Check-circle.svg" alt="Checkcircle icon">
             </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="text-right mt-4">
                 <button 
-                    v-if="currentPeriod == period"
+                    v-if="$currentPeriod() == period"
                     class="rounded-[10px] border hborder-black-100 hbg-gray-100 h-10 text-center px-3 py-2.5 lato text-sm font-bold leading-[16px] shadow-guest"
                     @click="editQuery(response, qualification)"
                 >
@@ -41,7 +41,9 @@
 import { inject } from 'vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import { formatTimestampDate } from '@/utils/dateHelpers';
-
+import { useHotelStore } from '@/stores/modules/hotel';
+import { $currentPeriod } from '@/utils/helpers';
+const hotelStore = useHotelStore();
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
 const EditComment = inject('EditComment');
@@ -61,10 +63,6 @@ const { qualification, period, response, id } = defineProps({
         default:null
     },
     id:{
-        type:String,
-        default:null
-    },
-    currentPeriod:{
         type:String,
         default:null
     },
