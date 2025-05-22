@@ -4,9 +4,7 @@
             <h2 class="lato text-lg font-bold leading-[20px]">
                 {{ $t('contact.modal-whatsapp.title') }}
             </h2>
-            <p class="mt-6 lato text-sm font-medium leading-[16px]">
-                {{ $t('contact.modal-whatsapp.description') }}
-            </p>
+            <p class="mt-6 lato text-sm font-medium leading-[16px]" v-html="$t('contact.modal-whatsapp.description')"></p>
             <div class="mt-6">
                 <PrimaryButton 
                     classes="shadow-guest-2 py-3 w-full h-10 border rounded-[10px] text-center lato text-sm font-bold leading-[16px]"

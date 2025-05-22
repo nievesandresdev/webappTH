@@ -52,24 +52,27 @@
         </div>
     </div>
 
-    <BottomModal :isOpen="isOpenContactModal" @update:isOpen="isOpenContactModal = $event">
+    <BottomModal :isOpen="isOpenContactModal || Boolean(getUrlParam('openContactModal'))" @update:isOpen="isOpenContactModal = $event">
         <div class="flex items-center gap-1 lato">
-            <img src="/assets/icons/WA.MENU.DEFAULT.MENSAJES.svg" class="w-8 h-8 text-[#333333]" alt="Normas Icon" />
-            <p class="text-[16px] sp:text-[20px] font-bold text-[#333333] lato leading-[26px] sp:leading-[28px]">{{ $t('contact.titleModal') }}</p>
+            <img src="/assets/icons/WA.MENU.DEFAULT.MENSAJES.svg" class="w-5 sp:w-8 h-5 sp:h-8 text-[#333333]" alt="Normas Icon" />
+            <p class="text-[14px] sp:text-[20px] font-bold text-[#333333] lato leading-[22px] sp:leading-[28px]">{{ $t('contact.titleModal') }}</p>
         </div>
-        <div class="mt-[16px] sp:mt-[28px]">
+        <div class="mt-[12px] sp:mt-[28px]">
             <template v-for="(item, index) in contactList" :key="item.title">
                 <div 
                     v-if="!item.exclude"
-                    class="flex items-center gap-2 pt-2"
-                    :class="{'border-b hborder-gray-400 pb-3': (index < contactList.length - 1),'pb-2': !(index < contactList.length - 1)}"
+                    class="flex items-center gap-1 sp:gap-2 pt-1 sp:pt-2"
+                    :class="{'border-b hborder-gray-400 pb-1.5 sp:pb-3': (index < contactList.length - 1),'pb-1 sp:pb-2': !(index < contactList.length - 1)}"
                     @click="handleContact(item)"
                 >
                     <img 
                         :src="`/assets/icons/${item.iconDefault}.svg`" 
                         class="w-4 sp:w-6 h-4 sp:h-6"
                     />
-                    <p class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px]">{{ $t(item.title) }}</p>
+                    <p class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px]">
+                        {{ $t(item.title) }}
+                        <span v-if="item.showSubtitle" class="text-[#777] italic pl-1 sp:pl-2">{{ $t('contact.second-line') }}</span>
+                    </p>
                 </div>
             </template>
         </div>
@@ -86,6 +89,7 @@ import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import SentEmailModal from '@/layout/Components/SentEmailModal.vue';
 import ModalOpenWhatsapp from '@/layout/Components/ModalOpenWhatsapp.vue';
 import { $formatTypeLodging } from '@/utils/helpers'
+import { getUrlParam } from '@/utils/utils.js'
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
@@ -181,6 +185,7 @@ const contactList = computed(() => {
             to: `tel:${hotelStore.hotelData?.phone_optional}`,
             exclude: !hotelStore.hotelData?.show_contact || !hotelStore.hotelData?.phone_optional?.trim(),
             routeNameIncludes: [],
+            showSubtitle: true
         },
         {
             title: 'contact.contact-by-whatsapp'+`${!showListModal.value ? '-mainMenu' : ''}`,
