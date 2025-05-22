@@ -29,8 +29,11 @@ export function $currentPeriod() {
     if(!stayStore.stayData) return null;
 
     // Obtén las fechas y horas de check-in y check-out
-    const { check_in, check_out } = stayStore.stayData;
-    const { checkin, checkout } = hotelStore.hotelData;
+    const check_in = stayStore.stayData.check_in ?? null;
+    const check_out = stayStore.stayData.check_out ?? null;
+
+    const checkin = hotelStore?.hotelData?.checkin ?? '14:00';
+    const checkout = hotelStore?.hotelData?.checkout ?? '14:00';
 
     // Combina las fechas y horas en objetos DateTime de Luxon
     const checkInDateTime = DateTime.fromISO(check_in + 'T' + (checkin ?? '14:00'));

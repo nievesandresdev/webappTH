@@ -81,10 +81,10 @@ provide('EditComment',EditComment);
 provide('EditQualification',EditQualification);
 
 
-const hotelData = computed(() => hotelStore.hotelData);
+const guestData = computed(() => guestStore.guestData);
 
-watch(hotelData, (newValue, oldValue) => {
-    if(newValue){
+watch(guestData, (newValue, oldValue) => {
+    if(newValue && stayStore?.stayData){
         period.value = $currentPeriod()
         queryStore.$getCurrentAndSettingsQuery(stayStore.stayData.id, guestStore.guestData.id, $currentPeriod(), guestStore.guestData.name)
     }

@@ -231,12 +231,6 @@ const goPlaces = (type, cat) => {
     router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
 }
 
-
-
-const goGuests = () => {
-    router.push({ name: 'Guests' });
-};
-
 // const formType = computed(() => props.acform);
 
 const showWhatvisitSection = computed(() => {

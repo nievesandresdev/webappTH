@@ -106,7 +106,7 @@ const submit = async () => {
     sendingQuery.value = true;
     form.comment = form.comment.trim();
     form.checkinEmail = form.email;
-    form.docSupportNumber = form.docSupportNumber.toUpperCase();
+    form.docSupportNumber = form.docSupportNumber?.toUpperCase() ?? '';
     form.docNumber = form.docNumber.toUpperCase();
     form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);

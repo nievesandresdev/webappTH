@@ -97,4 +97,7 @@ const handleMyStays = () => {
     router.push({ name: 'MyStays' });
 };
 
+const goGuests = () => {
+    router.push({ name: 'Guests' });
+};
 </script>
