@@ -82,7 +82,7 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //
 
-    if (to.query.mockup) {
+    if (to.query.mockup || to.query.dossier) {
         await authStore.$autenticateWithGuestDemo();
     }
 
