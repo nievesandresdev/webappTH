@@ -65,16 +65,18 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
     const HASH_HOTEL = await generateHash(subdomain ?? '');
     const HASH_USER = await generateHash(chainSubdomain ?? '');
 
-    const valueResetCacheInQueryUrl = getPropertyResetCacheInQueryUrl();
-    const newNumbersRandom = Math.floor(Math.random() * 10000000000000000);
-    let numbersRandom = localStorage.getItem('reset-cache') ?? null;
-    if (valueResetCacheInQueryUrl) {
-      numbersRandom = valueResetCacheInQueryUrl;
-    }
-    else if (RESET_CACHE || !numbersRandom) {
-      numbersRandom = newNumbersRandom;
-    }
-    localStorage.setItem('reset-cache', numbersRandom);
+    const RANDOM_LIMIT = 10000000000000000;
+
+    const urlParam = getPropertyResetCacheInQueryUrl();
+    const cached = localStorage.getItem('reset-cache');
+
+
+    const nextValue = urlParam
+      ?? ((RESET_CACHE || !cached)
+      ? Math.floor(Math.random() * RANDOM_LIMIT).toString()
+      : cached);
+
+    localStorage.setItem('reset-cache', nextValue);
 
     const defaultHeaders = {
       'Content-Type': 'application/json',
@@ -85,7 +87,7 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
       'Hash-Hotel': HASH_HOTEL,
       'Hash-User': HASH_USER,
       'Origin-Component': 'HUESPED',
-      'Reset-Cache': numbersRandom,
+      'Reset-Cache': nextValue,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }

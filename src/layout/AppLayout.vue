@@ -1,5 +1,4 @@
 <template>
-
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
@@ -7,6 +6,7 @@
             v-if="!isDesktop && hotelStore.hotelData"
             v-show="showMenu" 
         />
+        <IconsQueryModal />
     </div>
     <!-- evitar que se pueda usar la webapp en Mockup -->
     <div v-if="$utils.isMockup() && route.name !== 'FakeChat'" class="fixed top-0 left-0 w-screen h-screen z-[5000]"></div>
@@ -16,6 +16,8 @@
 
 import { onMounted, ref, provide, watch, computed } from 'vue';
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
+import { $currentPeriod } from '@/utils/helpers';
+import IconsQueryModal from './Components/IconsQueryModal.vue'
 import { isMockup } from '@/utils/utils.js'
 import { useMediaQuery } from '@/composables/useMediaQuery.js'
 const { isDesktop } = useMediaQuery()
@@ -36,7 +38,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
 import { useAuthStore } from '@/stores/modules/auth';
 const authStore = useAuthStore()
-
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
 
 const hideAppMenu = ref(false);
 const channelChat = ref(null);
@@ -47,7 +50,11 @@ const isSubscribed = ref(false);
 provide('hideAppMenu',hideAppMenu)
 
 onMounted(() => {
-    
+    setTimeout(() => {
+        if(queryStore.hasPendingQuery && !isMockup()){
+            queryStore.$firstOpenPopUp();
+        }
+    }, 20000);
 })
 
 const connectPusher = () => {

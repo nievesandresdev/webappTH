@@ -6,29 +6,7 @@
    <PageTransitionGlobal module="home">
         <HeroSectionRed />
 
-        <div 
-            class="px-3 sp:px-4 mt-4 sp:mt-6"
-            v-if="isCheckoutPast"
-        >
-            <WACardBanner 
-                @click="handleMyStays"
-                :title="$t('profile.my_stays.title')"
-                :subtitle="$t('profile.my_stays.subtitle_inactive')"
-                :active-custom="true"
-            />
-        </div>
-        <div 
-            v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay' && hotelStore.hotelData?.checkin_service_enabled"
-            class="px-3 sp:px-4 mt-4 sp:mt-6"
-        >
-            <WACardBanner 
-                @click="goGuests"
-                :title="$t('checkin.cardBanner.title')"
-                :subtitle="$t('checkin.cardBanner.subtitle')"
-                :active-custom="true"
-                nameIconLeft="WA.checkin.user"
-            />
-        </div>
+        <BannersSection />
 
         <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
             <ButtonsSection />
@@ -159,7 +137,7 @@ import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
-import WACardBanner from '@/components/WACardBanner.vue';
+import BannersSection from './Components/BannersSection.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -253,9 +231,7 @@ const goPlaces = (type, cat) => {
     router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
 }
 
-const handleMyStays = () => {
-    router.push({ name: 'MyStays' });
-};
+
 
 const goGuests = () => {
     router.push({ name: 'Guests' });
@@ -281,12 +257,7 @@ const showLeisureSection = computed(() => {
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
 });
 
-const isCheckoutPast = computed(() => {
-if(!stayStore.stayData?.check_out) return
-  const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
-  const now = DateTime.now();
-  return inputDate < now; // Retorna true si la fecha ya pasó
-});
+
 
 
 

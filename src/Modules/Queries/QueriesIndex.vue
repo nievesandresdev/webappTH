@@ -98,7 +98,7 @@ const EditComment = ref(null);
 const EditQualification = ref(null);
 
 onBeforeMount(async ()=>{
-    queryStore.$setPendingQuery(false);
+    // queryStore.$setPendingQuery(false);
     await getQuerySettings();
     await getCurrentPeriod();
     if(period.value){

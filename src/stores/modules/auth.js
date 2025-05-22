@@ -22,7 +22,7 @@ import { useStayStore } from '@/stores/modules/stay';
 import { useChainStore } from '@/stores/modules/chain';
 import { useHotelStore } from '@/stores/modules/hotel';
 import { useHistoryStore } from '@/stores/modules/history';
-
+import { useQueryStore } from '@/stores/modules/query';
 
 
 export const useAuthStore = defineStore('auth', () => {
@@ -32,6 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
     const chainStore = useChainStore()
     const hotelStore = useHotelStore()
     const historyStore = useHistoryStore()
+    const queryStore = useQueryStore();
     // STATE
     const sessionActive = ref(false)
     const token = ref(localStorage.getItem('token'));
@@ -95,6 +96,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logout () {
+        //el popup debe abrirse para la proxima sesion si amerita
+        queryStore.$closeSessionPopUp();
         await stayStore.deleteLocalStayData()
         await guestStore.deleteLocalGuest()
         localStorage.removeItem('startedWebappBy')

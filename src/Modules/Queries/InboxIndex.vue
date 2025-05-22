@@ -7,13 +7,13 @@
                 <!-- {{ item._type }} - {{ item._date }} -->
                 <TextQuery 
                     v-if="period == 'pre-stay' && item._type == 'query' && !item?.answered" 
-                    :settings="settings"
+                    :settings="querySettingsStore.settings"
                     :data="item"
                     @reloadList="reloadList"
                 />
                 <IconsQuery 
                     v-else-if="period !== 'pre-stay' && item._type == 'query' && !item?.answered"
-                    :settings="settings"
+                    :settings="querySettingsStore.settings"
                     :data="item"
                     @reloadList="reloadList"
                 />
@@ -44,12 +44,12 @@
                     <TextQuery 
                         v-if="EditPeriod == 'pre-stay'" 
                         @reloadList="reloadList"
-                        :settings="settings"
+                        :settings="querySettingsStore.settings"
                         :data="item"
                     />
                     <IconsQuery 
                         v-else
-                        :settings="settings"
+                        :settings="querySettingsStore.settings"
                         :data="item"
                         @reloadList="reloadList"
                     />    
@@ -98,7 +98,6 @@ const requestSettingsStore = useRequestSettingStore();
 const settings = ref([]);
 const responses = ref([]);
 const period = ref(null);
-const currentQuery = ref(null);
 const requestTexts = ref(null);
 const requestTo = ref(null);
 const contactEmails = ref([]);
@@ -112,19 +111,18 @@ const EditQualification = ref(utils.getUrlParam('fill') ?? null);
 startLoading(SECTIONS.QUERY.GLOBAL);
 //
 onMounted(async() => {
-    // queryStore.$setPendingQuery(false);
-    await getQuerySettings();
+    
+    // await getQuerySettings();
     period.value = $currentPeriod();
-    // console.log('test period',period.value)
-    if(period.value){
-        await getCurrentQuery();
-    }
+    // if(period.value){
+    //     await getCurrentQuery();
+    // }
     await getResponses();
     await getContactEmailsByStayId();
     stopLoading(SECTIONS.QUERY.GLOBAL);
-    requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
+    // requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
-    requestTo.value = requestTexts.value.request_to;
+    requestTo.value = requestSettingsStore.requestData.request_to;
     getCombinedList();
     
 })
@@ -144,15 +142,6 @@ async function getQuerySettings(){
 //     period.value = await queryStore.$getCurrentPeriod(params);
 // }
 
-async function getCurrentQuery(){
-    let params = {
-        stayId : stayStore?.stayData?.id,
-        guestId : guestStore?.guestData?.id,
-        period : period.value,
-    }
-    currentQuery.value = await queryStore.$visited(params);
-    // console.log('test currentQuery',currentQuery.value)
-}
 
 async function getResponses(){
     let params = {
@@ -179,21 +168,20 @@ async function getContactEmailsByStayId(){
 }
 async function reloadList(){
     // console.log('test reloadList')
-    await getCurrentQuery();
     await getResponses();
     getCombinedList();
 }
 
 const showRequestReview = computed(()=>{
-    if(!period.value || !requestTexts.value) return false;
-    let requestTo = JSON.parse(requestTexts.value?.request_to)
+    if(!period.value || !requestSettingsStore.requestData) return false;
+    let requestTo = JSON.parse(requestSettingsStore.requestData?.request_to)
     
     if(period.value == 'in-stay'){
-        return currentQuery.value?.answered && requestTexts.value.in_stay_activate && ['GOOD','VERYGOOD'].includes(currentQuery.value.qualification)
+        return queryStore.currentQuery?.answered && requestSettingsStore.requestData.in_stay_activate && ['GOOD','VERYGOOD'].includes(queryStore.currentQuery.qualification)
     }
 
     if(period.value == 'post-stay'){
-        return currentQuery.value?.answered && requestTo.includes(currentQuery.value.qualification) 
+        return queryStore.currentQuery?.answered && requestTo.includes(queryStore.currentQuery.qualification) 
         // requestTo.includes('NOTANSWERED')
     }
     
@@ -202,13 +190,13 @@ const showRequestReview = computed(()=>{
 
 const getCombinedList = () => {
   const items = []
-
+//   console.log('test currentQuery',queryStore.currentQuery)
   // 1. La consulta actual (suponiendo que el campo de fecha es answeredAt)
-  if (currentQuery.value && !currentQuery.value.answered) {
+  if (queryStore.currentQuery && !queryStore.currentQuery.answered) {
     items.push({
-      ...currentQuery.value,
+      ...queryStore.currentQuery,
       _type: 'query',
-      _date: currentQuery.value.created_at
+      _date: queryStore.currentQuery.created_at
     })
   }
 
@@ -225,7 +213,7 @@ const getCombinedList = () => {
   // 3. La solicitud al usuario (suponiendo que el campo de fecha es requestDate)
   if (responses.value.length > 0) {
     items.push({
-      ...requestTexts.value,
+      ...requestSettingsStore.requestData,
       _type: 'request',
       _date: responses.value.find(r => r.period == period.value)?.responded_at
     })
@@ -258,5 +246,4 @@ provide('EditPeriod',EditPeriod);
 provide('EditComment',EditComment);
 provide('EditQualification',EditQualification);
 provide('period',period)
-provide('requestTexts',requestTexts)
 </script>

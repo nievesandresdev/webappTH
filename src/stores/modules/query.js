@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { $currentPeriod } from '@/utils/helpers';
 
 import {
     getCurrentPeriodApi,
@@ -7,13 +8,22 @@ import {
     firstOrCreateApi,
     saveResponseApi,
     existingPendingQueryApi,
-    visitedApi
+    visitedApi,
+    getCurrentAndSettingsQueryApi
 } from '@/api/services/query.services'
+
+import { useQuerySettingsStore } from '@/stores/modules/querySettings'
+import { useRequestSettingStore } from '@/stores/modules/requestSettings'
 
 export const useQueryStore = defineStore('query', () => {
     
+    const querySettingsStore = useQuerySettingsStore()
+    const requestSettingsStore = useRequestSettingStore()
     // STATE
     const pendingQuery = ref(false);
+    const currentQuery = ref(null);
+    const isOpenPopUp = ref(false);
+    
 
     // ACTIONS
     async function $getCurrentPeriod (data) {
@@ -80,11 +90,54 @@ export const useQueryStore = defineStore('query', () => {
     async function $setPendingQuery(value) {
         pendingQuery.value = value;
     }
+
+    async function $setCurrentQuery(value) {
+        currentQuery.value = value;
+    }
+
+    async function $getCurrentAndSettingsQuery(stayId, guestId, period, guestName) {
+        let params = {stayId, guestId, period, guestName};
+        const response = await getCurrentAndSettingsQueryApi(params)
+        const { ok } = response   
+        if(ok){
+            $setCurrentQuery(response.data.query)
+            await querySettingsStore.$setSettings(response.data.settings)
+            await requestSettingsStore.$setRequestData(response.data.requestData)
+            return response.data
+        }
+    }
     //
 
     const hasPendingQuery = computed(() => {
         return pendingQuery.value;
     });
+
+    const currentQueryComputed = computed(() => {
+        return currentQuery.value
+    });
+
+    function $setIsOpenPopUp(value) {
+        console.log('currentPeriod', $currentPeriod())
+        if($currentPeriod() == 'pre-stay') return;
+        isOpenPopUp.value = value;
+    }
+
+    function $openPopUp() {
+        let localOpen = localStorage.getItem('queryPopUpHasBeenOpen')
+        // console.log('localOpen',localOpen)
+        if(localOpen !== 'true'){
+            $setIsOpenPopUp(true)
+        }
+    }
+
+    function $firstOpenPopUp() {
+        $openPopUp()
+        localStorage.setItem('queryPopUpHasBeenOpen', true);
+    }
+
+    function $closeSessionPopUp() {
+        localStorage.setItem('queryPopUpHasBeenOpen', false);
+    }
     return {
         $getCurrentPeriod,
         $getRecentlySortedResponses,
@@ -93,8 +146,16 @@ export const useQueryStore = defineStore('query', () => {
         $existingPendingQuery,
         $visited,
         $setPendingQuery,
+        $getCurrentAndSettingsQuery,
+        $setIsOpenPopUp,
+        $openPopUp,
+        $firstOpenPopUp,
+        $closeSessionPopUp,
+        $setCurrentQuery,
         //
-        hasPendingQuery
+        hasPendingQuery,
+        currentQuery:currentQueryComputed,
+        isOpenPopUp
     }
 
 })

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex items-center mb-2 gap-1">
+        <div class="flex items-center mb-2 gap-1" v-if="!inModal">
             <IconCustomColor
                 class="transform rotate-180"
                 name="arrow-back"
@@ -34,19 +34,19 @@
                 v-if="!inModal"
                 class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
             >
-                {{ $t('query.settings.question'+data?.period)}}
+                {{ $t('query.settings.question'+data?.period, {lodging: hotelStore?.hotelData?.name ?? ''}) }}
             </p>
             <div class="mt-3 sp:mt-4 md:mt-8">
                 <FormTabEmojisRed :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
             </div>
-            <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-4 md:hidden"></div>
+            <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-6 md:hidden"></div>
             <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
             <div class="mt-3 sp:mt-4 md:mt-8" v-if="form.type">
                 <p class="lato text-[10px] sp:text-sm md:text-base md:font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
                     {{ settings[thanksHoster][localeStore.localeCurrent] }}
                 </p>
             </div>
-            <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type">
+            <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type && form.type !== 'GOOD' && form.type !== 'VERYGOOD'">
                 <TextareaAutogrow 
                     :id="'textarea1'"
                     v-model="textarea" 
@@ -57,7 +57,7 @@
                 />
             </div>
             <!-- <pre>
-                {{ settings }}
+                {{ thanksHoster }}
             </pre> -->
             <div 
                 class="flex items-center mt-3 sp:mt-6 md:mt-8"
@@ -80,8 +80,8 @@
                     </PrimaryButton> 
                 </div>
             </div>
-            <div v-else class="mt-4 sp:mt-6">
-                <PrimaryButton 
+            <div v-else-if="inModal && changes" class="mt-4 sp:mt-6">
+                <PrimaryButton
                     classes="text-center py-1.5 sp:py-2.5 rounded-[6px] sp:rounded-[10px] lato text-[12px] sp:text-base font-bold leading-[16px] sp:leading-[20px] w-full shadow-guest"
                     :disabled="!changes || sendingQuery"
                     :isLoading="sendingQuery"
@@ -100,6 +100,7 @@ import FormTabEmojisRed from './FormTabEmojisRed'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import IconCustomColor from '@/components/IconCustomColor.vue';
+
 
 import { useToast } from "vue-toastification";
 import { useI18n } from 'vue-i18n';
@@ -175,6 +176,7 @@ async function submit(){
     }
     let response = await queryStore.$saveResponse(params);
     if(response){
+        queryStore.$setCurrentQuery(response)
         cancelChanges();
         emit('reloadList')
         //se envia solo para post-stay igual a GOOD
@@ -188,7 +190,7 @@ async function submit(){
         }
         setTimeout(() => {
             toastSuccess(t(textRes)); 
-            queryStore.$existingPendingQuery()
+            queryStore.$setPendingQuery(false)
             sendingQuery.value = false;
         }, 1000);
     }

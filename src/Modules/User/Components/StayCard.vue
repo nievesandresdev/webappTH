@@ -54,14 +54,14 @@
                         </div>
                     </div>
                     <div class="mt-auto flex gap-4 ml-auto">
-                        <RoundedButton
+                        <!-- <RoundedButton
                             id="open-query-modal"
                             v-if="showQueryButton && (period == 'in-stay' || period == 'post-stay')"
                             @click.stop="queryModalisOpen = true"
                             iconUrl="/assets/icons/WA.STAR.BLACK.svg"
                             sizeIcons="w-6 h-6"
                             @closeModal="queryModalisOpen = false"
-                        />
+                        /> -->
                         <!-- Botón de Compartir -->
                         <template v-if="showButtonShared">
                             <RoundedButton
@@ -79,26 +79,27 @@
             </div>
         </template>
     </div>
-    <QueryModal 
+    <!-- <QueryModal 
         v-if="period"
         :period="period"
-        :settings="settings"
-    />
+        :settings="querySettingsStore.settings"
+    /> -->
 </template>
 
 <script setup>
-import { computed, defineEmits, onMounted, ref, provide  } from 'vue';
+import { computed, defineEmits, onMounted, ref, provide, watch  } from 'vue';
 import RoundedButton from '@/components/Buttons/RoundedButton.vue';
-import QueryModal from './QueryModal.vue';
+// import QueryModal from './QueryModal.vue';
+import { $currentPeriod } from '@/utils/helpers';
 //
-import { useQueryStore } from '@/stores/modules/query';
-const queryStore = useQueryStore();
+// import { useQueryStore } from '@/stores/modules/query';
+// const queryStore = useQueryStore();
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
-import { useQuerySettingsStore } from '@/stores/modules/querySettings';
-const querySettingsStore = useQuerySettingsStore();
+// import { useQuerySettingsStore } from '@/stores/modules/querySettings';
+// const querySettingsStore = useQuerySettingsStore();
 
 import { useShare } from "@/composables/useShare";
 const { shareContent } = useShare();
@@ -142,9 +143,7 @@ const props = defineProps({
     }
 });
 
-const period = ref(null);
-const settings = ref([]);
-const currentQuery = ref(null);
+const period = ref($currentPeriod());
 const queryModalisOpen = ref(false);
 //
 const EditId = ref(null);
@@ -160,40 +159,25 @@ provide('EditQualification',EditQualification);
 provide('queryModalisOpen',queryModalisOpen);
 
 onMounted(async () => {
-    // solo se carga cuando se vaya a mostrar la query en modal
-    if(props.showQueryButton){
-        let params = {
-            stayId : localStorage.getItem('stayId')
-        }
-        period.value = await queryStore.$getCurrentPeriod(params);
-        await getQuerySettings();
-        if(period.value){
-            await getCurrentQuery();
-            if(currentQuery.value.answered){
-                EditPeriod.value = currentQuery.value.period;
-                EditComment.value = currentQuery.value.comment ? currentQuery.value.comment[currentQuery.value.response_lang] : '';
-                EditQualification.value = currentQuery.value.qualification;
-                EditId.value = currentQuery.value.id;
-            }
-        }
-    }
     shareUrl.value = await hotelStore.$buildUrlWebApp(hotelStore.hotelData?.subdomain,null,`e=${stayStore.stayData?.id}&guestPerStay=true`);
 })
 
-async function getQuerySettings(){
-    settings.value = await querySettingsStore.$getAll();
-    // console.log('test settings.value',settings.value)
-}
+// const currentQuery = computed(() => {
+//     return queryStore.currentQuery;
+// })
 
-async function getCurrentQuery(){
-    let params = {
-        stayId : localStorage.getItem('stayId'),
-        guestId : localStorage.getItem('guestId'),
-        period : period.value,
-    }
-    currentQuery.value = await queryStore.$visited(params);
-    // console.log('test currentQuery',currentQuery.value)
-}
+// watch(currentQuery, (newValue, oldValue) => {
+//     console.log('test currentQuery',newValue)
+//     if(newValue){
+//         // solo se carga cuando se vaya a mostrar la query en modal
+//         if(props.showQueryButton && queryStore.currentQuery.answered){
+//             EditPeriod.value = queryStore.currentQuery.period;
+//             EditComment.value = queryStore.currentQuery.comment ? queryStore.currentQuery.comment[queryStore.currentQuery.response_lang] : '';
+//             EditQualification.value = queryStore.currentQuery.qualification;
+//             EditId.value = queryStore.currentQuery.id;
+//         }
+//     }
+// }, { immediate: true })
 
 const formattedDates = computed(() => {
     const checkInDate = formatDate(props.stay?.check_in);
@@ -242,7 +226,6 @@ const shareUrlReady = computed(() => {
 
 
 provide('period',period)
-provide('currentQuery',currentQuery)
 </script>
 
 <style scoped>
