@@ -109,15 +109,19 @@ const unSubscribePusher = () =>{
     }
     
 }
+const guestData = computed(() => guestStore.guestData);
 
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
         // stayData = newStayData;
         if(newStayData){
             unSubscribePusher();
-            // console.log('test connectPusher',newStayData)
             connectPusher();
         }
+    }
+    
+    if(newStayData && guestData.value && !queryStore.currentQuery){
+        queryStore.$getCurrentAndSettingsQuery(stayStore.stayData.id, guestStore.guestData.id, $currentPeriod(), guestStore.guestData.name)
     }
 }, { immediate: true });
 
