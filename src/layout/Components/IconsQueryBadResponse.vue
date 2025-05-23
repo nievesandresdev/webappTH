@@ -1,5 +1,5 @@
 <template>
-    <h2 class="lato text-[20px] font-bold leading-[28px]">{{ $t(titleResponse, { guestName: guestStore.guestData.name }) }}</h2>
+    <h2 class="lato text-[20px] font-bold leading-[28px]">{{ $t(titleResponse, { guestName: guestStore.guestData?.name }) }}</h2>
     <p class="lato text-base font-bold leading-[20px] mt-4"> 
         {{ $t(descriptionResponse) }}
     </p>

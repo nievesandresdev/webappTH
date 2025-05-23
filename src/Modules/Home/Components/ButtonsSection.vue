@@ -93,7 +93,7 @@
     <BottomSheetReferent :hotelRewards="hotelRewards" />
 </template>
 <script setup>
-import { ref, computed, onMounted, provide } from 'vue';
+import { ref, computed, onMounted, provide, watch } from 'vue';
 import RoundedButton from '@/components/Buttons/RoundedButton.vue';
 import BottomRules from '@/components/BottomsSheets/BottomSheetRules.vue';
 import BottomSheetWifi from '@/components/BottomsSheets/BottomSheetWifi.vue';
@@ -104,7 +104,9 @@ import { $currentPeriod } from '@/utils/helpers.js'
 //
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
-
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
+//
 const isOpenRules = ref(false)
 const countRules = ref(0)
 const isOpenWifi = ref(false)
@@ -117,9 +119,9 @@ const responseButtons = ref([])
 provide('openModalReferrals',openModalReferrals)
 provide('openModalReferent',openModalReferent)
 
-onMounted(() => {
-    initData();
-})
+// onMounted(() => {
+//     initData();
+// })
 
 const initData = async () => {
     const response = await hotelStore.$getRewardsByHotel();
@@ -143,6 +145,11 @@ const openModalRewards = () => {
         openModalReferent.value = true;
     }
 };
+
+const guestData = computed(() => guestStore.guestData)
+watch(guestData, () => {
+    initData();
+}, { deep: true })
 
 const showCheckinButton = computed(() => {
     return hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay' && 

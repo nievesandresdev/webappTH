@@ -7,7 +7,7 @@
         <div v-if="queryStore.currentQuery && !queryStore.currentQuery.answered" class="p-6">
             <div class="flex justify-between items-center">
                 <h1 class="lato text-[20px] font-bold leading-[28px]">
-                    <template v-if="period == 'post-stay'">
+                    <template v-if="$currentPeriod() == 'post-stay'">
                         {{ $t('query.form.thanksAll') }}
                         <!-- {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}} -->
                     </template>
@@ -22,7 +22,7 @@
             <p 
                 class="mt-6 lato text-base font-bold leading-[20px]"
             >
-                {{ $t('query.settings.question'+period, {lodging: hotelStore.hotelData?.name}) }}
+                {{ $t('query.settings.question'+$currentPeriod(), {lodging: hotelStore.hotelData?.name}) }}
             </p>
             <IconsQuery 
                 :settings="querySettingsStore.settings"
@@ -69,7 +69,6 @@ const hotelStore = useHotelStore();
 import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 const querySettingsStore = useQuerySettingsStore();
 //data
-const period = ref(null);
 const EditId = ref(null);
 const EditPeriod = ref(null);
 const EditComment = ref(null);
@@ -81,14 +80,7 @@ provide('EditComment',EditComment);
 provide('EditQualification',EditQualification);
 
 
-const guestData = computed(() => guestStore.guestData);
 
-watch(guestData, (newValue, oldValue) => {
-    if(newValue && stayStore?.stayData){
-        period.value = $currentPeriod()
-        queryStore.$getCurrentAndSettingsQuery(stayStore.stayData.id, guestStore.guestData.id, $currentPeriod(), guestStore.guestData.name)
-    }
-}, { immediate: true });
 
 
 // const hotelData = computed(() => hotelStore.hotelData);
