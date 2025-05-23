@@ -18,19 +18,16 @@
         > -->
         <div 
             :id="`${placesRecommendated.length > 1 ? 'carousel-recommendation' : ''}`" 
-            :class="{
-                'pl-[8px] sp:pl-4': placesRecommendated.length > 1,
-                'px-[8px] sp:px-4': !(placesRecommendated.length > 1)
-            }"
         >
             <Carousel 
                 :snap-align="placesRecommendated.length > 1 ? 'start' : 'center'"
+                :wrap-around="false"
+                :items-to-show="2.5"
             >
             <!-- first:ml-4 last:mr-4 -->
                 <Slide v-for="(place, index) in placesRecommendated" :key="place.id">
                     <div
                         class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden"
-                        :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'"
                         @mousedown="handleMouseDown"
                         @mouseup="handleMouseUp(place.id, $utils.isMockup())"
                     >
@@ -140,8 +137,12 @@
         width: 120px !important;
     }
     #carousel-recommendation .carousel__track {
-        padding: 6px 0 !important;
+        padding: 6px 0 6px 0 !important;
+        padding-right: 48px !important; /* espacio para que no se corte el último slide */
         gap: 6px !important;
+    }
+    #carousel-recommendation .carousel__slide:last-child {
+        margin-right: 24px !important; /* margen derecho para el último slide */
     }
 }
 @media (min-width: 300px) {
@@ -149,8 +150,13 @@
         width: 160px !important;
     }
     #carousel-recommendation .carousel__track {
-        padding: 8px 0 !important;
+        padding: 8px 0 8px 0 !important;
+        padding-right: 48px !important; /* espacio para que no se corte el último slide */
         gap: 8px !important;
     }
+    #carousel-recommendation .carousel__slide:last-child {
+        margin-right: 24px !important; /* margen derecho para el último slide */
+    }
 }
+
 </style>
