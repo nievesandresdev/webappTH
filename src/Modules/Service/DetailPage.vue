@@ -10,7 +10,7 @@
                     :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
                     :from="'services'"
             />
-            <div class="mx-2 sp:mx-4" :class="{'py-[42px] sp:py-[42px]': hire }">
+            <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4 pb-[40px] sp:pb-[86px]">
                 <div class=" border-b  border-[#E9E9E9]">
                     <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                         {{ serviceData?.name }}
@@ -82,7 +82,7 @@
     
                 <PrimaryButton 
                     v-if="serviceData.link_url"
-                    classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
+                    classes="text-center py-1 sp:py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
                     @click="isOpenModelLink = true"
                 >
                     {{ $t('service.modal-request-service.button') }}

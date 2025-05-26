@@ -16,7 +16,7 @@
         </button>
     </div>
     <!-- name -->
-    <div class="mt-6" v-if="settings?.first_step?.name?.visible">
+    <div class="sp:mt-6 mt-4" v-if="settings?.first_step?.name?.visible">
         <THInputText
             :textLabel="`${$t('profile.page_personal_info.form.name.label')}${isMandatory('name')}`"
             iconLeft="/assets/icons/WA.user.svg"

@@ -3,7 +3,7 @@
       <div
         :disabled="disabled"
         @click="toggleDropdown"
-        class="flex items-center h-7 sp:h-10 w-full rounded-[6px] sp:rounded-[10px] px-2 bg-white text-left border-[2px]"
+        class="flex items-center h-7 sp:h-10 w-full rounded-[6px] sp:rounded-[10px] sp:px-2 px-1 bg-white text-left border-[2px]"
         :class="[borderColor]"
       >
         <img v-if="icon_left" :src="icon_left" :class="icon_left_class">

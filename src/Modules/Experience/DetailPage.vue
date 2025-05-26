@@ -6,31 +6,31 @@
         show-button-back
         :images="experienceData?.images?.map(item => item?.url) ?? []"
         /> 
-        <div class="pt-[12px] sp:pt-[24px] px-[8px] sp:px-[16px] mb-2 sp:mb-4 space-y-3 sp:space-y-6">
+        <div class="pt-[12px] sp:pt-[24px] px-[8px] sp:px-[16px] mb-2 sp:mb-4 space-y-3 sp:space-y-6 pb-[70px] sp:pb-[90px]">
             <div class="space-y-2 sp:space-y-4">
                 <div class="flex justify-between">
                     <h2
                         v-html="experienceData?.title"
-                        class="text-[14px] sp:text-[18px] font-bold w-[133px] sp:w-[246px] lato"
+                        class="text-[12px] sp:text-[18px] font-bold w-[133px] sp:w-[246px] lato"
                     />
                     <div class="flex flex-col items-center">
                         <div class="flex items-center mb-0.5 sp:mb-1">
-                            <img src="/assets/icons/WA.star.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
-                            <p class="text-[11px] sp:text-[20px] font-semibold leading-none lato">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</p>
+                            <img src="/assets/icons/WA.star.svg" class="size-[10px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                            <p class="text-[13px] sp:text-[20px] font-semibold leading-none lato">{{ experienceData?.reviews.combined_average_rating.toFixed(1) }}</p>
                         </div>
-                        <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
+                        <p class="text-[7.5px] sp:text-[10px] font-medium lato leading-none">
                             ({{ experienceData?.reviews.total_reviews }} {{ $t('place.detail.opinionsWord') }})
                         </p>
                     </div>
                 </div>
                 <div class="flex justify-between items-end">
                     <div class="flex flex-col">
-                        <p  class="text-[5px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
+                        <p  class="text-[8px] sp:text-[10px] lato leading-none font-bold">{{ $t('experience.card-experience.from') }}</p>
                         <p class="text-[10px] sp:text-[20px] font-bold lato leading-none">{{ experienceData?.from_price?.toFixed(2) }} €</p>
                     </div>
                     <div class="flex items-center">
-                        <img src="/assets/icons/WA.pointer.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
-                        <p class="text-[8px] sp:text-[14px] font-medium lato leading-none">{{ experienceData?.city_experince }}, España</p>
+                        <img src="/assets/icons/WA.pointer.svg" class="size-[9px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                        <p class="text-[10px] sp:text-[14px] font-medium lato leading-none">{{ experienceData?.city_experince }}, España</p>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <span class="text-[7px] sp:text-[12px] font-bold leading-none lato">{{ $t('place.detail.recommended')?.toUpperCase() }}</span>
                 </div>
                 <p
-                    class="text-[9px] sp:text-sm font-medium lato"
+                    class="text-[10px] sp:text-sm font-medium lato"
                     style="font-family: 'Lato', sans-serif !important; font-style: italic;"
                 >
                     {{ `“${experienceData?.recomendation_language_current}”` }}
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="space-y-[8px] sp:space-y-[16px] pb-[14px] sp:pb-[24px] border-b  border-[#E9E9E9]">
-                <h3 class="lato  text-[8px] sp:text-[16px] font-medium leading-none">{{ $t('experience.detail-page.check-the-availability-of-this-experience') }}</h3>
+                <h3 class="lato  text-[9px] sp:text-[16px] font-medium leading-none">{{ $t('experience.detail-page.check-the-availability-of-this-experience') }}</h3>
                 <PrimaryButton 
                     classes="block text-center py-1.5 sp:py-2.5 rounded-[10px] text-[9px] sp:text-[14px] font-bold leading-none w-full shadow-guest lato"
                     @click="goInViator"
@@ -84,32 +84,32 @@
                 </PrimaryButton>
             </div>
             <div class="p-3 sp:p-6 space-y-[12px] border border-color-secondary bg-gradient-100 rounded-[10px]">
-                <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('experience.detail-page.title-general-information') }}</h3>
+                <h3 class="text-[10px] sp:text-[16px] lato font-bold leading-none">{{ $t('experience.detail-page.title-general-information') }}</h3>
                 <div
                     v-if="experienceViatorData?.cancellationPolicy?.type == 'STANDARD'"
                     class="flex items-center space-x-1 sp:space-x-2"
                 >
-                    <img src="/assets/icons/WA.Cancelacion.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] leading-none">{{ $t('experience.detail-page.free-cancellation-label') }}</p>
+                    <img src="/assets/icons/WA.Cancelacion.svg" class="size-3 sp:size-4" />
+                    <p class="text-[9px] sp:text-[14px] leading-none">{{ $t('experience.detail-page.free-cancellation-label') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
-                    <img src="/assets/icons/WA.Clock.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none"> {{ duration }} </p>
+                    <img src="/assets/icons/WA.Clock.svg" class="size-3 sp:size-4" />
+                    <p class="text-[9px] sp:text-[14px] lato font-medium leading-none"> {{ duration }} </p>
                 </div>
                 <div
                     v-if="experienceViatorData?.ticketInfo?.ticketTypes?.includes('MOBILE_ONLY')"
                     class="flex items-center space-x-1 sp:space-x-2"
                 >
-                    <img src="/assets/icons/WA.mobile.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-ticket-mobile') }}</p>
+                    <img src="/assets/icons/WA.mobile.svg" class="size-3 sp:size-4" />
+                    <p class="text-[9px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-ticket-mobile') }}</p>
                 </div>
                 <div class="flex items-center space-x-1 sp:space-x-2">
-                    <img src="/assets/icons/WA.PaperTicket.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-paper-ticket') }}</p>
+                    <img src="/assets/icons/WA.PaperTicket.svg" class="size-3 sp:size-4" />
+                    <p class="text-[9px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.tag-paper-ticket') }}</p>
                 </div>
                 <div v-if="availablelanguages?.length" class="flex items-center space-x-1 sp:space-x-2">
-                    <img src="/assets/icons/WA.Idiomas.svg" class="size-2 sp:size-4" />
-                    <p class="text-[7px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.offered-in') }}: {{ availablelanguages?.languages?.map(lg => $t(`language.${lg}`)).join(', ') }} </p>
+                    <img src="/assets/icons/WA.Idiomas.svg" class="size-3 sp:size-4" />
+                    <p class="text-[9px] sp:text-[14px] lato font-medium leading-none">{{ $t('experience.detail-page.offered-in') }}: {{ availablelanguages?.languages?.map(lg => $t(`language.${lg}`)).join(', ') }} </p>
                 </div>
             </div>
             <DetailPageSectionInclude />

@@ -1,9 +1,9 @@
 <template>
   <div
     v-if="subservices.length > 0"
-    class="mt-[36] sp:mt-[48px]"
+    class="mt-[20px] sp:mt-[38px] pb-[62px] sp:pb-[85px]"
   >
-    <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.options.title') }}</h3>
+    <h3 class="text-[10px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.options.title') }}</h3>
     <div class="mt-[9px] sp:mt-[10px] space-y-[14px] sp:space-y-[14px]">
       <CardList
         v-for="subservice in subservices"

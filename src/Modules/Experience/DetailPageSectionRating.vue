@@ -1,28 +1,28 @@
 <template>
-    <div class="flex space-x-1 sp:space-x-2">
+    <div class="flex space-x-1 sp:space-x-2 ">
         <p class="text-[17px] sp:text-[30px] roboto font-medium leading-[18px] sp:leading-[32px]">{{ experienceViatorData?.reviews?.combinedAverageRating?.toFixed(1) }}</p>
         <div class="space-y-[4px] sp:space-y-[8px]">
             <div class="flex space-x-[2px] sp:space-x-[4px]">
                 <template v-for="star in 5">
                      <img
                             :src="`/assets/icons/WA.${star <=  Math.ceil(experienceViatorData?.reviews?.combinedAverageRating) ? 'star' : 'STAR.GREY'}.svg`"
-                            class="size-[9px] sp:size-[16px]"
+                            class="size-[10px] sp:size-[16px]"
                         >
                 </template>
             </div>
-            <p class="text-[8px] sp:text-[14px] font-medium lato leading-0">{{ experienceViatorData?.reviews?.totalReviews }} {{ $t('experience.card-experience.reviews').toLowerCase() }}</p>
+            <p class="text-[9px] sp:text-[14px] font-medium lato leading-0">{{ experienceViatorData?.reviews?.totalReviews }} {{ $t('experience.card-experience.reviews').toLowerCase() }}</p>
         </div>
     </div>
-    <div class="p-3 sp:p-6 border border-color-secondary bg-gradient-100 rounded-[10px] mt-[5px] sp:mt-[8px]">
+    <div class="p-3 sp:p-6 border border-color-secondary bg-gradient-100 rounded-[10px] mt-[5px] sp:mt-[8px] ">
         <template v-for="(item, index) in reviewsData ?? []">
             <div class="flex justify-between items-center space-x-[16px]">
-                <p class="text-[8px] sp:text-[14px] font-medium leading-0 lato">{{item.rating}} {{ $t('experience.list-page.section-filter.score.star').toLowerCase() }}</p>
+                <p class="text-[9px] sp:text-[14px] font-medium leading-0 lato">{{item.rating}} {{ $t('experience.list-page.section-filter.score.star').toLowerCase() }}</p>
                 <div class="w-[84px] sp:w-[168px]">
                     <div class="progress-container">
                         <div :style="{ width: getPercentage(item.count) + '%',  borderRadius: getPercentage(item.count) == 100 ? '6px' : '6px 0px 0px 6px' }" class="progress"></div>
                     </div>
                 </div>
-                <p class="text-[8px] sp:text-[14px] font-medium leading-0 lato">{{ item.count }}</p>
+                <p class="text-[9px] sp:text-[14px] font-medium leading-0 lato">{{ item.count }}</p>
             </div>
             <div
                 v-if="index < (reviewsData?.length || 0) - 1"

@@ -8,7 +8,7 @@
     </label>
     <div 
         v-show="!loading" 
-        class="flex h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] border-[2px]"
+        class="flex h-[29px] sp:h-10 rounded-[6px] sp:rounded-[10px] border-[2px]"
         :class="[borderColor]"
     >
       <!-- Dropdown con la lista de códigos -->

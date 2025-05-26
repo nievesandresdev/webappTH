@@ -2,7 +2,7 @@
     <!-- <PageTransitionGlobal module="service"> -->
         <div
             id="list-confort"
-            class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
+            class="overflow-y-scroll w-full px-2 sp:px-4 pt-[8px] sp:pt-[32px] "
         >
             <p
                 v-if="!isloadingForm"
@@ -15,7 +15,7 @@
                 v-else
                 class="item-skeletom animate-pulse h-[7px] sp:h-[14px] w-[60px] sp:w-[120px]"
             />
-            <div class="mt-2 sp:mt-4">
+            <div class="mt-2 sp:mt-4 ">
                 <template v-for="(item, index) in (servicesData ?? [])">
                     <CardList
                         :data="item"

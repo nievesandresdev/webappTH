@@ -66,7 +66,7 @@ const props = defineProps({
     },
     classIconLeft:{
         type: String,
-        default: 'mr-1'
+        default: 'mr-1 size-[15px] sp:size-4'
     },
     title:{
         type: String,
@@ -74,7 +74,7 @@ const props = defineProps({
     },
     classTitle:{
         type: String,
-        default: 'lato text-xs sp:text-base font-bold leading-[20px]'
+        default: 'lato text-[10px] sp:text-base font-bold leading-[20px]'
     },
     subtitle:{
         type: String,
@@ -82,7 +82,7 @@ const props = defineProps({
     },
     classSubtitle:{
         type: String,
-        default: 'lato text-[10px] sp:text-sm font-medium leading-[16px] mt-[2px]'
+        default: 'lato text-[8px] sp:text-sm font-medium leading-[16px] mt-[2px]'
     },
     activeCustom:{
         type: String,
