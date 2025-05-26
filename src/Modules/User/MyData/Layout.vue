@@ -18,17 +18,11 @@
     </template>
   </HeaderProfile>
 
-  <TransitionBook
-      :custom-transitions="{
-          PersonalInfo: 1,
-          UbicationData: 2,
-          ContactData: 3,
-      }"
-  >
-    <router-view v-slot="{ Component }">
-      <component :is="Component" :key="$route.name" />
-    </router-view>
-  </TransitionBook>
+  
+  <SlideTransition 
+  ref="slideTransition" 
+  :tabs="[{name: 'PersonalInfo'},{name: 'UbicationData'},{name: 'ContactData'}]"  
+  />
 
   <ModalNative width="327px" top="18%" @closeModal="isWhyModalOpen = false" :openProp="isWhyModalOpen">
         <div class="p-6">
@@ -76,7 +70,7 @@
   import { useHistoryStore } from '@/stores/modules/history';
   const historyStore = useHistoryStore();
 
-  import TransitionBook from '@/components/Transition/TransitionBook.vue';
+  import SlideTransition from '@/components/Transition/SlideTransition.vue'
   import HeaderProfile from '@/layout/Components/HeaderProfile.vue';
   import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import IconCustomColor from '@/components/IconCustomColor.vue';
@@ -89,41 +83,43 @@
   // DATA
     
   const isWhyModalOpen = ref(false);
+  const slideTransition = ref(null);
     
-const tabsMenu = computed(() => [
-  {    
-    title: 'Información',//t('hotel.information')
-    exclude: false,
-    iconDefault: '1.WA.INFOHUESPED',
-    iconSelected: `1.WA.INFOHUESPED`,
-    routeName: 'PersonalInfo',
-    isActive: router.currentRoute.value.name === 'PersonalInfo',
-    onClick: () => changeTab('PersonalInfo'),
-  },
-  {    
-    title: 'Ubicación',
-    exclude: false,
-    iconDefault: 'WA.pin-point',
-    iconSelected: `WA.pin-point`,
-    routeName: 'UbicationData',
-    isActive: router.currentRoute.value.name === 'UbicationData',
-    onClick: () => changeTab('UbicationData'),
-  },
-  {
-    title: 'Contacto',
-    exclude: false,
-    iconDefault: 'WA.SMS',
-    iconSelected: `WA.SMS`,
-    routeName: 'ContactData',
-    isActive: router.currentRoute.value.name === 'ContactData',
-    onClick: () => changeTab('ContactData'),
-  }
-]);
+  const tabsMenu = computed(() => [
+    {    
+      title: 'Información',//t('hotel.information')
+      exclude: false,
+      iconDefault: '1.WA.INFOHUESPED',
+      iconSelected: `1.WA.INFOHUESPED`,
+      routeName: 'PersonalInfo',
+      isActive: router.currentRoute.value.name === 'PersonalInfo',
+      onClick: () => changeTab('PersonalInfo'),
+    },
+    {    
+      title: 'Ubicación',
+      exclude: false,
+      iconDefault: 'WA.pin-point',
+      iconSelected: `WA.pin-point`,
+      routeName: 'UbicationData',
+      isActive: router.currentRoute.value.name === 'UbicationData',
+      onClick: () => changeTab('UbicationData'),
+    },
+    {
+      title: 'Contacto',
+      exclude: false,
+      iconDefault: 'WA.SMS',
+      iconSelected: `WA.SMS`,
+      routeName: 'ContactData',
+      isActive: router.currentRoute.value.name === 'ContactData',
+      onClick: () => changeTab('ContactData'),
+    }
+  ]);
 
    
  
-  function changeTab (r) {
-    router.push({ name: r });
+  function changeTab (name) {
+    slideTransition.value.goView({name})
+    // router.push({ name: r });
   }
 
   async function goPolices() { 

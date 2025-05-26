@@ -1,221 +1,223 @@
 <template>
-    <PageTransitionGlobal module="mydata">
-        <div class="px-4 pt-4" ref="formContainer">
-            <!-- foto -->
-            <div class="flex items-center gap-2 mb-4">
-                <!-- Círculo para la foto-->
-                <div
-                    class="flex justify-center items-center border border-black rounded-full overflow-hidden"
-                    style="width: 40px; height: 40px;"
-                >
-                    <img
-                        :src="$formatImage({ url: form.avatar, type: form.avatar_type })"
-                        class="object-cover"
-                        :class="{ 'w-6 h-6': !form.avatar }"
-                        alt="User Avatar"
+    <div>
+        <PageTransitionGlobal module="mydata">
+            <div class="px-4 pt-4" ref="formContainer">
+                <!-- foto -->
+                <div class="flex items-center gap-2 mb-4">
+                    <!-- Círculo para la foto-->
+                    <div
+                        class="flex justify-center items-center border border-black rounded-full overflow-hidden"
+                        style="width: 40px; height: 40px;"
+                    >
+                        <img
+                            :src="$formatImage({ url: form.avatar, type: form.avatar_type })"
+                            class="object-cover"
+                            :class="{ 'w-6 h-6': !form.avatar }"
+                            alt="User Avatar"
+                        />
+                    </div>
+                    <span
+                        class="underline text-[14px] font-bold lato cursor-pointer"
+                        @click="selectImage"
+                        >{{ $t('profile.page_personal_info.change_photo') }}</span
+                    >
+                    <!-- Input file oculto -->
+                    <input
+                        type="file"
+                        ref="fileInput"
+                        class="hidden"
+                        @change="onFileSelected"
+                        accept="image/*"
                     />
                 </div>
-                <span
-                    class="underline text-[14px] font-bold lato cursor-pointer"
-                    @click="selectImage"
-                    >{{ $t('profile.page_personal_info.change_photo') }}</span
-                >
-                <!-- Input file oculto -->
-                <input
-                    type="file"
-                    ref="fileInput"
-                    class="hidden"
-                    @change="onFileSelected"
-                    accept="image/*"
-                />
-            </div>
 
+                <div class="flex flex-col w-full gap-4">
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-1-label')}*`"
+                        :placeholder="$t('checkin.form.input-1-plchdr')"
+                        v-model="form.name"
+                        :isError="!form.name && nameTouched"
+                        @blur="handleNameBlur"
+                        :showTextError="true"
+                        :textError="$t('checkin.form.input-1-error')"
+                    />
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-2-label')}`"
+                        :placeholder="$t('checkin.form.input-2-plchdr')"
+                        v-model="form.lastname"
+                        :showTextError="false"
+                    />
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-3-label')}`"
+                        :placeholder="$t('checkin.form.input-3-plchdr')"
+                        v-model="form.secondLastname"
+                        :isError="secondLastnameError"
+                        :showTextError="false"
+                    />
+                    <!-- birthdate -->
+                    <div>
+                        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                            {{$t('checkin.form.input-4-label')}} 
+                        </label>
+                        <THInputCalendar
+                            :textLabel="$t('checkin.form.input-4-plchdr')"
+                            v-model="form.birthdate"
+                            :show_error_msg="false"
+                            :minDate="null"
+                            :is_range="false"
+                            mandatory
+                        />
+                    </div>
+                    <!-- nationality -->
+                    <div>
+                        <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                            {{$t('checkin.form.input-10-label')}} {{ form.nationality }}
+                        </label>
+                        <SearchCountryDropdown 
+                            v-model="form.nationality"
+                            :placeholder="$t('checkin.form.input-10-plchdr')"
+                            @hasError="nationalityError = $event"
+                        />
+                    </div>
+                    <!-- docType -->
+                    <div>
+                        <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                            {{$t('checkin.form.input-11-label')}}
+                        </label>
+                        <THInputField
+                            icon_left="/assets/icons/WA.Passport.svg"
+                            :textLabel="$t('checkin.form.input-11-plchdr')"
+                            :options="docType_options"
+                            v-model="form.docType"
+                            :top_dropdown="'top-0'"
+                            :extra_dropdown="'dropdown-clasess'"
+                            :error="secondLastnameError"
+                            mandatory
+                        />
+                        <p
+                            v-if="secondLastnameError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-11-error')}}</p>
+                    </div>
+                    <!-- docSupportNumber -->
+                    <div v-if="form.docType == 'DNI español' || form.docType == 'NIE'">
+                        <THInputText
+                            :customClasses="{'uppercase':form.docSupportNumber}"
+                            :textLabel="`${$t('checkin.form.input-12-label')}`"
+                            :placeholder="$t('checkin.form.input-12-plchdr')"
+                            iconLeft="/assets/icons/WA.Passport.svg"
+                            v-model="form.docSupportNumber"
+                            :isError="docSupportNumberError"
+                            :showTextError="false"
+                        />
+                        <p
+                            v-if="docSupportNumberError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-12-error')}}</p>
+                    </div>
+                    <!-- docNumber -->
+                    <div>
+                        <!-- {{ String(docNumberError) }} -->
+                        <THInputText
+                            :textLabel="`${$t('checkin.form.input-13-label')}`"
+                            :placeholder="$t('checkin.form.input-13-plchdr')"
+                            :customClasses="{'uppercase':form.docNumber}"
+                            iconLeft="/assets/icons/WA.Passport.svg"
+                            v-model="form.docNumber"
+                            :isError="docNumberError"
+                            :showTextError="false"
+                        />
+                        <p
+                            v-if="docNumberError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-12-error')}}</p>
+                    </div>
+                    <!-- gender  -->
+                    <div>
+                        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                            {{$t('checkin.form.input-5-label')}}
+                        </label>
+                        <THInputField
+                            icon_left="/assets/icons/WA.sexo.svg"
+                            :textLabel="$t('checkin.form.input-5-plchdr')"
+                            :options="options_gender"
+                            v-model="form.gender"
+                            :top_dropdown="'top-0'"
+                            :extra_dropdown="'dropdown-clasess'"
+                            mandatory
+                        />
+                    </div>
+                    <!-- <THInputText
+                        :textLabel="`${$t('profile.page_personal_info.form.email.label')}*`"
+                        :placeholder="emailPlaceholder"
+                        v-model="form.email"
+                        :isError="(!form.email && emailTouched) || (emailTouched && !isEmailValid)"
+                        @blur="validateEmail"
+                        type="email"
+                        :showTextError="false"
+                    /> -->
+                    <!-- <div>
+                        <BaseInputPhone 
+                            :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
+                            v-model="form.phone" 
+                            @handleError="phoneError = $event"
+                        /> 
+                    </div> -->
+                    <THInputText
+                        :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
+                        :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
+                        v-model="form.password"
+                        type="password"
+                        :disabled="true"
+                    />
+                </div>
+                <div class="flex justify-end mt-2 mb-2">
+                    <span
+                        class="underline lato text-sm font-bold"
+                        @click="openModalPassword"
+                        >{{ $t('profile.page_personal_info.change_password') }}</span
+                    >
+                </div>
+            </div>
+        </PageTransitionGlobal>
+        <SubmitButton
+            :isFormValid="isFormValid"
+            @handleSubmit="handleSubmit"
+            :sending="sending"
+        />
+        
+        <!-- Modal para cambiar contraseña -->
+        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
             <div class="flex flex-col w-full gap-4">
                 <THInputText
-                    :textLabel="`${$t('checkin.form.input-1-label')}*`"
-                    :placeholder="$t('checkin.form.input-1-plchdr')"
-                    v-model="form.name"
-                    :isError="!form.name && nameTouched"
-                    @blur="handleNameBlur"
-                    :showTextError="true"
-                    :textError="$t('checkin.form.input-1-error')"
-                />
-                <THInputText
-                    :textLabel="`${$t('checkin.form.input-2-label')}`"
-                    :placeholder="$t('checkin.form.input-2-plchdr')"
-                    v-model="form.lastname"
-                    :showTextError="false"
-                />
-                <THInputText
-                    :textLabel="`${$t('checkin.form.input-3-label')}`"
-                    :placeholder="$t('checkin.form.input-3-plchdr')"
-                    v-model="form.secondLastname"
-                    :isError="secondLastnameError"
-                    :showTextError="false"
-                />
-                <!-- birthdate -->
-                <div>
-                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                        {{$t('checkin.form.input-4-label')}} 
-                    </label>
-                    <THInputCalendar
-                        :textLabel="$t('checkin.form.input-4-plchdr')"
-                        v-model="form.birthdate"
-                        :show_error_msg="false"
-                        :minDate="null"
-                        :is_range="false"
-                        mandatory
-                    />
-                </div>
-                <!-- nationality -->
-                <div>
-                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                        {{$t('checkin.form.input-10-label')}} {{ form.nationality }}
-                    </label>
-                    <SearchCountryDropdown 
-                        v-model="form.nationality"
-                        :placeholder="$t('checkin.form.input-10-plchdr')"
-                        @hasError="nationalityError = $event"
-                    />
-                </div>
-                <!-- docType -->
-                <div>
-                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                        {{$t('checkin.form.input-11-label')}}
-                    </label>
-                    <THInputField
-                        icon_left="/assets/icons/WA.Passport.svg"
-                        :textLabel="$t('checkin.form.input-11-plchdr')"
-                        :options="docType_options"
-                        v-model="form.docType"
-                        :top_dropdown="'top-0'"
-                        :extra_dropdown="'dropdown-clasess'"
-                        :error="secondLastnameError"
-                        mandatory
-                    />
-                    <p
-                        v-if="secondLastnameError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-11-error')}}</p>
-                </div>
-                <!-- docSupportNumber -->
-                <div v-if="form.docType == 'DNI español' || form.docType == 'NIE'">
-                    <THInputText
-                        :customClasses="{'uppercase':form.docSupportNumber}"
-                        :textLabel="`${$t('checkin.form.input-12-label')}`"
-                        :placeholder="$t('checkin.form.input-12-plchdr')"
-                        iconLeft="/assets/icons/WA.Passport.svg"
-                        v-model="form.docSupportNumber"
-                        :isError="docSupportNumberError"
-                        :showTextError="false"
-                    />
-                    <p
-                        v-if="docSupportNumberError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-12-error')}}</p>
-                </div>
-                <!-- docNumber -->
-                <div>
-                    <!-- {{ String(docNumberError) }} -->
-                    <THInputText
-                        :textLabel="`${$t('checkin.form.input-13-label')}`"
-                        :placeholder="$t('checkin.form.input-13-plchdr')"
-                        :customClasses="{'uppercase':form.docNumber}"
-                        iconLeft="/assets/icons/WA.Passport.svg"
-                        v-model="form.docNumber"
-                        :isError="docNumberError"
-                        :showTextError="false"
-                    />
-                    <p
-                        v-if="docNumberError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-12-error')}}</p>
-                </div>
-                <!-- gender  -->
-                <div>
-                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                        {{$t('checkin.form.input-5-label')}}
-                    </label>
-                    <THInputField
-                        icon_left="/assets/icons/WA.sexo.svg"
-                        :textLabel="$t('checkin.form.input-5-plchdr')"
-                        :options="options_gender"
-                        v-model="form.gender"
-                        :top_dropdown="'top-0'"
-                        :extra_dropdown="'dropdown-clasess'"
-                        mandatory
-                    />
-                </div>
-                <!-- <THInputText
-                    :textLabel="`${$t('profile.page_personal_info.form.email.label')}*`"
-                    :placeholder="emailPlaceholder"
-                    v-model="form.email"
-                    :isError="(!form.email && emailTouched) || (emailTouched && !isEmailValid)"
-                    @blur="validateEmail"
-                    type="email"
-                    :showTextError="false"
-                /> -->
-                <!-- <div>
-                    <BaseInputPhone 
-                        :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
-                        v-model="form.phone" 
-                        @handleError="phoneError = $event"
-                    /> 
-                </div> -->
-                <THInputText
-                    :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
-                    :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
-                    v-model="form.password"
+                    :textLabel="'Contraseña actual'"
+                    :placeholder="'Introduce tu contraseña actual'"
+                    v-model="currentPassword"
+                    :isError="currentPasswordError"
+                    :textError="'La contraseña actual introducida es incorrecta'"
                     type="password"
-                    :disabled="true"
                 />
-            </div>
-            <div class="flex justify-end mt-2 mb-2">
-                <span
-                    class="underline lato text-sm font-bold"
-                    @click="openModalPassword"
-                    >{{ $t('profile.page_personal_info.change_password') }}</span
+                <THInputText
+                    :textLabel="'Nueva contraseña'"
+                    :placeholder="'Introduce tu nueva contraseña'"
+                    v-model="newPassword"
+                    type="password"
+                />
+                <button
+                    @click="handleChangePassword"
+                    :disabled="!isModalFormValid"
+                    :class="[
+                        'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
+                        isModalFormValid
+                            ? 'bg-[#333333] text-white border-white'
+                            : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
+                    ]"
                 >
+                    Cambiar contraseña
+                </button>
             </div>
-        </div>
-    </PageTransitionGlobal>
-    <SubmitButton
-        :isFormValid="isFormValid"
-        @handleSubmit="handleSubmit"
-        :sending="sending"
-    />
-    
-    <!-- Modal para cambiar contraseña -->
-    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
-        <div class="flex flex-col w-full gap-4">
-            <THInputText
-                :textLabel="'Contraseña actual'"
-                :placeholder="'Introduce tu contraseña actual'"
-                v-model="currentPassword"
-                :isError="currentPasswordError"
-                :textError="'La contraseña actual introducida es incorrecta'"
-                type="password"
-            />
-            <THInputText
-                :textLabel="'Nueva contraseña'"
-                :placeholder="'Introduce tu nueva contraseña'"
-                v-model="newPassword"
-                type="password"
-            />
-            <button
-                @click="handleChangePassword"
-                :disabled="!isModalFormValid"
-                :class="[
-                    'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
-                    isModalFormValid
-                        ? 'bg-[#333333] text-white border-white'
-                        : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
-                ]"
-            >
-                Cambiar contraseña
-            </button>
-        </div>
-    </BottomModal>
+        </BottomModal>
+    </div>
 </template>
 
 <script setup>

@@ -1,63 +1,65 @@
 <template>
-    <PageTransitionGlobal module="mydata">
-        <div class="px-4 pt-4 flex flex-col gap-4 min-h-[68.6vh]">
-            <!-- addressResidence -->
-            <div>
-                <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                {{$t('checkin.form.input-14-label')}}
-                </label>
-                <SearchCountryDropdown 
-                    v-model="form.countryResidence"
-                    :placeholder="$t('checkin.form.input-14-plchdr')"
-                    @selectedCountryCode="selectedCountryCode = $event"
-                />
+    <div>
+        <PageTransitionGlobal module="mydata">
+            <div class="px-4 pt-4 flex flex-col gap-4 min-h-[68.6vh]">
+                <!-- addressResidence -->
+                <div>
+                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                    {{$t('checkin.form.input-14-label')}}
+                    </label>
+                    <SearchCountryDropdown 
+                        v-model="form.countryResidence"
+                        :placeholder="$t('checkin.form.input-14-plchdr')"
+                        @selectedCountryCode="selectedCountryCode = $event"
+                    />
+                </div>
+                <!-- postalCode -->
+                <div>
+                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                        {{$t('checkin.form.input-15-label')}}
+                    </label>
+                    <CodeMunicipalityInput 
+                        v-model="form.postalCode"
+                        :selectedCountry="selectedCountryCode"
+                        :placeholder="$t('checkin.form.input-15-plchdr')"
+                        typeResults="locality,postcode"
+                        :countryName="form.countryResidence"
+                    />
+                </div>
+                <!-- municipality -->
+                <div>
+                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                        {{$t('checkin.form.input-16-label')}}
+                    </label>
+                    <CodeMunicipalityInput
+                        v-model="form.municipality"
+                        :placeholder="$t('checkin.form.input-16-plchdr')"
+                        :selectedCountry="selectedCountryCode"
+                        :countryName="form.countryResidence"
+                    />
+                </div>
+                <!-- addressResidence -->
+                <div>
+                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                        {{$t('checkin.form.input-17-label')}}
+                    </label>
+                    <CodeMunicipalityInput 
+                        v-model="form.addressResidence"
+                        :placeholder="$t('checkin.form.input-17-plchdr')"
+                        :selectedCountry="selectedCountryCode"
+                        :countryName="form.countryResidence"
+                        typeResults="address,place,locality"
+                        formatResult="address"
+                    />
+                </div>
             </div>
-            <!-- postalCode -->
-            <div>
-                <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                    {{$t('checkin.form.input-15-label')}}
-                </label>
-                <CodeMunicipalityInput 
-                    v-model="form.postalCode"
-                    :selectedCountry="selectedCountryCode"
-                    :placeholder="$t('checkin.form.input-15-plchdr')"
-                    typeResults="locality,postcode"
-                    :countryName="form.countryResidence"
-                />
-            </div>
-            <!-- municipality -->
-            <div>
-                <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                    {{$t('checkin.form.input-16-label')}}
-                </label>
-                <CodeMunicipalityInput
-                    v-model="form.municipality"
-                    :placeholder="$t('checkin.form.input-16-plchdr')"
-                    :selectedCountry="selectedCountryCode"
-                    :countryName="form.countryResidence"
-                />
-            </div>
-            <!-- addressResidence -->
-            <div>
-                <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                    {{$t('checkin.form.input-17-label')}}
-                </label>
-                <CodeMunicipalityInput 
-                    v-model="form.addressResidence"
-                    :placeholder="$t('checkin.form.input-17-plchdr')"
-                    :selectedCountry="selectedCountryCode"
-                    :countryName="form.countryResidence"
-                    typeResults="address,place,locality"
-                    formatResult="address"
-                />
-            </div>
-        </div>
-    </PageTransitionGlobal>
-    <SubmitButton
-        :isFormValid="isFormValid"
-        @handleSubmit="handleSubmit"
-        :sending="sending"
-    />
+        </PageTransitionGlobal>
+        <SubmitButton
+            :isFormValid="isFormValid"
+            @handleSubmit="handleSubmit"
+            :sending="sending"
+        />
+    </div>
 </template>
 <script setup>
 import { ref, onMounted, computed, reactive } from 'vue';

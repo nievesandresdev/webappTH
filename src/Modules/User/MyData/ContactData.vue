@@ -1,38 +1,40 @@
 <template>
-    <PageTransitionGlobal module="mydata">
-        <div class="px-4 pt-4 flex flex-col gap-4 min-h-[68.6vh]">
+    <div>
+        <PageTransitionGlobal module="mydata">
+            <div class="px-4 pt-4 flex flex-col gap-4 min-h-[68.6vh]">
 
-            <!-- email -->
-            <div>
-                <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                    {{$t('checkin.form.input-7-label')}}*
-                </label>
-                <THInputText
-                    iconLeft="/assets/icons/WA.mail.svg"
-                    :placeholder="$t('auth.log-or-register.input')"
-                    :type="'email'"
-                    v-model="form.email"
-                    @handleError="emailError = $event"
-                    :textError="$t('auth.log-or-register.text-error')"
-                />
+                <!-- email -->
+                <div>
+                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                        {{$t('checkin.form.input-7-label')}}*
+                    </label>
+                    <THInputText
+                        iconLeft="/assets/icons/WA.mail.svg"
+                        :placeholder="$t('auth.log-or-register.input')"
+                        :type="'email'"
+                        v-model="form.email"
+                        @handleError="emailError = $event"
+                        :textError="$t('auth.log-or-register.text-error')"
+                    />
+                </div>
+                <!-- phone -->
+                <div>
+                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                        {{$t('checkin.form.input-6-label')}}
+                    </label>
+                    <BaseInputPhone 
+                        v-model="form.phone" 
+                        @handleError="phoneError = $event"
+                    /> 
+                </div>
             </div>
-            <!-- phone -->
-            <div>
-                <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                    {{$t('checkin.form.input-6-label')}}
-                </label>
-                <BaseInputPhone 
-                    v-model="form.phone" 
-                    @handleError="phoneError = $event"
-                /> 
-            </div>
-        </div>
-    </PageTransitionGlobal>
-    <SubmitButton
-        :isFormValid="isFormValid"
-        @handleSubmit="handleSubmit"
-        :sending="sending"
-    />
+        </PageTransitionGlobal>
+        <SubmitButton
+            :isFormValid="isFormValid"
+            @handleSubmit="handleSubmit"
+            :sending="sending"
+        />
+    </div>
 </template>
 <script setup>
 import { ref, onMounted, computed, reactive } from 'vue';
