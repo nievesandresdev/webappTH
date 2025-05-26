@@ -6,11 +6,11 @@
     <!-- El badge (círculo) en la esquina -->
     <div
       v-if="showBadge"
-      :class="classes"
+      :class="[classes, responsiveSizeClasses]"
       :style="[{
             backgroundColor: bgColor ?? chainStore.$bgColor1,
             borderColor: borderColor ?? chainStore.$colorContrast1,
-      },badgeSize]"
+      }]"
     />
   </div>
 </template>
@@ -57,5 +57,18 @@ const badgeSize = computed(() => {
       return;
 });
 
+// Clases responsivas basadas en el size
+const responsiveSizeClasses = computed(() => {
+    switch (props.size) {
+        case 'small':
+          return 'w-[7px] h-[7px] sp:w-[14px] sp:h-[14px]';
+        case 'medium':
+          return 'w-[14px] h-[14px] sp:w-[14px] sp:h-[14px]';
+        case 'large':
+          return 'w-[20px] h-[20px] sp:w-[20px] sp:h-[20px]';
+        default:
+          return 'w-[7px] h-[7px] sp:w-[7px] sp:h-[7px]';
+    }
+});
 
 </script>
