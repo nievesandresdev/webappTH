@@ -71,7 +71,7 @@
                     <!-- nationality -->
                     <div>
                         <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                            {{$t('checkin.form.input-10-label')}} {{ form.nationality }}
+                            {{$t('checkin.form.input-10-label')}}
                         </label>
                         <SearchCountryDropdown 
                             v-model="form.nationality"
@@ -373,7 +373,7 @@ const handleSubmit = async () => {
         formData.append('name', form.name);
         formData.append('lastname', form.lastname);
         formData.append('secondLastname', form.secondLastname);
-        formData.append('birthdate', formatAnyDate(form.birthdate,'dd/MM/yyyy'));
+        formData.append('birthdate', form.birthdate ? formatAnyDate(form.birthdate,'dd/MM/yyyy') : null);
         formData.append('nationality', form.nationality);
         formData.append('docType', form.docType);
         formData.append('docSupportNumber', form.docSupportNumber);
@@ -498,6 +498,8 @@ const isFormValid = computed(() => {
         $normalizeInput(form.docNumber) !== $normalizeInput(originalData.value.doc_num) ||
         $normalizeInput(form.gender) !== $normalizeInput(originalData.value.sex);
         
+        console.log('test originalData', originalData.value);
+        console.log('test form', form);
     return (
         isChanged && Boolean(form.name) && !nationalityError.value &&
         !docNumberError.value && !docSupportNumberError.value

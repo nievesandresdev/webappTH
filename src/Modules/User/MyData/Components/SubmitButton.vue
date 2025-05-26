@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 hbg-gray-100 sticky bottom-0 left-0 z-[100]" :class="{'shadow-guest': scrollPosition > 0}">
+    <div class="p-4 hbg-gray-100 sticky bottom-0 left-0 z-[60]" :class="{'shadow-guest': scrollPosition > 0}">
         <PrimaryButton
             @click="handleSubmit"
             :disabled="!isFormValid || sending"

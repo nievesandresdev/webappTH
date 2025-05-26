@@ -17,7 +17,7 @@ export default {
     "logout": "Disconnettersi",
     "share_stay": "Condividi soggiorno",
     "page_personal_info": {
-        "title": "Informazioni personali",
+        "title": "I miei dati",
         "change_photo": "Cambia foto",
         "change_password": "Cambia password",
         "btn_save": "Salva",

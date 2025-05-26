@@ -4,7 +4,7 @@
       <!-- Transition container -->
       <transition :name="transitionName" mode="out-in">
         <!-- Router view with position absolute for proper overlay -->
-        <router-view :key="$route.fullPath" class="absolute inset-0 w-full h-full z-[90000]" />
+        <router-view :key="$route.fullPath" class="absolute inset-0 w-full h-full z-[900]" />
       </transition>
     </div>
   
