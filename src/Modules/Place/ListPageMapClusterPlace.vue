@@ -50,7 +50,7 @@
                     'icon-size': [
                         'match',
                         ['get', 'category'],
-                        'hotel', 0.1,
+                        'hotel', windowWidth < 250 ? 0.053 : 0.1,
                         'monumentos-recomendation', 0.1,
                         'museos-recomendation', 0.1,
                         'naturaleza-recomendation', 0.1,

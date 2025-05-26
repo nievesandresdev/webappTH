@@ -14,21 +14,21 @@
             v-else
             src="/assets/icons/WA.search.svg"
             alt="prepend inner icon"
-            class="absolute left-1.5 sp:left-3 top-[9px] sp:top-[7.5px] w-2.5 sp:w-6 h-3 sp:h-6 z-10"
+            class="absolute left-1.5 sp:left-3 top-[8px] sp:top-[7.5px] w-[14px] sp:w-6 h-[14px] sp:h-6 z-10"
         >
         <input
             v-model="valueSearch"
             id="input-search-place"
             type="text"
             :placeholder="$t('place.placeholder-search')"
-            class="rounded-[100px] h-[20px] sp:h-[40px] w-full pl-5 sp:pl-11 lato py-1.5 sp:py-3 text-[8px] sp:text-sm font-medium leading-[16px] border-[2px] focus:border-[#333] border-[#bfbfbf]"
+            class="rounded-[100px] h-[25px] sp:h-[40px] w-full pl-[22px] sp:pl-11 lato py-2 sp:py-3 text-[8px] sp:text-sm font-medium leading-[16px] border-[2px] focus:border-[#333] border-[#bfbfbf]"
             :class="valueSearch ? 'border-[2px]' : 'border-[1px]'"
             @input="searchHnadle"
             @focus="isFocused = true"
             @blur="isFocused = false"
             @click="activateSearch('medium')"
         >
-        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 flex space-x-1 sp:space-x-2 flex items-center">
+        <div class="absolute right-[8px] sp:right-[16px] top-[3px] sp:top-[7px] z-10 space-x-1 sp:space-x-2 flex items-center">
             <button
                 v-if="searchFull"
                 class="size-[12px] sp:size-6 mb-[1px] sp:mb-[3px]"  
@@ -57,7 +57,7 @@
                     :border-color="chainStore.$colorContrast1"
                 >
                     <button
-                        class="size-[12px] sp:size-6"
+                        class="size-[14px] sp:size-6"
                     >
                         <img
                             src="/assets/icons/WA.Filtros.svg"

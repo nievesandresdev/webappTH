@@ -3,7 +3,7 @@
     <!-- <div class="" :class="{ 'shadow-header': isScrollingList }"> -->
         <p
             v-if="!isloadingForm"
-            class="text-[6px] sp:text-sm font-medium"
+            class="text-[10px] sp:text-sm font-medium"
         >
             <template v-if="!searchingActive">
                 <template v-if="!formFilter.search && placesData.length">

@@ -17,7 +17,7 @@
             :classes="[
                 'absolute border-[1.2px] rounded-full w-[7px] h-[7px] sp:w-[14px] sp:h-[14px]',
                 {
-                    'top-[-13px] right-[-20px] sp:top-[-22px] sp:right-[-37px]': $route.name == 'Home',
+                    'top-[-14px] right-[-20px] sp:top-[-26px] sp:right-[-39px]': $route.name == 'Home',
                     'top-[-13px] right-[-20px] sp:top-[-22px] sp:right-[-37px]': $route.name !== 'Home',
                 }
             ]" 

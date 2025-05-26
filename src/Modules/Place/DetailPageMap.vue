@@ -7,6 +7,7 @@
         :height-map="windowWidth >= 250 ? '168px' : '90px'"
         :showExpand="true"
         :transition="false"
+        :zoom="13"
     >
         <template v-slot:controls>
             <!-- <MapboxMarker :lng-lat="coordCenter">
@@ -17,22 +18,31 @@
             </MapboxMarker> -->
 
             <MapboxImage id="hotel" src="/assets/icons/WA.map-pointer.png" />
+            <MapboxImage id="hotel-recomendation" src="/assets/icons/WA.map-pointer.png" />
 
             <MapboxImage id="monumentos" src="/assets/icons/WA.MAP.POINTER.MONUMENTOS.png" />
+            <MapboxImage id="monumentos-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.MONUMENTOS.png" />
 
             <MapboxImage id="museos" src="/assets/icons/WA.MAP.POINTER.MUSEOS.png" />
+            <MapboxImage id="museos-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.MUSEOS.png" />
 
             <MapboxImage id="naturaleza" src="/assets/icons/WA.MAP.POINTER.NATURALEZA.png" />
+            <MapboxImage id="naturaleza-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.NATURALEZA.png" />
 
             <MapboxImage id="restaurantes" src="/assets/icons/WA.MAP.POINTER.RESTAURANTES.png" />
+            <MapboxImage id="restaurantes-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.RESTAURANTES.png" />
 
             <MapboxImage id="cafeterias-y-postres" src="/assets/icons/WA.MAP.POINTER.CAFETERIASYPOSTRES.png" />
+            <MapboxImage id="cafeterias-y-postres-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.CAFETERIASYPOSTRES.png" />
 
             <MapboxImage id="compras" src="/assets/icons/WA.MAP.POINTER.COMPRAS.png" />
+            <MapboxImage id="compras-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.COMPRAS.png" />
 
             <MapboxImage id="otros" src="/assets/icons/WA.MAP.POINTER.OTROS.png" />
+            <MapboxImage id="otros-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.OTROS.png" />
 
             <MapboxImage id="vida-nocturna" src="/assets/icons/WA.MAP.POINTER.VIDANOCTURNA.png" />
+            <MapboxImage id="vida-nocturna-recomendation" src="/assets/icons/WA.MAP.POINTER.RECOMMENDATION.VIDANOCTURNA.png" />
 
             <MapboxCluster
                 :data="transformedPointersData"
@@ -42,9 +52,18 @@
                     'icon-size': [
                         'match',
                         ['get', 'category'],
-                        'hotel', 0.09,
+                        'hotel', windowWidth < 250 ? 0.053 : 0.1,
+                        'hotel-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'monumentos-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'museos-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'naturaleza-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'restaurantes-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'cafeterias-y-postres-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'otros-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'vida nocturna-recomendation', windowWidth < 250 ? 0.053 : 0.1,
+                        'compras-recomendation', windowWidth < 250 ? 0.053 : 0.1,
                         /* default size if category doesn't match */
-                        0.09
+                        0.063
                     ]
                 }"
                 :clusterMinPoints="5"

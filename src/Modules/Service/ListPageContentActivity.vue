@@ -6,7 +6,7 @@
         >
             <p
                 v-if="!isloadingForm"
-                class="text-[6px] sp:text-sm font-bold lato"
+                class="text-[9px] sp:text-sm font-bold lato"
             >
                 {{ paginateData.total }} {{ $t('service.activity.text-search-found') }}
             </p>

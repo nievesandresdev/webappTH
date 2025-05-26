@@ -15,7 +15,7 @@
                 v-if="data?.featured"
                 class="absolute bottom-0 left-0 px-[2px] sp:px-[4px] pb-[4px] sp:pb-[8px] z-20 w-full"
             >
-                <div class="rounded-full px-[2px] sp:px-[4px] py-[1px] sp:py-[2px] flex space-x-[1px] sp:space-x-1 bg-white flex items-center">
+                <div class="rounded-full px-[2px] sp:px-[4px] py-[1px] sp:py-[2px] flex space-x-[1px] sp:space-x-1 bg-white items-center">
                     <img
                         src="/assets/icons/WA.STAR.BLACK.svg"
                         class="size-[6px] sp:size-[12px]"
@@ -30,8 +30,8 @@
             
         >
             <div class="truncate-2">
-                <p class="text-[9px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
-                <p v-if="typeService != 'ACTIVITY'" class="text-[9px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
+                <p class="text-[11px] sp:text-[14px] font-bold lato leading-none" v-html="data?.name ?? data?.title" />
+                <p v-if="typeService != 'ACTIVITY'" class="text-[10px] sp:text-[14px] lato leading-none truncate-2" v-html="data?.translation_current?.description ?? data?.description" />
             </div>
             <div
                 class="flex items-end justify-end pb-[4px] sp:pb-[8px]"
@@ -45,7 +45,7 @@
                         </span>
                     </template>
                     <template v-else>
-                        <span v-if="serviceStore.calPrice(data)?.isFrom" class="text-[7px] sp:text-[10px] lato leading-none font-bold block">
+                        <span v-if="serviceStore.calPrice(data)?.isFrom" class="text-[8px] sp:text-[10px] lato leading-none font-bold block">
                             {{ $t('experience.card-experience.from') }}
                         </span>
                         <span class="text-[10px] sp:text-[14px] font-medium lato leading-none">

@@ -48,11 +48,11 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="innerWidth <= 300 ? '16' : '24'"
-                                    :width="innerWidth <= 300 ? '16' : '24'"
+                                    :height="innerWidth <= 300 ? '15' : '24'"
+                                    :width="innerWidth <= 300 ? '15' : '24'"
                                 />
                                 <span
-                                    class="text-[10px] sp:text-base font-bold leading-none lato"
+                                    class="text-[9px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
                                 >{{ tab.title }}</span>
                             </div>
