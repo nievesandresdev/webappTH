@@ -53,7 +53,7 @@
             </p>
         </div>
         <h5 
-            class="text-xs sp:text-base font-medium mt-0 sp:mt-2.5"
+            class="text-[10px] sp:text-base font-medium mt-0 sp:mt-2.5"
             :class="{'h-8 sp:h-11 truncate-2':truncateTitle}"
         >
             {{data.title}}

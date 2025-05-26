@@ -15,10 +15,10 @@
             size="medium"
             :showBadge="queryStore.hasPendingQuery"
             :classes="[
-                'absolute border-[1.2px] rounded-full',
+                'absolute border-[1.2px] rounded-full w-[7px] h-[7px] sp:w-[14px] sp:h-[14px]',
                 {
-                    'top-[-24px] right-[-48px]': $route.name == 'Home',
-                    'top-[-22px] right-[-40px]': $route.name !== 'Home',
+                    'top-[-13px] right-[-20px] sp:top-[-22px] sp:right-[-37px]': $route.name == 'Home',
+                    'top-[-13px] right-[-20px] sp:top-[-22px] sp:right-[-37px]': $route.name !== 'Home',
                 }
             ]" 
         />
