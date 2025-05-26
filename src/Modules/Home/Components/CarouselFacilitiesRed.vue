@@ -8,8 +8,10 @@
         }"
     >
         <Carousel 
-            :items-to-show="items.length > 1 ? 1.2 : 1"
+            :items-to-show="1"
             :snap-align="items.length > 1 ? 'start' : 'center'"
+            ref="myCarousel"
+            :wrap-around="true"
         >
             <Slide v-for="(item, index) in items" :key="index">
                 <CarouselCard
@@ -41,6 +43,10 @@ const router = useRouter();
 // STORE
 import { useFacilityStore } from '@/stores/modules/facility'
 const facilityStore = useFacilityStore()
+
+const myCarousel = ref(null)
+
+console.log(myCarousel.currentSlide )
 
 const props =  defineProps({
     items: {
