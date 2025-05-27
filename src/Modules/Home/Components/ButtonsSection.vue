@@ -107,6 +107,7 @@ import { $currentPeriod } from '@/utils/helpers.js'
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useGuestStore } from '@/stores/modules/guest';
+import { isMockup } from '@/utils/utils';
 const guestStore = useGuestStore();
 //
 const isOpenRules = ref(false)
@@ -122,7 +123,7 @@ provide('openModalReferrals',openModalReferrals)
 provide('openModalReferent',openModalReferent)
 
 onMounted(() => {
-    if(hotelStore.hotelData?.buttons_home && guestStore.guestData) {
+    if(hotelStore.hotelData?.buttons_home && guestStore.guestData || hotelStore.hotelData?.buttons_home && isMockup()) {
         initData();
     }
 })
