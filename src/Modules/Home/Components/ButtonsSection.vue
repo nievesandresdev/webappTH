@@ -1,91 +1,93 @@
 <template>
-    <ButtonsSectionCarousel
-        v-if="activeButtonsCount > 4"
-        @goCall="goCall"
-        @isOpenWifi="isOpenWifi = true"
-        @isOpenRules="isOpenRules = true"
-        @openModalRewards="openModalRewards"
-    />
-    <div 
-        v-else
-        class="px-2 sp:px-6 flex items-start"
-        :class="{'justify-between': activeButtonsCount > 2, 'justify-around': activeButtonsCount == 2, 'justify-center': activeButtonsCount == 1}"
-    >
-        <!-- button checkin -->
-        <router-link v-if="showCheckinButton" :to="{name: 'Guests'}" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="checkin-button"
-                iconUrl="/assets/icons/WA.checkin.user.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.checkin') }}</span>
-        </router-link>
-        <!-- button call -->
-        <div v-if="showPhoneButton" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="call-button"
-                iconUrl="/assets/icons/WA.llamar.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                @click="goCall"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.call') }}</span>
-        </div>
-        <!-- button wifi -->
-        <div v-if="showWifiButton" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="wifi-button"
-                iconUrl="/assets/icons/WA.wifi.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                @click="isOpenWifi = true"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.wifi') }}</span>
-        </div>
-        <!-- button rules --> 
-        <div v-if="showRulesButton" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="rules-button"
-                iconUrl="/assets/icons/WA.normas.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                @click="isOpenRules = true"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.rules') }}</span>
-        </div>
-        <!-- button refered -->
-        <div v-if="showReferedButton" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="refered-button"
-                iconUrl="/assets/icons/WA.referido.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                @click="openModalRewards"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-        </div>
-        <!-- button refered -->
-        <div v-if="showReferedButton2" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="refered-button"
-                iconUrl="/assets/icons/WA.referente.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                @click="openModalRewards"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-        </div>
+    <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
+        <ButtonsSectionCarousel
+            v-if="activeButtonsCount > 4"
+            @goCall="goCall"
+            @isOpenWifi="isOpenWifi = true"
+            @isOpenRules="isOpenRules = true"
+            @openModalRewards="openModalRewards"
+        />
+        <div 
+            v-else
+            class="px-2 sp:px-6 flex items-start"
+            :class="{'justify-between': activeButtonsCount > 2, 'justify-around': activeButtonsCount == 2, 'justify-center': activeButtonsCount == 1}"
+        >
+            <!-- button checkin -->
+            <router-link v-if="showCheckinButton" :to="{name: 'Guests'}" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="checkin-button"
+                    iconUrl="/assets/icons/WA.checkin.user.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.checkin') }}</span>
+            </router-link>
+            <!-- button call -->
+            <div v-if="showPhoneButton" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="call-button"
+                    iconUrl="/assets/icons/WA.llamar.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                    @click="goCall"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.call') }}</span>
+            </div>
+            <!-- button wifi -->
+            <div v-if="showWifiButton" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="wifi-button"
+                    iconUrl="/assets/icons/WA.wifi.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                    @click="isOpenWifi = true"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.wifi') }}</span>
+            </div>
+            <!-- button rules --> 
+            <div v-if="showRulesButton" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="rules-button"
+                    iconUrl="/assets/icons/WA.normas.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                    @click="isOpenRules = true"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.rules') }}</span>
+            </div>
+            <!-- button refered -->
+            <div v-if="showReferedButton" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="refered-button"
+                    iconUrl="/assets/icons/WA.referido.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                    @click="openModalRewards"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
+            </div>
+            <!-- button refered -->
+            <div v-if="showReferedButton2" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="refered-button"
+                    iconUrl="/assets/icons/WA.referente.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                    @click="openModalRewards"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
+            </div>
 
-        <router-link v-if="showReserveButton" :to="{name: 'ReservationStay'}" class="block max-w-[76px]">
-            <RoundedButton
-                classContainer="mx-auto"
-                id="reserve-button"
-                iconUrl="/assets/icons/WA.bookyournextstay.svg"
-                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-            />
-            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.reserve') }}</span>
-        </router-link>
+            <router-link v-if="showReserveButton" :to="{name: 'ReservationStay'}" class="block max-w-[76px]">
+                <RoundedButton
+                    classContainer="mx-auto"
+                    id="reserve-button"
+                    iconUrl="/assets/icons/WA.bookyournextstay.svg"
+                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                />
+                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.reserve') }}</span>
+            </router-link>
+        </div>
     </div>
     <BottomRules :isOpen="isOpenRules" :scrollContentOnly="true" @update:isOpen="isOpenRules = $event" @update:count="countRules = $event" />
     <BottomSheetWifi :isOpen="isOpenWifi" :scrollContentOnly="true" @update:isOpen="isOpenWifi = $event" @update:count="countWifi = $event" />
@@ -119,9 +121,11 @@ const responseButtons = ref([])
 provide('openModalReferrals',openModalReferrals)
 provide('openModalReferent',openModalReferent)
 
-// onMounted(() => {
-//     initData();
-// })
+onMounted(() => {
+    if(hotelStore.hotelData?.buttons_home && guestStore.guestData) {
+        initData();
+    }
+})
 
 const initData = async () => {
     const response = await hotelStore.$getRewardsByHotel();
