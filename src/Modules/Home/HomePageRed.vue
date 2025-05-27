@@ -4,14 +4,10 @@
 
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
+    
         <HeroSectionRed />
-
         <BannersSection />
-
-        <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
-            <ButtonsSection />
-        </div>
-
+        <ButtonsSection />
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
