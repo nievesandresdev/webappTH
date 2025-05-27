@@ -25,7 +25,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div class="mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
                 </div>
             </section>
