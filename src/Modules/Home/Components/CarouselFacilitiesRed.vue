@@ -93,17 +93,16 @@ const props =  defineProps({
 let isDragging = ref(false);
 let translateX = ref(0);
 let startX = ref(0);
-let currentX = ref(0);
-let slideWidth = ref(0);
 let maxTranslate = ref(0);
 
 onMounted(() => {
     if (carouselContainer.value && props.items.length > 1) {
-        // Simular el comportamiento original de items-to-show="1.2"
-        slideWidth.value = carouselContainer.value.offsetWidth / 1.2; // 83.33% del contenedor
-        const totalWidth = slideWidth.value * props.items.length;
-        const containerWidth = carouselContainer.value.offsetWidth;
-        maxTranslate.value = Math.max(0, totalWidth - containerWidth);
+        // Esperar a que las cards se rendericen
+        setTimeout(() => {
+            const containerWidth = carouselContainer.value.offsetWidth;
+            const trackWidth = carouselTrack.value.scrollWidth; // Ancho total del contenido
+            maxTranslate.value = Math.max(0, trackWidth - containerWidth);
+        }, 100);
     }
 });
 
@@ -113,7 +112,6 @@ const handleStart = (event) => {
     isDragging.value = true;
     const clientX = event.touches ? event.touches[0].clientX : event.clientX;
     startX.value = clientX;
-    currentX.value = clientX;
     
     // Prevent default to avoid scrolling on mobile
     event.preventDefault();
@@ -123,12 +121,15 @@ const handleMove = (event) => {
     if (!isDragging.value || props.items.length <= 1) return;
     
     const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-    currentX.value = clientX;
+    const deltaX = clientX - startX.value;
     
-    const deltaX = currentX.value - startX.value;
-    let newTranslateX = translateX.value + deltaX;
+    // Hacer el scroll más sensible multiplicando por 1.5
+    const sensitivityMultiplier = 1.5;
+    const adjustedDelta = deltaX * sensitivityMultiplier;
     
-    // Limit movement to boundaries
+    let newTranslateX = translateX.value + adjustedDelta;
+    
+    // Límites estrictos - no permitir ningún espacio extra
     newTranslateX = Math.max(-maxTranslate.value, Math.min(0, newTranslateX));
     translateX.value = newTranslateX;
     
