@@ -462,7 +462,7 @@ const isFormValid = computed(() => {
         $normalizeInput(form.docNumber) !== $normalizeInput(originalData.doc_num) ||
         $normalizeInput(form.gender) !== $normalizeInput(originalData.sex);
         
-        // console.log('test originalData', originalData.value);
+        // console.log('test originalData', originalData);
         // console.log('test form', form);
         myDataStore.$setForm(form);
     return (

@@ -81,6 +81,9 @@ export const useMyDataStore = defineStore('myData', () => {
                 toastSuccess(t('messageRequest.dataSave'), 'bottom-toast-over-64');
                 let res = guestStore.$updateLocalGuestData(response.data);
                 $setOriginalData(res);
+                if (selectedFile.value) {
+                    form.value.avatar = response.data.avatar;
+                }
                 // initForm(response.data);
             } else {
                 console.error('Error al guardar los datos');
