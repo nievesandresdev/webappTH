@@ -4,14 +4,16 @@
         :class="[
             'flex flex-col hbg-gray-200 w-full h-screen']"
     >
-        <InboxHead/>
+        <AppHeader 
+            title="Chat"
+        />
         <!-- body chat -->
         <PageTransitionGlobal module="chat">
         </PageTransitionGlobal>
         <div v-if="!loading" class="body-chat flex-grow flex flex-col overflow-y-auto px-2 sp:px-4 no-scrollbar">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[97px] sp:top-[142px] left-2 sp:left-4 bg-gradient-100 rounded-[7px] sp:rounded-[10px] p-1.5 sp:p-3 shadow-guest"
+                class="fixed top-[77px] sp:top-[142px] left-2 sp:left-4 bg-gradient-100 rounded-[7px] sp:rounded-[10px] p-1.5 sp:p-3 shadow-guest"
                 @click="isScheduleModalOpen = true"
             >
                 <div class="flex items-center gap-1 sp:gap-2">
@@ -99,6 +101,8 @@
     import Moment from 'moment'
     import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
     import ScheduleModal from './ScheduleModalRed.vue';
+    import AppHeader from '@/layout/Components/AppHeader.vue';
+
     import { useRoute } from 'vue-router'
     const route = useRoute();
     //load
