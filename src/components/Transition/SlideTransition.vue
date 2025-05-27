@@ -1,56 +1,82 @@
 <template>
-    <!-- Content container -->
-    <div class="relative">
-      <!-- Transition container -->
-      <transition :name="transitionName" mode="out-in">
-        <!-- Router view with position absolute for proper overlay -->
-        <router-view :key="$route.fullPath" class="absolute inset-0 w-full h-full z-[900]" />
-      </transition>
-    </div>
-  
+  <!-- Content container -->
+  <div class="relative">
+    <!-- Transition container -->
+    <transition
+      :name="transitionName"
+      mode="out-in"
+      @before-enter="beforeEnter"
+      @after-enter="afterEnter"
+      @before-leave="beforeLeave"
+      @after-leave="afterLeave"
+    >
+      <!-- Router view with position absolute for proper overlay -->
+      <router-view :key="$route.fullPath" class="transition-view" />
+    </transition>
+  </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
 const props = defineProps({
   tabs: {
     type: Array,
     required: true
   }
-})
+});
 
-const activeTab = ref(route.name)
-const lastIndex = ref(props.tabs.findIndex(t => t.name === route.name))
-const transitionName = ref('slide-left')
+const activeTab = ref(route.name);
+const lastIndex = ref(props.tabs.findIndex(t => t.routeName === route.name));
+const transitionName = ref('slide-left');
 
+// Función para ir a la vista correspondiente
 function goView(obj) {
-  if (obj.name === activeTab.value) return
-  const newIndex = props.tabs.findIndex(t => t.name === obj.name)
-  transitionName.value = newIndex > lastIndex.value ? 'slide-left' : 'slide-right'
-  lastIndex.value = newIndex
-  activeTab.value = obj.name
-  router.push({ name: obj.name })
+  if (obj.name === activeTab.value) return;
+  const newIndex = props.tabs.findIndex(t => t.routeName === obj.name);
+  transitionName.value = newIndex > lastIndex.value ? 'slide-left' : 'slide-right';
+  lastIndex.value = newIndex;
+  activeTab.value = obj.name;
+  router.push({ name: obj.name });
 }
 
+// Detecta el cambio de ruta
 watch(() => route.name, (newName) => {
-  console.log('newName', newName)
   if (newName && newName !== activeTab.value) {
-    goView(newName)
+    goView(newName);
   }
-})
+});
+
+// Agregar la clase 'absolute' antes de entrar y quitarla después de entrar
+function beforeEnter(el) {
+  el.classList.add('absolute'); // Añadir la clase al empezar la transición
+}
+
+function afterEnter(el) {
+  el.classList.remove('absolute'); // Eliminar la clase cuando la transición termine
+}
+
+function beforeLeave(el) {
+  el.classList.add('absolute'); // Añadir la clase al salir de la transición
+}
+
+function afterLeave(el) {
+  el.classList.remove('absolute'); // Eliminar la clase después de que termine la salida
+}
 
 defineExpose({
-    goView
-})
+  goView
+});
 </script>
 
-<style>
-.slide-left-enter-active, .slide-left-leave-active {
+<style scoped>
+/* Definimos la transición para el slide */
+.slide-left-enter-active,
+.slide-left-leave-active {
   transition: transform 0.3s ease;
   position: absolute;
   width: 100%;
@@ -67,7 +93,8 @@ defineExpose({
   transform: translateX(-100%);
 }
 
-.slide-right-enter-active, .slide-right-leave-active {
+.slide-right-enter-active,
+.slide-right-leave-active {
   transition: transform 0.3s ease;
   position: absolute;
   width: 100%;
@@ -82,5 +109,11 @@ defineExpose({
 
 .slide-right-leave-to {
   transform: translateX(100%);
+}
+
+/* Asegúrate de que la vista ocupe todo el espacio */
+.transition-view {
+  width: 100%;
+  height: 100%;
 }
 </style>

@@ -180,11 +180,7 @@
                 </div>
             </div>
         </PageTransitionGlobal>
-        <SubmitButton
-            :isFormValid="isFormValid"
-            @handleSubmit="handleSubmit"
-            :sending="sending"
-        />
+        
         
         <!-- Modal para cambiar contraseña -->
         <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
@@ -221,7 +217,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount,watch } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { formatAnyDate } from '@/utils/dateHelpers';
 import { useI18n } from 'vue-i18n';
 import { $normalizeInput } from '@/utils/utils';
@@ -233,7 +229,7 @@ import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import THInputField from '@/components/THInputField.vue';
-import SubmitButton from './Components/SubmitButton.vue';
+
 //
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -242,12 +238,10 @@ const { startLoading, stopLoading, loading } = useLoadingSections();
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
-
 import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
-
-import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
+import { useMyDataStore } from '@/stores/modules/user/myData';
+const myDataStore = useMyDataStore();
 
 const formContainer = ref(null);
 const phoneError = ref(false);
@@ -279,16 +273,18 @@ const newPassword = ref('');
 const currentPasswordError = ref(false);
 const nameTouched = ref(false);
 const nationalityError = ref(false);
-let selectedFile = ref(null);
-const originalData = ref(guestStore.guestData)
+
 const sending = ref(false);
 
 startLoading(SECTIONS.MYDATA.GLOBAL);
 
 onMounted(async () => {
+    myDataStore.$resetForm();
     const data = await guestStore.findById(guestStore.guestData.id)
     guestStore.$updateLocalGuestData(data);
     initForm(data);
+    myDataStore.$setOriginalData(data);
+    myDataStore.$setForm(form);
     stopLoading(SECTIONS.MYDATA.GLOBAL);
 });
 
@@ -318,12 +314,12 @@ const selectImage = () => {
 const onFileSelected = (event) => {
     const file = event.target.files[0];
     if (file) {
-        selectedFile.value = file;
+        myDataStore.$setSelectedFile(file);
         form.avatar = URL.createObjectURL(file);
     }
 };
 
-const initForm = (data) => {
+const initForm = async(data) => {
     form.id = data.id;
     form.name = data.name ?? '';
     form.lastname = data.lastname ?? '';
@@ -364,40 +360,7 @@ const handleChangePassword = async () => {
     }
 };
 
-const handleSubmit = async () => {
-    
-    if (isFormValid.value) {
-        sending.value = true;
-        const formData = new FormData();
-        formData.append('id', form.id);
-        formData.append('name', form.name);
-        formData.append('lastname', form.lastname);
-        formData.append('secondLastname', form.secondLastname);
-        formData.append('birthdate', form.birthdate ? formatAnyDate(form.birthdate,'dd/MM/yyyy') : null);
-        formData.append('nationality', form.nationality);
-        formData.append('docType', form.docType);
-        formData.append('docSupportNumber', form.docSupportNumber);
-        formData.append('docNumber', form.docNumber);
-        formData.append('gender', form.gender);
-        formData.append('updateFields', form.updateFields);
-        
 
-        if (selectedFile.value) {
-            formData.append('avatar', selectedFile.value);
-        }
-        
-        const response = await guestStore.$updateDataGuest(formData);
-        if (response.ok) {
-            toastSuccess(t('messageRequest.dataSave'), 'bottom-toast-over-64');
-            let res = guestStore.$updateLocalGuestData(response.data);
-            originalData.value = res;
-            initForm(response.data);
-        } else {
-            console.error('Error al guardar los datos');
-        }
-        sending.value = false;
-    }
-};
 
 const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
@@ -485,25 +448,31 @@ const docSupportNumberError = computed(() => {
 });
 
 const isFormValid = computed(() => {
-    
-    const isChanged =
-        $normalizeInput(form.name) !== $normalizeInput(originalData.value.name) ||
-        $normalizeInput(form.lastname) !== $normalizeInput(originalData.value.lastname) ||
-        $normalizeInput(form.secondLastname) !== $normalizeInput(originalData.value.second_lastname) ||
-        $normalizeInput(form.avatar) !== $normalizeInput(originalData.value.avatar) ||
-        $normalizeInput(form.nationality) !== $normalizeInput(originalData.value.nationality) ||
-        $normalizeInput(formatAnyDate(form.birthdate)) !== $normalizeInput(formatAnyDate(originalData.value.birthdate)) ||
-        $normalizeInput(form.docType) !== $normalizeInput(originalData.value.doc_type) ||
-        $normalizeInput(form.docSupportNumber) !== $normalizeInput(originalData.value.doc_support_number) ||
-        $normalizeInput(form.docNumber) !== $normalizeInput(originalData.value.doc_num) ||
-        $normalizeInput(form.gender) !== $normalizeInput(originalData.value.sex);
+    let originalData = myDataStore.originalData;
+    if(!originalData)return false;
+        const isChanged =
+            $normalizeInput(form.name) !== $normalizeInput(originalData.name) ||
+            $normalizeInput(form.lastname) !== $normalizeInput(originalData.lastname) ||
+        $normalizeInput(form.secondLastname) !== $normalizeInput(originalData.second_lastname) ||
+        $normalizeInput(form.avatar) !== $normalizeInput(originalData.avatar) ||
+        $normalizeInput(form.nationality) !== $normalizeInput(originalData.nationality) ||
+        $normalizeInput(formatAnyDate(form.birthdate)) !== $normalizeInput(formatAnyDate(originalData.birthdate)) ||
+        $normalizeInput(form.docType) !== $normalizeInput(originalData.doc_type) ||
+        $normalizeInput(form.docSupportNumber) !== $normalizeInput(originalData.doc_support_number) ||
+        $normalizeInput(form.docNumber) !== $normalizeInput(originalData.doc_num) ||
+        $normalizeInput(form.gender) !== $normalizeInput(originalData.sex);
         
-        console.log('test originalData', originalData.value);
-        console.log('test form', form);
+        // console.log('test originalData', originalData);
+        // console.log('test form', form);
+        myDataStore.$setForm(form);
     return (
         isChanged && Boolean(form.name) && !nationalityError.value &&
         !docNumberError.value && !docSupportNumberError.value
     );
+});
+
+watch(isFormValid, (newValue) => {
+    myDataStore.$setIsFormValid(newValue);
 });
 </script>
 

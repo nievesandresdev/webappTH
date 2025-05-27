@@ -29,24 +29,18 @@
                 </div>
             </div>
         </PageTransitionGlobal>
-        <SubmitButton
-            :isFormValid="isFormValid"
-            @handleSubmit="handleSubmit"
-            :sending="sending"
-        />
     </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, reactive } from 'vue';
+import { ref, onMounted, computed, reactive, watch } from 'vue';
 import THInputText from '@/components/THInputText.vue';
 import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
-import SubmitButton from './Components/SubmitButton.vue';
 import { $normalizeInput } from '@/utils/utils';
 // Stores
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
-import { handleToast } from '@/composables/useToast';
-const { toastSuccess } = handleToast();
+import { useMyDataStore } from '@/stores/modules/user/myData';
+const myDataStore = useMyDataStore();
 //
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -63,35 +57,21 @@ const form = reactive({
     updateFields: ['email', 'phone'],
 }); 
 
-const originalData = ref(guestStore.guestData)
 const sending = ref(false);
 const emailError = ref(false);
 const phoneError = ref(false);
 
 startLoading(SECTIONS.MYDATA.GLOBAL);
 onMounted(async () => {
+    myDataStore.$resetForm();
     const data = await guestStore.findById(guestStore.guestData.id)
     guestStore.$updateLocalGuestData(data);
+    myDataStore.$setOriginalData(data);
+    myDataStore.$setForm(form);
     initForm(data);
     stopLoading(SECTIONS.MYDATA.GLOBAL);
 });
 
-const handleSubmit = async () => {
-    
-    if (isFormValid.value) {
-        sending.value = true;
-        const response = await guestStore.$updateDataGuest(form);
-        if (response.ok) {
-            toastSuccess(t('messageRequest.dataSave'), 'bottom-toast-over-64');
-            let res = guestStore.$updateLocalGuestData(response.data);
-            originalData.value = res;
-            initForm(response.data);
-        } else {
-            console.error('Error al guardar los datos');
-        }
-        sending.value = false;
-    }
-};
 
 const initForm = (data) => {
     
@@ -101,13 +81,17 @@ const initForm = (data) => {
 };
 
 const isFormValid = computed(() => {
-    
+    let originalData = myDataStore.originalData;
+    if(!originalData)return false;
     const isChanged =
-        $normalizeInput(form.email) !== $normalizeInput(originalData.value.email) ||
-        $normalizeInput(form.phone) !== $normalizeInput(originalData.value.phone);
+        $normalizeInput(form.email) !== $normalizeInput(originalData.email) ||
+        $normalizeInput(form.phone) !== $normalizeInput(originalData.phone);
     return (
         isChanged && Boolean(form.email?.trim()) && !emailError.value && !phoneError.value
     );
 });
 
+watch(isFormValid, (newValue) => {
+    myDataStore.$setIsFormValid(newValue);
+});
 </script>
