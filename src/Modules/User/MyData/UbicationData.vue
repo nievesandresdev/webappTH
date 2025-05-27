@@ -54,18 +54,12 @@
                 </div>
             </div>
         </PageTransitionGlobal>
-        <SubmitButton
-            :isFormValid="isFormValid"
-            @handleSubmit="handleSubmit"
-            :sending="sending"
-        />
     </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, reactive } from 'vue';
+import { ref, onMounted, computed, reactive, watch } from 'vue';
 import SearchCountryDropdown from '@/components/Forms/SearchCountryDropdown.vue';
 import CodeMunicipalityInput from '@/components/Forms/CodeMunicipalityInput.vue';
-import SubmitButton from './Components/SubmitButton.vue';
 import { $normalizeInput } from '@/utils/utils';
 //
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
@@ -78,6 +72,8 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
+import { useMyDataStore } from '@/stores/modules/user/myData';
+const myDataStore = useMyDataStore();
 //
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -91,34 +87,18 @@ const form = reactive({
     updateFields: ['countryResidence', 'postalCode', 'municipality', 'addressResidence'],
 }); 
 
-const originalData = ref(guestStore.guestData)
 const selectedCountryCode = ref('ES');
-const sending = ref(false);
 
 startLoading(SECTIONS.MYDATA.GLOBAL);
 onMounted(async () => {
+    myDataStore.$resetForm();
     const data = await guestStore.findById(guestStore.guestData.id)
     guestStore.$updateLocalGuestData(data);
     initForm(data);
+    myDataStore.$setOriginalData(data);
+    myDataStore.$setForm(form);
     stopLoading(SECTIONS.MYDATA.GLOBAL);
 });
-
-const handleSubmit = async () => {
-    
-    if (isFormValid.value) {
-        sending.value = true;
-        const response = await guestStore.$updateDataGuest(form);
-        if (response.ok) {
-            toastSuccess(t('messageRequest.dataSave'), 'bottom-toast-over-64');
-            let res = guestStore.$updateLocalGuestData(response.data);
-            originalData.value = res;
-            initForm(response.data);
-        } else {
-            console.error('Error al guardar los datos');
-        }
-        sending.value = false;
-    }
-};
 
 const initForm = (data) => {
     
@@ -127,20 +107,25 @@ const initForm = (data) => {
     form.postalCode = data.postal_code;
     form.municipality = data.municipality;
     form.addressResidence = data.address;
-    console.log('test form',form)
+    // console.log('test form',form)
 };
 
 const isFormValid = computed(() => {
-    
+    let originalData = myDataStore.originalData;
+    if(!originalData)return false;
     const isChanged =
-        $normalizeInput(form.countryResidence) !== $normalizeInput(originalData.value.country_address) ||
-        $normalizeInput(form.postalCode) !== $normalizeInput(originalData.value.postal_code) ||
-        $normalizeInput(form.municipality) !== $normalizeInput(originalData.value.municipality) ||
-        $normalizeInput(form.addressResidence) !== $normalizeInput(originalData.value.address);
+        $normalizeInput(form.countryResidence) !== $normalizeInput(originalData.country_address) ||
+        $normalizeInput(form.postalCode) !== $normalizeInput(originalData.postal_code) ||
+        $normalizeInput(form.municipality) !== $normalizeInput(originalData.municipality) ||
+        $normalizeInput(form.addressResidence) !== $normalizeInput(originalData.address);
         
+        myDataStore.$setForm(form);
     return (
         isChanged
     );
 });
 
+watch(isFormValid, (newValue) => {
+    myDataStore.$setIsFormValid(newValue);
+});
 </script>

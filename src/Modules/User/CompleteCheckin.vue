@@ -203,6 +203,7 @@ async function loadDataGuest(id) {
         currentGuestData.value = await guestStore.findById(id)
         form.name = currentGuestData.value.name;
         form.lastname = currentGuestData.value.lastname;
+        form.secondLastname = currentGuestData.value.second_lastname;
         form.email = currentGuestData.value.email;
         form.phone = currentGuestData.value.phone;
         form.birthdate = currentGuestData.value.birthdate;

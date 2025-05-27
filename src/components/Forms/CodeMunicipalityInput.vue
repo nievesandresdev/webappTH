@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
       placeSuggestions.value = []
       return
     }
-    console.log('props.selectedCountry', props.selectedCountry)
+    // console.log('props.selectedCountry', props.selectedCountry)
     try {
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json
         ?access_token=${mapboxgl.accessToken}
@@ -157,7 +157,7 @@ onBeforeUnmount(() => {
 
       const res = await fetch(url)
       const data = await res.json()
-      console.log('data',data)
+      // console.log('data',data)
       placeSuggestions.value = data.features || []
       return placeSuggestions.value;
     } catch (error) {
