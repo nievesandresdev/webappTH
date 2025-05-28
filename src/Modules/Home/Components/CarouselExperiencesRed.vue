@@ -7,7 +7,7 @@
         }"
     >
         <Carousel 
-            :items-to-show="itemsToShow"
+            :items-to-show="1.3"
             snapAlign="start"
             :mouse-drag="true"
             :touch-drag="true"
@@ -79,18 +79,18 @@ const props =  defineProps({
     }
 })
 
-const screenWidth = ref(window.innerWidth)
-const itemsToShow = ref(1.32)
+// const screenWidth = ref(window.innerWidth)
+// const itemsToShow = ref(1.32)
 
-onMounted(() => {
-    if(screenWidth.value < 300){
-        itemsToShow.value = 1.22
-    }else if(screenWidth.value > 300 && screenWidth.value < 340){
-        itemsToShow.value = 1.165
-    }else{
-        itemsToShow.value = 1.332
-    }
-})
+// onMounted(() => {
+//     if(screenWidth.value < 300){
+//         itemsToShow.value = 1.22
+//     }else if(screenWidth.value > 300 && screenWidth.value < 340){
+//         itemsToShow.value = 1.165
+//     }else{
+//         itemsToShow.value = 1.332
+//     }
+// })
 
 function getDuration (data) {
     if (!data.duration) null
@@ -120,11 +120,19 @@ function goExperience (exp) {
 @media (max-width: 299px) {
     #experience-cross-mobile .carousel__viewport {
         padding-bottom: 8px;
+        padding-right: 10px;
+    }
+    #experience-cross-mobile .carousel__track {
+        gap: 10px;
     }
 }
 @media (min-width: 300px) {
     #experience-cross-mobile .carousel__viewport {
         padding-bottom: 16px;
+        padding-right: 20px;
+    }
+    #experience-cross-mobile .carousel__track {
+        gap: 16px;
     }
 }
 </style>

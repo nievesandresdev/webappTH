@@ -25,7 +25,7 @@
             }"
         >
             <Carousel 
-                :items-to-show="itemsToShow"
+                :items-to-show="2.25"
                 snapAlign="start"
                 :mouse-drag="true"
                 :touch-drag="true"
@@ -34,9 +34,10 @@
             >
             <!-- first:ml-4 last:mr-4 -->
                 <Slide v-for="(place, index) in placesRecommendated" :key="place.id">
+                    <!-- :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'" -->
                     <div
-                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden"
-                        :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'"
+                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden w-full"
+                        
                         @mousedown="handleMouseDown"
                         @mouseup="handleMouseUp(place.id, $utils.isMockup())"
                     >
@@ -125,23 +126,23 @@
 
     
     let isDragging = ref(false);
-    const screenWidth = ref(window.innerWidth)
-    const itemsToShow = ref(2.12)
+    // const screenWidth = ref(window.innerWidth)
+    // const itemsToShow = ref(2.12)
 
-    onMounted(() => {
+    // onMounted(() => {
 
-        if(screenWidth.value < 300){
-            itemsToShow.value = 1.615
-        }else if(screenWidth.value > 300 && screenWidth.value < 340){
-            itemsToShow.value = 1.83
-        }else{
-            itemsToShow.value = 2.12
-        }
+    //     if(screenWidth.value < 300){
+    //         itemsToShow.value = 1.615
+    //     }else if(screenWidth.value > 300 && screenWidth.value < 340){
+    //         itemsToShow.value = 1.83
+    //     }else{
+    //         itemsToShow.value = 2.12
+    //     }
 
-        if(props.placesRecommendated.length === 1){
-            itemsToShow.value = 1;
-        }
-    })
+    //     if(props.placesRecommendated.length === 1){
+    //         itemsToShow.value = 1;
+    //     }
+    // })
 
     const handleMouseDown = () => {
         isDragging.value = false;
@@ -166,8 +167,14 @@
 #carousel-recommendation .carousel__slide {
     justify-content: start;
 }
-/* @media (max-width: 299px) {
-    #carousel-recommendation .carousel__slide {
+@media (max-width: 299px) {
+    #carousel-recommendation .carousel__track {
+        gap:6px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 9px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 120px !important;
     }
     #carousel-recommendation .carousel__track {
@@ -177,10 +184,16 @@
     }
     #carousel-recommendation .carousel__slide:last-child {
         margin-right: 24px !important; 
-    }
+    } */
 }
 @media (min-width: 300px) {
-    #carousel-recommendation .carousel__slide {
+    #carousel-recommendation .carousel__track {
+        gap:8px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 18px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 160px !important;
     }
     #carousel-recommendation .carousel__track {
@@ -190,7 +203,7 @@
     }
     #carousel-recommendation .carousel__slide:last-child {
         margin-right: 24px !important; 
-    }
-} */
+    } */
+}
 
 </style>
