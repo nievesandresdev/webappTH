@@ -6,7 +6,8 @@
             flex border border-white bg-gradient-h justify-between
         ">
             <template
-                v-for="item in menuItems"
+                v-for="(item, index) in menuItems"
+                :key="index"
             >
                 <span
                     class="menu__item rounded-[5px] sp:rounded-[8px] py-[6px] sp:py-[10px] w-[36px] sp:w-[60px] h-[36px] sp:h-[60px] space-y-[2px] sp:space-y-1 text-center flex flex-col justify-center relative"
@@ -52,7 +53,11 @@
         </div>
     </div>
 
-    <BottomModal :isOpen="isOpenContactModal || Boolean(getUrlParam('openContactModal'))" @update:isOpen="isOpenContactModal = $event">
+    <BottomModal 
+        :isOpen="isOpenContactModal" 
+        @update:isOpen="isOpenContactModal = $event"
+        :scrollMockup="Boolean(getUrlParam('openContactModal'))"
+    >
         <div class="flex items-center gap-1 lato">
             <img src="/assets/icons/WA.MENU.DEFAULT.MENSAJES.svg" class="w-4 sp:w-8 h-4 sp:h-8 text-[#333333]" alt="Normas Icon" />
             <p class="text-[13px] sp:text-[20px] font-bold text-[#333333] lato leading-[22px] sp:leading-[28px]">{{ $t('contact.titleModal') }}</p>
@@ -131,6 +136,11 @@ onMounted(() => {
         }
     }
     queryStore.$existingPendingQuery()
+
+    //open modal contact witch url 
+    if(getUrlParam('openContactModal')){
+        isOpenContactModal.value = true
+    }
 });
 
 const goItem = (item)=>{

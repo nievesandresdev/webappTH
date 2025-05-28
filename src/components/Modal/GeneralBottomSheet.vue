@@ -92,6 +92,10 @@ const props = defineProps({
     scrollContentOnly: {
         type: Boolean,
         default: false
+    },
+    scrollMockup: {
+        type: Boolean,
+        default: false
     }
 });
 

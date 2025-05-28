@@ -2,7 +2,7 @@
   <div class="relative w-full shadow-md border-b border-white rounded-b-[20px] overflow-hidden  h-[200px] sp:h-[337px]" @touchstart="touchStart" @touchend="touchEnd" :class="{ 'mt-[0px]': showButtonBack ,'mt-[75px]': !showButtonBack}">
     <button
       v-show="showButtonBack"
-      class="inline-flex items-center gap-2 p-1 w-[25px] h-[25px] sp:w-auto sp:h-auto absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"
+      class="inline-flex items-center gap-2 p-1 w-[25px] h-[25px] sp:w-auto sp:h-auto absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer ease-in-out"
       @click="goBack"
     >
       <img src="/assets/icons/WA.chevron.svg" alt="Back Icon" />
