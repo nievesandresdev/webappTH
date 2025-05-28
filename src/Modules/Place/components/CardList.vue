@@ -42,10 +42,10 @@
                     </div>
                 </div> -->
             </div>
-            <div class="p-[4px] sp:p-[8px] flex flex-col flex-1">
+            <div class="p-[4px] sp:p-[8px] flex flex-col flex-1 truncate-1">
                 <div class="flex-1">
                     <!-- <div class="truncate-1  h-[16px] sp:h-[32px]"> -->
-                    <div class="truncate-1  h-[12px] sp:h-[16px]">
+                    <div class="h-[12px] sp:h-[16px]">
                         <p class="text-[6px] sp:text-[14px] font-bold truncate-1 lato leading-0" v-html="data.title" />
                     </div>
                     <div class="flex items-center space-x-[4px] space-x-2 mt-[4px] sp:mt-2">

@@ -14,19 +14,30 @@ module.exports = defineConfig({
   devServer: {
     host: '0.0.0.0',
     port: 81,
-    // allowedHosts: [
-    //   '.ngrok.io', // Permite todas las subdominios de ngrok
-    // ],
-    // https: true, // Asegura que el servidor esté usando HTTPS
-    // client: {
-    //   webSocketURL: 'wss://localhost:81/ws', // Cambia `ws` a `wss`
-    // },
-    // disableHostCheck: true,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://127.0.0.1:8000',
-    //     changeOrigin: true
-    //   }
-    // }
-  }
+  },
+  // chainWebpack: (config) => {
+  //   // regla para svgs como componentes (solo en /src/assets/icons)
+  //   config.module
+  //     .rule('svg-component')
+  //     .test(/\.svg$/)
+  //     .include.add(/src\/assets\/icons/)
+  //     .end()
+  //     .use('babel-loader')
+  //     .loader('babel-loader')
+  //     .end()
+  //     .use('@svgr/webpack')
+  //     .loader('@svgr/webpack');
+  
+  //   // regla para imágenes svg normales (excluye la carpeta de componentes)
+  //   config.module
+  //     .rule('svg')
+  //     .test(/\.svg$/)
+  //     .exclude.add(/src\/assets\/icons/)
+  //     .end()
+  //     .use('file-loader')
+  //     .loader('file-loader')
+  //     .options({
+  //       name: 'img/[name].[hash:8].[ext]',
+  //     });
+  // }
 });

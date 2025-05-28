@@ -9,7 +9,7 @@
             <ListPageBottomSheeListNotFound />
         </template>
         <template v-else>
-            <template v-if="numbersPlacesNotRecommendation > 0">
+            <template v-if="numbersPlacesRecommendation > 0">
                 <ListPageBottomSheeListRecommendation
                     :placesRecommendated="placeDataRecommendation"
                 />
@@ -25,12 +25,12 @@
                     <!-- class="mx-[3px] sp:mx-[6px]" -->
                     <CardList
                         :data="item"
-                        :class="index === placeDataNotRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                        :class="index === paginateData.total - placeDataRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                     />
                 </template>
                 <template v-for="(card, index) in (numberCardsToLoad ?? 0)">
                     <SkeletonCard
-                        :class="index === placeDataNotRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
+                        :class="index === paginateData.total - placeDataRecommendation.length - 1 ? 'mb-[96px]' : 'mb-[8px] sp:mb-4'"
                     />
                 </template>
             </div>
@@ -101,7 +101,7 @@
     const numberCardsToLoad = computed(() => {
         if(firstLoad.value) return numberCardsToLoadDefault.value;
         if(!firstLoad.value && paginateData.total == 0) return 0;
-        let remaining = paginateData.total - placeDataNotRecommendation.value.length;
+        let remaining = paginateData.total - placesData.value.length;
         remaining = remaining < 0 ? 0 : remaining;
         if(remaining < numberCardsToLoadDefault.value && paginateData.total > 0){
             return remaining ;
