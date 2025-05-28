@@ -36,7 +36,7 @@
 
               <p
                 @click="isExpanded = !isExpanded"
-                class="text-[10px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
+                class="text-[12px] sp:text-[14px] font-bold lato underline text-[#333] mt-2 sp:mt-3 text-right cursor-pointer"
                 v-show="hotelInfo?.description?.length > CHARACTER_LIMIT"
               >
                 {{ isExpanded ? $t('hotel.utils.see_less') : $t('hotel.utils.see_more') }}
@@ -66,7 +66,7 @@
                 <div class="border-t my-3 sp:my-6 border-[#E9E9E9]"></div>
 
                 <div class="flex items-center gap-2 sp:gap-4" v-show="hotelData?.show_facilities === 1" >
-                  <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
+                  <p class="text-[14px] sp:text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.facilities') }}</p>
                   <div class="border-t border-[#E9E9E9] flex-grow ml-1 sp:ml-2"></div>
                   
                   <span @click="goToFacilities()" class="underline lato text-[8px] sp:text-sm font-bold">{{ $t('hotel.utils.see_all') }}</span>
@@ -79,7 +79,7 @@
               <div class="flex flex-col mt-1 sp:mt-2 px-2 sp:px-4">
                   <template  v-if="rrss">
                   <div class="flex items-center gap-4 mb-4">
-                    <p class="text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
+                    <p class="text-[14px] sp:text-[16px] font-bold text-[#333333] lato">{{ $t('hotel.utils.our_networks') }}</p>
                     <div class="border-t border-[#E9E9E9] flex-grow ml-2"></div>
                   </div >
                   <HotelRRSS :hotelData="hotelInfo" />

@@ -19,7 +19,7 @@
         </div>
         <div class="flex">
             <div
-                class="w-[45px] sp:w-[111px] h-[48px] sp:h-[96px] relative overflow-hidden"
+                class="w-[45px] sp:w-[111px] h-[60px] sp:h-[96px] relative overflow-hidden"
                 :class="recommended ? 'rounded-b-[10px]' : 'rounded-l-[10px] rounded-b-[10px]'"
             >
                 <img
@@ -51,10 +51,10 @@
                     <div class="flex items-center space-x-[4px] space-x-2 mt-[4px] sp:mt-2">
                         <img
                             src="/assets/icons/WA.STAR.BLACK.svg"
-                            class="size-[8px] sp:size-4"
+                            class="size-[9px] sp:size-4"
                         >
-                        <span class="text-[8px] sp:text-[16px] font-bold lato leading-none">{{ converStar(data.num_stars).toFixed(1) }}</span>
-                        <span class="text-[4px] sp:text-[10px] leading-none font-medium lato leading-none">({{ data.num_reviews }} {{ $t('experience.card-experience.reviews') }})</span>
+                        <span class="text-[11px] sp:text-[16px] font-bold lato leading-none">{{ converStar(data.num_stars).toFixed(1) }}</span>
+                        <span class="text-[7.5px] sp:text-[10px] leading-none font-medium lato leading-none">({{ data.num_reviews }} {{ $t('experience.card-experience.reviews') }})</span>
                     </div>
                 </div>
                 <div
@@ -68,9 +68,9 @@
                         <div class="flex items-center justify-center">
                             <img
                                 src="/assets/icons/WA.pointer.svg"
-                                class="size-[6px] sp:size-[12px]"
+                                class="size-[7px] sp:size-[12px]"
                             >
-                            <span class="text-[4px] sp:text-[10px] font-medium leading-[10px] lato">{{ distance }}km</span>
+                            <span class="text-[7px] sp:text-[10px] font-medium leading-[10px] lato">{{ distance }}km</span>
                         </div>
                     </div>
                     <img

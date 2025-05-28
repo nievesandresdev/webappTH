@@ -4,7 +4,7 @@
         class="pt-[12px] sp:pt-[16px] pb-[12px] sp:pb-[16px] bg-[#FFF5D7]"
     >
     <!-- mb-[12px] sp:mb-[16px] -->
-        <div class="space-y-[6px] sp:space-y-[8px] space-y-[6px] px-[8px] sp:px-4">
+        <div class="sp:space-y-[8px] space-y-[6px] px-[8px] sp:px-4">
             <p v-if="!searchingActive" class="text-[12px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px]">Nuestra selección para ti</p>
             <!-- <p v-if="placesRecommendated.length > 1" class="text-[10px] sp:text-[14px] font-medium lato">{{ placesRecommendated.length }} lugares</p> -->
             <ListPageBottomSheetListText  :numbersPlaces="placesRecommendated?.length || 0" />

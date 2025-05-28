@@ -1,225 +1,223 @@
 <template>
-    <PageTransitionGlobal module="mydata">
-        <div class="px-4 pt-4" ref="formContainer">
-            <!-- foto -->
-            <div class="flex items-center gap-2 mb-4">
-                <!-- Círculo para la foto-->
-                <div
-                    class="flex justify-center items-center border border-black rounded-full overflow-hidden"
-                    style="width: 40px; height: 40px;"
-                >
-                    <img
-                        :src="$formatImage({ url: form.avatar, type: form.avatar_type })"
-                        class="object-cover"
-                        :class="{ 'w-6 h-6': !form.avatar }"
-                        alt="User Avatar"
+    <div>
+        <PageTransitionGlobal module="mydata">
+            <div class="px-4 pt-4" ref="formContainer">
+                <!-- foto -->
+                <div class="flex items-center gap-2 mb-4">
+                    <!-- Círculo para la foto-->
+                    <div
+                        class="flex justify-center items-center border border-black rounded-full overflow-hidden"
+                        style="width: 40px; height: 40px;"
+                    >
+                        <img
+                            :src="$formatImage({ url: form.avatar, type: form.avatar_type })"
+                            class="object-cover"
+                            :class="{ 'w-6 h-6': !form.avatar }"
+                            alt="User Avatar"
+                        />
+                    </div>
+                    <span
+                        class="underline text-[14px] font-bold lato cursor-pointer"
+                        @click="selectImage"
+                        >{{ $t('profile.page_personal_info.change_photo') }}</span
+                    >
+                    <!-- Input file oculto -->
+                    <input
+                        type="file"
+                        ref="fileInput"
+                        class="hidden"
+                        @change="onFileSelected"
+                        accept="image/*"
                     />
                 </div>
-                <span
-                    class="underline text-[14px] font-bold lato cursor-pointer"
-                    @click="selectImage"
-                    >{{ $t('profile.page_personal_info.change_photo') }}</span
-                >
-                <!-- Input file oculto -->
-                <input
-                    type="file"
-                    ref="fileInput"
-                    class="hidden"
-                    @change="onFileSelected"
-                    accept="image/*"
-                />
-            </div>
 
+                <div class="flex flex-col w-full gap-4">
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-1-label')}*`"
+                        :placeholder="$t('checkin.form.input-1-plchdr')"
+                        v-model="form.name"
+                        :isError="!form.name && nameTouched"
+                        @blur="handleNameBlur"
+                        :showTextError="true"
+                        :textError="$t('checkin.form.input-1-error')"
+                    />
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-2-label')}`"
+                        :placeholder="$t('checkin.form.input-2-plchdr')"
+                        v-model="form.lastname"
+                        :showTextError="false"
+                    />
+                    <THInputText
+                        :textLabel="`${$t('checkin.form.input-3-label')}`"
+                        :placeholder="$t('checkin.form.input-3-plchdr')"
+                        v-model="form.secondLastname"
+                        :isError="secondLastnameError"
+                        :showTextError="false"
+                    />
+                    <!-- birthdate -->
+                    <div>
+                        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                            {{$t('checkin.form.input-4-label')}} 
+                        </label>
+                        <THInputCalendar
+                            :textLabel="$t('checkin.form.input-4-plchdr')"
+                            v-model="form.birthdate"
+                            :show_error_msg="false"
+                            :minDate="null"
+                            :is_range="false"
+                            mandatory
+                        />
+                    </div>
+                    <!-- nationality -->
+                    <div>
+                        <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                            {{$t('checkin.form.input-10-label')}}
+                        </label>
+                        <SearchCountryDropdown 
+                            v-model="form.nationality"
+                            :placeholder="$t('checkin.form.input-10-plchdr')"
+                            @hasError="nationalityError = $event"
+                        />
+                    </div>
+                    <!-- docType -->
+                    <div>
+                        <label class="block mb-2 lato text-sm font-bold leading-[16px]">
+                            {{$t('checkin.form.input-11-label')}}
+                        </label>
+                        <THInputField
+                            icon_left="/assets/icons/WA.Passport.svg"
+                            :textLabel="$t('checkin.form.input-11-plchdr')"
+                            :options="docType_options"
+                            v-model="form.docType"
+                            :top_dropdown="'top-0'"
+                            :extra_dropdown="'dropdown-clasess'"
+                            :error="secondLastnameError"
+                            mandatory
+                        />
+                        <p
+                            v-if="secondLastnameError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-11-error')}}</p>
+                    </div>
+                    <!-- docSupportNumber -->
+                    <div v-if="form.docType == 'DNI español' || form.docType == 'NIE'">
+                        <THInputText
+                            :customClasses="{'uppercase':form.docSupportNumber}"
+                            :textLabel="`${$t('checkin.form.input-12-label')}`"
+                            :placeholder="$t('checkin.form.input-12-plchdr')"
+                            iconLeft="/assets/icons/WA.Passport.svg"
+                            v-model="form.docSupportNumber"
+                            :isError="docSupportNumberError"
+                            :showTextError="false"
+                        />
+                        <p
+                            v-if="docSupportNumberError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-12-error')}}</p>
+                    </div>
+                    <!-- docNumber -->
+                    <div>
+                        <!-- {{ String(docNumberError) }} -->
+                        <THInputText
+                            :textLabel="`${$t('checkin.form.input-13-label')}`"
+                            :placeholder="$t('checkin.form.input-13-plchdr')"
+                            :customClasses="{'uppercase':form.docNumber}"
+                            iconLeft="/assets/icons/WA.Passport.svg"
+                            v-model="form.docNumber"
+                            :isError="docNumberError"
+                            :showTextError="false"
+                        />
+                        <p
+                            v-if="docNumberError"
+                            class="lato text-xs font-bold leading-[16px] htext-alert-negative"
+                        >{{$t('checkin.form.input-12-error')}}</p>
+                    </div>
+                    <!-- gender  -->
+                    <div>
+                        <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
+                            {{$t('checkin.form.input-5-label')}}
+                        </label>
+                        <THInputField
+                            icon_left="/assets/icons/WA.sexo.svg"
+                            :textLabel="$t('checkin.form.input-5-plchdr')"
+                            :options="options_gender"
+                            v-model="form.gender"
+                            :top_dropdown="'top-0'"
+                            :extra_dropdown="'dropdown-clasess'"
+                            mandatory
+                        />
+                    </div>
+                    <!-- <THInputText
+                        :textLabel="`${$t('profile.page_personal_info.form.email.label')}*`"
+                        :placeholder="emailPlaceholder"
+                        v-model="form.email"
+                        :isError="(!form.email && emailTouched) || (emailTouched && !isEmailValid)"
+                        @blur="validateEmail"
+                        type="email"
+                        :showTextError="false"
+                    /> -->
+                    <!-- <div>
+                        <BaseInputPhone 
+                            :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
+                            v-model="form.phone" 
+                            @handleError="phoneError = $event"
+                        /> 
+                    </div> -->
+                    <THInputText
+                        :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
+                        :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
+                        v-model="form.password"
+                        type="password"
+                        :disabled="true"
+                    />
+                </div>
+                <div class="flex justify-end mt-2 mb-2">
+                    <span
+                        class="underline lato text-sm font-bold"
+                        @click="openModalPassword"
+                        >{{ $t('profile.page_personal_info.change_password') }}</span
+                    >
+                </div>
+            </div>
+        </PageTransitionGlobal>
+        
+        
+        <!-- Modal para cambiar contraseña -->
+        <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
             <div class="flex flex-col w-full gap-4">
                 <THInputText
-                    :textLabel="`${$t('checkin.form.input-1-label')}*`"
-                    :placeholder="$t('checkin.form.input-1-plchdr')"
-                    v-model="form.name"
-                    :isError="!form.name && nameTouched"
-                    @blur="handleNameBlur"
-                    :showTextError="true"
-                    :textError="$t('checkin.form.input-1-error')"
-                />
-                <THInputText
-                    :textLabel="`${$t('checkin.form.input-2-label')}`"
-                    :placeholder="$t('checkin.form.input-2-plchdr')"
-                    v-model="form.lastname"
-                    :showTextError="false"
-                />
-                <THInputText
-                    :textLabel="`${$t('checkin.form.input-3-label')}`"
-                    :placeholder="$t('checkin.form.input-3-plchdr')"
-                    v-model="form.secondLastname"
-                    :isError="secondLastnameError"
-                    :showTextError="false"
-                />
-                <!-- birthdate -->
-                <div>
-                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                        {{$t('checkin.form.input-4-label')}} 
-                    </label>
-                    <THInputCalendar
-                        :textLabel="$t('checkin.form.input-4-plchdr')"
-                        v-model="form.birthdate"
-                        :show_error_msg="false"
-                        :minDate="null"
-                        :is_range="false"
-                        mandatory
-                    />
-                </div>
-                <!-- nationality -->
-                <div>
-                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                        {{$t('checkin.form.input-10-label')}} {{ form.nationality }}
-                    </label>
-                    <SearchCountryDropdown 
-                        v-model="form.nationality"
-                        :placeholder="$t('checkin.form.input-10-plchdr')"
-                        @hasError="nationalityError = $event"
-                    />
-                </div>
-                <!-- docType -->
-                <div>
-                    <label class="block mb-2 lato text-sm font-bold leading-[16px]">
-                        {{$t('checkin.form.input-11-label')}}
-                    </label>
-                    <THInputField
-                        icon_left="/assets/icons/WA.Passport.svg"
-                        :textLabel="$t('checkin.form.input-11-plchdr')"
-                        :options="docType_options"
-                        v-model="form.docType"
-                        :top_dropdown="'top-0'"
-                        :extra_dropdown="'dropdown-clasess'"
-                        :error="secondLastnameError"
-                        mandatory
-                    />
-                    <p
-                        v-if="secondLastnameError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-11-error')}}</p>
-                </div>
-                <!-- docSupportNumber -->
-                <div v-if="form.docType == 'DNI español' || form.docType == 'NIE'">
-                    <THInputText
-                        :customClasses="{'uppercase':form.docSupportNumber}"
-                        :textLabel="`${$t('checkin.form.input-12-label')}`"
-                        :placeholder="$t('checkin.form.input-12-plchdr')"
-                        iconLeft="/assets/icons/WA.Passport.svg"
-                        v-model="form.docSupportNumber"
-                        :isError="docSupportNumberError"
-                        :showTextError="false"
-                    />
-                    <p
-                        v-if="docSupportNumberError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-12-error')}}</p>
-                </div>
-                <!-- docNumber -->
-                <div>
-                    <!-- {{ String(docNumberError) }} -->
-                    <THInputText
-                        :textLabel="`${$t('checkin.form.input-13-label')}`"
-                        :placeholder="$t('checkin.form.input-13-plchdr')"
-                        :customClasses="{'uppercase':form.docNumber}"
-                        iconLeft="/assets/icons/WA.Passport.svg"
-                        v-model="form.docNumber"
-                        :isError="docNumberError"
-                        :showTextError="false"
-                    />
-                    <p
-                        v-if="docNumberError"
-                        class="lato text-xs font-bold leading-[16px] htext-alert-negative"
-                    >{{$t('checkin.form.input-12-error')}}</p>
-                </div>
-                <!-- gender  -->
-                <div>
-                    <label class="block mb-1 sp:mb-2 lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px]">
-                        {{$t('checkin.form.input-5-label')}}
-                    </label>
-                    <THInputField
-                        icon_left="/assets/icons/WA.sexo.svg"
-                        :textLabel="$t('checkin.form.input-5-plchdr')"
-                        :options="options_gender"
-                        v-model="form.gender"
-                        :top_dropdown="'top-0'"
-                        :extra_dropdown="'dropdown-clasess'"
-                        mandatory
-                    />
-                </div>
-                <!-- <THInputText
-                    :textLabel="`${$t('profile.page_personal_info.form.email.label')}*`"
-                    :placeholder="emailPlaceholder"
-                    v-model="form.email"
-                    :isError="(!form.email && emailTouched) || (emailTouched && !isEmailValid)"
-                    @blur="validateEmail"
-                    type="email"
-                    :showTextError="false"
-                /> -->
-                <!-- <div>
-                    <BaseInputPhone 
-                        :textLabel="`${$t('profile.page_personal_info.form.number_phone.label')}`"
-                        v-model="form.phone" 
-                        @handleError="phoneError = $event"
-                    /> 
-                </div> -->
-                <THInputText
-                    :textLabel="`${$t('profile.page_personal_info.form.password.label')}`"
-                    :placeholder="`${$t('profile.page_personal_info.form.password.placeholder')}`"
-                    v-model="form.password"
+                    :textLabel="'Contraseña actual'"
+                    :placeholder="'Introduce tu contraseña actual'"
+                    v-model="currentPassword"
+                    :isError="currentPasswordError"
+                    :textError="'La contraseña actual introducida es incorrecta'"
                     type="password"
-                    :disabled="true"
                 />
-            </div>
-            <div class="flex justify-end mt-2 mb-2">
-                <span
-                    class="underline lato text-sm font-bold"
-                    @click="openModalPassword"
-                    >{{ $t('profile.page_personal_info.change_password') }}</span
+                <THInputText
+                    :textLabel="'Nueva contraseña'"
+                    :placeholder="'Introduce tu nueva contraseña'"
+                    v-model="newPassword"
+                    type="password"
+                />
+                <button
+                    @click="handleChangePassword"
+                    :disabled="!isModalFormValid"
+                    :class="[
+                        'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
+                        isModalFormValid
+                            ? 'bg-[#333333] text-white border-white'
+                            : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
+                    ]"
                 >
+                    Cambiar contraseña
+                </button>
             </div>
-        </div>
-    </PageTransitionGlobal>
-    <SubmitButton
-        :isFormValid="isFormValid"
-        @handleSubmit="handleSubmit"
-        :sending="sending"
-    />
-    
-    <!-- Modal para cambiar contraseña -->
-    <BottomModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event">
-        <div class="flex flex-col w-full gap-4">
-            <THInputText
-                :textLabel="'Contraseña actual'"
-                :placeholder="'Introduce tu contraseña actual'"
-                v-model="currentPassword"
-                :isError="currentPasswordError"
-                :textError="'La contraseña actual introducida es incorrecta'"
-                type="password"
-            />
-            <THInputText
-                :textLabel="'Nueva contraseña'"
-                :placeholder="'Introduce tu nueva contraseña'"
-                v-model="newPassword"
-                type="password"
-            />
-            <button
-                @click="handleChangePassword"
-                :disabled="!isModalFormValid"
-                :class="[
-                    'w-full lato flex justify-center items-center h-10 gap-2 rounded-[10px] border text-sm font-bold hshadow-button',
-                    isModalFormValid
-                        ? 'bg-[#333333] text-white border-white'
-                        : 'bg-[#333333] bg-opacity-50 text-[#FAFAFA40] text-opacity-25 border-[rgba(255,255,255,0.25)] shadow-small',
-                ]"
-            >
-                Cambiar contraseña
-            </button>
-        </div>
-    </BottomModal>
+        </BottomModal>
+    </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount,watch } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { formatAnyDate } from '@/utils/dateHelpers';
 import { useI18n } from 'vue-i18n';
 import { $normalizeInput } from '@/utils/utils';
@@ -231,7 +229,7 @@ import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import BaseInputPhone from '@/components/Forms/BaseInputPhone.vue';
 import THInputCalendar from '@/components/THInputFieldCalendar.vue'
 import THInputField from '@/components/THInputField.vue';
-import SubmitButton from './Components/SubmitButton.vue';
+
 //
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -240,12 +238,10 @@ const { startLoading, stopLoading, loading } = useLoadingSections();
 
 import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
-
 import { handleToast } from '@/composables/useToast';
 const { toastSuccess } = handleToast();
-
-import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
+import { useMyDataStore } from '@/stores/modules/user/myData';
+const myDataStore = useMyDataStore();
 
 const formContainer = ref(null);
 const phoneError = ref(false);
@@ -277,16 +273,18 @@ const newPassword = ref('');
 const currentPasswordError = ref(false);
 const nameTouched = ref(false);
 const nationalityError = ref(false);
-let selectedFile = ref(null);
-const originalData = ref(guestStore.guestData)
+
 const sending = ref(false);
 
 startLoading(SECTIONS.MYDATA.GLOBAL);
 
 onMounted(async () => {
+    myDataStore.$resetForm();
     const data = await guestStore.findById(guestStore.guestData.id)
     guestStore.$updateLocalGuestData(data);
     initForm(data);
+    myDataStore.$setOriginalData(data);
+    myDataStore.$setForm(form);
     stopLoading(SECTIONS.MYDATA.GLOBAL);
 });
 
@@ -316,12 +314,12 @@ const selectImage = () => {
 const onFileSelected = (event) => {
     const file = event.target.files[0];
     if (file) {
-        selectedFile.value = file;
+        myDataStore.$setSelectedFile(file);
         form.avatar = URL.createObjectURL(file);
     }
 };
 
-const initForm = (data) => {
+const initForm = async(data) => {
     form.id = data.id;
     form.name = data.name ?? '';
     form.lastname = data.lastname ?? '';
@@ -362,40 +360,7 @@ const handleChangePassword = async () => {
     }
 };
 
-const handleSubmit = async () => {
-    
-    if (isFormValid.value) {
-        sending.value = true;
-        const formData = new FormData();
-        formData.append('id', form.id);
-        formData.append('name', form.name);
-        formData.append('lastname', form.lastname);
-        formData.append('secondLastname', form.secondLastname);
-        formData.append('birthdate', formatAnyDate(form.birthdate,'dd/MM/yyyy'));
-        formData.append('nationality', form.nationality);
-        formData.append('docType', form.docType);
-        formData.append('docSupportNumber', form.docSupportNumber);
-        formData.append('docNumber', form.docNumber);
-        formData.append('gender', form.gender);
-        formData.append('updateFields', form.updateFields);
-        
 
-        if (selectedFile.value) {
-            formData.append('avatar', selectedFile.value);
-        }
-        
-        const response = await guestStore.$updateDataGuest(formData);
-        if (response.ok) {
-            toastSuccess(t('messageRequest.dataSave'), 'bottom-toast-over-64');
-            let res = guestStore.$updateLocalGuestData(response.data);
-            originalData.value = res;
-            initForm(response.data);
-        } else {
-            console.error('Error al guardar los datos');
-        }
-        sending.value = false;
-    }
-};
 
 const $formatImage = (payload) => {
     const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
@@ -483,23 +448,31 @@ const docSupportNumberError = computed(() => {
 });
 
 const isFormValid = computed(() => {
-    
-    const isChanged =
-        $normalizeInput(form.name) !== $normalizeInput(originalData.value.name) ||
-        $normalizeInput(form.lastname) !== $normalizeInput(originalData.value.lastname) ||
-        $normalizeInput(form.secondLastname) !== $normalizeInput(originalData.value.second_lastname) ||
-        $normalizeInput(form.avatar) !== $normalizeInput(originalData.value.avatar) ||
-        $normalizeInput(form.nationality) !== $normalizeInput(originalData.value.nationality) ||
-        $normalizeInput(formatAnyDate(form.birthdate)) !== $normalizeInput(formatAnyDate(originalData.value.birthdate)) ||
-        $normalizeInput(form.docType) !== $normalizeInput(originalData.value.doc_type) ||
-        $normalizeInput(form.docSupportNumber) !== $normalizeInput(originalData.value.doc_support_number) ||
-        $normalizeInput(form.docNumber) !== $normalizeInput(originalData.value.doc_num) ||
-        $normalizeInput(form.gender) !== $normalizeInput(originalData.value.sex);
+    let originalData = myDataStore.originalData;
+    if(!originalData)return false;
+        const isChanged =
+            $normalizeInput(form.name) !== $normalizeInput(originalData.name) ||
+            $normalizeInput(form.lastname) !== $normalizeInput(originalData.lastname) ||
+        $normalizeInput(form.secondLastname) !== $normalizeInput(originalData.second_lastname) ||
+        $normalizeInput(form.avatar) !== $normalizeInput(originalData.avatar) ||
+        $normalizeInput(form.nationality) !== $normalizeInput(originalData.nationality) ||
+        $normalizeInput(formatAnyDate(form.birthdate)) !== $normalizeInput(formatAnyDate(originalData.birthdate)) ||
+        $normalizeInput(form.docType) !== $normalizeInput(originalData.doc_type) ||
+        $normalizeInput(form.docSupportNumber) !== $normalizeInput(originalData.doc_support_number) ||
+        $normalizeInput(form.docNumber) !== $normalizeInput(originalData.doc_num) ||
+        $normalizeInput(form.gender) !== $normalizeInput(originalData.sex);
         
+        // console.log('test originalData', originalData);
+        // console.log('test form', form);
+        myDataStore.$setForm(form);
     return (
         isChanged && Boolean(form.name) && !nationalityError.value &&
         !docNumberError.value && !docSupportNumberError.value
     );
+});
+
+watch(isFormValid, (newValue) => {
+    myDataStore.$setIsFormValid(newValue);
 });
 </script>
 

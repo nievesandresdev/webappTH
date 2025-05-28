@@ -7,7 +7,7 @@ export default {
         "subtitle_inactive": "Sortu zure hurrengo egonaldia"
     },
     "personal_info": {
-        "title": "Pertsonal informazioa",
+        "title": "Nire datuak",
         "description": "Zure informazio pertsonala konfiguratu"
     },
     "language": {

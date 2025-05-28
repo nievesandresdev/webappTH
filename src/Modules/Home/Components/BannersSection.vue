@@ -50,16 +50,16 @@
     <!-- banner query in stay -->
     <div v-if="queryStore.hasPendingQuery && $currentPeriod() == 'in-stay'" class="px-3 sp:px-4 mt-4 sp:mt-6">
         <div 
-            class="flex items-center w-full h-[70px] rounded-[10px] bg-[linear-gradient(91deg,#0783FF_0.21%,#025CB6_39.83%,#0B6357_99.27%)] shadow-guest"
+            class="flex items-center w-full h-[55px] sp:h-[70px] rounded-[10px] bg-[linear-gradient(91deg,#0783FF_0.21%,#025CB6_39.83%,#0B6357_99.27%)] shadow-guest"
             @click="queryStore.$setIsOpenPopUp(true)"
         >
             <div class="pl-4">
-                <h1 class="lato text-[16px] font-bold leading-[20px] text-[#fafafa]">{{ $t('query.popup.bannerHome-in-stay.title') }}</h1>
-                <p class="mt-[2px] lato text-sm font-medium leading-[16px] text-[#fafafa]">
+                <h1 class="lato sp:text-[16px]  text-[10px] font-bold leading-[20px] text-[#fafafa]">{{ $t('query.popup.bannerHome-in-stay.title') }}</h1>
+                <p class="mt-[1px] lato sp:text-sm text-[9px] font-medium leading-[16px] text-[#fafafa]">
                     {{ $t('query.popup.bannerHome-in-stay.subtitle') }}
                 </p>
             </div>
-            <img src="/assets/img/noAnsweredQueryHomeImg.svg" alt="" class="w-[118px] h-full ml-auto">
+            <img src="/assets/img/noAnsweredQueryHomeImg.svg" alt="" class="sp:w-[118px] w-[60px] h-[70px] sp:h-full ml-auto">
         </div>
     </div>
     

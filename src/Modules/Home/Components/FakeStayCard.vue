@@ -7,25 +7,25 @@
         <!-- Skeleton Loader -->
         
         <div>
-            <p class="text-xs font-bold lato leading-[16px] text-[#333333]">{{ hotelData ? hotelData.name : '-'}}</p>
+            <p class="text-[10px] font-bold lato leading-[16px] text-[#333333]">{{ hotelData ? hotelData.name : '-'}}</p>
             <div class="flex mt-1.5">
                 <div>
                     <div class="flex items-center text-[14px] font-bold text-[#333333]">
-                        <img src="/assets/icons/WA.pointer.svg" class="w-3 h-3 mr-0.5" alt="Location Icon" />
+                        <img src="/assets/icons/WA.pointer.svg" class="w-[10px] h-[10px] mr-0.5" alt="Location Icon" />
                         <span class="lato text-[10px] font-bold leading-[12px]">{{ hotelData ? hotelData.zone : '-'}}</span>
                     </div>
                     <div class="flex items-center mt-1">
-                        <img src="/assets/icons/WA.calendar.svg" class="w-3 h-3 mr-0.5" alt="Calendar Icon" />
-                        <span class="lato text-[10px] font-bold leading-[12px]">{{ dates }}</span>
+                        <img src="/assets/icons/WA.calendar.svg" class="w-[10px] h-[10px] mr-0.5" alt="Calendar Icon" />
+                        <span class="lato text-[9px] font-bold leading-[12px]">{{ dates }}</span>
                     </div>
                     <div class="flex items-center text-[14px] font-bold text-[#333333] space-x-2 mt-1">
                         <div class="flex items-center">
-                            <img src="/assets/icons/WA.bed.svg" class="w-3 h-3 mr-0.5" alt="Bed Icon" />
-                            <span class="lato text-[10px] font-bold leading-[12px]">{{ '-' }}</span>
+                            <img src="/assets/icons/WA.bed.svg" class="w-[10px] h-[10px] mr-0.5" alt="Bed Icon" />
+                            <span class="lato text-[9px] font-bold leading-[12px]">{{ '-' }}</span>
                         </div>
                         <div class="flex items-center">
-                            <img src="/assets/icons/WA.huespedes.svg" class="w-3 h-3 mr-0.5" alt="Guests Icon" />
-                            <span class="lato text-[10px] font-bold leading-[12px]">{{ 1 }}</span>
+                            <img src="/assets/icons/WA.huespedes.svg" class="w-[10px] h-[10px] mr-0.5" alt="Guests Icon" />
+                            <span class="lato text-[9px] font-bold leading-[12px]">{{ 1 }}</span>
                         </div>
                     </div>
                 </div>
@@ -33,12 +33,12 @@
                 <RoundedButton
                     id="open-query-modal"
                     iconUrl="/assets/icons/WA.feedback.svg"
-                    sizeIcons="w-4 h-4"
+                    sizeIcons="w-[12px] h-[12px]"
                 />
                 <RoundedButton
                     id="open-shared-stay-modal"
                     iconUrl="/assets/icons/arrow-up-from-bracket.svg"
-                    sizeIcons="w-4 h-4"
+                    sizeIcons="w-[12px] h-[12px]"
                 />
             </div>
             </div>

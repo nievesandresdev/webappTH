@@ -14,12 +14,12 @@
         <button
           v-if="showExpand"
           @click="toggleFullScreen"
-          class="absolute top-2 right-2 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
+          class="absolute top-2 right-3 sp:right-2 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
         >
           <img
             :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
             :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
-            class="w-6 h-6"
+            class="sp:w-6 sp:h-6 w-3 h-3"
           />
         </button>
 
