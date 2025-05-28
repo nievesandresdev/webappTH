@@ -18,26 +18,33 @@
         > -->
         <div 
             :id="`${placesRecommendated.length > 1 ? 'carousel-recommendation' : ''}`" 
+            class="pt-[6px] sp:pt-[8px]"
             :class="{
-                'pl-[8px] sp:pl-4': placesRecommendated.length > 1,
-                'px-[8px] sp:px-4': !(placesRecommendated.length > 1)
+                'pl-2.5 sp:pl-4': placesRecommendated.length > 1,
+                'px-2.5 sp:px-4': !(placesRecommendated.length > 1)
             }"
         >
             <Carousel 
-                :snap-align="placesRecommendated.length > 1 ? 'start' : 'center'"
+                :items-to-show="2.25"
+                snapAlign="start"
+                :mouse-drag="true"
+                :touch-drag="true"
+                :mouse-wheel="{ threshold: 20 }"
+                :clamp="true"
             >
             <!-- first:ml-4 last:mr-4 -->
                 <Slide v-for="(place, index) in placesRecommendated" :key="place.id">
+                    <!-- :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'" -->
                     <div
-                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden"
-                        :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'"
+                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden w-full"
+                        
                         @mousedown="handleMouseDown"
                         @mouseup="handleMouseUp(place.id, $utils.isMockup())"
                     >
                         <div
-                            class="absolute top-0 left-0 w-full p-[2.8px] sp:p-[4px] text-center rounded-t-[10px] flex items-center justify-center gap-[2.8px] sp:gap-[4px]"
-                            :style="{ backgroundColor: chainStore.$bgColor1 }"
-                        >
+                            class="absolute top-0 left-0 w-full p-[2.8px] sp:p-[4px] text-center rounded-t-[10px] flex items-center justify-center gap-[2.8px] sp:gap-[4px] bg-[#FFD700]"
+                            >
+                            <!-- :style="{ backgroundColor: chainStore.$bgColor1 }" -->
                             <img
                                 src="/assets/icons/WA.STAR.BLACK.svg"
                                 class="size-[8.4px] sp:size-[12px]"
@@ -51,16 +58,17 @@
                             
                             class="p-[8px] absolute left-0 bottom-0 w-full z-[1000] truncate-1"
                         >
-                            <p class="text-[14px] font-bold lato mb-[6px] sp:mb-[8px] text-white truncate-1">
+                            <p class="text-[14px] font-bold lato mb-[6px] sp:mb-[8px] text-[--h-gray-100] truncate-1">
                                 {{ place.title }}
                             </p>
                             <div class="flex items-center justify-between w-full">
                                 <div class="flex items-center flex-1">
                                     <img
                                         src="/assets/icons/WA.pointer.svg"
-                                        class="size-[8.4px] sp:size-[12px] icon-white mr-[1px]"
+                                        class="size-[8.4px] sp:size-[12px] mr-[1px] icon-white"
                                     >
-                                    <p class="text-[8.4px] sp:text-[12px] font-medium lato text-white">
+                                    <!-- <IconPointer class="size-[8.4px] sp:size-[12px] mr-[1px]" /> -->
+                                    <p class="text-[8.4px] sp:text-[12px] font-medium lato text-[--h-gray-100]">
                                         {{ place.distance }}km
                                     </p>
                                 </div>
@@ -84,9 +92,11 @@
 </template>
 
 <script setup>
-    import { inject, ref } from 'vue';
+    import { inject, ref, onMounted } from 'vue';
     import 'vue3-carousel/dist/carousel.css';
     import { Carousel, Slide } from 'vue3-carousel';
+
+    // import IconPointer from '@/assets/icons/WA-POINTER.svg';
 
     // COMPONENTS
     import ListPageBottomSheetListText from './ListPageBottomSheetListText.vue';
@@ -113,7 +123,26 @@
     import { usePlaceStore } from '@/stores/modules/place';
     const placeStore = usePlaceStore();
 
+
+    
     let isDragging = ref(false);
+    // const screenWidth = ref(window.innerWidth)
+    // const itemsToShow = ref(2.12)
+
+    // onMounted(() => {
+
+    //     if(screenWidth.value < 300){
+    //         itemsToShow.value = 1.615
+    //     }else if(screenWidth.value > 300 && screenWidth.value < 340){
+    //         itemsToShow.value = 1.83
+    //     }else{
+    //         itemsToShow.value = 2.12
+    //     }
+
+    //     if(props.placesRecommendated.length === 1){
+    //         itemsToShow.value = 1;
+    //     }
+    // })
 
     const handleMouseDown = () => {
         isDragging.value = false;
@@ -135,22 +164,46 @@
 </script>
 
 <style>
+#carousel-recommendation .carousel__slide {
+    justify-content: start;
+}
 @media (max-width: 299px) {
-    #carousel-recommendation .carousel__slide {
+    #carousel-recommendation .carousel__track {
+        gap:6px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 9px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 120px !important;
     }
     #carousel-recommendation .carousel__track {
-        padding: 6px 0 !important;
+        padding: 6px 0 6px 0 !important;
+        padding-right: 48px !important;
         gap: 6px !important;
     }
+    #carousel-recommendation .carousel__slide:last-child {
+        margin-right: 24px !important; 
+    } */
 }
 @media (min-width: 300px) {
-    #carousel-recommendation .carousel__slide {
+    #carousel-recommendation .carousel__track {
+        gap:8px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 18px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 160px !important;
     }
     #carousel-recommendation .carousel__track {
-        padding: 8px 0 !important;
+        padding: 8px 0 8px 0 !important;
+        padding-right: 48px !important;
         gap: 8px !important;
     }
+    #carousel-recommendation .carousel__slide:last-child {
+        margin-right: 24px !important; 
+    } */
 }
+
 </style>
