@@ -1,11 +1,18 @@
 <template>
     <div 
         id="experience-cross-mobile"
-        class="carousel-home pl-2.5 sp:pl-4"
+        :class="{
+            'pl-2.5 sp:pl-4': items.length > 1,
+            'flex justify-center': !(items.length > 1)
+        }"
     >
         <Carousel 
-            :items-to-show="1.2"
-            :snap-align="items.length > 1 ? 'start' : 'center'"
+            :items-to-show="itemsToShow"
+            snapAlign="start"
+            :mouse-drag="true"
+            :touch-drag="true"
+            :mouse-wheel="{ threshold: 20 }"
+            :clamp="true"
         >
             <Slide v-for="(item, index) in items" :key="index">
                 <CarouselCard
@@ -72,6 +79,18 @@ const props =  defineProps({
     }
 })
 
+const screenWidth = ref(window.innerWidth)
+const itemsToShow = ref(1.32)
+
+onMounted(() => {
+    if(screenWidth.value < 300){
+        itemsToShow.value = 1.22
+    }else if(screenWidth.value > 300 && screenWidth.value < 340){
+        itemsToShow.value = 1.165
+    }else{
+        itemsToShow.value = 1.332
+    }
+})
 
 function getDuration (data) {
     if (!data.duration) null
@@ -94,17 +113,18 @@ function goExperience (exp) {
 
 </script>
 <style>
-
-
+#experience-cross-mobile .carousel__slide {
+    justify-content: start;
+}
 
 @media (max-width: 299px) {
-    #experience-cross-mobile .carousel__slide {
-        height: 238px;
+    #experience-cross-mobile .carousel__viewport {
+        padding-bottom: 8px;
     }
 }
 @media (min-width: 300px) {
-    #experience-cross-mobile .carousel__slide {
-        height: 344px;
+    #experience-cross-mobile .carousel__viewport {
+        padding-bottom: 16px;
     }
 }
 </style>

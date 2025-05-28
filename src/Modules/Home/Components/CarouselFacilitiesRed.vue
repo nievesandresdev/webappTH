@@ -63,11 +63,11 @@ const itemsToShow = ref(1.32)
 
 onMounted(() => {
     if(screenWidth.value < 300){
-        itemsToShow.value = 1.21
+        itemsToShow.value = 1.22
     }else if(screenWidth.value > 300 && screenWidth.value < 340){
-        itemsToShow.value = 1.16
+        itemsToShow.value = 1.165
     }else{
-        itemsToShow.value = 1.32
+        itemsToShow.value = 1.332
     }
 })
 
