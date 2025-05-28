@@ -8,7 +8,7 @@
         }"
     >
         <Carousel 
-            :items-to-show="1.32"
+            :items-to-show="itemsToShow"
             snapAlign="start"
             :mouse-drag="true"
             :touch-drag="true"
@@ -35,7 +35,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import CarouselCard from './CarouselCard.vue';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide } from 'vue3-carousel';
@@ -58,6 +58,18 @@ const props =  defineProps({
 })
 
 let isDragging = ref(false);
+const screenWidth = ref(window.innerWidth)
+const itemsToShow = ref(1.32)
+
+onMounted(() => {
+    if(screenWidth.value < 300){
+        itemsToShow.value = 1.21
+    }else if(screenWidth.value > 300 && screenWidth.value < 340){
+        itemsToShow.value = 1.16
+    }else{
+        itemsToShow.value = 1.32
+    }
+})
 
 const handleMouseDown = () => {
     isDragging.value = false;
