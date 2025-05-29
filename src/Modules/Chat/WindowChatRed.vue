@@ -17,8 +17,8 @@
         <PageTransitionGlobal module="chat">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[98px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
-                @click="isScheduleModalOpen = true"
+                class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
+                @click="isScheduleModalOpen = isAvailable ? true : false"
             >
                 <div class="flex items-center gap-2">
                     <p class="lato text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
@@ -157,7 +157,6 @@ onMounted( async () => {
     setTimeout(scrollToBottom, 50);
     clearTimeouts();
     connectPusher();
-    console.log('test 5',hotelStore.hotelData)
     isIphone.value = /iPhone/i.test(navigator.userAgent);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
@@ -254,7 +253,7 @@ const handleEnter = (e) => {
 const watchAvailability = async () => {
     try {
         // Cargar los horarios de chat desde el store
-        let loadChatHours = await hotelStore.$loadChatHours(); 
+        let loadChatHours = await chatStore.$getChatHoursByHotel(); 
         // Obtener la fecha y hora actual
         const currentDateTime = DateTime.now();
         const currentDay = currentDateTime.toFormat('cccc'); // Nombre completo del día, e.g., 'Monday'
