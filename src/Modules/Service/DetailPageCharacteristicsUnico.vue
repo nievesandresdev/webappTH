@@ -1,5 +1,9 @@
 <template>
-    <div class=" mt-[15px] sp:mt-[48px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px] mb-[28px] sp:mb-[24px]">
+<!-- mt-[15px] sp:mt-[48px] -->
+    <div
+        v-if="isVisibleSectionInformationGeneral"
+        class="mt-[14px] sp:mt-[24px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px] mb-[28px] sp:mb-[24px]"
+    >
         <h3 class="text-[10px] sp:text-[16px] lato font-bold leading-none">{{ $t('experience.detail-page.title-general-information') }}</h3>
         <div
             v-if="serviceData?.duration && serviceData?.fields_visibles?.includes('DURATION')"
@@ -37,14 +41,17 @@
             <p class="text-[9px] sp:text-[14px] leading-none">{{ `${$t('service.detail-page.offered-in')}: ${serviceData?.languages?.map(lg => $utils.capitalize($t(`language.${lg}`))).join(', ')}` }}</p>
         </div>
     </div>
-    <div v-if="serviceData?.requeriment && serviceData?.fields_visibles?.includes('REQUIREMENT')" class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]"> 
+    <div
+        v-if="serviceData?.requeriment && serviceData?.fields_visibles?.includes('REQUIREMENT')"
+        class="sp:pb-[16px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px]"
+    >
         <h3 class="text-[9px] sp:text-[16px] lato font-bold leading-none">{{ $t('service.detail-page.requeriments.title') }}</h3>
         <p class="text-[9px] sp:text-[14px] leading-none font-medium">{{ serviceData?.requeriment }}</p>
     </div>
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject, computed } from 'vue';
 
 const serviceData = inject('serviceData');
 
@@ -60,6 +67,16 @@ function calculateDuration(duration) {
     }
     return `${hours} Horas`;
 }
+
+// COMPUTED
+const isVisibleSectionInformationGeneral = computed(() => {
+    return serviceData?.fields_visibles?.includes('DURATION') ||
+           serviceData?.fields_visibles?.includes('AVAILABILITY') ||
+           serviceData?.fields_visibles?.includes('ADDRESS') ||
+           serviceData?.fields_visibles?.includes('ACCESSIBLE') ||
+           serviceData?.fields_visibles?.includes('LANGUAGES');
+});
+
 </script>
 
 <style lang="scss">

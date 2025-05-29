@@ -11,7 +11,8 @@
                     :from="'services'"
             />
             <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4 pb-[40px] sp:pb-[86px]">
-                <div class=" border-b  border-[#E9E9E9]">
+                <div class=" ">
+                    <!-- border-b  border-[#E9E9E9] -->
                     <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                         {{ serviceData?.name }}
                     </h2>
@@ -87,6 +88,7 @@
                 >
                     {{ $t('service.modal-request-service.button') }}
                 </PrimaryButton>
+                <span class="mt-[14px] sp:mt-[24px] border-b border-color-secondary block"></span>
                 <template v-if="serviceData.type == 1">
                     <DetailPageCharacteristicsUnico />
                 </template>
