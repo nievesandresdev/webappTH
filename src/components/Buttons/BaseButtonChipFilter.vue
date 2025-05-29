@@ -1,7 +1,7 @@
 <template>
         <div
             class="flex items-center inline-block px-4 py-[6px] rounded-[100px] max-w-max"
-            :class="{'item-menu-cat-active': !active, 'hbg-gray-100 hborder-black-100': active}"
+            :class="{'item-menu-cat-active': !active, 'hbg-gray-100 border hborder-black-100': active}"
             @click="changeValue"
         >
                 <img
