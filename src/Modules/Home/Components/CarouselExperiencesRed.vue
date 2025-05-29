@@ -18,7 +18,8 @@
                 <CarouselCard
                     :img-url="experienceStore. $loadImage(item.image)"    
                     :data="item"
-                    @click="goExperience(item)"
+                    @mousedown="handleMouseDown"
+                    @mouseup="handleMouseUp(item, $utils.isMockup())"
                 >
                     <p 
                     class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] max-h-[28px] sp:max-h-[40px] truncate-2 text-left"
@@ -68,6 +69,7 @@ import { useExperienceStore } from '@/stores/modules/experience'
 const experienceStore = useExperienceStore()
 
 const duration = ref(null);
+let isDragging = ref(false);
 const props =  defineProps({
     items: {
         type: Array,
@@ -103,13 +105,31 @@ function getDuration (data) {
     return m
 }
 
-function goExperience (exp) {
+function goExperience (exp, isMockup) {
+    if(isMockup) return;
     if (exp.name_api === 'viator') {
         router.push({ name:'DetailActivity', params: { slug: exp.slug } });
     } else {
         router.push({ name: 'DetailService', params: { service: 'activity', slug: exp.slug } });
     }
 }
+
+const handleMouseDown = () => {
+    isDragging.value = false;
+    document.addEventListener('mousemove', handleMouseMove);
+};
+
+const handleMouseMove = () => {
+    isDragging.value = true; // Si hay movimiento, es un arrastre.
+};
+
+const handleMouseUp = (exp, isMockup) => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    if (!isDragging.value) { // Solo si no hubo arrastre.
+        goExperience(exp, isMockup);
+    }
+    isDragging.value = false;
+};
 
 </script>
 <style>
