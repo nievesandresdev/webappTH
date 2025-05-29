@@ -6,7 +6,8 @@ import {
     markMsgsAsReadApi,
     unreadMsgsApi,
     getAvailableLanguagesApi,
-    getAllSettingsApi
+    getAllSettingsApi,
+    getChatHoursByHotelApi
 } from '@/api/services/chat.services'
 
 export const useChatStore = defineStore('chat', () => {
@@ -14,6 +15,7 @@ export const useChatStore = defineStore('chat', () => {
     // STATE
     const messages = ref([]);
     const unreadMsgsRef = ref(0);
+    const chatHours = ref([]);
     // ACTIONS
     async function sendMsgToHoster (params) {
         const response = await sendMsgToHosterApi(params)
@@ -88,6 +90,13 @@ export const useChatStore = defineStore('chat', () => {
         unreadMsgsRef.value = count;
     }
 
+    async function $getChatHoursByHotel () {
+        const response = await getChatHoursByHotelApi()
+        const { ok, data } = response
+        chatHours.value = ok ? response.data : null
+        return response.data
+    }
+
     //getters
 
     const countUnreadMessages = computed(() => {
@@ -106,8 +115,11 @@ export const useChatStore = defineStore('chat', () => {
         countUnreadMessages,
         setUnreadMsgsCount,
         getAvailableLanguages,
+        getAllSettings,
+        $getChatHoursByHotel,
+        //
         messages,
-        getAllSettings
+        chatHours
     }
 
 })

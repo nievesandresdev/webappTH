@@ -13,19 +13,20 @@
         <div v-if="!loading" class="body-chat flex-grow flex flex-col overflow-y-auto px-2 sp:px-4 no-scrollbar">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[77px] sp:top-[142px] left-2 sp:left-4 bg-gradient-100 rounded-[7px] sp:rounded-[10px] p-1.5 sp:p-3 shadow-guest"
+                class="fixed top-[65px] sp:top-[142px] left-2 sp:left-4 bg-gradient-100 rounded-[7px] sp:rounded-[10px] p-1.5 sp:p-3 shadow-guest"
                 @click="isScheduleModalOpen = true"
             >
-                <div class="flex items-center gap-1 sp:gap-2">
+                <div class="flex items-center gap-1 sp:gap-2 justify-center">
                     <p class="lato text-[10px] sp:text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
                         {{ isAvailable ? $t('chat.availabilty') : $t('chat.not-availabilty') }}
                     </p>
                     <IconCustomColor 
                         name="WA.Clock" 
+                        :class="'mt-[1px]'"
                         :color="isAvailable ? '#34A98F' : '#F66'" 
                         only-change-background 
-                        height="14"
-                        width="14"
+                        height="10"
+                        width="10"
                     />
                 </div>
             </div>
@@ -102,6 +103,7 @@
     import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
     import ScheduleModal from './ScheduleModalRed.vue';
     import AppHeader from '@/layout/Components/AppHeader.vue';
+    import IconCustomColor from '@/components/IconCustomColor.vue';
 
     import { useRoute } from 'vue-router'
     const route = useRoute();
@@ -125,7 +127,7 @@
     startLoading(SECTIONS.CHAT.GLOBAL);
     //mounted
     onMounted(async () => {
-        await hotelStore.$loadChatHours(); 
+        await chatStore.$getChatHoursByHotel(); 
         await watchAvailability();
         settings.value = await chatStore.getAllSettings();
         setTimeout(scrollToBottom, 50);
@@ -137,7 +139,7 @@
     const watchAvailability = () =>{
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
-        const todaysAvailability = hotelStore?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
+        const todaysAvailability = chatStore?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
         if (!todaysAvailability || !todaysAvailability.active) {
             return false;
         }

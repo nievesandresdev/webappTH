@@ -1,17 +1,26 @@
 <template>
     <div 
-        id="experience-cross-mobile"
-        class="carousel-home pl-2.5 sp:pl-4"
+        :id="items.length > 1 ? 'experience-cross-start' : 'experience-cross-center'"
+        :class="{
+            'pl-2.5 sp:pl-4': items.length > 1,
+            'flex justify-center': items.length === 1
+        }"
     >
         <Carousel 
-            :items-to-show="1.2"
-            :snap-align="items.length > 1 ? 'start' : 'center'"
+            :items-to-show="1.3"
+            snapAlign="start"
+            :mouse-drag="true"
+            :touch-drag="true"
+            :mouse-wheel="{ threshold: 20 }"
+            :clamp="true"
         >
             <Slide v-for="(item, index) in items" :key="index">
                 <CarouselCard
                     :img-url="experienceStore. $loadImage(item.image)"    
                     :data="item"
-                    @click="goExperience(item)"
+                    @mousedown="handleMouseDown"
+                    @mouseup="handleMouseUp(item, $utils.isMockup())"
+                    :items-length="items.length"
                 >
                     <p 
                     class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] max-h-[28px] sp:max-h-[40px] truncate-2 text-left"
@@ -46,7 +55,7 @@
                     </p>
                 </CarouselCard>
             </Slide>
-    </Carousel>
+        </Carousel>
 </div>
 </template>
 <script setup>
@@ -61,6 +70,7 @@ import { useExperienceStore } from '@/stores/modules/experience'
 const experienceStore = useExperienceStore()
 
 const duration = ref(null);
+let isDragging = ref(false);
 const props =  defineProps({
     items: {
         type: Array,
@@ -72,6 +82,18 @@ const props =  defineProps({
     }
 })
 
+// const screenWidth = ref(window.innerWidth)
+// const itemsToShow = ref(1.32)
+
+// onMounted(() => {
+//     if(screenWidth.value < 300){
+//         itemsToShow.value = 1.22
+//     }else if(screenWidth.value > 300 && screenWidth.value < 340){
+//         itemsToShow.value = 1.165
+//     }else{
+//         itemsToShow.value = 1.332
+//     }
+// })
 
 function getDuration (data) {
     if (!data.duration) null
@@ -84,7 +106,8 @@ function getDuration (data) {
     return m
 }
 
-function goExperience (exp) {
+function goExperience (exp, isMockup) {
+    if(isMockup) return;
     if (exp.name_api === 'viator') {
         router.push({ name:'DetailActivity', params: { slug: exp.slug } });
     } else {
@@ -92,19 +115,54 @@ function goExperience (exp) {
     }
 }
 
+const handleMouseDown = () => {
+    isDragging.value = false;
+    document.addEventListener('mousemove', handleMouseMove);
+};
+
+const handleMouseMove = () => {
+    isDragging.value = true; // Si hay movimiento, es un arrastre.
+};
+
+const handleMouseUp = (exp, isMockup) => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    if (!isDragging.value) { // Solo si no hubo arrastre.
+        goExperience(exp, isMockup);
+    }
+    isDragging.value = false;
+};
+
 </script>
 <style>
+#experience-cross-start .carousel__track {
+    justify-content: start;
+}
 
-
-
+#experience-cross-center .carousel__track {
+    justify-content: center !important;
+}
 @media (max-width: 299px) {
-    #experience-cross-mobile .carousel__slide {
-        height: 238px;
+    #experience-cross-start .carousel__viewport,
+    #experience-cross-center .carousel__viewport {
+        padding-bottom: 8px;
+    }
+    #experience-cross-start .carousel__viewport {
+        padding-right: 10px;
+    }
+    #experience-cross-start .carousel__track{
+        gap: 10px;
     }
 }
 @media (min-width: 300px) {
-    #experience-cross-mobile .carousel__slide {
-        height: 344px;
+    #experience-cross-start .carousel__viewport,
+    #experience-cross-center .carousel__viewport {
+        padding-bottom: 16px;
+    }
+    #experience-cross-start .carousel__viewport {
+        padding-right: 20px;
+    }
+    #experience-cross-start .carousel__track{
+        gap: 16px;
     }
 }
 </style>

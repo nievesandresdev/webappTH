@@ -25,7 +25,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="mt-4">
+                <div class="mt-2 sp:mt-4">
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
                 </div>
             </section>
@@ -46,7 +46,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div class="mt-2 sp:mt-4">
                     <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
@@ -67,7 +67,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div class="mt-2 sp:mt-4">
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
                 </div>
             </section>
@@ -88,7 +88,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div class="mt-2 sp:mt-4">
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
                 </div>
             </section>
@@ -106,7 +106,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </router-link>
                 </div>
-                <div class="">
+                <div class="mt-2 sp:mt-4">
                     <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
                 </div>
             </section>

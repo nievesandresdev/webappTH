@@ -18,16 +18,26 @@
         > -->
         <div 
             :id="`${placesRecommendated.length > 1 ? 'carousel-recommendation' : ''}`" 
+            class="pt-[6px] sp:pt-[8px]"
+            :class="{
+                'pl-2.5 sp:pl-4': placesRecommendated.length > 1,
+                'px-2.5 sp:px-4': !(placesRecommendated.length > 1)
+            }"
         >
             <Carousel 
-                :snap-align="placesRecommendated.length > 1 ? 'start' : 'center'"
-                :wrap-around="false"
-                :items-to-show="2.5"
+                :items-to-show="2.25"
+                snapAlign="start"
+                :mouse-drag="true"
+                :touch-drag="true"
+                :mouse-wheel="{ threshold: 20 }"
+                :clamp="true"
             >
             <!-- first:ml-4 last:mr-4 -->
                 <Slide v-for="(place, index) in placesRecommendated" :key="place.id">
+                    <!-- :class="placesRecommendated.length > 1 ? 'w-[120px] sp:w-[160px]' : 'w-full'" -->
                     <div
-                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden"
+                        class="h-[160px] sp:h-[208px] relative rounded-[10px] overflow-hidden w-full"
+                        
                         @mousedown="handleMouseDown"
                         @mouseup="handleMouseUp(place.id, $utils.isMockup())"
                     >
@@ -82,7 +92,7 @@
 </template>
 
 <script setup>
-    import { inject, ref } from 'vue';
+    import { inject, ref, onMounted } from 'vue';
     import 'vue3-carousel/dist/carousel.css';
     import { Carousel, Slide } from 'vue3-carousel';
 
@@ -113,7 +123,26 @@
     import { usePlaceStore } from '@/stores/modules/place';
     const placeStore = usePlaceStore();
 
+
+    
     let isDragging = ref(false);
+    // const screenWidth = ref(window.innerWidth)
+    // const itemsToShow = ref(2.12)
+
+    // onMounted(() => {
+
+    //     if(screenWidth.value < 300){
+    //         itemsToShow.value = 1.615
+    //     }else if(screenWidth.value > 300 && screenWidth.value < 340){
+    //         itemsToShow.value = 1.83
+    //     }else{
+    //         itemsToShow.value = 2.12
+    //     }
+
+    //     if(props.placesRecommendated.length === 1){
+    //         itemsToShow.value = 1;
+    //     }
+    // })
 
     const handleMouseDown = () => {
         isDragging.value = false;
@@ -135,31 +164,46 @@
 </script>
 
 <style>
+#carousel-recommendation .carousel__slide {
+    justify-content: start;
+}
 @media (max-width: 299px) {
-    #carousel-recommendation .carousel__slide {
+    #carousel-recommendation .carousel__track {
+        gap:6px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 9px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 120px !important;
     }
     #carousel-recommendation .carousel__track {
         padding: 6px 0 6px 0 !important;
-        padding-right: 48px !important; /* espacio para que no se corte el último slide */
+        padding-right: 48px !important;
         gap: 6px !important;
     }
     #carousel-recommendation .carousel__slide:last-child {
-        margin-right: 24px !important; /* margen derecho para el último slide */
-    }
+        margin-right: 24px !important; 
+    } */
 }
 @media (min-width: 300px) {
-    #carousel-recommendation .carousel__slide {
+    #carousel-recommendation .carousel__track {
+        gap:8px;
+    }
+    #carousel-recommendation .carousel__viewport {
+        padding-right: 18px;
+    }
+    /* #carousel-recommendation .carousel__slide {
         width: 160px !important;
     }
     #carousel-recommendation .carousel__track {
         padding: 8px 0 8px 0 !important;
-        padding-right: 48px !important; /* espacio para que no se corte el último slide */
+        padding-right: 48px !important;
         gap: 8px !important;
     }
     #carousel-recommendation .carousel__slide:last-child {
-        margin-right: 24px !important; /* margen derecho para el último slide */
-    }
+        margin-right: 24px !important; 
+    } */
 }
 
 </style>
