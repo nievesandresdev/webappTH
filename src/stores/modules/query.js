@@ -9,7 +9,8 @@ import {
     saveResponseApi,
     existingPendingQueryApi,
     visitedApi,
-    getCurrentAndSettingsQueryApi
+    getCurrentAndSettingsQueryApi,
+    getCurrentQueryApi
 } from '@/api/services/query.services'
 
 import { useQuerySettingsStore } from '@/stores/modules/querySettings'
@@ -123,7 +124,6 @@ export const useQueryStore = defineStore('query', () => {
 
     function $openPopUp() {
         let localOpen = localStorage.getItem('queryPopUpHasBeenOpen')
-        // console.log('localOpen',localOpen)
         if(localOpen !== 'true'){
             $setIsOpenPopUp(true)
         }
@@ -136,6 +136,16 @@ export const useQueryStore = defineStore('query', () => {
 
     function $closeSessionPopUp() {
         localStorage.setItem('queryPopUpHasBeenOpen', false);
+    }
+
+    async function $getCurrentQuery(params) {
+        const response = await getCurrentQueryApi(params)
+        console.log('test getCurrentQuery',response)
+        const { ok } = response   
+        if(ok){
+            $setCurrentQuery(response.data)
+            return response.data
+        }
     }
     return {
         $getCurrentPeriod,
@@ -151,6 +161,7 @@ export const useQueryStore = defineStore('query', () => {
         $firstOpenPopUp,
         $closeSessionPopUp,
         $setCurrentQuery,
+        $getCurrentQuery,
         //
         hasPendingQuery,
         currentQuery:currentQueryComputed,
