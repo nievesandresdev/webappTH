@@ -9,9 +9,9 @@
             <!-- card -->
                 <div 
                     class="flex justify-between items-center h-7 sp:h-10 px-2 sppx-4" 
-                    v-for="(schedule, index) in hotelStore.chatHours" 
+                    v-for="(schedule, index) in chatStore.chatHours" 
                     :key="schedule"
-                    :class="{'border-b border-color-secondary':(hotelStore.chatHours.length - 1) > index}"
+                    :class="{'border-b border-color-secondary':(chatStore.chatHours.length - 1) > index}"
                 >
                     <h2 class="lato text-xs sp:text-base font-bold">{{ $t('chat.nameDay'+schedule.day) }}</h2>
                     <div class="flex items-center">
@@ -37,6 +37,9 @@ import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 const { hotelData } = hotelStore;
+
+import { useChatStore } from '@/stores/modules/chat';
+const chatStore = useChatStore();
 
 
 const isScheduleModalOpen = inject('isScheduleModalOpen');

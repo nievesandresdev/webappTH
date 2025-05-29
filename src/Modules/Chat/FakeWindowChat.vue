@@ -121,7 +121,7 @@
     startLoading(SECTIONS.CHAT.GLOBAL);
     //mounted
     onMounted(async () => {
-        await hotelStore.$loadChatHours(); 
+        await chatStore.$getChatHoursByHotel(); 
         await watchAvailability();
         settings.value = await chatStore.getAllSettings();
         setTimeout(scrollToBottom, 50);
@@ -133,7 +133,7 @@
     const watchAvailability = () =>{
         const currentDay = Moment().format('dddd'); 
         const currentTime = Moment().format('HH:mm');
-        const todaysAvailability = hotelStore?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
+        const todaysAvailability = chatStore?.chatHours.find(item => item.day.toUpperCase() == currentDay.toUpperCase());
         if (!todaysAvailability || !todaysAvailability.active) {
             return false;
         }
