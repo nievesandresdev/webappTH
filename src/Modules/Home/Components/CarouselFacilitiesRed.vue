@@ -1,7 +1,6 @@
 <template>
-    <!-- :id="`${items.length > 1 ? 'facility-cross-mobile' : ''}`" -->
     <div 
-        id="facility-cross-mobile"
+        :id="items.length > 1 ? 'facility-cross-start' : 'facility-cross-center'"
         :class="{
             'pl-2.5 sp:pl-4': items.length > 1,
             'flex justify-center': !(items.length > 1)
@@ -21,6 +20,7 @@
                     :data="item"
                     @mousedown="handleMouseDown"
                     @mouseup="handleMouseUp(item.id, $utils.isMockup())"
+                    :items-length="items.length"
                 >
                     <div class="flex items-center h-[22px] sp:h-[32px]">
                         <p 
@@ -96,26 +96,38 @@ function goFacility (facility,isMockup) {
 
 </script>
 <style>
-#facility-cross-mobile .carousel__slide {
+#facility-cross-start .carousel__track {
     justify-content: start;
 }
 
+#facility-cross-center .carousel__track {
+    justify-content: center !important;
+}
+
 @media (max-width: 299px) {
-    #facility-cross-mobile .carousel__viewport {
+    #facility-cross-start .carousel__viewport,
+    #facility-cross-center .carousel__viewport {
         padding-bottom: 8px;
+    }
+    #facility-cross-start .carousel__viewport {
         padding-right: 10px;
     }
-    #facility-cross-mobile .carousel__track {
+    #facility-cross-start .carousel__track{
         gap: 10px;
     }
 }
 @media (min-width: 300px) {
-    #facility-cross-mobile .carousel__viewport {
+    #facility-cross-start .carousel__viewport,
+    #facility-cross-center .carousel__viewport {
         padding-bottom: 16px;
+    }
+    #facility-cross-start .carousel__viewport {
         padding-right: 20px;
     }
-    #facility-cross-mobile .carousel__track {
+    #facility-cross-start .carousel__track{
         gap: 16px;
     }
 }
+
+
 </style>
