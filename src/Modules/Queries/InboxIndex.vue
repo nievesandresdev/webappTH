@@ -119,9 +119,6 @@ onMounted(async() => {
         await queryStore.$getCurrentAndSettingsQuery(localStorage.getItem('stayId'),localStorage.getItem('guestId'),$currentPeriod(),guestStore.guestData.name)
     }
     //cargar query en caso de cambio de fecha en la sesion
-    console.log('test queryStore.currentQuery',queryStore.currentQuery)
-    console.log('test period',$currentPeriod())
-    console.log('test queryStore.currentQuery.period',queryStore.currentQuery.period !== $currentPeriod())
     if(queryStore.currentQuery && queryStore.currentQuery.period !== $currentPeriod()){
         console.log('test entro')
         await queryStore.$getCurrentQuery({
@@ -210,7 +207,6 @@ const showRequestReview = computed(()=>{
 const getCombinedList = () => {
   const items = []
   // 1. La consulta actual (suponiendo que el campo de fecha es answeredAt)
-  console.log('test queryStore.currentQuery',queryStore.currentQuery)
   if (queryStore.currentQuery && !queryStore.currentQuery.answered) {
     items.push({
       ...queryStore.currentQuery,
@@ -253,7 +249,6 @@ const getCombinedList = () => {
     return formatFa - formatFb
 })
 
-  console.log('test combinedList',combinedList.value)
 }
 
 provide('EditId',EditId);
