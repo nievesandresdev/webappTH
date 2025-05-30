@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card-list flex w-full cursor-pointer"
+        class="card-list flex w-full cursor-pointer h-[75px] sp:h-auto"
         :class="class"
         @click="goService"
     >
@@ -38,7 +38,7 @@
                 :class="data?.name_api === 'viator' ? 'justify-between' : 'justify-end'"
             >
                 <img v-if="data?.name_api === 'viator'" class="w-[30px] sp:w-[49px]" src="/assets/icons/TH.VIATOR.svg" alt="VIATOR">
-                <div class="text-right">
+                <div class="text-right flex flex-col items-end gap-1">
                     <template v-if="serviceStore.calPrice(data)?.isFree">
                         <span class="text-[10px] sp:text-[14px] font-medium lato leading-none">
                             {{ $t('service.card-item.free') }}
