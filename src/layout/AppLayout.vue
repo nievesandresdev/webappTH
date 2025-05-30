@@ -3,8 +3,7 @@
 
         <router-view></router-view>
         <MenuMobile 
-            v-if="!isDesktop && hotelStore.hotelData"
-            v-show="showMenu" 
+            v-if="!isDesktop && hotelStore.hotelData && showMenu"
         />
         <IconsQueryModal />
     </div>
@@ -132,6 +131,7 @@ const showMenu = computed(() => {
     let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
     let hiddenMenuByRef = !hideAppMenu.value;
     let existsUrlParam = !getUrlParam('acform');
-    return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
+    let show = existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
+    return show;
 });
 </script>

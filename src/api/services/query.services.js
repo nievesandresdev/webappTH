@@ -10,6 +10,7 @@ export const saveResponseApi = (params) => apiHttp('POST', `${queryPath}/saveRes
 export const existingPendingQueryApi = (params) => apiHttp('GET', `${queryPath}/existingPendingQuery`, params)
 export const visitedApi = (params) => apiHttp('POST', `${queryPath}/visited`, params, {}, 'API_GENERAL', false, true)
 export const getCurrentAndSettingsQueryApi = (params) => apiHttp('GET', `${queryPath}/getCurrentAndSettingsQuery`, params)
+export const getCurrentQueryApi = (params) => apiHttp('GET', `${queryPath}/getCurrentQuery`, params)
 
 
 

@@ -1,6 +1,6 @@
 <template>
     <div 
-        id="place-cross-mobile"
+        :id="items.length > 1 ? 'place-cross-start' : 'place-cross-center'"
         :class="{
             'pl-2.5 sp:pl-4': items.length > 1,
             'flex justify-center': !(items.length > 1)
@@ -20,6 +20,7 @@
                     :data="item"
                     @mousedown="handleMouseDown"
                     @mouseup="handleMouseUp(item.id, $utils.isMockup())"
+                    :items-length="items.length"
                 >
                     <h1 class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] truncate text-left" v-html="item.title"></h1>
                     <div class="mt-1 sp:mt-3 flex items-center gap-[3px] sp:gap-1">
@@ -100,27 +101,36 @@ function goPlace (place, isMockup) {
 }
 </script>
 <style>
-#place-cross-mobile .carousel__slide {
+#place-cross-start .carousel__track {
     justify-content: start;
 }
 
+#place-cross-center .carousel__track {
+    justify-content: center !important;
+}
+
 @media (max-width: 299px) {
-    #place-cross-mobile .carousel__viewport {
+    #place-cross-start .carousel__viewport,
+    #place-cross-center .carousel__viewport {
         padding-bottom: 8px;
+    }
+    #place-cross-start .carousel__viewport {
         padding-right: 10px;
     }
-    #place-cross-mobile .carousel__track {
+    #place-cross-start .carousel__track{
         gap: 10px;
     }
 }
 @media (min-width: 300px) {
-    #place-cross-mobile .carousel__viewport {
+    #place-cross-start .carousel__viewport,
+    #place-cross-center .carousel__viewport {
         padding-bottom: 16px;
+    }
+    #place-cross-start .carousel__viewport {
         padding-right: 20px;
     }
-    #place-cross-mobile .carousel__track {
+    #place-cross-start .carousel__track{
         gap: 16px;
     }
 }
-
 </style>

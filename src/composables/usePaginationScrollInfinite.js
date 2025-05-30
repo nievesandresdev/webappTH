@@ -32,7 +32,7 @@ export const usePaginationScrollInfinite = (
 
     function initScrollListener () {
         const container = document?.querySelector(`#${idSelectorContainer}`);
-        console.log(container, 'container');
+        // console.log(container, 'container');
         if (!container) {
             console.warn(`No se encontró el contenedor con el ID: ${idSelectorContainer}`);
             return;

@@ -1,9 +1,9 @@
 <template>
     <div 
-        id="experience-cross-mobile"
+        :id="items.length > 1 ? 'experience-cross-start' : 'experience-cross-center'"
         :class="{
             'pl-2.5 sp:pl-4': items.length > 1,
-            'flex justify-center': !(items.length > 1)
+            'flex justify-center': items.length === 1
         }"
     >
         <Carousel 
@@ -20,6 +20,7 @@
                     :data="item"
                     @mousedown="handleMouseDown"
                     @mouseup="handleMouseUp(item, $utils.isMockup())"
+                    :items-length="items.length"
                 >
                     <p 
                     class="lato text-xs sp:text-lg font-bold leading-[14px] sp:leading-[20px] max-h-[28px] sp:max-h-[40px] truncate-2 text-left"
@@ -54,7 +55,7 @@
                     </p>
                 </CarouselCard>
             </Slide>
-    </Carousel>
+        </Carousel>
 </div>
 </template>
 <script setup>
@@ -133,25 +134,34 @@ const handleMouseUp = (exp, isMockup) => {
 
 </script>
 <style>
-#experience-cross-mobile .carousel__slide {
+#experience-cross-start .carousel__track {
     justify-content: start;
 }
 
+#experience-cross-center .carousel__track {
+    justify-content: center !important;
+}
 @media (max-width: 299px) {
-    #experience-cross-mobile .carousel__viewport {
+    #experience-cross-start .carousel__viewport,
+    #experience-cross-center .carousel__viewport {
         padding-bottom: 8px;
+    }
+    #experience-cross-start .carousel__viewport {
         padding-right: 10px;
     }
-    #experience-cross-mobile .carousel__track {
+    #experience-cross-start .carousel__track{
         gap: 10px;
     }
 }
 @media (min-width: 300px) {
-    #experience-cross-mobile .carousel__viewport {
+    #experience-cross-start .carousel__viewport,
+    #experience-cross-center .carousel__viewport {
         padding-bottom: 16px;
+    }
+    #experience-cross-start .carousel__viewport {
         padding-right: 20px;
     }
-    #experience-cross-mobile .carousel__track {
+    #experience-cross-start .carousel__track{
         gap: 16px;
     }
 }

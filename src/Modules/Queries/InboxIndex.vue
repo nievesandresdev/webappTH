@@ -2,7 +2,7 @@
     <SectionBar :title="$t('profile.inbox.title')" :fixed="false"/>
     <!-- pre-stay -->
     <PageTransitionGlobal module="query">
-        <div class="flex flex-col gap-6 px-4 pt-6 pb-[114px]">
+        <div class="flex flex-col gap-6 px-4 py-6">
             <template v-for="(item,index) in combinedList" :key="index">
                 <!-- {{ item._type }} - {{ item._date }} -->
                 <TextQuery 
@@ -41,6 +41,7 @@
                     :id="item.id"
                 />
                 <template v-else-if="item._type == 'response' && EditPeriod == item.period">
+                    aqui2
                     <TextQuery 
                         v-if="EditPeriod == 'pre-stay'" 
                         @reloadList="reloadList"
@@ -112,11 +113,21 @@ startLoading(SECTIONS.QUERY.GLOBAL);
 //
 onMounted(async() => {
     
-    // await getQuerySettings();
     period.value = $currentPeriod();
-    // if(period.value){
-    //     await getCurrentQuery();
-    // }
+    //cargar data en caso de recarga
+    if(!querySettingsStore.settings){
+        await queryStore.$getCurrentAndSettingsQuery(localStorage.getItem('stayId'),localStorage.getItem('guestId'),$currentPeriod(),guestStore.guestData.name)
+    }
+    //cargar query en caso de cambio de fecha en la sesion
+    if(queryStore.currentQuery && queryStore.currentQuery.period !== $currentPeriod()){
+        console.log('test entro')
+        await queryStore.$getCurrentQuery({
+            stayId : localStorage.getItem('stayId'),
+            guestId : localStorage.getItem('guestId'),
+            period : $currentPeriod()
+        })
+    }
+    
     await getResponses();
     await getContactEmailsByStayId();
     stopLoading(SECTIONS.QUERY.GLOBAL);
@@ -167,6 +178,11 @@ async function getContactEmailsByStayId(){
     // console.log('test contactEmails',contactEmails.value)
 }
 async function reloadList(){
+    await queryStore.$getCurrentQuery({
+        stayId : localStorage.getItem('stayId'),
+        guestId : localStorage.getItem('guestId'),
+        period : $currentPeriod()
+    })
     // console.log('test reloadList')
     await getResponses();
     getCombinedList();
@@ -190,7 +206,6 @@ const showRequestReview = computed(()=>{
 
 const getCombinedList = () => {
   const items = []
-//   console.log('test currentQuery',queryStore.currentQuery)
   // 1. La consulta actual (suponiendo que el campo de fecha es answeredAt)
   if (queryStore.currentQuery && !queryStore.currentQuery.answered) {
     items.push({
@@ -200,7 +215,6 @@ const getCombinedList = () => {
     })
   }
 
-//   console.log('test responses.value',responses.value)
   // 2. Todas las respuestas (suponiendo que el campo de fecha es createdAt)
   if(responses.value?.length > 0){
     items.push(...responses.value.map(r => ({
@@ -228,9 +242,6 @@ const getCombinedList = () => {
   }
   // ordenar de más antiguo a más reciente
   combinedList.value = items.sort((a, b) => {
-    // console.log('--------------------------------')
-    // console.log('test a',a._date)
-    // console.log('test b',b._date)
     const fa = formatAnyDate(a._date, 'dd/MM/yyyy - HH:mm')
     const fb = formatAnyDate(b._date, 'dd/MM/yyyy - HH:mm')
     const formatFa = DateTime.fromFormat(fa, 'dd/MM/yyyy - HH:mm')
@@ -238,7 +249,6 @@ const getCombinedList = () => {
     return formatFa - formatFb
 })
 
-//   console.log('test combinedList',combinedList.value)
 }
 
 provide('EditId',EditId);

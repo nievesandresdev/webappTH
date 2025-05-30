@@ -41,7 +41,7 @@
 import { onMounted, ref, provide, reactive, toRefs, computed, toRaw, nextTick, watch, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { getUrlParam, slufy } from '@/utils/utils.js';
+import { titleCase } from '@/utils/utils.js';
 const route = useRouter();
 
 // COMPONENTS
@@ -110,9 +110,34 @@ const emptyFilters = computed(() => {
     return numbersFiltersApplied.value.length == 0;
 });
 
-startLoading(SECTIONS.SERVICE.GLOBAL);
-onMounted(() => {
+// COMPUTED
+const typeServicesEnabled = computed(() => {
+    let typeServices = [];
+    if (hotelStore.hotelData.show_confort) typeServices.push('CONFORT');
+    if (hotelStore.hotelData.show_transport) typeServices.push('TRANSPORT');
+    if (hotelStore.hotelData.show_experiences) typeServices.push('ACTIVITY');
+    return typeServices;
+});
+const typeServicesFull = computed(() => {
+    return ['CONFORT', 'TRANSPORT', 'ACTIVITY'];
+});
+const typeServiceInRoute = computed(() => {
+    return route.currentRoute.value.name?.toUpperCase();
+});
+const typeServiceCurrent = computed(() => {
+    if (!typeServiceInRoute.value) {
+        return null;
+    }
+    if (typeServicesEnabled.value.includes(typeServiceInRoute.value)) {
+        return typeServiceInRoute.value;
+    }
+    return typeServicesEnabled.value?.length > 0 ? typeServicesEnabled.value[0] : null;
+});
 
+// ONMOUNTED
+startLoading(SECTIONS.SERVICE.GLOBAL);
+onMounted(async () => {
+    // console.log('onMounted')
 });
 
 // WATCH
@@ -120,20 +145,38 @@ watch(formFilter, function(value) {
     serviceStore.setDataFilterList(formFilter);
 });
 
-watch(hotelData, (valueCurrent, valueOld) => {
+watch(hotelData, async (valueCurrent, valueOld) => {
     if (!valueOld && valueCurrent) {
+        // console.log('watch hotelData')
+        await validateServiceCurrent();
         loadData();
     }
 }, { immediate: true });
 
 watch (() => route.currentRoute.value, (valCurrent) => {
     if (hotelData.value) {
+        // console.log('watch rout')
         loadData();
     }
 });
 
-
 // FUNCTION
+async function validateServiceCurrent () {
+    // console.log('validateServiceCurrent')
+    if (!typeServiceCurrent.value) {
+        await nextTick();
+        route.push({ name: 'Home' });
+    }
+    
+    const typeEnabled = typeServicesEnabled.value.includes(typeServiceInRoute.value);
+    if (!typeEnabled) {
+        await nextTick();
+        await changeType(titleCase(typeServiceCurrent.value), true);
+    }
+}
+function loadType () {
+    formFilter.type = typeServiceCurrent.value;
+}
 function loadData () {
     loadForFilterGlobal();
     loadType();
@@ -142,9 +185,6 @@ function loadData () {
 
 function loadForFilterGlobal () {
     Object.assign(formFilter, serviceStore.dataFilterGlobal);
-}
-function loadType () {
-    formFilter.type = route.currentRoute.value.name?.toUpperCase();
 }
 function loadTabs () {
     // console.log(hotelStore.hotelData, 'hotelStore.hotelData');
@@ -176,14 +216,18 @@ function loadTabs () {
     ];
 }
 
-function changeType (type = null) {
-    if (isloadingForm.value) {
+async function changeType (type = null, forceReload = false) {
+    // console.log(forceReload, 'forceReload')
+    // console.log(type, 'type changeType')
+    if (isloadingForm.value && !forceReload) {
         return;
     }
     formFilter.type = type.toUpperCase();
     page.value = 1;
     servicesData.value = [];
-    route.push({ name: type });
+    // console.log(type, 'type changeType');
+    // console.log('route.name actual:', route.currentRoute.value.name);
+    await route.replace({ name: type });
     stopLoading(SECTIONS.SERVICE.GLOBAL);
 }
 
