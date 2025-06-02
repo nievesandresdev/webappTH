@@ -50,6 +50,8 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import mapboxgl from 'mapbox-gl'
 
+import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
 // Tu token de Mapbox
 mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -59,10 +61,9 @@ async function fetchCountriesFromMapbox(query) {
     // Escapa el string de búsqueda:
     const encodedQuery = encodeURIComponent(query)
 
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedQuery}.json?access_token=${mapboxgl.accessToken}&autocomplete=true&types=country&language=es&limit=10`
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedQuery}.json?access_token=${mapboxgl.accessToken}&autocomplete=true&types=country&language=${localeStore.localeCurrent}&limit=10`
     const res = await fetch(url)
     const data = await res.json()
-
     return data.features.map(feature => {
       const code = feature.properties?.short_code
         ? feature.properties.short_code.toUpperCase()
