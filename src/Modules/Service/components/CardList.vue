@@ -1,10 +1,10 @@
 <template>
     <div
-        class="card-list flex w-full cursor-pointer h-[75px] sp:h-auto"
+        class="card-list flex w-full cursor-pointer h-[65px] sp:h-auto"
         :class="class"
         @click="goService"
     >
-        <div class="w-[55px] sp:w-[111px] rounded-[10px] relative overflow-hidden flex-shrink-0">
+        <div class="w-[60px] h-[65px] sp:w-[111px] sp:h-[111px] rounded-[10px] relative overflow-hidden flex-shrink-0">
             <img
                 class="aspect-[1/1] object-cover w-full h-full"
                  :src="serviceStore.$loadImage(data?.images?.[0] ?? data?.image)"
