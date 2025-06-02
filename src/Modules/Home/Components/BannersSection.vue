@@ -1,7 +1,9 @@
 <template>
     <!-- este banner nunca se encontrara al mismo tiempo con los demas solo aparece en pre stay -->
     <div 
-        v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay' && hotelStore.hotelData?.checkin_service_enabled"
+        v-if="
+            hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay' && 
+            hotelStore.hotelData?.checkin_service_enabled && !guestStore.guestData?.complete_checkin_data"
         class="px-3 sp:px-4 mt-4 sp:mt-6"
     >
         <WACardBanner 
@@ -80,6 +82,8 @@ const stayStore = useStayStore();
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
 import { useRouter } from 'vue-router';
+import { useGuestStore } from '@/stores/modules/guest';
+const guestStore = useGuestStore();
 const router = useRouter();
 
 const isCheckoutPast = computed(() => {

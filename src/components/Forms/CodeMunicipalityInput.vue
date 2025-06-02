@@ -57,6 +57,10 @@
   <script setup>
   import { ref, watch, onMounted, onBeforeUnmount, toRefs } from 'vue'
   import mapboxgl from 'mapbox-gl'
+
+  import { useLocaleStore } from '@/stores/modules/locale'
+const localeStore = useLocaleStore()
+
   
   // Tu token de Mapbox
   mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
@@ -151,7 +155,7 @@ onBeforeUnmount(() => {
         ?access_token=${mapboxgl.accessToken}
         &autocomplete=true
         &types=${props.typeResults}
-        &language=es
+        &language=${localeStore.localeCurrent}
         &country=${props.selectedCountry}
         &limit=5`.replace(/\s+/g, '')
 
@@ -176,7 +180,8 @@ onBeforeUnmount(() => {
     emit('hasError', hasError.value)
     if (!placeSuggestions.value?.length) {
       let countryAbbr = countryName.value?.slice(0,3) ?? 'esp'
-      let stringDefault = props.typeResults.includes('postcode') ? '11' : countryAbbr
+      let defaultCaracters = ['AR'].includes(props.selectedCountry) ? 'a' : '11';
+      let stringDefault = props.typeResults.includes('postcode') ? defaultCaracters : countryAbbr
       let search = searchQuery.value?.trim() ? searchQuery.value?.trim() : stringDefault
       placeSuggestions.value = await searchPlaces(search)
     }
@@ -193,9 +198,9 @@ onBeforeUnmount(() => {
   
   // Eventos
   function handleInput() {
-    if(props.typeResults.includes('postcode')){
-      searchQuery.value = searchQuery.value.replace(/\D/g, '')
-    }
+    // if(props.typeResults.includes('postcode')){
+    //   searchQuery.value = searchQuery.value.replace(/\D/g, '')
+    // }
     isDropdownOpen.value = true;
     hasError.value = false
     emit('hasError', hasError.value)
