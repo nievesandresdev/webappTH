@@ -15,15 +15,15 @@
         />
     </div>
 
-    <div class="flex items-center" :class="{'flex-row overflow-x-auto px-3 sp:px-4 gap-2': showSliderBanner, 'flex-col': !showSliderBanner}">
+    <div class="flex items-center" :class="{'flex-row overflow-x-auto px-3 sp:px-4 gap-2 no-scrollbar': showSliderBanner, 'flex-col': !showSliderBanner}">
         <!-- banner query post stay -->
         <div 
             v-if="queryStore.hasPendingQuery && $currentPeriod() == 'post-stay'" 
             class="mt-4 sp:mt-6"
-            :class="{'w-full px-3 sp:px-4': !showSliderBanner, 'w-[343px] flex-shrink-0': showSliderBanner}"
+            :class="{'w-full px-3 sp:px-4': !showSliderBanner, 'w-[calc(100vw-32px)] flex-shrink-0': showSliderBanner}"
         >
             <div 
-                class="flex items-center w-full h-[70px] rounded-[10px] bg-[linear-gradient(91deg,#9407FF_0.21%,#4402B6_39.83%,#540B63_99.27%)] shadow-guest"
+                class="flex items-center w-full h-[75px] rounded-[10px] bg-[linear-gradient(91deg,#9407FF_0.21%,#4402B6_39.83%,#540B63_99.27%)] shadow-guest overflow-hidden"
                 @click="queryStore.$setIsOpenPopUp(true)"
             >
                 <div class="pl-4">
@@ -32,7 +32,7 @@
                         {{ $t('query.popup.bannerHome-post-stay.subtitle') }}
                     </p>
                 </div>
-                <img src="/assets/img/noAnsweredQueryHomeImg.svg" alt="" class="w-[118px] h-full ml-auto">
+                <img src="/assets/img/noAnsweredQueryHomeImg.svg" alt="" class="w-[118px] h-full ml-auto mb-[-4px]">
             </div>
         </div>
 

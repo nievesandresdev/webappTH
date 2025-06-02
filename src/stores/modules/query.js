@@ -140,7 +140,6 @@ export const useQueryStore = defineStore('query', () => {
 
     async function $getCurrentQuery(params) {
         const response = await getCurrentQueryApi(params)
-        console.log('test getCurrentQuery',response)
         const { ok } = response   
         if(ok){
             $setCurrentQuery(response.data)

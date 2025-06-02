@@ -48,13 +48,6 @@ const pusher = ref(null);
 const isSubscribed = ref(false);
 provide('hideAppMenu',hideAppMenu)
 
-onMounted(() => {
-    setTimeout(() => {
-        if(queryStore.hasPendingQuery && !isMockup()){
-            queryStore.$firstOpenPopUp();
-        }
-    }, 20000);
-})
 
 const connectPusher = () => {
     const guestData = guestStore.guestData;
@@ -120,7 +113,17 @@ watch(() => stayStore.stayData, async (newStayData) => {
     }
     
     if(newStayData && guestData.value && !queryStore.currentQuery){
+        // console.log('entra a getCurrentAndSettingsQuery')
         queryStore.$getCurrentAndSettingsQuery(stayStore.stayData.id, guestStore.guestData.id, $currentPeriod(), guestStore.guestData.name)
+    }
+
+    let localOpen = localStorage.getItem('queryPopUpHasBeenOpen')
+    if(newStayData && guestData.value && localOpen !== 'true'){
+        setTimeout(() => {
+            if(queryStore.hasPendingQuery && !isMockup()){
+                queryStore.$firstOpenPopUp();
+            }
+        }, 20000);
     }
 }, { immediate: true });
 

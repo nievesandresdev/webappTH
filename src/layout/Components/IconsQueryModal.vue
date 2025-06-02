@@ -12,7 +12,7 @@
                         <!-- {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}} -->
                     </template>
                     <template v-else>
-                        ¿{{ $t('query.form.whatsup') }} 
+                        ¿{{ $t('query.form.whatsup', {guestName: guestStore.guestData?.name}) }} 
                     </template>
                 </h1>
                 <button @click="queryStore.$setIsOpenPopUp(false)">
@@ -22,7 +22,7 @@
             <p 
                 class="mt-6 lato text-base font-bold leading-[20px]"
             >
-                {{ $t('query.settings.question'+$currentPeriod(), {lodging: hotelStore.hotelData?.name}) }}
+                {{ $t('query.settings.question'+$currentPeriod(), {lodging: $formatTypeLodging() ?? '', hotelName: hotelStore.hotelData?.name}) }}
             </p>
             <IconsQuery 
                 :settings="querySettingsStore.settings"
@@ -57,6 +57,7 @@ import IconsQueryBadResponse from '@/layout/Components/IconsQueryBadResponse.vue
 import LinksReview from '@/Modules/Queries/Components/LinksReviewRed.vue';
 import ModalNative from '@/components/ModalNative.vue'
 import { $currentPeriod } from '@/utils/helpers';
+import { $formatNameLodging } from '@/utils/utils';
 //stores
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();

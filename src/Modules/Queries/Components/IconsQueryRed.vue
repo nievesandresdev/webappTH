@@ -23,18 +23,16 @@
             >
                 <template v-if="data?.period == 'post-stay'">
                     {{ $t('query.form.thanksAll') }} 
-                    {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}
                 </template>
                 <template v-else>
-                    ¿{{ $t('query.form.whatsup') }} 
-                    {{ !$utils.isMockup() ? guestStore.guestData.name : 'Huésped'}}?
+                    ¿{{ $t('query.form.whatsup', {guestName: guestStore.guestData?.name}) }}
                 </template>
             </h1>
             <p 
                 v-if="!inModal"
                 class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
             >
-                {{ $t('query.settings.question'+data?.period, {lodging: hotelStore?.hotelData?.name ?? ''}) }}
+                {{ $t('query.settings.question'+data?.period, {lodging: $formatTypeLodging() ?? '', hotelName: hotelStore?.hotelData?.name ?? ''}) }}
             </p>
             <div class="mt-3 sp:mt-4 md:mt-8">
                 <FormTabEmojisRed :userFor="data?.period == 'post-stay' ? 'queries-poststay' : 'queries-stay'"/>
@@ -72,11 +70,12 @@
                 </button>
                 <div class="ml-auto">
                     <PrimaryButton 
-                        classes="text-center py-1.5 sp:py-2.5 md:py-[14px] rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-[48px] sp:w-[71px] md:w-[82px] shadow-guest"
-                        :disabled="!changes"
+                        classes="text-center py-1.5 sp:py-2.5 md:py-[14px] rounded-[7px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] shadow-guest px-2 sp:px-4"
+                        :disabled="!changes || sendingQuery"
                         @click="submit"
+                        :isLoading="sendingQuery"
                     >
-                        {{ $t('query.form.send') }} 
+                        {{ sendingQuery  ? $t('query.form.sending') : $t('query.form.send') }} 
                     </PrimaryButton> 
                 </div>
             </div>
@@ -96,6 +95,7 @@
 <script setup>
 import { reactive, provide, computed, ref, inject, watch  } from 'vue';
 import { formatTimestampDate } from '@/utils/dateHelpers';
+import { $formatNameLodging } from '@/utils/utils';
 import FormTabEmojisRed from './FormTabEmojisRed'
 import TextareaAutogrow from '@/components/TextareaAutogrow.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
@@ -107,6 +107,7 @@ import { useI18n } from 'vue-i18n';
 import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
 import { useLocaleStore } from '@/stores/modules/locale';
+import { useHotelStore } from '@/stores/modules/hotel';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
@@ -115,7 +116,7 @@ const emit = defineEmits(['reloadList']);
 const { t } = useI18n();
 const queryStore = useQueryStore();
 const localeStore = useLocaleStore();
-
+const hotelStore = useHotelStore();
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
 const EditComment = inject('EditComment');
