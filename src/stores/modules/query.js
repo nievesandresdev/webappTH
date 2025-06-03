@@ -118,7 +118,7 @@ export const useQueryStore = defineStore('query', () => {
     });
 
     function $setIsOpenPopUp(value) {
-        if($currentPeriod() == 'pre-stay') return;
+        if($currentPeriod() !== 'in-stay' && $currentPeriod() !== 'post-stay') return;
         isOpenPopUp.value = value;
     }
 

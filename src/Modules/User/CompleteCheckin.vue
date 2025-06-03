@@ -105,6 +105,7 @@ import ModalNative from '@/components/ModalNative.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import Spinner from '@/components/Spinner.vue';
+import { formatAnyDate } from '@/utils/dateHelpers';
 //
 import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
 import { navigateTo } from '@/utils/navigation'
@@ -209,7 +210,9 @@ async function loadDataGuest(id) {
         form.secondLastname = currentGuestData.value.second_lastname;
         form.email = currentGuestData.value.email;
         form.phone = currentGuestData.value.phone;
-        form.birthdate = currentGuestData.value.birthdate;
+        let dateFormat = currentGuestData.value.birthdate ? formatAnyDate(currentGuestData.value.birthdate,'dd/MM/yyyy') : null;
+        // console.log('dateFormat ',dateFormat)
+        form.birthdate = dateFormat;
         form.gender = currentGuestData.value.sex;
         form.docType = currentGuestData.value.doc_type;
         form.docSupportNumber = currentGuestData.value.doc_support_number;
