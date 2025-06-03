@@ -113,9 +113,12 @@ const emptyFilters = computed(() => {
 // COMPUTED
 const typeServicesEnabled = computed(() => {
     let typeServices = [];
-    if (hotelStore.hotelData.show_confort) typeServices.push('CONFORT');
-    if (hotelStore.hotelData.show_transport) typeServices.push('TRANSPORT');
-    if (hotelStore.hotelData.show_experiences) typeServices.push('ACTIVITY');
+    if (hotelData.value.show_confort) typeServices.push('CONFORT');
+    if (hotelData.value.show_transport) typeServices.push('TRANSPORT');
+    if (hotelData.value.show_experiences) typeServices.push('ACTIVITY');
+    console.log(hotelData.value.show_confort, 'show_confort')
+    console.log(hotelData.value.show_transport, 'show_transport')
+    console.log(hotelData.value.show_experiences, 'show_experiences')
     return typeServices;
 });
 const typeServicesFull = computed(() => {
@@ -162,10 +165,12 @@ watch (() => route.currentRoute.value, (valCurrent) => {
 
 // FUNCTION
 async function validateServiceCurrent () {
-    // console.log('validateServiceCurrent')
+    // console.log('validateServiceCurrent', typeServiceCurrent.value)
     if (!typeServiceCurrent.value) {
         await nextTick();
-        route.push({ name: 'Home' });
+        // console.log('push Home')
+        route.replace({ name: 'Home' });
+        return
     }
     
     const typeEnabled = typeServicesEnabled.value.includes(typeServiceInRoute.value);

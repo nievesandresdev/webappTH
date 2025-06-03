@@ -29,7 +29,7 @@ const serviceRoutes = [
       {
         path: '',
         children: [
-          {
+           {
             path: ':service/:slug',
             name: 'DetailService',
             component: DetailPage,
