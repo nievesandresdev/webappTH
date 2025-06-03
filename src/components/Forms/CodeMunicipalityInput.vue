@@ -22,9 +22,9 @@
           @focus="focusOn = true"
           :placeholder="placeholder"
           class="w-full h-full border-none p-0 rounded-[10px] flex-grow py-3 lato text-sm font-medium"
-          :inputmode="props.typeResults.includes('postcode') ? 'numeric' : 'text'"
-          :pattern="props.typeResults.includes('postcode') ? '^[0-9]*$' : '.*'"
         />
+        <!-- :inputmode="props.typeResults.includes('postcode') ? 'numeric' : 'text'"
+          :pattern="props.typeResults.includes('postcode') ? '^[0-9]*$' : '.*'" -->
         
         <!-- Ícono de desplegable -->
         <img 
