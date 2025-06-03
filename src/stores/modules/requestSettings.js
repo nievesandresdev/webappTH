@@ -20,8 +20,8 @@ export const useRequestSettingStore = defineStore('requestSettings', () => {
         }
     }
 
-    async function $getRequestData (period) {
-        let data = { period };
+    async function $getRequestData (period, guestName) {
+        let data = { period, guestName };
         const response = await getRequestDataApi(data)
         const { ok } = response   
         if(ok){

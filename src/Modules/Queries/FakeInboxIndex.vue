@@ -1,5 +1,5 @@
 <template>
-    <InboxHead />
+    <SectionBar :title="$t('profile.inbox.title')" :fixed="false"/>
     <!-- pre-stay -->
     <div v-if="$utils.isMockup()" class="fixed top-0 left-0 w-screen h-full z-[5000]" />
     <div class="queries-body h-[75vh] sp:h-[81vh] overflow-y-auto px-2 py-4">
@@ -24,7 +24,7 @@
 </template>
 <script setup>
 import { ref, onMounted, provide } from 'vue'
-import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+import SectionBar from '@/components/SectionBar.vue';
 import TextQuery from './Components/TextQueryRed.vue';
 import IconsQuery from './Components/IconsQueryRed.vue'
 

@@ -28,6 +28,7 @@
         
         <!-- Ícono de desplegable -->
         <img 
+            v-if="!typeResults.includes('postcode')"
             class="w-5 h-5" 
             src="/assets/icons/WA.chevron.DOWN.svg" 
             alt="chevron-down"

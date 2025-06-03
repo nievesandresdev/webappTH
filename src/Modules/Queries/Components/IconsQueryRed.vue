@@ -8,7 +8,7 @@
             />
             <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">{{ $t('query.form.received-text') }} </span>
             <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">
-                {{ formatTimestampDate(data?.created_at, 'dd/MM/yyyy - HH:mm')+'hs' }}
+                {{ $utils.isMockup() ? '01/06 - 10:00' : formatTimestampDate(data?.created_at, 'dd/MM/yyyy - HH:mm')+'hs' }}
             </span>
         </div>
         <div 
