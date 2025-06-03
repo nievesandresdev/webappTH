@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="flex items-center mb-2 gap-1" v-if="!inModal">
+    <div class="max-w-[500px] mx-auto">
+        <div class="flex items-center mb-2 gap-1 md:hidden" v-if="!inModal">
             <IconCustomColor
                 class="transform rotate-180"
                 name="arrow-back"

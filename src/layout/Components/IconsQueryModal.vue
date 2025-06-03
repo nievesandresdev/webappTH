@@ -4,7 +4,7 @@
         customClasses="bottom-0"
         top="0"
     >   
-        <div v-if="queryStore.currentQuery && !queryStore.currentQuery.answered" class="p-6">
+        <div v-if="queryStore.currentQuery && queryStore.hasPendingQuery" class="p-6">
             <div class="flex justify-between items-center">
                 <h1 class="lato text-[20px] font-bold leading-[28px]">
                     <template v-if="$currentPeriod() == 'post-stay'">
@@ -40,7 +40,7 @@
             </div>
             <div class="pt-3 px-4 pb-6" v-else>
                 <div class="mb-2">
-                    <img src="/assets/icons/WA.close2.svg" class="w-[24px] h-[24px] ml-auto">
+                    <img src="/assets/icons/WA.close2.svg" class="w-[24px] h-[24px] ml-auto" @click="queryStore.$setIsOpenPopUp(false)">
                 </div>
                 <LinksReview inModal/>
             </div>

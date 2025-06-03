@@ -118,7 +118,7 @@ watch(() => stayStore.stayData, async (newStayData) => {
     }
 
     let localOpen = localStorage.getItem('queryPopUpHasBeenOpen')
-    if(newStayData && guestData.value && localOpen !== 'true'){
+    if(newStayData && guestData.value && localOpen !== 'true' && !queryStore.currentQuery?.answered){
         setTimeout(() => {
             if(queryStore.hasPendingQuery && !isMockup()){
                 queryStore.$firstOpenPopUp();

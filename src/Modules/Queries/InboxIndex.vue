@@ -1,8 +1,13 @@
 <template>
-    <SectionBar :title="$t('profile.inbox.title')" :fixed="false"/>
+    <div class="hidden md:block"><InboxHead /></div>
+    <div class="md:hidden">
+        <SectionBar :title="$t('profile.inbox.title')" :fixed="false"/>
+    </div>
+    
+
     <!-- pre-stay -->
     <PageTransitionGlobal module="query">
-        <div class="flex flex-col gap-6 px-4 py-6">
+        <div class="flex flex-col gap-6 px-4 py-6 min-h-[90vh] md:bg-white">
             <template v-for="(item,index) in combinedList" :key="index">
                 <!-- {{ item._type }} - {{ item._date }} -->
                 <TextQuery 
@@ -64,6 +69,7 @@
     </PageTransitionGlobal>
 </template>
 <script setup>
+import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
 import { ref, onMounted, provide, computed } from 'vue'
 import { DateTime } from 'luxon'
 import utils from '@/utils/utils.js';
