@@ -128,9 +128,9 @@ watch(() => stayStore.stayData, async (newStayData) => {
 }, { immediate: true });
 
 const showMenu = computed(() => {
-    if(isMockup()) return true;
     let hiddenMenuByRoute = route?.meta?.hiddenMenu;
     if (hiddenMenuByRoute) return false;
+    if(isMockup()) return true;
     let guestId = guestStore.guestData ? guestStore.guestData?.id : false;
     let stayId = stayStore.stayData ? stayStore.stayData?.id : false;
     let hiddenMenuByRef = !hideAppMenu.value;
