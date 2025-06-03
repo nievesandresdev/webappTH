@@ -15,6 +15,7 @@ export const useQuerySettingsStore = defineStore('querySettings', () => {
         const response = await getAllApi()
         const { ok } = response   
         if(ok){
+            $setSettings(response.data)
             return response.data
         }
     }

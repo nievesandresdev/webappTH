@@ -12,7 +12,7 @@ export default{
         "cancel" : "Cancelar",
         "title": "Feedback",
         "hello" : "Hola",
-        "whatsup" : "Qué tal",
+        "whatsup" : "Qué tal {guestName}?",
         "thanksAll" : "¿Qué tal lo hemos hecho?",
         "btn-verywrong-stay": "Muy malo",
         "btn-wrong-stay": "Malo",
@@ -31,9 +31,9 @@ export default{
         "sent-text" : "Enviado"
     },
     "settings":{
-        "questionpre-stay": "¿Hay algo que podamos hacer para tu llegada al",
+        "questionpre-stay": "¿Hay algo que podamos hacer para tu llegada al {lodging}?",
         "questionin-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia hasta ahora?",
-        "questionpost-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia en {lodging}?",
+        "questionpost-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia en {hotelName}?",
     },
     "inbox": {
         "title": "Mensajes"

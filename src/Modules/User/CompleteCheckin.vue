@@ -121,7 +121,8 @@ import { useLegalStore } from '@/stores/modules/legal';
 const legalStore = useLegalStore();
 import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore();
-
+import { useQuerySettingsStore } from '@/stores/modules/querySettings'
+const querySettingsStore = useQuerySettingsStore();
 
 const props = defineProps({
     paramsRouter: {
@@ -171,7 +172,9 @@ const loading = ref(true);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
-    // console.log('test settings',settings)
+    if(!querySettingsStore.settings){
+        await querySettingsStore.$getAll();
+    }
     await loadDataGuest(paramsRouter.value.id);
     norms.value = await legalStore.$getNormsByHotel();
     loading.value = false;
@@ -188,7 +191,7 @@ const numberStepsEnabled = computed(() => {
   let sum = 1;
   if (!settings.value) return sum;
   if(secondStepEnabled.value) sum++;
-  if(settings.value.show_prestay_query) sum++;
+  if(settings.value.show_prestay_query && querySettingsStore.settings?.pre_stay_activate) sum++;
   return sum
 })
 
@@ -321,15 +324,11 @@ const existsChanges = computed(() => {
     let fieldsFilled = form.name !== currentGuestData.value.name ||form.lastname !== currentGuestData.value.lastname || 
     form.email !== currentGuestData.value.email;
     //
-    let firsStepRestant = form.secondLastname.trim() || form.birthdate || form.gender.trim() || form.phone.length > 4 || 
-    form.responsibleAdult.trim() || form.kinshipRelationship.trim();
+    let firsStepRestant = form.secondLastname?.trim() || form.birthdate || form.gender?.trim() || form.phone?.length > 4 || 
+    form.responsibleAdult?.trim() || form.kinshipRelationship?.trim();
     //
     let seconStep = form.nationality || form.docType || form.docSupportNumber || form.docNumber || form.countryResidence ||
     form.postalCode || form.municipality ||form.addressResidence;
-
-    // console.log('test fieldsFilled',fieldsFilled)
-    // console.log('test firsStepRestant',firsStepRestant)
-    // console.log('test seconStep',!!seconStep)
 
     return (!!fieldsFilled) || (!!firsStepRestant) || (!!seconStep);
 });

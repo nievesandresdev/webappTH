@@ -13,6 +13,7 @@
           name="WA.Question"
           :width="24"
           :height="24"
+          :color="chainStore.customizationData?.colors[0].contrast_color" 
         />
       </PrimaryButton>
     </template>
@@ -70,6 +71,8 @@
   const hotelStore = useHotelStore();
   import { useHistoryStore } from '@/stores/modules/history';
   const historyStore = useHistoryStore();
+  import { useChainStore } from '@/stores/modules/chain';
+  const chainStore = useChainStore();
 
   import { useMyDataStore } from '@/stores/modules/user/myData';
   const myDataStore = useMyDataStore();

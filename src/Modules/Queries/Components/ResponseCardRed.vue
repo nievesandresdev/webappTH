@@ -14,7 +14,7 @@
         <div class="rounded-[20px] p-4 bg-gradient-h">
             <div class="flex">
                 <h1 class="lato text-sm font-medium leading-[16px]">
-                    {{ $t('query.settings.question'+period, { lodging: hotelStore?.hotelData?.name })}}
+                    {{ $t('query.settings.question'+period, { lodging: $formatTypeLodging() ?? '', hotelName: hotelStore?.hotelData?.name ?? ''})}}
                 </h1>
                 <img class="w-6 h-6 ml-4" src="/assets/icons/WA.Check-circle.svg" alt="Checkcircle icon">
             </div>
@@ -43,6 +43,7 @@ import IconCustomColor from '@/components/IconCustomColor.vue';
 import { formatTimestampDate } from '@/utils/dateHelpers';
 import { useHotelStore } from '@/stores/modules/hotel';
 import { $currentPeriod } from '@/utils/helpers';
+import { $formatNameLodging } from '@/utils/utils';
 const hotelStore = useHotelStore();
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
