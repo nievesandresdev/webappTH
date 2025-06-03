@@ -1,5 +1,5 @@
 <template>
-<!-- mt-[15px] sp:mt-[48px] -->
+    <!-- mt-[15px] sp:mt-[48px] -->
     <div
         v-if="isVisibleSectionInformationGeneral"
         class="mt-[14px] sp:mt-[24px] card-recommendation p-2 sp:p-4 space-y-[9px] sp:space-y-[12px] mb-[28px] sp:mb-[24px]"
@@ -70,11 +70,11 @@ function calculateDuration(duration) {
 
 // COMPUTED
 const isVisibleSectionInformationGeneral = computed(() => {
-    return serviceData?.fields_visibles?.includes('DURATION') ||
-           serviceData?.fields_visibles?.includes('AVAILABILITY') ||
-           serviceData?.fields_visibles?.includes('ADDRESS') ||
-           serviceData?.fields_visibles?.includes('ACCESSIBLE') ||
-           serviceData?.fields_visibles?.includes('LANGUAGES');
+    return serviceData?.value?.fields_visibles?.includes('DURATION') ||
+           serviceData?.value?.fields_visibles?.includes('AVAILABILITY') ||
+           serviceData?.value?.fields_visibles?.includes('ADDRESS') ||
+           serviceData?.value?.fields_visibles?.includes('ACCESSIBLE') ||
+           serviceData?.value?.fields_visibles?.includes('LANGUAGES');
 });
 
 </script>
