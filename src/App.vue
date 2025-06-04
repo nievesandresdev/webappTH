@@ -15,7 +15,7 @@ defineComponent({ name: 'App' });
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
 import { computed, onMounted, watch, ref } from 'vue';
-import useHotelMetadata from '@/src/composables/useHotelMetadata'
+import useHotelMetadata from '@/composables/useHotelMetadata'
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
 //
 import { useRouter } from 'vue-router';
