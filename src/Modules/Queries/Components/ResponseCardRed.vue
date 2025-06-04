@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="{'md:hidden': $currentPeriod() !== period || $currentPeriod() == period && ['GOOD','VERYGOOD'].includes(qualification)}">
         <div class="flex items-center mb-2 gap-1">
             <IconCustomColor
                 class=""

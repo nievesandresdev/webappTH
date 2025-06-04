@@ -2,7 +2,7 @@
     <div 
         id="container-otas-links"
         :class="{
-            'rounded-[10px] sp:rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary': !inModal
+            'rounded-[10px] sp:rounded-[20px] sp:p-4 p-2 md:p-0 sp:mb-4 mb-2 md:mb-0 bg-gradient-h border border-color-secondary max-w-[500px] mx-auto': !inModal
         }"
     >
         <!-- <img 

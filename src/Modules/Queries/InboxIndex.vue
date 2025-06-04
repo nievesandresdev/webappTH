@@ -23,7 +23,7 @@
                     @reloadList="reloadList"
                 />
                 <div v-else-if="showRequestReview && item._type == 'request'" >
-                    <div class="flex items-center mb-2 gap-1">
+                    <div class="flex items-center mb-2 gap-1 md:hidden" >
                         <IconCustomColor
                             class="transform rotate-180"
                             name="arrow-back"

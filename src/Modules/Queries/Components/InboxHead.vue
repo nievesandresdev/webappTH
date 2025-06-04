@@ -11,7 +11,7 @@
         />
     </template>
     <template v-else>
-        <div class="bg-white shadow-guest py-5">
+        <div class="bg-white shadow-guest py-5 z-[100] sticky top-0 left-0">
             <p class="w-[650px] mx-auto roboto text-[30px] font-medium leading-[106%]">
                 {{$utils.capitalize(hotelStore.hotelData?.type)}} {{hotelStore.hotelData?.name}}
             </p>  
