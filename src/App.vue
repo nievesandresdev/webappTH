@@ -15,10 +15,13 @@ defineComponent({ name: 'App' });
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
 import { computed, onMounted, watch, ref } from 'vue';
+import useMetadata from '@/composables/useMetadata'
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
 //
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const { setMetadata } = useMetadata()
+
 //stores
 import { useStayStore } from '@/stores/modules/stay';
 const stayStore = useStayStore();
@@ -26,6 +29,9 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { usePreloaderStore } from '@/stores/modules/preloader';
 const preloaderStore = usePreloaderStore();
+
+
+
 
 
 
@@ -87,6 +93,21 @@ const unSubscribePusher = () =>{
     
 }
 
+const getSubdomain = () => {
+  const host = window.location.hostname
+  if (host.includes('thehoster.app')) {
+    return host.split('.')[0]
+  }
+  return null
+}
+
+watch(() => route.path, () => {
+  const subdomain = getSubdomain()
+  if (subdomain) {
+    setMetadata(subdomain)
+  }
+}, { immediate: true })
+
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
         if(newStayData){
@@ -96,6 +117,8 @@ watch(() => stayStore.stayData, async (newStayData) => {
         }
     }
 }, { immediate: true });
+
+
 </script>
 
 
