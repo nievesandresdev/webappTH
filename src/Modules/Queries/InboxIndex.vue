@@ -46,7 +46,6 @@
                     :id="item.id"
                 />
                 <template v-else-if="item._type == 'response' && EditPeriod == item.period">
-                    aqui2
                     <TextQuery 
                         v-if="EditPeriod == 'pre-stay'" 
                         @reloadList="reloadList"
