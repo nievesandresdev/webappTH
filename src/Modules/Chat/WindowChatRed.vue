@@ -17,7 +17,7 @@
         <PageTransitionGlobal module="chat">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
+                class="fixed top-[98px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
                 @click="isScheduleModalOpen = isAvailable ? true : false"
             >
                 <div class="flex items-center gap-2">
@@ -128,6 +128,8 @@ import { useChatStore } from '@/stores/modules/chat'
 const chatStore = useChatStore();
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore();
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
 //DATA
 const settings = ref(hotelStore?.hotelData?.chatSettings ?? {});
 const msg = ref(null);
@@ -154,7 +156,7 @@ onMounted( async () => {
     if(hotelStore.hotelData && (!hotelStore.hotelData?.chatSettings?.show_guest || !hotelStore.hotelData?.chat_service_enabled)){
         router.push({ name:'Inbox' })
     }
-    setTimeout(scrollToBottom, 50);
+    setTimeout(scrollToBottom, 400);
     clearTimeouts();
     connectPusher();
     isIphone.value = /iPhone/i.test(navigator.userAgent);
@@ -338,7 +340,7 @@ const connectPusher = () => {
                 if(!screenOff.value){
                     await chatStore.markMsgsAsRead('lleno');
                 }
-                if(data.message.by == 'Hoster'){    
+                if(data.message.by == 'Hoster' && data.chatData.stay_id == stayStore.stayData.id){     
                     await chatStore.addMessage(data.message);
                     setTimeout(scrollToBottom, 50);
                 }
