@@ -1,92 +1,31 @@
 <template>
-    <div class="px-3 sp:px-4 mt-3 sp:mt-6" v-if="hotelStore.hotelData?.buttons_home">
+    <div class="px-3 sp:px-4 mt-3 sp:mt-6">
         <ButtonsSectionCarousel
-            v-if="activeButtonsCount > 4"
+            v-if="activeButtonsCount > 4 && buttonsMap.length > 0"
             @goCall="goCall"
-            @isOpenWifi="isOpenWifi = true"
-            @isOpenRules="isOpenRules = true"
+            @isOpenWifi="openModalWifi"
+            @openModalRules="openModalRules"
             @openModalRewards="openModalRewards"
+            @goReserve="goReserve"
+            @goCheckin="goCheckin"
         />
         <div 
             v-else
             class="px-2 sp:px-6 flex items-start"
             :class="{'justify-between': activeButtonsCount > 2, 'justify-around': activeButtonsCount == 2, 'justify-center': activeButtonsCount == 1}"
         >
-            <!-- button checkin -->
-            <router-link v-if="showCheckinButton" :to="{name: 'Guests'}" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="checkin-button"
-                    iconUrl="/assets/icons/WA.checkin.user.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.checkin') }}</span>
-            </router-link>
-            <!-- button call -->
-            <div v-if="showPhoneButton" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="call-button"
-                    iconUrl="/assets/icons/WA.llamar.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                    @click="goCall"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.call') }}</span>
-            </div>
-            <!-- button wifi -->
-            <div v-if="showWifiButton" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="wifi-button"
-                    iconUrl="/assets/icons/WA.wifi.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                    @click="isOpenWifi = true"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.wifi') }}</span>
-            </div>
-            <!-- button rules --> 
-            <div v-if="showRulesButton" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="rules-button"
-                    iconUrl="/assets/icons/WA.normas.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                    @click="isOpenRules = true"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.rules') }}</span>
-            </div>
-            <!-- button refered -->
-            <div v-if="showReferedButton" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="refered-button"
-                    iconUrl="/assets/icons/WA.referido.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                    @click="openModalRewards"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-            </div>
-            <!-- button refered -->
-            <div v-if="showReferedButton2" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="refered-button"
-                    iconUrl="/assets/icons/WA.referente.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                    @click="openModalRewards"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-            </div>
-
-            <router-link v-if="showReserveButton" :to="{name: 'ReservationStay'}" class="block max-w-[76px]">
-                <RoundedButton
-                    classContainer="mx-auto"
-                    id="reserve-button"
-                    iconUrl="/assets/icons/WA.bookyournextstay.svg"
-                    sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                />
-                <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.reserve') }}</span>
-            </router-link>
+            <template v-for="button in buttonsMap" :key="button.name">
+                <div v-if="button.show" class="block max-w-[76px]">
+                    <RoundedButton
+                        classContainer="mx-auto"
+                        :id="`call-button-${button.name}`"
+                        :iconUrl="button.iconUrl"
+                        sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                        @click="button.action"
+                    />
+                    <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t(button.translate) }}</span>
+                </div>
+            </template>
         </div>
     </div>
     <BottomRules :isOpen="isOpenRules" :scrollContentOnly="true" @update:isOpen="isOpenRules = $event" @update:count="countRules = $event" />
@@ -104,6 +43,8 @@ import BottomSheetReferent from '@/Modules/User/Components/Rewards/BottomSheetRe
 import ButtonsSectionCarousel from '@/Modules/Home/Components/ButtonsSectionCarousel.vue';
 import { $currentPeriod } from '@/utils/helpers.js'
 //
+import { useRouter } from 'vue-router';
+const router = useRouter();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 import { useGuestStore } from '@/stores/modules/guest';
@@ -143,6 +84,14 @@ const goCall = () => {
     window.open(`tel:${numberToCall.value}`, '_blank');
 }
 
+const goCheckin = () => {
+    router.push({name: 'Guests'})
+}
+
+const goReserve = () => {
+    router.push({name: 'ReservationStay'})
+}
+
 const openModalRewards = () => {
     if(hotelStore?.hotelData?.show_referrals && !hotelStore?.hotelData?.offer_benefits) {
         openModalReferrals.value = true;
@@ -150,6 +99,14 @@ const openModalRewards = () => {
         openModalReferent.value = true;
     }
 };
+
+const openModalRules = () => {
+    isOpenRules.value = true;
+}
+
+const openModalWifi = () => {
+    isOpenWifi.value = true;
+}
 
 const guestData = computed(() => guestStore.guestData)
 watch(guestData, () => {
@@ -180,7 +137,7 @@ const showReferedButton2 = computed(() => {
 })
 
 const showReserveButton = computed(() => {
-    return responseButtons.value?.find(button => button.name == "Reserva tu estancia")
+    return Boolean(responseButtons.value?.find(button => button.name == "Reserva tu estancia"))
 })
 
 const showPhoneButton = computed(() => {
@@ -200,12 +157,62 @@ const activeButtonsCount = computed(() => {
   return flags.filter(Boolean).length
 })
 
-provide('showCheckinButton',showCheckinButton)
-provide('showRulesButton',showRulesButton)
-provide('showWifiButton',showWifiButton)
-provide('showPhoneButton',showPhoneButton)
-provide('showReserveButton',showReserveButton)
-provide('showReferedButton',showReferedButton)
-provide('showReferedButton2',showReferedButton2)
+const buttonsData = computed(() => {
+    return {
+        'Check-In' : {
+            iconUrl:'/assets/icons/WA.checkin.user.svg',
+            show:showCheckinButton.value,
+            act:goCheckin,
+            translate: 'home.buttons.checkin'
+        },
+        'Llamar' : {
+            iconUrl:'/assets/icons/WA.llamar.svg',
+            show:showPhoneButton.value,
+            act:goCall,
+            translate: 'home.buttons.call'
+        },
+        'Redes WiFi' : {
+            iconUrl:'/assets/icons/WA.wifi.svg',
+            show:showWifiButton.value,
+            act:openModalWifi,
+            translate: 'home.buttons.wifi'
+        },
+        'Normas del alojamiento' : {
+            iconUrl:'/assets/icons/WA.normas.svg',
+            show:showRulesButton.value,
+            act:openModalRules,
+            translate: 'home.buttons.rules'
+        },
+        'Programa de referidos' : {
+            iconUrl:'/assets/icons/WA.referido.svg',
+            show: Boolean(showReferedButton.value || showReferedButton2.value),
+            act:openModalRewards,
+            translate: 'home.buttons.refered'
+        },
+        'Reserva tu estancia' : {
+            iconUrl:'/assets/icons/WA.bookyournextstay.svg',
+            show:showReserveButton.value,
+            act:goReserve,
+            translate: 'home.buttons.reserve'
+        },
+    }
+})
+
+const buttonsMap = computed(() => {
+    let buttons = responseButtons.value.map(button => {
+        return {
+            name: button.name,
+            iconUrl: buttonsData.value[button.name].iconUrl,
+            show: buttonsData.value[button.name].show,
+            translate: buttonsData.value[button.name].translate,
+            action: buttonsData.value[button.name].act,
+        }
+    })
+    console.log('test buttonsMap', buttons)
+    return buttons.filter(button => button.show) ?? [];
+})
+
+
+provide('buttonsMap',buttonsMap)
 provide('activeButtonsCount',activeButtonsCount)
 </script>

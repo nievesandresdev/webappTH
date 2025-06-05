@@ -7,7 +7,7 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <ButtonsSection />
+        <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
