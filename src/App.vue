@@ -18,8 +18,9 @@ import { computed, onMounted, watch, ref } from 'vue';
 import useHotelMetadata from '@/composables/useHotelMetadata'
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
 //
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 const { setMetadata } = useHotelMetadata()
 
 //stores
