@@ -47,7 +47,7 @@
                     </div>
                     <!-- END Filter city -->
                 </div>
-                <h4 class="mt-4 font-medium hidden md:block text-sm">
+                <h4 class="mt-4 font-medium hidden md:block sp:text-sm text-xs">
                     {{ $t('place.list-page.text-count-list', {count: paginateData?.total}) }}
                 </h4>
                 <section class="hidden md:block">

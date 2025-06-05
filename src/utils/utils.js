@@ -151,6 +151,22 @@ const getUrlParam = (param) => {
     );
   }
 
+  const $normalizeInput = (input, defaultValue = '') => {
+    // 1) nulo o indefinido
+    if (input == null) {
+      return defaultValue;
+    }
+  
+    // 2) string: trim y comprueba vacío
+    if (typeof input === 'string') {
+      const trimmed = input.trim();
+      return trimmed === '' ? defaultValue : trimmed;
+    }
+  
+    // 3) otros tipos (número, objeto, etc.)
+    return input;
+  };
+
 module.exports = {
     slufy,
     formatPrice,
@@ -165,4 +181,5 @@ module.exports = {
     $formatNameLodging,
     $throttle,
     $isElementVisible,
+    $normalizeInput
 }

@@ -7,7 +7,7 @@ export default {
         "wifi": "WiFi",
         "call": "Call",
         "standards": "Standards",
-        "share_stay": "Share Stay"
+        "share_stay": "Share"
     },
     "utils": {
         "see_more": "See more",

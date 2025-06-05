@@ -10,7 +10,7 @@ export default {
         "subtitle_inactive": "Crea tu próxima estancia"
     },
     "personal_info": {
-        "title": "Información personal",
+        "title": "Mis datos",
         "description": "Configura tu información personal"
     },
     "language": {
@@ -77,4 +77,7 @@ export default {
         "continue-yes": "Sí, continuar",
         "continue-cancel": "Cancelar",
     },
+    "inbox": {
+        "title": "Buzón de mensajes",
+    }
 };

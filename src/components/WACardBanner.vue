@@ -16,7 +16,7 @@
                     :color="iconDesignClass" 
                     only-change-background 
                     :width=" !$utils.isMockup() ? '20' : '16'"
-                    :height=" !$utils.isMockup() ? '20' : '16'"
+                    :height=" !$utils.isMockup() ? '20' : '15'"
                 />
                 <p  
                     :class="[classTitle]"
@@ -50,7 +50,7 @@ const chainStore = useChainStore();
 const props = defineProps({
     classContainer:{
         type:String,
-        default: 'flex justify-between items-center p-3 sp:p-4 w-full rounded-[10px] border shadow-guest relative'
+        default: 'flex justify-between items-center p-1 sp:p-4 w-full rounded-[10px] border shadow-guest relative'
     },
     nameIconRight:{
         type: String,
@@ -66,7 +66,7 @@ const props = defineProps({
     },
     classIconLeft:{
         type: String,
-        default: 'mr-1'
+        default: 'mr-1 size-[15px] sp:size-4'
     },
     title:{
         type: String,
@@ -74,7 +74,7 @@ const props = defineProps({
     },
     classTitle:{
         type: String,
-        default: 'lato text-xs sp:text-base font-bold leading-[20px]'
+        default: 'lato text-[10px] sp:text-base font-bold sp:leading-[20px] leading-[12px]'
     },
     subtitle:{
         type: String,
@@ -82,7 +82,7 @@ const props = defineProps({
     },
     classSubtitle:{
         type: String,
-        default: 'lato text-[10px] sp:text-sm font-medium leading-[16px] mt-[2px]'
+        default: 'lato text-[9px] sp:text-sm font-medium leading-[16px] mt-[2px]'
     },
     activeCustom:{
         type: String,

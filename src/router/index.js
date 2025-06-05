@@ -29,7 +29,10 @@ const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Aut
 const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
 const DisabledEmail = () => import('@/Modules/Email/DisabledEmail.vue');
-
+const TestView1 = () => import('@/Modules/TestView1.vue');
+const TestView2 = () => import('@/Modules/TestView2.vue');
+const TestView3 = () => import('@/Modules/TestView3.vue');
+const TestViewMain = () => import('@/Modules/TestCarousel.vue');
 
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
@@ -83,7 +86,13 @@ const routes = [
   
   {
     path: '/:hotelSlug',
-    beforeEnter: [checkHotelSubdomain],
+    beforeEnter: [
+      checkHotelSubdomain,
+        //middleware para enviar a la pantalla compartir en caso de esta en pc
+        // este middleware debe funcionar solo para todas las urls con slug hotel
+        //en middleware principal se maneja para chainlanding
+      isMobile
+    ],
     // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
@@ -100,12 +109,8 @@ const routes = [
       ...chatRoutes,
       ...facilityRoutes,
       ...hotelRoutes,
-      ...queryRoutes
+      ...queryRoutes,
     ],
-    //middleware para enviar a la pantalla compartir en caso de esta en pc
-    // este middleware debe funcionar solo para todas las urls con slug hotel
-    //en middleware principal se maneja para chainlanding
-    beforeEnter: [isMobile]
   },
 
 

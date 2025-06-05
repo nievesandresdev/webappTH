@@ -1,9 +1,9 @@
 <template>
     <div>
-        <label v-if="textLabel" class="text-[10px] sp:text-sm font-bold mb-1 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
+        <label v-if="textLabel" class="text-[9px] sp:text-sm font-bold mb-1 block lato leading-[12px] sp:leading-[16px]">{{ textLabel }}</label>
         <p v-if="textDescription" class="mb-2 text-sm htext-gray-500 lato">{{ textDescription }}</p>
         <div class="relative">
-            <img v-if="iconLeft" class="w-[14px] sp:w-5 h-[14px] sp:h-5 absolute left-[6px] sp:left-2 top-[8px] sp:top-2.5" :src="iconLeft">
+            <img v-if="iconLeft" class="w-[14px] sp:w-5 h-[15px] sp:h-5 absolute left-[5px] sp:left-2 top-[5px] sp:top-2.5" :src="iconLeft">
             <input
                 :ref="id"
                 :id="id"
@@ -77,11 +77,11 @@ export default {
             return placeholder;
         },
         computeClasses() {
-            let paddingDefault = this.iconLeft ? 'p-3' : 'px-3 py-2';
+            let paddingDefault = this.iconLeft ? 'p-[11px]' : 'px-3 py-2';
             let borderClasess = this.disabled ? 'hborder-disabled-2' : 'hborder-gray-400'; //hborder-disabled disabled-text
                 borderClasess = this.isFocused && !this.disabled ? 'hborder-black-100' : borderClasess;
             let bgClasess = this.disabled ? 'bg-[#fafafa80]' : 'bg-white';
-            let classes = `${bgClasess} border-[2px] ${borderClasess} h-7 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full block lato ${paddingDefault}`;
+            let classes = `${bgClasess} border-[2px] ${borderClasess} h-4 sp:h-10 rounded-[6px] sp:rounded-[10px] text-sm font-medium w-full  lato ${paddingDefault}`;
 
 
             if (this.errorWhenOtherType || this.errorWhenTypeEmail || this.isError) {
@@ -92,7 +92,7 @@ export default {
                 classes += ' pl-[26px] sp:pl-[34px]';
             }
             if(this.iconRight){
-                classes += ' pr-[34px]';
+                classes += ' sp:pr-[34px] pr-[20px]';
             }
 
             Object.entries(this.customClasses).forEach(([key, value]) => {

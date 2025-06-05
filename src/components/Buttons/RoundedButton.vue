@@ -11,7 +11,7 @@
       >
         <img :src="iconUrl" :class="sizeIcons" alt="Icon" />
       </button>
-      <p v-if="showLabel" class="mt-[4px] sp:mt-2 text-[7px] sp:text-[12px] font-bold text-[#333] lato text-center sp:max-w-[40px] sp:max-w-[80px]">{{ label }}</p>
+      <p v-if="showLabel" class="mt-[4px] sp:mt-2 text-[8px] sp:text-[12px] font-bold text-[#333] lato text-center sp:max-w-[40px] sp:max-w-[80px]">{{ label }}</p>
     </div>
   </template>
   

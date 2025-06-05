@@ -7,7 +7,7 @@ export default {
       "wifi": "WiFi",
       "call": "Llamar",
       "standards": "Normas",
-      "share_stay": "Compartir Estancia"
+      "share_stay": "Compartir"
   },
   "utils": {
       "see_more": "Ver más",

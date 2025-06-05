@@ -1,98 +1,99 @@
 export default {
     "breadcrumbs": {
-        "explore": "Explore",
+      "explore": "Arakatu"
     },
     "list-page": {
-        "title": "Explora en",
-        "text-count-list": "{count} lugares encontradas",
-        "text-count-list-search": "{count} lugares encontrados para",
-        "text-count-list-search-active": "Buscar todos los lugares para",
-        "text-search-not-found": "Ajusta tu búsqueda o intenta en otra categoría",
-        "btn-load-more": "Cargar más"
-        // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
+      "title": "Arakatu hemen",
+      "text-count-list": "{count} leku aurkitu dira",
+      "text-count-list-search": "{count} leku aurkitu dira honetarako:",
+      "text-count-list-search-active": "Bilatu leku guztiak honetarako:",
+      "text-search-not-found": "Doitu zure bilaketa edo saiatu beste kategoria batean",
+      "btn-load-more": "Kargatu gehiago"
+      // "text-count-list-mobile": "Aurkitu dira {count} esperientzia."
     },
-    "results":'Sin resultados...',
-    "seaching":'Buscando...',
-    "categorySearch":'encontrados',
-    "city":"Ciudad",
-    "placeholder-search":"Buscar destino",
-    "types":{
-        "que-visitar":"Qué visitar",
-        "donde-comer":"Dónde comer",
-        "ocio":"Ocio"
+    "results": "Emaitzarik ez...",
+    "seaching": "Bilatzen...",
+    "categorySearch": "aurkitu dira",
+    "city": "Hiria",
+    "placeholder-search": "Helmuga bilatu",
+    "types": {
+      "que-visitar": "Zer bisitatu",
+      "donde-comer": "Non jan",
+      "ocio": "Aisialdia"
     },
-    "categories":{
-        "monumentos":"Monumentos",
-        "museos":"Museos",
-        "zonas-verdes":"Zonas verdes",
-        "cafeterias-y-postres":"Cafeterías y postres",
-        "restaurantes":"Restaurantes",
-        "vida-nocturna":"Vida nocturna",
-        "copas":"Copas",
-        "compras":"Compras",
-        "otros":"Otros",
+    "categories": {
+      "monumentos": "Monumentuak",
+      "museos": "Museoak",
+      "zonas-verdes": "Gune berdeak",
+      "cafeterias-y-postres": "Kafetegiak eta postreak",
+      "restaurantes": "Jatetxeak",
+      "vida-nocturna": "Gaueko bizitza",
+      "copas": "Edariak",
+      "compras": "Erosketak",
+      "otros": "Bestelakoak"
     },
-    "detail":{
-        'titleList': "Explora",
-        "opinionsTitle":"Opiniones de la info. turística",
-        "opinionsWord":"Reseñas",
-        "recommendationWord": "Recomendación",
-        "featured": "Destacado",
-        "callWord": "Llamar",
-        "dataInterest":{
-            "title":"Datos de interés",
-            "priceRange":'Rangos de precios',
-            "diet":"Dietas especiales",
-            "others":"Otros",
-        },
-        "specialRegimes": "Regímenes especiales",
-        "additionalInformation": "Información adicional",
-        "copy": "Copiar",
-        "showLess": "Mostrar menos",
-        "showMore": "Mostrar más",
-        "recommended": "Recomendado",
-        "recommendedTitle": "Recomendación del {lodging}",
-        "buttoms": {
-            "web": "Web",
-            "call": "Llamar",
-            "menu": "Menú",
-            "email": "E-mail",
-        },
-        "hours": {
-            "title": "Horarios",
-            "monday": "lunes",
-            "tuesday": "martes",
-            "wednesday": "miércoles",
-            "thursday": "jueves",
-            "friday": "viernes",
-            "saturday": "sábado",
-            "sunday": "domingo"
-        },
-        "locationWord": "Ubicación",
-        "starWord": "Estrella",
-        "starsWord": "Estrellas",
-        "ratingTitle": "Puntuación",
-        "noComment": "No se escribio comentario",
-        "seeMoreComment": "Ver más",
-        "seeAllComments": "Ver todas las opiniones",
-        "titleAllReviews": "Opiniones de la info. turística",
-        "exploreIn":"Explora en",
-        "filters":{
-            "title":"Filtrar por",
-            "distanceLogding":"Distancia del",
-            "recommended": "Recomendado",
-            "ratings":"Valoraciones",
-            "star":"estrella",
-            "score": "Puntaje",
-            "stars":"estrellas",
-            "remove":"Quitar todos",
-            "apply":"Aplicar filtros",
-            "distante": {
-                "oneKm": "Entre 1 km y 3 km",
-                "threeKm": "Entre 3 km y 5 km",
-                "fiveKm": "Entre 5km y 10 km",
-                "tenKm": "10 km+"
-            }
+    "detail": {
+      "titleList": "Arakatu",
+      "opinionsTitle": "Informazio turistikoaren iritziak",
+      "opinionsWord": "Iritziak",
+      "recommendationWord": "Gomendioa",
+      "featured": "Nabarmendua",
+      "callWord": "Deitu",
+      "dataInterest": {
+        "title": "Intereseko datuak",
+        "priceRange": "Prezio tarteak",
+        "diet": "Dieta bereziak",
+        "others": "Bestelakoak"
+      },
+      "specialRegimes": "Erregimen bereziak",
+      "additionalInformation": "Informazio gehigarria",
+      "copy": "Kopiatu",
+      "showLess": "Gutxiago erakutsi",
+      "showMore": "Gehiago erakutsi",
+      "recommended": "Gomendatua",
+      "recommendedTitle": "{lodging}-(r)en gomendioa",
+      "buttoms": {
+        "web": "Webgunea",
+        "call": "Deitu",
+        "menu": "Menua",
+        "email": "E-maila"
+      },
+      "hours": {
+        "title": "Ordutegiak",
+        "monday": "astelehena",
+        "tuesday": "asteartea",
+        "wednesday": "asteazkena",
+        "thursday": "osteguna",
+        "friday": "ostirala",
+        "saturday": "larunbata",
+        "sunday": "igandea"
+      },
+      "locationWord": "Kokapena",
+      "starWord": "Izar",
+      "starsWord": "Izarrak",
+      "ratingTitle": "Balorazioa",
+      "noComment": "Ez da iruzkinik idatzi",
+      "seeMoreComment": "Iruzkin gehiago ikusi",
+      "seeAllComments": "Iritzi guztiak ikusi",
+      "titleAllReviews": "Informazio turistikoaren iritziak",
+      "exploreIn": "Arakatu hemen",
+      "filters": {
+        "title": "Iragazi honen arabera",
+        "distanceLogding": "{lodging}-(e)tik distantzia",
+        "recommended": "Gomendatua",
+        "ratings": "Balorazioak",
+        "star": "izar",
+        "score": "Puntuazioa",
+        "stars": "izarrak",
+        "remove": "Kendu guztiak",
+        "apply": "Aplikatu iragazkiak",
+        "distante": {
+          "oneKm": "1 km eta 3 km artean",
+          "threeKm": "3 km eta 5 km artean",
+          "fiveKm": "5 km eta 10 km artean",
+          "tenKm": "10 km+"
         }
-    },
-}
+      }
+    }
+  }
+  

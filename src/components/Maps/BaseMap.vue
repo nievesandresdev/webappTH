@@ -14,16 +14,17 @@
         <button
           v-if="showExpand"
           @click="toggleFullScreen"
-          class="absolute top-2 right-2 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
+          class="absolute top-2 right-3 sp:right-2 inline-flex items-center gap-2 p-1 border border-white bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] fullscreen-button"
         >
           <img
             :src="isFullScreen ? '/assets/icons/WA.Compress.svg' : '/assets/icons/WA.Expand.svg'"
             :alt="isFullScreen ? 'Salir de Pantalla Completa' : 'Pantalla Completa'"
-            class="w-6 h-6"
+            class="sp:w-6 sp:h-6 w-3 h-3"
           />
         </button>
 
           <MapboxMap
+            
             class="h-full z-0"
             :access-token="TOKEN"
             ref="mapboxMap"
@@ -77,6 +78,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  refMap: {
+    type: String,
+    default: null,
+  }
 });
 
 
@@ -127,7 +132,18 @@ function onFullScreenChange() {
 
 onMounted(() => {
   document.addEventListener('fullscreenchange', onFullScreenChange);
+  nextTick(() => {
+    removeUserLocationDot();
+  });
 });
+
+const removeUserLocationDot = () => {
+  const layersToRemove = ['mapboxgl-user-location-dot', 'mapboxgl-user-location-accuracy-circle'];
+  layersToRemove.forEach((layerId) => {
+    if (map.value.getLayer(layerId)) map.value.removeLayer(layerId);
+    if (map.value.getSource(layerId)) map.value.removeSource(layerId);
+  });
+};
 
 onUnmounted(() => {
   document.removeEventListener('fullscreenchange', onFullScreenChange);
@@ -183,7 +199,7 @@ function focusOnPoint(lng, lat, zoom = 15) {
   }
 }
 
-defineExpose({ focusOnPoint });
+defineExpose({ focusOnPoint, map });
 
 </script>
 

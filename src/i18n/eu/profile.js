@@ -7,17 +7,17 @@ export default {
         "subtitle_inactive": "Sortu zure hurrengo egonaldia"
     },
     "personal_info": {
-        "title": "Informazio pertsonala",
-        "description": "Konfiguratu zure informazio pertsonala"
+        "title": "Nire datuak",
+        "description": "Zure informazio pertsonala konfiguratu"
     },
     "language": {
-        "title": "Hizkuntza hobespena",
-        "description": "Hautatu zure lehenetsitako hizkuntza"
+        "title": "Hizkuntza lehentasuna",
+        "description": "Hautatu zure lehenetsi hizkuntza"
     },
-    "logout": "Saioa itxi",
+    "logout": "Saioa amaitu",
     "share_stay": "Egonaldia partekatu",
     "page_personal_info": {
-        "title": "Informazio pertsonala",
+        "title": "Pertsonal informazioa",
         "change_photo": "Argazkia aldatu",
         "change_password": "Pasahitza aldatu",
         "btn_save": "Gorde",
@@ -28,15 +28,15 @@ export default {
             },
             "last_name": {
                 "label": "Abizenak",
-                "placeholder": "Sartu zure abizena"
+                "placeholder": "Sartu zure abizenak"
             },
             "email": {
                 "label": "Posta elektronikoa",
-                "placeholder": "Sartu zure posta"
+                "placeholder": "Sartu zure posta elektronikoa"
             },
             "number_phone": {
                 "label": "Telefono zenbakia",
-                "placeholder": "Sartu zure telefonoa"
+                "placeholder": "Sartu zure telefono zenbakia"
             },
             "password": {
                 "label": "Pasahitza",
@@ -46,32 +46,35 @@ export default {
     },
     "book_next_stay": {
         "title": "Erreserbatu zure hurrengo egonaldia",
-        "description": "Planifikatu zure hurrengo ihesaldia"
+        "description": "Planifikatu zure hurrengo irteera"
     },
     "rewards": {
-        "title": "Gonbidatu lagun bat",
+        "title": "Lagun bat gonbidatu",
         "description": "Partekatu abantaila esklusiboak",
-        "button-recommend": "Gomendatu lagun bat orain",
+        "button-recommend": "Gonbidatu lagun bat orain",
         "referrals": {
-            "title": "Gomendatu lagun bat!",
-            "discount": "{amount} deskontua",
-            "description": "Bidali zure erreferentzia kodea. {amount} deskontua lortuko du kode horri esker.",
+            "title": "Gonbidatu lagun bat!",
+            "discount": "{amount} deskontu",
+            "description": "Bidali zure erreferentzia-kodea. Eskerrak zure kodeari, {amount} deskontua lortuko du."
         },
         "referent": {
-            "title": "Gomendatu lagun bat eta biok irabazi!",
-            "titleReferred": "{amount} deskontua gomendatutakoarentzat",
-            "descerptionReferred": "Bidali zure erreferentzia kodea. {amount} deskontua lortuko du kode horri esker.",
-            "titleReferent": "{amount} deskontua jaso",
-            "descerptionReferent": "Kodea erabili eta balidatzean, {amount} deskontua jasoko duzu."
+            "title": "Gonbidatu lagun bat eta bien onura!",
+            "titleReferred": "Gonbidatuak {amount} deskontu",
+            "descerptionReferred": "Bidali zure erreferentzia-kodea. Eskerrak zure kodeari, {amount} deskontua lortuko du.",
+            "titleReferent": "Jaso {amount} deskontu",
+            "descerptionReferent": "Behin gonbidatuaren kodea balidatu eta erabili ondoren, {amount} deskontua jasoko duzu."
         },
         "titleReferentProfile": "Dirua irabazi",
-        "descriptionReferentProfile": "Gomendatu lagun bat onurak lortzeko"
+        "descriptionReferentProfile": "Lagun bat erreferitu abantailak lortzeko"
     },
     "next-reserve": {
         "reserve-button": "Erreserbatu",
         "continue-title": "Jarraitu nahi duzu?",
-        "continue-message": "Hotelaren webgunera birbideratuko zara erreserba prozesuarekin jarraitzeko.",
+        "continue-message": "Ostatuaren webgunera bideratuko zaitugu erreserba prozesua jarraitzeko.",
         "continue-yes": "Bai, jarraitu",
-        "continue-cancel": "Utzi",
+        "continue-cancel": "Utzi"
     },
+    "inbox": {
+        "title": "Postontzia"
+    }
 };

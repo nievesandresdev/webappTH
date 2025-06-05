@@ -52,7 +52,7 @@ export default {
     "title": "Le nostre reti"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Password",
     "noPassword":"Questa rete non ha password"
@@ -60,5 +60,14 @@ export default {
   "policies":{
     "title":"Politiche e regole",
     "penalization":"Penalità"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Chiamare",
+    "wifi": "WiFi",
+    "rules": "Regole",
+    "reserve": "Prenota!",
+    "refered": "Referisci"
   }
+
 };

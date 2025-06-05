@@ -2,7 +2,7 @@
     <div class="h-full w-[64px] sp:w-auto">
       <!-- Sección “vista previa” donde se ve, por ejemplo, ES +34 -->
       <div class="flex items-center h-full" @click="toggleOpen">
-        <img class="w-[14px] sp:w-5 h-[14px] sp:h-5 mr-1 sp:mr-2" src="/assets/icons/WA.llamar.svg" alt="">
+        <img class="w-[14px] sp:w-5 h-[11px] sp:h-5 mr-1 sp:mr-2" src="/assets/icons/WA.llamar.svg" alt="">
         <div class="h-[28px] sp:h-[24px]">
           <!-- Muestra algo como 'ES' y '+34'. Aquí podrías mostrar el label exacto que quieras -->
           <span class="inline lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px] sp:pr-1">

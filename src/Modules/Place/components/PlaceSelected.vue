@@ -1,4 +1,5 @@
 <template>
+    
     <div v-if="!laoding && placeComputed"  class="w-screen absolute px-[16px] top-[-113px] lef-0 z-[3000]">
         <CardList :data="placeComputed" />
     </div>

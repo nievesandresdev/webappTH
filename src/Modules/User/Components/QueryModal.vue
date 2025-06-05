@@ -17,9 +17,9 @@
                 {{ $t('query.settings.question'+period)}}
             </p>
             <IconsQuery 
-                v-if="currentQuery"
-                :settings="settings"
-                :data="currentQuery"
+                v-if="queryStore.currentQuery"
+                :settings="querySettingsStore.settings"
+                :data="queryStore.currentQuery"
                 @reloadList="reloadQuery"
                 inModal
             />
@@ -36,6 +36,8 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
+import { useQuerySettingsStore } from '@/stores/modules/querySettings';
+const querySettingsStore = useQuerySettingsStore();
 import { useRequestSettingStore } from '@/stores/modules/requestSettings';
 const requestSettingsStore = useRequestSettingStore();
 
@@ -65,7 +67,6 @@ onMounted(async () => {
 })
 
 const requestTexts = ref(null);
-const currentQuery = inject('currentQuery');
 const queryModalisOpen = inject('queryModalisOpen');
 
 
@@ -75,14 +76,14 @@ async function reloadQuery(){
         guestId : localStorage.getItem('guestId'),
         period : period.value,
     }
-    currentQuery.value = await queryStore.$visited(params);
+    queryStore.currentQuery = await queryStore.$visited(params);
     if(!showRequestReview.value){
         closeModal();
     }
-    EditId.value = currentQuery.value.id
-    EditPeriod.value = currentQuery.value.period
-    EditComment.value = currentQuery.value.comment ? currentQuery.value.comment[currentQuery.value.response_lang] : '';
-    EditQualification.value = currentQuery.value.qualification
+    EditId.value = queryStore.currentQuery.id
+    EditPeriod.value = queryStore.currentQuery.period
+    EditComment.value = queryStore.currentQuery.comment ? queryStore.currentQuery.comment[queryStore.currentQuery.response_lang] : '';
+    EditQualification.value = queryStore.currentQuery.qualification
 }
 
 function closeModal(){
@@ -94,11 +95,11 @@ const showRequestReview = computed(()=>{
     let requestTo = JSON.parse(requestTexts.value?.request_to)
     
     if(period.value == 'in-stay'){
-        return currentQuery.value?.answered && requestTexts.value.in_stay_activate && ['GOOD','VERYGOOD'].includes(currentQuery.value.qualification)
+        return queryStore.currentQuery?.answered && requestTexts.value.in_stay_activate && ['GOOD','VERYGOOD'].includes(queryStore.currentQuery.qualification)
     }
 
     if(period.value == 'post-stay'){
-        return currentQuery.value?.answered && requestTo.includes(currentQuery.value.qualification) 
+        return queryStore.currentQuery?.answered && requestTo.includes(queryStore.currentQuery.qualification) 
         // requestTo.includes('NOTANSWERED')
     }
     

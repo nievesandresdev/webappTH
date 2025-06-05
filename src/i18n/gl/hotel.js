@@ -7,7 +7,7 @@ export default {
     "wifi": "WiFi",
     "call": "Chamar",
     "standards": "Normas",
-    "share_stay": "Compartir estancia"
+    "share_stay": "Compartir"
   },
   "utils": {
     "see_more": "Ver máis",

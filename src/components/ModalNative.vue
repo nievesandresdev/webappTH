@@ -1,24 +1,29 @@
 <template>
-    <Transition>
+    <!-- <Transition>
       <div
         v-if="modalNativeIsOpen || openProp"
         class="fixed inset-0 bg-modal z-[6001]"
         @click="close"
       ></div>
-    </Transition>
+    </Transition> -->
     <Transition>
       <div
         v-if="modalNativeIsOpen || openProp"
-        :class="`${position} m-auto bg-gradient-h left-0 right-0 z-[6002] rounded-[20px] ${customClasses}`"
-        :style="{ width: width, top: top }"
-      >
-        <slot></slot>
+        class="fixed inset-0 z-[6002] flex justify-center items-center bg-modal"
+         @click.self="close"
+        >
+        <div
+          :class="`m-auto bg-gradient-h rounded-[20px] ${customClasses}`"
+          :style="{ width: width}"
+        >
+          <slot></slot>
+        </div>
       </div>
     </Transition>
   </template>
   
   <script setup>
-  import { inject } from 'vue';
+  import { inject, watch, onUnmounted } from 'vue';
   
   const emit = defineEmits(['closeModal'])
 
@@ -27,17 +32,9 @@
       type: String,
       default: '300px',
     },
-    top: {
-      type: String,
-      default: '35%',
-    },
     customClasses: {
       type: String,
       default: '',
-    },
-    position : {
-      type: String,
-      default: 'absolute'
     },
     openProp : {
       type: Boolean,
@@ -46,6 +43,16 @@
   });
   
   const modalNativeIsOpen = inject('modalNativeIsOpen');
+
+  watch(
+    () => (modalNativeIsOpen ? modalNativeIsOpen.value : props.openProp),
+    (isOpen) => {
+      document.body.style.overflow = isOpen ? 'hidden' : ''
+    },
+    { immediate: true }
+  )
+
+  onUnmounted(() => (document.body.style.overflow = ''))
 
   function close(){
     if(modalNativeIsOpen){

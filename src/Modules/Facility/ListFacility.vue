@@ -50,6 +50,9 @@ import AppHeader from '@/layout/Components/AppHeader.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+import { useFacilityStore } from '@/stores/modules/facility';
+const facilityStore = useFacilityStore();
+
 const hotelStore = useHotelStore();
 const facilities = ref([]);
 
@@ -105,8 +108,8 @@ watch(hotelData, (valueCurrent, valueOld) => {
 }, { immediate: true });
 
 async function loadData () {
-  const response = await hotelStore.$getCrossellings();
-  facilities.value = response.crosselling_facilities;
+  const response = await facilityStore.$getAll();
+  facilities.value = response;
   if (hotelStore.hotelData.show_facilities !== 1 && hotelStore.hotelData.show_profile === 1) {
     router.push({ name: 'ShowHotel', query: { mockup: isMockup() } });
   }

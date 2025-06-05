@@ -12,6 +12,7 @@ export default {
   },
   "detail-page": {
     "accessibility": "Erosotasuna",
+    "how-to-hire": "Nola eskatu",
     "offered-in": "Erosotasunaren eskubideetan",
     "requeriments": {
       "title": "Erosotasunaren eskubideetan"

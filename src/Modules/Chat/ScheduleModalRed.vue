@@ -1,8 +1,8 @@
 <template>
     <BottomModal :isOpen="isScheduleModalOpen" @update:isOpen="closeModal">
         <div class="flex items-center gap-1">
-            <img class="w-5 sp:w-8 h-5 sp:h-8" src="/assets/icons/WA.Clock.svg" alt="">
-            <h2 class="lato text-sm sp:text-[20px] font-bold leading-[14px] sp:leading-[28px]">{{ $t('chat.horary-title') }}</h2>
+            <img class="w-4 sp:w-8 h-4 sp:h-8" src="/assets/icons/WA.Clock.svg" alt="">
+            <h2 class="lato text-[13px] sp:text-[20px] font-bold leading-[14px] sp:leading-[28px]">{{ $t('chat.horary-title') }}</h2>
         </div>
         <div class="mt-[18px] sp:mt-[28px] border border-color-secondary rounded-[14px] sp:rounded-[20px] py-3 sp:py-4">
             <div class="flex flex-col gap-1.5 sp:gap-3">

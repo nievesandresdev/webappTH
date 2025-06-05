@@ -5,7 +5,7 @@
     >
         <p
             v-if="!isloadingForm"
-            class="text-[6px] sp:text-sm font-bold lato"
+            class="text-[9px] sp:text-sm font-bold lato"
         >
             <!-- {{ paginateData.total }} Servicios encontrados en Transporte -->
             {{ $t('service.transport.text-search-found', { number: paginateData.total  }) }}

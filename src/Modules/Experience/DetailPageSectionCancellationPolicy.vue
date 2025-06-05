@@ -1,9 +1,9 @@
 <template>
     <div class="p-3 sp:p-6 space-y-[12px] border border-color-secondary bg-gradient-100 rounded-[10px]">
-        <h3 class="text-[9px] sp:text-[16px] leading-0 font-bold mb-[12px] sp:mb-[24px] lato">{{ $t('experience.detail-page.title-politic-cancelation') }}</h3>
+        <h3 class="text-[10px] sp:text-[16px] leading-0 font-bold mb-[12px] sp:mb-[24px] lato">{{ $t('experience.detail-page.title-politic-cancelation') }}</h3>
         <p
             ref="cancellationRef"
-            class="description text-[8px] sp:text-[14px] font-medium lato"
+            class="description text-[9px] sp:text-[14px] font-medium lato"
             :class="{ expanded: isExpanded }"
         >
             {{ cancellationPolicy }}

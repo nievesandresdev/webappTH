@@ -88,7 +88,7 @@ onBeforeRouteLeave((to, from, next) => {
 
 
 const heightHomeLog = computed(() => {
-    console.log('test formType.value', formType.value)
+    // console.log('test formType.value', formType.value)
     return formType.value == 'log' && route.name == 'Home' && !showEnterPassword.value;
 });
 // Mantenemos las condiciones originales para cada formulario:
@@ -192,7 +192,7 @@ function unblockScroll() {
 watch(
   () => route.query.acform,
   (newAcform, oldAcform) => {
-    console.log('acform ha cambiado de', oldAcform, 'a', newAcform);
+    // console.log('acform ha cambiado de', oldAcform, 'a', newAcform);
     formType.value = newAcform;
   }
 );

@@ -12,6 +12,7 @@ export default {
   },
   "detail-page": {
     "accessibility": "Toegankelijk",
+    "how-to-hire": "Hoe te contracteren",
     "offered-in": "Aangeboden in",
     "requeriments": {
       "title": "Voorwaarden"

@@ -161,7 +161,7 @@ export const useStayStore = defineStore('stay', () => {
         const response = await findbyIdApi(stayId)
         const { ok } = response   
         stayData.value = ok ? response.data : null;
-        if(stayData){
+        if(stayData.value){
             localStorage.setItem('stayId', stayData.value.id)
             localStorage.setItem('stayData', JSON.stringify(stayData.value))
         }

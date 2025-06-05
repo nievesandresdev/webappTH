@@ -16,9 +16,12 @@ export const useHistoryStore = defineStore('history', () => {
     'MyStay',
     'Guests',
     'ReservationStay',
-    'PersonalInfo',
     'SelectLanguage',
-    'AutoCompleteCheckin'
+    'AutoCompleteCheckin',
+    // MyData
+    'PersonalInfo',
+    'UbicationData',
+    'ContactData',
   ]);
 
   // ACTIONS
