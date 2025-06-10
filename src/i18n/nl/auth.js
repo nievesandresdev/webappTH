@@ -7,7 +7,8 @@ export default {
       "text-error": "Het ingevoerde e-mailadres is niet correct",
       "continue-button": "Doorgaan",
       "continue-google": "Doorgaan met Google",
-      "continue-fb": "Doorgaan met Facebook"
+      "continue-fb": "Doorgaan met Facebook",
+      "unaffiliated-mail": "Oh nee! Sorry voor het ongemak; om je met Facebook aan te melden moet er een e-mailadres aan je Facebook-account gekoppeld zijn."
     },
     "log": {
       "title": "Log in",
