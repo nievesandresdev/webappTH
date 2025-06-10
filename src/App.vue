@@ -144,9 +144,9 @@ watch(
   (newRouteName) => {
     console.log('Route Changed:', newRouteName)
     if (newRouteName === 'Home' && hotelStore.hotelData?.name) {
-      document.title = `${hotelStore.hotelData.name} | Inicio`
+      document.title = `${hotelStore.hotelData?.name} | Inicio`
     }else{
-      document.title = `${hotelStore.hotelData.name} | ${newRouteName}`
+      document.title = `${hotelStore.hotelData?.name} | ${newRouteName}`
     }
   },
   { immediate: true }
