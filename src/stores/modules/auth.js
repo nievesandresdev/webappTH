@@ -14,7 +14,8 @@ import {
     sendResetLinkEmailApi,
     resetPasswordApi,
     createTokenSessionByGoogleApi,
-    autenticateWithGuestDemoApi
+    autenticateWithGuestDemoApi,
+    createTokenSessionByFacebookApi
 } from '@/api/services/auth.services'
 
 import { useGuestStore } from '@/stores/modules/guest';
@@ -276,8 +277,26 @@ export const useAuthStore = defineStore('auth', () => {
         return response.data
     }
 
+    async function $createTokenSessionByFacebook(facebookId) {
+        let body = {
+            facebookId,
+        }
+        const response = await createTokenSessionByFacebookApi(body);
+        if (!response?.ok) return;
+        return response.data
+    }
+
     async function $loginByGoogle(guestId, googleId) {  
         const {token, guest } = await $createTokenSessionByGoogle(googleId);
+        localStorage.setItem('token', token);
+        let localGuest = guestStore.getLocalGuest();
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            guestStore.setLocalGuest(guest);
+        }
+    }
+
+    async function $loginByFacebook(guestId, facebookId) {
+        const {token, guest } = await $createTokenSessionByFacebook(facebookId);
         localStorage.setItem('token', token);
         let localGuest = guestStore.getLocalGuest();
         if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
@@ -314,7 +333,8 @@ export const useAuthStore = defineStore('auth', () => {
         $redirectAfterLogin,
         $goLoginBySocialNetwork,
         $validateStayGuestRelation,
-        $autenticateWithGuestDemo
+        $autenticateWithGuestDemo,
+        $loginByFacebook
     }
 
 })
