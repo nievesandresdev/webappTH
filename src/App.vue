@@ -14,7 +14,7 @@ defineComponent({ name: 'App' });
 //
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
-import { computed, onMounted, watch, ref } from 'vue';
+import { computed, onMounted, watch, ref, watchEffect } from 'vue';
 import useHotelMetadata from '@/composables/useHotelMetadata'
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
 //
@@ -117,17 +117,26 @@ watch(() => stayStore.stayData, async (newStayData) => {
 
 const hotelStore = useHotelStore()
 
-// Watcher para actualizar el título cuando cambie el nombre del hotel
-watch(
-  () => hotelStore.hotelData,
-  (newHotelData) => {
-    console.log('Hotel Data Changed:', newHotelData)
-    if (route.name === 'Home' && newHotelData?.name) {
-      document.title = `${newHotelData.name} | Inicio`
+// Usar watchEffect para manejar la actualización del título
+watchEffect(() => {
+  // Usar hotelDataStorage que viene del localStorage
+  const hotelName = hotelStore.hotelDataStorage?.name
+  const routeName = route.name
+  
+  if (hotelName) {
+    if (routeName === 'Home') {
+      document.title = `${hotelName} | Inicio`
+    } else if (routeName) {
+      // Formatear el nombre de la ruta para el título
+      const routeTitle = routeName
+        .replace(/([A-Z])/g, ' $1') // Agrega espacio antes de mayúsculas
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ')
+      document.title = `${hotelName} | ${routeTitle}`
     }
-  },
-  { immediate: true, deep: true }
-)
+  }
+})
 
 // También observamos los cambios de ruta
 watch(
@@ -136,6 +145,8 @@ watch(
     console.log('Route Changed:', newRouteName)
     if (newRouteName === 'Home' && hotelStore.hotelData?.name) {
       document.title = `${hotelStore.hotelData.name} | Inicio`
+    }else{
+      document.title = `${hotelStore.hotelData.name} | ${newRouteName}`
     }
   },
   { immediate: true }
