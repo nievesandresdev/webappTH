@@ -124,6 +124,8 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
+import { useHead } from '@vueuse/head'
+
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
@@ -165,6 +167,14 @@ const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 
 startLoading(SECTIONS.HOME.GLOBAL);
+
+useHead({
+    title: 'The Hoster',
+    meta: [
+        { name: 'description', content: 'The Hoster' },
+        { name: 'og:title', content: 'The Hoster' },
+    ]
+})
 
 onMounted(async () => {
     // loadCrossellings();

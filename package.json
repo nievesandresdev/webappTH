@@ -12,6 +12,7 @@
     "@studiometa/vue-mapbox-gl": "^2.5.0",
     "@unhead/vue": "^2.0.10",
     "@vueuse/core": "^11.2.0",
+    "@vueuse/head": "^2.0.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "core-js": "^3.8.3",
