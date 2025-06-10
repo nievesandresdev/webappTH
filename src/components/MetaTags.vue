@@ -1,53 +1,51 @@
 <!-- MetaTags.vue -->
 <template>
-  <!-- Este componente no renderiza nada visualmente -->
+  <div style="display: none;">
+    <!-- Componente invisible que maneja los meta tags -->
+  </div>
 </template>
 
 <script setup>
 import { useHotelStore } from '@/stores/modules/hotel'
 import { useRoute } from 'vue-router'
-import { watchEffect } from 'vue'
+import { onMounted, watch } from 'vue'
+import { getMetaTagsApi } from '@/api/services/hotel.services'
 
 const hotelStore = useHotelStore()
 const route = useRoute()
 
-watchEffect(() => {
-  const hotelData = hotelStore.hotelDataStorage
-  const routeName = route.name
-  
-  if (hotelData?.name) {
-    let title = ''
-    let description = ''
-    
-    // Configurar título según la ruta
-    if (routeName === 'Home') {
-      title = `${hotelData.name} | Inicio`
-      description = `Bienvenido a ${hotelData.name}. Descubre nuestros servicios y comodidades.`
-    } else if (routeName) {
-      const routeTitle = routeName
-        .replace(/([A-Z])/g, ' $1')
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ')
-      title = `${hotelData.name} | ${routeTitle}`
-      description = `${routeTitle} en ${hotelData.name}`
+async function updateMetaTags() {
+  try {
+    const params = {
+      path: route.path,
+      url: window.location.href
     }
-
-    // Actualizar meta tags
-    document.title = title
     
-    // OpenGraph
-    updateMetaTag('og:title', title)
-    updateMetaTag('og:description', description)
-    updateMetaTag('og:image', hotelData.logo || hotelData.image)
-    updateMetaTag('og:url', window.location.href)
+    const response = await getMetaTagsApi(params)
     
-    // Twitter Card
-    updateMetaTag('twitter:title', title)
-    updateMetaTag('twitter:description', description)
-    updateMetaTag('twitter:image', hotelData.logo || hotelData.image)
+    if (response.ok && response.data) {
+      const metaData = response.data
+      
+      // Actualizar título
+      document.title = metaData.title
+      
+      // Actualizar meta tags
+      updateMetaTag('og:title', metaData.title)
+      updateMetaTag('og:description', metaData.description)
+      updateMetaTag('og:image', metaData.image)
+      updateMetaTag('og:url', metaData.url)
+      updateMetaTag('og:type', metaData.type)
+      updateMetaTag('og:site_name', metaData.site_name)
+      
+      // Twitter Card
+      updateMetaTag('twitter:title', metaData.title)
+      updateMetaTag('twitter:description', metaData.description)
+      updateMetaTag('twitter:image', metaData.image)
+    }
+  } catch (error) {
+    console.error('Error updating meta tags:', error)
   }
-})
+}
 
 function updateMetaTag(property, content) {
   let meta = document.querySelector(`meta[property="${property}"]`)
@@ -58,4 +56,10 @@ function updateMetaTag(property, content) {
     meta.setAttribute('content', content)
   }
 }
+
+// Actualizar meta tags cuando cambie la ruta
+watch(() => route.path, updateMetaTags)
+
+// Actualizar meta tags al montar el componente
+onMounted(updateMetaTags)
 </script> 

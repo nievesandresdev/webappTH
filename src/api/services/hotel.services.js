@@ -20,3 +20,5 @@ export const getAllWifiHotel = () => apiHttp('GET', `${hotelPath}/${wifiNetworks
 export const getAllByHotelAndVisible = () => apiHttp('GET', `${hotelPath}/${wifiNetworksPath}/getAllByHotelAndVisible`);
 //buttons
 export const getActiveHotelButtons = () => apiHttp('GET', `${hotelPath}/getActiveHotelButtons`);
+
+export const getMetaTagsApi = (params) => apiHttp('GET', `${hotelPath}/meta-tags`, params)

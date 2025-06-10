@@ -141,7 +141,7 @@ watchEffect(() => {
 })
 
 // También observamos los cambios de ruta
-watch(
+/* watch(
   () => route.name,
   (newRouteName) => {
     console.log('Route Changed:', newRouteName)
@@ -152,7 +152,7 @@ watch(
     }
   },
   { immediate: true }
-)
+) */
 
 </script>
 
