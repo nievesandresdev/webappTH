@@ -7,7 +7,8 @@ export default{
         "text-error": "El formato de correo electrónico introducido no es correcto",
         "continue-button": "Continuar",
         "continue-google": "Continuar con Google",
-        "continue-fb": "Continuar con Facebook"
+        "continue-fb": "Continuar con Facebook",
+        "unaffiliated-mail": "Oh no! Sentimos la molestia, para autenticarte con Facebook, debes tener un correo electrónico asociado a la cuenta de Facebook."
     },
     "log":{
         "title":"Inicia sesión",

@@ -42,17 +42,20 @@
             <img class="w-6 h-6 mr-2" src="/assets/icons/WA.facebook.svg" alt="icon google">
             <p class="text-sm font-bold leading-[16px]">{{$t('auth.log-or-register.continue-fb')}}</p>
         </button>
-        
+        <p class="mt-4 text-sm font-medium leading-[16px] htext-alert-negative" v-if="route.query.error">
+            {{ $t('auth.log-or-register.'+route.query.error) }}
+        </p>
     </div>
 </template>
 <script setup>
-import { reactive, ref, computed, inject  } from 'vue';
+import { reactive, ref, computed, inject, onMounted  } from 'vue';
 import THInputText from '@/components/THInputText.vue';
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { navigateTo } from '@/utils/navigation'
 //router
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 //stores
 import { useChainStore } from '@/stores/modules/chain'
 const chainStore = useChainStore()

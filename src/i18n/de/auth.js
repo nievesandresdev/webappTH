@@ -7,7 +7,8 @@ export default{
         "text-error": "Das eingegebene E-Mail-Format ist nicht korrekt",
         "continue-button": "Fortsetzen",
         "continue-google": "Mit Google fortfahren",
-        "continue-fb": "Mit Facebook fortfahren"
+        "continue-fb": "Mit Facebook fortfahren",
+        "unaffiliated-mail": "Oh nein! Entschuldige die Umstände; um dich mit Facebook anzumelden, musst du eine E-Mail-Adresse mit deinem Facebook-Konto verknüpft haben."
     },
     "log": {
         "title": "Anmelden",
