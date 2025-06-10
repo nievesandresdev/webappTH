@@ -13,6 +13,7 @@
                     showButtonShared 
                     :nameShared="facility.title"
                     :typeShared="hotelData.type" 
+                    :msgShared="msgShared"
                 />
                     <!-- v-if="facility.ad_tag" -->
                 <div
@@ -77,11 +78,14 @@
 </template>
 
 <script setup>
-    import { onMounted, defineProps, ref,computed, nextTick } from 'vue';
+    import { onMounted, defineProps, ref, computed, nextTick } from 'vue';
     import ImageSlider from '@/components/ImageSlider.vue';
     import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
     import { useFacilityStore } from '@/stores/modules/facility.js';
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useI18n } from 'vue-i18n';
+
+    const { t: $t } = useI18n();
 
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";
@@ -94,6 +98,10 @@
     const hotelStore = useHotelStore();
 
     const hotelData = computed(() => hotelStore.hotelData);
+
+    const msgShared = computed(() => {
+        return $t('facility.detailPage.share.message', { type: hotelData.value.type });
+    });
 
     const facilityStore = useFacilityStore();
 

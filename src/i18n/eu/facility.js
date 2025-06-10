@@ -15,6 +15,9 @@ export default {
           "Sábado": "Larunbata",
           "Domingo": "Igandea"
         }
+      },
+      "share": {
+        "message": "Gure estanciaren egin saioa eta begiratu gure {type}aren instalazioa WebApp bidez"
       }
     }
   }

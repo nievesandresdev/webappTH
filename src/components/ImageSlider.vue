@@ -79,6 +79,10 @@ const props = defineProps({
   typeShared: {
     type: String,
     default: 'hotel'
+  },
+  msgShared: {
+    type: String,
+    default: 'Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro hotel en su WebApp'
   }
 })
 
@@ -200,7 +204,7 @@ function goBack() {
 function isModalShareOpen () {
     let data = {
         title: props.nameShared,
-        text: `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${props.typeShared} en su WebApp`,
+        text: props.msgShared,
         url: window.location.href
     }
     shareContent(data);
