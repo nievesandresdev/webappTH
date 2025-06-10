@@ -117,7 +117,7 @@ watch(() => stayStore.stayData, async (newStayData) => {
 
 const hotelStore = useHotelStore()
 
-// Usar watchEffect para manejar la actualización del título
+/* // Usar watchEffect para manejar la actualización del título
 watchEffect(() => {
   // Usar hotelDataStorage que viene del localStorage
   const hotelName = hotelStore.hotelDataStorage?.name
@@ -150,7 +150,7 @@ watch(
     }
   },
   { immediate: true }
-)
+) */
 
 </script>
 
