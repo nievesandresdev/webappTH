@@ -22,13 +22,19 @@ const homeRoutes = [
             path: '',
             name: 'ShowHotel',
             component: ShowHotel,
-            meta: { index: 1 },
+            meta: { 
+              index: 1,
+              title: 'Detalles del Alojamiento | Huesped Hoster'
+            },
           },
           {
             path: 'instalaciones',
             name: 'FacilityList',
             component: ListFacility,
-            meta: { index: 2 },
+            meta: { 
+              index: 2,
+              title: 'Instalaciones | Huesped Hoster'
+            },
           },
         ]
       }

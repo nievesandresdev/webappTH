@@ -5,11 +5,17 @@ const homeRoutes = [
   {
     path: '',
     component: AppLayout,
+    meta: {
+      verifyHotel: true,
+    },
     children: [
       {
         name: 'Home',
         path: '',
         component: HomePage,
+        meta: {
+          title: 'Inicio | Huesped Hoster'
+        },
         props: (route) => ({ acform: route.query.acform })
       },
     ],

@@ -30,11 +30,7 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { usePreloaderStore } from '@/stores/modules/preloader';
 const preloaderStore = usePreloaderStore();
-
-
-
-
-
+import { useHotelStore } from '@/stores/modules/hotel'
 
 onMounted(()=>{
   // console.log('test hola')
@@ -119,6 +115,31 @@ watch(() => stayStore.stayData, async (newStayData) => {
     }
 }, { immediate: true });
 
+const hotelStore = useHotelStore()
+
+// Watcher para actualizar el título cuando cambie el nombre del hotel
+watch(
+  () => hotelStore.hotelData,
+  (newHotelData) => {
+    console.log('Hotel Data Changed:', newHotelData)
+    if (route.name === 'Home' && newHotelData?.name) {
+      document.title = `${newHotelData.name} | Inicio`
+    }
+  },
+  { immediate: true, deep: true }
+)
+
+// También observamos los cambios de ruta
+watch(
+  () => route.name,
+  (newRouteName) => {
+    console.log('Route Changed:', newRouteName)
+    if (newRouteName === 'Home' && hotelStore.hotelData?.name) {
+      document.title = `${hotelStore.hotelData.name} | Inicio`
+    }
+  },
+  { immediate: true }
+)
 
 </script>
 

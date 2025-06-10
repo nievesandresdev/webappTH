@@ -7,16 +7,14 @@ import serviceRoutes from './serviceRoutes'
 import placeRoutes from './placeRoutes'
 import chatRoutes from './chatRoutes'
 import facilityRoutes from './facilityRoutes'
- import hotelRoutes from './hotelRoutes'
+import hotelRoutes from './hotelRoutes'
 import queryRoutes from './queryRoutes'
 import policiesRoutes from './policiesRoutes'
-
 
 import middlewarePipeline from '@/middlewares'
 import isDesktop from '@/middlewares/isDesktop'
 import isMobile from '@/middlewares/isMobile'
 import handleWebAppData from '@/middlewares/handleWebAppData';
-
 
 import utils from '@/utils/utils.js'
 
@@ -33,7 +31,6 @@ const TestView1 = () => import('@/Modules/TestView1.vue');
 const TestView2 = () => import('@/Modules/TestView2.vue');
 const TestView3 = () => import('@/Modules/TestView3.vue');
 const TestViewMain = () => import('@/Modules/TestCarousel.vue');
-
 
 import GeneralRoutes from './chainRoutes';  // Asegúrate de que esta importación es correcta
 
@@ -139,7 +136,24 @@ router.beforeEach((to, from, next) => {
       ...context,
       next: middlewarePipeline(context, middleware, 1)
   });
-});
+})
 
+// Navegación global para manejar títulos dinámicos
+router.beforeEach((to, from, next) => {
+  // Obtener el título de la meta información
+  let title
+  if (to.meta.getDynamicTitle) {
+    // Si hay una función para título dinámico, usarla
+    title = to.meta.getDynamicTitle()
+  } else {
+    // Si no, usar el título estático o el título por defecto
+    title = to.meta.title || 'Huesped Hoster'
+  }
+
+  // Establecer el título del documento
+  document.title = title
+
+  next()
+})
 
 export default router;
