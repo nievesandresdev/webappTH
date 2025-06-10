@@ -84,8 +84,17 @@
     import { useFacilityStore } from '@/stores/modules/facility.js';
     import { useHotelStore } from '@/stores/modules/hotel';
     import { useI18n } from 'vue-i18n';
+    import { useHead } from '@vueuse/head';
 
     const { t: $t } = useI18n();
+
+    //useHead
+    useHead({
+        title: 'Instalaciones',
+        meta: [
+            { name: 'description', content: 'Instalaciones' }
+        ]
+    });
 
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";

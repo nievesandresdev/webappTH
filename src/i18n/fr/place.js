@@ -10,6 +10,9 @@ export default {
         "text-search-not-found": "Affinez votre recherche ou essayez une autre catégorie",
         "btn-load-more": "Charger plus"
     },
+    "share": {
+        "message": "Inscrivez-vous à notre séjour et découvrez ce lieu dans notre catalogue {type} via son lien WebApp"
+    },
     "results":'Sans résultats...',
     "seaching":'Rechercher une destination',
     "categorySearch":'rencontrés',

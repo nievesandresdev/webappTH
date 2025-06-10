@@ -10,6 +10,9 @@ export default {
       "text-search-not-found": "Ajusta la teva cerca o prova amb una altra categoria",
       "btn-load-more": "Carregar més"
     },
+    "share": {
+        "message": "Regístrate en nuestra estancia i fes un cop d'ull a aquest lloc en el catàleg de llocs del nostre {type} a través del seu enllaç WebApp"
+    },
     "results": "Sense resultats...",
     "seaching": "Cercant...",
     "categorySearch": "trobats",

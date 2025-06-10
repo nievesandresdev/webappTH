@@ -71,7 +71,7 @@
                 class="text-[9px] sp:text-sm font-medium"
                 style="font-family: 'Lato', sans-serif !important; font-style: italic;"
             >
-                {{ `“${placeData?.recomendation_language_current}”` }}
+                {{ `"${placeData?.recomendation_language_current}"` }}
             </p>
         </div>
         <div class="mt-[12px] sp:mt-[24px]">
@@ -225,8 +225,9 @@ import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
 import LoadPage from '@/shared/LoadPage.vue';
-
+import { useHead } from '@vueuse/head';
 import $utils from '@/utils/utils';
+
 
 import { usePlaceStore } from '@/stores/modules/place';
 
@@ -241,7 +242,7 @@ const hotelStore = useHotelStore();
 const placeStore = usePlaceStore();
 
 const msgShared = computed(() => {
-    return `Regístrate en nuestra estancia y echa un vistazo a este sitio en el catálogo de lugares de nuestro ${hotelData.value.type} a través de su WebApp enlace al elemento`
+    return t('place.share.message', { type: hotelData.value.type });
 });
 
 const props = defineProps({
@@ -261,6 +262,14 @@ const loading = ref(true);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
+
+//useHead
+useHead({
+    title: 'Destinos',
+    meta: [
+        { name: 'description', content: 'Destinos' }
+    ]
+});
 
 onMounted(async () => {
 

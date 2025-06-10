@@ -38,5 +38,8 @@ export default {
     "text-search-found": "Servizos atopados en actividades",
     "list-page": {},
     "detail-page": {}
+  },
+  "share": {
+    "message": "Regístrate en nuestra estancia y echa un vistazo a este servicio de nuestro {type} a través de su enlace WebApp"
   }
 }
