@@ -15,6 +15,10 @@ export default {
                 "Sábado": "Samedi",
                 "Domingo": "Dimanche"
             }
+        },
+        "share": {
+            "message": "Inscrivez-vous à notre séjour et découvrez cette installation de notre {type} via son lien WebApp"
         }
-    }
+    },
+    
 }

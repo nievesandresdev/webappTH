@@ -78,11 +78,14 @@
 </template>
 
 <script setup>
-    import { onMounted, defineProps, ref,computed, nextTick } from 'vue';
+    import { onMounted, defineProps, ref, computed, nextTick } from 'vue';
     import ImageSlider from '@/components/ImageSlider.vue';
     import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
     import { useFacilityStore } from '@/stores/modules/facility.js';
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useI18n } from 'vue-i18n';
+
+    const { t: $t } = useI18n();
 
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";
@@ -97,7 +100,7 @@
     const hotelData = computed(() => hotelStore.hotelData);
 
     const msgShared = computed(() => {
-        return `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${hotelData.value.type} en su WebApp`
+        return $t('facility.detailPage.share.message', { type: hotelData.value.type });
     });
 
     const facilityStore = useFacilityStore();
