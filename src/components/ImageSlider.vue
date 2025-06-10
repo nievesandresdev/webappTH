@@ -8,6 +8,14 @@
       <img src="/assets/icons/WA.chevron.svg" alt="Back Icon" />
     </button>
 
+    <button
+      v-show="showButtonShared"
+      class="inline-flex items-center gap-2 p-1 w-[25px] h-[25px] sp:w-auto sp:h-auto absolute top-2 right-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer ease-in-out"
+      @click="isModalShareOpen"
+    >
+      <img src="/assets/icons/arrow-up-from-bracket.svg" alt="Share Icon" />
+    </button>
+
     <img
       v-for="(image, index) in imagesComplete"
       :key="image.id"
@@ -35,6 +43,8 @@
 <script setup>
 import { ref, defineProps, computed } from 'vue'
 import router from '@/router';
+import { useShare } from "@/composables/useShare";
+const { shareContent } = useShare();
 const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
 const props = defineProps({
   images: {
@@ -50,6 +60,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  showButtonShared: {
+    type: Boolean,
+    default: false
+  },
   imgDefault: {
     type: String,
     default: '/storage/gallery/general-1.jpg'
@@ -57,6 +71,14 @@ const props = defineProps({
   from: {
     type: String,
     default: null
+  },
+  nameShared: {
+    type: String,
+    default: null
+  },
+  facilityType: {
+    type: String,
+    default: 'hotel'
   }
 })
 
@@ -174,6 +196,15 @@ function goBack() {
     window.location.href = '/ruta-especifica'; // Cambia '/ruta-especifica' por la URL deseada
   } */
 }
+
+function isModalShareOpen () {
+    let data = {
+        title: props.nameShared,
+        text: `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${props.facilityType} en su WebApp`,
+        url: window.location.href
+    }
+    shareContent(data);
+};
 
 
 </script>

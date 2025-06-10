@@ -5,7 +5,15 @@
         <PageTransitionGlobal module="facility" name="facility_detail" component-name="SkeletomDetail">
 
             <div class="bg-[#FAFAFA] mb-[48px]">
-                <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" :imgDefault="hotelData?.image"  showButtonBack :from="'facility'" />
+                <ImageSlider 
+                    :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" 
+                    :imgDefault="hotelData?.image"  
+                    showButtonBack 
+                    :from="'facility'" 
+                    showButtonShared 
+                    :nameShared="facility.title"
+                    :facilityType="hotelData.type" 
+                />
                     <!-- v-if="facility.ad_tag" -->
                 <div
                     v-if="facility.ad_tag"

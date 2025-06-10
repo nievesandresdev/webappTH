@@ -13,9 +13,6 @@ const homeRoutes = [
         name: 'Home',
         path: '',
         component: HomePage,
-        meta: {
-          title: 'Inicio | Huesped Hoster'
-        },
         props: (route) => ({ acform: route.query.acform })
       },
     ],

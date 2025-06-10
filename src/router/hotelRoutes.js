@@ -24,7 +24,6 @@ const homeRoutes = [
             component: ShowHotel,
             meta: { 
               index: 1,
-              title: 'Detalles del Alojamiento | Huesped Hoster'
             },
           },
           {
@@ -33,7 +32,6 @@ const homeRoutes = [
             component: ListFacility,
             meta: { 
               index: 2,
-              title: 'Instalaciones | Huesped Hoster'
             },
           },
         ]
