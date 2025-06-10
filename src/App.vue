@@ -4,6 +4,7 @@
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
     <!-- Resto de la aplicación -->
     <router-view />
+    <MetaTags />
   </div>
 </template>
 
@@ -31,6 +32,7 @@ const guestStore = useGuestStore();
 import { usePreloaderStore } from '@/stores/modules/preloader';
 const preloaderStore = usePreloaderStore();
 import { useHotelStore } from '@/stores/modules/hotel'
+import MetaTags from '@/components/MetaTags.vue'
 
 onMounted(()=>{
   // console.log('test hola')

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +11,16 @@
     <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <title><%= htmlWebpackPlugin.options.title %></title>
-
-    <!--<meta property="og:title" content="Título predeterminado" />
-    <meta property="og:description" content="Descripción predeterminada" />
-    <meta property="og:url" content="URL predeterminada" />
-    <meta property="og:image" content="https://thehosterappbucket.s3.eu-south-2.amazonaws.com/test/storage/gallery/1731931248-3107459-Vector.svg" />-->
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Huesped Hoster">
+    <meta property="og:description" content="Bienvenido a Huesped Hoster">
+    <meta property="og:image" content="<%= BASE_URL %>og-image.jpg">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Huesped Hoster">
+    <meta name="twitter:description" content="Bienvenido a Huesped Hoster">
+    <meta name="twitter:image" content="<%= BASE_URL %>og-image.jpg">
 </head>
 <body>
     <noscript>
