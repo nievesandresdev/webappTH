@@ -16,12 +16,14 @@ const route = useRoute()
 
 async function updateMetaTags() {
   try {
+    console.log('Actualizando meta tags...')
     const params = {
       path: route.path,
       url: window.location.href
     }
     
     const response = await getMetaTagsApi(params)
+    console.log('Meta tags response:', response)
     
     if (response.ok && response.data) {
       const metaData = response.data
@@ -48,18 +50,41 @@ async function updateMetaTags() {
 }
 
 function updateMetaTag(property, content) {
+  if (!content) return
+
   let meta = document.querySelector(`meta[property="${property}"]`)
   if (!meta) {
     meta = document.querySelector(`meta[name="${property}"]`)
   }
-  if (meta) {
-    meta.setAttribute('content', content)
+  
+  // Si no existe el meta tag, lo creamos
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.setAttribute(property.includes('og:') ? 'property' : 'name', property)
+    document.head.appendChild(meta)
   }
+  
+  meta.setAttribute('content', content)
+  console.log(`Meta tag actualizado: ${property} = ${content}`)
 }
 
 // Actualizar meta tags cuando cambie la ruta
-watch(() => route.path, updateMetaTags)
+watch(() => route.path, () => {
+  console.log('Ruta cambió:', route.path)
+  updateMetaTags()
+})
+
+// Actualizar meta tags cuando los datos del hotel estén disponibles
+watch(() => hotelStore.hotelDataStorage, (newValue) => {
+  console.log('Datos del hotel actualizados:', newValue)
+  if (newValue) {
+    updateMetaTags()
+  }
+}, { deep: true })
 
 // Actualizar meta tags al montar el componente
-onMounted(updateMetaTags)
+onMounted(() => {
+  console.log('Componente montado')
+  updateMetaTags()
+})
 </script> 
