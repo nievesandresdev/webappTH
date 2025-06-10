@@ -13,6 +13,7 @@
                     showButtonShared 
                     :nameShared="facility.title"
                     :typeShared="hotelData.type" 
+                    :msgShared="msgShared"
                 />
                     <!-- v-if="facility.ad_tag" -->
                 <div
@@ -94,6 +95,10 @@
     const hotelStore = useHotelStore();
 
     const hotelData = computed(() => hotelStore.hotelData);
+
+    const msgShared = computed(() => {
+        return `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${hotelData.value.type} en su WebApp`
+    });
 
     const facilityStore = useFacilityStore();
 

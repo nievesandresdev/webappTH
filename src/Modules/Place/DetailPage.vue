@@ -9,6 +9,7 @@
       :from="'places'"
       :nameShared="placeData?.title"
       :typeShared="hotelData.type"
+      :msgShared="msgShared"
       show-button-shared
     />
     <div class="sp:py-[24px] py-[10px] no-scrollbar" :class="{
@@ -238,6 +239,10 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
 const placeStore = usePlaceStore();
+
+const msgShared = computed(() => {
+    return `Regístrate en nuestra estancia y echa un vistazo a este sitio en el catálogo de lugares de nuestro ${hotelData.value.type} a través de su WebApp enlace al elemento`
+});
 
 const props = defineProps({
   paramsRouter: {
