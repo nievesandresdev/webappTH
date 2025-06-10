@@ -124,8 +124,6 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
-import { useHead } from '@vueuse/head'
-
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
@@ -167,24 +165,6 @@ const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 
 startLoading(SECTIONS.HOME.GLOBAL);
-
-useHead({
-    title: 'The Hoster',
-    meta: [
-        { name: 'description', content: 'The Hoster' },
-        { name: 'og:title', content: 'The Hoster' },
-        { name: 'og:description', content: 'The Hoster' },
-        { name: 'og:image', content: 'https://thehosterappbucket.s3.eu-south-2.amazonaws.com/test/storage/gallery/1731931248-3107459-Vector.svg' },
-        { name: 'og:url', content: 'https://thehoster.app' },
-        { name: 'og:site_name', content: 'The Hoster' },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'The Hoster' },
-        { name: 'twitter:description', content: 'The Hoster' },
-        { name: 'twitter:image', content: 'https://thehosterappbucket.s3.eu-south-2.amazonaws.com/test/storage/gallery/1731931248-3107459-Vector.svg' },
-        { name: 'twitter:url', content: 'https://thehoster.app' },
-        { name: 'twitter:site_name', content: 'The Hoster' },
-    ]
-})
 
 onMounted(async () => {
     // loadCrossellings();

@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router';
 import Toast from "vue-toastification";
 import 'vue-toastification/dist/index.css';
-import { createHead } from '@vueuse/head'
 
 
 
@@ -25,7 +24,6 @@ import * as utils from './utils/utils.js'
 import { $formatTypeLodging } from './utils/helpers'
 // import { useHotelStore } from '@/stores/modules/hotel'
 
-const head = createHead()
 
 function initializeApp () {
     moment.locale('es')
@@ -37,7 +35,6 @@ function initializeApp () {
     app.use(pinia)
     app.use(i18n)
     app.use(router)
-    app.use(head)
     app.config.globalProperties.$utils = utils
     app.config.globalProperties.$moment = moment
     app.config.globalProperties.$formatTypeLodging = $formatTypeLodging

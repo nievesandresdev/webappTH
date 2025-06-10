@@ -219,7 +219,7 @@
         import MenuHome from '@/layout/Components/MenuHome.vue'
         import InviteModal from './Components/InviteModal.vue'
         import StayDataModal from './Components/StayDataModal.vue';
-        import { useHead } from '@vueuse/head'
+
 
         // STORE
         import { useMainStore } from '@/stores'
