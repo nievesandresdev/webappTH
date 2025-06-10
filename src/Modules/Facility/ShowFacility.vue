@@ -12,7 +12,7 @@
                     :from="'facility'" 
                     showButtonShared 
                     :nameShared="facility.title"
-                    :facilityType="hotelData.type" 
+                    :typeShared="hotelData.type" 
                 />
                     <!-- v-if="facility.ad_tag" -->
                 <div

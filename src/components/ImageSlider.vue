@@ -76,7 +76,7 @@ const props = defineProps({
     type: String,
     default: null
   },
-  facilityType: {
+  typeShared: {
     type: String,
     default: 'hotel'
   }
@@ -200,7 +200,7 @@ function goBack() {
 function isModalShareOpen () {
     let data = {
         title: props.nameShared,
-        text: `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${props.facilityType} en su WebApp`,
+        text: `Regístrate en nuestra estancia y echa un vistazo a esta instalación de nuestro ${props.typeShared} en su WebApp`,
         url: window.location.href
     }
     shareContent(data);

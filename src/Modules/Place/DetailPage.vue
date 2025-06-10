@@ -7,6 +7,9 @@
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
       :from="'places'"
+      :nameShared="placeData?.title"
+      :typeShared="hotelData.type"
+      show-button-shared
     />
     <div class="sp:py-[24px] py-[10px] no-scrollbar" :class="{
         'pb-[50px] sp:pb-[80px]' : placeData?.web_link || placeData?.phone_wheretoeat || placeData?.url_menu || placeData?.email_wheretoeat,
