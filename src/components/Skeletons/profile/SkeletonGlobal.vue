@@ -1,12 +1,12 @@
 <template>
     <div class="animate-pulse">
         <!-- Section Bar Skeleton -->
-        <div class="w-full sp:h-[76px] top-0 left-0 px-2 sp:px-4 py-3.5 sp:py-6 z-[2000] flex items-center justify-between bg-head bg-gradient-100 fixed">
+       <!--  <div class="w-full sp:h-[76px] top-0 left-0 px-2 sp:px-4 py-3.5 sp:py-6 z-[2000] flex items-center justify-between bg-head bg-gradient-100 fixed">
             <div class="flex items-center justify-center">
                 <div class="sp:w-6 sp:h-6 w-4 h-4 sp:mr-2 mr-1 bg-border-secondary rounded-full"></div>
                 <div class="h-5 w-[100px] bg-border-secondary rounded-[6px]"></div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Contenido del perfil -->
         <div class="px-2 sp:px-4 sp:my-[100px] my-[50px]">

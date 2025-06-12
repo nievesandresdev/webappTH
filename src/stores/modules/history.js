@@ -5,6 +5,8 @@ export const useHistoryStore = defineStore('history', () => {
   // STATE
   const storedHistory = localStorage.getItem('history')
   const history = ref(storedHistory ? JSON.parse(storedHistory) : [])
+  const isBack = ref(false);
+
   const excludedRoutes = ref([// nombres de ruta para no guardar en historial
     'ChainLanding', 
     'SelectLanguage',
@@ -67,7 +69,7 @@ export const useHistoryStore = defineStore('history', () => {
   }
 
   function $goBack(router) {
-    
+    isBack.value = true;
     const currentRouteName = router.currentRoute.value.name
     // console.log('test ',history.value.length)
     // Recupera la anterior
@@ -127,6 +129,7 @@ export const useHistoryStore = defineStore('history', () => {
     $loadHistory,
     $addRoute,
     $goBack,
+    isBack,
     $clearHistory,
     $saveExclusiveRoute,
     $deleteExclusiveRoute,
