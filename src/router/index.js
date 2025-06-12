@@ -26,6 +26,7 @@ const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/Test
 const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
 const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
+const TransitionLayout = () => import(/* webpackChunkName: "layout" */ '@/layouts/TransitionLayout.vue')
 const DisabledEmail = () => import('@/Modules/Email/DisabledEmail.vue');
 const TestView1 = () => import('@/Modules/TestView1.vue');
 const TestView2 = () => import('@/Modules/TestView2.vue');
@@ -83,6 +84,7 @@ const routes = [
   
   {
     path: '/:hotelSlug',
+    component: TransitionLayout,
     beforeEnter: [
       checkHotelSubdomain,
         //middleware para enviar a la pantalla compartir en caso de esta en pc
@@ -90,7 +92,6 @@ const routes = [
         //en middleware principal se maneja para chainlanding
       isMobile
     ],
-    // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       {
