@@ -8,17 +8,17 @@
         <component :is="Component" :key="$route.fullPath" />
       </transition>
     </router-view> -->
-    <RouterView v-slot="{ Component, route }">
-      <!-- <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">
+   <!--  <RouterView v-slot="{ Component, route }">
+      <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">
         <component :is="Component" :key="route.fullPath" />
-      </Transition> -->
+      </Transition>
       <component :is="Component" :key="route.fullPath" />
-    </RouterView>
+    </RouterView> -->
 
 
 
 
-    <!-- <router-view /> -->
+    <router-view />
   </div>
 </template>
 
