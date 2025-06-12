@@ -31,6 +31,9 @@ export const SECTIONS = {
     },
     MYPROFILE: {
       GLOBAL: "myprofile_global",
+    },
+    PROFILE: {
+      GLOBAL: "profile_global",
     },  
   };
   

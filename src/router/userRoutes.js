@@ -56,28 +56,16 @@ const profileRoutes = [
         path: 'mis-estancias',
         component: MyStays
       },
-      // {
-      //   name: 'PersonalInfo',
-      //   path: 'informacion-personal',
-      //   component: PersonalInfo
-      // },
       {
         name: 'SelectLanguage',
         path: 'seleccionar-idioma',
         component: SelectLanguage
       },
-      //reservation
       {
         name: 'ReservationStay',
         path: 'reservar-estancia',
         component : ReservationStay
       },
-      // {
-      //   name: 'EditStay',
-      //   path: 'editar-estancia/:stayId',
-      //   component: EditStay,
-      //   props: (route) => ({ paramsRouter: {...route.params} })
-      // },
       {
         name: 'LogoutUser',
         path: 'logout',

@@ -59,22 +59,33 @@ const routes = [
     path: '/compartir',
     name: 'ScreenNotAllowed',
     component: ScreenNotAllowed,
-    // beforeEnter: [isDesktop]
+    meta: {
+      transition: 'fade'
+    }
   },
   {
     path: '/test',
     name: 'Test',
-    component: GoogleButton
+    component: GoogleButton,
+    meta: {
+      transition: 'fade'
+    }
   },
   {
     path: '/testFacebook',
     name: 'TestFacebook',
-    component: TestFacebook
+    component: TestFacebook,
+    meta: {
+      transition: 'fade'
+    }
   },
   {
     name: 'ResetPassword',
     path: '/restablecer-contrasena',
-    component: ResetPassword
+    component: ResetPassword,
+    meta: {
+      transition: 'fade'
+    }
   },
   ...policiesRoutes,
   //
@@ -90,13 +101,18 @@ const routes = [
         //en middleware principal se maneja para chainlanding
       isMobile
     ],
-    // component: AppLayout,
+    meta: {
+      transition: 'fade'
+    },
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       {
         path: 'no-notificacion',
         name: 'DisabledEmail',
-        component: DisabledEmail
+        component: DisabledEmail,
+        meta: {
+          transition: 'fade'
+        }
       },
       ...placeRoutes,
       ...profileRoutes,
@@ -112,7 +128,14 @@ const routes = [
 
 
   // Captura para cualquier URL no reconocida (debe ir al final)
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage },
+  { 
+    path: '/:pathMatch(.*)*', 
+    name: 'NotFound', 
+    component: NotFoundPage,
+    meta: {
+      transition: 'fade'
+    }
+  },
 ];
 
 

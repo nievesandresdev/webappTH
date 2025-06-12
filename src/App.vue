@@ -1,9 +1,24 @@
 <template>
-  <div id="app">
+  <div>
     <!-- Preloader -->
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
-    <!-- Resto de la aplicación transition -->
-    <router-view />
+    <!-- Resto de la aplicación -->
+    <!-- <router-view v-slot="{ Component, route }">
+      <transition :name="route.meta.transition || 'fade'" mode="out-in">
+        <component :is="Component" :key="$route.fullPath" />
+      </transition>
+    </router-view> -->
+    <RouterView v-slot="{ Component, route }">
+      <!-- <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">
+        <component :is="Component" :key="route.fullPath" />
+      </Transition> -->
+      <component :is="Component" :key="route.fullPath" />
+    </RouterView>
+
+
+
+
+    <!-- <router-view /> -->
   </div>
 </template>
 
@@ -115,6 +130,22 @@ watch(() => stayStore.stayData, async (newStayData) => {
 
 const hotelStore = useHotelStore()
 
+// Transition handlers
+const beforeLeave = (el) => {
+  el.style.position = 'absolute';
+  el.style.width = '100%';
+};
+
+const enter = (el) => {
+  el.style.position = 'absolute';
+  el.style.width = '100%';
+};
+
+const afterEnter = (el) => {
+  el.style.position = '';
+  el.style.width = '';
+};
+
 /* // Usar watchEffect para manejar la actualización del título
 watchEffect(() => {
   // Usar hotelDataStorage que viene del localStorage
@@ -151,5 +182,34 @@ watch(
 ) */
 
 </script>
+
+<style>
+/* Transición slide */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* Transición fade por defecto */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
 
 

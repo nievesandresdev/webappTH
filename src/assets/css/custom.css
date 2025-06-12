@@ -287,7 +287,7 @@ body{
   background-color: #fafafa;
 }
 
-.slide-enter-active,
+/* .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.3s ease;
 }
@@ -308,4 +308,5 @@ body{
 .zoom-enter-from,
 .zoom-leave-to {
   transform: scale(0.9);
-}
+} */
+

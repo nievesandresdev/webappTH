@@ -1,7 +1,15 @@
 <template>
   <div class="page-transition-wrapper">
-    <Transition 
-      name="page" 
+    <!-- Transición del Skeleton -->
+    <Transition name="skeleton" mode="out-in">
+      <div v-if="loading !== null && loading" key="skeleton" class="skeleton-wrapper">
+        <component :is="getSkeletonComponent()" />
+      </div>
+    </Transition>
+
+    <!-- Contenido real, con clases personalizadas -->
+    <Transition
+      name="page"
       mode="out-in"
       @before-enter="beforeEnter"
       @enter="enter"
@@ -10,10 +18,12 @@
       @leave="leave"
       @after-leave="afterLeave"
     >
-      <div v-if="loading !== null && loading" class="skeleton-wrapper">
-        <component :is="getSkeletonComponent()" />
-      </div>
-      <div v-else class="content" :class="{ 'content-enter': isEntering, 'content-leave': isLeaving }">
+      <div
+        v-if="!loading"
+        key="content"
+        class="content"
+        :class="{ 'content-enter': isEntering, 'content-leave': isLeaving }"
+      >
         <slot></slot>
       </div>
     </Transition>
@@ -25,14 +35,8 @@ import { computed, defineAsyncComponent, ref } from "vue";
 import { useLoadingSections } from "@/composables/useLoadingSections";
 
 const props = defineProps({
-  name: {
-    type: String,
-    default: null,
-  },
-  module: {
-    type: String,
-    default: null,
-  },
+  name: String,
+  module: String,
   componentName: {
     type: String,
     default: 'SkeletonGlobal',
@@ -45,35 +49,16 @@ const loading = computed(() => isLoading(`${props.name ?? props.module}_global`)
 const isEntering = ref(false);
 const isLeaving = ref(false);
 
-// Carga el skeleton general de la página
-const getSkeletonComponent = () => {
-  return defineAsyncComponent(() => import(`@/components/Skeletons/${props.module}/${props.componentName}.vue`));
-};
+const getSkeletonComponent = () =>
+  defineAsyncComponent(() => import(`@/components/Skeletons/${props.module}/${props.componentName}.vue`));
 
-// Hooks de transición
-const beforeEnter = () => {
-  isEntering.value = true;
-};
-
-const enter = () => {
-  // Se puede agregar lógica adicional durante la entrada
-};
-
-const afterEnter = () => {
-  isEntering.value = false;
-};
-
-const beforeLeave = () => {
-  isLeaving.value = true;
-};
-
-const leave = () => {
-  // Se puede agregar lógica adicional durante la salida
-};
-
-const afterLeave = () => {
-  isLeaving.value = false;
-};
+// Hooks de transición del contenido
+const beforeEnter = () => (isEntering.value = true);
+const enter = () => {};
+const afterEnter = () => (isEntering.value = false);
+const beforeLeave = () => (isLeaving.value = true);
+const leave = () => {};
+const afterLeave = () => (isLeaving.value = false);
 </script>
 
 <style scoped>
@@ -83,6 +68,35 @@ const afterLeave = () => {
   width: 100%;
 }
 
+/* TRANSICIÓN DEL SKELETON */
+.skeleton-enter-active {
+  animation: skeletonSlideIn 0.4s ease-out forwards;
+}
+.skeleton-leave-active {
+  animation: skeletonFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes skeletonSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes skeletonFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* TRANSICIÓN DEL CONTENIDO REAL */
 .page-enter-active,
 .page-leave-active {
   transition: all 0.5s ease-out;
@@ -90,12 +104,12 @@ const afterLeave = () => {
 
 .page-enter-from {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateX(100%);
 }
 
 .page-leave-to {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateX(-100%);
 }
 
 .content {
@@ -103,32 +117,32 @@ const afterLeave = () => {
 }
 
 .content-enter {
-  animation: slideInUp 0.5s ease-out;
+  animation: slideInRight 0.5s ease-out;
 }
 
 .content-leave {
-  animation: slideOutDown 0.5s ease-out;
+  animation: slideOutLeft 0.5s ease-out;
 }
 
-@keyframes slideInUp {
+@keyframes slideInRight {
   from {
-    transform: translateY(30px);
+    transform: translateX(100%);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
-@keyframes slideOutDown {
+@keyframes slideOutLeft {
   from {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
   to {
-    transform: translateY(-30px);
+    transform: translateX(-100%);
     opacity: 0;
   }
 }
-</style> 
+</style>
