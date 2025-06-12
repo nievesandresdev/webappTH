@@ -102,12 +102,12 @@ const getSubdomain = () => {
   return null
 }
 
-watch(() => route.path, () => {
+/* watch(() => route.path, () => {
   const subdomain = getSubdomain()
   if (subdomain) {
     setMetadata(subdomain)
   }
-}, { immediate: true })
+}, { immediate: true }) */
 
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
