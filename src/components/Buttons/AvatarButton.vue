@@ -61,9 +61,18 @@ const props = defineProps({
     }
 })
 
-const goProfile = () =>{
+const goProfile = async () => {
     if(stayStore.stayData && guestStore.guestData){
-        router.push({ name : 'Profile'})   
+        try {
+            await router.push({ 
+                name: 'Profile',
+                params: {
+                    hotelSlug: route.params.hotelSlug
+                }
+            });
+        } catch (error) {
+            console.error('Navigation error:', error);
+        }
     }
 }
 

@@ -26,7 +26,6 @@ const TestFacebook = () => import(/* webpackChunkName: "home" */ '@/Modules/Test
 const ResetPassword = () => import(/* webpackChunkName: "home" */ '@/Modules/Auth/ResetPassword.vue')
 const ProfilePageMockup = () => import(/* webpackChunkName: "home" */ '@/Modules/User/ProfilePageMockup.vue')
 const AppLayout = () => import(/* webpackChunkName: "home" */ '@/layout/AppLayout')
-const TransitionLayout = () => import(/* webpackChunkName: "layout" */ '@/layouts/TransitionLayout.vue')
 const DisabledEmail = () => import('@/Modules/Email/DisabledEmail.vue');
 const TestView1 = () => import('@/Modules/TestView1.vue');
 const TestView2 = () => import('@/Modules/TestView2.vue');
@@ -84,7 +83,6 @@ const routes = [
   
   {
     path: '/:hotelSlug',
-    component: TransitionLayout,
     beforeEnter: [
       checkHotelSubdomain,
         //middleware para enviar a la pantalla compartir en caso de esta en pc
@@ -92,6 +90,7 @@ const routes = [
         //en middleware principal se maneja para chainlanding
       isMobile
     ],
+    // component: AppLayout,
     children: [
       // aquí van todas las rutas que dependen del slug del hotel
       {
@@ -122,20 +121,28 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    // Siempre desplazar a la parte superior cuando cambien las rutas
-    return { top: 0 };
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { top: 0, behavior: 'smooth' };
   }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  // Si la ruta requiere el slug del hotel y no está presente, redirigir
+  if (to.params.hotelSlug === undefined && to.matched.some(record => record.path.includes(':hotelSlug'))) {
+    next({ name: 'ChainLanding' });
+    return;
+  }
+
   /* if (to.name === 'ProfileMockup' || to.path.includes('/profile-mockup')) {
     return next();
   } */
   const middleware = to.meta.middleware ? [...to.meta.middleware, handleWebAppData] : [handleWebAppData];
   const context = { to, from, next };
   return middleware[0]({
-      ...context,
-      next: middlewarePipeline(context, middleware, 1)
+    ...context,
+    next: middlewarePipeline(context, middleware, 1)
   });
 })
 

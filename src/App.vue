@@ -2,7 +2,7 @@
   <div id="app">
     <!-- Preloader -->
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
-    <!-- Resto de la aplicación -->
+    <!-- Resto de la aplicación transition -->
     <router-view />
   </div>
 </template>
@@ -15,13 +15,11 @@ defineComponent({ name: 'App' });
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
 import { computed, onMounted, watch, ref, watchEffect } from 'vue';
-import useHotelMetadata from '@/composables/useHotelMetadata'
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
 //
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
-const { setMetadata } = useHotelMetadata()
 
 //stores
 import { useStayStore } from '@/stores/modules/stay';
