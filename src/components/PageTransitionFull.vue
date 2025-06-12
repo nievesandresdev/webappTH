@@ -129,4 +129,5 @@ const afterLeave = () => (isLeaving.value = false);
 .content-leave {
   /* opcional si usas animaciones personalizadas aquí */
 }
+
 </style>

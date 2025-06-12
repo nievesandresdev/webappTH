@@ -1,8 +1,9 @@
 <template>
 <!--     <div> -->
         
-    <SectionBar :title="$t('profile.account')" />
+    
     <PageTransitionFull module="profile">
+        <SectionBar :title="$t('profile.account')" />
         <div class="px-2 sp:px-4 sp:my-[100px] my-[50px]">
             <div class="flex flex-col items-center mt-6">
                 <!-- <div class="flex justify-center items-center border border-black rounded-full overflow-hidden"
