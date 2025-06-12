@@ -1,13 +1,13 @@
 <template>
   <div class="page-transition-wrapper">
-    <!-- Transición del Skeleton -->
+    <!-- Skeleton con slide-in y fade-out -->
     <Transition name="skeleton" mode="out-in">
       <div v-if="loading !== null && loading" key="skeleton" class="skeleton-wrapper">
         <component :is="getSkeletonComponent()" />
       </div>
     </Transition>
 
-    <!-- Contenido real, con clases personalizadas -->
+    <!-- Contenido real con fade-in y slide-left al salir -->
     <Transition
       name="page"
       mode="out-in"
@@ -50,9 +50,10 @@ const isEntering = ref(false);
 const isLeaving = ref(false);
 
 const getSkeletonComponent = () =>
-  defineAsyncComponent(() => import(`@/components/Skeletons/${props.module}/${props.componentName}.vue`));
+  defineAsyncComponent(() =>
+    import(`@/components/Skeletons/${props.module}/${props.componentName}.vue`)
+  );
 
-// Hooks de transición del contenido
 const beforeEnter = () => (isEntering.value = true);
 const enter = () => {};
 const afterEnter = () => (isEntering.value = false);
@@ -68,7 +69,7 @@ const afterLeave = () => (isLeaving.value = false);
   width: 100%;
 }
 
-/* TRANSICIÓN DEL SKELETON */
+/* ===== Skeleton animations ===== */
 .skeleton-enter-active {
   animation: skeletonSlideIn 0.4s ease-out forwards;
 }
@@ -96,7 +97,7 @@ const afterLeave = () => (isLeaving.value = false);
   }
 }
 
-/* TRANSICIÓN DEL CONTENIDO REAL */
+/* ===== Content animations ===== */
 .page-enter-active,
 .page-leave-active {
   transition: all 0.5s ease-out;
@@ -104,45 +105,28 @@ const afterLeave = () => (isLeaving.value = false);
 
 .page-enter-from {
   opacity: 0;
-  transform: translateX(100%);
 }
-
+.page-enter-to {
+  opacity: 1;
+}
+.page-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
 .page-leave-to {
-  opacity: 0;
   transform: translateX(-100%);
+  opacity: 0;
 }
 
 .content {
   transition: all 0.5s ease-out;
 }
 
+/* Puedes controlar adicionalmente con clases si quieres */
 .content-enter {
-  animation: slideInRight 0.5s ease-out;
+  /* opcional si usas animaciones personalizadas aquí */
 }
-
 .content-leave {
-  animation: slideOutLeft 0.5s ease-out;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutLeft {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
+  /* opcional si usas animaciones personalizadas aquí */
 }
 </style>
