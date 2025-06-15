@@ -44,7 +44,11 @@ const profileRoutes = [
       {
         name: 'Profile',
         path: 'perfil',
-        component: ProfilePage
+        component: ProfilePage,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
       {
         name: 'ProfileMockup',
@@ -54,12 +58,20 @@ const profileRoutes = [
       {
         name: 'MyStays',
         path: 'mis-estancias',
-        component: MyStays
+        component: MyStays,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
       {
         name: 'SelectLanguage',
         path: 'seleccionar-idioma',
-        component: SelectLanguage
+        component: SelectLanguage,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
       {
         name: 'ReservationStay',

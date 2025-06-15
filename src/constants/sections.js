@@ -34,6 +34,9 @@ export const SECTIONS = {
     },
     PROFILE: {
       GLOBAL: "profile_global",
+    },
+    MYSTAYS: {
+      GLOBAL: "mystays_global",
     },  
   };
   

@@ -1,14 +1,14 @@
 <template>
   <div class="page-transition-wrapper">
     <!-- Skeleton con slide-in y fade-out -->
-    <Transition name="skeleton" mode="out-in">
+  <!--   <Transition name="skeleton" mode="out-in"> -->
       <div v-if="loading !== null && loading" key="skeleton" class="skeleton-wrapper">
         <component :is="getSkeletonComponent()" />
       </div>
-    </Transition>
+    <!-- </Transition> -->
 
     <!-- Contenido real con fade-in y slide-left al salir -->
-    <Transition
+   <!--  <Transition
       name="page"
       mode="out-in"
       @before-enter="beforeEnter"
@@ -17,7 +17,7 @@
       @before-leave="beforeLeave"
       @leave="leave"
       @after-leave="afterLeave"
-    >
+    > -->
       <div
         v-if="!loading"
         key="content"
@@ -26,7 +26,7 @@
       >
         <slot></slot>
       </div>
-    </Transition>
+    <!-- </Transition> -->
   </div>
 </template>
 
@@ -100,7 +100,7 @@ const afterLeave = () => (isLeaving.value = false);
 /* ===== Content animations ===== */
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 .page-enter-from {

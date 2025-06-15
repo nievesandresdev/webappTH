@@ -8,7 +8,6 @@
             </div>
         </div> -->
 
-        <!-- Contenido del perfil -->
         <div class="px-2 sp:px-4 sp:my-[100px] my-[50px]">
             <!-- Avatar y nombre -->
             <div class="flex flex-col items-center mt-6">
@@ -18,44 +17,84 @@
                 <div class="h-5 w-[150px] bg-border-secondary rounded-[6px] mt-2"></div>
             </div>
 
-            <!-- Tarjeta de estancia -->
+
             <div class="sp:mt-6 mt-2">
-                <div class="h-[150px] w-full bg-border-secondary rounded-[10px]"></div>
+                <div class="flex flex-col p-4 gap-2 w-full rounded-[20px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA] relative ">
+                    <!-- Nombre del hotel -->
+                    <div class="h-4 w-full bg-border-secondary rounded-[4px] mb-3"></div>
+                    
+                    <!-- Información de la estancia -->
+                    <div class="flex">
+                        <div class="flex-1">
+                            <!-- Línea mediana 1 -->
+                            <div class="h-4 w-[180px] bg-border-secondary rounded-[4px] mb-2"></div>
+                            
+                            <!-- Línea mediana 2 -->
+                            <div class="h-4 w-[160px] bg-border-secondary rounded-[4px] mb-2"></div>
+                            
+                            <!-- Dos líneas pequeñas -->
+                            <div class="flex space-x-4">
+                                <div class="h-4 w-[80px] bg-border-secondary rounded-[4px]"></div>
+                                <div class="h-4 w-[60px] bg-border-secondary rounded-[4px]"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Círculo derecha -->
+                        <div class="ml-4 mt-auto">
+                            <div class="w-10 h-10 bg-border-secondary rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Sección "Mis estancias" -->
+            <!--"Mis estancias" -->
             <div class="mt-4">
-                <div class="h-[60px] w-full bg-border-secondary rounded-[10px]"></div>
+                <div class="flex items-center p-4 w-full rounded-[10px] border border-color-secondary bg-gradient-to-r from-[#F3F3F3] to-[#FAFAFA]">
+                    <div class="w-4 h-4 bg-border-secondary rounded-full mr-3"></div>
+                    <div class="flex-1">
+                        <div class="h-4 w-[160px] bg-border-secondary rounded-[4px] mb-1"></div>
+                        <div class="h-3 w-[200px] bg-border-secondary rounded-[4px]"></div>
+                    </div>
+                    <div class="w-4 h-4 bg-border-secondary rounded-full"></div>
+                </div>
             </div>
 
             <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
             
             <!-- Secciones de menú -->
-            <div v-for="i in 6" :key="i" class="flex items-center mt-6 gap-2">
-                <div class="w-6 h-6 bg-border-secondary rounded-full"></div>
-                <div class="h-4 w-[200px] bg-border-secondary rounded-[6px] mr-auto"></div>
-                <div class="w-6 h-6 bg-border-secondary rounded-full"></div>
+            <div v-for="i in 5" :key="i" class="flex items-center mt-6 px-2">
+                <div class="w-4 h-4 bg-border-secondary rounded-full mr-3"></div>
+                <div class="flex-1">
+                    <div class="h-4 w-[180px] bg-border-secondary rounded-[4px] mb-1"></div>
+                    <div class="h-3 w-[220px] bg-border-secondary rounded-[4px]"></div>
+                </div>
+                <div class="w-4 h-4 bg-border-secondary rounded-full"></div>
             </div>
         
             <!-- Cerrar sesión -->
             <div class="flex items-center justify-center mt-[40px] gap-2 cursor-pointer mb-10">
-                <div class="h-4 w-[100px] bg-border-secondary rounded-[6px]"></div>
+                <div class="h-4 w-[120px] bg-border-secondary rounded-[4px]"></div>
             </div>
         </div>
     </div>
 </template>
 
-<script setup>
-// No es necesario importar nada para este componente
-</script>
 
 <style scoped>
 .bg-border-secondary {
     background-color: #E6E6E6;
 }
 
+.border-color-secondary {
+    border-color: #E6E6E6;
+}
+
 .bg-head {
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-guest {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 /* Asegura que todos los elementos del skeleton se rendericen inmediatamente */
@@ -64,7 +103,6 @@
     backface-visibility: hidden;
 }
 
-/* Mejora la animación de pulso para que sea más suave */
 .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

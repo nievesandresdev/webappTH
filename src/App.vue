@@ -1,13 +1,19 @@
 <template>
-  <div>
+  <div class="app-container">
     <!-- Preloader -->
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
     <!-- Resto de la aplicación -->
-    <!-- <router-view v-slot="{ Component, route }">
-      <transition :name="route.meta.transition || 'fade'" mode="out-in">
-        <component :is="Component" :key="$route.fullPath" />
-      </transition>
-    </router-view> -->
+    <router-view v-slot="{ Component, route }">
+      <component 
+        v-if="Component?.type?.name === 'ListPage'"
+        :is="Component" 
+        :key="route.name" 
+      />
+      <TransitionBookGlobal v-else>
+        <component :is="Component" :key="route.name" />
+      </TransitionBookGlobal>
+    </router-view>
+    <!-- <router-view v-else ></router-view> -->
    <!--  <RouterView v-slot="{ Component, route }">
       <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">
         <component :is="Component" :key="route.fullPath" />
@@ -18,7 +24,7 @@
 
 
 
-    <router-view /> 
+   <!-- <router-view />  -->
   </div>
 </template>
 
@@ -29,8 +35,9 @@ defineComponent({ name: 'App' });
 //
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
-import { computed, onMounted, watch, ref, watchEffect } from 'vue';
+import { computed, onMounted, watch, ref, watchEffect, nextTick } from 'vue';
 import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
+import TransitionBookGlobal from '@/components/Transition/TransitionBookGlobal.vue';
 //
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -184,20 +191,10 @@ watch(
 </script>
 
 <style>
-/* Transición slide */
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-100%);
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Transición fade por defecto */
@@ -209,6 +206,13 @@ watch(
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* Asegurarse que el contenedor principal mantenga el espacio */
+#app {
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 </style>
 
