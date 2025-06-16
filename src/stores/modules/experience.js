@@ -81,6 +81,7 @@ export const useExperienceStore = defineStore('experience', () => {
     }
 
     async function $apiFindInVIatorByShortId (params) {
+        console.log('params', params);
         let newParams = getHotelParams(params);
         const response = await findInVIatorByShortIdApi(newParams);
         return response;
