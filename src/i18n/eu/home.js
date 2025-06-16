@@ -48,7 +48,7 @@ export default {
     "title": "Gure sareak"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Pasahitza",
     "noPassword":"Hau ez du pasahitza"
@@ -56,6 +56,15 @@ export default {
   "policies":{
     "title":"Egunerak eta erregelak",
     "penalization":"Penalizazioa"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Deitu",
+    "wifi": "WiFi",
+    "rules": "Arauak",
+    "reserve": "Erreserbatu!",
+    "refered": "Gomendatu"
   }
+
   
 };

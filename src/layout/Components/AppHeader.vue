@@ -1,21 +1,23 @@
 <template>
-    <header
-        id="header"
-        class="custom-header"
-        :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
+    <transition name="slide-up">
+        <header
+            v-if="showHeader"
+            id="header"
+            class="custom-header"
+            :class="{'fixed top-0 left-0 w-full': fixed,'relative': !fixed}"
     >
-        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[23px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
+        <div class="header-top pt-4 sp:pt-6 px-3 sp:px-4 pb-2 sp:pb-3" :class="{'pb-[12px] sp:pb-6': !(showSubHeader && (tabsActives.length > 1)) }">
             <h1
                 v-if="withTitleRoute"
                 class="text-[14px] sp:text-[20px] font-bold mb-[10px] sp:mb-[16px]"
             >
                 {{ $t($route.meta.title) }}
             </h1>
-            <div class="flex justify-between items-start w-full h-7 sp:h-10 space-x-1 sp:space-x-2">
+            <div class="flex justify-between items-center w-full h-7 sp:h-10 space-x-1 sp:space-x-2">
                 <!-- Sección izquierda: Buscador o título -->
                 <div class="header-left flex-1">
                     <slot name="titleOrSearch">
-                        <h1 class="lato text-[14px] sp:text-[20px] font-bold leading-[18px] first-letter:capitalize">{{ title }}</h1>
+                        <h1 class="lato text-[13px] sp:text-[20px] font-bold leading-[18px] first-letter:capitalize">{{ title }}</h1>
                     </slot>
                 </div>
 
@@ -46,11 +48,11 @@
                                 <IconCustomColor 
                                     class="" :name="tab.iconDefault" 
                                     :color="!tab.isActive ? '#777777' : null"
-                                    :height="innerWidth <= 300 ? '16' : '24'"
-                                    :width="innerWidth <= 300 ? '16' : '24'"
+                                    :height="innerWidth <= 300 ? '15' : '24'"
+                                    :width="innerWidth <= 300 ? '15' : '24'"
                                 />
                                 <span
-                                    class="text-[10px] sp:text-base font-bold leading-none lato"
+                                    class="text-[9px] sp:text-base font-bold leading-none lato"
                                     :class="{'text-[#777]':!tab.isActive}"
                                 >{{ tab.title }}</span>
                             </div>
@@ -65,7 +67,8 @@
                 </div>
             </slot>
         </div>
-    </header>
+        </header>
+    </transition>
 </template>
 
 <script setup>
@@ -78,6 +81,10 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const props = defineProps({
+    showHeader: {
+        type: Boolean,
+        default: true,
+    },
     title: {
       type: String,
       default: '',
@@ -144,5 +151,15 @@ const navigateTo = (routeName) => {
             width: 48px;
             height: 4px;
         }
+     }
+     
+     .slide-up-enter-active,
+     .slide-up-leave-active {
+         transition: all 0.3s ease;
+     }
+     .slide-up-enter-from,
+     .slide-up-leave-to {
+        opacity: 0;
+        transform: translateY(-100%);
      }
 </style>

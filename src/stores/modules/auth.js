@@ -12,7 +12,9 @@ import {
     updateGuestByIdApi,
     confirmPasswordApi,
     sendResetLinkEmailApi,
-    resetPasswordApi
+    resetPasswordApi,
+    createTokenSessionByGoogleApi,
+    autenticateWithGuestDemoApi
 } from '@/api/services/auth.services'
 
 import { useGuestStore } from '@/stores/modules/guest';
@@ -20,7 +22,7 @@ import { useStayStore } from '@/stores/modules/stay';
 import { useChainStore } from '@/stores/modules/chain';
 import { useHotelStore } from '@/stores/modules/hotel';
 import { useHistoryStore } from '@/stores/modules/history';
-
+import { useQueryStore } from '@/stores/modules/query';
 
 
 export const useAuthStore = defineStore('auth', () => {
@@ -30,8 +32,10 @@ export const useAuthStore = defineStore('auth', () => {
     const chainStore = useChainStore()
     const hotelStore = useHotelStore()
     const historyStore = useHistoryStore()
+    const queryStore = useQueryStore();
     // STATE
     const sessionActive = ref(false)
+    const token = ref(localStorage.getItem('token'));
 
     // ACTIONS
     async function $registerOrLoginSN (params) {
@@ -46,14 +50,21 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $updateGuestById (params) {
-        const response = await updateGuestByIdApi(params)
-        return response.ok ? response.data : null;
+        const response = await updateGuestByIdApi(params);
+        if (response.ok && response.data){
+            localStorage.setItem('token', response.data?.token);
+            return response.data?.guest;
+        }
+        return null;
     }
 
     async function $sendPasswordAndLogin (params) {
+
         const response = await confirmPasswordApi(params)
         if(response.ok && response.data){
-            guestStore.setLocalGuest(response.data)
+            // console.log('test response',response.data.token);
+            localStorage.setItem('token', response.data?.token);
+            guestStore.setLocalGuest(response.data?.guest);
             return response.data;
         }
         return null
@@ -85,15 +96,18 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logout () {
+        //el popup debe abrirse para la proxima sesion si amerita
+        queryStore.$closeSessionPopUp();
         await stayStore.deleteLocalStayData()
         await guestStore.deleteLocalGuest()
         localStorage.removeItem('startedWebappBy')
+        localStorage.removeItem('token')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         historyStore.$clearHistory();
         if(chainType === 'INDEPENDENT'){
             navigateTo('Home')
-        }else{
+        } else {
             await hotelStore.$deleteLocalHotel();
             router.push({ name:'ChainLanding' })
         }
@@ -121,6 +135,7 @@ export const useAuthStore = defineStore('auth', () => {
                 await stayStore.deleteLocalStayData()
             }
         }
+
         //redireccionar segun corresponda
         await $redirectAfterLogin()
     }
@@ -191,7 +206,7 @@ export const useAuthStore = defineStore('auth', () => {
         }else{
             if(optional) return
             
-            router.push({ name:'Home', params: { hotelSlug: hotelStore.hotelData.subdomain} })
+            router.push({ name:'Home', params: { hotelSlug: localStorage.getItem('subdomain')} })
         }
     }
 
@@ -252,6 +267,37 @@ export const useAuthStore = defineStore('auth', () => {
          
     }
 
+    async function $createTokenSessionByGoogle(googleId) {
+        let body = {
+            googleId,
+        }
+        const response = await createTokenSessionByGoogleApi(body);
+        if (!response?.ok) return;
+        return response.data
+    }
+
+    async function $loginByGoogle(guestId, googleId) {  
+        const {token, guest } = await $createTokenSessionByGoogle(googleId);
+        localStorage.setItem('token', token);
+        let localGuest = guestStore.getLocalGuest();
+        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+            guestStore.setLocalGuest(guest);
+        }
+    }
+
+    async function $autenticateWithGuestDemo () {
+        try {
+            const response = await autenticateWithGuestDemoApi();
+            if(response.ok && response.data){
+                localStorage.setItem('token', response.data?.token);
+            }
+        } catch (error) {
+            console.log('autenticateWithGuestDemo', error);
+        }
+    }
+
+
+
     return {
         $registerOrLoginSN,
         $updateGuestById,
@@ -264,9 +310,11 @@ export const useAuthStore = defineStore('auth', () => {
         sessionActive,
         $goStartedWebappBy,
         $logIn,
+        $loginByGoogle,
         $redirectAfterLogin,
         $goLoginBySocialNetwork,
-        $validateStayGuestRelation
+        $validateStayGuestRelation,
+        $autenticateWithGuestDemo
     }
 
 })

@@ -10,8 +10,9 @@
                     :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
                     :from="'services'"
             />
-            <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4">
-                <div class=" border-b  border-[#E9E9E9]">
+            <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4 pb-[40px] sp:pb-[86px]">
+                <div class=" ">
+                    <!-- border-b  border-[#E9E9E9] -->
                     <h2 class="text-[14px] sp:text-[18px] font-bold w-[173px] sp:w-[246px] lato">
                         {{ serviceData?.name }}
                     </h2>
@@ -22,7 +23,7 @@
                         >
                             {{ $t('experience.card-experience.from') }}
                         </p>
-                        <p class="text-[14px] sp:text-[20px] font-bold lato">
+                        <p class="text-[12px] sp:text-[20px] font-bold lato">
                             <template v-if="serviceStore.calPrice(serviceData)?.isFree">
                                 {{ $t('service.card-item.free') }}
                             </template>
@@ -38,7 +39,7 @@
                 >
                     <p
                         ref="descriptionRef"
-                        class="description mt-2 sp:mt-4 text-[9px] sp:text-sm font-medium lato"
+                        class="description mt-2 sp:mt-4 text-[10px] sp:text-sm font-medium lato"
                         :class="{ expanded: isExpandedDescription }"
                         v-html="description"
                     />
@@ -60,7 +61,7 @@
                     v-if="hire"
                     class=" sp:pb-[16px] mt-4 sp:mt-6 card-recommendation p-2 sp:p-4"
                 >
-                    <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">Cómo contratar</h3>
+                    <h3 class="font-bold text-[12px] sp:text-[16px] lato mb-[8px] sp:mb-[12px]">{{ $t('service.detail-page.how-to-hire') }}</h3>
                     <p
                         ref="hireRef"
                         class="hire  text-[9px] sp:text-sm font-medium lato"
@@ -82,11 +83,12 @@
     
                 <PrimaryButton 
                     v-if="serviceData.link_url"
-                    classes="text-center py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
+                    classes="text-center py-1 sp:py-2.5 rounded-[10px] text-[10px] sp:text-[14px] font-bold leading-[20px] w-full lato mt-[14px] sp:mt-[24px]"
                     @click="isOpenModelLink = true"
                 >
                     {{ $t('service.modal-request-service.button') }}
                 </PrimaryButton>
+                <span class="mt-[14px] sp:mt-[24px] border-b border-color-secondary block"></span>
                 <template v-if="serviceData.type == 1">
                     <DetailPageCharacteristicsUnico />
                 </template>

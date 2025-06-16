@@ -8,18 +8,21 @@
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
       :from="'places'"
     />
-    <div class="py-[12px] sp:py-[24px] no-scrollbar">
+    <div class="sp:py-[24px] py-[10px] no-scrollbar" :class="{
+        'pb-[50px] sp:pb-[80px]' : placeData?.web_link || placeData?.phone_wheretoeat || placeData?.url_menu || placeData?.email_wheretoeat,
+        'pb-[12px] sp:pb-[12px]' : !placeData?.web_link && !placeData?.phone_wheretoeat && !placeData?.url_menu && !placeData?.email_wheretoeat,
+    }">
         <div class="pb-[12px] border-b  border-[#E9E9E9] mx-2 sp:mx-4">
             <div class="flex justify-between">
-                <h2 class="text-[14px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
+                <h2 class="text-[12px] sp:text-[18px] font-bold w-[123px] sp:w-[246px] lato">
                     {{ placeData?.title }}
                 </h2>
                 <div class="flex flex-col items-center">
                 <div class="flex items-center mb-0.5 sp:mb-1">
-                    <img src="/assets/icons/WA.star.svg" class="size-[8px] sp:size-[16px] mr-0.5 sp:mr-1" />
-                    <p class="text-[11px] sp:text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
+                    <img src="/assets/icons/WA.star.svg" class="size-[10px] sp:size-[16px] mr-0.5 sp:mr-1" />
+                    <p class="text-[13px] sp:text-[20px] font-semibold leading-none">{{ converStar(placeData?.num_stars) }}</p>
                 </div>
-                <p class="text-[6px] sp:text-[10px] font-medium lato leading-none">
+                <p class="text-[7.5px] sp:text-[10px] font-medium lato leading-none">
                     ({{ placeData?.num_reviews }}
                     {{ $t('place.detail.opinionsWord') }})
                 </p>
@@ -364,6 +367,7 @@ const copyText = (text) => {
 };
 
 provide('placeData', placeData);
+provide('hotelData', hotelData);
 
 </script>
 

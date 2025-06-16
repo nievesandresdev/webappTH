@@ -4,7 +4,7 @@
       v-if="hotelData.instagram_url || hotelData.facebook_url || hotelData.pinterest_url || hotelData.x_url"
   >
       <div class="flex items-center gap-3 sp:gap-4">
-          <h3 class="lato tex-xs sp:text-base font-bold leading-[16px] sp:leading-[20px]">{{ $t('home.social.title') }}</h3>
+          <h3 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">{{ $t('home.social.title') }}</h3>
           <div class="flex-grow border-t border-color-secondary"></div>
       </div>
       

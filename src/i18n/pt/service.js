@@ -12,6 +12,7 @@ export default {
     },
     "detail-page": {
       "accessibility": "Acessível",
+      "how-to-hire": "Como contratar",
       "offered-in": "Oferecido em",
       "requeriments": {
         "title": "Condições"

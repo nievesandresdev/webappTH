@@ -52,7 +52,7 @@ export default {
       "title": "Our networks"
     },
     "wifi":{
-      "title":"Wifi",
+      "title":"WiFi",
       "red":"Red",
       "password":"Password",
       "noPassword":"This network has no password"
@@ -60,5 +60,14 @@ export default {
     "policies":{
       "title":"Policies and Rules",
       "penalization":"Penalization"
+    },
+    "buttons": {
+      "checkin": "Check-in",
+      "call": "Call",
+      "wifi": "WiFi",
+      "rules": "Rules",
+      "reserve": "Reserve!",
+      "refered": "Refer"
     }
+
   };

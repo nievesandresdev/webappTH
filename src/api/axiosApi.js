@@ -2,7 +2,8 @@ import axios from 'axios'
 import { i18n } from '@/i18n'
 import { usePreloaderStore } from '@/stores/modules/preloader';
 import { useLocaleStore } from '@/stores/modules/locale';
-
+import { generateHash } from '@/utils/hash';
+import { getPropertyResetCacheInQueryUrl } from '@/utils/treatmentCache';
 
 
 // const locale = localStorage.getItem('locale') || 'es'
@@ -21,6 +22,13 @@ axios.interceptors.request.use(config => {
     const preloader = getPreloaderStore();
     preloader.requestStarted();
   }
+
+  const token = localStorage.getItem('token');
+  // console.log('test token',token)
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+
   return config;
 }, error => {
   return Promise.reject(error);
@@ -42,7 +50,7 @@ axios.interceptors.response.use(response => {
 });
 
 
-export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false) => {
+export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = 'API_GENERAL',IS_FORM_DATA = false, RESET_CACHE = false) => {
   let api_url_backend = URL_BASE_BACKEND_GENERAL;
   // console.log('test SLUG_API',SLUG_API)
   SLUG_API === 'API_HELPER' ? api_url_backend = URL_BASE_BACKEND_HELPER : '';
@@ -53,12 +61,33 @@ export const apiHttp = async (method, endpoint, data, options = {}, SLUG_API = '
     // const { token } = localStorage
     const subdomain = localStorage.getItem('subdomain') || null;
     const chainSubdomain = localStorage.getItem('chainSubdomain') || null;
+
+    const HASH_HOTEL = await generateHash(subdomain ?? '');
+    const HASH_USER = await generateHash(chainSubdomain ?? '');
+
+    const RANDOM_LIMIT = 10000000000000000;
+
+    const urlParam = getPropertyResetCacheInQueryUrl();
+    const cached = localStorage.getItem('reset-cache');
+
+
+    const nextValue = urlParam
+      ?? ((RESET_CACHE || !cached)
+      ? Math.floor(Math.random() * RANDOM_LIMIT).toString()
+      : cached);
+
+    localStorage.setItem('reset-cache', nextValue);
+
     const defaultHeaders = {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       'Accept-Language': locale,
       'subdomainHotel': subdomain,
       'chainSubdomain': chainSubdomain,
+      'Hash-Hotel': HASH_HOTEL,
+      'Hash-User': HASH_USER,
+      'Origin-Component': 'HUESPED',
+      'Reset-Cache': nextValue,
       'x-key-api': X_KEY_API,
     //   Authorization: 'Bearer ' + `${token}`,
     }

@@ -27,7 +27,7 @@ const formType = ref(route.query.acform ?? 'log')
 watch(
   () => route.query.acform,
   (newAcform, oldAcform) => {
-    console.log('acform ha cambiado de', oldAcform, 'a', newAcform);
+    // console.log('acform ha cambiado de', oldAcform, 'a', newAcform);
     formType.value = newAcform;
     // Aquí puedes actualizar una variable reactiva o ejecutar otra lógica
   }

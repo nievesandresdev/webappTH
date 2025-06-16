@@ -6,7 +6,9 @@
             isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen'
         ]"
     >
-        <InboxHead/>
+        <AppHeader 
+            title="Chat"
+        />
         
 
         <!-- body chat -->
@@ -15,8 +17,8 @@
         <PageTransitionGlobal module="chat">
             <!-- availabilty tag-->
             <div 
-                class="fixed top-[142px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
-                @click="isScheduleModalOpen = true"
+                class="fixed top-[98px] left-4 bg-gradient-100 rounded-[10px] p-3 shadow-guest"
+                @click="isScheduleModalOpen = isAvailable ? true : false"
             >
                 <div class="flex items-center gap-2">
                     <p class="lato text-sm font-bold underline leading-[16px]" :class="{'text-[#34A98F]':isAvailable,'text-[#F66]':!isAvailable}">
@@ -106,7 +108,7 @@ import { ref, onMounted, onUnmounted, provide, inject, computed } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
-import InboxHead from '@/Modules/Queries/Components/InboxHead.vue'
+import AppHeader from '@/layout/Components/AppHeader.vue';
 //load
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -126,6 +128,8 @@ import { useChatStore } from '@/stores/modules/chat'
 const chatStore = useChatStore();
 import { useGuestStore } from '@/stores/modules/guest'
 const guestStore = useGuestStore();
+import { useStayStore } from '@/stores/modules/stay';
+const stayStore = useStayStore();
 //DATA
 const settings = ref(hotelStore?.hotelData?.chatSettings ?? {});
 const msg = ref(null);
@@ -149,18 +153,16 @@ onMounted( async () => {
     await chatStore.loadMessages();
     availableLanguages.value = await chatStore.getAvailableLanguages();
     await watchAvailability();
-    if(hotelStore.hotelData && !hotelStore.hotelData?.chatSettings?.show_guest){
+    if(hotelStore.hotelData && (!hotelStore.hotelData?.chatSettings?.show_guest || !hotelStore.hotelData?.chat_service_enabled)){
         router.push({ name:'Inbox' })
     }
-    setTimeout(scrollToBottom, 50);
+    setTimeout(scrollToBottom, 400);
     clearTimeouts();
     connectPusher();
-    console.log('test 5',hotelStore.hotelData)
     isIphone.value = /iPhone/i.test(navigator.userAgent);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
     stopLoading(SECTIONS.CHAT.GLOBAL);
-    // console.log('test chatSettings',hotelStore.hotelData?.chatSettings?.show_guest)
 });
 
 onUnmounted(() => {
@@ -253,7 +255,7 @@ const handleEnter = (e) => {
 const watchAvailability = async () => {
     try {
         // Cargar los horarios de chat desde el store
-        let loadChatHours = await hotelStore.$loadChatHours(); 
+        let loadChatHours = await chatStore.$getChatHoursByHotel(); 
         // Obtener la fecha y hora actual
         const currentDateTime = DateTime.now();
         const currentDay = currentDateTime.toFormat('cccc'); // Nombre completo del día, e.g., 'Monday'
@@ -338,7 +340,7 @@ const connectPusher = () => {
                 if(!screenOff.value){
                     await chatStore.markMsgsAsRead('lleno');
                 }
-                if(data.message.by == 'Hoster'){    
+                if(data.message.by == 'Hoster' && data.chatData.stay_id == stayStore.stayData.id){     
                     await chatStore.addMessage(data.message);
                     setTimeout(scrollToBottom, 50);
                 }

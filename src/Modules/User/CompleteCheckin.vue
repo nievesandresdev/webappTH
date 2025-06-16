@@ -105,6 +105,7 @@ import ModalNative from '@/components/ModalNative.vue'
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
 import Spinner from '@/components/Spinner.vue';
+import { formatAnyDate } from '@/utils/dateHelpers';
 //
 import { ref, provide, reactive, onMounted, computed, watch, toRefs } from 'vue'
 import { navigateTo } from '@/utils/navigation'
@@ -121,7 +122,8 @@ import { useLegalStore } from '@/stores/modules/legal';
 const legalStore = useLegalStore();
 import { useHistoryStore } from '@/stores/modules/history';
 const historyStore = useHistoryStore();
-
+import { useQuerySettingsStore } from '@/stores/modules/querySettings'
+const querySettingsStore = useQuerySettingsStore();
 
 const props = defineProps({
     paramsRouter: {
@@ -171,7 +173,9 @@ const loading = ref(true);
 
 onMounted(async() => {
     settings.value = await checkinStore.$getAllSettings();
-    // console.log('test settings',settings)
+    if(!querySettingsStore.settings){
+        await querySettingsStore.$getAll();
+    }
     await loadDataGuest(paramsRouter.value.id);
     norms.value = await legalStore.$getNormsByHotel();
     loading.value = false;
@@ -188,7 +192,7 @@ const numberStepsEnabled = computed(() => {
   let sum = 1;
   if (!settings.value) return sum;
   if(secondStepEnabled.value) sum++;
-  if(settings.value.show_prestay_query) sum++;
+  if(settings.value.show_prestay_query && querySettingsStore.settings?.pre_stay_activate) sum++;
   return sum
 })
 
@@ -203,7 +207,21 @@ async function loadDataGuest(id) {
         currentGuestData.value = await guestStore.findById(id)
         form.name = currentGuestData.value.name;
         form.lastname = currentGuestData.value.lastname;
+        form.secondLastname = currentGuestData.value.second_lastname;
         form.email = currentGuestData.value.email;
+        form.phone = currentGuestData.value.phone;
+        let dateFormat = currentGuestData.value.birthdate ? formatAnyDate(currentGuestData.value.birthdate,'dd/MM/yyyy') : null;
+        // console.log('dateFormat ',dateFormat)
+        form.birthdate = dateFormat;
+        form.gender = currentGuestData.value.sex;
+        form.docType = currentGuestData.value.doc_type;
+        form.docSupportNumber = currentGuestData.value.doc_support_number;
+        form.docNumber = currentGuestData.value.doc_num;
+        form.nationality = currentGuestData.value.nationality;
+        form.countryResidence = currentGuestData.value.country_address;
+        form.postalCode = currentGuestData.value.postal_code;
+        form.municipality = currentGuestData.value.municipality;
+        form.addressResidence = currentGuestData.value.address;
         localStorage.setItem('formDataCheckin', JSON.stringify(form))
     }
     // console.log('test loadDataGuest',form)
@@ -309,15 +327,11 @@ const existsChanges = computed(() => {
     let fieldsFilled = form.name !== currentGuestData.value.name ||form.lastname !== currentGuestData.value.lastname || 
     form.email !== currentGuestData.value.email;
     //
-    let firsStepRestant = form.secondLastname.trim() || form.birthdate || form.gender.trim() || form.phone.length > 4 || 
-    form.responsibleAdult.trim() || form.kinshipRelationship.trim();
+    let firsStepRestant = form.secondLastname?.trim() || form.birthdate || form.gender?.trim() || form.phone?.length > 4 || 
+    form.responsibleAdult?.trim() || form.kinshipRelationship?.trim();
     //
     let seconStep = form.nationality || form.docType || form.docSupportNumber || form.docNumber || form.countryResidence ||
     form.postalCode || form.municipality ||form.addressResidence;
-
-    // console.log('test fieldsFilled',fieldsFilled)
-    // console.log('test firsStepRestant',firsStepRestant)
-    // console.log('test seconStep',!!seconStep)
 
     return (!!fieldsFilled) || (!!firsStepRestant) || (!!seconStep);
 });

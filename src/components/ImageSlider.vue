@@ -1,8 +1,8 @@
 <template>
-  <div class="relative w-full shadow-md border-b border-white rounded-b-[20px] overflow-hidden h-[190px] sp:h-[337px]" @touchstart="touchStart" @touchend="touchEnd">
+  <div class="relative w-full shadow-md border-b border-white rounded-b-[20px] overflow-hidden  h-[200px] sp:h-[337px]" @touchstart="touchStart" @touchend="touchEnd" :class="{ 'mt-[0px]': showButtonBack ,'mt-[75px]': !showButtonBack}">
     <button
       v-show="showButtonBack"
-      class="inline-flex items-center gap-2 p-1 absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer"
+      class="inline-flex items-center gap-2 p-1 w-[25px] h-[25px] sp:w-auto sp:h-auto absolute top-2 left-2 z-10 rounded-lg border border-white bg-gradient-to-r from-gray-200 to-gray-100 shadow-md cursor-pointer ease-in-out"
       @click="goBack"
     >
       <img src="/assets/icons/WA.chevron.svg" alt="Back Icon" />
@@ -24,7 +24,7 @@
       <button
         v-for="(dot, index) in visibleDots"
         :key="index"
-        class="w-2.5 h-2.5 bg-transparent border border-white rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
+        class="sp:w-2.5 sp:h-2.5 w-[6px] h-[6px] bg-transparent border border-white rounded-full cursor-pointer transition-colors duration-300 ease-in-out"
         :class="{ 'bg-white': currentDotIndex === index }"
         @click="setSlide(dot.realIndex)"
       ></button>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import {
     getAllApi,
@@ -9,7 +9,7 @@ import {
 export const useRequestSettingStore = defineStore('requestSettings', () => {
     
     // STATE
-
+    const requestData = ref(null);
     // ACTIONS
     async function $getAll () {
 
@@ -20,19 +20,30 @@ export const useRequestSettingStore = defineStore('requestSettings', () => {
         }
     }
 
-    async function $getRequestData (period) {
-        let data = { period };
+    async function $getRequestData (period, guestName) {
+        let data = { period, guestName };
         const response = await getRequestDataApi(data)
         const { ok } = response   
         if(ok){
+            requestData.value = response.data
             return response.data
         }
     }
 
+    async function $setRequestData(data) {
+        requestData.value = data;
+    }
+
+    const requestDataComputed = computed(() => {
+        return requestData.value;
+    });
+
     //
     return {
         $getAll,
-        $getRequestData
+        $getRequestData,
+        $setRequestData,
+        requestData:requestDataComputed
     }
 
 })

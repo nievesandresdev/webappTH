@@ -1,21 +1,22 @@
 <template>
-
     <div class="hcursor-mobile" id="app-container">
 
         <router-view></router-view>
         <MenuMobile 
-            v-if="!isDesktop && hotelStore.hotelData"
-            v-show="showMenu" 
+            v-if="!isDesktop && hotelStore.hotelData && showMenu"
         />
+        <IconsQueryModal />
     </div>
     <!-- evitar que se pueda usar la webapp en Mockup -->
-    <div v-if="$utils.isMockup() && route.name !== 'FakeChat'" class="fixed top-0 left-0 w-screen h-screen z-[5000]"></div>
+    <div v-if="$utils.isMockup() && route.name !== 'FakeChat'" class="fixed top-0 left-0 w-screen h-screen z-[7000]"></div>
 </template>
 
 <script setup>
 
 import { onMounted, ref, provide, watch, computed } from 'vue';
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
+import { $currentPeriod } from '@/utils/helpers';
+import IconsQueryModal from './Components/IconsQueryModal.vue'
 import { isMockup } from '@/utils/utils.js'
 import { useMediaQuery } from '@/composables/useMediaQuery.js'
 const { isDesktop } = useMediaQuery()
@@ -36,7 +37,8 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore()
 import { useAuthStore } from '@/stores/modules/auth';
 const authStore = useAuthStore()
-
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
 
 const hideAppMenu = ref(false);
 const channelChat = ref(null);
@@ -46,9 +48,6 @@ const pusher = ref(null);
 const isSubscribed = ref(false);
 provide('hideAppMenu',hideAppMenu)
 
-onMounted(() => {
-    
-})
 
 const connectPusher = () => {
     const guestData = guestStore.guestData;
@@ -102,25 +101,41 @@ const unSubscribePusher = () =>{
     }
     
 }
+const guestData = computed(() => guestStore.guestData);
 
 watch(() => stayStore.stayData, async (newStayData) => {
     if (!isMockup()) {
         // stayData = newStayData;
         if(newStayData){
             unSubscribePusher();
-            // console.log('test connectPusher',newStayData)
             connectPusher();
         }
+    }
+    
+    if(newStayData && guestData.value && !queryStore.currentQuery){
+        // console.log('entra a getCurrentAndSettingsQuery')
+        queryStore.$getCurrentAndSettingsQuery(stayStore.stayData.id, guestStore.guestData.id, $currentPeriod(), guestStore.guestData.name)
+    }
+
+    let localOpen = localStorage.getItem('queryPopUpHasBeenOpen')
+    if(newStayData && guestData.value && localOpen !== 'true' && !queryStore.currentQuery?.answered){
+        setTimeout(() => {
+            if(queryStore.hasPendingQuery && !isMockup()){
+                queryStore.$firstOpenPopUp();
+            }
+        }, 20000);
     }
 }, { immediate: true });
 
 const showMenu = computed(() => {
+    let hiddenMenuByRoute = route?.meta?.hiddenMenu;
+    if (hiddenMenuByRoute) return false;
     if(isMockup()) return true;
     let guestId = guestStore.guestData ? guestStore.guestData?.id : false;
     let stayId = stayStore.stayData ? stayStore.stayData?.id : false;
-    let hiddenMenuByRoute = !route?.meta?.hiddenMenu;
     let hiddenMenuByRef = !hideAppMenu.value;
     let existsUrlParam = !getUrlParam('acform');
-    return  existsUrlParam && hiddenMenuByRef && stayId && guestId && hiddenMenuByRoute;
+    let show = existsUrlParam && hiddenMenuByRef && stayId && guestId;
+    return show;
 });
 </script>

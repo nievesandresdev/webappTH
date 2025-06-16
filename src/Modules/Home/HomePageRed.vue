@@ -4,32 +4,10 @@
 
     <HeaderHomeRed />
    <PageTransitionGlobal module="home">
+    
         <HeroSectionRed />
-
-        <div 
-            class="px-3 sp:px-4 mt-4 sp:mt-6"
-            v-if="isCheckoutPast"
-        >
-            <WACardBanner 
-                @click="handleMyStays"
-                :title="$t('profile.my_stays.title')"
-                :subtitle="$t('profile.my_stays.subtitle_inactive')"
-                :active-custom="true"
-            />
-        </div>
-        <div 
-            v-if="hotelStore.hotelData?.show_checkin_stay && $currentPeriod() == 'pre-stay'"
-            class="px-3 sp:px-4 mt-4 sp:mt-6"
-        >
-            <WACardBanner 
-                @click="goGuests"
-                :title="$t('checkin.cardBanner.title')"
-                :subtitle="$t('checkin.cardBanner.subtitle')"
-                :active-custom="true"
-                nameIconLeft="WA.checkin.user"
-            />
-        </div>
-
+        <BannersSection />
+        <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
@@ -47,7 +25,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div>
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
                 </div>
             </section>
@@ -68,7 +46,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div>
                     <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
@@ -89,7 +67,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
                 </div>
             </section>
@@ -110,7 +88,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="">
+                <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
                 </div>
             </section>
@@ -128,7 +106,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </router-link>
                 </div>
-                <div class="">
+                <div>
                     <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
                 </div>
             </section>
@@ -154,7 +132,8 @@ import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
-import WACardBanner from '@/components/WACardBanner.vue';
+import ButtonsSection from './Components/ButtonsSection.vue'
+import BannersSection from './Components/BannersSection.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -248,14 +227,6 @@ const goPlaces = (type, cat) => {
     router.push({ name: 'PlaceList', query: { typeplace: type, categoriplace: cat, mobile : true } });
 }
 
-const handleMyStays = () => {
-    router.push({ name: 'MyStays' });
-};
-
-const goGuests = () => {
-    router.push({ name: 'Guests' });
-};
-
 // const formType = computed(() => props.acform);
 
 const showWhatvisitSection = computed(() => {
@@ -276,12 +247,7 @@ const showLeisureSection = computed(() => {
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
 });
 
-const isCheckoutPast = computed(() => {
-if(!stayStore.stayData?.check_out) return
-  const inputDate = DateTime.fromFormat(stayStore.stayData?.check_out, 'yyyy-MM-dd');
-  const now = DateTime.now();
-  return inputDate < now; // Retorna true si la fecha ya pasó
-});
+
 
 
 

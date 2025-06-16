@@ -21,6 +21,7 @@ export default async function handleWebAppData({ to, from, next }) {
     // const guestId = utils.getUrlParam('g');
     const stayId = to.query.e;
     const guestId = to.query.g;
+    const googleId = to.query.gid;
     
     sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
     //evitar multiples redirecciones
@@ -80,6 +81,11 @@ export default async function handleWebAppData({ to, from, next }) {
     ////////////////////////////////////////////////////////
     //
     //
+
+    if (to.query.mockup || to.query.dossier) {
+        await authStore.$autenticateWithGuestDemo();
+    }
+
     //cargar data stay
     if(stayId){
         await stayStore.findByIdInSetLocalStay(stayId)
@@ -89,10 +95,13 @@ export default async function handleWebAppData({ to, from, next }) {
     //
     //cargar data huesped
     if(guestId){
-        
-        let localGuest = guestStore.getLocalGuest();
-        if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
-            await guestStore.findByIdInSetLocalGuest(guestId)
+        if (googleId) {
+            await authStore.$loginByGoogle(guestId, googleId);
+        } else {
+            let localGuest = guestStore.getLocalGuest();
+            if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
+                await guestStore.findByIdInSetLocalGuest(guestId)
+            }
         }
     }
     ////////////////////////////////////////////////////////

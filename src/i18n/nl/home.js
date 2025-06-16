@@ -48,7 +48,7 @@ export default {
     "title": "Onze netwerken"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Wachtwoord",
     "noPassword":"Deze netwerk heeft geen wachtwoord"
@@ -56,5 +56,14 @@ export default {
   "policies":{
     "title":"Politieke en regels",
     "penalization":"Boete"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Bellen",
+    "wifi": "WiFi",
+    "rules": "Regels",
+    "reserve": "Reserveren!",
+    "refered": "Doorverwijzen"
   }
+
 };

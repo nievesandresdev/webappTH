@@ -1,39 +1,54 @@
 export default {
-    "textToast": {
-        "sendQueryText": "Wir schätzen Ihr Feedback aufrichtig. Ihre Erfahrung ist uns wichtig, und wir bemühen uns, Ihre Erwartungen zu erfüllen.",
-        "updateQueryText" : "Änderung gesendet",
-        "registerResponse": "Feedback gesendet",
-        "updateResponse": "Feedback aktualisiert"
+  "textToast": {
+    "sendQueryText": "Wir danken dir herzlich für dein Feedback. Deine Erfahrung ist uns wichtig und wir bemühen uns, deine Erwartungen zu erfüllen",
+    "updateQueryText": "Änderung gesendet",
+    "registerResponse": "Feedback gesendet",
+    "updateResponse": "Feedback geändert"
+  },
+  "form": {
+    "send": "Senden",
+    "sending": "Sende",
+    "modify": "Ändern",
+    "cancel": "Abbrechen",
+    "title": "Feedback",
+    "hello": "Hallo",
+    "whatsup": "Wie geht's",
+    "thanksAll": "Wie haben wir uns geschlagen?",
+    "btn-verywrong-stay": "Sehr schlecht",
+    "btn-wrong-stay": "Schlecht",
+    "btn-normal-stay": "Normal",
+    "btn-good-stay": "Gut",
+    "btn-verygood-stay": "Sehr gut",
+    "btn-verywrong-poststay": "Sehr schlecht",
+    "btn-wrong-poststay": "Schlecht",
+    "btn-normal-poststay": "Normal",
+    "btn-good-poststay": "Gut",
+    "btn-verygood-poststay": "Sehr gut",
+    "poststay-bad-thanks-title": "Antwort gesendet",
+    "poststay-bad-thanks-subtitle": "Vielen Dank für deine Zeit",
+    "continueIn": "Bewerten in",
+    "received-text": "Empfangen",
+    "sent-text": "Gesendet"
+  },
+  "settings": {
+    "questionpre-stay": "Gibt es etwas, das wir für deine Ankunft in tun können?",
+    "questionin-stay": "Wie würdest du deine Zufriedenheit mit deinem Aufenthalt bisher bewerten?",
+    "questionpost-stay": "Wie würdest du deine Zufriedenheit mit deinem Aufenthalt in {lodging} bewerten?"
+  },
+  "inbox": {
+    "title": "Nachrichten"
+  },
+  "popup": {
+    "thanksResponse": "Danke für deine Antwort",
+    "sorryResponse": "Es tut uns sehr leid, {guestName}!",
+    "sorryDescription": "Es tut uns leid, dass wir deine Erwartungen nicht erfüllt haben. Wir haben dein Feedback erhalten und werden daran arbeiten, uns zu verbessern. Danke, dass du uns hilfst, besser zu werden!",
+    "bannerHome-in-stay": {
+      "title": "Wie läuft alles?",
+      "subtitle": "Wir würden gerne wissen, wie du dich bisher fühlst."
     },
-    "form": {
-        "send": "Senden",
-        "sending": "Wird gesendet",
-        "modify" : "Ändern",
-        "cancel" : "Stornieren",
-        "title": "Anfragen",
-        "hello": "Hallo",
-        "whatsup": "Was gibt's?",
-        "thanksAll" : "Danke für alles",
-        "btn-verywrong-stay": "Sehr schlecht",
-        "btn-wrong-stay": "Schlecht",
-        "btn-normal-stay": "Normal",
-        "btn-good-stay": "Gut",
-        "btn-verygood-stay": "Sehr gut",
-        "btn-verywrong-poststay": "Sehr schlecht",
-        "btn-wrong-poststay": "Schlecht",
-        "btn-normal-poststay": "Normal",
-        "btn-good-poststay": "Gut",
-        "btn-verygood-poststay": "Sehr gut",
-        "poststay-bad-thanks-title": "Antwort gesendet",
-        "poststay-bad-thanks-subtitle": "Vielen Dank für Ihre Zeit",
-        "continueIn" : "Zu Hause"
-    },
-    "settings": {
-        "questionpre-stay": "Können wir etwas für Ihre Ankunft im {lodging} tun?",
-        "questionin-stay": "Wie würden Sie Ihre Zufriedenheit mit Ihrem Aufenthalt bisher bewerten?",
-        "questionpost-stay": "Wie war Ihre Erfahrung mit uns?",
-    },
-    "inbox": {
-        "title": "Nachrichten"
+    "bannerHome-post-stay": {
+      "title": "Wie war deine Erfahrung?",
+      "subtitle": "Wir würden gerne deine Meinung zu deinem Aufenthalt hören"
     }
+  }
 }

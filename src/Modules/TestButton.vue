@@ -44,7 +44,7 @@
 
   function signInWithGoogle() {
     const currentUrl = window.location.href
-    console.log('currentUrl',window.location.href)
+    // console.log('currentUrl',window.location.href)
     // Redirigir al usuario a la API para iniciar el flujo de autenticación
     window.location.href = `${process.env.VUE_APP_API_URL_BACKEND_GENERAL}/guest/auth/google?redirect=${encodeURIComponent(currentUrl)}`
   }

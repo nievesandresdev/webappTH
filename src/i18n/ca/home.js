@@ -48,7 +48,7 @@ export default {
     "title": "Les nostres xarxes"
   },
   "wifi":{
-    "title":"Wifi",
+    "title":"WiFi",
     "red":"Red",
     "password":"Contrasenya",
     "noPassword":"Aquesta xarxa no té contrasenya"
@@ -56,6 +56,15 @@ export default {
   "policies":{
     "title":"Polítiques i normes",
     "penalization":"Penalització"
+  },
+  "buttons": {
+    "checkin": "Check-in",
+    "call": "Trucar",
+    "wifi": "WiFi",
+    "rules": "Normes",
+    "reserve": "Reserva!",
+    "refered": "Referir"
   }
+
   
 };

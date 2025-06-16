@@ -8,7 +8,7 @@ const FakeLinksOtas = () => import('@/Modules/Queries/FakeLinksOtasRed.vue')
 const chatRoutes = [
   {
     path: 'inbox',
-    component: AppLayout,
+    // component: AppLayout,
     meta: {
       verifyHotel: true,
     //   middleware: [

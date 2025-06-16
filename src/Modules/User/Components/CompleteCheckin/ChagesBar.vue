@@ -31,6 +31,7 @@
 <script setup>
 import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 import { ref, inject, computed } from 'vue'
+import { formatAnyDate } from '@/utils/dateHelpers';
 import { useRouter } from 'vue-router'
 const router = useRouter();
 //
@@ -104,10 +105,12 @@ const validForm = computed(() => {
 
 const submit = async () => {
     sendingQuery.value = true;
-    form.comment = form.comment.trim();
+    let dateFormat = form.birthdate ? formatAnyDate(form.birthdate,'dd/MM/yyyy') : null;
+    form.birthdate = dateFormat;
+    form.comment = form.comment?.trim() ?? '';
     form.checkinEmail = form.email;
-    form.docSupportNumber = form.docSupportNumber.toUpperCase();
-    form.docNumber = form.docNumber.toUpperCase();
+    form.docSupportNumber = form.docSupportNumber?.toUpperCase() ?? '';
+    form.docNumber = form.docNumber?.toUpperCase() ?? '';
     form.email = currentGuestData.value.email;
     const response = await guestStore.$saveCheckinData(form);
     sendingQuery.value = false;

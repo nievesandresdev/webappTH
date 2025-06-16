@@ -1,12 +1,12 @@
 <template>
-    <PageTransitionGlobal module="service">
+    <!-- <PageTransitionGlobal module="service"> -->
         <div
             id="list-activities"
             class="overflow-y-scroll w-full px-2 sp:px-4 pt-[12px] sp:pt-[32px]"
         >
             <p
                 v-if="!isloadingForm"
-                class="text-[6px] sp:text-sm font-bold lato"
+                class="text-[9px] sp:text-sm font-bold lato"
             >
                 {{ paginateData.total }} {{ $t('service.activity.text-search-found') }}
             </p>
@@ -29,7 +29,7 @@
                 </template>
             </div>
         </div>
-    </PageTransitionGlobal>
+    <!-- </PageTransitionGlobal> -->
 </template>
 
 <script setup>
@@ -40,7 +40,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 
 // COMPONENTS
-import PageTransitionGlobal from '@/components/PageTransitionGlobal.vue';
+// import PageTransitionGlobal from '@/components/PageTransitionGlobal.vue';
 
 const route = useRouter();
 
@@ -141,7 +141,8 @@ function submitFilter (payload){
 async function loadItems () {
     isloadingForm.value = true;
     let query = {...filterNonNullAndNonEmpty(formFilter)}
-    const response = await experienceStore.$apiGetAll({page: page.value,...query});
+    query.page = page.value;
+    const response = await experienceStore.$apiGetAll(query);
     if (response.ok) {
         Object.assign(paginateData, response.data.experiences.paginate);
         page.value = paginateData.current_page;

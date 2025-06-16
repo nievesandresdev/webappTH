@@ -82,6 +82,9 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
+import { useQueryStore } from '@/stores/modules/query';
+const queryStore = useQueryStore();
+
 
   import { useShare } from "@/composables/useShare";
   const { shareContent } = useShare();
@@ -140,6 +143,7 @@ const submitForm = async () => {
     // console.log('test currentStay.value',currentStay.value)
     if(currentStay.value){
         toastSuccess(t('messageRequest.changeSave'));
+        queryStore.$closeSessionPopUp()
     }
     loading.value = false;
 }

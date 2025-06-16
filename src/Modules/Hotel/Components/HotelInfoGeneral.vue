@@ -5,13 +5,13 @@
       <div class="flex justify-between gap-1 sp:gap-2">
         <div class="flex gap-1 sp:gap-2 items-center w-1/2">
           <img src="/assets/icons/WA.pointer.svg" class="size-2.5 sp:size-5" alt="Ubicación Icon" />
-          <p class="text-[8px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.address }}</p>
+          <p class="text-[10px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.address }}</p>
         </div>
         
         <!-- copiar la dirección -->
         <div class="flex gap-1 sp:gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.address)">
           <img src="/assets/icons/WA.copy.svg" class="h-4 w-5" alt="Copy Icon" />
-          <span class="text-[8px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
+          <span class="text-[10px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
         </div>
       </div>
 
@@ -34,28 +34,28 @@
       
 
     <section class="no-transition">
-      <div class="border-t my-3 sp:my-6 border-[#E9E9E9]" v-show="hotelData.email"></div>
+      <div class="border-t my-4 sp:my-6 border-[#E9E9E9]" v-show="hotelData.email"></div>
     
       <!-- Sección de Email -->
       <div class="flex justify-between gap-1 sp:gap-2" v-show="hotelData.email">
         <div class="flex gap-1 sp:gap-2 items-center w-1/2">
-          <img src="/assets/icons/WA.mail.svg" class="size-2.5 sp:size-5" alt="Email Icon" />
-          <p class="text-[8px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.email }}</p>
+          <img src="/assets/icons/WA.mail.svg" class="size-3 sp:size-5" alt="Email Icon" />
+          <p class="text-[11px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.email }}</p>
         </div>
     
         <!-- copiar el email -->
         <div class="flex gap-1 sp:gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.email)">
-          <img src="/assets/icons/WA.copy.svg" class="size-2.5 sp:size-5" alt="Copy Icon" />
-          <span class="text-[8px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
+          <img src="/assets/icons/WA.copy.svg" class="h-[10px] w-[10px] sp:h-5 sp:w-5" alt="Copy Icon" />
+          <span class="text-[10px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
         </div>
       </div>
 
-      <div class="border-t mt-6 mb-6 border-[#E9E9E9]"></div>
+      <div class="border-t mt-4 sp:mt-6 mb-4 sp:mb-6 border-[#E9E9E9]"></div>
     
       <div class="flex justify-between gap-2">
         <div class="flex gap-2 items-center w-1/2">
-          <img src="/assets/icons/WA.website.svg" class="w-5 h-5" alt="Website Icon" />
-          <p class="text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="goToWebsite(hotelData.website_google)">
+          <img src="/assets/icons/WA.website.svg" class="w-[12px] h-[12px] sp:w-5 sp:h-5" alt="Website Icon" />
+          <p class="text-[11px] sp:text-[14px] font-semibold underline text-[#333333] lato cursor-pointer" @click="goToWebsite(hotelData.website_google)">
             {{ formattedWebsite }}
           </p>
         </div>
@@ -67,13 +67,13 @@
       <div class="flex justify-between gap-1 sp:gap-2" v-show="hotelData.phone">
         <div class="flex gap-1 sp:gap-2 items-center w-1/2">
           <img src="/assets/icons/WA.llamar.svg" class="size-2.5 sp:size-5" alt="Phone Icon" />
-          <p class="text-[8px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.phone }}</p>
+          <p class="text-[10px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.phone }}</p>
         </div>
     
         <!-- copiar el teléfono principal -->
         <div class="flex gap-1 sp:gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.phone)">
-          <img src="/assets/icons/WA.copy.svg" class="size-2.5 sp:size-5" alt="Copy Icon" />
-          <span class="text-[8px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
+          <img src="/assets/icons/WA.copy.svg" class="h-[10px] w-[10px] sp:h-5 sp:w-5" alt="Copy Icon" />
+          <span class="text-[10px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
         </div>
       </div>
     
@@ -83,14 +83,14 @@
       <!-- Sección de Teléfono Opcional -->
       <div class="flex justify-between gap-1 sp:gap-2"  v-show="hotelData.phone_optional">
         <div class="flex gap-1 sp:gap-2 items-center w-1/2">
-          <img src="/assets/icons/WA.llamar.svg" class="size-2.5 sp:size-5" alt="Phone Icon" />
-          <p class="text-[8px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.phone_optional }}</p>
+          <img src="/assets/icons/WA.llamar.svg" class="h-[12px] w-[12px] sp:h-5 sp:w-5" alt="Phone Icon" />
+          <p class="text-[10px] sp:text-[14px] font-bold text-[#333333] lato">{{ hotelData.phone_optional }}</p>
         </div>
     
         <!-- copiar el teléfono opcional -->
         <div class="flex gap-1 sp:gap-2 items-center cursor-pointer justify-end w-1/2" @click="copyText(hotelData.phone_optional)">
-          <img src="/assets/icons/WA.copy.svg" class="size-2 sp:size-4" alt="Copy Icon" />
-          <span class="text-[8px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
+          <img src="/assets/icons/WA.copy.svg" class="h-[10px] w-[10px] sp:h-5 sp:w-5" alt="Copy Icon" />
+          <span class="text-[10px] sp:text-[14px] font-bold underline text-[#333333] lato">{{ $t('hotel.utils.copy') }}</span>
         </div>
       </div>
     </section>

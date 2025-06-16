@@ -14,7 +14,9 @@ import {
     deleteGuestOfStayApi,
     saveAndFindValidLastStayApi,
     saveCheckinDataApi,
-    deleteCheckinDataApi
+    deleteCheckinDataApi,
+    sendContactEmailApi,
+    getContactEmailsByStayIdApi
 } from '@/api/services/guest.services';
 import { getUrlParam } from '@/utils/utils.js'
 import { useStayStore } from '@/stores/modules/stay'
@@ -256,7 +258,8 @@ export const useGuestStore = defineStore('guest', () => {
     
         // Guarda el objeto actualizado en el localStorage
         localStorage.setItem('guestData', JSON.stringify(responseData));
-        
+        guestData.value = responseData;
+        return guestData.value;
     };
     
     const $saveCheckinData = async (data) => {
@@ -280,6 +283,16 @@ export const useGuestStore = defineStore('guest', () => {
             return response.data
         }
         return false
+    }
+
+    const $sendContactEmail = async (data) => {
+        const response = await sendContactEmailApi(data)
+        return response;
+    }
+
+    const $getContactEmailsByStayId = async (data) => {
+        const response = await getContactEmailsByStayIdApi(data)
+        return response;
     }
     
 
@@ -306,7 +319,9 @@ export const useGuestStore = defineStore('guest', () => {
         saveAndFindValidLastStay,
         findAndValidLastStayAndLogHotel,
         $saveCheckinData,
-        $deleteCheckinData
+        $deleteCheckinData,
+        $sendContactEmail,
+        $getContactEmailsByStayId
     }
 
 })
