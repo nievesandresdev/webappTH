@@ -192,7 +192,9 @@ const duration = computed( ()  => {
 
 // FUNCTION
 async function loadData () {
-    await Promise.all([loadExperience(), loadExperienceInViator()]);
+    // await Promise.all([loadExperience(), loadExperienceInViator()]);
+    await loadExperience();
+    await loadExperienceInViator();
     loading.value = false;
 }
 
