@@ -239,7 +239,8 @@ function getShortId () {
         const lastMatch = matches[matches.length - 1];
         return lastMatch;
     }
-    return;
+    let shortId = experienceData.value?.api_short_id ?? null;
+    return shortId;
 }
 
 function checkDescriptionLength() {
