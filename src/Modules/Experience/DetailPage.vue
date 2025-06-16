@@ -74,7 +74,7 @@
                     </button>
                 </div>
             </div>
-            <div class="space-y-[8px] sp:space-y-[16px] pb-[14px] sp:pb-[24px] border-b  border-[#E9E9E9]">
+            <div v-if="existUrlVIator" class="space-y-[8px] sp:space-y-[16px] pb-[14px] sp:pb-[24px] border-b  border-[#E9E9E9]">
                 <h3 class="lato  text-[8px] sp:text-[16px] font-medium leading-none">{{ $t('experience.detail-page.check-the-availability-of-this-experience') }}</h3>
                 <PrimaryButton 
                     classes="block text-center py-1.5 sp:py-2.5 rounded-[10px] text-[9px] sp:text-[14px] font-bold leading-none w-full shadow-guest lato"
@@ -180,6 +180,10 @@ watch(hotelData, (valueCurrent, valueOld) => {
     }
 }, { immediate: true });
 
+const existUrlVIator = computed(() => {
+    return experienceViatorData.value && experienceViatorData?.value?.productUrl;
+});
+
 const duration = computed( ()  => {
     let d = $utils.transformDuration(experienceData?.value?.duration)
     let text = d?.minutes <= 0 ? `${d?.hours} ${t('experience.card-experience.hour')}` : `${d?.hours} ${t('experience.card-experience.hour')} ${t('experience.card-experience.and')} ${d?.minutes} ${t('experience.card-experience.min-aprox')}`
@@ -252,7 +256,7 @@ const toggleDescription = () => {
 }
 
 function goInViator ()  {
-    if (!experienceViatorData.value || !experienceViatorData?.value?.productUrl) {
+    if (!existUrlVIator.value) {
          router.go(-1);
          return;
     }
