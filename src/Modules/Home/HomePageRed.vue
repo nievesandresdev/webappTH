@@ -117,6 +117,7 @@
 
     <!-- forms -->
     <ModalSession />
+    <FakeModalMsgQuery />
 </template>
 <script setup>
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
@@ -125,6 +126,7 @@ import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
 import { useHead } from '@vueuse/head'
+import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
 
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
