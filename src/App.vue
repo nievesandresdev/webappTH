@@ -3,16 +3,21 @@
     <!-- Preloader -->
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
     <!-- Resto de la aplicación -->
-    <router-view v-slot="{ Component, route }">
-      <component 
-        v-if="Component?.type?.name === 'ListPage'"
-        :is="Component" 
-        :key="route.name" 
-      />
-      <TransitionBookGlobal v-else>
-        <component :is="Component" :key="route.name" />
-      </TransitionBookGlobal>
-    </router-view>
+    
+    <!-- Sin transición para rutas de servicios (Confort, Transport, Activity) -->
+    <div v-if="['Confort', 'Transport', 'Activity','PersonalInfo','UbicationData','ContactData'].includes($route.name)">
+      <router-view />
+    </div>
+    
+    <!-- Con transición para otras páginas -->
+    <div v-else>
+      <router-view v-slot="{ Component, route }">
+        <TransitionBookGlobal>
+          <component :is="Component" :key="route.name" />
+        </TransitionBookGlobal>
+      </router-view>
+    </div>
+    
     <!-- <router-view v-else ></router-view> -->
    <!--  <RouterView v-slot="{ Component, route }">
       <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">

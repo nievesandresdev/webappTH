@@ -13,7 +13,7 @@ const route = useRoute();
 const router = useRouter();
 
 // Lista de rutas que deberían tener transición
-const ROUTES_WITH_TRANSITION = ['Profile', 'Home','MyStays','HotelsList','CreateStay','CreateStayFromChain'];
+const ROUTES_WITH_TRANSITION = ['Profile', 'Home','MyStays','HotelsList','CreateStay','CreateStayFromChain','Confort'];
 
 // Definir la jerarquía de navegación
 const NAVIGATION_HIERARCHY = {
