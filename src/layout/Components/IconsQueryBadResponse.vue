@@ -1,6 +1,6 @@
 <template>
     <h2 class="lato text-sm sp:text-[20px] font-bold leading-[20px] sp:leading-[28px]">
-        {{ route.query.period == 'pre-stay' ? $t('query.settings.thanks-title', { guestName: guestStore.guestData.name }) : titleThanks }}
+        {{ route.query.period == 'pre-stay' ? $t('query.settings.thanks-title', { guestName: '[nombreHuesped]' }) : titleThanks }}
     </h2>
     <p 
         class="lato text-[10px] sp:text-base font-bold leading-[14px] sp:leading-[20px] mt-2 sp:mt-4" 

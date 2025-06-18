@@ -35,6 +35,7 @@ import LinksReview from '@/Modules/Queries/Components/LinksReviewRed.vue';
 import ModalNative from '@/components/ModalNative.vue'
 import { $currentPeriod } from '@/utils/helpers';
 import { $formatNameLodging } from '@/utils/utils';
+import { isMockup } from '@/utils/utils.js'
 //stores
 import { useRoute } from 'vue-router';
 const route = useRoute();
@@ -50,10 +51,10 @@ import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 const querySettingsStore = useQuerySettingsStore();
 //data
 
-onMounted(() => {
-    let openFakeMsg = route.query.openFakeMsg == 'true' ? true : false;
-    if(openFakeMsg){
-        console.log('test openFakeMsgste¿', querySettingsStore.settings);
+onMounted(async() => {
+    if(Boolean(route.query.openFakeMsg) && isMockup()){
+        await querySettingsStore.$getAll();
+        // console.log('se monta',querySettingsStore.settings);
     }
 })
 
