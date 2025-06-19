@@ -175,7 +175,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/svg+xml',
-      href: computed(() => `/assets/icons/search.svg?t=${Date.now()}`),
+      href: computed(() => `/assets/icons/search.svg`),
       key: 'hotel-favicon'  // Identificador único para este favicon
     }
   ]

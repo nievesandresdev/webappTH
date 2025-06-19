@@ -180,7 +180,7 @@ useHead({
         {
             rel: 'icon',
             type: 'image/svg+xml',
-            href: computed(() => `/assets/icons/1.TH.RECOMMEND.svg?t=${Date.now()}`),
+            href: computed(() => `/assets/icons/1.TH.RECOMMEND.svg`),
             key: 'home-favicon'  // Identificador único para este favicon
         }
     ]
