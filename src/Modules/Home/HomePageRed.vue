@@ -171,7 +171,7 @@ const placeCategories = ref(null)
 const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
-const showTutorial = ref(false)
+const showTutorial = ref(true)
 
 startLoading(SECTIONS.HOME.GLOBAL);
 

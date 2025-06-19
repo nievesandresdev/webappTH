@@ -119,10 +119,6 @@ const deviceInfo = ref({
 
 onMounted(() => {
     deviceInfo.value = detectOS();
-    // Si el usuario está en móvil, mostrar directamente el modal correspondiente
-    if (deviceInfo.value.isIOS || deviceInfo.value.isAndroid) {
-        openOSModal(deviceInfo.value.isIOS ? 'ios' : 'android');
-    }
 });
 
 const props = defineProps({
