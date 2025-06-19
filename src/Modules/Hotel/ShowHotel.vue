@@ -167,14 +167,14 @@ const handleCall = () => {
   }
 }
 
-useHead({
+/* useHead({
   title: computed(() => hotelInfo.value.name),
   meta: [
     { name: 'description', content: computed(() => hotelInfo.value.description) },
   ]
 })
 
-useFavicon('/assets/icons/search.svg')
+useFavicon('/assets/icons/search.svg') */
 
 const handleWifi = async() => {
   modalWifi.value = true

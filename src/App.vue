@@ -30,7 +30,8 @@ defineComponent({ name: 'App' });
 //
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
-import { computed, watch, ref } from 'vue';
+import { computed, watch, ref, onMounted } from 'vue';
+import { useFavicon } from '@/composables/useFavicon'
 /*   import LoadPage from '@/shared/LoadPage.vue'; 
   import TransitionBookGlobal from '@/components/Transition/TransitionBookGlobal.vue'; */
 //
@@ -131,6 +132,30 @@ watch(() => stayStore.stayData, async (newStayData) => {
 }, { immediate: true });
 
 const hotelStore = useHotelStore()
+const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
+
+const formatImage = (payload) => {
+  let { url, type } = payload
+  
+  if (url && url.startsWith("blob:")) return url
+  if (!url || !URL_STORAGE) return '/assets/icons/1.TH.RECOMMEND.svg'
+  
+  let type_d = url.includes('https://') ? 'CDN' : 'STORAGE'
+  type = type ?? type_d
+  
+  return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
+}
+
+// Observar cambios en hotelData para actualizar el favicon
+watch(() => hotelStore.hotelData, (hotelData) => {
+  if (!hotelData) return;
+
+  const faviconUrl = hotelData.favicon 
+    ? formatImage({ url: hotelData.favicon }) 
+    : '/assets/icons/1.TH.RECOMMEND.svg';
+
+  useFavicon(faviconUrl);
+}, { immediate: true });
 
 // Transition handlers
 const beforeLeave = (el) => {
