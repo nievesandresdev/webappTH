@@ -173,6 +173,14 @@ useHead({
     meta: [
         { name: 'description', content: 'The Hoster' },
         { name: 'og:title', content: 'The Hoster' },
+    ],
+    link: [
+        {
+            rel: 'icon',
+            type: 'image/svg+xml',
+            href: computed(() => `/assets/icons/1.TH.RECOMMEND.svg?t=${Date.now()}`),
+            key: 'home-favicon'  // Identificador único para este favicon
+        }
     ]
 })
 

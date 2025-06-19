@@ -5,31 +5,21 @@
     <!-- Resto de la aplicación -->
     
     <!-- Sin transición para rutas de servicios (Confort, Transport, Activity) -->
-    <div v-if="['Confort', 'Transport', 'Activity','PersonalInfo','UbicationData','ContactData'].includes($route.name)">
+    <!-- <div v-if="['Confort', 'Transport', 'Activity','PersonalInfo','UbicationData','ContactData'].includes($route.name)">
       <router-view />
-    </div>
+    </div> -->
     
     <!-- Con transición para otras páginas -->
-    <div v-else>
+   <!--  <div v-else>
       <router-view v-slot="{ Component, route }">
         <TransitionBookGlobal>
           <component :is="Component" :key="route.name" />
         </TransitionBookGlobal>
       </router-view>
-    </div>
-    
-    <!-- <router-view v-else ></router-view> -->
-   <!--  <RouterView v-slot="{ Component, route }">
-      <Transition v-if="route.meta.transition" :name="route.meta.transition" mode="out-in">
-        <component :is="Component" :key="route.fullPath" />
-      </Transition>
-      <component :is="Component" :key="route.fullPath" />
-    </RouterView> -->
+    </div> -->
 
 
-
-
-   <!-- <router-view />  -->
+   <router-view /> 
   </div>
 </template>
 
@@ -40,9 +30,9 @@ defineComponent({ name: 'App' });
 //
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
-import { computed, onMounted, watch, ref, watchEffect, nextTick } from 'vue';
-import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
-import TransitionBookGlobal from '@/components/Transition/TransitionBookGlobal.vue';
+import { computed, watch, ref } from 'vue';
+/*   import LoadPage from '@/shared/LoadPage.vue'; 
+  import TransitionBookGlobal from '@/components/Transition/TransitionBookGlobal.vue'; */
 //
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -57,7 +47,7 @@ import { usePreloaderStore } from '@/stores/modules/preloader';
 const preloaderStore = usePreloaderStore();
 import { useHotelStore } from '@/stores/modules/hotel'
 
-onMounted(()=>{
+/* onMounted(()=>{
   // console.log('test hola')
   updateOpenGraphMeta({
     title: 'Título Hoteles',
@@ -79,7 +69,7 @@ function updateOpenGraphMeta(data) {
   if (imageMeta) imageMeta.setAttribute('content', data.image);
   if (urlMeta) urlMeta.setAttribute('content', data.url);
 }
-
+ */
 const pusher = ref(null);   
 const isSubscribed = ref(false);
 const channelLogOutGuest = ref(null);

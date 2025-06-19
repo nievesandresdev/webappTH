@@ -15,7 +15,7 @@
 
             <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
               <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333]">
-                {{ hotelData?.name }}
+                {{ hotelData?.name }}  
               </h1>
 
 
@@ -171,6 +171,14 @@ useHead({
   meta: [
     { name: 'description', content: computed(() => hotelInfo.value.description) },
   ],
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href: computed(() => `/assets/icons/search.svg?t=${Date.now()}`),
+      key: 'hotel-favicon'  // Identificador único para este favicon
+    }
+  ]
 })
 
 const handleWifi = async() => {
