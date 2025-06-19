@@ -115,6 +115,7 @@ import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import CarouselFacilities from '@/Modules/Home/Components/CarouselFacilitiesRed.vue'
 import { useI18n } from 'vue-i18n';
 import { useHead } from '@vueuse/head';
+import { useFavicon } from '@/composables/useFavicon'
 // import TransitionBook from '@/components/Transition/TransitionBook.vue';
 
 import router from '@/router'
@@ -170,16 +171,10 @@ useHead({
   title: computed(() => hotelInfo.value.name),
   meta: [
     { name: 'description', content: computed(() => hotelInfo.value.description) },
-  ],
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/svg+xml',
-      href: computed(() => `/assets/icons/search.svg`),
-      key: 'hotel-favicon'  // Identificador único para este favicon
-    }
   ]
 })
+
+useFavicon('/assets/icons/search.svg')
 
 const handleWifi = async() => {
   modalWifi.value = true

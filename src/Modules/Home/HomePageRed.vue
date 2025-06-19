@@ -127,6 +127,7 @@ import { isMockup } from '@/utils/utils'
 const router = useRouter();
 import { useHead } from '@vueuse/head'
 import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
+import { useFavicon } from '@/composables/useFavicon'
 
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
@@ -175,16 +176,10 @@ useHead({
     meta: [
         { name: 'description', content: 'The Hoster' },
         { name: 'og:title', content: 'The Hoster' },
-    ],
-    link: [
-        {
-            rel: 'icon',
-            type: 'image/svg+xml',
-            href: computed(() => `/assets/icons/1.TH.RECOMMEND.svg`),
-            key: 'home-favicon'  // Identificador único para este favicon
-        }
     ]
 })
+
+useFavicon('/assets/icons/1.TH.RECOMMEND.svg')
 
 onMounted(async () => {
     // loadCrossellings();
