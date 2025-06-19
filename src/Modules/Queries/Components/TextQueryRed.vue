@@ -12,7 +12,7 @@
             </span>
         </div>
         <div class="hshadow rounded-[14px] sp:rounded-[20px] p-2 sp:p-4  bg-gradient-h border border-color-secondary">
-            <h1 class="lato text-xs sp:text-base font-medium leading-[14px] sp:leading-[20px]">
+            <h1 class="lato text-sm sp:text-[20px] font-bold leading-[18px] sp:leading-[28px]">
                 {{ $t('query.form.hello') }} 
                 <template v-if="!$utils.isMockup()" >
                     {{ guestStore?.guestData?.name}},
@@ -21,7 +21,7 @@
                     Huésped
                 </template>
             </h1>
-            <p class="mt-2 sp:mt-3 lato text-[10px] sp:text-sm font-medium leading-[12px] sp:leading-[16px]">
+            <p class="mt-2 sp:mt-3 lato text-[12px] sp:text-base font-bold leading-[14px] sp:leading-[20px]">
                 {{ $t('query.settings.question' + data?.period, { lodging: $formatTypeLodging() }) }}
             </p>
             <div class="mt-3 sp:mt-4">
@@ -31,7 +31,7 @@
                     :id="'textarea1'"
                     v-model="textarea" 
                     :wordLimit="300"
-                    placeholder=""
+                    :placeholder="$t('query.settings.prestay-placeholder')"
                     showWordLimit
                     customClasses="min-h-[48px] sp:min-h-[72px]"
                 />
@@ -109,7 +109,7 @@ async function saveQuery(){
     if(response){
         emit('reloadList')
         // emit('showFeedback',props.settings.pre_stay_thanks.es);
-        let textRes = props.settings?.pre_stay_thanks[localeStore.localeCurrent];
+        let textRes = 'query.textToast.sendQueryText';
         if(EditPeriod.value){
             textRes = 'query.textToast.updateQueryText';
         }

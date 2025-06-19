@@ -34,6 +34,13 @@ export default{
         "questionpre-stay": "¿Hay algo que podamos hacer para tu llegada al {lodging}?",
         "questionin-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia hasta ahora?",
         "questionpost-stay" : "¿Cómo calificarías tu nivel de satisfacción con tu estancia en {hotelName}?",
+        "prestay-placeholder": "Nos encantaría saber más detalles, buscamos mejorar tu experiencia",
+        "thanks-title" : "¡Muchas gracias {guestName}!",
+        "in-stay-comment-good-feedback" : "¡Nos alegra mucho saber que estás disfrutando de tu estancia! Agradecemos sinceramente tu feedback.",
+        "in-stay-comment-bad-feedback" : "Lamentamos que tu estancia no esté siendo la ideal ¿Te importaría darnos más detalles?",
+        "post-stay-comment-good-feedback" : "¡Nos alegra mucho saber que has disfrutado de tu estancia! Agradecemos sinceramente tu feedback.",
+        "post-stay-comment-bad-feedback" : "Lamentamos que tu estancia no haya sido la ideal ¿Te importaría darnos más detalles?",
+        "placeholder-bad-feedback" : "Cuentanos cómo podemos mejorar tu experiencia...",
     },
     "inbox": {
         "title": "Mensajes"
