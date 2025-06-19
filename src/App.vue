@@ -147,7 +147,7 @@ const formatImage = (payload) => {
 }
 
 // Observar cambios en hotelData para actualizar el favicon
-watch(() => hotelStore.hotelData, (hotelData) => {
+/* watch(() => hotelStore.hotelData, (hotelData) => {
   if (!hotelData) return;
 
   const faviconUrl = hotelData.favicon 
@@ -155,7 +155,7 @@ watch(() => hotelStore.hotelData, (hotelData) => {
     : '/assets/icons/1.TH.RECOMMEND.svg';
 
   useFavicon(faviconUrl);
-}, { immediate: true });
+}, { immediate: true }); */
 
 // Transition handlers
 const beforeLeave = (el) => {

@@ -8,6 +8,8 @@
         <HeroSectionRed />
         <BannersSection />
         <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <!--  como anclar app  al inicio -->
+        <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
@@ -139,6 +141,7 @@ import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
+import TutorialHome from './Components/TutorialHome.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -168,6 +171,7 @@ const placeCategories = ref(null)
 const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
+const showTutorial = ref(true)
 
 startLoading(SECTIONS.HOME.GLOBAL);
 
@@ -262,6 +266,9 @@ const showLeisureSection = computed(() => {
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
 });
 
+const closeAppTutorial = () => {
+    showTutorial.value = false
+}
 
 
 
