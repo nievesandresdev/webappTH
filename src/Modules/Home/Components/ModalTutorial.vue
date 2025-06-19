@@ -1,5 +1,5 @@
 <template>
-    <ModalNative :openProp="openProp" @closeModal="closeModal" width="340px">
+    <ModalNative :openProp="openProp" @closeModal="closeModal" width="340px" customClasses="'lato'">
         <div class="p-6">
             <h2 class="text-[18px] font-bold mb-6 lato">¡Acceso rápido a la WebApp!</h2>
             <p class="text-[14px] mb-3 lato font-normal">Añade un acceso rápido a la WebApp en el escritorio de tu móvil en 3 simples pasos.</p>
@@ -10,6 +10,7 @@
                 <button 
                     class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button bg-[#333333]"
                     @click="openOSModal('ios')"
+                    :class="{ 'opacity-50': deviceInfo.isAndroid }"
                 >
                     <img src="/assets/icons/apple.svg" class="sp:w-6 sp:h-6 h-5 w-5" alt="iPhone" />
                     iPhone
@@ -17,6 +18,7 @@
                 <button 
                     class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button bg-[#333333]"
                     @click="openOSModal('android')"
+                    :class="{ 'opacity-50': deviceInfo.isIOS }"
                 >
                     <img src="/assets/icons/android.svg" class="sp:w-6 sp:h-6 h-5 w-5" alt="Android" />
                     Android
@@ -30,7 +32,7 @@
             <img 
                 src="/assets/icons/android.svg" 
                 alt="Android Background" 
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 "
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48"
             />
             <div class="relative z-10">
                 <h2 class="text-[18px] font-bold mb-6 lato">¡Acceso rápido a la WebApp!</h2>
@@ -104,7 +106,24 @@
 
 <script setup>
 import ModalNative from '@/components/ModalNative.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { detectOS } from '@/utils/helpers';
+
+const showAndroidModal = ref(false);
+const showIOSModal = ref(false);
+const deviceInfo = ref({
+    isIOS: false,
+    isAndroid: false,
+    browser: 'other'
+});
+
+onMounted(() => {
+    deviceInfo.value = detectOS();
+    // Si el usuario está en móvil, mostrar directamente el modal correspondiente
+    if (deviceInfo.value.isIOS || deviceInfo.value.isAndroid) {
+        openOSModal(deviceInfo.value.isIOS ? 'ios' : 'android');
+    }
+});
 
 const props = defineProps({
     openProp: {
@@ -114,9 +133,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['closeModal']);
-
-const showAndroidModal = ref(false);
-const showIOSModal = ref(false);
 
 const closeModal = () => {
     emit('closeModal');
