@@ -10,7 +10,6 @@
                 <button 
                     class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button bg-[#333333]"
                     @click="openOSModal('ios')"
-                    :class="{ 'opacity-50': deviceInfo.isAndroid }"
                 >
                     <img src="/assets/icons/apple.svg" class="sp:w-6 sp:h-6 h-5 w-5" alt="iPhone" />
                     iPhone
@@ -18,7 +17,6 @@
                 <button 
                     class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button bg-[#333333]"
                     @click="openOSModal('android')"
-                    :class="{ 'opacity-50': deviceInfo.isIOS }"
                 >
                     <img src="/assets/icons/android.svg" class="sp:w-6 sp:h-6 h-5 w-5" alt="Android" />
                     Android
