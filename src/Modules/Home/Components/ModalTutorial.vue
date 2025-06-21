@@ -30,9 +30,9 @@
     <ModalNative :openProp="showAndroidModal" @closeModal="closeOSModal" width="340px" customClasses="'lato'">
         <div class="p-6 relative overflow-hidden">
             <img 
-                src="/assets/icons/android.svg" 
+                src="/assets/img/Android_logo_grey 1.svg" 
                 alt="Android Background" 
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48"
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[93px] h-[110px]"
             />
             <div class="relative z-10">
                 <h2 class="text-[18px] font-bold mb-6 lato">¡Acceso rápido a la WebApp!</h2>
@@ -68,9 +68,9 @@
     <ModalNative :openProp="showIOSModal" @closeModal="closeOSModal" width="340px" customClasses="'lato'">
         <div class="p-6 relative overflow-hidden">
             <img 
-                src="/assets/icons/apple.svg" 
+                src="/assets/img/Apple_logo_grey 1.svg" 
                 alt="Apple Background" 
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48"
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[93px] h-[110px]"
             />
             <div class="relative z-10">
                 <h2 class="text-[18px] font-bold mb-6 lato">¡Acceso rápido a la WebApp!</h2>
