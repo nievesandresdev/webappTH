@@ -1,45 +1,28 @@
 <template>
     <div 
-        :id="items.length > 1 ? 'facility-cross-start' : 'facility-cross-center'"
-        :class="{
-            'pl-2.5 sp:pl-4': items.length > 1,
-            'flex justify-center': !(items.length > 1)
-        }"
+        v-if="items.length > 0"  
+        id="facility-cross-mobile" 
+        class="flex gap-3 sp:gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
+        :class="{'justify-center': items.length == 1}"
     >
-        <Carousel 
-            :items-to-show="1.3"
-            snapAlign="start"
-            :mouse-drag="true"
-            :touch-drag="true"
-            :mouse-wheel="{ threshold: 20 }"
-            :clamp="true"
+        <CarouselCard
+            v-for="(item, index) in items"
+            :img-url="facilityStore.$loadImage(item?.image)"    
+            :data="item"
+            @click="goFacility(item.id, $utils.isMockup())"
         >
-            <Slide v-for="(item, index) in items" :key="index">
-                <CarouselCard
-                    :img-url="facilityStore.$loadImage(item?.image)"    
-                    :data="item"
-                    @mousedown="handleMouseDown"
-                    @mouseup="handleMouseUp(item.id, $utils.isMockup())"
-                    :items-length="items.length"
-                >
-                    <div class="flex items-center h-[22px] sp:h-[32px]">
-                        <p 
-                            v-if="item.title"
-                            class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] truncate-2t text-left"
-                            v-html="item.title[0].toUpperCase() + item.title.substring(1)"
-                        ></p>
-                    </div>  
-                </CarouselCard>
-            </Slide>
-        </Carousel>
+            <div class="flex items-center max-h-[22px] sp:max-h-[32px]">
+                <p 
+                    v-if="item.title"
+                    class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] truncate-2"
+                    v-html="item.title[0].toUpperCase() + item.title.substring(1)"
+                ></p>
+            </div>  
+        </CarouselCard>
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
 import CarouselCard from './CarouselCard.vue';
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide } from 'vue3-carousel';
-//
 import { useRouter } from 'vue-router';
 const router = useRouter();
 // STORE
@@ -57,77 +40,9 @@ const props =  defineProps({
     }
 })
 
-let isDragging = ref(false);
-// const screenWidth = ref(window.innerWidth)
-// const itemsToShow = ref(1.32)
-
-onMounted(() => {
-    // if(screenWidth.value < 300){
-    //     itemsToShow.value = 1.22
-    // }else if(screenWidth.value > 300 && screenWidth.value < 340){
-    //     itemsToShow.value = 1.165
-    // }else{
-    //     itemsToShow.value = 1.332
-    // }
-})
-
-const handleMouseDown = () => {
-    isDragging.value = false;
-    document.addEventListener('mousemove', handleMouseMove);
-};
-
-const handleMouseMove = () => {
-    isDragging.value = true; // Si hay movimiento, es un arrastre.
-};
-
-const handleMouseUp = (facilityId, isMockup) => {
-    document.removeEventListener('mousemove', handleMouseMove);
-    if (!isDragging.value) { // Solo si no hubo arrastre.
-        goFacility(facilityId, isMockup);
-    }
-    isDragging.value = false;
-};
-
 function goFacility (facility,isMockup) {
     if(!isMockup){
         router.push({name:'ShowFacility',params:{id:facility}})
     }
 }
-
 </script>
-<style>
-#facility-cross-start .carousel__track {
-    justify-content: start;
-}
-
-#facility-cross-center .carousel__track {
-    justify-content: center !important;
-}
-
-@media (max-width: 299px) {
-    #facility-cross-start .carousel__viewport,
-    #facility-cross-center .carousel__viewport {
-        padding-bottom: 8px;
-    }
-    #facility-cross-start .carousel__viewport {
-        padding-right: 10px;
-    }
-    #facility-cross-start .carousel__track{
-        gap: 10px;
-    }
-}
-@media (min-width: 300px) {
-    #facility-cross-start .carousel__viewport,
-    #facility-cross-center .carousel__viewport {
-        padding-bottom: 16px;
-    }
-    #facility-cross-start .carousel__viewport {
-        padding-right: 20px;
-    }
-    #facility-cross-start .carousel__track{
-        gap: 16px;
-    }
-}
-
-
-</style>

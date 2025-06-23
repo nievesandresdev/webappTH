@@ -3,8 +3,8 @@
         width="343px" @closeModal="queryStore.$setIsOpenPopUp(false)" :openProp="queryStore.isOpenPopUp"
         customClasses="bottom-0"
         top="0"
-    >   
-        <div v-if="queryStore.currentQuery && !queryStore.currentQuery.answered" class="p-6">
+    > 
+        <div v-if="queryStore.currentQuery && queryStore.hasPendingQuery" class="p-6">
             <div class="flex justify-between items-center">
                 <h1 class="lato text-[20px] font-bold leading-[28px]">
                     <template v-if="$currentPeriod() == 'post-stay'">
@@ -34,15 +34,22 @@
         <template v-else>
             <div 
                 class="p-6" 
-                v-if="queryStore.currentQuery?.qualification !== 'GOOD' && queryStore.currentQuery?.qualification !== 'VERYGOOD'"
+                v-if="showThanksMsg"
             >
-                <IconsQueryBadResponse />
+                <IconsQueryBadResponse 
+                    :period="queryStore.currentQuery?.period"
+                    :qualification="queryStore.currentQuery?.qualification"
+                />
             </div>
             <div class="pt-3 px-4 pb-6" v-else>
                 <div class="mb-2">
-                    <img src="/assets/icons/WA.close2.svg" class="w-[24px] h-[24px] ml-auto">
+                    <img src="/assets/icons/WA.close2.svg" class="w-[24px] h-[24px] ml-auto" @click="queryStore.$setIsOpenPopUp(false)">
                 </div>
-                <LinksReview inModal/>
+                <LinksReview 
+                    :period="period"
+                    :qualification="queryStore.currentQuery?.qualification"
+                    inModal
+                />
             </div>
         </template>
         
@@ -80,19 +87,38 @@ provide('EditPeriod',EditPeriod);
 provide('EditComment',EditComment);
 provide('EditQualification',EditQualification);
 
+const period = computed(() => {
+    return $currentPeriod();
+})
 
+const modifiedPeriod = computed(() => {
+    let modifiedString;
+    
+    if(period.value){
+        modifiedString = period.value.replace("-", "_")
+    }
+    return modifiedString;
+})
 
+const keyPeriodAndFeedback = computed(() => {
+    if(!queryStore.currentQuery?.qualification) return '';
+    return modifiedPeriod.value+'_'+queryStore.currentQuery?.qualification.toLowerCase();
+})
 
+const showThanksMsg = computed(() => {
+    if(period.value == 'post-stay' && queryStore.currentQuery?.qualification == 'VERYGOOD'){
+        return false;
+    }
+    let calculated = (
+        (['WRONG','VERYWRONG','NORMAL'].includes(queryStore.currentQuery?.qualification)) ||
+        (['GOOD','VERYGOOD'].includes(queryStore.currentQuery?.qualification)) && !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']
+    )
+    return calculated;
+})
 
-// const hotelData = computed(() => hotelStore.hotelData);
+// const showLinksReview = computed(() => {
+//     let calculated = (['GOOD','VERYGOOD'].includes(queryStore.currentQuery?.qualification)) && querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']
+//     return calculated;
+// })
 
-// onMounted(async () => {
-
-// });
-
-// watch(hotelData, (valueCurrent, valueOld) => {
-//     if (!valueOld && valueCurrent) {
-//         loadData();
-//     }
-// }, { immediate: true });
 </script>

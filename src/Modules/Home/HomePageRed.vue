@@ -7,7 +7,9 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <ButtonsSection />
+        <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <!--  como anclar app  al inicio -->
+        <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
@@ -25,7 +27,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="mt-2 sp:mt-4">
+                <div>
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
                 </div>
             </section>
@@ -46,7 +48,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="mt-2 sp:mt-4">
+                <div>
                     <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
             </section>
@@ -67,7 +69,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="mt-2 sp:mt-4">
+                <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
                 </div>
             </section>
@@ -88,7 +90,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </a>
                 </div>
-                <div class="mt-2 sp:mt-4">
+                <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
                 </div>
             </section>
@@ -106,7 +108,7 @@
                         {{ $utils.capitalize($t('home.btn-see-all')) }}
                     </router-link>
                 </div>
-                <div class="mt-2 sp:mt-4">
+                <div>
                     <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
                 </div>
             </section>
@@ -117,6 +119,7 @@
 
     <!-- forms -->
     <ModalSession />
+    <FakeModalMsgQuery />
 </template>
 <script setup>
 import { onMounted, computed, ref, watch, watchEffect } from 'vue';
@@ -124,6 +127,10 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
+import { useHead } from '@vueuse/head'
+import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
+import { useFavicon } from '@/composables/useFavicon'
+
 //sections
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
@@ -134,6 +141,7 @@ import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
+import TutorialHome from './Components/TutorialHome.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -163,8 +171,19 @@ const placeCategories = ref(null)
 const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
+const showTutorial = ref(true)
 
 startLoading(SECTIONS.HOME.GLOBAL);
+
+useHead({
+    title: 'The Hoster',
+    meta: [
+        { name: 'description', content: 'The Hoster' },
+        { name: 'og:title', content: 'The Hoster' },
+    ]
+})
+
+useFavicon('/assets/icons/1.TH.RECOMMEND.svg')
 
 onMounted(async () => {
     // loadCrossellings();
@@ -247,6 +266,9 @@ const showLeisureSection = computed(() => {
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
 });
 
+const closeAppTutorial = () => {
+    showTutorial.value = false
+}
 
 
 

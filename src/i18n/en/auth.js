@@ -7,7 +7,8 @@ export default{
         "text-error": "The email format entered is incorrect",
         "continue-button": "Continue",
         "continue-google": "Continue with Google",
-        "continue-fb": "Continue with Facebook"
+        "continue-fb": "Continue with Facebook",
+        "unaffiliated-mail": "Oh no! Sorry for the inconvenience; to sign in with Facebook you must have an email address associated with your Facebook account."
     },
     "log": {
         "title": "Log In",

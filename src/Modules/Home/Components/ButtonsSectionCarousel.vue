@@ -1,109 +1,44 @@
 <template>
     <div class="" id="carousel-buttons">
         <Carousel :items-to-show="1">
-            <Slide key="checkin">
+            <Slide key="slide1">
                 <div class="px-2 sp:px-6 flex items-start justify-between w-full">
-                    <!-- button checkin -->
-                    <router-link v-if="showCheckinButton" :to="{name: 'Guests'}" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="checkin-button"
-                            iconUrl="/assets/icons/WA.checkin.user.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.checkin') }}</span>
-                    </router-link>
-                    <!-- button call -->
-                    <div v-if="showPhoneButton" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="call-button"
-                            iconUrl="/assets/icons/WA.llamar.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="goCall"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.call') }}</span>
-                    </div>
-                    <!-- button wifi -->
-                    <div v-if="showWifiButton" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="wifi-button"
-                            iconUrl="/assets/icons/WA.wifi.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="isOpenWifi"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.wifi') }}</span>
-                    </div>
-                    <!-- button rules --> 
-                    <div v-if="showRulesButton" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="rules-button"
-                            iconUrl="/assets/icons/WA.normas.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="isOpenRules"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.rules') }}</span>
-                    </div>
-                    <!-- button refered -->
-                    <div v-if="showReferedButton && activeButtonsCount == 5" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="refered-button"
-                            iconUrl="/assets/icons/WA.referido.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="openModalRewards"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-                    </div>
-                    <!-- button refered -->
-                    <div v-if="showReferedButton2 && activeButtonsCount == 5" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="refered-button"
-                            iconUrl="/assets/icons/WA.referente.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="openModalRewards"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
+                    <div 
+                        v-for="button in buttonsMap.slice(0, 4)"
+                        :key="button.name"
+                        class="block max-w-[76px]"
+                    >
+                        <template v-if="button.show">
+                            <RoundedButton
+                                classContainer="mx-auto"
+                                :id="`call-button-${button.name}`"
+                                :iconUrl="button.iconUrl"
+                                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                                @click="handleAction(button.action)"
+                            />
+                            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t(button.translate) }}</span>
+                        </template>
                     </div>
                 </div>
             </Slide>
-            <Slide key="refered">
-                <div class="px-2 sp:px-6 flex items-start w-full gap-[36px]">
-                    <!-- button refered -->
-                    <div v-if="showReferedButton && activeButtonsCount > 5" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="refered-button"
-                            iconUrl="/assets/icons/WA.referido.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="openModalRewards"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
+            <Slide key="slide12">
+                <div class="px-2 sp:px-6 flex items-start w-full gap-6">
+                    <div 
+                        v-for="button in buttonsMap.slice(4)"
+                        :key="button.name"
+                        class="block max-w-[76px]"
+                    >
+                        <template v-if="button.show">
+                            <RoundedButton
+                                classContainer="mx-auto"
+                                :id="`call-button-${button.name}`"
+                                :iconUrl="button.iconUrl"
+                                sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
+                                @click="handleAction(button.action)"
+                            />
+                            <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t(button.translate) }}</span>
+                        </template>
                     </div>
-                    <!-- button refered -->
-                    <div v-if="showReferedButton2 && activeButtonsCount > 5" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="refered-button"
-                            iconUrl="/assets/icons/WA.referente.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                            @click="openModalRewards"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.refered') }}</span>
-                    </div>
-
-                    <router-link v-if="showReserveButton" :to="{name: 'ReservationStay'}" class="block max-w-[76px]">
-                        <RoundedButton
-                            classContainer="mx-auto"
-                            id="reserve-button"
-                            iconUrl="/assets/icons/WA.bookyournextstay.svg"
-                            sizeIcons="w-5 sp:w-8 h-5 sp:h-8"
-                        />
-                        <span class="text-center lato text-[9px] sp:text-xs font-bold leading-[16px] block mt-1 sp:mt-2">{{ $t('home.buttons.reserve') }}</span>
-                    </router-link>
                 </div>
             </Slide>
             <template #addons>
@@ -118,21 +53,22 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination } from 'vue3-carousel';
 import RoundedButton from '@/components/Buttons/RoundedButton.vue';
 
-const emit = defineEmits(['goCall','isOpenWifi','isOpenRules','openModalRewards'])
+const emit = defineEmits(['goCall','openModalWifi','openModalRules','openModalRewards','goReserve','goCheckin'])
 
-const showCheckinButton = inject('showCheckinButton')
-const showRulesButton = inject('showRulesButton')
-const showWifiButton = inject('showWifiButton')
-const showPhoneButton = inject('showPhoneButton')
-const showReserveButton = inject('showReserveButton')
-const showReferedButton = inject('showReferedButton')
-const showReferedButton2 = inject('showReferedButton2')
-const activeButtonsCount = inject('activeButtonsCount')
+const buttonsMap = inject('buttonsMap')
+
 
 const goCall = () => {emit('goCall')}
-const isOpenWifi = () => {emit('isOpenWifi')}
-const isOpenRules = () => {emit('isOpenRules')}
+const openModalWifi = () => {emit('openModalWifi')}
+const openModalRules = () => {emit('openModalRules')}
 const openModalRewards = () => {emit('openModalRewards')}
+const goReserve = () => {emit('goReserve')}
+const goCheckin = () => {emit('goCheckin')}
+
+const handleAction = (action) => {
+    console.log('test handleAction', action)
+    action();
+}   
 
 </script>
 <style>

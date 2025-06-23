@@ -10,6 +10,9 @@ export default {
       "text-search-not-found": "Pas je zoekopdracht aan of probeer een andere categorie",
       "btn-load-more": "Meer laden"
     },
+    "share": {
+        "message": "Registreer je bij onze verblijf en bekijk dit plekje in onze {type} catalogus via de WebApp-link"
+    },
     "results": "Geen resultaten...",
     "seaching": "Bezig met zoeken...",
     "categorySearch": "gevonden",

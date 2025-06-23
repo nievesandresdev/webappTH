@@ -4,12 +4,11 @@
         <HeadInChain 
             :text="$t('stay.reservation.title')" 
             go-back
-            @go-back="goProfilePage"
+            @go-back="goBack"
         />
     </div>
     <!-- body -->
     <div class="py-6 px-4">
-        
         <!-- estos mensajes se muestran si el hotel es tipo chain -->
         <h1 v-if="typeChainHotel" class="lato text-lg font-bold leading-[20px]">{{$t('stay.reservation.title-page')}}</h1>
         <h4 v-if="typeChainHotel && !loading" class="lato text-base font-bold leading-[20px] mt-4">{{hotels.length ?? 0}} {{$t('auth.hotel-list.amount-text')}}</h4>
@@ -141,6 +140,8 @@ import ModalNative from '@/components/ModalNative.vue'
 //store
 import { useChainStore } from '@/stores/modules/chain';
 const chainStore = useChainStore();
+import { useHistoryStore } from '@/stores/modules/history';
+const historyStore = useHistoryStore()
 
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
@@ -184,8 +185,9 @@ onMounted(async() => {
     loading.value = false
 })
 
-async function goProfilePage(){
-    router.push({ name: 'Profile' });
+async function goBack(){
+    historyStore.$goBack(router);
+    // router.push({ name: 'Profile' });
 }
 
 const modalInfoReservation = (hotel) => {

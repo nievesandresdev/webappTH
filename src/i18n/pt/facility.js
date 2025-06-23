@@ -15,6 +15,9 @@ export default {
                 "Sábado": "Sábado",
                 "Domingo": "Domingo"
             }
+        },
+        "share": {
+            "message": "Registe-se na nossa estância e dê uma olhada nesta instalação do nosso {type} através do seu link WebApp"
         }
     }
 }

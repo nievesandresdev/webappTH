@@ -15,7 +15,7 @@
 
             <div class="flex flex-col  mt-1 sp:mt-2 px-2 sp:px-4">
               <h1 class="lato text-[14px]  sp:text-[18px] font-bold text-[#333]">
-                {{ hotelData?.name }}
+                {{ hotelData?.name }}  
               </h1>
 
 
@@ -113,6 +113,9 @@ import { useHotelStore } from '@/stores/modules/hotel'
 import { useLocaleStore } from '@/stores/modules/locale'
 import ShareStayModal from '@/Modules/User/Components/ShareStayModal.vue'
 import CarouselFacilities from '@/Modules/Home/Components/CarouselFacilitiesRed.vue'
+import { useI18n } from 'vue-i18n';
+import { useHead } from '@vueuse/head';
+import { useFavicon } from '@/composables/useFavicon'
 // import TransitionBook from '@/components/Transition/TransitionBook.vue';
 
 import router from '@/router'
@@ -140,6 +143,8 @@ const isModalOpen = ref(false);
 const CHARACTER_LIMIT = 185;
 
 
+
+
 const hotelStore = useHotelStore()
 
 const isExpanded = ref(false)
@@ -161,6 +166,15 @@ const handleCall = () => {
     console.warn('Número de teléfono no disponible.')
   }
 }
+
+/* useHead({
+  title: computed(() => hotelInfo.value.name),
+  meta: [
+    { name: 'description', content: computed(() => hotelInfo.value.description) },
+  ]
+})
+
+useFavicon('/assets/icons/search.svg') */
 
 const handleWifi = async() => {
   modalWifi.value = true

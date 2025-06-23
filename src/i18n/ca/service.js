@@ -38,5 +38,8 @@ export default {
     "text-search-found": "Serveis trobats en activitats",
     "list-page": {},
     "detail-page": {}
+  },
+  "share": {
+    "message": "Regístrate en nuestra estancia i fes un cop d'ull a aquest servei del nostre {type} a través del seu enllaç WebApp"
   }
 }

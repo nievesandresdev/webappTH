@@ -7,6 +7,10 @@
       show-button-back
       :images="placeData?.place_images?.map(item=> placeStore.$loadImage(item)) ?? []"
       :from="'places'"
+      :nameShared="placeData?.title"
+      :typeShared="hotelData.type"
+      :msgShared="msgShared"
+      show-button-shared
     />
     <div class="sp:py-[24px] py-[10px] no-scrollbar" :class="{
         'pb-[50px] sp:pb-[80px]' : placeData?.web_link || placeData?.phone_wheretoeat || placeData?.url_menu || placeData?.email_wheretoeat,
@@ -67,7 +71,7 @@
                 class="text-[9px] sp:text-sm font-medium"
                 style="font-family: 'Lato', sans-serif !important; font-style: italic;"
             >
-                {{ `“${placeData?.recomendation_language_current}”` }}
+                {{ `"${placeData?.recomendation_language_current}"` }}
             </p>
         </div>
         <div class="mt-[12px] sp:mt-[24px]">
@@ -221,8 +225,9 @@ import { onMounted, ref, nextTick, provide, computed, watch } from 'vue';
 import ImageSlider from '@/components/ImageSlider.vue';
 import DetailPageMap from './DetailPageMap.vue';
 import LoadPage from '@/shared/LoadPage.vue';
-
+import { useHead } from '@vueuse/head';
 import $utils from '@/utils/utils';
+
 
 import { usePlaceStore } from '@/stores/modules/place';
 
@@ -235,6 +240,10 @@ import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
 
 const placeStore = usePlaceStore();
+
+const msgShared = computed(() => {
+    return t('place.share.message', { type: hotelData.value.type });
+});
 
 const props = defineProps({
   paramsRouter: {
@@ -253,6 +262,14 @@ const loading = ref(true);
 
 // COMPUTED
 const hotelData = computed(() => hotelStore.hotelData);
+
+//useHead
+useHead({
+    title: 'Destinos',
+    meta: [
+        { name: 'description', content: 'Destinos' }
+    ]
+});
 
 onMounted(async () => {
 

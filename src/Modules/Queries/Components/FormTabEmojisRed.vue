@@ -198,7 +198,7 @@
   }
 
   function textEmojiClasess(face) {
-    return form.type && form.type == face ? 'htext-black-100' : 'text-[#777]';
+    return form.type && form.type !== face ? 'text-[#777]' : 'htext-black-100';
   }
   
   watch(form, (newType) => {

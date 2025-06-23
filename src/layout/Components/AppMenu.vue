@@ -259,7 +259,7 @@ const contactMenuItems = computed(() => {
             iconDefault: 'WA.MENU.DEFAULT.MENSAJES',
             iconSelected: 'WA.MENU.SELECTED.MENSAJES',
             to: null,
-            routeNameIncludes: ['Contact'],
+            routeNameIncludes: ['Contact','Chat'],
             type : 'button',
             action: openContactModal
         }]

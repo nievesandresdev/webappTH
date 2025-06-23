@@ -5,7 +5,16 @@
         <PageTransitionGlobal module="facility" name="facility_detail" component-name="SkeletomDetail">
 
             <div class="bg-[#FAFAFA] mb-[48px]">
-                <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" :imgDefault="hotelData?.image"  showButtonBack :from="'facility'" />
+                <ImageSlider 
+                    :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" 
+                    :imgDefault="hotelData?.image"  
+                    showButtonBack 
+                    :from="'facility'" 
+                    showButtonShared 
+                    :nameShared="facility.title"
+                    :typeShared="hotelData.type" 
+                    :msgShared="msgShared"
+                />
                     <!-- v-if="facility.ad_tag" -->
                 <div
                     v-if="facility.ad_tag"
@@ -69,11 +78,23 @@
 </template>
 
 <script setup>
-    import { onMounted, defineProps, ref,computed, nextTick } from 'vue';
+    import { onMounted, defineProps, ref, computed, nextTick } from 'vue';
     import ImageSlider from '@/components/ImageSlider.vue';
     import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
     import { useFacilityStore } from '@/stores/modules/facility.js';
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useI18n } from 'vue-i18n';
+    import { useHead } from '@vueuse/head';
+
+    const { t: $t } = useI18n();
+
+    //useHead
+    useHead({
+        title: 'Instalaciones',
+        meta: [
+            { name: 'description', content: 'Instalaciones' }
+        ]
+    });
 
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";
@@ -86,6 +107,10 @@
     const hotelStore = useHotelStore();
 
     const hotelData = computed(() => hotelStore.hotelData);
+
+    const msgShared = computed(() => {
+        return $t('facility.detailPage.share.message', { type: hotelData.value.type });
+    });
 
     const facilityStore = useFacilityStore();
 

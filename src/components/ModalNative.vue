@@ -23,7 +23,7 @@
   </template>
   
   <script setup>
-  import { inject } from 'vue';
+  import { inject, watch, onUnmounted } from 'vue';
   
   const emit = defineEmits(['closeModal'])
 
@@ -43,6 +43,16 @@
   });
   
   const modalNativeIsOpen = inject('modalNativeIsOpen');
+
+  watch(
+    () => (modalNativeIsOpen ? modalNativeIsOpen.value : props.openProp),
+    (isOpen) => {
+      document.body.style.overflow = isOpen ? 'hidden' : ''
+    },
+    { immediate: true }
+  )
+
+  onUnmounted(() => (document.body.style.overflow = ''))
 
   function close(){
     if(modalNativeIsOpen){
