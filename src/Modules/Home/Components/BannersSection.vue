@@ -15,7 +15,7 @@
         />
     </div>
 
-    <div class="flex items-center" :class="{'flex-row overflow-x-auto px-3 sp:px-4 gap-2 no-scrollbar': showSliderBanner, 'flex-col': !showSliderBanner}">
+    <div v-if="!stayStore.stayData.isDemo" class="flex items-center" :class="{'flex-row overflow-x-auto px-3 sp:px-4 gap-2 no-scrollbar': showSliderBanner, 'flex-col': !showSliderBanner}">
         <!-- banner query post stay -->
         <div 
             v-if="queryStore.hasPendingQuery && $currentPeriod() == 'post-stay'" 
@@ -50,7 +50,7 @@
         </div>
     </div>
     <!-- banner query in stay -->
-    <div v-if="queryStore.hasPendingQuery && $currentPeriod() == 'in-stay'" class="px-3 sp:px-4 mt-4 sp:mt-6">
+    <div v-if="queryStore.hasPendingQuery && $currentPeriod() == 'in-stay' && !stayStore.stayData.isDemo" class="px-3 sp:px-4 mt-4 sp:mt-6">
         <div 
             class="flex items-center w-full h-[50px] sp:h-[70px] rounded-[10px] bg-[linear-gradient(91deg,#0783FF_0.21%,#025CB6_39.83%,#0B6357_99.27%)] shadow-guest overflow-hidden"
             @click="queryStore.$setIsOpenPopUp(true)"

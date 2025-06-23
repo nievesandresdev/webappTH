@@ -138,7 +138,7 @@ onMounted(async() => {
     stopLoading(SECTIONS.QUERY.GLOBAL);
     // requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
-    requestTo.value = requestSettingsStore.requestData.request_to;
+    requestTo.value = requestSettingsStore.requestData?.request_to;
     getCombinedList();
     
 })

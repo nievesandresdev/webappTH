@@ -49,7 +49,7 @@
 
         <div class="w-full h-[1px] bg-[#E9E9E9] mt-4"></div>
         <!-- seccion buzon-->
-        <div class="flex items-center mt-4 sp:gap-2 gap-1" @click="handleInbox">
+        <div class="flex items-center mt-4 sp:gap-2 gap-1" @click="handleInbox" v-if="!stayStore.stayData.isDemo">
             <img src="/assets/icons/WA.inbox.svg" class="sp:w-6 sp:h-6 w-4 h-4" />
             <span class="sp:text-[16px] text-[12px] font-medium lato leading-[20px] mr-auto">{{ $t('profile.inbox.title') }}</span>
             <BaseBadge
