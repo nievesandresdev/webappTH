@@ -116,9 +116,9 @@ const typeServicesEnabled = computed(() => {
     if (hotelData.value.show_confort) typeServices.push('CONFORT');
     if (hotelData.value.show_transport) typeServices.push('TRANSPORT');
     if (hotelData.value.show_experiences) typeServices.push('ACTIVITY');
-    console.log(hotelData.value.show_confort, 'show_confort')
-    console.log(hotelData.value.show_transport, 'show_transport')
-    console.log(hotelData.value.show_experiences, 'show_experiences')
+    // console.log(hotelData.value.show_confort, 'show_confort')
+    // console.log(hotelData.value.show_transport, 'show_transport')
+    // console.log(hotelData.value.show_experiences, 'show_experiences')
     return typeServices;
 });
 const typeServicesFull = computed(() => {
