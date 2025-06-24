@@ -134,9 +134,9 @@ async function loadItems () {
     let query = {...filterNonNullAndNonEmpty(formFilter)}
     const response = await serviceStore.$apiDetAllConforApi({page: page.value,...query});
     if (response.ok) {
-        Object.assign(paginateData, response.data.paginate);
+        Object.assign(paginateData, response.data.confortServicesCollection.paginate);
         page.value = paginateData.current_page;
-        servicesData.value = [...servicesData.value, ...response.data.data];
+        servicesData.value = [...servicesData.value, ...response.data.confortServicesCollection.data];
     }
     firstLoad.value = false;
     isloadingForm.value = false;
