@@ -1,8 +1,8 @@
 <template>
     <div v-if="featuredPlaces.length > 0" class="mb-4 mx-3 sp:mx-4">
         <!-- Header Section with Yellow Background -->
-        <div class="bg-yellow-400 text-black px-4 py-3 rounded-t-[16px] sp:rounded-t-[20px]">
-            <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
+        <div class="bg-[#FFD700] text-black px-2 py-3 rounded-t-[10px]">
+            <h2 class="lato text-[16px] lato  font-bold leading-[12px] ">
                 Sitios exclusivos para ti
             </h2>
         </div>
@@ -10,7 +10,7 @@
         <!-- Slider Container -->
         <div class="relative">
             <!-- Progress Lines (Líneas de progreso) - FIJAS SOBRE TODO -->
-            <div v-if="featuredPlaces.length > 1" class="absolute top-4 left-4 right-4 z-30">
+            <div v-if="featuredPlaces.length > 1" class="absolute top-2 left-4 right-4 z-30">
                 <div class="flex gap-2">
                     <button
                         v-for="(place, index) in featuredPlaces"
@@ -59,8 +59,8 @@
                             <!-- Content Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                             
-                            <!-- Place Info - Bottom overlay -->
-                            <div class="absolute bottom-0 left-0 right-0 p-3 sp:p-4 text-white">
+                            <!-- Place Info - Bottom overlay with background -->
+                            <div class="absolute bottom-0 left-0 right-0 py-3 px-2 text-white" style="background-color: rgba(51, 51, 51, 0.5);">
                                 <div class="flex items-center gap-3">
                                     <!-- Category Icon -->
                                     <img 
@@ -77,9 +77,9 @@
                                     >
                                     
                                     <!-- Title and Distance -->
-                                    <div class="flex-1">
-                                        <h3 class="text-sm sp:text-base font-bold line-clamp-1 text-white" v-html="place.title"></h3>
-                                        <p class="text-xs sp:text-sm text-white opacity-90">{{ place.distance }} km</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-[#FAFAFA] font-bold line-clamp-2 text-[16px] lato" v-html="place.title"></span>
+                                        <p class="text-[#FAFAFA] text-[14px] lato font-bold">{{ place.distance }} km</p>
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@ const handleUserInteraction = () => {
 </script>
 
 <style scoped>
-.line-clamp-1 {
+.line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
