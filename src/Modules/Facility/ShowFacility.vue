@@ -44,6 +44,16 @@
                         >
                             {{ isExpanded ? 'Ver menos' : 'Ver más' }}
                         </p>
+                        
+                        <button
+                            :disabled="$utils.isMockup()"
+                            v-if="facility.text_document_button && facility.document != 'no_add_document'"
+                            class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
+                            :style="{backgroundColor: chainStore.$bgColor0}"
+                            @click="downloadDocument(facility)"
+                        >
+                            {{ facility.text_document_button }}
+                        </button>
                     </div>
 
                     <div  class="flex flex-col w-full p-2 sp:p-4 gap-2 sp:gap-4 border border-[#E9E9E9] rounded-[10px] bg-gradient-h mt-2 sp:mt-4">
@@ -51,6 +61,7 @@
                         <p v-if="facility.always_open" class="lato text-[8px] sp:text-sm font-bold">{{ $t('facility.detailPage.sectionSchedules.openAlways') }}</p>
                         
                         <template v-else-if="activeWeekdays.length">
+                            
                             <!-- horarios -->
                             <div class="flex flex-col">
                                 <div v-for="(day, index) in activeWeekdays" :key="index">
@@ -85,8 +96,11 @@
     import { useHotelStore } from '@/stores/modules/hotel';
     import { useI18n } from 'vue-i18n';
     import { useHead } from '@vueuse/head';
+    import { useChainStore } from '@/stores/modules/chain';
 
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
     const { t: $t } = useI18n();
+    const chainStore = useChainStore();
 
     //useHead
     useHead({
@@ -158,6 +172,22 @@
 
     const toggleDescription = () => {
         isExpanded.value = !isExpanded.value;
+    }
+
+    const formatDocument = (url) => {
+        if (!url) return '';
+        if (url.includes('https://')) return url; // Si es una URL completa, la retornamos tal cual
+        return `${URL_STORAGE}/storage/facility_documents/${url}`; // Si no, construimos la ruta al documento
+    }
+
+    const downloadDocument = (facility) => {
+        if (facility.document === 'link_document') {
+            window.open(facility.link_document_url, '_blank');
+        }
+        if (facility.document === 'upload_file') {
+            const documentUrl = formatDocument(facility.file_document_url);
+            window.open(documentUrl, '_blank');
+        }
     }
 </script>
 
