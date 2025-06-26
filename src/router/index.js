@@ -178,7 +178,7 @@ router.beforeEach((to, from, next) => {
     title = to.meta.getDynamicTitle()
   } else {
     // Si no, usar el título estático o el título por defecto
-    title = to.meta.title || 'The White Lotus'
+    title = to.meta.title || 'The Hoster'
   }
 
   // Establecer el título del documento

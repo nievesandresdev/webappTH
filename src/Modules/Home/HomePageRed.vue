@@ -32,6 +32,8 @@
                 </div>
             </section>
 
+            <!-- <pre>{{ crossellingPlacesData?.crosselling_places_whatvisit?.filter(place => place.recommended || place.place_featured) }}</pre> -->
+
             <!-- what visit carousel -->
             <section 
                 v-if="showWhatvisitSection"
@@ -73,6 +75,8 @@
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
                 </div>
             </section>
+
+            
 
             <!-- leisure carousel -->
             <section 
