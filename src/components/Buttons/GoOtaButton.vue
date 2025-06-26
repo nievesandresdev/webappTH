@@ -56,32 +56,32 @@
     })
 
     async function loadOtaUrl () {
-        // console.log('test code',hotelData?.code)
+        //
         let dataOta = await reviewStore.$getDataOTAS({ googleMapCid : hotelData?.code })
-        // console.log('test dataOta',dataOta)
         let detailHotel = await reviewStore.$getHotelDetail({ ota: 'GOOGLE', googleMapCid : hotelData?.code })
-        // console.log('test detailHotel',detailHotel)
         let searchTripadvisorData = dataOta.otas.find(item => item.ota == "TRIPADVISOR")
-        // console.log('test searchTripadvisorData',searchTripadvisorData)
+        let searchExpediaData = dataOta.otas.find(item => item.ota == "EXPEDIA")
+        //
         if(ota == "google" && detailHotel.hotel){
             let placeid = detailHotel.hotel.placeId;
             urlReview.value = placeid ? `https://search.google.com/local/writereview?placeid=${placeid}` : ''
         }
-        
         if(ota == "tripadvisor" && searchTripadvisorData){
             urlReview.value = searchTripadvisorData?.url ? `https://www.tripadvisor.es/UserReviewEdit-${matchUrl(searchTripadvisorData?.url)}` : ''
         }
-
         if(ota == "booking"){
             urlReview.value = "https://secure.booking.com/reviewmanage.html";
             if(screen.width > 1020){
                 urlReview.value = "https://secure.booking.com/reviewtimeline.html";
             }
         }
+        if(ota == "expedia"){
+            urlReview.value = searchExpediaData?.url ? searchExpediaData?.url : 'https://www.expedia.com/user/login';
+        }
     }
 
     function goOta () {
-        console.log('test urlReview',urlReview.value)
+        // console.log('test urlReview',urlReview.value)
         if(urlReview.value){
             window.open(urlReview.value, '_blank')
         }

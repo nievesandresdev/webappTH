@@ -25,9 +25,9 @@
             <div v-if="otasEnabled?.booking">
                 <GoOtaButton ota="booking" :textButton="$t('query.form.continueIn')+' Booking'"/>
             </div>
-            <!-- <div v-if="otasEnabled?.expedia">
-                <GoOtaButton ota="expedia" textButton="Continuar en Expedia"/>
-            </div> -->
+            <div v-if="otasEnabled?.expedia">
+                <GoOtaButton ota="expedia" :textButton="$t('query.form.continueIn')+' Expedia'"/>
+            </div>
             <div v-if="otasEnabled?.tripadvisor">
                 <GoOtaButton ota="tripadvisor" :textButton="$t('query.form.continueIn')+' Tripadvisor'" />
             </div>
