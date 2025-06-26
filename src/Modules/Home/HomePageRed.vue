@@ -32,7 +32,11 @@
                 </div>
             </section>
 
-            <!-- <pre>{{ crossellingPlacesData?.crosselling_places_whatvisit?.filter(place => place.recommended || place.place_featured) }}</pre> -->
+            <!-- Featured Places Slider -->
+            <FeaturedPlacesSlider 
+                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
+                :places="crossellingPlacesData.crosselling_places_whatvisit"
+            />
 
             <!-- what visit carousel -->
             <section 
@@ -142,6 +146,7 @@ import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
+import FeaturedPlacesSlider from './Components/FeaturedPlacesSlider.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
