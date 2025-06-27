@@ -108,12 +108,11 @@ const placeStore = usePlaceStore();
 
 const currentSlide = ref(0);
 const isPaused = ref(false);
-let autoSlideInterval = null;
-
-// Variables para el manejo del swipe táctil
 const touchStartX = ref(0);
-const touchEndX = ref(0);
-const isSwiping = ref(false);
+const touchStartY = ref(0);
+let isScrollingVertically = false;
+let isScrollingHorizontally = false;
+let autoSlideInterval = null;
 
 // Computed para filtrar lugares recomendados y destacados
 const featuredPlaces = computed(() => {
@@ -183,53 +182,61 @@ onUnmounted(() => {
     stopAutoSlide();
 });
 
-// Funciones para manejo de swipe táctil
+// Touch handlers mejorados
 const handleTouchStart = (e) => {
     touchStartX.value = e.touches[0].clientX;
-    isSwiping.value = true;
-    // Pausar auto-slide durante el toque
+    touchStartY.value = e.touches[0].clientY;
+    isScrollingVertically = false;
+    isScrollingHorizontally = false;
     stopAutoSlide();
 };
 
 const handleTouchMove = (e) => {
-    if (!isSwiping.value) return;
-    
-    // Prevenir scroll vertical si el movimiento es principalmente horizontal
+    if (!touchStartX.value || !touchStartY.value) return;
+
     const touchCurrentX = e.touches[0].clientX;
+    const touchCurrentY = e.touches[0].clientY;
     const deltaX = Math.abs(touchCurrentX - touchStartX.value);
-    const deltaY = Math.abs(e.touches[0].clientY - e.touches[0].clientY);
+    const deltaY = Math.abs(touchCurrentY - touchStartY.value);
+
+    // Si aún no hemos determinado la dirección
+    if (!isScrollingVertically && !isScrollingHorizontally) {
+        // Si el movimiento es más horizontal que vertical (usando un ángulo de 30 grados)
+        if (deltaX > deltaY && deltaX > 10) {
+            isScrollingHorizontally = true;
+            e.preventDefault();
+        } else if (deltaY > deltaX && deltaY > 10) {
+            isScrollingVertically = true;
+        }
+    }
     
-    if (deltaX > deltaY) {
+    // Si ya determinamos que es scroll horizontal, prevenimos el scroll vertical
+    if (isScrollingHorizontally) {
         e.preventDefault();
     }
 };
 
 const handleTouchEnd = (e) => {
-    if (!isSwiping.value) return;
-    
-    touchEndX.value = e.changedTouches[0].clientX;
-    handleSwipeGesture();
-    isSwiping.value = false;
-    
-    // Reiniciar auto-slide después del swipe
-    setTimeout(() => {
-        startAutoSlide();
-    }, 500);
-};
+    if (isScrollingHorizontally) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX.value - touchEndX;
 
-const handleSwipeGesture = () => {
-    const swipeDistance = touchStartX.value - touchEndX.value;
-    const minSwipeDistance = 50; // Mínima distancia para considerar un swipe
-    
-    if (Math.abs(swipeDistance) < minSwipeDistance) return;
-    
-    if (swipeDistance > 0) {
-        // Swipe hacia la izquierda - siguiente slide
-        nextSlide();
-    } else {
-        // Swipe hacia la derecha - slide anterior
-        previousSlide();
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                previousSlide();
+            }
+        }
     }
+
+    // Resetear valores
+    touchStartX.value = 0;
+    touchStartY.value = 0;
+    isScrollingHorizontally = false;
+    isScrollingVertically = false;
+    
+    startAutoSlide();
 };
 
 // Pausar auto-slide cuando el usuario interactúa

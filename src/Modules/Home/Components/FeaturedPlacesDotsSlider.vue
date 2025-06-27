@@ -11,6 +11,7 @@
         <!-- Slider Container -->
         <div class="relative w-full h-[200px] sp:h-[250px]" 
             @touchstart="handleTouchStart"
+            @touchmove="handleTouchMove"
             @touchend="handleTouchEnd">
             
             <!-- Slides -->
@@ -73,6 +74,9 @@ const placeStore = usePlaceStore();
 
 const currentSlide = ref(0);
 const touchStartX = ref(0);
+const touchStartY = ref(0);
+let isScrollingVertically = false;
+let isScrollingHorizontally = false;
 let autoSlideInterval = null;
 
 // Computed para filtrar lugares recomendados y destacados
@@ -116,23 +120,59 @@ const resetAutoSlide = () => {
     startAutoSlide();
 };
 
-// Touch handlers
+// Touch handlers mejorados
 const handleTouchStart = (e) => {
     touchStartX.value = e.touches[0].clientX;
+    touchStartY.value = e.touches[0].clientY;
+    isScrollingVertically = false;
+    isScrollingHorizontally = false;
     stopAutoSlide();
 };
 
-const handleTouchEnd = (e) => {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.value - touchEndX;
+const handleTouchMove = (e) => {
+    if (!touchStartX.value || !touchStartY.value) return;
 
-    if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-            nextSlide();
-        } else {
-            prevSlide();
+    const touchCurrentX = e.touches[0].clientX;
+    const touchCurrentY = e.touches[0].clientY;
+    const deltaX = Math.abs(touchCurrentX - touchStartX.value);
+    const deltaY = Math.abs(touchCurrentY - touchStartY.value);
+
+    // Si aún no hemos determinado la dirección
+    if (!isScrollingVertically && !isScrollingHorizontally) {
+        // Si el movimiento es más horizontal que vertical (usando un ángulo de 30 grados)
+        if (deltaX > deltaY && deltaX > 10) {
+            isScrollingHorizontally = true;
+            e.preventDefault();
+        } else if (deltaY > deltaX && deltaY > 10) {
+            isScrollingVertically = true;
         }
     }
+    
+    // Si ya determinamos que es scroll horizontal, prevenimos el scroll vertical
+    if (isScrollingHorizontally) {
+        e.preventDefault();
+    }
+};
+
+const handleTouchEnd = (e) => {
+    if (isScrollingHorizontally) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX.value - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }
+
+    // Resetear valores
+    touchStartX.value = 0;
+    touchStartY.value = 0;
+    isScrollingHorizontally = false;
+    isScrollingVertically = false;
     
     startAutoSlide();
 };
