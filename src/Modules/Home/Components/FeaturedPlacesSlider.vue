@@ -155,7 +155,7 @@ const startAutoSlide = () => {
         isPaused.value = false;
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 5000); // Cambiar slide cada 5 segundos
+        }, 3000); // Cambiar slide cada 3 segundos
     }
 };
 

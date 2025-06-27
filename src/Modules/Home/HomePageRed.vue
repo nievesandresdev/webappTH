@@ -33,13 +33,35 @@
             </section>
 
             <!-- Featured Places Slider -->
+            <!-- <FeaturedPlacesSlider 
+                v-if="allPlaces.length > 0"
+                :places="allPlaces"
+            /> -->
+            <!-- what visit carousel -->
             <FeaturedPlacesSlider 
                 v-if="crossellingPlacesData?.crosselling_places_whatvisit"
                 :places="crossellingPlacesData.crosselling_places_whatvisit"
             />
 
+            <!-- <FeaturedPlacesDotsSlider 
+                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
+                :places="crossellingPlacesData.crosselling_places_whatvisit"
+            /> -->
+
+            <!-- where eat carousel -->
+            <FeaturedPlacesSlider 
+                v-if="crossellingPlacesData?.crosselling_places_whereeat"
+                :places="crossellingPlacesData.crosselling_places_whereeat"
+            />
+
+            <!-- leisure carousel -->
+            <FeaturedPlacesSlider 
+                v-if="crossellingPlacesData?.crosselling_places_leisure"
+                :places="crossellingPlacesData.crosselling_places_leisure"
+            />
+
             <!-- what visit carousel -->
-            <section 
+            <!-- <section 
                 v-if="showWhatvisitSection"
                 class="mt-2"
             >
@@ -57,10 +79,10 @@
                 <div>
                     <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
                 </div>
-            </section>
+            </section> -->
 
             <!-- where eat carousel -->
-            <section 
+            <!-- <section 
             v-if="showWhereeatSection"
                 class="mt-2"
             >
@@ -78,12 +100,12 @@
                 <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
                 </div>
-            </section>
+            </section> -->
 
             
 
             <!-- leisure carousel -->
-            <section 
+            <!-- <section 
                 v-if="showLeisureSection"
                 class="mt-2"
             >
@@ -101,7 +123,7 @@
                 <div>
                     <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
                 </div>
-            </section>
+            </section> -->
 
             <!-- experiences carousel -->
             <section 
@@ -278,6 +300,17 @@ const showLeisureSection = computed(() => {
 const closeAppTutorial = () => {
     showTutorial.value = false
 }
+
+// Computed para combinar todos los lugares
+const allPlaces = computed(() => {
+    if (!crossellingPlacesData.value) return [];
+    
+    return [
+        ...(crossellingPlacesData.value.crosselling_places_whatvisit || []),
+        ...(crossellingPlacesData.value.crosselling_places_whereeat || []),
+        ...(crossellingPlacesData.value.crosselling_places_leisure || [])
+    ];
+});
 
 
 
