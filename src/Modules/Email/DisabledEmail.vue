@@ -32,22 +32,34 @@
   const enabledEmail = ref(false)
 
   onMounted(async () => {
-
-    let params = {
-      guest_id: gParam.value
+    try {
+      let params = {
+        guest_id: gParam.value
+      }
+      const response = await emailStore.$disabledEmail(params)
+      
+      // Verificar si el correo ya está desactivado
+      if (response.data.guest && response.data.guest.off_email === true) {
+        // Si está desactivado, activarlo automáticamente
+        const reactivateResponse = await emailStore.$reactivateEmail(params)
+        enabledEmail.value = true
+      }
+      // Si no está desactivado, mantiene el flujo normal
+    } catch (error) {
+      console.error('Error al procesar la solicitud:', error)
     }
-    const response = await emailStore.$disabledEmail(params)
-
   })
 
   const reactivateEmail = async () => {
-    console.log('Reactivando correo...')
-    let params = {
-      guest_id: gParam.value
+    try {
+      let params = {
+        guest_id: gParam.value
+      }
+      const response = await emailStore.$reactivateEmail(params)
+      enabledEmail.value = true
+    } catch (error) {
+      console.error('Error al reactivar el correo:', error)
     }
-    const response = await emailStore.$reactivateEmail(params)
-    enabledEmail.value = true
-    //console.log(response, 'response')
   }
   </script>
   
