@@ -205,7 +205,8 @@ function isModalShareOpen () {
     let data = {
         title: props.nameShared,
         text: props.msgShared,
-        url: window.location.href
+        url: window.location.href,
+        combineTitle: true
     }
     shareContent(data);
 };

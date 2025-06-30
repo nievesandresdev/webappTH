@@ -32,7 +32,10 @@ export const useShare = () => {
     }
 
     async function shareContent (data) {
-        let { title, text, url, image } = data;
+        let { title, text, url, image, combineTitle = false } = data;
+        
+        // Si combineTitle es true, combinar título y texto
+        const finalText = combineTitle ? `${title}\n\n${text}` : text;
         
         // Guardar los meta tags originales
         const originalTitle = document.title;
@@ -46,15 +49,15 @@ export const useShare = () => {
         const metaImage = document.querySelector('meta[property="og:image"]');
         const metaUrl = document.querySelector('meta[property="og:url"]');
 
-        if (metaDescription) metaDescription.content = text;
+        if (metaDescription) metaDescription.content = finalText;
         if (metaImage) metaImage.content = image;
         if (metaUrl) metaUrl.content = url;
 
         if (navigator.share) {
           try {
             const shareData = {
-              title,
-              text,
+              title: combineTitle ? finalText : title,
+              text: finalText,
               url,
             };
 
