@@ -39,7 +39,7 @@ export const useShare = () => {
         let { title, text, url, image, combineTitle = false } = data;
         
         // Si combineTitle es true, combinar título y texto
-        const finalText = combineTitle ? `${title} - ${hotelStore.hotelData.name}\n\n${text}` : text;
+        const finalText = combineTitle ? `${hotelStore.hotelData.name} - ${title} \n\n${text}` : text;
         
         // Guardar los meta tags originales
         const originalTitle = document.title;
