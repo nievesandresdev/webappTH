@@ -31,7 +31,7 @@
                     <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
                 </div>
             </section>
-
+            <ExplorePlacesSection />
             <!-- Featured Places Slider -->
             <!-- <FeaturedPlacesSlider 
                 v-if="allPlaces.length > 0"
@@ -152,7 +152,7 @@
     <FakeModalMsgQuery />
 </template>
 <script setup>
-import { onMounted, computed, ref, watch, watchEffect } from 'vue';
+import { onMounted, computed, ref, watch, watchEffect, provide } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
@@ -173,6 +173,7 @@ import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
 import TutorialHome from './Components/TutorialHome.vue';
+import ExplorePlacesSection from './Components/ExplorePlacesSection.vue';
 
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
@@ -203,6 +204,7 @@ const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 const showTutorial = ref(true)
+const orderSections = ref(null)
 
 startLoading(SECTIONS.HOME.GLOBAL);
 
@@ -235,7 +237,7 @@ watch(hotelData, (valueCurrent, valueOld) => {
 }, { immediate: true });
 
 async function loadData () {
-    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories(), loadOrderSections()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
 
@@ -249,7 +251,13 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+}
+
+async function loadOrderSections () {
+    const response = await hotelStore.$getOrderSections()
+    if(response.ok) orderSections.value = response.data
+    console.log('test orderSections.value', orderSections.value)
 }
 
 async function getPlaceCategories(){
@@ -314,5 +322,7 @@ const allPlaces = computed(() => {
 
 
 
-
+provide('placeCategories', placeCategories)
+provide('orderSections', orderSections)
+provide('crossellingPlacesData', crossellingPlacesData)
 </script>
