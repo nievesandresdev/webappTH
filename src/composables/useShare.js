@@ -1,4 +1,8 @@
+import { useHotelStore } from '@/stores/modules/hotel';
+
 export const useShare = () => {
+    const hotelStore = useHotelStore();
+
     async function resizeImage(imageUrl, maxWidth = 800, maxHeight = 600) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -35,7 +39,7 @@ export const useShare = () => {
         let { title, text, url, image, combineTitle = false } = data;
         
         // Si combineTitle es true, combinar título y texto
-        const finalText = combineTitle ? `${title}\n\n${text}` : text;
+        const finalText = combineTitle ? `${title} - ${hotelStore.hotelData.name}\n\n${text}` : text;
         
         // Guardar los meta tags originales
         const originalTitle = document.title;
