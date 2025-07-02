@@ -28,8 +28,8 @@
                             <!-- titulo y distancia-->
                             <div class="flex-1">
                                 <h3 class="text-[#FAFAFA] font-bold text-[16px] lato line-clamp-2 mb-1" v-html="place.title"></h3>
-                                <div class="flex items-center">
-                                    <img src="/assets/icons/WA.POINTER.svg" class="w-3 h-3 filter brightness-0 invert" alt="pointer">
+                                <div class="flex items-center gap-[2px]">
+                                    <img src="/assets/icons/WA.pointer.svg" class="w-3 h-3 filter brightness-0 invert" alt="pointer">
                                     <p class="text-[#FAFAFA] text-[12px] lato font-medium">{{ place.distance }}km</p>
                                     
                                 </div>
