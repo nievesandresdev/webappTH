@@ -198,6 +198,7 @@ const isModalOpen = () => {
         title: t('stay.share.title', { hotel: hotelStore.hotelData.name }),
         text: t('stay.share.text'),
         url: shareUrl.value,
+        combineTitle: true,
     }
     shareContent(data);
 };
