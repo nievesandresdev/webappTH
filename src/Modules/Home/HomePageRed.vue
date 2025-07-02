@@ -10,6 +10,9 @@
         <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
+
+        <SectionServices />
+
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
             <!-- facilities carousel -->
@@ -162,6 +165,7 @@ import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
 import { useFavicon } from '@/composables/useFavicon'
 
 //sections
+    import SectionServices from './Components/SectionServices.vue';
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
