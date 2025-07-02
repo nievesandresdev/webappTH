@@ -1,6 +1,6 @@
 <template>
   <section 
-      class="px-3 sp:px-4 mt-4 sp:mt-6"
+      class="px-3 sp:px-4 my-1 sp:my-2"
       v-if="hotelData.instagram_url || hotelData.facebook_url || hotelData.pinterest_url || hotelData.x_url"
   >
       <div class="flex items-center gap-3 sp:gap-4">

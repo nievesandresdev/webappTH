@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="bg-[#FAFAFA] w-auto sp:h-[114px] h-[90px] rounded-[8px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.15)] py-2 pr-2 pl-4 relative mt-[30px] mx-3 mb-[24px]" v-if="showTutorial">
+    <div class="bg-[#FAFAFA] w-auto sp:h-[114px] h-[90px] rounded-[8px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.15)] py-2 pr-2 pl-4 relative mt-[30px] mx-3" v-if="showTutorial">
         <BackgroundSvg :backgroundColor="chainStore.$bgColor0" />
         <img src="/images/home/phone2.png" alt="" class="absolute sp:-top-[10px] -top-[5px] z-10 sp:w-[59px] w-[40px] left-[5px] sp:left-[17px]">
         

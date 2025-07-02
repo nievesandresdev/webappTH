@@ -1,19 +1,22 @@
 <template>
-    <div class="flex items-center gap-2 px-3 py-2 ml-1 mb-2">
-        <img src="/assets/icons/WA.STAR.BLACK.svg" class="w-6 h-6" alt="star">
-        <h2 class="lato text-[20px] font-bold">
-            {{ $t('home.recomendation-places.title') }}
-        </h2>
-    </div>
-    <FeaturedPlacesSlider 
-        v-if="orderSections?.placesRecommendationSection?.style === 1"
-        :places="allPlaces"
-    />
+    <div class="my-1 sp:my-2">
+        <div class="flex items-center gap-2 px-3 ml-1 mb-2">
+            <img src="/assets/icons/WA.STAR.BLACK.svg" class="w-6 h-6" alt="star">
+            <h2 class="lato text-[20px] font-bold">
+                {{ $t('home.recomendation-places.title') }}
+            </h2>
+        </div>
+        <FeaturedPlacesSlider 
+            v-if="orderSections?.placesRecommendationSection?.style === 1"
+            :places="allPlaces"
+        />
 
-    <FeaturedPlacesDotsSlider 
-        v-if="orderSections?.placesRecommendationSection?.style === 2"
-        :places="allPlaces"
-    />
+        <FeaturedPlacesDotsSlider 
+            v-if="orderSections?.placesRecommendationSection?.style === 2"
+            :places="allPlaces"
+        />
+    </div>
+    
 </template>
 <script setup>
 import FeaturedPlacesSlider from './FeaturedPlacesSlider.vue';
