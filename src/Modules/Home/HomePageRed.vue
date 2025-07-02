@@ -11,114 +11,13 @@
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
         <!-- carousel's -->
-        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
+        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]" v-if="hotelStore.hotelData">
             <!-- facilities carousel -->
-            <section 
-                v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-facility.title')) }}
-                    </h2>
-                    <a 
-                        @click="goFacilities()" 
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
-                </div>
-            </section>
+            <CarouselFacilities/>    
             <ExplorePlacesSection />
-            <RecomendationPlaces :data="allPlaces" />
-
-
-            <!-- what visit carousel -->
-            <!-- <section 
-                v-if="showWhatvisitSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-what-visit.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
-                </div>
-            </section> -->
-
-            <!-- where eat carousel -->
-            <!-- <section 
-            v-if="showWhereeatSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-where-eat.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
-                </div>
-            </section> -->
-
-            
-
-            <!-- leisure carousel -->
-            <!-- <section 
-                v-if="showLeisureSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-leisure.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
-                </div>
-            </section> -->
-
-            <!-- experiences carousel -->
-            <section 
-                v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-experience.title')) }}
-                    </h2>
-                    <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
-                </div>
-                <div>
-                    <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
-                </div>
-            </section>
-
-            <SocialNetworks v-if="hotelData" />
+            <RecomendationPlaces/>
+            <CarouselExperiences/>
+            <SocialNetworks />
         </div>
     </PageTransitionGlobal>
 
@@ -283,20 +182,9 @@ const closeAppTutorial = () => {
     showTutorial.value = false
 }
 
-// Computed para combinar todos los lugares
-const allPlaces = computed(() => {
-    if (!crossellingPlacesData.value) return [];
-    
-    return [
-        ...(crossellingPlacesData.value.crosselling_places_whatvisit || []),
-        ...(crossellingPlacesData.value.crosselling_places_whereeat || []),
-        ...(crossellingPlacesData.value.crosselling_places_leisure || [])
-    ];
-});
-
-
-
 provide('placeCategories', placeCategories)
 provide('orderSections', orderSections)
 provide('crossellingPlacesData', crossellingPlacesData)
+provide('crossellingsData', crossellingsData)
+
 </script>
