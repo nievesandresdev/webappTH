@@ -14,139 +14,13 @@
         <SectionServices />
 
         <!-- carousel's -->
-        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
+        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]" v-if="hotelStore.hotelData">
             <!-- facilities carousel -->
-            <section 
-                v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-facility.title')) }}
-                    </h2>
-                    <a 
-                        @click="goFacilities()" 
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
-                </div>
-            </section>
-
-            <!-- Featured Places Slider -->
-            <!-- <FeaturedPlacesSlider 
-                v-if="allPlaces.length > 0"
-                :places="allPlaces"
-            /> -->
-            <!-- what visit carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
-                :places="crossellingPlacesData.crosselling_places_whatvisit"
-            />
-
-            <!-- <FeaturedPlacesDotsSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
-                :places="crossellingPlacesData.crosselling_places_whatvisit"
-            /> -->
-
-            <!-- where eat carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whereeat"
-                :places="crossellingPlacesData.crosselling_places_whereeat"
-            />
-
-            <!-- leisure carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_leisure"
-                :places="crossellingPlacesData.crosselling_places_leisure"
-            />
-
-            <!-- what visit carousel -->
-            <!-- <section 
-                v-if="showWhatvisitSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-what-visit.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
-                </div>
-            </section> -->
-
-            <!-- where eat carousel -->
-            <!-- <section 
-            v-if="showWhereeatSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-where-eat.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
-                </div>
-            </section> -->
-
-            
-
-            <!-- leisure carousel -->
-            <!-- <section 
-                v-if="showLeisureSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-leisure.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
-                </div>
-            </section> -->
-
-            <!-- experiences carousel -->
-            <section 
-                v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-experience.title')) }}
-                    </h2>
-                    <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
-                </div>
-                <div>
-                    <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
-                </div>
-            </section>
-
-            <SocialNetworks v-if="hotelData" />
+            <CarouselFacilities/>    
+            <ExplorePlacesSection />
+            <RecomendationPlaces/>
+            <CarouselExperiences/>
+            <SocialNetworks />
         </div>
     </PageTransitionGlobal>
 
@@ -155,7 +29,7 @@
     <FakeModalMsgQuery />
 </template>
 <script setup>
-import { onMounted, computed, ref, watch, watchEffect } from 'vue';
+import { onMounted, computed, ref, watch, watchEffect, provide } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
@@ -172,14 +46,14 @@ import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
-import FeaturedPlacesSlider from './Components/FeaturedPlacesSlider.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
 import TutorialHome from './Components/TutorialHome.vue';
-
+import ExplorePlacesSection from './Components/ExplorePlacesSection.vue';
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
+import RecomendationPlaces from './Components/RecomendationPlaceSections.vue';
 
 //
 import { $currentPeriod } from '@/utils/helpers.js'
@@ -207,6 +81,7 @@ const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 const showTutorial = ref(true)
+const orderSections = ref(null)
 
 startLoading(SECTIONS.HOME.GLOBAL);
 
@@ -239,7 +114,7 @@ watch(hotelData, (valueCurrent, valueOld) => {
 }, { immediate: true });
 
 async function loadData () {
-    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories(), loadOrderSections()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
 
@@ -253,7 +128,13 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+}
+
+async function loadOrderSections () {
+    const response = await hotelStore.$getOrderSections()
+    if(response.ok) orderSections.value = response.data
+    console.log('test orderSections.value', orderSections.value)
 }
 
 async function getPlaceCategories(){
@@ -305,18 +186,9 @@ const closeAppTutorial = () => {
     showTutorial.value = false
 }
 
-// Computed para combinar todos los lugares
-const allPlaces = computed(() => {
-    if (!crossellingPlacesData.value) return [];
-    
-    return [
-        ...(crossellingPlacesData.value.crosselling_places_whatvisit || []),
-        ...(crossellingPlacesData.value.crosselling_places_whereeat || []),
-        ...(crossellingPlacesData.value.crosselling_places_leisure || [])
-    ];
-});
-
-
-
+provide('placeCategories', placeCategories)
+provide('orderSections', orderSections)
+provide('crossellingPlacesData', crossellingPlacesData)
+provide('crossellingsData', crossellingsData)
 
 </script>

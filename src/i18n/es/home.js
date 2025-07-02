@@ -7,6 +7,10 @@ export default {
     "stayTitle":"Estancia",
     "guestTitle":"Huéspedes",
     "invite":"Invitar",
+    "explore-places": "Cerca de tu {typeLodging}",
+    "explore-places-text": "{totalPlaces} sitios de interés para ti",
+    "explore-title": "Explorar",
+    "explore-destination": "Explora tu destino",
     "section-facility": {
       "title": "instalaciones"
     },
