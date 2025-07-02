@@ -73,6 +73,10 @@ export default {
       "rules":"Normas",
       "reserve":"¡Reserva!",
       "refered":"Referir"
+    },
+    "recomendation-places":{
+      "title":"Destino - Recomendados",
+      "title-slider":"Sitios exclusivos para ti"
     }
   };
   

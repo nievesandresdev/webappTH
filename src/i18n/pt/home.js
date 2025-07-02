@@ -73,6 +73,10 @@ export default {
     "rules": "Regras",
     "reserve": "Reservar!",
     "refered": "Indicar"
+  },
+  "recomendation-places":{
+    "title-slider":"Lugares exclusivos para você",
+    "title":"Destino - Recomendados"
   }
 
 };

@@ -1,46 +1,40 @@
 <template>
     <div v-if="featuredPlaces.length > 0" class="mb-10">
-        <!-- Header con estrella -->
-        <div class="flex items-center gap-2 px-3 py-2">
-            <img src="/assets/icons/WA.STAR.BLACK.svg" class="w-4 h-4" alt="star">
-            <h2 class="lato text-[16px] font-bold">
-                Destino - Recomendados
-            </h2>
-        </div>
-
         <!-- Slider Container -->
         <div class="relative w-full h-[200px] sp:h-[250px]" 
             @touchstart="handleTouchStart"
             @touchmove="handleTouchMove"
             @touchend="handleTouchEnd">
             
-            <!-- Slides -->
+            <!-- slides -->
             <div v-for="(place, index) in featuredPlaces" 
                 :key="place.id"
                 class="absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out"
                 :class="{ 'opacity-100': currentSlide === index, 'opacity-0': currentSlide !== index }"
                 @click="goPlace(place.id)"
             >
-                <!-- Imagen con overlay -->
+                <!-- imagen con overlay -->
                 <div class="relative w-full h-full">
                     <img 
                         :src="placeStore.$loadImage(place.image)"
                         :alt="place.title"
                         class="w-full h-full object-cover"
                     >
-                    <!-- Overlay con gradiente -->
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"></div>
                     
-                    <!-- Información del lugar con fondo -->
+                    <!-- informacion del lugar con fondo -->
                     <div class="absolute bottom-0 left-0 right-0 py-2 px-2 text-white" style="background-color: rgba(51, 51, 51, 0.5);">
                         <div class="flex justify-between items-end">
-                            <!-- Title and Distance -->
+                            <!-- titulo y distancia-->
                             <div class="flex-1">
                                 <h3 class="text-[#FAFAFA] font-bold text-[16px] lato line-clamp-2 mb-1" v-html="place.title"></h3>
-                                <p class="text-[#FAFAFA] text-[12px] lato" style="font-weight: 500;">{{ place.distance }}km</p>
+                                <div class="flex items-center">
+                                    <img src="/assets/icons/WA.POINTER.svg" class="w-3 h-3 filter brightness-0 invert" alt="pointer">
+                                    <p class="text-[#FAFAFA] text-[12px] lato font-medium">{{ place.distance }}km</p>
+                                    
+                                </div>
                             </div>
                             
-                            <!-- Category Icon - Bottom Right -->
                             <div class="flex-shrink-0 ml-2">
                                 <img 
                                     v-if="place.categori_place?.icon" 
@@ -64,11 +58,14 @@
             <div v-if="featuredPlaces.length > 1" 
                 class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2">
                 <button
-                    v-for="(dot, index) in featuredPlaces"
+                    v-for="index in Math.min(3, featuredPlaces.length)"
                     :key="index"
                     class="w-2 h-2 rounded-full transition-colors duration-300 ease-in-out border border-gray-400"
-                    :class="{ 'bg-gray-800': currentSlide === index, 'bg-white': currentSlide !== index }"
-                    @click="goToSlide(index)"
+                    :class="{ 
+                        'bg-gray-800': index === 3 ? currentSlide >= 2 : currentSlide === index - 1, 
+                        'bg-white': index === 3 ? currentSlide < 2 : currentSlide !== index - 1 
+                    }"
+                    @click="goToSlide(index - 1)"
                 ></button>
             </div>
         </div>
@@ -122,7 +119,7 @@ const startAutoSlide = () => {
     if (featuredPlaces.value.length > 1) {
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 5000);
+        }, 1500);
     }
 };
 

@@ -69,6 +69,10 @@ export default {
     "rules": "Regels",
     "reserve": "Reserveren!",
     "refered": "Doorverwijzen"
+  },
+  "recomendation-places":{
+    "title-slider":"Uitgelichte locaties voor jou",
+    "title":"Bestemming - Aanbevolen"
   }
 
 };

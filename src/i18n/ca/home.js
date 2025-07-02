@@ -69,6 +69,10 @@ export default {
     "rules": "Normes",
     "reserve": "Reserva!",
     "refered": "Referir"
+  },
+  "recomendation-places":{
+    "title-slider":"Llocs exclusius per a tu",
+    "title":"Destí - Recomanat"
   }
 
   
