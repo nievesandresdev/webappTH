@@ -7,22 +7,28 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <buttonsSection v-if="hotelStore.hotelData?.buttons_home" />
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
 
-        <template v-if="showServices">
-            <SectionServices />
-        </template>
-
         <!-- carousel's -->
-        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]" v-if="hotelStore.hotelData">
-            <!-- facilities carousel -->
-            <CarouselFacilities/>    
-            <ExplorePlacesSection />
-            <RecomendationPlaces/>
-            <CarouselExperiences/>
-            <SocialNetworks />
+        <div class="mt-2 sp:mt-4 pb-[70px] sp:pb-[104px] flex flex-col gap-1 sp:gap-2" v-if="hotelStore.hotelData && orderSections">
+            <template v-for="name in orderSections?.visibleOrder" :key="name">
+                <component
+                    v-if="name !== 'buttonsSection'"
+                    :is="componentMap[name]"
+                    @updateOrderSections="updatehiddenSections"
+                    @mouseup="() => onMouseUp(String(name))"
+                />
+            </template>
+
+            <!-- <facilitiesSection/>    
+            <placesExploreSection />
+            <placesRecommendationSection/>
+            <activitiesSection/>
+            <socialNetworksSection />
+            <servicesSection /> -->
+            <!-- showServices -->
         </div>
     </PageTransitionGlobal>
 
@@ -41,21 +47,20 @@ import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
 import { useFavicon } from '@/composables/useFavicon'
 
 //sections
-    import SectionServices from './Components/SectionServices.vue';
+import servicesSection from './Components/SectionServices.vue';
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
-import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
-import CarouselPlaces from './Components/CarouselPlacesRed.vue'
-import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
-import SocialNetworks from './Components/SocialNetworksRed.vue'
-import ButtonsSection from './Components/ButtonsSection.vue'
+import facilitiesSection from './Components/CarouselFacilitiesRed.vue'
+import activitiesSection from './Components/CarouselExperiencesRed.vue'
+import socialNetworksSection from './Components/SocialNetworksRed.vue'
+import buttonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
 import TutorialHome from './Components/TutorialHome.vue';
-import ExplorePlacesSection from './Components/ExplorePlacesSection.vue';
+import placesExploreSection from './Components/ExplorePlacesSection.vue';
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
-import RecomendationPlaces from './Components/RecomendationPlaceSections.vue';
+import placesRecommendationSection from './Components/RecomendationPlaceSections.vue';
 
 //
 import { $currentPeriod } from '@/utils/helpers.js'
@@ -84,6 +89,16 @@ const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
 const showTutorial = ref(true)
 const orderSections = ref(null)
+
+const componentMap = {
+  buttonsSection,
+  facilitiesSection,
+  placesRecommendationSection,
+  placesExploreSection,
+  servicesSection,
+  activitiesSection,
+  socialNetworksSection
+};
 
 startLoading(SECTIONS.HOME.GLOBAL);
 

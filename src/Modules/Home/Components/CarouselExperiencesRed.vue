@@ -1,7 +1,7 @@
 <template>
     <section 
         v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelStore.hotelData?.show_experiences"
-        class="mt-2"
+        class="mt-1 sp:mt-2"
     >
         <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
             <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
@@ -14,7 +14,7 @@
         <div>
             <div 
                 v-if="crossellingPlacesData?.crosselling_experiences?.length > 0"   
-                class="flex gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
+                class="flex gap-4 overflow-x-auto w-full pt-2 sp:pt-4 pb-1 sp:pb-2 px-2.5 sp:px-4 no-scrollbar"
                 :class="{'justify-center': crossellingPlacesData?.crosselling_experiences?.length == 1}"
             >
                 <CarouselCard

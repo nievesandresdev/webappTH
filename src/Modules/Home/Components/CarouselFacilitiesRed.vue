@@ -2,7 +2,7 @@
     <section 
         v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelStore.hotelData?.show_facilities" 
     >
-        <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
+        <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px] mt-1 sp:mt-2">
             <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
                 {{ $utils.capitalize($t('home.section-facility.title')) }}
             </h2>
@@ -17,7 +17,7 @@
             <div 
                 v-if="crossellingsData?.crosselling_facilities?.length > 0"  
                 id="facility-cross-mobile" 
-                class="flex gap-3 sp:gap-4 overflow-x-auto w-full py-2.5 sp:py-4 px-2.5 sp:px-4 no-scrollbar"
+                class="flex gap-3 sp:gap-4 overflow-x-auto w-full pt-2 sp:pt-4 pb-1 sp:pb-2 px-2.5 sp:px-4 no-scrollbar"
                 :class="{'justify-center': crossellingsData?.crosselling_facilities?.length == 1}"
             >
                 <CarouselCard
