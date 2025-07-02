@@ -25,7 +25,7 @@
                     @click="goToPlaces(item)"
                     class="p-0.5 sp:p-1 flex items-center gap-[2px] sp:gap-1 border border-[#bfbfbf80] rounded-[2px] flex-shrink-0"
                 >
-                    <img src="/assets/icons/WA.MONUMENTOS.svg" class="w-3 sp:w-4 h-3 sp:h-4">
+                    <img :src="`/assets/icons/${icons[item.categori_places_id]}.svg`" class="w-3 sp:w-4 h-3 sp:h-4">
                     <p class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px]">
                         {{ item.count_places }} {{  item.name }}
                     </p>
@@ -59,4 +59,15 @@ const goToPlaces = (item) =>{
 //     if(!hotelStore.hotelData) return true;
 //     return !hotelStore.hotelData?.hidden_categories?.includes(categoryId)
 // }
+
+const icons = {
+    1: 'WA.MONUMENTOS',
+    2: 'WA.MUSEOS',
+    3: 'WA.NATURALEZA',
+    5: 'WA.RESTAURANTES',
+    4: 'WA.COFFE',
+    7: 'WA.VIDANOCTURNA',
+    9: 'WA.OCIO',
+    10: 'WA.OTROS', 
+}
 </script>
