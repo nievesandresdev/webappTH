@@ -1,16 +1,16 @@
 <template>
     <div v-if="featuredPlaces.length > 0" class="mb-4 mx-3 sp:mx-4">
-        <!-- Header Section with Yellow Background -->
+        <!-- header con fondo amarillo -->
         <div class="bg-[#FFD700] text-black px-2 py-3 rounded-t-[10px]">
             <h2 class="lato text-[16px] lato  font-bold leading-[12px] ">
-                Sitios exclusivos para ti
+                {{ $t('home.recomendation-places.title-slider') }}
             </h2>
         </div>
 
-        <!-- Slider Container -->
+        <!-- contenedor del slider -->
         <div class="relative">
-            <!-- Progress Lines (Líneas de progreso) - FIJAS SOBRE TODO -->
-            <div v-if="featuredPlaces.length > 1" class="absolute top-2 left-4 right-4 z-30">
+            <!-- lineas de progreso - FIJAS SOBRE TODO -->
+            <div v-if="featuredPlaces.length > 1" class="absolute top-2 left-2 right-2 z-30">
                 <div class="flex gap-2">
                     <button
                         v-for="(place, index) in featuredPlaces"
@@ -18,7 +18,7 @@
                         @click.stop="goToSlide(index)"
                         class="relative flex-1 h-1 bg-white/30 rounded-full overflow-hidden"
                     >
-                        <!-- Línea de progreso que se llena -->
+                        <!-- linea de progreso que se llena -->
                         <div 
                             v-if="currentSlide === index"
                             class="absolute top-0 left-0 h-full bg-white rounded-full progress-fill"
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <!-- Slider de Imágenes -->
+            <!-- Slider de imagenes -->
             <div class="overflow-hidden rounded-b-[16px] sp:rounded-b-[20px]">
                 <div 
                     class="flex transition-transform duration-300 ease-in-out"
@@ -48,7 +48,7 @@
                         class="w-full flex-shrink-0 relative cursor-pointer"
                         @click="goPlace(place.id)"
                     >
-                        <!-- Background Image -->
+                        <!-- imagen de fondo -->
                         <div class="relative h-[140px] sp:h-[180px]">
                             <img 
                                 :src="placeStore.$loadImage(place.image)"
@@ -56,16 +56,16 @@
                                 class="absolute inset-0 w-full h-full object-cover"
                             >
                             
-                            <!-- Content Overlay -->
+                            <!-- Content Ovoverlayerlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                             
-                            <!-- Place Info - Bottom overlay with background -->
-                            <div class="absolute bottom-0 left-0 right-0 py-3 px-2 text-white" style="background-color: rgba(51, 51, 51, 0.5);">
-                                <div class="flex items-center gap-3">
-                                    <!-- Category Icon -->
+                            <!-- informacion del lugar con fondo -->
+                            <div class="absolute bottom-0 left-0 right-0 py-3 px-2 text-white" style="background-color: rgba(51, 51, 51, 0.3);">
+                                <div class="flex items-center gap-2">
+                                    <!-- icono de la categoria -->
                                     <img 
                                         v-if="place.categori_place?.icon" 
-                                        class="w-5 h-5 filter brightness-0 invert" 
+                                        class="w-6 h-6 filter brightness-0 invert" 
                                         :src="`/assets/icons/${place.categori_place.icon}.svg`"
                                         alt=""
                                     >
@@ -76,10 +76,12 @@
                                         alt=""
                                     >
                                     
-                                    <!-- Title and Distance -->
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-[#FAFAFA] font-bold line-clamp-2 text-[16px] lato" v-html="place.title"></span>
-                                        <p class="text-[#FAFAFA] text-[14px] lato font-bold">{{ place.distance }} km</p>
+                                    <!-- titulo y distancia -->
+                                    <div class="flex items-center">
+                                        <div class="max-w-[70%] min-w-0">
+                                            <span class="text-[#FAFAFA] font-bold line-clamp-1 text-[16px] lato" v-html="place.title + ','"></span>
+                                        </div>
+                                        <p class="text-[#FAFAFA] text-[14px] lato font-bold flex-shrink-0 ml-1">{{ place.distance }} km</p>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +116,7 @@ let isScrollingVertically = false;
 let isScrollingHorizontally = false;
 let autoSlideInterval = null;
 
-// Computed para filtrar lugares recomendados y destacados
+// computed para filtrar lugares recomendados y destacados
 const featuredPlaces = computed(() => {
     if (!props.places) return [];
     return props.places.filter(place => place.recommended || place.place_featured);
@@ -125,7 +127,7 @@ const nextSlide = () => {
     if (currentSlide.value < featuredPlaces.value.length - 1) {
         currentSlide.value++;
     } else {
-        currentSlide.value = 0; // Loop back to first slide
+        currentSlide.value = 0; // volver al primer slide
     }
 };
 
@@ -133,13 +135,13 @@ const previousSlide = () => {
     if (currentSlide.value > 0) {
         currentSlide.value--;
     } else {
-        currentSlide.value = featuredPlaces.value.length - 1; // Loop to last slide
+        currentSlide.value = featuredPlaces.value.length - 1; // volver al ultimo slide
     }
 };
 
 const goToSlide = (index) => {
     currentSlide.value = index;
-    // Reiniciar auto-slide cuando se hace click manual
+    // reiniciar auto-slide cuando se hace click manual
     if (autoSlideInterval) {
         stopAutoSlide();
         setTimeout(() => {
@@ -148,13 +150,13 @@ const goToSlide = (index) => {
     }
 };
 
-// Auto-slide funcionalidad
+// auto-slide funcionalidad
 const startAutoSlide = () => {
     if (featuredPlaces.value.length > 1) {
         isPaused.value = false;
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 3000); // Cambiar slide cada 3 segundos
+        }, 1500); // cambiar slide cada 1.5 segundos
     }
 };
 
@@ -166,14 +168,13 @@ const stopAutoSlide = () => {
     }
 };
 
-// Navegación a detalle del lugar
+// navegacion a detalle del lugar
 const goPlace = (placeId) => {
     if (!window.$utils?.isMockup()) {
         router.push({ name: 'PlaceDetail', params: { id: placeId } });
     }
 };
 
-// Lifecycle
 onMounted(() => {
     startAutoSlide();
 });
@@ -182,7 +183,7 @@ onUnmounted(() => {
     stopAutoSlide();
 });
 
-// Touch handlers mejorados
+// handlers de touch mejorados
 const handleTouchStart = (e) => {
     touchStartX.value = e.touches[0].clientX;
     touchStartY.value = e.touches[0].clientY;
@@ -199,9 +200,9 @@ const handleTouchMove = (e) => {
     const deltaX = Math.abs(touchCurrentX - touchStartX.value);
     const deltaY = Math.abs(touchCurrentY - touchStartY.value);
 
-    // Si aún no hemos determinado la dirección
+    // si aun no hemos determinado la direccion
     if (!isScrollingVertically && !isScrollingHorizontally) {
-        // Si el movimiento es más horizontal que vertical (usando un ángulo de 30 grados)
+        // si el movimiento es mas horizontal que vertical (usando un angulo de 30 grados)
         if (deltaX > deltaY && deltaX > 10) {
             isScrollingHorizontally = true;
             e.preventDefault();
@@ -242,10 +243,10 @@ const handleTouchEnd = (e) => {
 // Pausar auto-slide cuando el usuario interactúa
 const handleUserInteraction = () => {
     stopAutoSlide();
-    // Reiniciar auto-slide después de 3 segundos de inactividad
+    // reiniciar auto-slide despues de 1.5 segundos de inactividad
     setTimeout(() => {
         startAutoSlide();
-    }, 3000);
+    }, 1500);
 };
 </script>
 
@@ -270,7 +271,7 @@ const handleUserInteraction = () => {
 }
 
 .animate-progress {
-    animation: fillProgress 5s linear forwards;
+    animation: fillProgress 1.5s linear forwards;
 }
 
 @keyframes fillProgress {

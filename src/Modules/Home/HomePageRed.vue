@@ -10,6 +10,11 @@
         <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
+
+        <template v-if="showServices">
+            <SectionServices />
+        </template>
+
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]" v-if="hotelStore.hotelData">
             <!-- facilities carousel -->
@@ -36,6 +41,7 @@ import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
 import { useFavicon } from '@/composables/useFavicon'
 
 //sections
+    import SectionServices from './Components/SectionServices.vue';
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
@@ -101,6 +107,10 @@ onMounted(async () => {
 
 const hotelData = computed(() => {
     return hotelStore.hotelData;
+});
+
+const showServices = computed(() => {
+    return hotelData.value?.show_confort || hotelData.value?.show_transport || hotelData.value?.show_experiences;
 });
 
 watch(hotelData, (valueCurrent, valueOld) => {
@@ -182,6 +192,7 @@ const closeAppTutorial = () => {
     showTutorial.value = false
 }
 
+provide('hotelData', hotelData)
 provide('placeCategories', placeCategories)
 provide('orderSections', orderSections)
 provide('crossellingPlacesData', crossellingPlacesData)

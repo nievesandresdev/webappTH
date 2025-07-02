@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Aufenthalt",
   "guestTitle": "Gäste",
   "invite": "Einladen",
+  "section-services": {
+    "text-on": "Ihre Erfahrung, auf das nächste Niveau",
+    "text-off": "Entspannen Sie und machen Sie den besten Gebrauch von jedem Service, der für Sie entwickelt wurde.",
+    "btn-discover": "Entdecken Sie Dienste"
+  },
   "section-facility": {
     "title": "Einrichtungen"
   },
@@ -68,6 +73,10 @@ export default {
     "rules": "Regeln",
     "reserve": "Reservieren!",
     "refered": "Empfehlen"
+  },
+  "recomendation-places":{
+    "title-slider":"Exklusive Orte für Sie",
+    "title":"Ziel - Empfohlen"
   }
 
   

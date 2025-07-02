@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Estancia",
   "guestTitle": "Hóspedes",
   "invite": "Invitar",
+  "section-services": {
+    "text-on": "A túa experiencia, ao seguinte nivel",
+    "text-off": "Relaxa e aproveita ao máximo cada servizo pensado para ti.",
+    "btn-discover": "Descobrir servizos"
+  },
   "section-facility": {
     "title": "instalacións"
   },
@@ -64,6 +69,10 @@ export default {
     "rules": "Normas",
     "reserve": "Reserva!",
     "refered": "Referir"
+  },
+  "recomendation-places":{
+    "title-slider":"Lugares exclusivos para ti",
+    "title":"Destino - Recomendados"
   }
 
 

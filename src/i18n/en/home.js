@@ -6,7 +6,12 @@ export default {
     "btn-more-info": "Hotel information",
     "stayTitle":"Stay",
     "guestTitle":"Guests",
-    "invite":"Invite",
+    "invite":"Invite",	
+    "section-services": {
+      "text-on": "Your experience, at the next level",
+      "text-off": "Relax and make the most of each service designed for you.",
+      "btn-discover": "Discover services"
+    },
     "section-facility": {
       "title": "facilities"
     },
@@ -68,6 +73,10 @@ export default {
       "rules": "Rules",
       "reserve": "Reserve!",
       "refered": "Refer"
+    },
+    "recomendation-places":{
+      "title-slider":"Exclusive places for you",
+      "title":"Destination - Recommended"
     }
 
   };
