@@ -64,6 +64,10 @@ export default {
     "rules": "Arauak",
     "reserve": "Erreserbatu!",
     "refered": "Gomendatu"
+  },
+  "recomendation-places":{
+    "title-slider":"Lugarrak esklusiboak zuretzat",
+    "title":"Helbidea - Gomendatua"
   }
 
   

@@ -64,6 +64,10 @@ export default {
       "rules": "Règles",
       "reserve": "Réserver !",
       "refered": "Parrainer"
+    },
+    "recomendation-places":{
+      "title-slider":"Lieux exclusifs pour vous",
+      "title":"Destination - Recommandé"
     }
 
   };
