@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Soggiorno",
   "guestTitle": "Ospiti",
   "invite": "Invita",
+  "section-services": {
+    "text-on": "La tua esperienza, al livello successivo",
+    "text-off": "Rilassa e sfrutta al massimo ogni servizio pensato per te.",
+    "btn-discover": "Scopri i servizi"
+  },
   "section-facility": {
     "title": "strutture"
   },

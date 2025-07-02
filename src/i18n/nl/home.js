@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Verblijf",
   "guestTitle": "Gasten",
   "invite": "Uitnodigen",
+  "section-services": {
+    "text-on": "Je ervaring, op het volgende niveau",
+    "text-off": "Ontspan en maak de beste uit van elke service die voor je is bedacht.",
+    "btn-discover": "Ontdek services"
+  },
   "section-facility": {
     "title": "voorzieningen"
   },

@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Estadia",
   "guestTitle": "Hóspedes",
   "invite": "Convidar",
+  "section-services": {
+    "text-on": "Sua experiência, no próximo nível",
+    "text-off": "Relaxe e aproveite ao máximo cada serviço pensado para você.",
+    "btn-discover": "Descobrir serviços"
+  },
   "section-facility": {
     "title": "instalações"
   },

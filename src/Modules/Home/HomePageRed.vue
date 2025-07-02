@@ -11,7 +11,9 @@
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
 
-        <SectionServices />
+        <template v-if="showServices">
+            <SectionServices />
+        </template>
 
         <!-- carousel's -->
         <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]" v-if="hotelStore.hotelData">
@@ -107,6 +109,10 @@ const hotelData = computed(() => {
     return hotelStore.hotelData;
 });
 
+const showServices = computed(() => {
+    return hotelData.value?.show_confort || hotelData.value?.show_transport || hotelData.value?.show_experiences;
+});
+
 watch(hotelData, (valueCurrent, valueOld) => {
     if (!valueOld && valueCurrent) {
         loadData();
@@ -186,6 +192,7 @@ const closeAppTutorial = () => {
     showTutorial.value = false
 }
 
+provide('hotelData', hotelData)
 provide('placeCategories', placeCategories)
 provide('orderSections', orderSections)
 provide('crossellingPlacesData', crossellingPlacesData)
