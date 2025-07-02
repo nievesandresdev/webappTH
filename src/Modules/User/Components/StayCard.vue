@@ -195,9 +195,10 @@ const formatDate = (dateString) => {
 
 const isModalOpen = () => {
     let data = {
-        title: hotelStore.hotelData.name,
+        title: false,
         text: t('stay.share.text'),
         url: shareUrl.value,
+        combineTitle: true,
     }
     shareContent(data);
 };
