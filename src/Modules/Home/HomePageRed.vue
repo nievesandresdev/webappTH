@@ -32,33 +32,8 @@
                 </div>
             </section>
             <ExplorePlacesSection />
-            <!-- Featured Places Slider -->
-            <!-- <FeaturedPlacesSlider 
-                v-if="allPlaces.length > 0"
-                :places="allPlaces"
-            /> -->
-            <!-- what visit carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
-                :places="crossellingPlacesData.crosselling_places_whatvisit"
-            />
+            <RecomendationPlaces :data="allPlaces" />
 
-            <!-- <FeaturedPlacesDotsSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whatvisit"
-                :places="crossellingPlacesData.crosselling_places_whatvisit"
-            /> -->
-
-            <!-- where eat carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_whereeat"
-                :places="crossellingPlacesData.crosselling_places_whereeat"
-            />
-
-            <!-- leisure carousel -->
-            <FeaturedPlacesSlider 
-                v-if="crossellingPlacesData?.crosselling_places_leisure"
-                :places="crossellingPlacesData.crosselling_places_leisure"
-            />
 
             <!-- what visit carousel -->
             <!-- <section 
@@ -168,15 +143,14 @@ import HeroSectionRed from './Components/HeroSectionRed.vue'
 import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
 import CarouselPlaces from './Components/CarouselPlacesRed.vue'
 import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
-import FeaturedPlacesSlider from './Components/FeaturedPlacesSlider.vue'
 import SocialNetworks from './Components/SocialNetworksRed.vue'
 import ButtonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
 import TutorialHome from './Components/TutorialHome.vue';
 import ExplorePlacesSection from './Components/ExplorePlacesSection.vue';
-
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
+import RecomendationPlaces from './Components/RecomendationPlaceSections.vue';
 
 //
 import { $currentPeriod } from '@/utils/helpers.js'

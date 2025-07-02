@@ -1,5 +1,5 @@
 <template>
-    <div v-if="featuredPlaces.length > 0" class="mb-4">
+    <div v-if="featuredPlaces.length > 0" class="mb-10">
         <!-- Header con estrella -->
         <div class="flex items-center gap-2 px-3 py-2">
             <img src="/assets/icons/WA.STAR.BLACK.svg" class="w-4 h-4" alt="star">
@@ -31,12 +31,30 @@
                     <!-- Overlay con gradiente -->
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"></div>
                     
-                    <!-- Información del lugar -->
-                    <div class="absolute bottom-3 left-3 text-white">
-                        <h3 class="text-lg font-bold" v-html="place.title"></h3>
-                        <div class="flex items-center gap-2 mt-1">
-                            <img src="/assets/icons/WA.pointer.svg" class="w-4 h-4 filter brightness-0 invert" alt="location">
-                            <span class="text-sm">{{ place.distance }}km</span>
+                    <!-- Información del lugar con fondo -->
+                    <div class="absolute bottom-0 left-0 right-0 py-2 px-2 text-white" style="background-color: rgba(51, 51, 51, 0.5);">
+                        <div class="flex justify-between items-end">
+                            <!-- Title and Distance -->
+                            <div class="flex-1">
+                                <h3 class="text-[#FAFAFA] font-bold text-[16px] lato line-clamp-2 mb-1" v-html="place.title"></h3>
+                                <p class="text-[#FAFAFA] text-[12px] lato" style="font-weight: 500;">{{ place.distance }}km</p>
+                            </div>
+                            
+                            <!-- Category Icon - Bottom Right -->
+                            <div class="flex-shrink-0 ml-2">
+                                <img 
+                                    v-if="place.categori_place?.icon" 
+                                    class="w-6 h-6 filter brightness-0 invert" 
+                                    :src="`/assets/icons/${place.categori_place.icon}.svg`"
+                                    alt=""
+                                >
+                                <img 
+                                    v-else 
+                                    class="w-6 h-6 filter brightness-0 invert" 
+                                    src="/assets/icons/WA.MONUMENTOS.svg"
+                                    alt=""
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,4 +210,13 @@ onMounted(() => {
 onUnmounted(() => {
     stopAutoSlide();
 });
-</script> 
+</script>
+
+<style scoped>
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style> 
