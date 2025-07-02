@@ -26,10 +26,13 @@ const crossellingPlacesData = inject('crossellingPlacesData')
 const allPlaces = computed(() => {
     if (!crossellingPlacesData.value) return [];
     
-    return [
+    const places = [
         ...(crossellingPlacesData.value.crosselling_places_whatvisit || []),
         ...(crossellingPlacesData.value.crosselling_places_whereeat || []),
         ...(crossellingPlacesData.value.crosselling_places_leisure || [])
     ];
+
+    //console.log('All Places:', places);
+    return places;
 });
 </script>
