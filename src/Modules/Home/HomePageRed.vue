@@ -7,7 +7,7 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <buttonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <buttonsSection v-if="orderSections?.buttonsSection?.visibility" />
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
 
