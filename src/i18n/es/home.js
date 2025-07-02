@@ -11,6 +11,11 @@ export default {
     "explore-places-text": "{totalPlaces} sitios de interés para ti",
     "explore-title": "Explorar",
     "explore-destination": "Explora tu destino",
+    "section-services": {
+      "text-on": "Tu experiencia, al siguiente nivel",
+      "text-off": "Relájate y aprovecha al máximo cada servicio pensado para ti.",
+      "btn-discover": "Descubrir servicios"
+    },
     "section-facility": {
       "title": "instalaciones"
     },

@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Estada",
   "guestTitle": "Hostes",
   "invite": "Convidar",
+  "section-services": {
+    "text-on": "La teva experiència, al següent nivell",
+    "text-off": "Relaxa i aprofita al màxim cada servei pensat per a tu.",
+    "btn-discover": "Descobrir serveis"
+  },
   "section-facility": {
     "title": "instal·lacions"
   },

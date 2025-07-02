@@ -7,6 +7,11 @@ export default {
   "stayTitle": "Egonaldia",
   "guestTitle": "Gonbidatuak",
   "invite": "Gonbidatu",
+  "section-services": {
+    "text-on": "Zure esperientzia, hurrengo mailan",
+    "text-off": "Ezabatu eta ezagutu zuretzat dizainaturiko giza-zereginak.",
+    "btn-discover": "Ezagutu giza-zereginak"
+  },
   "section-facility": {
     "title": "instalazioak"
   },

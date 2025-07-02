@@ -7,6 +7,11 @@ export default {
     "stayTitle":"Rester",
     "guestTitle":"Les hôtes",
     "invite":"Inviter",
+    "section-services": {
+      "text-on": "Votre expérience, au niveau suivant",
+      "text-off": "Relaxez-vous et profitez de chaque service conçu pour vous.",
+      "btn-discover": "Découvrir les services"
+    },
     "section-facility": {
       "title": "installations"
     },
