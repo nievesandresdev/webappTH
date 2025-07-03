@@ -2,7 +2,7 @@
     <div v-if="featuredPlaces.length > 0" class="mx-3 sp:mx-4">
         <!-- header con fondo amarillo -->
         <div class="bg-[#FFD700] text-black px-2 py-3 rounded-t-[10px]">
-            <h2 class="lato text-[16px] lato  font-bold leading-[12px] ">
+            <h2 class="lato sp:text-[16px] text-[12px] lato  font-bold leading-[12px] ">
                 {{ $t('home.recomendation-places.title-slider') }}
             </h2>
         </div>
