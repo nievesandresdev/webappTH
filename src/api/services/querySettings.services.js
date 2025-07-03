@@ -3,5 +3,5 @@ import {
     querySettingsPath,
 } from '../config/apiRoute'
 
-export const getAllApi = () => apiHttp('GET', `${querySettingsPath}/getAll`, [])
+export const getAllApi = () => apiHttp('GET', `${querySettingsPath}/getAll`, { guestName: '[nombreHuesped]' })
 
