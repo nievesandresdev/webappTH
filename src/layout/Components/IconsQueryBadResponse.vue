@@ -1,6 +1,6 @@
 <template>
     <h2 class="lato text-sm sp:text-[20px] font-bold leading-[20px] sp:leading-[28px]">
-        {{ route.query.period == 'pre-stay' ? $t('query.settings.thanks-title', { guestName: '[nombreHuesped]' }) : titleThanks }}
+        {{ route.query.period == 'pre-stay' ? $t('query.settings.thanks-title', { guestName: '[nombreHuesped]' })+'1' : titleThanks+'2' }}
     </h2>
     <p 
         class="lato text-[10px] sp:text-base font-bold leading-[14px] sp:leading-[20px] mt-2 sp:mt-4" 
@@ -59,6 +59,7 @@ const keyPeriodAndFeedback = computed(() => {
 })
 
 const titleKeyThanks = computed(() => {
+    console.log('test querySettingsStore.settings huesped',querySettingsStore.settings)
     if(!querySettingsStore.settings)return '';
     let key = props.period.replace("-", "_")+'_bad_response_title';
     if(['GOOD','VERYGOOD'].includes(props.qualification) && !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']){
