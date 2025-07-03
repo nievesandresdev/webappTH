@@ -79,9 +79,9 @@
                                     <!-- titulo y distancia -->
                                     <div class="flex items-center">
                                         <div class="max-w-[70%] min-w-0">
-                                            <span class="text-[#FAFAFA] font-bold line-clamp-1 text-[16px] lato" v-html="place.title + ','"></span>
+                                            <span class="text-[#FAFAFA] font-bold line-clamp-1 sp:text-[16px] text-[13px] lato" v-html="place.title + ','"></span>
                                         </div>
-                                        <p class="text-[#FAFAFA] text-[14px] lato font-bold flex-shrink-0 ml-1">{{ place.distance }} km</p>
+                                        <p class="text-[#FAFAFA] sp:text-[14px] text-[12px] lato font-bold flex-shrink-0 ml-1">{{ place.distance }} km</p>
                                     </div>
                                 </div>
                             </div>
