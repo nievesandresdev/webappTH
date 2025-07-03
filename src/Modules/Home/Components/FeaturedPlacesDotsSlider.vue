@@ -119,7 +119,7 @@ const startAutoSlide = () => {
     if (featuredPlaces.value.length > 1) {
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 1500);
+        }, 2500);
     }
 };
 

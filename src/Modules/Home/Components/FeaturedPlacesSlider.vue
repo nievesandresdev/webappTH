@@ -156,7 +156,7 @@ const startAutoSlide = () => {
         isPaused.value = false;
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 1500); // cambiar slide cada 1.5 segundos
+        }, 2500); // cambiar slide cada 2.5 segundos
     }
 };
 
@@ -246,7 +246,7 @@ const handleUserInteraction = () => {
     // reiniciar auto-slide despues de 1.5 segundos de inactividad
     setTimeout(() => {
         startAutoSlide();
-    }, 1500);
+    }, 2500);
 };
 </script>
 
@@ -271,7 +271,7 @@ const handleUserInteraction = () => {
 }
 
 .animate-progress {
-    animation: fillProgress 1.5s linear forwards;
+    animation: fillProgress 2.5s linear forwards;
 }
 
 @keyframes fillProgress {
