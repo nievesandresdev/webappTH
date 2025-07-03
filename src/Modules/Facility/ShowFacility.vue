@@ -181,6 +181,7 @@
     }
 
     const downloadDocument = (facility) => {
+        
         if (facility.document === 'link_document') {
             window.open(facility.link_document_url, '_blank');
         }
@@ -188,6 +189,8 @@
             const documentUrl = formatDocument(facility.file_document_url);
             window.open(documentUrl, '_blank');
         }
+        console.log('facility', facility.document);
+        console.log('facility.file_document_url', formatDocument(facility.file_document_url));
     }
 </script>
 
