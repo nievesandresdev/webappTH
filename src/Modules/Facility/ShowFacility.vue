@@ -186,11 +186,10 @@
             window.open(facility.link_document_url, '_blank');
         }
         if (facility.document === 'upload_file') {
-            const documentUrl = formatDocument(facility.file_document_url);
+            const documentUrl = formatDocument(facility.document_file);
             window.open(documentUrl, '_blank');
         }
-        console.log('facility', facility.document);
-        console.log('facility.file_document_url', formatDocument(facility.file_document_url));
+        
     }
 </script>
 
@@ -198,7 +197,7 @@
 <style scoped lang="scss">
 .description {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Mostrar solo 3 líneas */
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
