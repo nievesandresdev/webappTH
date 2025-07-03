@@ -149,13 +149,11 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
 }
 
 async function loadOrderSections () {
     const response = await hotelStore.$getOrderSections()
     if(response.ok) orderSections.value = response.data
-    console.log('test orderSections.value', orderSections.value)
 }
 
 async function getPlaceCategories(){
