@@ -10,7 +10,7 @@
     <!-- {{ $t(descriptionResponse) }} -->
     <PrimaryButton 
         @click="queryStore.$setIsOpenPopUp(false)"
-        classes="block mt-3 text-center py-1.5 rounded-[6px] lato text-[10px] font-bold leading-[12px] w-full shadow-guest"
+        classes="block mt-2 sp:mt-4 text-center py-1.5 sp:py-3 rounded-[6px] sp:rounded-[10px] lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] w-full shadow-guest"
     >
         Entendido
     </PrimaryButton> 
