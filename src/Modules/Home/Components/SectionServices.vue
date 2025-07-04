@@ -31,27 +31,28 @@
             </div>
         </section> 
 
-    <section
-        v-else-if="orderSections?.servicesSection?.style == 2"
-        class="section-services"
-    >
-        <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
-            <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
-            <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
-        </div>
-        <div class="pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
-            <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="`grid-cols-${services.length}`">
-                <div
-                    v-for="(service, index) in services"
-                    :key="service.name"
-                    class="h-[70px] sp:h-[140px] bg-[#000000] flex items-end justify-center pb-[6px] sp:pb-[8px]"
-                    :class="`${getDirectionRounded(index)}`"
-                    :style="{ backgroundImage: `url(${service.pathImg})`, backgroundSize: 'cover', backgroundPosition: 'center', background: `linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url(${service.pathImg}) lightgray ${calDimentionImg()}` }"
-                    @click="goToService(service.to)"
-                >
-                    <div class="flex flex-col items-center">
-                        <img :src="service.icon" :alt="service.name" class="size-[32px] sp:size-[48px] z-10">
-                        <span class="text-[11px] sp:text-[18px] font-bold lato text-white mt-[6px] sp:mt-[8px]">{{ service.name }}</span>
+        <section
+            v-else-if="orderSections?.servicesSection?.style == 2"
+            class="section-services"
+        >
+            <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
+                <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
+                <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
+            </div>
+            <div class="pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
+                <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="`grid-cols-${services.length}`">
+                    <div
+                        v-for="(service, index) in services"
+                        :key="service.name"
+                        class="h-[70px] sp:h-[140px] bg-[#000000] flex items-end justify-center pb-[6px] sp:pb-[8px]"
+                        :class="`${getDirectionRounded(index)}`"
+                        :style="{ backgroundImage: `url(${service.pathImg})`, backgroundSize: 'cover', backgroundPosition: 'center', background: `linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url(${service.pathImg}) lightgray ${calDimentionImg()}` }"
+                        @click="goToService(service.to)"
+                    >
+                        <div class="flex flex-col items-center">
+                            <img :src="service.icon" :alt="service.name" class="size-[32px] sp:size-[48px] z-10">
+                            <span class="text-[11px] sp:text-[18px] font-bold lato text-white mt-[6px] sp:mt-[8px]">{{ service.name }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="px-[10px] sp:px-[16px] mt-[10px] sp:mt-[16px]">
