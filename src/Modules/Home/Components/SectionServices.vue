@@ -40,18 +40,18 @@
                 <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
             </div>
             <div class="pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
-                <div class="grid gap-x-[6px] sp:gap-x-[8px]" :class="`grid-cols-${services.length}`">
+                <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="{'grid-cols-1': services.length === 1, 'grid-cols-2': services.length === 2, 'grid-cols-3': services.length === 3}">
                     <div
                         v-for="(service, index) in services"
                         :key="service.name"
-                        class="h-[90px] sp:h-[140px] bg-[#000000] flex items-end justify-center pb-[6px] sp:pb-[8px]"
-                        :class="`rounded-${getDirectionRounded(index)}-[7px] sp:rounded-${getDirectionRounded(index)}-[10px]`"
+                        class="h-[70px] sp:h-[140px] bg-[#000000] flex items-end justify-center pb-[6px] sp:pb-[8px]"
+                        :class="`${getDirectionRounded(index)}`"
                         :style="{ backgroundImage: `url(${service.pathImg})`, backgroundSize: 'cover', backgroundPosition: 'center', background: `linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url(${service.pathImg}) lightgray ${calDimentionImg()}` }"
                         @click="goToService(service.to)"
                     >
                         <div class="flex flex-col items-center">
                             <img :src="service.icon" :alt="service.name" class="size-[32px] sp:size-[48px] z-10">
-                            <span class="text-[12px] sp:text-[18px] font-bold lato text-white mt-[6px] sp:mt-[8px]">{{ service.name }}</span>
+                            <span class="text-[11px] sp:text-[18px] font-bold lato text-white mt-[6px] sp:mt-[8px]">{{ service.name }}</span>
                         </div>
                     </div>
                 </div>
@@ -125,11 +125,11 @@ const numbersServices = computed(() => {
 
 const getDirectionRounded = (index) => {
     if (services.value.length === 1) {
-        return 't';
+        return 'rounded-t';
     } else if (index === 0) {
-        return 'tl';
+        return 'rounded-tl';
     } else if (index === services.value.length - 1) {
-        return 'tr';
+        return 'rounded-tr';
     }
 }
 
@@ -159,11 +159,31 @@ const goToService = (to) => {
     margin: 0 10px;
 }
 
+.rounded-t {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+.rounded-tl {
+    border-top-left-radius: 7px;
+}
+.rounded-tr {
+    border-top-right-radius: 7px;
+}
+
 @media (min-width: 300px) {
     .section-services {
         border-radius: 10px;
         margin: 0 16px;
     }
+    .rounded-t {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .rounded-tl {
+        border-top-left-radius: 10px;
+    }
+    .rounded-tr {
+        border-top-right-radius: 10px;
+    }
 }
-    
 </style>
