@@ -40,7 +40,7 @@
                 <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
             </div>
             <div class="pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
-                <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="`grid-cols-${services.length}`">
+                <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="{'grid-cols-1': services.length === 1, 'grid-cols-2': services.length === 2, 'grid-cols-3': services.length === 3}">
                     <div
                         v-for="(service, index) in services"
                         :key="service.name"
