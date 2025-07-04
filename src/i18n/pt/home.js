@@ -7,6 +7,10 @@ export default {
   "stayTitle": "Estadia",
   "guestTitle": "Hóspedes",
   "invite": "Convidar",
+  "explore-places": "Perto do seu {typeLodging}",
+  "explore-places-text": "{totalPlaces} locais de interesse para você",
+  "explore-title": "Explorar",
+  "explore-destination": "Explore seu destino",
   "section-services": {
     "text-on": "Sua experiência, no próximo nível",
     "text-off": "Relaxe e aproveite ao máximo cada serviço pensado para você.",

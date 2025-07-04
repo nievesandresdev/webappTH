@@ -7,6 +7,10 @@ export default {
   "stayTitle": "Verblijf",
   "guestTitle": "Gasten",
   "invite": "Uitnodigen",
+  "explore-places": "Dicht bij je {typeLodging}",
+  "explore-places-text": "{totalPlaces} interessante plekken voor jou",
+  "explore-title": "Verkennen",
+  "explore-destination": "Verken je bestemming",
   "section-services": {
     "text-on": "Je ervaring, op het volgende niveau",
     "text-off": "Ontspan en maak de beste uit van elke service die voor je is bedacht.",

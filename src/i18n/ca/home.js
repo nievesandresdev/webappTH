@@ -7,6 +7,10 @@ export default {
   "stayTitle": "Estada",
   "guestTitle": "Hostes",
   "invite": "Convidar",
+  "explore-places": "A prop del teu {typeLodging}",
+  "explore-places-text": "{totalPlaces} llocs d'interès per a tu",
+  "explore-title": "Explorar",
+  "explore-destination": "Explora la teva destinació",
   "section-services": {
     "text-on": "La teva experiència, al següent nivell",
     "text-off": "Relaxa i aprofita al màxim cada servei pensat per a tu.",

@@ -7,6 +7,10 @@ export default {
   "stayTitle": "Egonaldia",
   "guestTitle": "Gonbidatuak",
   "invite": "Gonbidatu",
+  "explore-places": "Zure {typeLodging}(e)tik gertu",
+  "explore-places-text": "{totalPlaces} interesgune zuretzat",
+  "explore-title": "Esploratu",
+  "explore-destination": "Esploratu zure helmuga",
   "section-services": {
     "text-on": "Zure esperientzia, hurrengo mailan",
     "text-off": "Ezabatu eta ezagutu zuretzat dizainaturiko giza-zereginak.",
