@@ -2,7 +2,7 @@
     <div v-if="featuredPlaces.length > 0" class="mx-3 sp:mx-4">
         <!-- header con fondo amarillo -->
         <div class="bg-[#FFD700] text-black px-2 py-3 rounded-t-[10px]">
-            <h2 class="lato text-[16px] lato  font-bold leading-[12px] ">
+            <h2 class="lato sp:text-[16px] text-[12px] lato  font-bold leading-[12px] ">
                 {{ $t('home.recomendation-places.title-slider') }}
             </h2>
         </div>
@@ -79,9 +79,9 @@
                                     <!-- titulo y distancia -->
                                     <div class="flex items-center">
                                         <div class="max-w-[70%] min-w-0">
-                                            <span class="text-[#FAFAFA] font-bold line-clamp-1 text-[16px] lato" v-html="place.title + ','"></span>
+                                            <span class="text-[#FAFAFA] font-bold line-clamp-1 sp:text-[16px] text-[11px] lato" v-html="place.title + ','"></span>
                                         </div>
-                                        <p class="text-[#FAFAFA] text-[14px] lato font-bold flex-shrink-0 ml-1">{{ place.distance }} km</p>
+                                        <p class="text-[#FAFAFA] sp:text-[14px] text-[10px] lato font-bold flex-shrink-0 ml-1">{{ place.distance }} km</p>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@ const startAutoSlide = () => {
         isPaused.value = false;
         autoSlideInterval = setInterval(() => {
             nextSlide();
-        }, 1500); // cambiar slide cada 1.5 segundos
+        }, 2500); // cambiar slide cada 2.5 segundos
     }
 };
 
@@ -246,7 +246,7 @@ const handleUserInteraction = () => {
     // reiniciar auto-slide despues de 1.5 segundos de inactividad
     setTimeout(() => {
         startAutoSlide();
-    }, 1500);
+    }, 2500);
 };
 </script>
 
@@ -271,7 +271,7 @@ const handleUserInteraction = () => {
 }
 
 .animate-progress {
-    animation: fillProgress 1.5s linear forwards;
+    animation: fillProgress 2.5s linear forwards;
 }
 
 @keyframes fillProgress {

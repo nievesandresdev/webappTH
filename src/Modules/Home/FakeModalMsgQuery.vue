@@ -6,7 +6,7 @@
     > 
         <div 
             class="p-3" 
-            v-if="showThanksMsg"
+            v-if="route.query.openFakeMsgActivate == 'false' || route.query.qualification == 'NORMAL' || route.query.period == 'pre-stay'"
         >
             <IconsQueryBadResponse 
                 :period="route.query.period"
@@ -54,7 +54,7 @@ const querySettingsStore = useQuerySettingsStore();
 onMounted(async() => {
     if(Boolean(route.query.openFakeMsg) && isMockup()){
         await querySettingsStore.$getAll();
-        // console.log('se monta',querySettingsStore.settings);
+        console.log('se monta',querySettingsStore.settings);
     }
 })
 
@@ -76,21 +76,17 @@ const keyPeriodAndFeedback = computed(() => {
     return modifiedPeriod.value+'_'+route.query.qualification.toLowerCase();
 })
 
-const showThanksMsg = computed(() => {
-    if(route.query.period == 'pre-stay' || !querySettingsStore.settings)return true;
-    if(period.value == 'post-stay' && route.query.qualification == 'VERYGOOD'){
-        return false;
-    }
-    let calculated = (
-        (['WRONG','VERYWRONG','NORMAL'].includes(route.query.qualification)) ||
-        (['GOOD','VERYGOOD'].includes(route.query.qualification)) && !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']
-    )
-    return calculated;
-})
-
-// const showLinksReview = computed(() => {
-//     let calculated = (['GOOD','VERYGOOD'].includes(queryStore.currentQuery?.qualification)) && querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']
+// const showThanksMsg = computed(() => {
+//     if(route.query.period == 'pre-stay' || !querySettingsStore.settings)return true;
+//     if(period.value == 'post-stay' && route.query.qualification == 'VERYGOOD'){
+//         return false;
+//     }
+//     let calculated = (
+//         (['WRONG','VERYWRONG','NORMAL'].includes(route.query.qualification)) ||
+//         (['GOOD','VERYGOOD'].includes(route.query.qualification)) && !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate']
+//     )
 //     return calculated;
 // })
+
 
 </script>

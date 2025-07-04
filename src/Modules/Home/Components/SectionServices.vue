@@ -1,34 +1,35 @@
 <template>
-    <section
-        v-if="orderSections?.servicesSection?.style == 1"
-        class="section-services"
-        @click="goToService('servicios/confort')"
-    >
-        <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
-            <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
-            <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
-        </div>
-        <div class="flex space-x-[6px] sp:space-x-[8px] items-center px-[6px] sp:px-[8px] pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
-            <div class="flex-1">
-                <p class="text-[10px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px] leading-[12px] sp:leading-[20px]">{{ $t('home.section-services.text-on') }}</p>
-                <p class="text-[8px] sp:text-[12px] lato mb-[12px] sp:mb-[16px] text-[#777777] leading-[7px] sp:leading-[14px]">
-                    {{ $t('home.section-services.text-off') }}
-                </p>
-                <button
-                    class="space-x-[6px] sp:space-x-[8px] flex items-center"
-                    @click="goToService('servicios/confort')"
-                >
-                    <span class="text-[10px] sp:text-[14px] font-bold lato">
-                        {{ $t('home.section-services.btn-discover') }}
-                    </span>
-                    <img src="/assets/icons/arrow-right-long.svg" alt="arrow" class="size-[12px] sp:size-[16px]">
-                </button>
+    <div class="my-1 sp:my-2">
+        <section
+            v-if="orderSections?.servicesSection?.style == 1"
+            class="section-services"
+            @click="goToService('servicios/confort')"
+        >
+            <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
+                <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
+                <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
             </div>
-            <div class="w-[60px] sp:w-[115px]">
-                <img src="/assets/img/card-services.png" alt="card-services" class="w-full">
+            <div class="flex space-x-[6px] sp:space-x-[8px] items-center px-[6px] sp:px-[8px] pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
+                <div class="flex-1">
+                    <p class="text-[10px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px] leading-[12px] sp:leading-[20px]">{{ $t('home.section-services.text-on') }}</p>
+                    <p class="text-[8px] sp:text-[12px] lato mb-[12px] sp:mb-[16px] text-[#777777] leading-[7px] sp:leading-[14px]">
+                        {{ $t('home.section-services.text-off') }}
+                    </p>
+                    <button
+                        class="space-x-[6px] sp:space-x-[8px] flex items-center"
+                        @click="goToService('servicios/confort')"
+                    >
+                        <span class="text-[10px] sp:text-[14px] font-bold lato">
+                            {{ $t('home.section-services.btn-discover') }}
+                        </span>
+                        <img src="/assets/icons/arrow-right-long.svg" alt="arrow" class="size-[12px] sp:size-[16px]">
+                    </button>
+                </div>
+                <div class="w-[60px] sp:w-[115px]">
+                    <img src="/assets/img/card-services.png" alt="card-services" class="w-full">
+                </div>
             </div>
-        </div>
-    </section> 
+        </section> 
 
     <section
         v-else-if="orderSections?.servicesSection?.style == 2"
@@ -53,26 +54,26 @@
                         <span class="text-[11px] sp:text-[18px] font-bold lato text-white mt-[6px] sp:mt-[8px]">{{ service.name }}</span>
                     </div>
                 </div>
+                <div class="px-[10px] sp:px-[16px] mt-[10px] sp:mt-[16px]">
+                    <p class="text-[12px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px] leading-[12px] sp:leading-[20px]">{{ $t('home.section-services.text-on') }}</p>
+                    <p class="text-[10px] sp:text-[14px] lato mb-[12px] sp:mb-[16px] text-[#777777] leading-[10px] sp:leading-[14px]">
+                        {{ $t('home.section-services.text-off') }}
+                    </p>
+                </div>
+                <div class="px-[10px] sp:px-[16px] flex justify-end">
+                    <button
+                        class="space-x-[6px] sp:space-x-[8px] flex items-center"
+                        @click="goToService('servicios/confort')"
+                    >
+                        <span class="text-[10px] sp:text-[14px] font-bold lato">
+                            {{ $t('home.section-services.btn-discover') }}
+                        </span>
+                        <img src="/assets/icons/arrow-right-long.svg" alt="arrow" class="size-[12px] sp:size-[16px]">
+                    </button>
+                </div>
             </div>
-            <div class="px-[10px] sp:px-[16px] mt-[10px] sp:mt-[16px]">
-                <p class="text-[12px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px] leading-[12px] sp:leading-[20px]">{{ $t('home.section-services.text-on') }}</p>
-                <p class="text-[10px] sp:text-[14px] lato mb-[12px] sp:mb-[16px] text-[#777777] leading-[10px] sp:leading-[14px]">
-                    {{ $t('home.section-services.text-off') }}
-                </p>
-            </div>
-            <div class="px-[10px] sp:px-[16px] flex justify-end">
-                <button
-                    class="space-x-[6px] sp:space-x-[8px] flex items-center"
-                    @click="goToService('servicios/confort')"
-                >
-                    <span class="text-[10px] sp:text-[14px] font-bold lato">
-                        {{ $t('home.section-services.btn-discover') }}
-                    </span>
-                    <img src="/assets/icons/arrow-right-long.svg" alt="arrow" class="size-[12px] sp:size-[16px]">
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </template>
 
 <script setup>

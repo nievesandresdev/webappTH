@@ -7,7 +7,7 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <buttonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <buttonsSection v-if="orderSections?.buttonsSection?.visibility" />
         <!--  como anclar app  al inicio -->
         <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
 
@@ -149,13 +149,19 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
+<<<<<<< HEAD
     // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+=======
+>>>>>>> 1c2e981ea55b8a59a8a0c10e0beae0172634f288
 }
 
 async function loadOrderSections () {
     const response = await hotelStore.$getOrderSections()
     if(response.ok) orderSections.value = response.data
+<<<<<<< HEAD
     // console.log('test orderSections.value', orderSections.value)
+=======
+>>>>>>> 1c2e981ea55b8a59a8a0c10e0beae0172634f288
 }
 
 async function getPlaceCategories(){

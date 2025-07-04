@@ -106,9 +106,9 @@ onMounted(async() => {
     
     period.value = $currentPeriod();
     //cargar data en caso de recarga
-    if(!querySettingsStore.settings){
+    // if(!querySettingsStore.settings){
         await queryStore.$getCurrentAndSettingsQuery(localStorage.getItem('stayId'),localStorage.getItem('guestId'),$currentPeriod(),guestStore.guestData.name)
-    }
+    // }
     //cargar query en caso de cambio de fecha en la sesion
     if(queryStore.currentQuery && queryStore.currentQuery.period !== $currentPeriod()){
         await queryStore.$getCurrentQuery({
