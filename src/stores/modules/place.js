@@ -141,9 +141,11 @@ export const usePlaceStore = defineStore('place', () => {
         return response
     }
     async function $getCrosselling (params) {
-        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude } =  hotelData.value
+        let { id: idHotel, name: nameName, zone: zoneHotel, city_id: cityId, latitude, longitude, hidden_categories, hidden_type_places } =  hotelData.value
         let newParams = {
             hotel: { id: idHotel, name: nameName, zone: cityId, latitude, longitude},
+            hiddenCategoriPlaces: hidden_categories,
+            hiddenTypePlaces: hidden_type_places,
             ...params
         }
         const response = await getCrossellingApi(newParams)

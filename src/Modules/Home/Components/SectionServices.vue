@@ -1,14 +1,14 @@
 <template>
-    <div class="my-1 sp:my-2">
+    <div class="mx-[10px] sp:mx-[16px]">
+        <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
+            <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px] mt-">
+            <h2 class="text-[11px] sp:text-[20px] font-bold lato leading-[28px]">{{ $t('service.title') }}</h2>
+        </div>
         <section
             v-if="orderSections?.servicesSection?.style == 1"
             class="section-services"
             @click="goToService('servicios/confort')"
         >
-            <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
-                <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
-                <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
-            </div>
             <div class="flex space-x-[6px] sp:space-x-[8px] items-center px-[6px] sp:px-[8px] pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
                 <div class="flex-1">
                     <p class="text-[10px] sp:text-[16px] font-bold lato mb-[6px] sp:mb-[8px] leading-[12px] sp:leading-[20px]">{{ $t('home.section-services.text-on') }}</p>
@@ -35,10 +35,6 @@
             v-else-if="orderSections?.servicesSection?.style == 2"
             class="section-services"
         >
-            <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
-                <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px]">
-                <h2 class="text-[11px] sp:text-[20px] font-bold lato">{{ $t('service.title') }}</h2>
-            </div>
             <div class="pt-[6px] sp:pt-[8px] pb-[12px] sp:pb-[16px]">
                 <div class="grid gap-x-[5px] sp:gap-x-[8px]" :class="{'grid-cols-1': services.length === 1, 'grid-cols-2': services.length === 2, 'grid-cols-3': services.length === 3}">
                     <div
@@ -156,7 +152,7 @@ const goToService = (to) => {
     background: #FAFAFA;
     border-radius: 7px;
     box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
-    margin: 0 10px;
+    // margin: 0 10px;
 }
 
 .rounded-t {
@@ -173,7 +169,7 @@ const goToService = (to) => {
 @media (min-width: 300px) {
     .section-services {
         border-radius: 10px;
-        margin: 0 16px;
+        // margin: 0 16px;
     }
     .rounded-t {
         border-top-left-radius: 10px;
