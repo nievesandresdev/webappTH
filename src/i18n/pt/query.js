@@ -31,9 +31,16 @@ export default {
       "sent-text": "Enviado"
     },
     "settings": {
-      "questionpre-stay": "Há algo que possamos fazer para a sua chegada em",
-      "questionin-stay": "Como você avaliaria seu nível de satisfação com sua estadia até agora?",
-      "questionpost-stay": "Como você avaliaria seu nível de satisfação com sua estadia em {lodging}?"
+      "questionpre-stay": "Há algo que possamos fazer para preparar a sua chegada ao {lodging}?",
+      "questionin-stay": "Como você avaliaria seu nível de satisfação com a estadia até agora?",
+      "questionpost-stay": "Como você avaliaria seu nível de satisfação com a estadia no {hotelName}?",
+      "prestay-placeholder": "Adoraríamos saber mais detalhes — queremos melhorar a sua experiência.",
+      "thanks-title": "Muito obrigado(a), {guestName}!",
+      "in-stay-comment-good-feedback": "Ficamos muito felizes em saber que você está aproveitando a estadia! Agradecemos sinceramente pelo seu feedback.",
+      "in-stay-comment-bad-feedback": "Lamentamos que sua estadia não esteja sendo ideal. Poderia nos dar mais detalhes?",
+      "post-stay-comment-good-feedback": "Ficamos muito felizes em saber que você aproveitou a estadia! Agradecemos sinceramente pelo seu feedback.",
+      "post-stay-comment-bad-feedback": "Lamentamos que sua estadia não tenha sido ideal. Poderia nos dar mais detalhes?",
+      "placeholder-bad-feedback": "Conte-nos como podemos melhorar a sua experiência..."
     },
     "inbox": {
       "title": "Mensagens"

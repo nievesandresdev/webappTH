@@ -94,10 +94,42 @@ let isScrollingVertically = false;
 let isScrollingHorizontally = false;
 let autoSlideInterval = null;
 
-// Computed para filtrar lugares recomendados y destacados
+// Computed para filtrar lugares recomendados y destacados aplicando reverse POR CATEGORÍA
 const featuredPlaces = computed(() => {
     if (!props.places) return [];
-    return props.places.filter(place => place.recommended || place.place_featured);
+    
+    // Primero filtrar solo los lugares featured/recommended
+    const filtered = props.places.filter(place => place.recommended || place.place_featured);
+    
+    // Separar por categorías usando lógica simple basada en posición original
+    const whatvisitPlaces = [];
+    const whereeatPlaces = [];
+    const leisurePlaces = [];
+    
+    // Para cada lugar filtrado, encontrar su posición en el array original
+    // y determinar su categoría
+    filtered.forEach(place => {
+        const originalIndex = props.places.findIndex(p => p === place);
+        const totalPlaces = props.places.length;
+        
+        // Dividir en tercios aproximados
+        if (originalIndex < totalPlaces / 3) {
+            whatvisitPlaces.push(place);
+        } else if (originalIndex < (totalPlaces * 2) / 3) {
+            whereeatPlaces.push(place);
+        } else {
+            leisurePlaces.push(place);
+        }
+    });
+    
+    // Aplicar reverse a cada categoría y combinar en el orden correcto
+    const result = [
+        ...whatvisitPlaces.reverse(),
+        ...whereeatPlaces.reverse(),
+        ...leisurePlaces.reverse()
+    ];
+    
+    return result;
 });
 
 // Navegación

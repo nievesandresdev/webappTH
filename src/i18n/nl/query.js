@@ -31,9 +31,16 @@ export default {
       "sent-text": "Verzonden"
     },
     "settings": {
-      "questionpre-stay": "Is er iets wat we kunnen doen voor je aankomst bij",
-      "questionin-stay": "Hoe zou je je tevredenheid over je verblijf tot nu toe beoordelen?",
-      "questionpost-stay": "Hoe zou je je tevredenheid over je verblijf in {lodging} beoordelen?"
+      "questionpre-stay": "Is er iets dat we kunnen doen om je aankomst bij {lodging} voor te bereiden?",
+      "questionin-stay": "Hoe zou je je tevredenheid tot nu toe beoordelen over je verblijf?",
+      "questionpost-stay": "Hoe zou je je tevredenheid beoordelen over je verblijf in {hotelName}?",
+      "prestay-placeholder": "We horen graag meer details – we willen je ervaring verbeteren.",
+      "thanks-title": "Heel erg bedankt {guestName}!",
+      "in-stay-comment-good-feedback": "We zijn blij om te horen dat je van je verblijf geniet! Bedankt voor je feedback.",
+      "in-stay-comment-bad-feedback": "Het spijt ons dat je verblijf niet ideaal is. Zou je ons meer details willen geven?",
+      "post-stay-comment-good-feedback": "We zijn blij om te horen dat je van je verblijf hebt genoten! Bedankt voor je feedback.",
+      "post-stay-comment-bad-feedback": "Het spijt ons dat je verblijf niet ideaal was. Zou je ons meer details willen geven?",
+      "placeholder-bad-feedback": "Vertel ons hoe we je ervaring kunnen verbeteren..."
     },
     "inbox": {
       "title": "Berichten"

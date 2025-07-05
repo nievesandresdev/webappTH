@@ -17,8 +17,6 @@
                 <component
                     v-if="name !== 'buttonsSection'"
                     :is="componentMap[name]"
-                    @updateOrderSections="updatehiddenSections"
-                    @mouseup="() => onMouseUp(String(name))"
                 />
             </template>
 

@@ -90,7 +90,7 @@
     </div>
 </template>
 <script setup>
-import { reactive, provide, computed, ref, inject, watch  } from 'vue';
+import { reactive, provide, computed, ref, inject, watch,onMounted  } from 'vue';
 import { formatTimestampDate } from '@/utils/dateHelpers';
 import { $formatNameLodging } from '@/utils/utils';
 import FormTabEmojisRed from './FormTabEmojisRed'
@@ -121,6 +121,7 @@ const EditPeriod = inject('EditPeriod');
 const EditComment = inject('EditComment');
 const EditQualification = inject('EditQualification');
 
+
 const props = defineProps({
     settings:{
         type: Object,
@@ -137,6 +138,7 @@ const props = defineProps({
 })
 const guestStore = useGuestStore();
 const textarea = ref(EditComment.value);
+const accFeedback = ref(EditComment.value);
 const sendingQuery = ref(false);
 const isUpdate = ref(false);
 const form = reactive({
@@ -252,6 +254,19 @@ const placeholderTextarea = computed(() => {
     }
     return t('query.settings.placeholder-bad-feedback')
 })
+
+watch(
+  () => form.type, 
+  (newValue, oldValue) => {
+    if(!showTextarea.value){
+        textarea.value = null;
+    }
+    // else{
+    //     textarea.value = accFeedback.value;
+    // }
+  },
+  { immediate: true } 
+);
 </script>
 <style scoped>
 @media (min-width:767px){

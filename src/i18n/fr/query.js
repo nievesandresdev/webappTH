@@ -31,9 +31,16 @@ export default {
       "sent-text": "Envoyé"
     },
     "settings": {
-      "questionpre-stay": "Y a-t-il quelque chose que nous puissions faire pour votre arrivée à",
-      "questionin-stay": "Comment évalueriez-vous votre niveau de satisfaction avec votre séjour jusqu'à présent?",
-      "questionpost-stay": "Comment évalueriez-vous votre niveau de satisfaction avec votre séjour à {lodging}?"
+      "questionpre-stay": "Y a-t-il quelque chose que nous puissions faire pour préparer votre arrivée au {lodging} ?",
+      "questionin-stay": "Comment évalueriez-vous votre niveau de satisfaction pour l’instant ?",
+      "questionpost-stay": "Comment évalueriez-vous votre satisfaction concernant votre séjour au {hotelName} ?",
+      "prestay-placeholder": "Nous serions ravis d’en savoir plus, nous cherchons à améliorer votre expérience.",
+      "thanks-title": "Un grand merci {guestName} !",
+      "in-stay-comment-good-feedback": "Nous sommes ravis d’apprendre que vous profitez de votre séjour ! Merci beaucoup pour votre retour.",
+      "in-stay-comment-bad-feedback": "Nous sommes désolés que votre séjour ne soit pas à la hauteur. Pourriez-vous nous donner plus de détails ?",
+      "post-stay-comment-good-feedback": "Nous sommes ravis d’apprendre que vous avez apprécié votre séjour ! Merci beaucoup pour votre retour.",
+      "post-stay-comment-bad-feedback": "Nous sommes désolés que votre séjour n’ait pas été à la hauteur. Pourriez-vous nous donner plus de détails ?",
+      "placeholder-bad-feedback": "Dites-nous comment nous pouvons améliorer votre expérience..."
     },
     "inbox": {
       "title": "Messages"

@@ -7,12 +7,12 @@
             </h2>
         </div>
         <FeaturedPlacesSlider 
-            v-if="orderSections?.placesRecommendationSection?.style === 2"
+            v-if="orderSections?.placesRecommendationSection?.style === 1"
             :places="allPlaces"
         />
 
         <FeaturedPlacesDotsSlider 
-            v-if="orderSections?.placesRecommendationSection?.style === 1"
+            v-if="orderSections?.placesRecommendationSection?.style === 2"
             :places="allPlaces"
         />
     </div>
@@ -29,13 +29,18 @@ const crossellingPlacesData = inject('crossellingPlacesData')
 const allPlaces = computed(() => {
     if (!crossellingPlacesData.value) return [];
     
+    // Forzar el orden correcto: whatvisit SIEMPRE primero, whereeat segundo, leisure tercero
+    const whatvisitPlaces = crossellingPlacesData.value.crosselling_places_whatvisit || [];
+    const whereeatPlaces = crossellingPlacesData.value.crosselling_places_whereeat || [];
+    const leisurePlaces = crossellingPlacesData.value.crosselling_places_leisure || [];
+    
     const places = [
-        ...(crossellingPlacesData.value.crosselling_places_whatvisit || []),
-        ...(crossellingPlacesData.value.crosselling_places_whereeat || []),
-        ...(crossellingPlacesData.value.crosselling_places_leisure || [])
+        ...whatvisitPlaces,
+        ...whereeatPlaces,
+        ...leisurePlaces
     ];
 
-    //console.log('All Places:', places);
+    
     return places;
 });
 </script>
