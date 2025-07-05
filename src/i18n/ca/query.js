@@ -41,8 +41,7 @@ export default {
       "post-stay-comment-good-feedback": "Ens alegra molt saber que has gaudit de la teva estada! Agraïm sincerament el teu comentari.",
       "post-stay-comment-bad-feedback": "Lamentem que la teva estada no hagi estat ideal. Et faria res donar-nos més detalls?",
       "placeholder-bad-feedback": "Explica'ns com podem millorar la teva experiència..."
-  }
-
+  },
   "inbox": {
     "title": "Missatges"
   },
