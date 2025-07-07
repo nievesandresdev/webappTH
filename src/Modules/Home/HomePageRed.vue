@@ -108,7 +108,7 @@ useHead({
     ]
 })
 
-useFavicon('/assets/icons/1.TH.RECOMMEND.svg')
+//useFavicon('/assets/icons/1.TH.RECOMMEND.svg')
 
 onMounted(async () => {
     // loadCrossellings();
