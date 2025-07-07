@@ -98,5 +98,11 @@ export default {
         "error-scan": "Error: Has d'enfocar el codi MRZ del document",
         "browser-warning": "Inicia sessió des d'un navegador com Google Chrome per utilitzar aquesta funcionalitat.",
         "rescan-document": "Tornar a escanejar document"
+    },
+    "success-checkin": {
+        "title": "Check-in completat!",
+        "button": "Completar un altre Check-in",
+        "button-home": "Anar a l'inici"
     }
+
 }

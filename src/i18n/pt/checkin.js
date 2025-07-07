@@ -98,5 +98,10 @@ export default {
         "error-scan": "Erro: Você deve focar no código MRZ do documento",
         "browser-warning": "Faça login a partir de um navegador como o Google Chrome para usar essa funcionalidade.",
         "rescan-document": "Escanear novamente o documento"
+    },
+    "success-checkin": {
+        "title": "Check-in completado!",
+        "button": "Completar outro Check-in",
+        "button-home": "Ir para Início"
     }
 }

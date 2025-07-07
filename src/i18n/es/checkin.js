@@ -106,4 +106,9 @@ export default {
         "browser-warning": "Inicia sesion desde un navegador como Google Chrome para usar esta funcionalidad.",
         "rescan-document": "Volver a escanear documento"
     },
+    "success-checkin": {
+        "title": "Check-in completado!",
+        "button": "Completar otro Check-in",
+        "button-home": "Ir a Inicio",
+    }
 }

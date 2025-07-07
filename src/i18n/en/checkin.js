@@ -98,6 +98,11 @@ export default {
       "error-scan": "Error: You must focus the MRZ code of the document",
     "browser-warning": "Sign in using a browser such as Google Chrome to use this functionality.",
     "rescan-document": "Rescan document"
+    },
+    "success-checkin": {
+        "title": "Check-in completed!",
+        "button": "Complete another Check-in",
+        "button-home": "Go to Home"
     }
 }
   
