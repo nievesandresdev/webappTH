@@ -1,5 +1,5 @@
 <template>
-    <div class="my-1 sp:my-2">
+    <div class="my-1 sp:my-2" v-if="hotelStore?.hotelData?.show_places">
         <div class="flex items-center gap-2 px-3 ml-1 mb-2">
             <img src="/assets/icons/WA.STAR.BLACK.svg" class="sp:w-6 sp:h-6 w-4 h-4" alt="star">
             <h2 class="lato sp:text-[20px] text-[13px] font-bold">
@@ -24,6 +24,10 @@ import FeaturedPlacesDotsSlider from './FeaturedPlacesDotsSlider.vue';
 import { inject, computed } from 'vue';
 const orderSections = inject('orderSections')
 const crossellingPlacesData = inject('crossellingPlacesData')
+//
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
+
 
 // Computed para combinar todos los lugares
 const allPlaces = computed(() => {
