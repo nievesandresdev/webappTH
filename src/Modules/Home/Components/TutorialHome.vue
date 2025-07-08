@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="bg-[#FAFAFA] w-auto sp:h-[114px] h-[90px] rounded-[8px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.15)] py-2 pr-2 pl-4 relative mt-[30px] mx-3" v-if="showTutorial">
+    <div class="bg-[#FAFAFA] w-auto sp:h-[114px] h-[90px] rounded-[8px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.15)] py-2 pr-2 pl-4 relative mt-[30px] mx-3" v-if="shouldShowTutorial">
         <BackgroundSvg :backgroundColor="chainStore.$bgColor0" />
         <img src="/images/home/phone2.png" alt="" class="absolute sp:-top-[10px] -top-[5px] z-10 sp:w-[59px] w-[40px] left-[5px] sp:left-[17px]">
         
@@ -32,30 +32,90 @@
 <script setup>
 import BackgroundSvg from './BackgroundSvg.vue';
 import ModalTutorial from './ModalTutorial.vue';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useChainStore } from '@/stores/modules/chain';
-const chainStore = useChainStore();
 
+const chainStore = useChainStore();
 const showModal = ref(false);
+const tutorialDismissed = ref(false);
+
+// Clave para localStorage
+const TUTORIAL_STORAGE_KEY = 'webapp_tutorial_dismissed';
+// Duración en milisegundos (12 horas = 12 * 60 * 60 * 1000)
+const TUTORIAL_DURATION = 12 * 60 * 60 * 1000;
 
 const props = defineProps({
     showTutorial: {
         type: Boolean,
         default: false
     }
-})
+});
 
-const emit = defineEmits(['closeAppTutorial'])
+const emit = defineEmits(['closeAppTutorial']);
+
+// Computed que determina si debe mostrarse el tutorial
+const shouldShowTutorial = computed(() => {
+    return props.showTutorial && !tutorialDismissed.value;
+});
+
+// Función para verificar si el tutorial debe mostrarse
+const checkTutorialStatus = () => {
+    try {
+        const dismissedData = localStorage.getItem(TUTORIAL_STORAGE_KEY);
+        
+        if (!dismissedData) {
+            // No hay datos guardados, mostrar tutorial
+            tutorialDismissed.value = false;
+            return;
+        }
+
+        const { timestamp } = JSON.parse(dismissedData);
+        const currentTime = Date.now();
+        const timeDifference = currentTime - timestamp;
+
+        // Si han pasado más de 12 horas, permitir mostrar el tutorial nuevamente
+        if (timeDifference >= TUTORIAL_DURATION) {
+            tutorialDismissed.value = false;
+            // Limpiar el localStorage para empezar de nuevo
+            localStorage.removeItem(TUTORIAL_STORAGE_KEY);
+        } else {
+            tutorialDismissed.value = true;
+        }
+    } catch (error) {
+        console.error('Error al verificar el estado del tutorial:', error);
+        tutorialDismissed.value = false;
+    }
+};
+
+// Función para marcar el tutorial como visto
+const markTutorialAsDismissed = () => {
+    try {
+        const dismissData = {
+            timestamp: Date.now(),
+            dismissed: true
+        };
+        localStorage.setItem(TUTORIAL_STORAGE_KEY, JSON.stringify(dismissData));
+        tutorialDismissed.value = true;
+    } catch (error) {
+        console.error('Error al guardar el estado del tutorial:', error);
+    }
+};
 
 const closeAppTutorial = () => {
-    emit('closeAppTutorial')
-}
+    markTutorialAsDismissed();
+    emit('closeAppTutorial');
+};
 
 const openTutorialModal = () => {
     showModal.value = true;
-}
+};
 
 const closeModal = () => {
     showModal.value = false;
-}
+};
+
+// Verificar el estado del tutorial al montar el componente
+onMounted(() => {
+    checkTutorialStatus();
+});
 </script>

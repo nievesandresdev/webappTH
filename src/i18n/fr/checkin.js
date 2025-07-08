@@ -98,5 +98,10 @@ export default {
         "error-scan": "Erreur : Veuillez cadrer le code MRZ du document",
         "browser-warning": "Connectez-vous via un navigateur tel que Google Chrome pour utiliser cette fonctionnalité.",
         "rescan-document": "Scanner à nouveau le document"
+      },
+      "success-checkin": {
+        "title": "Check-in terminé !",
+        "button": "Terminer un autre check-in",
+        "button-home": "Retour à l'accueil"
       }
 }

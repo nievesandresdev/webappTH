@@ -98,5 +98,10 @@ export default {
         "error-scan": "Errore: Devi inquadrare il codice MRZ del documento",
         "browser-warning": "Accedi tramite un browser come Google Chrome per utilizzare questa funzionalità.",
         "rescan-document": "Riscansiona il documento"
+    },
+    "success-checkin": {
+        "title": "Check-in completato!",
+        "button": "Completa un altro check-in",
+        "button-home": "Vai alla Home"
     }
 }

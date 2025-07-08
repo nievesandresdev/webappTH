@@ -183,7 +183,12 @@
     const downloadDocument = (facility) => {
         
         if (facility.document === 'link_document') {
-            window.open(facility.link_document_url, '_blank');
+            // Verificar si el URL tiene protocolo, si no lo tiene agregarlo
+            let url = facility.link_document_url;
+            if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            window.open(url, '_blank');
         }
         if (facility.document === 'upload_file') {
             const documentUrl = formatDocument(facility.document_file);

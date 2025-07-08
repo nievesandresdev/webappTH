@@ -98,6 +98,11 @@ export default {
       "error-scan": "Errorea: Dokumentuaren MRZ kodea enfokatu behar duzu",
       "browser-warning": "Hasi saioa Google Chrome bezalako nabigatzaile batetik funtzionalitate hau erabiltzeko.",
       "rescan-document": "Eskaneatu dokumentua berriro"
+    },
+    "success-checkin": {
+        "title": "Check-in osatua!",
+        "button": "Beste Check-in bat osatu",
+        "button-home": "Joan Hasiera"
     }
   }
   
