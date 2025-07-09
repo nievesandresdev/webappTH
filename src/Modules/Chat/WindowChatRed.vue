@@ -219,6 +219,13 @@ const onBlurTextarea = () => {
     document.body.style.overflow = 'hidden';
     hideAppMenu.value = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isIphone.value) {
+        setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }, 300);
+    }
     enableScroll()
 }
 

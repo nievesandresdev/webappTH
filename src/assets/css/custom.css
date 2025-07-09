@@ -291,3 +291,11 @@ body{
   overflow: hidden !important;
   height: 100% !important;
 }
+
+/* evita rebote en iOS esto es para el chat */
+html,
+body {
+  overscroll-behavior: none; /* evita rebote en iOS */
+  -webkit-overflow-scrolling: auto !important;
+}
+/* fin evita rebote en iOS esto es para el chat */
