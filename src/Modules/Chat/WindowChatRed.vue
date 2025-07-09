@@ -1,6 +1,4 @@
 <template>
-    
-    <!-- isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen' -->
     <div ref="myDiv" 
         :class="[
             'flex flex-col hbg-gray-200 w-full',
@@ -153,6 +151,10 @@ startLoading(SECTIONS.CHAT.GLOBAL);
 //mounted
 onMounted( async () => {
     
+    if (isIphone.value) {
+        document.body.classList.add('no-scroll-iphone');
+    }
+
     document.body.style.overflow = 'hidden';
     await chatStore.loadMessages();
     availableLanguages.value = await chatStore.getAvailableLanguages();
@@ -176,6 +178,10 @@ onUnmounted(() => {
     unsubscribeChatEvent()
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     document.body.style.overflow = '';
+    if (isIphone.value) {
+        document.body.classList.remove('no-scroll-iphone');
+    }
+
 });
     
 
