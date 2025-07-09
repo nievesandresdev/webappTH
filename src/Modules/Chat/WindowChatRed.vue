@@ -1,10 +1,12 @@
 <template>
-    <!-- <div class="fixed top-0 left-0 w-full z-[2500]"> -->
+    
+    <!-- isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen' -->
     <div ref="myDiv" 
         :class="[
             'flex flex-col hbg-gray-200 w-full',
-            isMobileScreen ? (isIphone ? 'h-[89.5vh]' : 'h-[92.3vh]') : 'h-screen'
         ]"
+        :style="{ height: isMobileScreen && !Boolean(hideAppMenu) ? 'calc(var(--vh, 1vh) * 100)' : '100vh' }"
+
     >
         <AppHeader 
             title="Chat"
@@ -99,12 +101,11 @@
             ></div>
         </div>
     </div>
-
     <!-- </div> -->
     <ScheduleModal />
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted, provide, inject, computed } from 'vue'
+import { ref, onMounted, onUnmounted, provide, inject, computed, watch } from 'vue'
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import IconCustomColor from '@/components/IconCustomColor.vue';
 import ScheduleModal from './ScheduleModalRed.vue';
@@ -144,12 +145,15 @@ const screenOff = ref(null);
 const hideAppMenu = inject('hideAppMenu'); 
 const isIphone = ref(false);
 const availableLanguages = ref([]);
+const myDiv = ref(null);
 
 const isMobileScreen = computed(() => screen.width < 768)
 
 startLoading(SECTIONS.CHAT.GLOBAL);
 //mounted
 onMounted( async () => {
+    
+    document.body.style.overflow = 'hidden';
     await chatStore.loadMessages();
     availableLanguages.value = await chatStore.getAvailableLanguages();
     await watchAvailability();
@@ -163,16 +167,26 @@ onMounted( async () => {
     document.addEventListener('visibilitychange', handleVisibilityChange);
     chatStore.markMsgsAsRead();
     stopLoading(SECTIONS.CHAT.GLOBAL);
+
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
 });
 
 onUnmounted(() => {
     unsubscribeChatEvent()
     document.removeEventListener('visibilitychange', handleVisibilityChange);
+    document.body.style.overflow = '';
 });
     
 
 let originalBodyOverflow;
 provide('isScheduleModalOpen',isScheduleModalOpen)
+
+const setViewportHeight = () => {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+};
+
+
 
 const handleVisibilityChange = () => {
     if (document.hidden) {
@@ -196,19 +210,24 @@ const focusTextarea = () => {
 }
 
 const onBlurTextarea = () => {
+    document.body.style.overflow = 'hidden';
     hideAppMenu.value = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     enableScroll()
 }
 
 const disableScroll = () => {
-    originalBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // originalBodyOverflow = document.body.style.overflow;
+    // document.body.style.overflow = 'hidden';
     // Agregar listener a la ventana para bloquear el scroll en dispositivos táctiles
+    document.body.style.overflow = 'hidden';
+
     window.addEventListener('touchmove', preventScroll, { passive: false });
 }
 
 const  enableScroll = () => {
-    document.body.style.overflow = originalBodyOverflow;
+    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = originalBodyOverflow;
     window.removeEventListener('touchmove', preventScroll);
 }
 
@@ -363,13 +382,17 @@ function preventScroll(e) {
 
 </script>
 <style scoped>
-.height-chat-normal {
-  /* height: calc(var(--vh, 1vh) * 100);  */
-  height: calc(100vh - 158px); 
+
+:root {
+  --vh: 100%;
 }
-.height-chat-hideMenu {
-  height: calc(var(--vh, 1vh) * 89); 
+
+@media (max-width: 768px) {
+  :root {
+    --vh: 100vh; /* luego será actualizado por JS */
+  }
 }
+
 
 #text-auto {
     height: 40px; 
