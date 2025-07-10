@@ -11,4 +11,5 @@ export default {
     'copas': 'copos',
     'compras': 'compras',
     'otros': 'outros',
+    "naturaleza": "natureza",       // portugués  
 }

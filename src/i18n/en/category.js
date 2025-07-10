@@ -11,4 +11,5 @@ export default {
     'copas': 'cups',
     'compras': 'shopping',
     'otros': 'others',
+    "naturaleza": "nature",       // inglés  
 }

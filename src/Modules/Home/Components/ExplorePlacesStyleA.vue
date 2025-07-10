@@ -27,7 +27,7 @@
                 >
                     <img :src="`/assets/icons/${icons[item.categori_places_id]}.svg`" class="w-3 sp:w-4 h-3 sp:h-4">
                     <p class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px]">
-                        {{ item.count_places }} {{  item.name }}
+                        {{ item.count_places }} {{  $utils.titleCase($t(`category.${slugify(item.name.toLowerCase())}`)) }}
                     </p>
                 </div>
             </template>
@@ -59,6 +59,13 @@ const goToPlaces = (item) =>{
 //     if(!hotelStore.hotelData) return true;
 //     return !hotelStore.hotelData?.hidden_categories?.includes(categoryId)
 // }
+
+function slugify(text) {
+  return text
+    .normalize("NFD")                 // separa acentos
+    .replace(/[\u0300-\u036f]/g, "") // elimina acentos
+    .replace(/\s+/g, "-");           // reemplaza espacios por guiones
+}
 
 const icons = {
     1: 'WA.MONUMENTOS',

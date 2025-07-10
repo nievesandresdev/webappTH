@@ -10,6 +10,7 @@ export default {
     'vida-nocturna': 'nachtleven',
     'copas': 'drankjes',
     'compras': 'winkelen',
-    'otros': 'overige'
+    'otros': 'overige',
+    "naturaleza": "natuur",       // holandés  
   }
   

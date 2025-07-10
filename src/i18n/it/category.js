@@ -11,4 +11,5 @@ export default {
     'copas': 'bicchieri',
     'compras': 'shopping',
     'otros': 'altri',
+    "naturaleza": "natura",       // italiano 
 }

@@ -10,6 +10,7 @@ export default {
     'vida-nocturna': 'gaueko bizitza',
     'copas': 'kopak',
     'compras': 'erosketak',
-    'otros': 'beste batzuk'
+    'otros': 'beste batzuk',
+    "naturaleza": "natura",       // euskera  
   }
   

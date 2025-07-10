@@ -10,5 +10,6 @@ export default {
     'vida-nocturna': 'vie nocturne',
     'copas': 'cups',
     'compras': 'tasses',
-    'otros': 'outres'
+    'otros': 'outres',
+    "naturaleza": "nature",       // francés  
 }

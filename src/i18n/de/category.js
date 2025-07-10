@@ -11,4 +11,5 @@ export default {
     'copas': 'Gläser',
     'compras': 'Einkaufen',
     'otros': 'Andere',
+    "naturaleza": "Natur",        // alemán  
 }

@@ -10,6 +10,7 @@ export default {
     'vida-nocturna': 'vida nocturna',
     'copas': 'copas',
     'compras': 'compras',
-    'otros': 'outros'
+    'otros': 'outros',
+    "naturaleza": "natureza",     // gallego  
   }
   

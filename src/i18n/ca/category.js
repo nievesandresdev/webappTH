@@ -10,5 +10,6 @@ export default {
     'vida-nocturna': 'vida nocturna',
     'copas': 'copes',
     'compras': 'compres',
-    'otros': 'altres'
+    'otros': 'altres',
+    "naturaleza": "natura",       // catalán  
   }
