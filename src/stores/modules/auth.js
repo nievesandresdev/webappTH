@@ -65,6 +65,8 @@ export const useAuthStore = defineStore('auth', () => {
         if(response.ok && response.data){
             // console.log('test response',response.data.token);
             localStorage.setItem('token', response.data?.token);
+            // Borrar tutorial para que se muestre al iniciar sesión
+            localStorage.removeItem('webapp_tutorial_dismissed')
             guestStore.setLocalGuest(response.data?.guest);
             return response.data;
         }
@@ -86,6 +88,8 @@ export const useAuthStore = defineStore('auth', () => {
     async function $logoutAndCreateStay () {
 
         stayStore.deleteLocalStayData()
+        // Borrar tutorial para que se muestre en la próxima sesión
+        localStorage.removeItem('webapp_tutorial_dismissed')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
@@ -103,6 +107,8 @@ export const useAuthStore = defineStore('auth', () => {
         await guestStore.deleteLocalGuest()
         localStorage.removeItem('startedWebappBy')
         localStorage.removeItem('token')
+        // Borrar tutorial para que se muestre en la próxima sesión
+        localStorage.removeItem('webapp_tutorial_dismissed')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         historyStore.$clearHistory();
@@ -115,6 +121,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logIn (email) {
+        // Borrar tutorial para que se muestre al iniciar sesión
+        localStorage.removeItem('webapp_tutorial_dismissed')
+        
         if(!stayStore?.stayData){
             //aqui entra solo si no hay una estancia cargada antes de culminar registro
             await guestStore.findAndValidLastStayAndLogHotel({
@@ -289,6 +298,8 @@ export const useAuthStore = defineStore('auth', () => {
     async function $loginByGoogle(guestId, googleId) {  
         const {token, guest } = await $createTokenSessionByGoogle(googleId);
         localStorage.setItem('token', token);
+        // Borrar tutorial para que se muestre al iniciar sesión
+        localStorage.removeItem('webapp_tutorial_dismissed')
         let localGuest = guestStore.getLocalGuest();
         if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
             guestStore.setLocalGuest(guest);
@@ -298,6 +309,8 @@ export const useAuthStore = defineStore('auth', () => {
     async function $loginByFacebook(guestId, facebookId) {
         const {token, guest } = await $createTokenSessionByFacebook(facebookId);
         localStorage.setItem('token', token);
+        // Borrar tutorial para que se muestre al iniciar sesión
+        localStorage.removeItem('webapp_tutorial_dismissed')
         let localGuest = guestStore.getLocalGuest();
         if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
             guestStore.setLocalGuest(guest);

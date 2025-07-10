@@ -81,6 +81,34 @@ export default {
   "recomendation-places":{
     "title-slider":"Luoghi esclusivi per te",
     "title":"Destinazione - Raccomandato"
+  },
+  "tutorial": {
+    "title": "Non perdere nulla!",
+    "description": "Aggiungi la WebApp alla schermata iniziale del tuo cellulare in 3 semplici passaggi.",
+    "link": "Tocca qui per vedere come",
+    "modal": {
+      "title": "Accesso rapido alla WebApp!",
+      "description": "Aggiungi un accesso rapido alla WebApp sul desktop del tuo cellulare in 3 semplici passaggi.",
+      "deviceQuestion": "Che tipo di cellulare usi?",
+      "understood": "Capito",
+      "android": {
+        "instructions": "Se il tuo cellulare è {device} e navighi con {browser}:",
+        "step1": "Tocca l'icona dei tre punti verticali (nell'angolo in alto a destra)",
+        "step2": "Tocca su \"{addToHome}\" e \"{createShortcut}\"",
+        "step3": "Modifica il nome (se desideri) e tocca \"{add}\"",
+        "addToHome": "Aggiungi alla schermata iniziale",
+        "createShortcut": "Crea collegamento",
+        "add": "Aggiungi"
+      },
+      "ios": {
+        "instructions": "Se il tuo cellulare è {device} e navighi con {browser}:",
+        "step1": "Tocca l'icona Condividi (in fondo allo schermo)",
+        "step2": "Tocca su \"{addToHome}\"",
+        "step3": "Modifica il nome (se desideri) e tocca \"{add}\"",
+        "addToHome": "Aggiungi alla schermata principale",
+        "add": "Aggiungi"
+      }
+    }
   }
 
 };

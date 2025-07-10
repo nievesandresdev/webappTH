@@ -81,6 +81,34 @@ export default {
     "recomendation-places":{
       "title-slider":"Exclusive places for you",
       "title":"Destination - Recommended"
+    },
+    "tutorial": {
+      "title": "Don't miss anything!",
+      "description": "Add the WebApp to your mobile home screen in 3 simple steps.",
+      "link": "Tap here to see how",
+      "modal": {
+        "title": "Quick access to the WebApp!",
+        "description": "Add quick access to the WebApp on your mobile desktop in 3 simple steps.",
+        "deviceQuestion": "What type of mobile do you use?",
+        "understood": "Understood",
+        "android": {
+          "instructions": "If your mobile is {device} and you browse with {browser}:",
+          "step1": "Tap the three vertical dots icon (in the top right corner)",
+          "step2": "Tap on \"{addToHome}\" and \"{createShortcut}\"",
+          "step3": "Edit the name (if you want) and tap \"{add}\"",
+          "addToHome": "Add to home screen",
+          "createShortcut": "Create shortcut",
+          "add": "Add"
+        },
+        "ios": {
+          "instructions": "If your mobile is {device} and you browse with {browser}:",
+          "step1": "Tap the Share icon (at the bottom of the screen)",
+          "step2": "Tap on \"{addToHome}\"",
+          "step3": "Edit the name (if you want) and tap \"{add}\"",
+          "addToHome": "Add to Home Screen",
+          "add": "Add"
+        }
+      }
     }
 
   };

@@ -77,6 +77,34 @@ export default {
   "recomendation-places":{
     "title-slider":"Lugarrak esklusiboak zuretzat",
     "title":"Helbidea - Gomendatua"
+  },
+  "tutorial": {
+    "title": "Ez galdu ezer!",
+    "description": "Gehitu WebApp-a zure mugikorraren hasiera pantailan 3 urrats sinpletan.",
+    "link": "Hemen sakatu nola ikusteko",
+    "modal": {
+      "title": "WebApp-ra sarbide azkarra!",
+      "description": "Gehitu WebApp-ra sarbide azkarra zure mugikorraren mahaigainean 3 urrats sinpletan.",
+      "deviceQuestion": "Zer mugikorr mota erabiltzen duzu?",
+      "understood": "Ulertuta",
+      "android": {
+        "instructions": "Zure mugikorra {device} bada eta {browser} bidez nabigatzen baduzu:",
+        "step1": "Sakatu hiru puntu bertikaleko ikonoa (goiko eskuineko izkinan)",
+        "step2": "Sakatu \"{addToHome}\" eta \"{createShortcut}\" aukeretan",
+        "step3": "Editatu izena (nahi baduzu) eta sakatu \"{add}\"",
+        "addToHome": "Hasiera pantailara gehitu",
+        "createShortcut": "Lasterbidea sortu",
+        "add": "Gehitu"
+      },
+      "ios": {
+        "instructions": "Zure mugikorra {device} bada eta {browser} bidez nabigatzen baduzu:",
+        "step1": "Sakatu Partekatu ikonoa (pantailaren behean)",
+        "step2": "Sakatu \"{addToHome}\" aukeran",
+        "step3": "Editatu izena (nahi baduzu) eta sakatu \"{add}\"",
+        "addToHome": "Hasiera pantailara gehitu",
+        "add": "Gehitu"
+      }
+    }
   }
 
   
