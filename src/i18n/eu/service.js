@@ -38,5 +38,8 @@ export default {
     "text-search-found": "Zerbitzuak aurkitu dira jardueretan",
     "list-page": {},
     "detail-page": {}
+  },
+  "share": {
+    "message": "Gure estanciaren egin saioa eta begiratu gure {type}aren zerbitzua WebApp bidez"
   }
 }

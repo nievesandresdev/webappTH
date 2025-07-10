@@ -1,38 +1,38 @@
 <template>
+    
     <SectionBar :title="$t('stay.detail.title')" :showButton="true" :button-text="$t('stay.detail.createBtn')" @onClickButton="createStay"/>
-    <div class="px-3 pb-10 pt-[100px]">
-        <div v-if="loading" class="flex justify-center">
-            <Spinner width="40px" height="40px"/>
-        </div>
-        <!-- Renderiza la estancia activa si existe -->
-        <StayCard 
-            v-if="activeStay"
-            :hotel="hotelData" 
-            :stay="activeStay" 
-            :isActive="true"
-            :shadowContainer="true"
-            :colorBorder="'#FFF'"
-            @sharedStay="openModalShared"
-            @stayClick="handleMyStays"
-            :isLoading="loading"
-            :hotelName="true"
-        />
-
-        <!-- Renderiza las demás estancias -->
-        <div v-for="stay in otherStays" :key="stay.id" class="mt-6">
+    <PageTransitionFull module="profile" name="mystays" component-name="MyStaysSkeleton">
+        <div class="px-3 pb-10 pt-[100px]">
+            <!-- Renderiza la estancia activa si existe -->
             <StayCard 
+                v-if="activeStay"
                 :hotel="hotelData" 
-                :stay="stay" 
-                :isActive="false"
+                :stay="activeStay" 
+                :isActive="true"
                 :shadowContainer="true"
                 :colorBorder="'#FFF'"
                 @sharedStay="openModalShared"
                 @stayClick="handleMyStays"
-                :isLoading="loading"
+                :isLoading="false"
                 :hotelName="true"
             />
+
+            <!-- Renderiza las demás estancias -->
+            <div v-for="stay in otherStays" :key="stay.id" class="mt-6">
+                <StayCard 
+                    :hotel="hotelData" 
+                    :stay="stay" 
+                    :isActive="false"
+                    :shadowContainer="true"
+                    :colorBorder="'#FFF'"
+                    @sharedStay="openModalShared"
+                    @stayClick="handleMyStays"
+                    :isLoading="false"
+                    :hotelName="true"
+                />
+            </div>
         </div>
-    </div>
+    </PageTransitionFull>
 
     <BottomModal 
         :isOpen="isModalOpen" 
@@ -82,10 +82,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import PageTransitionFull from '@/components/PageTransitionFull.vue';
 import SectionBar from '@/components/SectionBar.vue';
-import Spinner from '@/components/Spinner.vue';
 import StayCard from './Components/StayCard.vue';
 import BottomModal from '@/components/Modal/GeneralBottomSheet.vue';
+import { SECTIONS } from "@/constants/sections.js";
+import { useLoadingSections } from "@/composables/useLoadingSections";
 
 import { navigateTo } from '@/utils/navigation'
 
@@ -107,29 +109,35 @@ const chainStore = useChainStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
+const { startLoading, stopLoading } = useLoadingSections();
+
 const hotelData = ref({});
 const activeStay = ref(null); 
 const otherStays = ref([]); 
 const stayData = ref({}); 
 const guestData = ref({});
 const chainData = ref({});
-const loading = ref(true);
 
 const isModalOpen = ref(false);
 const dataModalStay = ref({});  
 
-onMounted(() => {
+onMounted(async () => {
+    startLoading(SECTIONS.MYSTAYS.GLOBAL);
+    
     guestData.value = guestStore.guestData;
     stayData.value = stayStore.stayData; 
     chainData.value = chainStore.chainData;
 
-    getStaysGuestByChain(guestData.value.id, stayData.value.id);
-    getHotelbyId(stayData.value.hotel_id);
+    await Promise.all([
+        getStaysGuestByChain(guestData.value.id, stayData.value.id),
+        getHotelbyId(stayData.value.hotel_id)
+    ]);
+    
+    stopLoading(SECTIONS.MYSTAYS.GLOBAL);
 });
 
 const getStaysGuestByChain = async (guestId, stayId) => {
     const response = await chainStore.$getStaysGuestByChain(guestId, stayId);
-
 
     if (response.ok) {
         activeStay.value = response.data.active_stay;
@@ -138,8 +146,6 @@ const getStaysGuestByChain = async (guestId, stayId) => {
     } else {
         console.log('error', response);
     }
-
-    loading.value = false;
 };
 
 const getHotelbyId = async (id) => {

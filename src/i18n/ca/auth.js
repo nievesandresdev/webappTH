@@ -7,7 +7,8 @@ export default {
       "text-error": "El format del correu electrònic introduït no és correcte",
       "continue-button": "Continuar",
       "continue-google": "Continuar amb Google",
-      "continue-fb": "Continuar amb Facebook"
+      "continue-fb": "Continuar amb Facebook",
+      "unaffiliated-mail": "Oh no! Sentim les molèsties; per autenticar-te amb Facebook, has de tenir un correu electrònic associat al compte de Facebook."
     },
     "log": {
       "title": "Inicia sessió",

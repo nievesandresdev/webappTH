@@ -22,20 +22,6 @@
                     :data="item"
                     @reloadList="reloadList"
                 />
-                <div v-else-if="showRequestReview && item._type == 'request'" >
-                    <div class="flex items-center mb-2 gap-1 md:hidden" >
-                        <IconCustomColor
-                            class="transform rotate-180"
-                            name="arrow-back"
-                            color="#777777"
-                        />
-                        <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">{{ $t('query.form.received-text') }} </span>
-                        <span class="lato text-[10px] sp:text-sm leading-[12px] sp:leading-[16px] text-[#777777]">
-                            {{ formatAnyDate(item?._date, 'dd/MM/yyyy - HH:mm')+'hs' }}
-                        </span>
-                    </div>
-                    <LinksReview />
-                </div>
                 <ResponseCard 
                     v-else-if="item._type == 'response' && EditPeriod !== item.period"
                     :response="item.comment ? item.comment[item.response_lang] : null"
@@ -120,12 +106,11 @@ onMounted(async() => {
     
     period.value = $currentPeriod();
     //cargar data en caso de recarga
-    if(!querySettingsStore.settings){
+    // if(!querySettingsStore.settings){
         await queryStore.$getCurrentAndSettingsQuery(localStorage.getItem('stayId'),localStorage.getItem('guestId'),$currentPeriod(),guestStore.guestData.name)
-    }
+    // }
     //cargar query en caso de cambio de fecha en la sesion
     if(queryStore.currentQuery && queryStore.currentQuery.period !== $currentPeriod()){
-        console.log('test entro')
         await queryStore.$getCurrentQuery({
             stayId : localStorage.getItem('stayId'),
             guestId : localStorage.getItem('guestId'),
@@ -138,7 +123,7 @@ onMounted(async() => {
     stopLoading(SECTIONS.QUERY.GLOBAL);
     // requestTexts.value = await requestSettingsStore.$getRequestData(period.value);
     // console.log('test requestTexts.value',requestTexts.value)
-    requestTo.value = requestSettingsStore.requestData?.request_to;
+    // requestTo.value = requestSettingsStore.requestData.request_to;
     getCombinedList();
     
 })
@@ -193,21 +178,21 @@ async function reloadList(){
     getCombinedList();
 }
 
-const showRequestReview = computed(()=>{
-    if(!period.value || !requestSettingsStore.requestData) return false;
-    let requestTo = JSON.parse(requestSettingsStore.requestData?.request_to)
+// const showRequestReview = computed(()=>{
+//     if(!period.value || !requestSettingsStore.requestData) return false;
+//     let requestTo = JSON.parse(requestSettingsStore.requestData?.request_to)
     
-    if(period.value == 'in-stay'){
-        return queryStore.currentQuery?.answered && requestSettingsStore.requestData.in_stay_activate && ['GOOD','VERYGOOD'].includes(queryStore.currentQuery.qualification)
-    }
+//     if(period.value == 'in-stay'){
+//         return queryStore.currentQuery?.answered && requestSettingsStore.requestData.in_stay_activate && ['GOOD','VERYGOOD'].includes(queryStore.currentQuery.qualification)
+//     }
 
-    if(period.value == 'post-stay'){
-        return queryStore.currentQuery?.answered && requestTo.includes(queryStore.currentQuery.qualification) 
-        // requestTo.includes('NOTANSWERED')
-    }
+//     if(period.value == 'post-stay'){
+//         return queryStore.currentQuery?.answered && requestTo.includes(queryStore.currentQuery.qualification) 
+//         // requestTo.includes('NOTANSWERED')
+//     }
     
-    return false
-})
+//     return false
+// })
 
 const getCombinedList = () => {
   const items = []
@@ -229,14 +214,14 @@ const getCombinedList = () => {
     })))
   }
   
-  // 3. La solicitud al usuario (suponiendo que el campo de fecha es requestDate)
-  if (responses.value.length > 0) {
-    items.push({
-      ...requestSettingsStore.requestData,
-      _type: 'request',
-      _date: responses.value.find(r => r.period == period.value)?.responded_at
-    })
-  }
+//   // 3. La solicitud al usuario (suponiendo que el campo de fecha es requestDate)
+//   if (responses.value.length > 0) {
+//     items.push({
+//       ...requestSettingsStore.requestData,
+//       _type: 'request',
+//       _date: responses.value.find(r => r.period == period.value)?.responded_at
+//     })
+//   }
 
   if(contactEmails.value.length > 0){
     items.push(...contactEmails.value.map(c => ({

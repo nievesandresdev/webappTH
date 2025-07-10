@@ -11,7 +11,7 @@ import utils from '@/utils/utils.js';
 import { i18n } from '@/i18n'
 
 export default async function handleWebAppData({ to, from, next }) {
-    // console.log('test handleWebAppData',{to,from});
+    console.log('test handleWebAppData',{to,from});
     const stayStore = useStayStore();
     const guestStore = useGuestStore();
     const historyStore = useHistoryStore();
@@ -22,7 +22,7 @@ export default async function handleWebAppData({ to, from, next }) {
     const stayId = to.query.e;
     const guestId = to.query.g;
     const googleId = to.query.gid;
-    
+    const facebookId = to.query.fid;
     sessionStorage.setItem('guestPerStay', utils.getUrlParam('guestPerStay'))
     //evitar multiples redirecciones
     
@@ -97,7 +97,9 @@ export default async function handleWebAppData({ to, from, next }) {
     if(guestId){
         if (googleId) {
             await authStore.$loginByGoogle(guestId, googleId);
-        } else {
+        }else if (facebookId) {
+            await authStore.$loginByFacebook(guestId, facebookId);
+        }else {
             let localGuest = guestStore.getLocalGuest();
             if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
                 await guestStore.findByIdInSetLocalGuest(guestId)

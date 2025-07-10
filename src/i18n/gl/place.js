@@ -10,6 +10,9 @@ export default {
       "text-search-not-found": "Axusta a túa busca ou proba noutra categoría",
       "btn-load-more": "Cargar máis"
     },
+    "share": {
+        "message": "Regístrate en nuestra estancia y echa un vistazo a este sitio en el catálogo de lugares de nuestro {type} a través de su WebApp enlace al elemento"
+    },
     "results": "Sen resultados...",
     "seaching": "Buscando...",
     "categorySearch": "atopados",

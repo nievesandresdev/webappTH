@@ -11,6 +11,9 @@ export default {
       "btn-load-more": "Kargatu gehiago"
       // "text-count-list-mobile": "Aurkitu dira {count} esperientzia."
     },
+    "share": {
+        "message": "Gure estanciaren egin saioa eta begiratu gure {type}aren katalogoan dagoen lekua WebApp bidez"
+    },
     "results": "Emaitzarik ez...",
     "seaching": "Bilatzen...",
     "categorySearch": "aurkitu dira",

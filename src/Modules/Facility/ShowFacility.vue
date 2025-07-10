@@ -5,7 +5,16 @@
         <PageTransitionGlobal module="facility" name="facility_detail" component-name="SkeletomDetail">
 
             <div class="bg-[#FAFAFA] mb-[48px]">
-                <ImageSlider :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" :imgDefault="hotelData?.image"  showButtonBack :from="'facility'" />
+                <ImageSlider 
+                    :images="facility?.images?.map(item=> facilityStore.$loadImage(item,hotelData.image))" 
+                    :imgDefault="hotelData?.image"  
+                    showButtonBack 
+                    :from="'facility'" 
+                    showButtonShared 
+                    :nameShared="facility.title"
+                    :typeShared="hotelData.type" 
+                    :msgShared="msgShared"
+                />
                     <!-- v-if="facility.ad_tag" -->
                 <div
                     v-if="facility.ad_tag"
@@ -35,6 +44,16 @@
                         >
                             {{ isExpanded ? 'Ver menos' : 'Ver más' }}
                         </p>
+                        
+                        <button
+                            :disabled="$utils.isMockup()"
+                            v-if="facility.text_document_button && facility.document != 'no_add_document'"
+                            class="w-full lato flex justify-center items-center h-8 sp:h-10 sp:px-4 px-1 py-2 gap-2 rounded-[10px] border border-white text-white sp:text-sm text-[12px] font-bold hshadow-button mt-4"
+                            :style="{backgroundColor: chainStore.$bgColor0}"
+                            @click="downloadDocument(facility)"
+                        >
+                            {{ facility.text_document_button }}
+                        </button>
                     </div>
 
                     <div  class="flex flex-col w-full p-2 sp:p-4 gap-2 sp:gap-4 border border-[#E9E9E9] rounded-[10px] bg-gradient-h mt-2 sp:mt-4">
@@ -42,6 +61,7 @@
                         <p v-if="facility.always_open" class="lato text-[8px] sp:text-sm font-bold">{{ $t('facility.detailPage.sectionSchedules.openAlways') }}</p>
                         
                         <template v-else-if="activeWeekdays.length">
+                            
                             <!-- horarios -->
                             <div class="flex flex-col">
                                 <div v-for="(day, index) in activeWeekdays" :key="index">
@@ -69,11 +89,26 @@
 </template>
 
 <script setup>
-    import { onMounted, defineProps, ref,computed, nextTick } from 'vue';
+    import { onMounted, defineProps, ref, computed, nextTick } from 'vue';
     import ImageSlider from '@/components/ImageSlider.vue';
     import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
     import { useFacilityStore } from '@/stores/modules/facility.js';
     import { useHotelStore } from '@/stores/modules/hotel';
+    import { useI18n } from 'vue-i18n';
+    import { useHead } from '@vueuse/head';
+    import { useChainStore } from '@/stores/modules/chain';
+
+    const URL_STORAGE = process.env.VUE_APP_STORAGE_URL;
+    const { t: $t } = useI18n();
+    const chainStore = useChainStore();
+
+    //useHead
+    useHead({
+        title: 'Instalaciones',
+        meta: [
+            { name: 'description', content: 'Instalaciones' }
+        ]
+    });
 
     import { SECTIONS } from "@/constants/sections.js";
     import { useLoadingSections } from "@/composables/useLoadingSections";
@@ -86,6 +121,10 @@
     const hotelStore = useHotelStore();
 
     const hotelData = computed(() => hotelStore.hotelData);
+
+    const msgShared = computed(() => {
+        return $t('facility.detailPage.share.message', { type: hotelData.value.type });
+    });
 
     const facilityStore = useFacilityStore();
 
@@ -134,13 +173,36 @@
     const toggleDescription = () => {
         isExpanded.value = !isExpanded.value;
     }
+
+    const formatDocument = (url) => {
+        if (!url) return '';
+        if (url.includes('https://')) return url; // Si es una URL completa, la retornamos tal cual
+        return `${URL_STORAGE}/storage/facility_documents/${url}`; // Si no, construimos la ruta al documento
+    }
+
+    const downloadDocument = (facility) => {
+        
+        if (facility.document === 'link_document') {
+            // Verificar si el URL tiene protocolo, si no lo tiene agregarlo
+            let url = facility.link_document_url;
+            if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            window.open(url, '_blank');
+        }
+        if (facility.document === 'upload_file') {
+            const documentUrl = formatDocument(facility.document_file);
+            window.open(documentUrl, '_blank');
+        }
+        
+    }
 </script>
 
 
 <style scoped lang="scss">
 .description {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Mostrar solo 3 líneas */
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

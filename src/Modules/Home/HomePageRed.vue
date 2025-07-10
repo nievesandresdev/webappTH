@@ -7,136 +7,58 @@
     
         <HeroSectionRed />
         <BannersSection />
-        <ButtonsSection v-if="hotelStore.hotelData?.buttons_home" />
+        <buttonsSection v-if="orderSections?.buttonsSection?.visibility" />
+        <!--  como anclar app  al inicio -->
+        <TutorialHome :showTutorial="showTutorial" @closeAppTutorial="closeAppTutorial" />
+
         <!-- carousel's -->
-        <div class="mt-4 sp:mt-6 pb-[70px] sp:pb-[104px]">
-            <!-- facilities carousel -->
-            <section 
-                v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" 
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-facility.title')) }}
-                    </h2>
-                    <a 
-                        @click="goFacilities()" 
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselFacilities id="1" :items="crossellingsData.crosselling_facilities"/>
-                </div>
-            </section>
+        <div class="mt-2 sp:mt-4 pb-[70px] sp:pb-[104px] flex flex-col gap-1 sp:gap-2" v-if="hotelStore.hotelData && orderSections">
+            <template v-for="name in orderSections?.visibleOrder" :key="name">
+                <component
+                    v-if="name !== 'buttonsSection'"
+                    :is="componentMap[name]"
+                />
+            </template>
 
-            <!-- what visit carousel -->
-            <section 
-                v-if="showWhatvisitSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-what-visit.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whatvisit_id, catWhatVisitId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="0" :items="crossellingPlacesData?.crosselling_places_whatvisit" place />
-                </div>
-            </section>
-
-            <!-- where eat carousel -->
-            <section 
-            v-if="showWhereeatSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-where-eat.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.whereeat_id, catWhereEatId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_whereeat" place />
-                </div>
-            </section>
-
-            <!-- leisure carousel -->
-            <section 
-                v-if="showLeisureSection"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-leisure.title')) }}
-                    </h2>
-                    <a 
-                        @click="goPlaces(crossellingPlacesData?.leisure_id, catLeisureId)"
-                        class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline" href="javascript:void(0)"
-                    >
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </a>
-                </div>
-                <div>
-                    <CarouselPlaces id="2" :items="crossellingPlacesData?.crosselling_places_leisure" place />
-                </div>
-            </section>
-
-            <!-- experiences carousel -->
-            <section 
-                v-if="crossellingPlacesData?.crosselling_experiences?.length > 0 && hotelData.show_experiences"
-                class="mt-2"
-            >
-                <div class="flex items-center justify-between px-3 sp:px-4 h-[20px] sp:h-[28px]">
-                    <h2 class="lato text-[14px] sp:text-[20px] font-bold leading-[12px] sp:leading-[18px]">
-                        {{ $utils.capitalize($t('home.section-experience.title')) }}
-                    </h2>
-                    <router-link :to="{name:'ExperienceList'}" class="lato text-[10px] sp:text-sm font-bold leading-[12px] sp:leading-[16px] underline hover:underline">
-                        {{ $utils.capitalize($t('home.btn-see-all')) }}
-                    </router-link>
-                </div>
-                <div>
-                    <CarouselExperiences id="5" :items="crossellingPlacesData.crosselling_experiences"/>
-                </div>
-            </section>
-
-            <SocialNetworks v-if="hotelData" />
+            <!-- <facilitiesSection/>    
+            <placesExploreSection />
+            <placesRecommendationSection/>
+            <activitiesSection/>
+            <socialNetworksSection />
+            <servicesSection /> -->
+            <!-- showServices -->
         </div>
     </PageTransitionGlobal>
 
     <!-- forms -->
     <ModalSession />
+    <FakeModalMsgQuery />
 </template>
 <script setup>
-import { onMounted, computed, ref, watch, watchEffect } from 'vue';
+import { onMounted, computed, ref, watch, watchEffect, provide } from 'vue';
 import { DateTime } from 'luxon';
 import { useRouter } from 'vue-router';
 import { isMockup } from '@/utils/utils'
 const router = useRouter();
+import { useHead } from '@vueuse/head'
+import FakeModalMsgQuery from './FakeModalMsgQuery.vue';
+import { useFavicon } from '@/composables/useFavicon'
+
 //sections
+import servicesSection from './Components/SectionServices.vue';
 import ModalSession from '@/Modules/Auth/ModalSession.vue';
 import HeaderHomeRed from './Components/HeaderHomeRed.vue'
 import HeroSectionRed from './Components/HeroSectionRed.vue'
-import CarouselFacilities from './Components/CarouselFacilitiesRed.vue'
-import CarouselPlaces from './Components/CarouselPlacesRed.vue'
-import CarouselExperiences from './Components/CarouselExperiencesRed.vue'
-import SocialNetworks from './Components/SocialNetworksRed.vue'
-import ButtonsSection from './Components/ButtonsSection.vue'
+import facilitiesSection from './Components/CarouselFacilitiesRed.vue'
+import activitiesSection from './Components/CarouselExperiencesRed.vue'
+import socialNetworksSection from './Components/SocialNetworksRed.vue'
+import buttonsSection from './Components/ButtonsSection.vue'
 import BannersSection from './Components/BannersSection.vue';
-
+import TutorialHome from './Components/TutorialHome.vue';
+import placesExploreSection from './Components/ExplorePlacesSection.vue';
 import PageTransitionGlobal from "@/components/PageTransitionGlobal.vue";
 import { SECTIONS } from "@/constants/sections.js";
+import placesRecommendationSection from './Components/RecomendationPlaceSections.vue';
 
 //
 import { $currentPeriod } from '@/utils/helpers.js'
@@ -163,8 +85,30 @@ const placeCategories = ref(null)
 const catWhatVisitId = ref(null)
 const catWhereEatId = ref(null)
 const catLeisureId  = ref(null)
+const showTutorial = ref(true)
+const orderSections = ref(null)
+
+const componentMap = {
+  buttonsSection,
+  facilitiesSection,
+  placesRecommendationSection,
+  placesExploreSection,
+  servicesSection,
+  activitiesSection,
+  socialNetworksSection
+};
 
 startLoading(SECTIONS.HOME.GLOBAL);
+
+useHead({
+    title: 'The Hoster',
+    meta: [
+        { name: 'description', content: 'The Hoster' },
+        { name: 'og:title', content: 'The Hoster' },
+    ]
+})
+
+//useFavicon('/assets/icons/1.TH.RECOMMEND.svg')
 
 onMounted(async () => {
     // loadCrossellings();
@@ -178,6 +122,10 @@ const hotelData = computed(() => {
     return hotelStore.hotelData;
 });
 
+const showServices = computed(() => {
+    return hotelData.value?.show_confort || hotelData.value?.show_transport || hotelData.value?.show_experiences;
+});
+
 watch(hotelData, (valueCurrent, valueOld) => {
     if (!valueOld && valueCurrent) {
         loadData();
@@ -185,7 +133,7 @@ watch(hotelData, (valueCurrent, valueOld) => {
 }, { immediate: true });
 
 async function loadData () {
-    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories()]);
+    await Promise.all([loadCrossellings(), loadCrossellingsPlaces(), getPlaceCategories(), loadOrderSections()]);
     stopLoading(SECTIONS.HOME.GLOBAL);
 }
 
@@ -199,7 +147,11 @@ const goFacilities = () => {
 
 async function loadCrossellingsPlaces () {
     crossellingPlacesData.value = await placeStore.$getCrosselling();
-    // console.log('test crossellingPlacesData.value', crossellingPlacesData.value)
+}
+
+async function loadOrderSections () {
+    const response = await hotelStore.$getOrderSections()
+    if(response.ok) orderSections.value = response.data
 }
 
 async function getPlaceCategories(){
@@ -247,8 +199,14 @@ const showLeisureSection = computed(() => {
     return !hotelStore.hotelData.hidden_type_places.includes(idSection)
 });
 
+const closeAppTutorial = () => {
+    showTutorial.value = false
+}
 
-
-
+provide('hotelData', hotelData)
+provide('placeCategories', placeCategories)
+provide('orderSections', orderSections)
+provide('crossellingPlacesData', crossellingPlacesData)
+provide('crossellingsData', crossellingsData)
 
 </script>

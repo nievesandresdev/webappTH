@@ -7,7 +7,8 @@ export default {
       "text-error": "Sartutako posta elektronikoaren formatua ez da zuzena",
       "continue-button": "Jaraitu",
       "continue-google": "Jarraitu Googlerekin",
-      "continue-fb": "Jarraitu Facebookekin"
+      "continue-fb": "Jarraitu Facebookekin",
+      "unaffiliated-mail": "Ai ene! Barkatu eragozpenagatik; Facebook bidez autentifikatzeko, Facebook kontuarekin loturiko helbide elektroniko bat izan behar duzu."
     },
     "log": {
       "title": "Hasi saioa",

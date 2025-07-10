@@ -38,5 +38,8 @@ export default  {
       "text-search-found": "Servizi trovati in attività",
       "list-page": {},
       "detail-page": {}
+    },
+    "share": {
+      "message": "Registrati alla nostra struttura e dai un'occhiata a questo servizio del nostro {type} attraverso il suo link WebApp"
     }
   }

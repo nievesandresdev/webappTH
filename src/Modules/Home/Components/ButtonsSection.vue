@@ -141,7 +141,8 @@ const showReserveButton = computed(() => {
 })
 
 const showPhoneButton = computed(() => {
-    return responseButtons.value?.find(button => button.name == "Llamar") && (Boolean(hotelStore.hotelData?.phone) || Boolean(hotelStore.hotelData?.phone_optional));
+    /* return responseButtons.value?.find(button => button.name == "Llamar") && (Boolean(hotelStore.hotelData?.phone) || Boolean(hotelStore.hotelData?.phone_optional)); */
+    return responseButtons.value?.find(button => button.name == "Llamar")
 })
 
 const activeButtonsCount = computed(() => {

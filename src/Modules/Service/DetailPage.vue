@@ -6,9 +6,13 @@
     <PageTransitionGlobal module="service" name="service_detail" :component-name="'SkeletonDetail'">
         <!-- <div class="h-full "> -->
             <ImageSlider
-                    show-button-back
-                    :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
-                    :from="'services'"
+                show-button-back
+                :images="serviceData.type == 'thehoster' ? serviceData.images.map(item=> serviceStore.$loadImage(item)) : serviceData.images.map(item=> experienceStore.$loadImage(item))"
+                :from="'services'"
+                :msg-shared="msgShared"
+                show-button-shared
+                :nameShared="serviceData?.name"
+                :typeShared="hotelData.type"
             />
             <div class="py-[12px] sp:py-[24px] mx-2 sp:mx-4 pb-[40px] sp:pb-[86px]">
                 <div class=" ">
@@ -147,9 +151,13 @@ import { useExperienceStore } from '@/stores/modules/experience';
 const experienceStore = useExperienceStore();
 import { useHotelStore } from '@/stores/modules/hotel';
 const hotelStore = useHotelStore();
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 // CONSTANTS
 import { SECTIONS } from '@/constants/sections';
+
+import { useHead } from '@vueuse/head';
 
 // COMPOSABLES
 import { useLoadingSections } from '@/composables/useLoadingSections';
@@ -195,6 +203,18 @@ const hotelData = computed(() => hotelStore.hotelData);
 
 const serviceCurrent = computed(() => {
     return props.paramsRouter.service;
+});
+
+//useHead
+useHead({
+    title: 'Servicios',
+    meta: [
+        { name: 'description', content: 'Servicios' }
+    ]
+});
+
+const msgShared = computed(() => {
+    return t('service.share.message', { type: hotelData.value.type });
 });
 
 startLoading(SECTIONS.SERVICE.DETAIL);

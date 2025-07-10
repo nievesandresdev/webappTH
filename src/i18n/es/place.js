@@ -11,6 +11,9 @@ export default {
         "btn-load-more": "Cargar más"
         // "text-count-list-mobile": "Se han encontrado {count} experiencias.",
     },
+    "share": {
+        "message": "Regístrate en nuestra estancia y echa un vistazo a este sitio en el catálogo de lugares de nuestro {type} a través de su WebApp"
+    },
     "results":'Sin resultados...',
     "seaching":'Buscando...',
     "categorySearch":'encontrados',

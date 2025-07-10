@@ -31,9 +31,16 @@ export default {
       "sent-text": "Bidalia"
     },
     "settings": {
-      "questionpre-stay": "Zure iritsierarako zerbait egin dezakegu",
-      "questionin-stay": "Nola baloratuko zenuke zure asebetetze maila orain arteko egonaldiarekin?",
-      "questionpost-stay": "Nola baloratuko zenuke zure asebetetze maila {lodging} egonaldiarekin?"
+      "questionpre-stay": "Zerbait egin dezakegu zure iritsiera {lodging}(e)ra prestatzeko?",
+      "questionin-stay": "Nola baloratuko zenuke zure egonaldiaren orain arteko gogobetetasuna?",
+      "questionpost-stay": "Nola baloratuko zenuke zure egonaldia {hotelName}(e)n?",
+      "prestay-placeholder": "Xehetasun gehiago jakitea gustatuko litzaiguke, zure esperientzia hobetzen saiatzen gara.",
+      "thanks-title": "Eskerrik asko {guestName}!",
+      "in-stay-comment-good-feedback": "Pozten gara zure egonaldia atsegina izaten ari dela jakiteaz! Eskerrik asko zure iritzia emateagatik.",
+      "in-stay-comment-bad-feedback": "Tamalgarria da zure egonaldia ez dela espero zenuen modukoa. Arazorik ez baduzu, xehetasun gehiago eman diezagukezu?",
+      "post-stay-comment-good-feedback": "Pozten gara zure egonaldia atsegina izan dela jakiteaz! Eskerrik asko zure iritzia emateagatik.",
+      "post-stay-comment-bad-feedback": "Tamalgarria da zure egonaldia ez dela nahi bezalakoa izan. Arazorik ez baduzu, xehetasun gehiago eman diezagukezu?",
+      "placeholder-bad-feedback": "Esaguzu nola hobetu dezakegun zure esperientzia..."
     },
     "inbox": {
       "title": "Mezuak"

@@ -44,7 +44,11 @@ const profileRoutes = [
       {
         name: 'Profile',
         path: 'perfil',
-        component: ProfilePage
+        component: ProfilePage,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
       {
         name: 'ProfileMockup',
@@ -54,30 +58,26 @@ const profileRoutes = [
       {
         name: 'MyStays',
         path: 'mis-estancias',
-        component: MyStays
+        component: MyStays,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
-      // {
-      //   name: 'PersonalInfo',
-      //   path: 'informacion-personal',
-      //   component: PersonalInfo
-      // },
       {
         name: 'SelectLanguage',
         path: 'seleccionar-idioma',
-        component: SelectLanguage
+        component: SelectLanguage,
+        meta: {
+          transition: 'slide-forward',
+          hasTransition: true
+        }
       },
-      //reservation
       {
         name: 'ReservationStay',
         path: 'reservar-estancia',
         component : ReservationStay
       },
-      // {
-      //   name: 'EditStay',
-      //   path: 'editar-estancia/:stayId',
-      //   component: EditStay,
-      //   props: (route) => ({ paramsRouter: {...route.params} })
-      // },
       {
         name: 'LogoutUser',
         path: 'logout',

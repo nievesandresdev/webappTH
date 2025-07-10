@@ -98,6 +98,11 @@ export default {
       "error-scan": "Fehler: Du musst den MRZ-Code des Dokuments fokussieren",
     "browser-warning": "Melde dich in einem Browser wie Google Chrome an, um diese Funktion zu nutzen.",
     "rescan-document": "Dokument erneut scannen"
+    },
+    "success-checkin": {
+        "title": "Check-in abgeschlossen!",
+        "button": "Weiteren Check-in abschließen",
+        "button-home": "Zurück zur Startseite"
     }
 }
   

@@ -10,6 +10,9 @@ export default {
         "text-search-not-found": "Refine your search or try another category",
         "btn-load-more": "Load more"
     },
+    "share": {
+        "message": "Register at our stay and take a look at this place in our {type} catalog through its WebApp link"
+    },
     "results":'Without results...',
     "seaching":'Searching...',
     "placeholder-search":"Search destination",

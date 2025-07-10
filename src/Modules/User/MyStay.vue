@@ -84,7 +84,7 @@ import { handleToast } from "@/composables/useToast";
 const { toastSuccess } = handleToast();
 import { useQueryStore } from '@/stores/modules/query';
 const queryStore = useQueryStore();
-
+import { $currentPeriod } from '@/utils/helpers';
 
   import { useShare } from "@/composables/useShare";
   const { shareContent } = useShare();
@@ -139,6 +139,7 @@ const submitForm = async () => {
     form.stayId = paramsRouter.value.stayId;
     // console.log('test stayId',paramsRouter.value.stayId)
     currentStay.value = await stayStore.updateStayAndGuests(form)
+    await queryStore.$getCurrentAndSettingsQuery(localStorage.getItem('stayId'),localStorage.getItem('guestId'),$currentPeriod(),guestStore.guestData.name)
     fillForm(currentStay.value)
     // console.log('test currentStay.value',currentStay.value)
     if(currentStay.value){

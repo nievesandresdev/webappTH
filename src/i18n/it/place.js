@@ -10,6 +10,9 @@ export default {
         "text-search-not-found": "Perfeziona la ricerca o prova un'altra categoria",
         "btn-load-more": "Carica altri"
     },
+    "share": {
+        "message": "Registrati alla nostra struttura e dai un'occhiata a questo posto nel nostro catalogo {type} attraverso il suo link WebApp"
+    },
     "results": "Nessun risultato...",
     "seaching": "Cerca destinazione",
     "categorySearch": "trovato",

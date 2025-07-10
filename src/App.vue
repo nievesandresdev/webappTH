@@ -1,9 +1,25 @@
 <template>
-  <div id="app">
+  <div class="app-container">
     <!-- Preloader -->
       <!-- <LoadPage v-if="activeRequests > 0" /> -->
     <!-- Resto de la aplicación -->
-    <router-view />
+    
+    <!-- Sin transición para rutas de servicios (Confort, Transport, Activity) -->
+    <!-- <div v-if="['Confort', 'Transport', 'Activity','PersonalInfo','UbicationData','ContactData'].includes($route.name)">
+      <router-view />
+    </div> -->
+    
+    <!-- Con transición para otras páginas -->
+   <!--  <div v-else>
+      <router-view v-slot="{ Component, route }">
+        <TransitionBookGlobal>
+          <component :is="Component" :key="route.name" />
+        </TransitionBookGlobal>
+      </router-view>
+    </div> -->
+
+
+   <router-view /> 
   </div>
 </template>
 
@@ -14,14 +30,14 @@ defineComponent({ name: 'App' });
 //
 import { getPusherInstance, isChannelSubscribed } from '@/utils/pusherSingleton.js'
 import { isMockup } from '@/utils/utils.js'
-import { computed, onMounted, watch, ref } from 'vue';
-import useHotelMetadata from '@/composables/useHotelMetadata'
-import LoadPage from '@/shared/LoadPage.vue'; // Asegúrate de que la ruta sea correcta
+import { computed, watch, ref, onMounted } from 'vue';
+import { useFavicon } from '@/composables/useFavicon'
+/*   import LoadPage from '@/shared/LoadPage.vue'; 
+  import TransitionBookGlobal from '@/components/Transition/TransitionBookGlobal.vue'; */
 //
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
-const { setMetadata } = useHotelMetadata()
 
 //stores
 import { useStayStore } from '@/stores/modules/stay';
@@ -30,13 +46,9 @@ import { useGuestStore } from '@/stores/modules/guest';
 const guestStore = useGuestStore();
 import { usePreloaderStore } from '@/stores/modules/preloader';
 const preloaderStore = usePreloaderStore();
+import { useHotelStore } from '@/stores/modules/hotel'
 
-
-
-
-
-
-onMounted(()=>{
+/* onMounted(()=>{
   // console.log('test hola')
   updateOpenGraphMeta({
     title: 'Título Hoteles',
@@ -58,7 +70,7 @@ function updateOpenGraphMeta(data) {
   if (imageMeta) imageMeta.setAttribute('content', data.image);
   if (urlMeta) urlMeta.setAttribute('content', data.url);
 }
-
+ */
 const pusher = ref(null);   
 const isSubscribed = ref(false);
 const channelLogOutGuest = ref(null);
@@ -119,7 +131,109 @@ watch(() => stayStore.stayData, async (newStayData) => {
     }
 }, { immediate: true });
 
+const hotelStore = useHotelStore()
+const URL_STORAGE = process.env.VUE_APP_STORAGE_URL
+
+const formatImage = (payload) => {
+  let { url, type } = payload
+  
+  if (url && url.startsWith("blob:")) return url
+  if (!url || !URL_STORAGE) return '/assets/icons/1.TH.RECOMMEND.svg'
+  
+  let type_d = url.includes('https://') ? 'CDN' : 'STORAGE'
+  type = type ?? type_d
+  
+  return type === 'CDN' || type === 'image-hotel-scraper' ? url : URL_STORAGE + url
+}
+
+// Observar cambios en hotelData para actualizar el favicon
+/* watch(() => hotelStore.hotelData, (hotelData) => {
+  if (!hotelData) return;
+
+  const faviconUrl = hotelData.favicon 
+    ? formatImage({ url: hotelData.favicon }) 
+    : '/assets/icons/1.TH.RECOMMEND.svg';
+
+  useFavicon(faviconUrl);
+}, { immediate: true }); */
+
+// Transition handlers
+const beforeLeave = (el) => {
+  el.style.position = 'absolute';
+  el.style.width = '100%';
+};
+
+const enter = (el) => {
+  el.style.position = 'absolute';
+  el.style.width = '100%';
+};
+
+const afterEnter = (el) => {
+  el.style.position = '';
+  el.style.width = '';
+};
+
+/* // Usar watchEffect para manejar la actualización del título
+watchEffect(() => {
+  // Usar hotelDataStorage que viene del localStorage
+  const hotelName = hotelStore.hotelDataStorage?.name
+  const routeName = route.name
+  
+  if (hotelName) {
+    if (routeName === 'Home') {
+      document.title = `${hotelName} | Inicio`
+    } else if (routeName) {
+      // Formatear el nombre de la ruta para el título
+      const routeTitle = routeName
+        .replace(/([A-Z])/g, ' $1') // Agrega espacio antes de mayúsculas
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ')
+      document.title = `${hotelName} | ${routeTitle}`
+    }
+  }
+})
+
+// También observamos los cambios de ruta
+watch(
+  () => route.name,
+  (newRouteName) => {
+    console.log('Route Changed:', newRouteName)
+    if (newRouteName === 'Home' && hotelStore.hotelData?.name) {
+      document.title = `${hotelStore.hotelData?.name} | Inicio`
+    }else{
+      document.title = `${hotelStore.hotelData?.name} | ${newRouteName}`
+    }
+  },
+  { immediate: true }
+) */
 
 </script>
+
+<style>
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Transición fade por defecto */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Asegurarse que el contenedor principal mantenga el espacio */
+#app {
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+</style>
 
 

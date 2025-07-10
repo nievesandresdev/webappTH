@@ -12,53 +12,91 @@
             id="title-container-request"
             :class="{
                 'lato text-[10px] sp:text-[20px] md:text-[24px] font-bold md:mt-0 leading-3 sp:leading-[28px] md:leading-[116%]':!inModal,
-                'lato text-[20px] font-bold leading-[28px]':inModal,
+                'lato text-[14px] sp:text-[20px] font-bold leading-[18px] sp:leading-[28px]':inModal,
                 }" 
-            v-html="requestSettingsStore.requestData?.title"
+            v-html="titleRequest"
         ></h1>
         <div 
             id="description-container1"
             class="description-container1 mt-3 md:mt-6" 
-            v-html="requestSettingsStore.requestData?.text1"
+            v-html="msgRequest.part1"
         ></div>
         <div class="buttons flex flex-col gap-3 sp:gap-4 md:max-w-[310px] md:mx-auto">
-            <div v-if="requestSettingsStore.requestData?.otas_enabled?.booking && requestSettingsStore.requestData?.buttonAnchor">
+            <div v-if="otasEnabled?.booking">
                 <GoOtaButton ota="booking" :textButton="$t('query.form.continueIn')+' Booking'"/>
             </div>
-            <!-- <div v-if="requestSettingsStore.requestData?.otas_enabled?.expedia && requestSettingsStore.requestData?.buttonAnchor">
-                <GoOtaButton ota="expedia" textButton="Continuar en Expedia"/>
-            </div> -->
-            <div v-if="requestSettingsStore.requestData?.otas_enabled?.tripadvisor && requestSettingsStore.requestData?.buttonAnchor">
+            <div v-if="otasEnabled?.expedia">
+                <GoOtaButton ota="expedia" :textButton="$t('query.form.continueIn')+' Expedia'"/>
+            </div>
+            <div v-if="otasEnabled?.tripadvisor">
                 <GoOtaButton ota="tripadvisor" :textButton="$t('query.form.continueIn')+' Tripadvisor'" />
             </div>
-            <div v-if="requestSettingsStore.requestData?.otas_enabled?.google && requestSettingsStore.requestData?.buttonAnchor">
+            <div v-if="otasEnabled?.google">
                 <GoOtaButton ota="google" :textButton="$t('query.form.continueIn')+' Google'"/>
             </div>
-            <!-- <div v-if="requestSettingsStore.requestData?.otas_enabled?.airbnb && requestSettingsStore.requestData?.buttonAnchor">
+            <!-- <div v-if="otasEnabled?.airbnb">
                 <GoOtaButton ota="airbnb" textButton="Continuar en Airbnb"/>
             </div> -->
         </div>
         <div 
             id="description-container2" 
             class="description-container2 mt-3 sp:mt-6 md:mt-8" 
-            v-html="requestSettingsStore.requestData?.text2"
+            v-html="msgRequest.part2"
         ></div>
     </div>
 </template>
 <script setup>
-import { onBeforeMount, ref, inject } from 'vue';
+import { computed } from 'vue';
 import GoOtaButton from '@/components/Buttons/GoOtaButton.vue'
-import { useRequestSettingStore } from '@/stores/modules/requestSettings';
-const requestSettingsStore = useRequestSettingStore();
+import { useQuerySettingsStore } from '@/stores/modules/querySettings';
+const querySettingsStore = useQuerySettingsStore();
 
-const period = inject('period')
 
 const props = defineProps({
     inModal:{
         type: Boolean,
         default:false
     },
+    period: {
+        type: String,
+        required: true
+    },
+    qualification: {
+        type: String,
+        required: true
+    }
 })
+
+
+const modifiedPeriod = computed(() => {
+    let modifiedString;
+    
+    if(props.period){
+        modifiedString = props.period.replace("-", "_")
+    }
+    return modifiedString;
+})
+
+const keyPeriodAndFeedback = computed(() => {
+    if(!props.qualification) return '';
+    return modifiedPeriod.value+'_'+props.qualification.toLowerCase();
+})
+
+const titleRequest = computed(() => {
+    if(!props.qualification) return '';
+    return querySettingsStore.settings[keyPeriodAndFeedback.value+'_response_title']
+})
+
+const msgRequest = computed(() => {
+    if(!props.qualification) return '';
+    return querySettingsStore.settings[keyPeriodAndFeedback.value+'_response_msg']
+})
+
+const otasEnabled = computed(() => {
+    if(!props.qualification) return '';
+    return querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_otas']
+})
+
 
 </script>
 <style>
@@ -112,8 +150,8 @@ const props = defineProps({
     .description-container2 > strong,
     .description-container1 > p,
     .description-container2 > p{
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 11px;
+        line-height: 13px;
     }
 }
 </style>

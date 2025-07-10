@@ -98,6 +98,11 @@ export default {
       "error-scan": "Fout: Richt op de MRZ-code van het document",
       "browser-warning": "Gebruik een browser zoals Google Chrome om deze functie te gebruiken.",
       "rescan-document": "Document opnieuw scannen"
+    },
+    "success-checkin": {
+        "title": "Check-in voltooid!",
+        "button": "Nog een Check-in voltooien",
+        "button-home": "Terug naar Start"
     }
   }
   

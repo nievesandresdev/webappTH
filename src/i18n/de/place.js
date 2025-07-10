@@ -10,6 +10,9 @@ export default {
         "text-search-not-found": "Verfeinern Sie Ihre Suche oder versuchen Sie es mit einer anderen Kategorie",
         "btn-load-more": "Mehr laden"
     },
+    "share": {
+        "message": "Registrieren Sie sich bei unserer Unterkunft und schauen Sie sich diesen Ort in unserem {type}-Katalog über den WebApp-Link an"
+    },
     "results": "Keine Ergebnisse...",
     "seaching": "Suche...",
     "categorySearch": "gefunden",

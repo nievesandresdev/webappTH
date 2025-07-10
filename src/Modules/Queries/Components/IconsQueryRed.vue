@@ -14,11 +14,11 @@
         <div 
             id="container-form"
             :class="{
-                'hshadow md:shadow-none rounded-[20px] p-2 sp:p-4 md:p-0 bg-gradient-h border border-color-secondary': !inModal
+                'hshadow md:shadow-none rounded-[20px] p-3 sp:p-6 md:p-0 bg-gradient-h border border-color-secondary': !inModal
             }"
         >
             <h1 
-                class="lato text-xs sp:text-base font-medium leading-[12px] sp:leading-[20px]"
+                class="lato text-sm sp:text-[20px] font-bold leading-[18px] sp:leading-[28px]"
                 v-if="!inModal"
             >
                 <template v-if="data?.period == 'post-stay'">
@@ -30,7 +30,7 @@
             </h1>
             <p 
                 v-if="!inModal"
-                class="mt-2 sp:mt-3 md:mt-6 lato text-[10px] sp:text-sm md:text-[24px] font-medium md:font-semibold leading-[16px] md:leading-[116%]"
+                class="mt-3 sp:mt-6 lato text-[12px] sp:text-base md:text-[24px] font-bold md:font-semibold sp:leading-[20px] md:leading-[116%]"
             >
                 {{ $t('query.settings.question'+data?.period, {lodging: $formatTypeLodging() ?? '', hotelName: hotelStore?.hotelData?.name ?? ''}) }}
             </p>
@@ -40,23 +40,20 @@
             <div  v-if="form.type" class="border-b border-color-secondary w-full mt-3 sp:mt-6 md:hidden"></div>
             <!-- :class="{'hidden': ['GOOD','VERYGOOD'].includes(form.type) && data?.period !== 'pre-stay'}" -->
             <div class="mt-3 sp:mt-4 md:mt-8" v-if="form.type">
-                <p class="lato text-[10px] sp:text-sm md:text-base md:font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
-                    {{ settings[thanksHoster][localeStore.localeCurrent] }}
+                <p class="lato text-[10px] sp:text-sm md:text-base font-medium leading-[12px] sp:leading-[16px] md:leading-[125%]">
+                    {{ $t('query.settings.'+commentToGuest) }}
                 </p>
             </div>
-            <div class="mt-3 sp:mt-4 md:mt-4" v-if="form.type && form.type !== 'GOOD' && form.type !== 'VERYGOOD'">
+            <div class="mt-3 sp:mt-4 md:mt-4" v-if="showTextarea">
                 <TextareaAutogrow 
                     :id="'textarea1'"
                     v-model="textarea" 
                     :wordLimit="300"
-                    :placeholder="assessmentComment"
+                    :placeholder="placeholderTextarea"
                     showWordLimit
                     customClasses="min-h-[72px] md:min-h-[232px]"
                 />
             </div>
-            <!-- <pre>
-                {{ thanksHoster }}
-            </pre> -->
             <div 
                 class="flex items-center mt-3 sp:mt-6 md:mt-8"
                 v-if="!inModal"
@@ -93,7 +90,7 @@
     </div>
 </template>
 <script setup>
-import { reactive, provide, computed, ref, inject, watch  } from 'vue';
+import { reactive, provide, computed, ref, inject, watch,onMounted  } from 'vue';
 import { formatTimestampDate } from '@/utils/dateHelpers';
 import { $formatNameLodging } from '@/utils/utils';
 import FormTabEmojisRed from './FormTabEmojisRed'
@@ -108,6 +105,7 @@ import { useGuestStore } from '@/stores/modules/guest';
 import { useQueryStore } from '@/stores/modules/query';
 import { useLocaleStore } from '@/stores/modules/locale';
 import { useHotelStore } from '@/stores/modules/hotel';
+import { useQuerySettingsStore } from '@/stores/modules/querySettings';
 
 import { handleToast } from "@/composables/useToast"; 
 const { toastSuccess } = handleToast();
@@ -117,10 +115,12 @@ const { t } = useI18n();
 const queryStore = useQueryStore();
 const localeStore = useLocaleStore();
 const hotelStore = useHotelStore();
+const querySettingsStore = useQuerySettingsStore();
 const EditId = inject('EditId');
 const EditPeriod = inject('EditPeriod');
 const EditComment = inject('EditComment');
 const EditQualification = inject('EditQualification');
+
 
 const props = defineProps({
     settings:{
@@ -138,6 +138,7 @@ const props = defineProps({
 })
 const guestStore = useGuestStore();
 const textarea = ref(EditComment.value);
+const accFeedback = ref(EditComment.value);
 const sendingQuery = ref(false);
 const isUpdate = ref(false);
 const form = reactive({
@@ -210,27 +211,12 @@ const changes = computed(()=>{
     return  textarea.value && textarea.value !== commment || form.type && form.type !== qualification;                    
 })
 
-const thanksHoster = computed(() => {
-    let thanks =  '_thanks_good';
+const commentToGuest = computed(() => {
+    let commmet =  '-comment-good-feedback';
     if(['WRONG','VERYWRONG','NORMAL'].includes(form.type)){
-        thanks = '_thanks_normal';
+        commmet = '-comment-bad-feedback';
     }
-    return modifiedPeriod.value+thanks;
-})
-
-const assessmentComment = computed(() => {
-    
-    let assessment =  '_assessment_good';
-    let assessmentShow = '_assessment_good_activate';
-    
-    // console.log('')
-    if(['WRONG','VERYWRONG','NORMAL'].includes(form.type)){
-        assessment = '_assessment_normal';
-        assessmentShow = '_assessment_normal_activate';
-    }
-    // console.log('test assessmentShow',assessmentShow)
-    if(!props.settings[modifiedPeriod.value+assessmentShow]) return ''
-    return props.settings[modifiedPeriod.value+assessment][localStorage.getItem('locale')];
+    return props.data?.period+commmet;
 })
 
 const modifiedPeriod = computed(() => {
@@ -241,6 +227,46 @@ const modifiedPeriod = computed(() => {
     }
     return modifiedString;
 })
+
+const showTextarea = computed(() => {
+    if(form.type && 
+        (
+            form.type !== 'GOOD' && form.type !== 'VERYGOOD' || 
+            !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate'] && querySettingsStore.settings[keyPeriodAndFeedback.value+'_no_request_comment_activate']
+        )){
+        return true
+        }
+    return false;
+})
+
+const keyPeriodAndFeedback = computed(() => {
+    if(!form.type) return '';
+    return modifiedPeriod.value+'_'+form.type.toLowerCase();
+})
+
+
+const placeholderTextarea = computed(() => {
+    if(form.type && 
+        (
+            (form.type == 'GOOD' || form.type == 'VERYGOOD') && !querySettingsStore.settings[keyPeriodAndFeedback.value+'_request_activate'] && querySettingsStore.settings[keyPeriodAndFeedback.value+'_no_request_comment_activate']
+        )){
+        return querySettingsStore.settings[keyPeriodAndFeedback.value+'_no_request_comment_msg']
+    }
+    return t('query.settings.placeholder-bad-feedback')
+})
+
+watch(
+  () => form.type, 
+  (newValue, oldValue) => {
+    if(!showTextarea.value){
+        textarea.value = null;
+    }
+    // else{
+    //     textarea.value = accFeedback.value;
+    // }
+  },
+  { immediate: true } 
+);
 </script>
 <style scoped>
 @media (min-width:767px){

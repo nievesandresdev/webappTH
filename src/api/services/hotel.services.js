@@ -20,3 +20,6 @@ export const getAllWifiHotel = () => apiHttp('GET', `${hotelPath}/${wifiNetworks
 export const getAllByHotelAndVisible = () => apiHttp('GET', `${hotelPath}/${wifiNetworksPath}/getAllByHotelAndVisible`);
 //buttons
 export const getActiveHotelButtons = () => apiHttp('GET', `${hotelPath}/getActiveHotelButtons`);
+//orderSections
+export const getOrderSectionsApi = () => apiHttp('GET', `${hotelPath}/getOrderSections`);
+

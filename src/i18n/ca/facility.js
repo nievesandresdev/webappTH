@@ -15,6 +15,9 @@ export default {
           "Sábado": "Dissabte",
           "Domingo": "Diumenge"
         }
+      },
+      "share": {
+        "message": "Regístrate en nuestra estancia i fes un cop d'ull a aquesta instal·lació del nostre {type} a través del seu enllaç WebApp"
       }
     }
   }

@@ -101,6 +101,7 @@
         </div>
         
 
+
         <!-- carousel's -->
          <div class="mt-4 mb-4 sp:mb-6" :class="!hotelData?.show_profile ? 'sp:mt-[-71px] z-[20]' : ''" >
             <section v-if="crossellingsData?.crosselling_facilities?.length > 0 && hotelData?.show_facilities" id="h-home-facilities" class="container-fluid-landing pr-mobile-0">

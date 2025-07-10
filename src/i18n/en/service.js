@@ -38,5 +38,8 @@ export default {
       "text-search-found": "Services found in activities",
       "list-page": {},
       "detail-page": {}
+    },
+    "share": {
+      "message": "Register at our stay and take a look at this service of our {type} through its WebApp link"
     }
   }

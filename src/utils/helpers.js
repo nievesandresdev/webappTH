@@ -1,4 +1,3 @@
-
 // helpers.js
 import { i18n } from '@/i18n'
 import { DateTime } from 'luxon';
@@ -74,5 +73,20 @@ export async function  $openShareMenu (concept = 'invitetToWebapp', params = {})
     }
     shareContent(data);
 };
+
+export const detectOS = () => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+    const isAndroid = /android/.test(userAgent);
+    
+    return {
+        isIOS,
+        isAndroid,
+        isMobile: isIOS || isAndroid,
+        browser: userAgent.includes('chrome') ? 'chrome' : 
+                 userAgent.includes('safari') ? 'safari' : 
+                 'other'
+    };
+}
 
 
