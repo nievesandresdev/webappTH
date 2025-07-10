@@ -81,6 +81,34 @@ export default {
   "recomendation-places":{
     "title-slider":"Lugares exclusivos para você",
     "title":"Destino - Recomendados"
+  },
+  "tutorial": {
+    "title": "Não perca nada!",
+    "description": "Adicione o WebApp à tela inicial do seu celular em 3 passos simples.",
+    "link": "Toque aqui para ver como",
+    "modal": {
+      "title": "Acesso rápido ao WebApp!",
+      "description": "Adicione acesso rápido ao WebApp na área de trabalho do seu celular em 3 passos simples.",
+      "deviceQuestion": "Que tipo de celular você usa?",
+      "understood": "Entendido",
+      "android": {
+        "instructions": "Se o seu celular é {device} e você navega com {browser}:",
+        "step1": "Toque no ícone de três pontos verticais (no canto superior direito)",
+        "step2": "Toque em \"{addToHome}\" e \"{createShortcut}\"",
+        "step3": "Edite o nome (se desejar) e toque \"{add}\"",
+        "addToHome": "Adicionar à tela inicial",
+        "createShortcut": "Criar atalho",
+        "add": "Adicionar"
+      },
+      "ios": {
+        "instructions": "Se o seu celular é {device} e você navega com {browser}:",
+        "step1": "Toque no ícone Compartilhar (na parte inferior da tela)",
+        "step2": "Toque em \"{addToHome}\"",
+        "step3": "Edite o nome (se desejar) e toque \"{add}\"",
+        "addToHome": "Adicionar à tela inicial",
+        "add": "Adicionar"
+      }
+    }
   }
 
 };

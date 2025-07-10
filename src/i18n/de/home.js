@@ -81,6 +81,34 @@ export default {
   "recomendation-places":{
     "title-slider":"Exklusive Orte für Sie",
     "title":"Ziel - Empfohlen"
+  },
+  "tutorial": {
+    "title": "Verpassen Sie nichts!",
+    "description": "Fügen Sie die WebApp in 3 einfachen Schritten zu Ihrem Handy-Startbildschirm hinzu.",
+    "link": "Hier tippen um zu sehen wie",
+    "modal": {
+      "title": "Schneller Zugriff auf die WebApp!",
+      "description": "Fügen Sie schnellen Zugriff auf die WebApp auf Ihrem Handy-Desktop in 3 einfachen Schritten hinzu.",
+      "deviceQuestion": "Welchen Handy-Typ verwenden Sie?",
+      "understood": "Verstanden",
+      "android": {
+        "instructions": "Wenn Ihr Handy {device} ist und Sie mit {browser} navigieren:",
+        "step1": "Tippen Sie auf das Symbol mit drei vertikalen Punkten (in der oberen rechten Ecke)",
+        "step2": "Tippen Sie auf \"{addToHome}\" und \"{createShortcut}\"",
+        "step3": "Bearbeiten Sie den Namen (falls gewünscht) und tippen Sie \"{add}\"",
+        "addToHome": "Zum Startbildschirm hinzufügen",
+        "createShortcut": "Verknüpfung erstellen",
+        "add": "Hinzufügen"
+      },
+      "ios": {
+        "instructions": "Wenn Ihr Handy {device} ist und Sie mit {browser} navigieren:",
+        "step1": "Tippen Sie auf das Teilen-Symbol (unten auf dem Bildschirm)",
+        "step2": "Tippen Sie auf \"{addToHome}\"",
+        "step3": "Bearbeiten Sie den Namen (falls gewünscht) und tippen Sie \"{add}\"",
+        "addToHome": "Zum Home-Bildschirm hinzufügen",
+        "add": "Hinzufügen"
+      }
+    }
   }
 
   

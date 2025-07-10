@@ -17,10 +17,10 @@
             >
         </button>
         <div class="relative z-10 sp:ml-[75px] ml-[39px]">
-            <h3 class="sp:text-[14px] text-[10px] font-bold sp:mb-3 mb-1 lato">¡No te pierdas de nada!</h3>
-            <p class="sp:text-[12px] text-[9px] font-medium sp:mb-2 mb-1 lato">Añade la WebApp a la pantalla de inicio de tu móvil en 3 simples pasos.</p>
+            <h3 class="sp:text-[14px] text-[10px] font-bold sp:mb-3 mb-1 lato">{{ $t('home.tutorial.title') }}</h3>
+            <p class="sp:text-[12px] text-[9px] font-medium sp:mb-2 mb-1 lato">{{ $t('home.tutorial.description') }}</p>
             <div class="flex justify-end">
-                <a href="#" class="sp:text-[14px] text-[10px] underline font-bold lato" @click.prevent="openTutorialModal">Toca aquí para ver cómo</a>
+                <a href="#" class="sp:text-[14px] text-[10px] underline font-bold lato" @click.prevent="openTutorialModal">{{ $t('home.tutorial.link') }}</a>
             </div>
         </div>
     </div>
@@ -41,8 +41,6 @@ const tutorialDismissed = ref(false);
 
 // Clave para localStorage
 const TUTORIAL_STORAGE_KEY = 'webapp_tutorial_dismissed';
-// Duración en milisegundos (12 horas = 12 * 60 * 60 * 1000)
-const TUTORIAL_DURATION = 12 * 60 * 60 * 1000;
 
 const props = defineProps({
     showTutorial: {
@@ -58,47 +56,16 @@ const shouldShowTutorial = computed(() => {
     return props.showTutorial && !tutorialDismissed.value;
 });
 
-// Función para verificar si el tutorial debe mostrarse
+// Función para verificar si el tutorial fue cerrado
 const checkTutorialStatus = () => {
-    try {
-        const dismissedData = localStorage.getItem(TUTORIAL_STORAGE_KEY);
-        
-        if (!dismissedData) {
-            // No hay datos guardados, mostrar tutorial
-            tutorialDismissed.value = false;
-            return;
-        }
-
-        const { timestamp } = JSON.parse(dismissedData);
-        const currentTime = Date.now();
-        const timeDifference = currentTime - timestamp;
-
-        // Si han pasado más de 12 horas, permitir mostrar el tutorial nuevamente
-        if (timeDifference >= TUTORIAL_DURATION) {
-            tutorialDismissed.value = false;
-            // Limpiar el localStorage para empezar de nuevo
-            localStorage.removeItem(TUTORIAL_STORAGE_KEY);
-        } else {
-            tutorialDismissed.value = true;
-        }
-    } catch (error) {
-        console.error('Error al verificar el estado del tutorial:', error);
-        tutorialDismissed.value = false;
-    }
+    const dismissed = localStorage.getItem(TUTORIAL_STORAGE_KEY);
+    tutorialDismissed.value = Boolean(dismissed);
 };
 
 // Función para marcar el tutorial como visto
 const markTutorialAsDismissed = () => {
-    try {
-        const dismissData = {
-            timestamp: Date.now(),
-            dismissed: true
-        };
-        localStorage.setItem(TUTORIAL_STORAGE_KEY, JSON.stringify(dismissData));
-        tutorialDismissed.value = true;
-    } catch (error) {
-        console.error('Error al guardar el estado del tutorial:', error);
-    }
+    localStorage.setItem(TUTORIAL_STORAGE_KEY, 'true');
+    tutorialDismissed.value = true;
 };
 
 const closeAppTutorial = () => {

@@ -77,6 +77,34 @@ export default {
   "recomendation-places":{
     "title-slider":"Uitgelichte locaties voor jou",
     "title":"Bestemming - Aanbevolen"
+  },
+  "tutorial": {
+    "title": "Mis niets!",
+    "description": "Voeg de WebApp toe aan je mobiele startscherm in 3 eenvoudige stappen.",
+    "link": "Tik hier om te zien hoe",
+    "modal": {
+      "title": "Snelle toegang tot de WebApp!",
+      "description": "Voeg snelle toegang tot de WebApp toe op je mobiele bureaublad in 3 eenvoudige stappen.",
+      "deviceQuestion": "Welk type mobiel gebruik je?",
+      "understood": "Begrepen",
+      "android": {
+        "instructions": "Als je mobiel {device} is en je browsed met {browser}:",
+        "step1": "Tik op het pictogram met drie verticale punten (in de rechterbovenhoek)",
+        "step2": "Tik op \"{addToHome}\" en \"{createShortcut}\"",
+        "step3": "Bewerk de naam (als je wilt) en tik \"{add}\"",
+        "addToHome": "Toevoegen aan startscherm",
+        "createShortcut": "Snelkoppeling maken",
+        "add": "Toevoegen"
+      },
+      "ios": {
+        "instructions": "Als je mobiel {device} is en je browsed met {browser}:",
+        "step1": "Tik op het Delen pictogram (onderaan het scherm)",
+        "step2": "Tik op \"{addToHome}\"",
+        "step3": "Bewerk de naam (als je wilt) en tik \"{add}\"",
+        "addToHome": "Voeg toe aan startscherm",
+        "add": "Toevoegen"
+      }
+    }
   }
 
 };

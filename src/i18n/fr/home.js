@@ -77,6 +77,34 @@ export default {
     "recomendation-places":{
       "title-slider":"Lieux exclusifs pour vous",
       "title":"Destination - Recommandé"
+    },
+    "tutorial": {
+      "title": "Ne ratez rien !",
+      "description": "Ajoutez l'WebApp à l'écran d'accueil de votre mobile en 3 étapes simples.",
+      "link": "Touchez ici pour voir comment",
+      "modal": {
+        "title": "Accès rapide à la WebApp !",
+        "description": "Ajoutez un accès rapide à la WebApp sur le bureau de votre mobile en 3 étapes simples.",
+        "deviceQuestion": "Quel type de mobile utilisez-vous ?",
+        "understood": "Compris",
+        "android": {
+          "instructions": "Si votre mobile est {device} et vous naviguez avec {browser} :",
+          "step1": "Touchez l'icône des trois points verticaux (dans le coin supérieur droit)",
+          "step2": "Touchez sur \"{addToHome}\" et \"{createShortcut}\"",
+          "step3": "Modifiez le nom (si vous le souhaitez) et touchez \"{add}\"",
+          "addToHome": "Ajouter à l'écran d'accueil",
+          "createShortcut": "Créer un raccourci",
+          "add": "Ajouter"
+        },
+        "ios": {
+          "instructions": "Si votre mobile est {device} et vous naviguez avec {browser} :",
+          "step1": "Touchez l'icône Partager (en bas de l'écran)",
+          "step2": "Touchez sur \"{addToHome}\"",
+          "step3": "Modifiez le nom (si vous le souhaitez) et touchez \"{add}\"",
+          "addToHome": "Ajouter à l'écran d'accueil",
+          "add": "Ajouter"
+        }
+      }
     }
 
   };
