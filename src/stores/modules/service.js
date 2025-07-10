@@ -58,12 +58,14 @@ export const useServiceStore = defineStore('service', () => {
 
     async function $apiDetAllConforApi (params) {
         let newParams = getHotelParams(params);
+        newParams.visibility = 'visible';
         const response = await getAllConforApi(newParams)
         // console.log(response, 'response')
         return response
     }
     async function $apiDetAllTransportApi (params) {
         let newParams = getHotelParams(params);
+        newParams.visibility = 'visible';
         const response = await getAllTransportApi(newParams)
         // console.log(response, 'response')
         return response

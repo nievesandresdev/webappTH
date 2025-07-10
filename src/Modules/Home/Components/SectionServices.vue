@@ -1,5 +1,8 @@
 <template>
-    <div class="mx-[10px] sp:mx-[16px]">
+    <div 
+        class="mx-[10px] sp:mx-[16px] my-1 sp:my-2" 
+        v-if="hotelStore?.hotelData?.show_confort || hotelStore?.hotelData?.show_transport || hotelStore?.hotelData?.show_experiences"
+    >
         <div class="flex items-center space-x-[6px] sp:space-x-[8px] mb-[6px] sp:mb-[8px]">
             <img src="/assets/icons/WA.MENU.DEFAULT.SERVICE.svg" alt="services" class="size-[16px] sp:size-[24px] mt-">
             <h2 class="text-[11px] sp:text-[20px] font-bold lato leading-[28px]">{{ $t('service.title') }}</h2>
@@ -83,6 +86,9 @@ const { t } = useI18n();
 
 const hotelData = inject('hotelData');
 const orderSections = inject('orderSections');
+//
+import { useHotelStore } from '@/stores/modules/hotel';
+const hotelStore = useHotelStore();
 
 const services = computed(() => {
     let services = [
