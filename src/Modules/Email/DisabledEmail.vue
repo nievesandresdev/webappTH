@@ -68,5 +68,5 @@ import { useEmailStore } from '@/stores/modules/email'
       console.error('Error al reactivar el correo:', error)
     }
   }
-}
+
 </script>
