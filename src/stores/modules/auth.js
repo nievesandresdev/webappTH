@@ -65,8 +65,6 @@ export const useAuthStore = defineStore('auth', () => {
         if(response.ok && response.data){
             // console.log('test response',response.data.token);
             localStorage.setItem('token', response.data?.token);
-            // Borrar tutorial para que se muestre al iniciar sesión
-            localStorage.removeItem('webapp_tutorial_dismissed')
             guestStore.setLocalGuest(response.data?.guest);
             return response.data;
         }
@@ -88,8 +86,6 @@ export const useAuthStore = defineStore('auth', () => {
     async function $logoutAndCreateStay () {
 
         stayStore.deleteLocalStayData()
-        // Borrar tutorial para que se muestre en la próxima sesión
-        localStorage.removeItem('webapp_tutorial_dismissed')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         if(chainType === 'INDEPENDENT'){
@@ -107,8 +103,6 @@ export const useAuthStore = defineStore('auth', () => {
         await guestStore.deleteLocalGuest()
         localStorage.removeItem('startedWebappBy')
         localStorage.removeItem('token')
-        // Borrar tutorial para que se muestre en la próxima sesión
-        localStorage.removeItem('webapp_tutorial_dismissed')
         const chainType = chainStore?.chainData?.type;
         // Determinar la ruta de redirección basada en el tipo de cadena
         historyStore.$clearHistory();
@@ -121,9 +115,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     async function $logIn (email) {
-        // Borrar tutorial para que se muestre al iniciar sesión
-        localStorage.removeItem('webapp_tutorial_dismissed')
-        
         if(!stayStore?.stayData){
             //aqui entra solo si no hay una estancia cargada antes de culminar registro
             await guestStore.findAndValidLastStayAndLogHotel({
@@ -171,7 +162,7 @@ export const useAuthStore = defineStore('auth', () => {
         //
         let currentSubdomainHotel = localStorage.getItem('subdomain');
         if(sessionActive.value && to?.name == 'ChainLanding'){
-            console.log('test $validateSession 1')
+            // console.log('test $validateSession 1')
             next({ name: 'Home', params :{ hotelSlug: currentSubdomainHotel }, query: to.query });
         }else{
             let sudmainsChain = chainStore.chainData.hotels_subdomains;
@@ -184,10 +175,10 @@ export const useAuthStore = defineStore('auth', () => {
             if(!sessionActive.value && to?.name !== 'ChainLanding'){
                 if(!isMockup() && validSubdomain){
                     //si hay un subdominio de hotel cargado va a la home
-                    console.log('test $validateSession 2')
+                    // console.log('test $validateSession 2')
                     next({ name:'Home', params: { hotelSlug: currentSubdomainHotel} })
                 }else{
-                    console.log('test $validateSession 3')
+                    // console.log('test $validateSession 3')
                     next({ name:'ChainLanding' })
                 }
             }   
@@ -211,12 +202,11 @@ export const useAuthStore = defineStore('auth', () => {
         const route =  JSON.parse(localStorage.getItem('startedWebappBy'));
         if(route?.name){
             localStorage.removeItem('startedWebappBy')
-            console.log('test $goStartedWebappBy 1')
             
             router.push({ name: route.name, params: route.params, query: route.query })
         }else{
             if(optional) return
-            console.log('test $goStartedWebappBy 2')
+            
             router.push({ name:'Home', params: { hotelSlug: localStorage.getItem('subdomain')} })
         }
     }
@@ -257,7 +247,7 @@ export const useAuthStore = defineStore('auth', () => {
             let validGuest = guestsIds.includes(guestStore.guestData.id);
             let logFrom = getUrlParam('m')
 
-            if(!validGuest && logFrom !== 'google'){
+            if(!validGuest && logFrom !== 'google' && logFrom !== 'facebook'){
                 guestStore.deleteLocalGuest();
                 $newHomeOrChain(next)
             }
@@ -269,10 +259,10 @@ export const useAuthStore = defineStore('auth', () => {
         if(isMockup()) return;
         let subdomainHotel = localStorage.getItem('subdomain');
         if(subdomainHotel){
-            console.log('test $newHomeOrChain 1');
+            // console.log('test $newHomeOrChain 1');
             next({ name:'Home', params: { hotelSlug: subdomainHotel} })
         }else{
-            console.log('test $newHomeOrChain 2');
+            // console.log('test $newHomeOrChain 2');
             next({ name:'ChainLanding' })
         }
          
@@ -299,8 +289,6 @@ export const useAuthStore = defineStore('auth', () => {
     async function $loginByGoogle(guestId, googleId) {  
         const {token, guest } = await $createTokenSessionByGoogle(googleId);
         localStorage.setItem('token', token);
-        // Borrar tutorial para que se muestre al iniciar sesión
-        localStorage.removeItem('webapp_tutorial_dismissed')
         let localGuest = guestStore.getLocalGuest();
         if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
             guestStore.setLocalGuest(guest);
@@ -310,8 +298,6 @@ export const useAuthStore = defineStore('auth', () => {
     async function $loginByFacebook(guestId, facebookId) {
         const {token, guest } = await $createTokenSessionByFacebook(facebookId);
         localStorage.setItem('token', token);
-        // Borrar tutorial para que se muestre al iniciar sesión
-        localStorage.removeItem('webapp_tutorial_dismissed')
         let localGuest = guestStore.getLocalGuest();
         if(!localGuest || localGuest && Number(localGuest.id) !== Number(guestId)){
             guestStore.setLocalGuest(guest);
